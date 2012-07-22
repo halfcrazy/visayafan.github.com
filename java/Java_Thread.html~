@@ -1,0 +1,507 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+               "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<title>Java_Thread</title>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
+<meta name="title" content="Java_Thread"/>
+<meta name="generator" content="Org-mode"/>
+<meta name="generated" content="2012-07-23 02:30:20 CST"/>
+<meta name="author" content="visaya fan"/>
+<meta name="description" content=""/>
+<meta name="keywords" content=""/>
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  html { font-family: Times, serif; font-size: 12pt; }
+  .title  { text-align: center; }
+  .todo   { color: red; }
+  .done   { color: green; }
+  .tag    { background-color: #add8e6; font-weight:normal }
+  .target { }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .right  {margin-left:auto; margin-right:0px;  text-align:right;}
+  .left   {margin-left:0px;  margin-right:auto; text-align:left;}
+  .center {margin-left:auto; margin-right:auto; text-align:center;}
+  p.verse { margin-left: 3% }
+  pre {
+	border: 1pt solid #AEBDCC;
+	background-color: #F3F5F7;
+	padding: 5pt;
+	font-family: courier, monospace;
+        font-size: 90%;
+        overflow:auto;
+  }
+  table { border-collapse: collapse; }
+  td, th { vertical-align: top;  }
+  th.right  { text-align:center;  }
+  th.left   { text-align:center;   }
+  th.center { text-align:center; }
+  td.right  { text-align:right;  }
+  td.left   { text-align:left;   }
+  td.center { text-align:center; }
+  dt { font-weight: bold; }
+  div.figure { padding: 0.5em; }
+  div.figure p { text-align: center; }
+  div.inlinetask {
+    padding:10px;
+    border:2px solid gray;
+    margin:10px;
+    background: #ffffcc;
+  }
+  textarea { overflow-x: auto; }
+  .linenr { font-size:smaller }
+  .code-highlighted {background-color:#ffff00;}
+  .org-info-js_info-navigation { border-style:none; }
+  #org-info-js_console-label { font-size:10px; font-weight:bold;
+                               white-space:nowrap; }
+  .org-info-js_search-highlight {background-color:#ffff00; color:#000000;
+                                 font-weight:bold; }
+  /*]]>*/-->
+</style><link rel="stylesheet"
+                href="../css/vf.css"
+                type="text/css"/>
+<link rel="stylesheet" type="text/css" href="../css/vf.css" />
+<script type="text/javascript">
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+
+</head>
+<body>
+<div id="org-div-home-and-up" style="text-align:right;font-size:70%;white-space:nowrap;">
+ <a accesskey="h" href="../index.html"> UP </a>
+ |
+ <a accesskey="H" href="../index.html"> HOME </a>
+</div>
+
+<div id="preamble">
+
+   <div id="menu">
+    <p>
+    <a href="../index.html" >返回首页</a>
+    </p>
+   </div>
+
+</div>
+
+<div id="content">
+<h1 class="title">Java_Thread</h1>
+
+
+<p><br/>
+</p>
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#sec-1">1 Java进程</a></li>
+<li><a href="#sec-2">2 创建Java线程的两种方法</a>
+<ul>
+<li><a href="#sec-2-1">2.1 声明一个类是Thread类的子类</a></li>
+<li><a href="#sec-2-2">2.2 实现Runnable接口，其实例做为创建thread时的参数</a></li>
+</ul>
+</li>
+<li><a href="#sec-3">3 Executor</a>
+<ul>
+<li><a href="#sec-3-1">3.1 Executors</a></li>
+<li><a href="#sec-3-2">3.2 ThreadFactory</a></li>
+<li><a href="#sec-3-3">3.3 ExecutorService</a></li>
+<li><a href="#sec-3-4">3.4 Future</a></li>
+</ul>
+</li>
+<li><a href="#sec-4">4 捕获异常</a></li>
+<li><a href="#sec-5">5 临界资源</a>
+<ul>
+<li><a href="#sec-5-1">5.1 synchronized关键字</a></li>
+<li><a href="#sec-5-2">5.2 Lock</a>
+<ul>
+<li><a href="#sec-5-2-1">5.2.1 ReentrantLock</a></li>
+<li><a href="#sec-5-2-2">5.2.2 原子类</a></li>
+</ul>
+</li>
+<li><a href="#sec-5-3">5.3 临界区</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-1" class="outline-2">
+<h2 id="sec-1"><span class="section-number-2">1</span> Java进程</h2>
+<div class="outline-text-2" id="text-1">
+
+<ol>
+<li>高优先级比低优先级优先执行，优先级可以用 <code>setPriority(int newPriority)</code> 来设置，默认优先级为5，最大为10，最小为0，其静态常量： <code>MAX_PRIORITY</code> <code>MIN_PRIORITY</code>, <code>NORM_PRIORITY</code> 分别表10,0,5.<br/>
+</li>
+<li>默认一个进程的子进程的优先级和该进程相同<br/>
+</li>
+<li>后台进程的子进程是后台进程，可以用 <code>isDaemon()</code> 函数判断进程是否是后台进程，可以用 <code>setDaemon(boolean on)</code> 来设置该进程为后台进程<br/>
+</li>
+<li>JVM开始执行的时候一般只有一个非后台进程（一般是main进程），当下面两种情况之一发生时进程退出：<br/>
+<ul>
+<li>Runtime的 <code>exit</code> 方法被调用<br/>
+</li>
+<li>所有非后台进程都died时，不论是执行 <code>run</code> 函数返回还是抛出异常被传到了 <code>run</code> 方法之外<br/>
+</li>
+</ul>
+
+</li>
+<li>进程休眠， <code>sleep(long millis)</code> 以毫秒为单位， <code>java.util.concurrent.TimeUnit</code> 提供了更加方便的方法： <code>TimeUnit.MILLISECONDS.sleep(long timeout)</code> 可以指定纳秒 <code>NANOSECONDS</code> 毫秒 <code>MILLISECONDS</code> 秒 <code>SECONDS</code> 分 <code>MINUTES</code> 小时 <code>HOURS</code> 天 <code>DAYS</code><br/>
+</li>
+<li><code>yield()</code> 向调度器暗示当前线程自愿让出处理器使用权<br/>
+</li>
+<li><code>setName()</code> 设置线程的名称，可以用 <code>getName()</code> 方法来获取线程的名称<br/>
+</li>
+<li><code>join()</code> 在A线程中有 <code>B.join()</code> 则A要等待B执行完毕后再执行<br/>
+</li>
+<li><code>interrupt()</code> 中断当前线程， <code>interrupted()</code> 用来测试当前线程是否被中断<br/>
+</li>
+<li><code>currentThread()</code> 返回当前线程引用<br/>
+</li>
+</ol>
+
+
+<p>     <br/>
+</p></div>
+
+</div>
+
+<div id="outline-container-2" class="outline-2">
+<h2 id="sec-2"><span class="section-number-2">2</span> 创建Java线程的两种方法</h2>
+<div class="outline-text-2" id="text-2">
+
+
+</div>
+
+<div id="outline-container-2-1" class="outline-3">
+<h3 id="sec-2-1"><span class="section-number-3">2.1</span> 声明一个类是Thread类的子类</h3>
+<div class="outline-text-3" id="text-2-1">
+
+<p>   必须重新重载run方法<br/>
+</p>
+<p><br/>
+<pre class="src src-java"><span style="color: #a020f0;">class</span> <span style="color: #228b22;">A</span> <span style="color: #a020f0;">extends</span> <span style="color: #228b22;">Thread</span>{
+    ...
+    <span style="color: #a020f0;">public</span> <span style="color: #228b22;">void</span> run(){
+        ...
+    }
+    ...
+}
+
+<span style="color: #228b22;">A</span> <span style="color: #a0522d;">a</span>=<span style="color: #a020f0;">new</span> <span style="color: #228b22;">A</span>();
+a.start();
+</pre>
+
+</p></div>
+
+</div>
+
+<div id="outline-container-2-2" class="outline-3">
+<h3 id="sec-2-2"><span class="section-number-3">2.2</span> 实现Runnable接口，其实例做为创建thread时的参数</h3>
+<div class="outline-text-3" id="text-2-2">
+
+
+<p><br/>
+<pre class="src src-java"><span style="color: #a020f0;">class</span> <span style="color: #228b22;">A</span> <span style="color: #a020f0;">implements</span> <span style="color: #228b22;">Runnable</span>{
+    ...
+    <span style="color: #a020f0;">public</span> <span style="color: #228b22;">void</span> run(){
+        ...
+    }
+    ...
+}
+<span style="color: #228b22;">Thread</span> <span style="color: #a0522d;">t</span> = <span style="color: #a020f0;">new</span> <span style="color: #228b22;">Thread</span>(<span style="color: #a020f0;">new</span> <span style="color: #228b22;">A</span>);
+t.start();
+</pre>
+
+</p>
+<p>   <br/>
+</p></div>
+</div>
+
+</div>
+
+<div id="outline-container-3" class="outline-2">
+<h2 id="sec-3"><span class="section-number-2">3</span> Executor</h2>
+<div class="outline-text-2" id="text-3">
+
+
+</div>
+
+<div id="outline-container-3-1" class="outline-3">
+<h3 id="sec-3-1"><span class="section-number-3">3.1</span> Executors</h3>
+<div class="outline-text-3" id="text-3-1">
+
+<ol>
+<li><code>static ExecutorService newCachedThreadPool()</code> 创建一个线程池，根据需要来创建线程<br/>
+</li>
+<li><code>static ExecutorService newFixedThreadPool(int nThreads)</code> 创建固定大小的线程池<br/>
+</li>
+<li><code>static ExecutorService newSingleThreadExecutor()</code> 创建单个线程<br/>
+      上面三个函数都有参数 <code>ThreadFactory</code> 版本。<br/>
+</li>
+</ol>
+
+</div>
+
+</div>
+
+<div id="outline-container-3-2" class="outline-3">
+<h3 id="sec-3-2"><span class="section-number-3">3.2</span> ThreadFactory</h3>
+<div class="outline-text-3" id="text-3-2">
+
+<p>   根据需求创建新线程，使用线程工厂从而去除难写的 <code>new Thread</code> 的调用，可以使用程序使用特殊的线程子类，优先级等。<br/>
+   要实现此接口必须实现 <code>newThread(Runnable r)</code> 方法，参数为一个 <code>Runnable</code> 类对象<br/>
+</p><ul>
+<li>下面是最简单的 <code>ThreadFactory</code> 应用，它返回一个 <code>Runnable</code> 对象创建的一个线程对象：<br/>
+</li>
+</ul>
+
+
+<p><br/>
+<pre class="src src-java"><span style="color: #a020f0;">class</span> <span style="color: #228b22;">SimpleThreadFactory</span> <span style="color: #a020f0;">implements</span> <span style="color: #228b22;">ThreadFactory</span>{
+    <span style="color: #a020f0;">public</span> <span style="color: #228b22;">Thread</span> <span style="color: #0000ff;">newThread</span>(<span style="color: #228b22;">Runnable</span> <span style="color: #a0522d;">r</span>){
+        <span style="color: #a020f0;">return</span> <span style="color: #a020f0;">new</span> <span style="color: #228b22;">Thread</span>(r);
+    }
+}
+</pre>
+
+</p><ul>
+<li>下面的例子设置进程为后台进程的线程工厂<br/>
+</li>
+</ul>
+
+
+<p><br/>
+<pre class="src src-java"><span style="color: #a020f0;">public</span> <span style="color: #a020f0;">class</span> <span style="color: #228b22;">DaemonThreadFactory</span> <span style="color: #a020f0;">implements</span> <span style="color: #228b22;">ThreadFactory</span>{
+    <span style="color: #a020f0;">public</span> <span style="color: #228b22;">Thread</span> <span style="color: #0000ff;">newThread</span>(<span style="color: #228b22;">Runnable</span> <span style="color: #a0522d;">r</span>){
+        <span style="color: #228b22;">Thread</span> <span style="color: #a0522d;">t</span> = <span style="color: #a020f0;">new</span> <span style="color: #228b22;">Thread</span>(r);
+        t.setDaemon(<span style="color: #008b8b;">true</span>);
+        <span style="color: #a020f0;">return</span> r;
+    }
+}
+</pre>
+
+
+</p></div>
+
+</div>
+
+<div id="outline-container-3-3" class="outline-3">
+<h3 id="sec-3-3"><span class="section-number-3">3.3</span> ExecutorService</h3>
+<div class="outline-text-3" id="text-3-3">
+
+<p>   用来创建和管理系统中的任务<br/>
+</p><ol>
+<li><code>execute(Runnable command)</code> 在未来的某个时间执行 <code>command</code> (调用command的run函数)<br/>
+</li>
+<li><code>submit(Runnable task)</code> or <code>Future&lt;T&gt; submit(Callable&lt;T&gt; task)</code> 提交执行一个有返回值的任务，返回值类型 <code>Future</code> 表任务结果未知<br/>
+</li>
+<li>Shutdown<br/>
+<ul>
+<li><code>shutdown()</code> 关闭之前执行先前提交的任务<br/>
+</li>
+<li><code>shutdownNow()</code> 立即关闭<br/>
+</li>
+</ul>
+
+</li>
+</ol>
+
+</div>
+
+</div>
+
+<div id="outline-container-3-4" class="outline-3">
+<h3 id="sec-3-4"><span class="section-number-3">3.4</span> Future</h3>
+<div class="outline-text-3" id="text-3-4">
+
+<p>   <code>Future</code> 代表异步计算的结果，有方法可以用来检查计算是否完成、等待其完成、得到其结果。<br/>
+</p><ol>
+<li><code>Get()</code> 方法可以得到其计算结果，如果完成就直接返回，如果未完成就阻塞等待其完成。此方法有重载版本 <code>get(long timeout, TimeUnit unit)</code> 等待最多timeout时间，时间单位是unit<br/>
+</li>
+<li><code>Cancel()</code> 方法可以取消计算<br/>
+</li>
+<li>如果你对计算结果并不感兴趣但又想使用其 <code>cancel</code> 方法，那你可以声明类型为 <code>Future&lt;?&gt;</code> 此时会返回null<br/>
+</li>
+</ol>
+
+</div>
+</div>
+
+</div>
+
+<div id="outline-container-4" class="outline-2">
+<h2 id="sec-4"><span class="section-number-2">4</span> 捕获异常</h2>
+<div class="outline-text-2" id="text-4">
+
+<p>  <code>Thread.UncaughtExceptionHandler</code> 是处理未捕获异常处理器接口(需要实现的方法是 <code>public void uncaughtException(Thread t, Throwable e)</code> )，通过 <code>Thread.setUncaughExceptionHandler(UncaughtExceptionHandler)</code> 来设置线程的异常处理器。<br/>
+</p>
+<p><br/>
+<pre class="src src-java"><span style="color: #b22222;">//</span><span style="color: #b22222;">&#19968;&#20010;&#24322;&#24120;&#31867;&#23454;&#29616;Runnable&#25509;&#21475;</span>
+<span style="color: #a020f0;">class</span> <span style="color: #228b22;">ExceptionThread</span> <span style="color: #a020f0;">implements</span> <span style="color: #228b22;">Runnable</span>{
+    <span style="color: #a020f0;">public</span> <span style="color: #228b22;">void</span> <span style="color: #0000ff;">run</span>(){
+        Throw <span style="color: #a020f0;">new</span> <span style="color: #228b22;">RuntimeException</span>();
+    }
+}
+<span style="color: #b22222;">//</span><span style="color: #b22222;">&#26410;&#25429;&#33719;&#24322;&#24120;&#22788;&#29702;&#22120;</span>
+<span style="color: #a020f0;">class</span> <span style="color: #228b22;">MyUncaughtExceptionHandler</span> <span style="color: #a020f0;">implements</span> <span style="color: #008b8b;">Thread</span>.<span style="color: #228b22;">UncaughtExceptionHandler</span>{
+    <span style="color: #a020f0;">public</span> <span style="color: #228b22;">void</span> <span style="color: #0000ff;">uncaughtException</span>(<span style="color: #228b22;">Thread</span> <span style="color: #a0522d;">t</span>, <span style="color: #228b22;">Throwable</span> <span style="color: #a0522d;">e</span>){
+        System.out.println(<span style="color: #8b2252;">"Caught: "</span>+e);
+    }
+}
+
+<span style="color: #a020f0;">public</span> <span style="color: #a020f0;">class</span> <span style="color: #228b22;">CaptureException</span>{
+    <span style="color: #a020f0;">public</span> <span style="color: #a020f0;">static</span> <span style="color: #228b22;">void</span> <span style="color: #0000ff;">main</span>(<span style="color: #228b22;">String</span>[] <span style="color: #a0522d;">args</span>){
+        <span style="color: #228b22;">Thread</span> <span style="color: #a0522d;">t</span> = <span style="color: #a020f0;">new</span> <span style="color: #228b22;">Thread</span>(<span style="color: #a020f0;">new</span> <span style="color: #228b22;">ExceptionThread</span>());
+        <span style="color: #b22222;">//</span><span style="color: #b22222;">&#20026;t&#28155;&#21152;&#26410;&#25429;&#33719;&#24322;&#24120;&#22788;&#29702;&#22120;&#65292;&#21487;&#20197;&#23558;&#19979;&#38754;&#35821;&#21477;&#27880;&#37322;&#25481;&#23545;&#27604;&#32467;&#26524;</span>
+        t.setUncaughExceptioniHandler(<span style="color: #a020f0;">new</span> <span style="color: #228b22;">MyUncaughtExceptionHandler</span>);
+        t.start();
+    }
+}
+</pre>
+
+</p></div>
+
+</div>
+
+<div id="outline-container-5" class="outline-2">
+<h2 id="sec-5"><span class="section-number-2">5</span> 临界资源</h2>
+<div class="outline-text-2" id="text-5">
+
+
+</div>
+
+<div id="outline-container-5-1" class="outline-3">
+<h3 id="sec-5-1"><span class="section-number-3">5.1</span> synchronized关键字</h3>
+<div class="outline-text-3" id="text-5-1">
+
+<p>   一个类中如果将方法声明为 <code>synchronized</code> ，如果一个线程得到一个 <code>synchronized</code> 则得到所有 <code>synchronized</code> 方法，即其它线程不能访问 <code>synchronized</code> 声明的方法。<br/>
+</p></div>
+
+</div>
+
+<div id="outline-container-5-2" class="outline-3">
+<h3 id="sec-5-2"><span class="section-number-3">5.2</span> Lock</h3>
+<div class="outline-text-3" id="text-5-2">
+
+<p>   <code>java.util.concurrent.locks</code> 中 <code>Lock接口</code> 显式锁住资源：<br/>
+   基本使用方法：<br/>
+</p>
+<p><br/>
+<pre class="src src-java"><span style="color: #228b22;">Lock</span> <span style="color: #a0522d;">lock</span> = <span style="color: #a020f0;">new</span> <span style="color: #228b22;">LockReentrant</span>();
+lock.lock();
+<span style="color: #a020f0;">try</span>{
+    <span style="color: #b22222;">//</span><span style="color: #b22222;">&#35775;&#38382;&#36164;&#28304;</span>
+}<span style="color: #a020f0;">finally</span>{
+    lock.unlock();
+}
+</pre>
+
+   其方法有：<br/>
+</p><ol>
+<li><code>lock()</code> 得到锁<br/>
+</li>
+<li><code>unlock()</code> 释放锁<br/>
+</li>
+<li><code>tryLock()</code> 尝试得到锁 <code>tryLock(long time, TimeUnit unit)</code><br/>
+</li>
+</ol>
+
+
+</div>
+
+<div id="outline-container-5-2-1" class="outline-4">
+<h4 id="sec-5-2-1"><span class="section-number-4">5.2.1</span> ReentrantLock</h4>
+<div class="outline-text-4" id="text-5-2-1">
+
+<p>    允许尝试获取但最终未获取锁，这样如果其它人已经获取了这个锁，那你就可以离开去执行其它一些事情而不是等待考虑到这个锁被释放。<br/>
+</p></div>
+
+</div>
+
+<div id="outline-container-5-2-2" class="outline-4">
+<h4 id="sec-5-2-2"><span class="section-number-4">5.2.2</span> 原子类</h4>
+<div class="outline-text-4" id="text-5-2-2">
+
+<p>    <code>java.util.concurrent.atomic</code> 提供了例如 <code>AtomicInteger</code> <code>AtomicLong</code> <code>AtomicReference</code> 之类的原子性变量类。<br/>
+</p>
+<p><br/>
+<pre class="src src-java"><span style="color: #a020f0;">class</span> <span style="color: #228b22;">Sequencer</span>{
+    <span style="color: #a020f0;">private</span> <span style="color: #a020f0;">final</span> <span style="color: #228b22;">AtomaicLong</span> <span style="color: #a0522d;">sequenceNumber</span> = <span style="color: #a020f0;">new</span> <span style="color: #228b22;">AtomicLong</span>(0);
+    <span style="color: #b22222;">// </span><span style="color: #b22222;">next&#26041;&#27861;&#20316;&#29992;&#26159;&#21407;&#23376;&#29615;&#22659;&#19979;&#33258;&#22686;&#65288;i++&#25805;&#20316;&#19981;&#26159;&#21407;&#23376;&#25805;&#20316;&#65289;</span>
+    <span style="color: #a020f0;">public</span> <span style="color: #228b22;">long</span> <span style="color: #0000ff;">next</span>(){
+        <span style="color: #a020f0;">return</span> sequenceNumber.getAndIncrement(); 
+    }
+}
+</pre>
+
+</p><ul>
+<li id="sec-5-2-2-1">AtomicInteger<br/>
+<ol>
+<li><code>addAndGet(int)</code>  增加给定值 同理 <code>decrementAndGet()</code> 减少给定值<br/>
+</li>
+<li><code>compareAndSet(int expect, int update)</code> 与expect比较，若相等则更新为update<br/>
+</li>
+<li><code>get()</code> 得到当前值 <code>set(int)</code> 设置为指定值<br/>
+</li>
+<li><code>getAndAdd(int)</code> 得到并加上给定值 <code>getAndDecrement(int)</code> 得到并减少给定值 <code>getAndIncrement()</code> <code>getAndDecrement()</code> 自增自减<br/>
+</li>
+<li>
+<p><br/>
+</p></li>
+</ol>
+
+</li>
+</ul>
+</div>
+</div>
+
+</div>
+
+<div id="outline-container-5-3" class="outline-3">
+<h3 id="sec-5-3"><span class="section-number-3">5.3</span> 临界区</h3>
+<div class="outline-text-3" id="text-5-3">
+
+
+<p><br/>
+<pre class="src src-java"><span style="color: #a020f0;">synchronized</span>(<span style="color: #228b22;">syncObject</span>){
+    <span style="color: #b22222;">//</span><span style="color: #b22222;">&#27492;&#20026;&#20020;&#30028;&#21306;&#65292;&#19968;&#27425;&#21482;&#33021;&#34987;&#19968;&#20010;&#32447;&#31243;&#35775;&#38382;</span>
+}
+</pre>
+
+</p>
+<p>   <br/>
+</p></div>
+</div>
+</div>
+</div>
+
+<div id="postamble">
+<p class="date">Date: 2012-07-23 02:30:20 CST</p>
+<p class="author">Author: visaya fan</p>
+<p class="creator">Org version 7.8.11 with Emacs version 23</p>
+
+
+</div>
+</body>
+</html>

@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="gb18030"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+               "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<title>Java_Eclipse_使用笔记</title>
+<meta http-equiv="Content-Type" content="text/html;charset=gb18030"/>
+<meta name="title" content="Java_Eclipse_使用笔记"/>
+<meta name="generator" content="Org-mode"/>
+<meta name="generated" content="2012-07-23 02:30:25 CST"/>
+<meta name="author" content="visaya fan"/>
+<meta name="description" content=""/>
+<meta name="keywords" content=""/>
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  html { font-family: Times, serif; font-size: 12pt; }
+  .title  { text-align: center; }
+  .todo   { color: red; }
+  .done   { color: green; }
+  .tag    { background-color: #add8e6; font-weight:normal }
+  .target { }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .right  {margin-left:auto; margin-right:0px;  text-align:right;}
+  .left   {margin-left:0px;  margin-right:auto; text-align:left;}
+  .center {margin-left:auto; margin-right:auto; text-align:center;}
+  p.verse { margin-left: 3% }
+  pre {
+	border: 1pt solid #AEBDCC;
+	background-color: #F3F5F7;
+	padding: 5pt;
+	font-family: courier, monospace;
+        font-size: 90%;
+        overflow:auto;
+  }
+  table { border-collapse: collapse; }
+  td, th { vertical-align: top;  }
+  th.right  { text-align:center;  }
+  th.left   { text-align:center;   }
+  th.center { text-align:center; }
+  td.right  { text-align:right;  }
+  td.left   { text-align:left;   }
+  td.center { text-align:center; }
+  dt { font-weight: bold; }
+  div.figure { padding: 0.5em; }
+  div.figure p { text-align: center; }
+  div.inlinetask {
+    padding:10px;
+    border:2px solid gray;
+    margin:10px;
+    background: #ffffcc;
+  }
+  textarea { overflow-x: auto; }
+  .linenr { font-size:smaller }
+  .code-highlighted {background-color:#ffff00;}
+  .org-info-js_info-navigation { border-style:none; }
+  #org-info-js_console-label { font-size:10px; font-weight:bold;
+                               white-space:nowrap; }
+  .org-info-js_search-highlight {background-color:#ffff00; color:#000000;
+                                 font-weight:bold; }
+  /*]]>*/-->
+</style><link rel="stylesheet"
+                href="../css/vf.css"
+                type="text/css"/>
+<link rel="stylesheet" type="text/css" href="../css/vf.css" />
+<script type="text/javascript">
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+
+</head>
+<body>
+<div id="org-div-home-and-up" style="text-align:right;font-size:70%;white-space:nowrap;">
+ <a accesskey="h" href="../index.html"> UP </a>
+ |
+ <a accesskey="H" href="../index.html"> HOME </a>
+</div>
+
+<div id="preamble">
+
+   <div id="menu">
+    <p>
+    <a href="../index.html" >返回首页</a>
+    </p>
+   </div>
+
+</div>
+
+<div id="content">
+<h1 class="title">Java_Eclipse_使用笔记</h1>
+
+
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#sec-1">1 eclilpse 快捷键</a></li>
+<li><a href="#sec-2">2 技巧</a>
+<ul>
+<li><a href="#sec-2-1">2.1 refactor</a></li>
+<li><a href="#sec-2-2">2.2 File-Switch workspace</a></li>
+</ul>
+</li>
+<li><a href="#sec-3">3 在eclipse中为main传参</a></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-1" class="outline-2">
+<h2 id="sec-1"><span class="section-number-2">1</span> eclilpse 快捷键</h2>
+<div class="outline-text-2" id="text-1">
+
+<table  border="2" cellspacing="0" cellpadding="6" rules="all" frame="all">
+<caption></caption>
+<colgroup><col class="left" /><col class="left" />
+</colgroup>
+<tbody>
+<tr><td class="left">M-/</td><td class="left">提示</td></tr>
+<tr><td class="left">syso</td><td class="left">system.out.println(" ");</td></tr>
+<tr><td class="left">main</td><td class="left">写出main语句</td></tr>
+<tr><td class="left">C-e</td><td class="left">调出隐藏的tab</td></tr>
+<tr><td class="left">C-d</td><td class="left">删除当前行</td></tr>
+<tr><td class="left">C-M-down</td><td class="left">复制当前行到下一行</td></tr>
+<tr><td class="left">C-M-up</td><td class="left">复制当前行到上一行</td></tr>
+<tr><td class="left">M-up</td><td class="left">当前行与上一行换位置</td></tr>
+<tr><td class="left">M-down</td><td class="left">当前行与下一行换位置</td></tr>
+<tr><td class="left">M-right</td><td class="left">下一个编辑页面</td></tr>
+<tr><td class="left">M-left</td><td class="left">上</td></tr>
+<tr><td class="left">C-q</td><td class="left">定位到最后编辑的地方</td></tr>
+<tr><td class="left">C-l</td><td class="left">goto-line</td></tr>
+<tr><td class="left">C-m</td><td class="left">最大化当前的edit或view</td></tr>
+<tr><td class="left">C-/</td><td class="left">comment/uncomment</td></tr>
+<tr><td class="left">C-o</td><td class="left">outline</td></tr>
+<tr><td class="left">C-t</td><td class="left">快捷键显示当前类的继承结构</td></tr>
+<tr><td class="left">C-w</td><td class="left">close 当前 editor</td></tr>
+<tr><td class="left">C-S-F4</td><td class="left">close all editor</td></tr>
+<tr><td class="left">C-k</td><td class="left">参照选中的word快速定位到下一个</td></tr>
+<tr><td class="left">M-enter</td><td class="left">显示当前资源的属性</td></tr>
+<tr><td class="left">S-enter</td><td class="left">在当前行的下一行插入空行</td></tr>
+<tr><td class="left">C-S-enter</td><td class="left">在当前行插入空行</td></tr>
+<tr><td class="left">C-/(小键盘)</td><td class="left">折叠当前类中所有代码</td></tr>
+<tr><td class="left">C-*(小键盘)</td><td class="left">展开当前类中所有代码</td></tr>
+<tr><td class="left">C-S-x</td><td class="left">upper region</td></tr>
+<tr><td class="left">C-S-y</td><td class="left">lowwer region</td></tr>
+<tr><td class="left">C-S-f</td><td class="left">format region</td></tr>
+<tr><td class="left">C-f11</td><td class="left">run</td></tr>
+<tr><td class="left">f11</td><td class="left">debug</td></tr>
+</tbody>
+</table>
+
+</div>
+
+</div>
+
+<div id="outline-container-2" class="outline-2">
+<h2 id="sec-2"><span class="section-number-2">2</span> 技巧</h2>
+<div class="outline-text-2" id="text-2">
+
+
+</div>
+
+<div id="outline-container-2-1" class="outline-3">
+<h3 id="sec-2-1"><span class="section-number-3">2.1</span> refactor</h3>
+<div class="outline-text-3" id="text-2-1">
+
+<p>   重构，一次性修改所有与修改内容有关的<br/>
+   在要refactor的词上右键refactor-&gt;rename即可<br/>
+</p></div>
+
+</div>
+
+<div id="outline-container-2-2" class="outline-3">
+<h3 id="sec-2-2"><span class="section-number-3">2.2</span> File-Switch workspace</h3>
+<div class="outline-text-3" id="text-2-2">
+
+<p>   切换工作空间<br/>
+</p></div>
+</div>
+
+</div>
+
+<div id="outline-container-3" class="outline-2">
+<h2 id="sec-3"><span class="section-number-2">3</span> 在eclipse中为main传参</h2>
+<div class="outline-text-2" id="text-3">
+
+
+<p><br/>
+<pre class="src src-java"><span style="color: #a020f0;">public</span> <span style="color: #a020f0;">class</span> <span style="color: #228b22;">hello</span> {
+    <span style="color: #a020f0;">public</span> <span style="color: #a020f0;">static</span> <span style="color: #228b22;">void</span> <span style="color: #0000ff;">main</span>(<span style="color: #228b22;">String</span>[] <span style="color: #a0522d;">args</span>) {
+        System.out.println(<span style="color: #8b2252;">"hello world "</span>+ args[0]);
+    }
+}
+</pre>
+
+在src中右键run as-run configuration-arguments中输入想要传入的参数<br/>
+</p></div>
+</div>
+</div>
+
+<div id="postamble">
+<p class="date">Date: 2012-07-23 02:30:25 CST</p>
+<p class="author">Author: visaya fan</p>
+<p class="creator">Org version 7.8.11 with Emacs version 23</p>
+
+
+</div>
+</body>
+</html>
