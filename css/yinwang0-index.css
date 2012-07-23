@@ -79,7 +79,7 @@ div{
     border : 1pt;
     border-color : white;
     border-style : solid;
-    padding: 10pt;
+    padding: 3pt;
 }
 
 IMG{
@@ -248,3 +248,7 @@ div.tl{
 
 
 .example { border: 1pt solid black; padding: 10pt; background: rgb(240, 240, 255); overflow: auto }
+
+#first_line{
+  padding: 100px 15px 8px 15px;
+}
