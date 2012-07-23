@@ -959,7 +959,7 @@ body {
     .outline-2 {
         position: relative;
         top: 105px;
-        left: 215px;
+        left: 12.5%;
         width: 75%;
         padding-bottom: 5pt;
     }
