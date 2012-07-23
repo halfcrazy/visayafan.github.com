@@ -441,7 +441,8 @@ ol {
   list-style: decimal;
 }
 li {
-  line-height: 18px;
+  /* line-height: 18px; */
+    line-height:0px;
 }
 ul.unstyled,
 ol.unstyled {
