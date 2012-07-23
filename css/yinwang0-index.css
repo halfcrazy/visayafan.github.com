@@ -164,6 +164,7 @@ h1 {
 	padding-bottom: 2pt;
     background: ;
 	color: #1E2A37;
+    text-align:left;
 }
 
 h1.home{
@@ -247,9 +248,3 @@ div.tl{
 
 
 .example { border: 1pt solid black; padding: 10pt; background: rgb(240, 240, 255); overflow: auto }
-
-
-.title {
-    text-align: left;
-}
-
