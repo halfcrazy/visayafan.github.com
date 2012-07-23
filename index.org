@@ -17,5 +17,6 @@
     7. [[./java/Java_Eclipse_%E4%BD%BF%E7%94%A8%E7%AC%94%E8%AE%B0.html][Java_Eclipse使用笔记]]
 * SOURCE CODE
 * OTHER STAFF
+** Linux
 * ABOUT ME
    FanHan(visayafan), 西安交大(Xi'an Jiaotong University)大四本科生，热爱自由与开源，曾在[[http://blog.csdn.net/pfanaya][CSDN]] 和[[http://cnblogs.com/visayafan][ 博客园]] 写博，不过最终决定在Github上建立个人主页(http://visayafan.github.com)，目的在于更方便地整理记录所学知识。您可以通过此邮件与我联系: [[mailto:visayafan@gmail.com"][visayafan@gmail.com]]。 ——2012年7月23日
