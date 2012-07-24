@@ -73,6 +73,7 @@
                   <li><a href="java/Java_Eclipse_使用笔记.html">Java_Eclipse使用笔记</a><br/>
                   </li>
                 </ol>
+                <!--#include file="java_index.html"-->
               </div>
             </div>
           </div>
