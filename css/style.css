@@ -77,7 +77,8 @@
   }
 
   .title {
-    color: #990000;
+      /* color: #990000; */
+      color: black;
     padding-bottom: 7px;
     margin-bottom: 20px;
     border-bottom: 1px solid #222;
