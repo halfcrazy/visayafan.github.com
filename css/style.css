@@ -1061,12 +1061,38 @@
   }
 */
 
-  h2 {
-    font-family:Arial,sans-serif;
-    font-size:1.45em;
-    line-height:16px;
-    padding:7px 0 0 0;
-    color: #6E2432;
+  /* h2 { */
+  /*   font-family:Arial,sans-serif; */
+  /*   font-size:1.45em; */
+  /*   line-height:16px; */
+  /*   padding:7px 0 0 0; */
+  /*   color: #6E2432; */
+  /* }*/
+
+  h2 { 
+      /* color:#666; */
+      color:black;
+      font-size: 21px;
+      border-top: solid black 1px;
+      border-bottom: solid black 1px;
+      padding: 0.1em;
+      padding-top: 0.2em;
+      padding-left: 0.3em;
+      padding-bottom: 0.3em;
+      /* background: LightGray; */
+      background: #f9f9f9;
+  }
+
+  h3 { 
+      color:#003;
+      font-size: 16px;
+      border-left: solid black 1px;
+      border-bottom: solid black 1px;
+      padding: 0.1em;
+      padding-top: 0.2em;
+      padding-left: 0.3em;
+      padding-bottom: 0.3em;
+      width: 85%;
   }
 
   .outline-text-2 {
@@ -1077,22 +1103,35 @@
 
   }
 
-  h3 {
-    font-family:Arial,sans-serif;
-    font-size:1.3em;
-    color: #A34D32;
-    margin-left: 0.6em;
-  }
+  /* h3 { */
+  /*   font-family:Arial,sans-serif; */
+  /*   font-size:1.3em; */
+  /*   color: #A34D32; */
+  /*   margin-left: 0.6em; */
+  /* } */
 
   .outline-text-3 {
     margin-left: 0.9em;
   }
 
-  h4 {
-    font-family:Arial,sans-serif;
-    font-size:1.2em;
-    margin-left: 1.2em;
-    color: #A5573E;
+  /* h4 { */
+  /*   font-family:Arial,sans-serif; */
+  /*   font-size:1.2em; */
+  /*   margin-left: 1.2em; */
+  /*   color: #A5573E; */
+  /* } */
+  h4 { 
+      color:#004;
+      font-size: 15px;
+      padding: 2px;
+      margin-top: 0px;
+      border-left: solid black 1px;
+      border-bottom: solid black 1px;
+      padding: 0.1em;
+      padding-top: 0.2em;
+      padding-left: 0.3em;
+      padding-bottom: 0.3em;
+      width:70%;
   }
 
   .outline-text-4 {
@@ -1908,8 +1947,9 @@
       position: relative;
       top: 10px;
       left: 12.5%;
+      right:12.5%;
       width: 75%;
-      padding-bottom: 5pt;
+      padding-bottom: 2pt;
   }
   
 
@@ -1924,6 +1964,7 @@
     border: 1px solid #CCC;
     max-width: 50%;
     overflow: auto;
+    z-index:999;
   }
 } /* END OF @media screen */
 
