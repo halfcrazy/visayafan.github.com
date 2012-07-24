@@ -56,14 +56,14 @@ OL.roman{
 
 A{
 	color: #813A66;
-	font-weight: bold;
+	/* font-weight: bold; */
 	text-decoration: none;
 }
 
 A:Hover {
 	caption-side : left;
-	background-color: #FF80FF;
-	text-decoration: none;
+	/* background-color: #FF80FF; */
+	text-decoration: underline;
 }
 
 HR {
@@ -173,7 +173,8 @@ h1.home{
 }
 
 h2 { 
-    color:#666;
+    /* color:#666; */
+    color:black;
     font-size: 18px;
     border-top: solid black 1px;
     border-bottom: solid black 1px;
@@ -181,11 +182,12 @@ h2 {
     padding-top: 0.2em;
     padding-left: 0.3em;
     padding-bottom: 0.3em;
-    background: LightGray;
+    /* background: LightGray; */
+    background: #f9f9f9;
 }
 
 h3 { 
-    color:#666;
+    color:#003;
     font-size: 16px;
     border-left: solid black 1px;
     border-bottom: solid black 1px;
