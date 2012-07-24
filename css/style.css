@@ -904,7 +904,7 @@
     font:0.9em serif;
     max-width: 95%;
     margin: auto;
-    background-image: url(http://orgmode.org/tmp/org-mode-unicorn.png);
+    /* background-image: url(http://orgmode.org/tmp/org-mode-unicorn.png); */
     background-repeat: no-repeat;
     }
     body #content {
@@ -981,7 +981,7 @@
 
     max-width: 95%;
     margin: auto;
-    background-image: url(http://orgmode.org/worg-unicorn.png);
+    /* background-image: url(http://orgmode.org/worg-unicorn.png); */
     background-position: 25px 5px;
     background-repeat: no-repeat;
     }
@@ -1186,7 +1186,7 @@
   pre {
     font-family: Monaco, Consolas, "Lucida Console", monospace;
     color: black;
-    background-color: #efefef;
+    background-color: white;
     padding: 1.2em;
     border: 1px solid #dddddd;
     overflow: auto;
@@ -1904,6 +1904,14 @@
 
   #show_source {float: right; margin: .7em;}
   
+  .outline-2 {
+      position: relative;
+      top: 10px;
+      left: 12.5%;
+      width: 75%;
+      padding-bottom: 5pt;
+  }
+  
 
 } /* END OF @media all */
 
@@ -1921,7 +1929,7 @@
 
 /* Date Author 显示字体及背景 */
 div#postamble {
-	margin: 20px 0px 20px 0px;
+	margin: 10px 0px 20px 13%;
 	font-style: italic;
 	font-size: 11px;
 	font-family:"Courier New", Courier, monospace;
