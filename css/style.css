@@ -995,7 +995,7 @@
 
   #org-div-home-and-up{
       position: fixed;
-      right: 0;
+      right: 2em;
       top: 4em;
   }
 
