@@ -55,15 +55,15 @@ OL.roman{
 }
 
 A{
-	color: #2B65EC;
+	color: #003;
 	/* font-weight: bold; */
 	text-decoration: none;
 }
 
 A:Hover {
 	caption-side : left;
-	/* background-color: #FF80FF; */
 	text-decoration: underline;
+    color:black;
 }
 
 HR {
@@ -72,7 +72,7 @@ HR {
 }
 
 UL {
-    list-style-type : circle;
+    /* list-style-type : circle; */
 }
 
 div{
