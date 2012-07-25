@@ -7,7 +7,7 @@
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
 <meta name="title" content="Java输入输出笔记"/>
 <meta name="generator" content="Org-mode"/>
-<meta name="generated" content="2012-07-24 18:20:39 CST"/>
+<meta name="generated" content="2012-07-25 18:05:19 CST"/>
 <meta name="author" content="visaya fan"/>
 <meta name="description" content=""/>
 <meta name="keywords" content=""/>
@@ -66,7 +66,7 @@
 <!--/*--><![CDATA[/*><!--*/
 org_html_manager.set("TOC_DEPTH", "3");
 org_html_manager.set("LINK_HOME", "../index.html");
-org_html_manager.set("LINK_UP", "");
+org_html_manager.set("LINK_UP", "index.html");
 org_html_manager.set("LOCAL_TOC", "1");
 org_html_manager.set("VIEW_BUTTONS", "0");
 org_html_manager.set("MOUSE_HINT", "#cccccc");
@@ -102,7 +102,9 @@ org_html_manager.setup();  // activate after the parameters are set
 </head>
 <body>
 <div id="org-div-home-and-up" style="text-align:right;font-size:100%;white-space:nowrap;">
- <a accesskey="H" href="../index.html"> 返回首页 </a>
+ <a accesskey="h" href="index.html">UP </a>
+|
+ <a accesskey="H" href="../index.html">HOME </a>
 </div>
 
 <div id="preamble">
@@ -147,7 +149,10 @@ org_html_manager.setup();  // activate after the parameters are set
 <div id="outline-container-1" class="outline-2">
 <h2 id="sec-1"><span class="section-number-2">1</span> java.io</h2>
 <div class="outline-text-2" id="text-1">
+
+
 </div>
+
 <div id="outline-container-1-1" class="outline-3">
 <h3 id="sec-1-1"><span class="section-number-3">1.1</span> File 文件类</h3>
 <div class="outline-text-3" id="text-1-1">
@@ -352,7 +357,6 @@ System.out.println(file.getAbsoluteFile());
     <code>System.in System.out System.err</code> 为标准输入输出，标准错误输出流。<br/>
     <img src="../image/Screenshot.png"  alt="../image/Screenshot.png" /><br/>
     可以看到out和err是PrintStream类型，而in是未加包装的原始InputStream，所以如果要使用out或err的话，可以直接用System.out或System.err来初始化包装类，而System.in必须加以手工包装。<br/>
-    <a href="#a">a</a><br/>
 
 <p><br/>
 <pre class="src src-java">        <span style="color: #b22222;">/*</span><span style="color: #b22222;">&#29992; InputStreamReader &#23558; InputStream&#31867;&#22411;&#30340; System.in &#36716;&#21270;&#25104; Reader&#31867;&#22411;&#65292;</span>
@@ -405,7 +409,7 @@ System.out.println(file.getAbsoluteFile());
 </div>
 
 <div id="postamble">
-<p class="date">Date: 2012-07-24 18:20:39 CST</p>
+<p class="date">Date: 2012-07-25 18:05:19 CST</p>
 <p class="author">Author: visaya fan</p>
 <p class="creator">Org version 7.8.11 with Emacs version 23</p>
 
