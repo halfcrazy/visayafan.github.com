@@ -1,0 +1,610 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+               "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<title>Linux内核－内存管理</title>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
+<meta name="title" content="Linux内核－内存管理"/>
+<meta name="generator" content="Org-mode"/>
+<meta name="generated" content="2012-07-28 00:40:16 CST"/>
+<meta name="author" content="visaya fan"/>
+<meta name="description" content=""/>
+<meta name="keywords" content=""/>
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  html { font-family: Times, serif; font-size: 12pt; }
+  .title  { text-align: center; }
+  .todo   { color: red; }
+  .done   { color: green; }
+  .tag    { background-color: #add8e6; font-weight:normal }
+  .target { }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .right  {margin-left:auto; margin-right:0px;  text-align:right;}
+  .left   {margin-left:0px;  margin-right:auto; text-align:left;}
+  .center {margin-left:auto; margin-right:auto; text-align:center;}
+  p.verse { margin-left: 3% }
+  pre {
+	border: 1pt solid #AEBDCC;
+	background-color: #F3F5F7;
+	padding: 5pt;
+	font-family: courier, monospace;
+        font-size: 90%;
+        overflow:auto;
+  }
+  table { border-collapse: collapse; }
+  td, th { vertical-align: top;  }
+  th.right  { text-align:center;  }
+  th.left   { text-align:center;   }
+  th.center { text-align:center; }
+  td.right  { text-align:right;  }
+  td.left   { text-align:left;   }
+  td.center { text-align:center; }
+  dt { font-weight: bold; }
+  div.figure { padding: 0.5em; }
+  div.figure p { text-align: center; }
+  div.inlinetask {
+    padding:10px;
+    border:2px solid gray;
+    margin:10px;
+    background: #ffffcc;
+  }
+  textarea { overflow-x: auto; }
+  .linenr { font-size:smaller }
+  .code-highlighted {background-color:#ffff00;}
+  .org-info-js_info-navigation { border-style:none; }
+  #org-info-js_console-label { font-size:10px; font-weight:bold;
+                               white-space:nowrap; }
+  .org-info-js_search-highlight {background-color:#ffff00; color:#000000;
+                                 font-weight:bold; }
+  /*]]>*/-->
+</style>
+<link rel="stylesheet" type="text/css" href="../css/vf.css" />
+<script type="text/javascript" src="../css/org-info.js"></script>
+<script type="text/javascript" >
+<!--/*--><![CDATA[/*><!--*/
+org_html_manager.set("TOC_DEPTH", "3");
+org_html_manager.set("LINK_HOME", "../index.html");
+org_html_manager.set("LINK_UP", "index.html");
+org_html_manager.set("LOCAL_TOC", "1");
+org_html_manager.set("VIEW_BUTTONS", "0");
+org_html_manager.set("MOUSE_HINT", "#cccccc");
+org_html_manager.set("FIXED_TOC", "1");
+org_html_manager.set("TOC", "1");
+org_html_manager.set("VIEW", "content");
+org_html_manager.setup();  // activate after the parameters are set
+/*]]>*///-->
+</script>
+<script type="text/javascript">
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+<script type="text/javascript" src="http://orgmode.org/mathjax/MathJax.js">
+<!--/*--><![CDATA[/*><!--*/
+    MathJax.Hub.Config({
+        // Only one of the two following lines, depending on user settings
+        // First allows browser-native MathML display, second forces HTML/CSS
+        //  config: ["MMLorHTML.js"], jax: ["input/TeX"],
+            jax: ["input/TeX", "output/HTML-CSS"],
+        extensions: ["tex2jax.js","TeX/AMSmath.js","TeX/AMSsymbols.js",
+                     "TeX/noUndefined.js"],
+        tex2jax: {
+            inlineMath: [ ["\\(","\\)"] ],
+            displayMath: [ ['$$','$$'], ["\\[","\\]"], ["\\begin{displaymath}","\\end{displaymath}"] ],
+            skipTags: ["script","noscript","style","textarea","pre","code"],
+            ignoreClass: "tex2jax_ignore",
+            processEscapes: false,
+            processEnvironments: true,
+            preview: "TeX"
+        },
+        showProcessingMessages: true,
+        displayAlign: "center",
+        displayIndent: "2em",
+
+        "HTML-CSS": {
+             scale: 100,
+             availableFonts: ["STIX","TeX"],
+             preferredFont: "TeX",
+             webFont: "TeX",
+             imageFont: "TeX",
+             showMathMenu: true,
+        },
+        MMLorHTML: {
+             prefer: {
+                 MSIE:    "MML",
+                 Firefox: "MML",
+                 Opera:   "HTML",
+                 other:   "HTML"
+             }
+        }
+    });
+/*]]>*///-->
+</script>
+</head>
+<body>
+<div id="org-div-home-and-up" style="text-align:right;font-size:100%;white-space:nowrap;">
+ <a accesskey="h" href="index.html">UP </a>
+|
+ <a accesskey="H" href="../index.html">HOME </a>
+</div>
+
+<div id="preamble">
+
+</div>
+
+<div id="content">
+<h1 class="title">Linux内核－内存管理</h1>
+
+
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#sec-1">1 Page</a></li>
+<li><a href="#sec-2">2 Node</a></li>
+<li><a href="#sec-3">3 Zone</a></li>
+<li><a href="#sec-4">4 保留页框池</a></li>
+<li><a href="#sec-5">5 分配和释放页</a></li>
+<li><a href="#sec-6">6 Buddy</a></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-1" class="outline-2">
+<h2 id="sec-1"><span class="section-number-2">1</span> Page</h2>
+<div class="outline-text-2" id="text-1">
+
+<p>  所有的页描述符都在一个名为 <code>mem_map</code> 的数组中。<br/>
+</p>
+<p><br/>
+<pre class="src src-c"><span class="linenr"> 1:  </span><span style="color: #a020f0;">struct</span> <span style="color: #228b22;">page</span> {
+<span class="linenr"> 2:  </span>    <span style="color: #228b22;">page_flags_t</span> <span style="color: #a0522d;">flags</span>;
+<span class="linenr"> 3:  </span>    <span style="color: #228b22;">atomic_t</span> <span style="color: #a0522d;">_count</span>;            
+<span class="linenr"> 4:  </span>    <span style="color: #228b22;">atomic_t</span> <span style="color: #a0522d;">_mapcount</span>;     <span style="color: #b22222;">/* </span><span style="color: #b22222;">&#21462;&#20540;-1&#26102;&#34920;&#31034;&#27809;&#26377;&#25351;&#21521;&#35813;&#39029;&#26694;&#30340;&#24341;&#29992;&#65292;</span>
+<span class="linenr"> 5:  </span><span style="color: #b22222;">                               &#21462;&#20540;0&#26102;&#34920;&#31034;&#35813;&#39029;&#26694;&#19981;&#21487;&#20849;&#20139;</span>
+<span class="linenr"> 6:  </span><span style="color: #b22222;">                               &#21462;&#20540;&#22823;&#20110;0&#26102;&#34920;&#31034;&#35813;&#39029;&#26694;&#21487;&#20849;&#20139;&#34920;&#31034;&#26377;&#20960;&#20010;PTE&#24341;&#29992;</span>
+<span class="linenr"> 7:  </span><span style="color: #b22222;">                            </span><span style="color: #b22222;">*/</span>
+<span id="coderef-private" class="coderef-off"><span class="linenr"> 8:  </span>    <span style="color: #228b22;">unsigned</span> <span style="color: #228b22;">long</span> <span style="color: #a0522d;">private</span>;</span>
+<span class="linenr"> 9:  </span>    <span style="color: #a020f0;">struct</span> <span style="color: #228b22;">address_space</span> *<span style="color: #a0522d;">mapping</span>;
+<span class="linenr">10:  </span>    <span style="color: #b22222;">/* </span><span style="color: #b22222;">mapping&#65306;address_space&#31867;&#22411;&#65292;&#20026;&#23545;&#40784;&#38656;&#35201;&#65292;&#20854;&#20540;&#20026;4&#30340;&#20301;&#25968;&#65292;&#25152;&#20197;&#26368;&#20302;&#20004;&#20301;&#26080;&#29992;&#65292;&#20026;&#20805;&#20998;&#21033;&#29992;&#36164;&#28304;&#65292;&#25152;&#20197;&#27492;&#22788;&#21033;&#29992;&#27492;&#26368;&#20302;&#20301;&#12290;</span>
+<span class="linenr">11:  </span><span style="color: #b22222;">          &#26368;&#20302;&#20301;&#20026;1&#34920;&#31034;&#35813;&#39029;&#20026;&#21311;&#21517;&#39029;&#65292;&#24182;&#19988;&#23427;&#25351;&#21521;anon_vma&#23545;&#35937;&#12290;</span>
+<span class="linenr">12:  </span><span style="color: #b22222;">          &#26368;&#20302;&#20026;0&#34920;&#26144;&#23556;&#39029;&#65292;&#27492;&#26102;mapping&#25351;&#21521;&#25991;&#20214;&#33410;&#28857;&#22320;&#22336;&#31354;&#38388;&#12290;</span><span style="color: #b22222;">*/</span>
+<span class="linenr">13:  </span>    <span style="color: #228b22;">pgoff_t</span> <span style="color: #a0522d;">index</span>;          <span style="color: #b22222;">/* </span><span style="color: #b22222;">Our offset within mapping. </span><span style="color: #b22222;">*/</span>
+<span class="linenr">14:  </span>    <span style="color: #a020f0;">struct</span> <span style="color: #228b22;">list_head</span> <span style="color: #a0522d;">lru</span>;       
+<span class="linenr">15:  </span><span style="color: #7a378b;">#if</span> <span style="color: #7a378b;">defined</span>(WANT_PAGE_VIRTUAL)
+<span class="linenr">16:  </span>    <span style="color: #228b22;">void</span> *<span style="color: #a0522d;">virtual</span>;          <span style="color: #b22222;">/* </span><span style="color: #b22222;">Kernel virtual address (NULL if</span>
+<span class="linenr">17:  </span><span style="color: #b22222;">                               not kmapped, ie. highmem) </span><span style="color: #b22222;">*/</span>
+<span class="linenr">18:  </span><span style="color: #7a378b;">#endif</span> <span style="color: #b22222;">/* </span><span style="color: #b22222;">WANT_PAGE_VIRTUAL </span><span style="color: #b22222;">*/</span>
+<span class="linenr">19:  </span>}
+</pre>
+
+</p></div>
+
+</div>
+
+<div id="outline-container-2" class="outline-2">
+<h2 id="sec-2"><span class="section-number-2">2</span> Node</h2>
+<div class="outline-text-2" id="text-2">
+
+<p>  不同位置的内存访问速度不同，不同位置的内存对应不同的Node，每个Node都由一个描述符来描述。<br/>
+  pg_data_t通过其成员pgdat_next链接成链表，pgdat_list指向其第一个成员。<br/>
+</p>
+<p><br/>
+<pre class="src src-c"><span class="linenr"> 1:  </span><span style="color: #a020f0;">typedef</span> <span style="color: #a020f0;">struct</span> <span style="color: #228b22;">pglist_data</span> {
+<span class="linenr"> 2:  </span>    <span style="color: #a020f0;">struct</span> <span style="color: #228b22;">zone</span> <span style="color: #a0522d;">node_zones</span>[MAX_NR_ZONES]; <span style="color: #b22222;">/* </span><span style="color: #b22222;">maximum number of zones, normally 3 </span><span style="color: #b22222;">*/</span>
+<span class="linenr"> 3:  </span>    <span style="color: #a020f0;">struct</span> <span style="color: #228b22;">zonelist</span> <span style="color: #a0522d;">node_zonelists</span>[GFP_ZONETYPES];
+<span class="linenr"> 4:  </span>    <span style="color: #228b22;">int</span> <span style="color: #a0522d;">nr_zones</span>;               <span style="color: #b22222;">/* </span><span style="color: #b22222;">zone&#20010;&#25968; </span><span style="color: #b22222;">*/</span>
+<span class="linenr"> 5:  </span>    <span style="color: #a020f0;">struct</span> <span style="color: #228b22;">page</span> *<span style="color: #a0522d;">node_mem_map</span>;  <span style="color: #b22222;">/* </span><span style="color: #b22222;">&#27492;&#32467;&#28857;&#30340;&#39029;&#25551;&#36848;&#31526;&#25968;&#32452; </span><span style="color: #b22222;">*/</span>
+<span class="linenr"> 6:  </span>    <span style="color: #a020f0;">struct</span> <span style="color: #228b22;">bootmem_data</span> *<span style="color: #a0522d;">bdata</span>;
+<span class="linenr"> 7:  </span>    <span style="color: #228b22;">unsigned</span> <span style="color: #228b22;">long</span> <span style="color: #a0522d;">node_start_pfn</span>;     <span style="color: #b22222;">/* </span><span style="color: #b22222;">&#32467;&#28857;&#24320;&#22987;&#39029; </span><span style="color: #b22222;">*/</span>
+<span class="linenr"> 8:  </span>    <span style="color: #228b22;">unsigned</span> <span style="color: #228b22;">long</span> <span style="color: #a0522d;">node_present_pages</span>; <span style="color: #b22222;">/* </span><span style="color: #b22222;">&#29289;&#29702;&#39029;&#20010;&#25968;&#65288;&#19981;&#21253;&#21547;&#31354;&#27934;&#65289; </span><span style="color: #b22222;">*/</span>
+<span class="linenr"> 9:  </span>    <span style="color: #228b22;">unsigned</span> <span style="color: #228b22;">long</span> <span style="color: #a0522d;">node_spanned_pages</span>; <span style="color: #b22222;">/* </span><span style="color: #b22222;">&#29289;&#29702;&#39029;&#20010;&#25968;&#65288;&#21253;&#21547;&#31354;&#27934;&#65289;  </span><span style="color: #b22222;">*/</span>
+<span class="linenr">10:  </span>    <span style="color: #228b22;">int</span> <span style="color: #a0522d;">node_id</span>;                      <span style="color: #b22222;">/* </span><span style="color: #b22222;">&#32467;&#28857;&#30340;&#26631;&#35782; </span><span style="color: #b22222;">*/</span>
+<span class="linenr">11:  </span>    <span style="color: #a020f0;">struct</span> <span style="color: #228b22;">pglist_data</span> *<span style="color: #a0522d;">pgdat_next</span>;   <span style="color: #b22222;">/* </span><span style="color: #b22222;">&#25351;&#21521;&#19979;&#19968;&#20010;&#32467;&#28857;&#25551;&#36848;&#31526; </span><span style="color: #b22222;">*/</span>
+<span class="linenr">12:  </span>    <span style="color: #228b22;">wait_queue_head_t</span> <span style="color: #a0522d;">kswapd_wait</span>;    <span style="color: #b22222;">/* </span><span style="color: #b22222;">kswap&#21518;&#21488;&#36827;&#31243;&#30340;&#31561;&#24453;&#38431;&#21015; </span><span style="color: #b22222;">*/</span>
+<span class="linenr">13:  </span>    <span style="color: #a020f0;">struct</span> <span style="color: #228b22;">task_struct</span> *<span style="color: #a0522d;">kswapd</span>;
+<span class="linenr">14:  </span>    <span style="color: #228b22;">int</span> <span style="color: #a0522d;">kswapd_max_order</span>;
+<span class="linenr">15:  </span>} <span style="color: #a0522d;">pg_data_t</span>;
+<span class="linenr">16:  </span>
+<span class="linenr">17:  </span>
+<span class="linenr">18:  </span><span style="color: #a020f0;">struct</span> <span style="color: #228b22;">zonelist</span> {
+<span class="linenr">19:  </span>    <span style="color: #a020f0;">struct</span> <span style="color: #228b22;">zone</span> *<span style="color: #a0522d;">zones</span>[MAX_NUMNODES * MAX_NR_ZONES + 1]; <span style="color: #b22222;">//</span><span style="color: #b22222;">&#26368;&#22823;zone&#20010;&#25968;x&#26368;&#22823;node&#20010;&#25968;&#65288;&#19968;&#20010;node&#21253;&#21547;&#33509;&#24178;&#20010;zone&#65289;&#30001;&#20110;&#20197;null&#32467;&#23614;&#65292;&#25925;&#65291;1</span>
+<span class="linenr">20:  </span>};
+<span class="linenr">21:  </span><span style="color: #7a378b;">#define</span> <span style="color: #a0522d;">GFP_ZONETYPES</span>   ((GFP_ZONEMASK + 1) / 2 + 1)        <span style="color: #b22222;">/* </span><span style="color: #b22222;">Loner </span><span style="color: #b22222;">*/</span>
+<span class="linenr">22:  </span><span style="color: #7a378b;">#define</span> <span style="color: #a0522d;">GFP_ZONEMASK</span>    0x03
+</pre>
+
+</p>
+<p>  <br/>
+</p></div>
+
+</div>
+
+<div id="outline-container-3" class="outline-2">
+<h2 id="sec-3"><span class="section-number-2">3</span> Zone</h2>
+<div class="outline-text-2" id="text-3">
+
+<p>  第个node分为3个zone：ZONE_DMA, ZONE_HIGHMEM, ZONE_NORMAL.<br/>
+  ZONE_DMA是能够DMA的区域（某些体系结构可以以DMA方式访问所有内存则ZONE_DMA为空；在x86上只能在以DMA访问前16M内存故此时ZONE_DMA＝0-16M），zone_dma和zone_normal是可以被内核映射的区域，剩下的区域即不能被映射（如x86－64由于可以映射到所有内存，故没有highmem区）的为zone_highmem（高端内存）。x86上zone_normal为16-896M, zone_highmem为&gt;896M.<br/>
+  所有的zone都保存在一个struct zone[] zone_table中<br/>
+</p>
+<p><br/>
+<pre class="src src-c"><span class="linenr"> 1:  </span><span style="color: #a020f0;">struct</span> <span style="color: #228b22;">zone</span> {
+<span class="linenr"> 2:  </span>    <span style="color: #228b22;">unsigned</span> <span style="color: #228b22;">long</span>       <span style="color: #a0522d;">free_pages</span>; <span style="color: #b22222;">/* </span><span style="color: #b22222;">&#27492;zone&#20013;&#30340;&#31354;&#38386;&#39029; </span><span style="color: #b22222;">*/</span>
+<span class="linenr"> 3:  </span>    <span style="color: #228b22;">unsigned</span> <span style="color: #228b22;">long</span>       <span style="color: #a0522d;">pages_min</span>, <span style="color: #a0522d;">pages_low</span>, <span style="color: #a0522d;">pages_high</span>;
+<span class="linenr"> 4:  </span>    <span style="color: #228b22;">unsigned</span> <span style="color: #228b22;">long</span>       <span style="color: #a0522d;">lowmem_reserve</span>[MAX_NR_ZONES];
+<span class="linenr"> 5:  </span>
+<span class="linenr"> 6:  </span>    <span style="color: #a020f0;">struct</span> <span style="color: #228b22;">per_cpu_pageset</span>  <span style="color: #a0522d;">pageset</span>[NR_CPUS];
+<span class="linenr"> 7:  </span>
+<span class="linenr"> 8:  </span>    <span style="color: #b22222;">/*</span>
+<span class="linenr"> 9:  </span><span style="color: #b22222;">     * free areas of different sizes</span>
+<span class="linenr">10:  </span><span style="color: #b22222;">     </span><span style="color: #b22222;">*/</span>
+<span class="linenr">11:  </span>    <span style="color: #228b22;">spinlock_t</span>      <span style="color: #a0522d;">lock</span>;
+<span class="linenr">12:  </span>    <span style="color: #a020f0;">struct</span> <span style="color: #228b22;">free_area</span>    <span style="color: #a0522d;">free_area</span>[MAX_ORDER];
+<span class="linenr">13:  </span>
+<span class="linenr">14:  </span>
+<span class="linenr">15:  </span>    ZONE_PADDING(_pad1_)
+<span class="linenr">16:  </span>
+<span class="linenr">17:  </span>    <span style="color: #b22222;">/* </span><span style="color: #b22222;">Fields commonly accessed by the page reclaim scanner </span><span style="color: #b22222;">*/</span>
+<span class="linenr">18:  </span>    <span style="color: #228b22;">spinlock_t</span>      <span style="color: #a0522d;">lru_lock</span>;   <span style="color: #b22222;">/* </span><span style="color: #b22222;">&#33258;&#26059;&#38145;&#29992;&#26469;&#38145;&#27963;&#21160;&#21644;&#38750;&#27963;&#21160;&#38142;&#34920; </span><span style="color: #b22222;">*/</span>
+<span class="linenr">19:  </span>    <span style="color: #a020f0;">struct</span> <span style="color: #228b22;">list_head</span>    <span style="color: #a0522d;">active_list</span>;
+<span class="linenr">20:  </span>    <span style="color: #a020f0;">struct</span> <span style="color: #228b22;">list_head</span>    <span style="color: #a0522d;">inactive_list</span>;
+<span class="linenr">21:  </span>    <span style="color: #228b22;">unsigned</span> <span style="color: #228b22;">long</span>       <span style="color: #a0522d;">nr_scan_active</span>;
+<span class="linenr">22:  </span>    <span style="color: #228b22;">unsigned</span> <span style="color: #228b22;">long</span>       <span style="color: #a0522d;">nr_scan_inactive</span>;
+<span class="linenr">23:  </span>    <span style="color: #228b22;">unsigned</span> <span style="color: #228b22;">long</span>       <span style="color: #a0522d;">nr_active</span>; <span style="color: #b22222;">/* </span><span style="color: #b22222;">active-list&#20013;&#39029;&#20010;&#25968; </span><span style="color: #b22222;">*/</span>
+<span class="linenr">24:  </span>    <span style="color: #228b22;">unsigned</span> <span style="color: #228b22;">long</span>       <span style="color: #a0522d;">nr_inactive</span>;   <span style="color: #b22222;">/* </span><span style="color: #b22222;">inactive-list&#20013;&#39029;&#20010;&#25968; </span><span style="color: #b22222;">*/</span>
+<span class="linenr">25:  </span>    <span style="color: #228b22;">unsigned</span> <span style="color: #228b22;">long</span>       <span style="color: #a0522d;">pages_scanned</span>;     <span style="color: #b22222;">/* </span><span style="color: #b22222;">since last reclaim </span><span style="color: #b22222;">*/</span>
+<span class="linenr">26:  </span>    <span style="color: #228b22;">int</span>         <span style="color: #a0522d;">all_unreclaimable</span>; <span style="color: #b22222;">/* </span><span style="color: #b22222;">All pages pinned </span><span style="color: #b22222;">*/</span>
+<span class="linenr">27:  </span>
+<span class="linenr">28:  </span>    <span style="color: #228b22;">int</span> <span style="color: #a0522d;">temp_priority</span>;
+<span class="linenr">29:  </span>    <span style="color: #228b22;">int</span> <span style="color: #a0522d;">prev_priority</span>;
+<span class="linenr">30:  </span>
+<span class="linenr">31:  </span>
+<span class="linenr">32:  </span>    ZONE_PADDING(_pad2_)
+<span class="linenr">33:  </span>    <span style="color: #228b22;">wait_queue_head_t</span>   * <span style="color: #a0522d;">wait_table</span>;
+<span class="linenr">34:  </span>    <span style="color: #228b22;">unsigned</span> <span style="color: #228b22;">long</span>       <span style="color: #a0522d;">wait_table_size</span>;
+<span class="linenr">35:  </span>    <span style="color: #228b22;">unsigned</span> <span style="color: #228b22;">long</span>       <span style="color: #a0522d;">wait_table_bits</span>;
+<span class="linenr">36:  </span>
+<span class="linenr">37:  </span>    <span style="color: #b22222;">/*</span>
+<span class="linenr">38:  </span><span style="color: #b22222;">     * Discontig memory support fields.</span>
+<span class="linenr">39:  </span><span style="color: #b22222;">     </span><span style="color: #b22222;">*/</span>
+<span class="linenr">40:  </span>    <span style="color: #a020f0;">struct</span> <span style="color: #228b22;">pglist_data</span>  *<span style="color: #a0522d;">zone_pgdat</span>;    <span style="color: #b22222;">/* </span><span style="color: #b22222;">&#25351;&#21521;&#27492;zone&#25152;&#23646;&#30340;node </span><span style="color: #b22222;">*/</span>
+<span class="linenr">41:  </span>    <span style="color: #a020f0;">struct</span> <span style="color: #228b22;">page</span>     *<span style="color: #a0522d;">zone_mem_map</span>; <span style="color: #b22222;">/* </span><span style="color: #b22222;">&#27492;zone&#20869;&#31532;&#19968;&#20010;page&#22320;&#22336; </span><span style="color: #b22222;">*/</span>
+<span class="linenr">42:  </span>    <span style="color: #b22222;">/* </span><span style="color: #b22222;">zone_start_pfn == zone_start_paddr &gt;&gt; PAGE_SHIFT </span><span style="color: #b22222;">*/</span>
+<span class="linenr">43:  </span>    <span style="color: #228b22;">unsigned</span> <span style="color: #228b22;">long</span>       <span style="color: #a0522d;">zone_start_pfn</span>; <span style="color: #b22222;">/* </span><span style="color: #b22222;">&#27492;zone&#20869;&#31532;&#19968;&#20010;page&#32034;&#24341; </span><span style="color: #b22222;">*/</span>
+<span class="linenr">44:  </span>
+<span class="linenr">45:  </span>    <span style="color: #228b22;">unsigned</span> <span style="color: #228b22;">long</span>       <span style="color: #a0522d;">spanned_pages</span>; <span style="color: #b22222;">/* </span><span style="color: #b22222;">&#27492;zone&#20013;&#39029;&#20010;&#25968; &#21253;&#21547;&#31354;&#27934; </span><span style="color: #b22222;">*/</span>
+<span class="linenr">46:  </span>    <span style="color: #228b22;">unsigned</span> <span style="color: #228b22;">long</span>       <span style="color: #a0522d;">present_pages</span>;  <span style="color: #b22222;">/* </span><span style="color: #b22222;">&#19981;&#21253;&#21547;&#31354;&#27934; </span><span style="color: #b22222;">*/</span>
+<span class="linenr">47:  </span>
+<span class="linenr">48:  </span>    <span style="color: #228b22;">char</span>            *<span style="color: #a0522d;">name</span>;              <span style="color: #b22222;">/* </span><span style="color: #b22222;">&#21517;&#23383; "dma" "highmem" "normal" </span><span style="color: #b22222;">*/</span>
+<span class="linenr">49:  </span>} <span style="color: #a0522d;">____cacheline_maxaligned_in_smp</span>;
+</pre>
+
+
+</p>
+<p>  <br/>
+可以用page_zone函数来判断指定页所在的zone<br/>
+</p>
+<p><br/>
+<pre class="src src-c"><span class="linenr"> 1:  </span><span style="color: #7a378b;">#define</span> <span style="color: #a0522d;">NODEZONE_SHIFT</span> (<span style="color: #a020f0;">sizeof</span>(page_flags_t)*8 - MAX_NODES_SHIFT - MAX_ZONES_SHIFT)
+<span class="linenr"> 2:  </span><span style="color: #a020f0;">static</span> <span style="color: #a020f0;">inline</span> <span style="color: #a020f0;">struct</span> <span style="color: #228b22;">zone</span> *<span style="color: #0000ff;">page_zone</span>(<span style="color: #a020f0;">struct</span> <span style="color: #228b22;">page</span> *<span style="color: #a0522d;">page</span>)
+<span class="linenr"> 3:  </span>{
+<span class="linenr"> 4:  </span>    <span style="color: #b22222;">/* </span><span style="color: #b22222;">page-&gt;flags &gt;&gt; NODEZONE_SHIFT &#20854;&#23454;&#23601;&#26159;page-&gt;flags&#30340;&#21069;MAX_NODES_SHIFT+MAX_ZONES_SHIFT&#20301;&#65288;32&#20301;&#26426;&#19978;&#26159;8&#20301;&#65292;64&#20301;&#26426;&#19978;&#26159;12&#20301;&#65289; </span><span style="color: #b22222;">*/</span>
+<span class="linenr"> 5:  </span>    <span style="color: #a020f0;">return</span> zone_table[page-&gt;flags &gt;&gt; NODEZONE_SHIFT];
+<span class="linenr"> 6:  </span>}
+<span class="linenr"> 7:  </span>
+<span class="linenr"> 8:  </span><span style="color: #b22222;">/*</span><span style="color: #b22222;">&#22914;&#26524;&#26159;32&#20301;&#21017;&#23450;&#20041;max_nodes_shift&#20026;6&#65292;64&#20301;&#21017;&#23450;&#20041;&#20026;10  </span><span style="color: #b22222;">*/</span>
+<span class="linenr"> 9:  </span><span style="color: #7a378b;">#if</span> BITS_PER_LONG == 32 || <span style="color: #7a378b;">defined</span>(ARCH_HAS_ATOMIC_UNSIGNED)
+<span class="linenr">10:  </span><span style="color: #b22222;">/* </span><span style="color: #b22222;">page-&gt;flags&#20013;&#19968;&#20849;&#20445;&#30041;&#20102;8&#20301;&#26469;&#20445;&#23384;node&#21644;zone&#20449;&#24687;&#65292;&#20854;&#20013;2&#20301;&#34987;&#29992;&#26469;&#20445;&#23384;zone&#31867;&#22411;&#65288;3&#20010;dma/highmem/normal&#65289;&#65292;&#25925;&#36824;&#21097;&#19979;6&#20301; </span><span style="color: #b22222;">*/</span>
+<span class="linenr">11:  </span><span style="color: #7a378b;">#define</span> <span style="color: #a0522d;">MAX_NODES_SHIFT</span>     6
+<span class="linenr">12:  </span><span style="color: #7a378b;">#elif</span> BITS_PER_LONG == 64
+<span class="linenr">13:  </span><span style="color: #b22222;">/* </span><span style="color: #b22222;">64&#21017;&#26377;&#20805;&#36275;&#30340;&#31354;&#38388;&#65292;&#27492;&#22788;&#35774;&#32622;&#20026;10 </span><span style="color: #b22222;">*/</span>
+<span class="linenr">14:  </span><span style="color: #7a378b;">#define</span> <span style="color: #a0522d;">MAX_NODES_SHIFT</span>     10
+<span class="linenr">15:  </span><span style="color: #b22222;">/* </span><span style="color: #b22222;">2&#20301;&#29992;&#26469;&#20445;&#23384;3&#20010;zone&#36275;&#30691; </span><span style="color: #b22222;">*/</span>
+<span class="linenr">16:  </span><span style="color: #7a378b;">#define</span> <span style="color: #a0522d;">MAX_ZONES_SHIFT</span>     2
+</pre>
+
+</p></div>
+
+</div>
+
+<div id="outline-container-4" class="outline-2">
+<h2 id="sec-4"><span class="section-number-2">4</span> 保留页框池</h2>
+<div class="outline-text-2" id="text-4">
+
+<p>  内核分配内存的方式无非两种：如果有足够内存则分配即可，如果内存不够则回收内存以便使用。<br/>
+  有些操作是不可以中断的，此时可以把这些不可中断的操作放在atomic环境下。<br/>
+  如果在atomic环境下有分配内存操作，但此时恰好没有足够内存但atomic环境下的操作又不能中断，故会返回内存不足的错误信息。为解决此问题，可以为此种情况专门保留一段内存，大小由 <code>min_free_kbytes</code> 决定：<br/>
+$$min\_free\_kbytes=\sqrt(16 \times (total\ size\ of\ zone\_dma\ and\ zone\_normal))$$
+
+<pre class="src src-c"><span class="linenr"> 1:  </span>min_free_kbytes = int_sqrt(lowmem_kbytes * 16);
+<span class="linenr"> 2:  </span>lowmem_kbytes = nr_free_buffer_pages() * (PAGE_SIZE &gt;&gt; 10);
+<span class="linenr"> 3:  </span><span style="color: #b22222;">/* </span><span style="color: #b22222;">&#36820;&#22238; zone_dma&#21644;zone_normal&#21644;&#24635;&#31354;&#38388; </span><span style="color: #b22222;">*/</span>
+<span class="linenr"> 4:  </span><span style="color: #228b22;">unsigned</span> <span style="color: #228b22;">int</span> <span style="color: #0000ff;">nr_free_buffer_pages</span>(<span style="color: #228b22;">void</span>)
+<span class="linenr"> 5:  </span>{
+<span class="linenr"> 6:  </span>    <span style="color: #a020f0;">return</span> nr_free_zone_pages(GFP_USER &amp; GFP_ZONEMASK);
+<span class="linenr"> 7:  </span>}
+<span class="linenr"> 8:  </span><span style="color: #b22222;">/* </span><span style="color: #b22222;">&#36820;&#22238;zone_dma or zone_normal or zone_hightmem&#30340;&#31354;&#38388;</span><span style="color: #b22222;">*/</span>
+<span class="linenr"> 9:  </span><span style="color: #a020f0;">static</span> <span style="color: #228b22;">unsigned</span> <span style="color: #228b22;">int</span> <span style="color: #0000ff;">nr_free_zone_pages</span>(<span style="color: #228b22;">int</span> <span style="color: #a0522d;">offset</span>)
+<span class="linenr">10:  </span>{
+<span class="linenr">11:  </span>    <span style="color: #228b22;">pg_data_t</span> *<span style="color: #a0522d;">pgdat</span>;           <span style="color: #b22222;">/* </span><span style="color: #b22222;">node&#25551;&#36848;&#31526;&#25351;&#38024;&#31867;&#22411; </span><span style="color: #b22222;">*/</span>
+<span class="linenr">12:  </span>    <span style="color: #228b22;">unsigned</span> <span style="color: #228b22;">int</span> <span style="color: #a0522d;">sum</span> = 0;
+<span class="linenr">13:  </span>
+<span class="linenr">14:  </span>    <span style="color: #a0522d;">for_each_pgdat</span>(pgdat) {     <span style="color: #b22222;">/* </span><span style="color: #b22222;">&#20381;&#27425;&#24490;&#29615;&#25152;&#26377;node </span><span style="color: #b22222;">*/</span>
+<span class="linenr">15:  </span>        <span style="color: #a020f0;">struct</span> <span style="color: #228b22;">zonelist</span> *<span style="color: #a0522d;">zonelist</span> = pgdat-&gt;node_zonelists + offset; <span style="color: #b22222;">/* </span><span style="color: #b22222;">&#21738;&#20010;zone&#65306;dma&#65295;normal&#65295;highmem </span><span style="color: #b22222;">*/</span>
+<span class="linenr">16:  </span>        <span style="color: #a020f0;">struct</span> <span style="color: #228b22;">zone</span> **<span style="color: #a0522d;">zonep</span> = zonelist-&gt;zones;                      <span style="color: #b22222;">/* </span><span style="color: #b22222;">zonelist&#31532;&#19968;&#20010;&#20803;&#32032; </span><span style="color: #b22222;">*/</span>
+<span class="linenr">17:  </span>        <span style="color: #a020f0;">struct</span> <span style="color: #228b22;">zone</span> *<span style="color: #a0522d;">zone</span>;
+<span class="linenr">18:  </span>
+<span class="linenr">19:  </span>        <span style="color: #a020f0;">for</span> (zone = *zonep++; zone; zone = *zonep++) { <span style="color: #b22222;">/* </span><span style="color: #b22222;">&#36941;&#21382;&#27492;zonelist </span><span style="color: #b22222;">*/</span>
+<span class="linenr">20:  </span>            <span style="color: #228b22;">unsigned</span> <span style="color: #228b22;">long</span> <span style="color: #a0522d;">size</span> = zone-&gt;present_pages;
+<span class="linenr">21:  </span>            <span style="color: #228b22;">unsigned</span> <span style="color: #228b22;">long</span> <span style="color: #a0522d;">high</span> = zone-&gt;pages_high;
+<span class="linenr">22:  </span>            <span style="color: #a020f0;">if</span> (size &gt; high)
+<span class="linenr">23:  </span>                sum += size - high;
+<span class="linenr">24:  </span>        }
+<span class="linenr">25:  </span>    }
+<span class="linenr">26:  </span>
+<span class="linenr">27:  </span>    <span style="color: #a020f0;">return</span> sum;
+<span class="linenr">28:  </span>}
+</pre>
+
+
+  回忆zone结构中的成员： <code>unsigned long pages_min, pages_low, pages_high;</code><br/>
+  其中 <code>pages_min=min_free_kbytes, pages_low=5/4pages_min, pages_high=3/2pages_min</code> ，此3个变量为页面回收服务的。<br/>
+</p>
+<p>  <br/>
+</p></div>
+
+</div>
+
+<div id="outline-container-5" class="outline-2">
+<h2 id="sec-5"><span class="section-number-2">5</span> 分配和释放页</h2>
+<div class="outline-text-2" id="text-5">
+
+<table border="2" cellspacing="0" cellpadding="6" rules="all" frame="all">
+<caption></caption>
+<colgroup><col class="left" /><col class="left" /><col class="left" />
+</colgroup>
+<tbody>
+<tr><td class="left"><b>函数</b></td><td class="left"><b>返回值</b></td><td class="left"><b>说明</b></td></tr>
+<tr><td class="left"><b>获得页</b></td><td class="left"></td><td class="left"></td></tr>
+<tr><td class="left">alloc_pages(gfp_t gfp_mask, unsigned int order)</td><td class="left">struct page*</td><td class="left">在指定模式下分配2^order个页，返回第一个页指针</td></tr>
+<tr><td class="left">alloc_page(gfp_t gfp_mask)</td><td class="left">struct page*</td><td class="left">相当于alloc_pages(gfp_mask, 0)</td></tr>
+<tr><td class="left">__get_free_pages(gfp_t gfp_mask, unsigned int order)</td><td class="left">unsigned long</td><td class="left">相当于先调用struct page* =alloc_pages(gfp_mask, order)，再调用page_address(page)返回逻辑地址</td></tr>
+<tr><td class="left">__get_free_page(gfp_t gfp_mask)</td><td class="left">unsigned long</td><td class="left">相当于__get_free_pages(gfp_mask, 0)</td></tr>
+<tr><td class="left">get_zeroed_page(gfp_mask)</td><td class="left">struct page*</td><td class="left">相当于先调用__get_free_page(mask)再将所得页内容清0</td></tr>
+<tr><td class="left"><b>释放页</b></td><td class="left"></td><td class="left"></td></tr>
+<tr><td class="left">__free_pages(struct page*page, unsinged int order)</td><td class="left">void</td><td class="left">释放指定页page开始的2^order页</td></tr>
+<tr><td class="left">free_pages(unsigned long addr, unsigned int order)</td><td class="left">void</td><td class="left">释放指定逻辑地址开始的2^order页</td></tr>
+<tr><td class="left">free_page(unsinged long*addr)</td><td class="left">void</td><td class="left">free_pages(addr, 0)</td></tr>
+</tbody>
+</table>
+
+
+<p><br/>
+  <b>gfp_mask标志</b><br/>
+</p>
+<p><br/>
+<pre class="src src-c"><span class="linenr"> 1:  </span><span style="color: #228b22;">&#21407;&#22987;&#26631;&#24535;</span>
+<span class="linenr"> 2:  </span><span style="color: #7a378b;">#define</span> <span style="color: #a0522d;">__GFP_DMA</span>   0x01        <span style="color: #b22222;">/* </span><span style="color: #b22222;">&#25351;&#23450;&#20174;ZONE_DMA&#20013;&#21462;&#39029; </span><span style="color: #b22222;">*/</span>
+<span class="linenr"> 3:  </span><span style="color: #7a378b;">#define</span> <span style="color: #a0522d;">__GFP_HIGHMEM</span>   0x02    <span style="color: #b22222;">/*  </span><span style="color: #b22222;">&#25351;&#23450;&#20174;ZONE_HIGHMEM&#20013;&#21462;&#39029; </span><span style="color: #b22222;">*/</span>
+<span class="linenr"> 4:  </span>
+<span class="linenr"> 5:  </span><span style="color: #7a378b;">#define</span> <span style="color: #a0522d;">__GFP_WAIT</span>  0x10    <span style="color: #b22222;">/* </span><span style="color: #b22222;">&#20998;&#37197;&#22120;&#21487;&#20241;&#30496; </span><span style="color: #b22222;">*/</span>
+<span class="linenr"> 6:  </span><span style="color: #7a378b;">#define</span> <span style="color: #a0522d;">__GFP_HIGH</span>  0x20    <span style="color: #b22222;">/* </span><span style="color: #b22222;">Should access emergency pools? </span><span style="color: #b22222;">*/</span>        <span style="color: #b22222;">/* </span><span style="color: #b22222;">&#20998;&#37197;&#22120;&#21487;&#20197;&#35775;&#38382;&#32039;&#24613;&#32531;&#20914;&#21306;</span><span style="color: #b22222;">*/</span>
+<span class="linenr"> 7:  </span><span style="color: #7a378b;">#define</span> <span style="color: #a0522d;">__GFP_IO</span>    0x40    <span style="color: #b22222;">/* </span><span style="color: #b22222;">Can start physical IO? </span><span style="color: #b22222;">*/</span>        <span style="color: #b22222;">/*  </span><span style="color: #b22222;">&#20998;&#37197;&#22120;&#21487;&#20197;&#24320;&#21551;IO </span><span style="color: #b22222;">*/</span>
+<span class="linenr"> 8:  </span><span style="color: #7a378b;">#define</span> <span style="color: #a0522d;">__GFP_FS</span>    0x80    <span style="color: #b22222;">/* </span><span style="color: #b22222;">Can call down to low-level FS? </span><span style="color: #b22222;">*/</span>        <span style="color: #b22222;">/* </span><span style="color: #b22222;">&#20998;&#37197;&#22120;&#21487;&#20197;&#24320;&#21551;&#25991;&#20214;&#31995;&#32479; </span><span style="color: #b22222;">*/</span>
+<span class="linenr"> 9:  </span><span style="color: #7a378b;">#define</span> <span style="color: #a0522d;">__GFP_COLD</span>  0x100   <span style="color: #b22222;">/* </span><span style="color: #b22222;">Cache-cold page required </span><span style="color: #b22222;">*/</span>      <span style="color: #b22222;">/* </span><span style="color: #b22222;">&#20998;&#37197;&#22120;&#24212;&#35813;&#20351;&#29992;&#39640;&#36895;&#32531;&#23384;&#20013;&#24555;&#35201;&#28120;&#27760;&#30340;&#39029;</span><span style="color: #b22222;">*/</span>
+<span class="linenr">10:  </span><span style="color: #7a378b;">#define</span> <span style="color: #a0522d;">__GFP_NOWARN</span>    0x200   <span style="color: #b22222;">/* </span><span style="color: #b22222;">Suppress page allocation failure warning </span><span style="color: #b22222;">*/</span>  <span style="color: #b22222;">/* </span><span style="color: #b22222;">&#19981;&#24517;&#25171;&#21360;&#35686;&#21578;&#20449;&#24687;</span><span style="color: #b22222;">*/</span>
+<span class="linenr">11:  </span><span style="color: #7a378b;">#define</span> <span style="color: #a0522d;">__GFP_REPEAT</span>    0x400   <span style="color: #b22222;">/* </span><span style="color: #b22222;">Retry the allocation.  Might fail </span><span style="color: #b22222;">*/</span> <span style="color: #b22222;">/*  </span><span style="color: #b22222;">&#20998;&#37197;&#22833;&#36133;&#21017;&#37325;&#22797;&#20998;&#37197;*</span><span style="color: #b22222;">*/</span>
+<span class="linenr">12:  </span><span style="color: #7a378b;">#define</span> <span style="color: #a0522d;">__GFP_NOFAIL</span>    0x800   <span style="color: #b22222;">/* </span><span style="color: #b22222;">Retry for ever.  Cannot fail </span><span style="color: #b22222;">*/</span>      <span style="color: #b22222;">/*  </span><span style="color: #b22222;">&#20998;&#37197;&#22120;&#26080;&#38480;&#22320;&#37325;&#22797;&#36827;&#34892;&#20998;&#37197;&#65292;&#19981;&#33021;&#22833;&#36133;*</span><span style="color: #b22222;">*/</span>
+<span class="linenr">13:  </span><span style="color: #7a378b;">#define</span> <span style="color: #a0522d;">__GFP_NORETRY</span>   0x1000  <span style="color: #b22222;">/* </span><span style="color: #b22222;">Do not retry.  Might fail </span><span style="color: #b22222;">*/</span> <span style="color: #b22222;">/*  </span><span style="color: #b22222;">&#20998;&#37197;&#22833;&#36133;&#21518;&#21518;&#19981;&#20250;&#20877;&#36827;&#34892;&#20998;&#37197;*</span><span style="color: #b22222;">*/</span>
+<span class="linenr">14:  </span><span style="color: #7a378b;">#define</span> <span style="color: #a0522d;">__GFP_NO_GROW</span>   0x2000  <span style="color: #b22222;">/* </span><span style="color: #b22222;">Slab internal usage </span><span style="color: #b22222;">*/</span>       <span style="color: #b22222;">/*  </span><span style="color: #b22222;">slab&#20013;&#20351;&#29992;&#30340;*</span><span style="color: #b22222;">*/</span>
+<span class="linenr">15:  </span><span style="color: #7a378b;">#define</span> <span style="color: #a0522d;">__GFP_COMP</span>  0x4000  <span style="color: #b22222;">/* </span><span style="color: #b22222;">Add compound page metadata </span><span style="color: #b22222;">*/</span>
+<span class="linenr">16:  </span><span style="color: #7a378b;">#define</span> <span style="color: #a0522d;">__GFP_ZERO</span>  0x8000  <span style="color: #b22222;">/* </span><span style="color: #b22222;">Return zeroed page on success </span><span style="color: #b22222;">*/</span>
+<span class="linenr">17:  </span>
+<span class="linenr">18:  </span><span style="color: #a0522d;">&#32452;&#21512;&#26631;&#24535;</span>
+<span class="linenr">19:  </span><span style="color: #7a378b;">#define</span> <span style="color: #a0522d;">GFP_ATOMIC</span>  (__GFP_HIGH)
+<span class="linenr">20:  </span><span style="color: #7a378b;">#define</span> <span style="color: #a0522d;">GFP_NOIO</span>    (__GFP_WAIT)
+<span class="linenr">21:  </span><span style="color: #7a378b;">#define</span> <span style="color: #a0522d;">GFP_NOFS</span>    (__GFP_WAIT | __GFP_IO)
+<span class="linenr">22:  </span><span style="color: #7a378b;">#define</span> <span style="color: #a0522d;">GFP_KERNEL</span>  (__GFP_WAIT | __GFP_IO | __GFP_FS)
+<span class="linenr">23:  </span><span style="color: #7a378b;">#define</span> <span style="color: #a0522d;">GFP_USER</span>    (__GFP_WAIT | __GFP_IO | __GFP_FS)
+<span class="linenr">24:  </span><span style="color: #7a378b;">#define</span> <span style="color: #a0522d;">GFP_HIGHUSER</span>    (__GFP_WAIT | __GFP_IO | __GFP_FS | __GFP_HIGHMEM)
+</pre>
+
+</p><ul>
+<li>应该避免直接使用__GFP开头的原始标志，最好直接使用GFP_开头的组合标志。<br/>
+    最常用的GFP_KERNEL和GFP_ATOMIC，前者由于可以引发睡眠并且可以启动IO和文件系统，所在分配成功的机率较大。GFP_ATOMIC由于不能引发睡眠，所以分配成功机率较小，但在特殊情况下，例如必须保证当前代码不能发生睡眠（例如：中断处理程序，软中断）时，必须使用该组合标志。 <br/>
+</li>
+<li>由于高端内存不一定存在有效的逻辑地址与之相对应，故在调用返回值是逻辑地址的函数时，不能使用__GFP_HIGHMEM标志位。（由于64位机上不存在高端内存，故无需考虑此种情况）<br/>
+</li>
+</ul>
+
+</div>
+
+</div>
+
+<div id="outline-container-6" class="outline-2">
+<h2 id="sec-6"><span class="section-number-2">6</span> Buddy</h2>
+<div class="outline-text-2" id="text-6">
+
+<p>  free_area结构体定义如下：<br/>
+</p>
+<p><br/>
+<pre class="src src-c"><span class="linenr">1:  </span><span style="color: #a020f0;">struct</span> <span style="color: #228b22;">free_area</span> {
+<span class="linenr">2:  </span>    <span style="color: #a020f0;">struct</span> <span style="color: #228b22;">list_head</span>    <span style="color: #a0522d;">free_list</span>;
+<span class="linenr">3:  </span>    <span style="color: #228b22;">unsigned</span> <span style="color: #228b22;">long</span>       <span style="color: #a0522d;">nr_free</span>;
+<span class="linenr">4:  </span>};
+</pre>
+
+  用于管理buddy块的结构是free_area[MAX_ORDER], MAX_ORDER为11.其中以free_area[order].free_list为链表头的链表中的每个元素为一个大小为2^order个页的块的第一个页。<br/>
+<center>
+<img src="image/buddy.jpg"></img>
+</center>
+  回忆：page结构体的<a href="#coderef-private" class="coderef" onmouseover="CodeHighlightOn(this, 'coderef-private');" onmouseout="CodeHighlightOff(this, 'coderef-private');">private</a>成员，当一个块的第一个页被链进一个链表时，其值被设置为order，当此块从该链表上删除时，此值被清空。作用是：合并两个块时用来检查该页开始的某个块是否可以被合并。<br/>
+</p>
+<p><br/>
+  <b>__rmqueue函数用于取块</b><br/>
+</p>
+<p><br/>
+<pre class="src src-c"><span class="linenr"> 1:  </span><span style="color: #b22222;">/*</span>
+<span class="linenr"> 2:  </span><span style="color: #b22222;"> * &#20174;free_area[11]&#20013;&#25214;&#19968;&#20010;&#21512;&#36866;&#30340;&#22359;</span>
+<span class="linenr"> 3:  </span><span style="color: #b22222;"> * zone&#25351;&#23450;&#21462;&#22359;&#25152;&#22312;&#30340;&#21306;&#65306;dma or highmeme or normal, &#27599;&#20010;&#21306;&#37117;&#26377;&#33258;&#24049;&#30340;free_area[11]</span>
+<span class="linenr"> 4:  </span><span style="color: #b22222;"> </span><span style="color: #b22222;">*/</span>
+<span class="linenr"> 5:  </span>
+<span class="linenr"> 6:  </span><span style="color: #a020f0;">static</span> <span style="color: #a020f0;">struct</span> <span style="color: #228b22;">page</span> *<span style="color: #0000ff;">__rmqueue</span>(<span style="color: #a020f0;">struct</span> <span style="color: #228b22;">zone</span> *<span style="color: #a0522d;">zone</span>, <span style="color: #228b22;">unsigned</span> <span style="color: #228b22;">int</span> <span style="color: #a0522d;">order</span>)
+<span class="linenr"> 7:  </span>{
+<span class="linenr"> 8:  </span>    <span style="color: #a020f0;">struct</span> <span style="color: #228b22;">free_area</span> * <span style="color: #a0522d;">area</span>;
+<span class="linenr"> 9:  </span>    <span style="color: #228b22;">unsigned</span> <span style="color: #228b22;">int</span> <span style="color: #a0522d;">current_order</span>;
+<span class="linenr">10:  </span>    <span style="color: #a020f0;">struct</span> <span style="color: #228b22;">page</span> *<span style="color: #a0522d;">page</span>;
+<span class="linenr">11:  </span>
+<span class="linenr">12:  </span>    <span style="color: #a020f0;">for</span> (current_order = order; current_order &lt; MAX_ORDER; ++current_order) {
+<span class="linenr">13:  </span>        area = zone-&gt;free_area + current_order;
+<span class="linenr">14:  </span>        <span style="color: #a020f0;">if</span> (list_empty(&amp;area-&gt;free_list))
+<span class="linenr">15:  </span>            <span style="color: #a020f0;">continue</span>;
+<span class="linenr">16:  </span>        page = list_entry(area-&gt;free_list.next, <span style="color: #a020f0;">struct</span> <span style="color: #228b22;">page</span>, lru);
+<span class="linenr">17:  </span>        list_del(&amp;page-&gt;lru);
+<span class="linenr">18:  </span>        <span style="color: #b22222;">/* </span><span style="color: #b22222;">&#28165;&#38500;page-&gt;flags&#20013;&#30340;pg_private&#26631;&#24535;&#24182;&#28165;&#31354;private&#21464;&#37327;&#28165;&#31354; </span><span style="color: #b22222;">*/</span>
+<span class="linenr">19:  </span>        rmv_page_order(page);
+<span class="linenr">20:  </span>        <span style="color: #b22222;">/* </span><span style="color: #b22222;">area&#20013;&#30340;nr_free&#35760;&#24405;&#21487;&#29992;&#22359;&#30340;&#20010;&#25968; </span><span style="color: #b22222;">*/</span>
+<span class="linenr">21:  </span>        area-&gt;nr_free--;
+<span class="linenr">22:  </span>        <span style="color: #b22222;">/* </span><span style="color: #b22222;">area&#20013;&#30340;free_pages&#35760;&#24405;&#27492;&#38142;&#34920;&#19978;&#25152;&#26377;&#22359;&#30340;&#24635;&#39029;&#25968;&#65309;nr_free*2^order </span><span style="color: #b22222;">*/</span>
+<span class="linenr">23:  </span>        zone-&gt;free_pages -= 1UL &lt;&lt; order;
+<span class="linenr">24:  </span>        <span style="color: #b22222;">/* </span><span style="color: #b22222;">&#22914;&#26524;&#20998;&#37197;&#30340;order&#27604;&#25152;&#38656;&#35201;&#30340;order&#22823;&#65292;&#21017;&#38656;&#35201;&#25286;&#20998;&#24182;&#25226;&#21097;&#19979;&#30340;&#25346;&#21040;&#21512;&#36866;&#30340;free_area[x]&#20013;&#30340;&#38142;&#34920;&#19978; </span><span style="color: #b22222;">*/</span>
+<span class="linenr">25:  </span>        <span style="color: #a020f0;">return</span> expand(zone, page, order, current_order, area);
+<span class="linenr">26:  </span>    }
+<span class="linenr">27:  </span>    <span style="color: #a020f0;">return</span> <span style="color: #008b8b;">NULL</span>;
+<span class="linenr">28:  </span>}
+<span class="linenr">29:  </span><span style="color: #a020f0;">static</span> <span style="color: #a020f0;">inline</span> <span style="color: #228b22;">void</span> <span style="color: #0000ff;">rmv_page_order</span>(<span style="color: #a020f0;">struct</span> <span style="color: #228b22;">page</span> *<span style="color: #a0522d;">page</span>)
+<span class="linenr">30:  </span>{
+<span class="linenr">31:  </span>    __ClearPagePrivate(page);
+<span class="linenr">32:  </span>    page-&gt;private = 0;
+<span class="linenr">33:  </span>}
+<span class="linenr">34:  </span><span style="color: #7a378b;">#define</span> <span style="color: #0000ff;">__ClearPagePrivate</span>(<span style="color: #a0522d;">page</span>) __clear_bit(PG_private, &amp;(page)-&gt;flags)
+<span class="linenr">35:  </span>
+<span class="linenr">36:  </span><span style="color: #a020f0;">static</span> <span style="color: #a020f0;">inline</span> <span style="color: #a020f0;">struct</span> <span style="color: #228b22;">page</span> *
+<span class="linenr">37:  </span><span style="color: #0000ff;">expand</span>(<span style="color: #a020f0;">struct</span> <span style="color: #228b22;">zone</span> *<span style="color: #a0522d;">zone</span>, <span style="color: #a020f0;">struct</span> <span style="color: #228b22;">page</span> *<span style="color: #a0522d;">page</span>,
+<span class="linenr">38:  </span>    <span style="color: #228b22;">int</span> <span style="color: #a0522d;">low</span>, <span style="color: #228b22;">int</span> <span style="color: #a0522d;">high</span>, <span style="color: #a020f0;">struct</span> <span style="color: #228b22;">free_area</span> *<span style="color: #a0522d;">area</span>)
+<span class="linenr">39:  </span>{
+<span class="linenr">40:  </span>    <span style="color: #228b22;">unsigned</span> <span style="color: #228b22;">long</span> <span style="color: #a0522d;">size</span> = 1 &lt;&lt; high;
+<span class="linenr">41:  </span>    <span style="color: #a020f0;">while</span> (high &gt; low) {
+<span class="linenr">42:  </span>        <span style="color: #b22222;">/* </span><span style="color: #b22222;">&#22312;free_area&#20013;&#30340;&#19979;&#26631;&#19979;&#38477;&#19968;&#32423; </span><span style="color: #b22222;">*/</span>
+<span class="linenr">43:  </span>        area--;
+<span class="linenr">44:  </span>        <span style="color: #b22222;">/* </span><span style="color: #b22222;">&#22823;&#22359;&#22823;&#23567;&#32553;&#20943;&#19968;&#21322; </span><span style="color: #b22222;">*/</span>
+<span class="linenr">45:  </span>        high--;
+<span class="linenr">46:  </span>        size &gt;&gt;= 1;
+<span class="linenr">47:  </span>        BUG_ON(bad_range(zone, &amp;page[size]));
+<span class="linenr">48:  </span>        <span style="color: #b22222;">/* </span><span style="color: #b22222;">&#20174;&#19979;&#38754;&#21487;&#20197;&#30475;&#21040;&#65306;&#22823;&#22359;&#20998;&#24320;&#21518;&#21069;&#38754;&#20026;&#25152;&#29992;&#65292;&#21518;&#38754;&#22359;&#25345;&#21040;&#38142;&#34920;&#19978;&#20445;&#23384; </span><span style="color: #b22222;">*/</span>
+<span class="linenr">49:  </span>        list_add(&amp;page[size].lru, &amp;area-&gt;free_list);
+<span class="linenr">50:  </span>        area-&gt;nr_free++;
+<span class="linenr">51:  </span>        set_page_order(&amp;page[size], high);
+<span class="linenr">52:  </span>    }
+<span class="linenr">53:  </span>    <span style="color: #a020f0;">return</span> page;
+<span class="linenr">54:  </span>}
+<span class="linenr">55:  </span><span style="color: #a020f0;">static</span> <span style="color: #a020f0;">inline</span> <span style="color: #228b22;">void</span> <span style="color: #0000ff;">set_page_order</span>(<span style="color: #a020f0;">struct</span> <span style="color: #228b22;">page</span> *<span style="color: #a0522d;">page</span>, <span style="color: #228b22;">int</span> <span style="color: #a0522d;">order</span>) {
+<span class="linenr">56:  </span>    page-&gt;private = order;
+<span class="linenr">57:  </span>    __SetPagePrivate(page);
+<span class="linenr">58:  </span>}
+<span class="linenr">59:  </span><span style="color: #7a378b;">#define</span> <span style="color: #0000ff;">__SetPagePrivate</span>(<span style="color: #a0522d;">page</span>)  __set_bit(PG_private, &amp;(page)-&gt;flags)
+</pre>
+
+
+</p>
+<p>  <br/>
+  <b>free_pages_bulk用于释放块</b><br/>
+  free_pages_bulk先对zone-&gt;lock进行加锁，再调用__free_pages_bulk<br/>
+</p>
+<p><br/>
+<pre class="src src-c"><span class="linenr"> 1:  </span><span style="color: #a020f0;">static</span> <span style="color: #a020f0;">inline</span> <span style="color: #228b22;">void</span> <span style="color: #0000ff;">__free_pages_bulk</span> (<span style="color: #a020f0;">struct</span> <span style="color: #228b22;">page</span> *<span style="color: #a0522d;">page</span>, <span style="color: #a020f0;">struct</span> <span style="color: #228b22;">page</span> *<span style="color: #a0522d;">base</span>,
+<span class="linenr"> 2:  </span>                                      <span style="color: #a020f0;">struct</span> <span style="color: #228b22;">zone</span> *<span style="color: #a0522d;">zone</span>, <span style="color: #228b22;">unsigned</span> <span style="color: #228b22;">int</span> <span style="color: #a0522d;">order</span>)
+<span class="linenr"> 3:  </span>{
+<span class="linenr"> 4:  </span>    <span style="color: #228b22;">unsigned</span> <span style="color: #228b22;">long</span> <span style="color: #a0522d;">page_idx</span>;
+<span class="linenr"> 5:  </span>    <span style="color: #a020f0;">struct</span> <span style="color: #228b22;">page</span> *<span style="color: #a0522d;">coalesced</span>;
+<span class="linenr"> 6:  </span>    <span style="color: #228b22;">int</span> <span style="color: #a0522d;">order_size</span> = 1 &lt;&lt; order;
+<span class="linenr"> 7:  </span>
+<span class="linenr"> 8:  </span>    <span style="color: #a020f0;">if</span> (unlikely(order))        <span style="color: #b22222;">/* </span><span style="color: #b22222;">???? </span><span style="color: #b22222;">*/</span>
+<span class="linenr"> 9:  </span>        destroy_compound_page(page, order);
+<span class="linenr">10:  </span>
+<span class="linenr">11:  </span>    page_idx = page - base;
+<span class="linenr">12:  </span>
+<span class="linenr">13:  </span>    BUG_ON(page_idx &amp; (order_size - 1)); <span style="color: #b22222;">/* </span><span style="color: #b22222;">???? </span><span style="color: #b22222;">*/</span>
+<span class="linenr">14:  </span>    BUG_ON(bad_range(zone, page));       <span style="color: #b22222;">/* </span><span style="color: #b22222;">&#28322;&#20986;&#26102;&#25253;&#38169; </span><span style="color: #b22222;">*/</span>
+<span class="linenr">15:  </span>
+<span class="linenr">16:  </span>    zone-&gt;free_pages += order_size;
+<span class="linenr">17:  </span>    <span style="color: #a020f0;">while</span> (order &lt; MAX_ORDER-1) {
+<span class="linenr">18:  </span>        <span style="color: #a020f0;">struct</span> <span style="color: #228b22;">free_area</span> *<span style="color: #a0522d;">area</span>;
+<span class="linenr">19:  </span>        <span style="color: #a020f0;">struct</span> <span style="color: #228b22;">page</span> *<span style="color: #a0522d;">buddy</span>;
+<span class="linenr">20:  </span>        <span style="color: #228b22;">int</span> <span style="color: #a0522d;">buddy_idx</span>;
+<span class="linenr">21:  </span>
+<span class="linenr">22:  </span>        buddy_idx = (page_idx ^ (1 &lt;&lt; order)); <span style="color: #b22222;">/* </span><span style="color: #b22222;">&#33509;page_idx&#30340;order&#20301;&#22914;&#26524;&#20026;0&#21017;&#32622;1&#65292;&#22914;&#26524;&#20026;1&#21017;&#32622;0&#65292;&#21363;&#30456;&#24403;&#20110;+2^order&#25110;&#32773;-2^order </span><span style="color: #b22222;">*/</span>
+<span class="linenr">23:  </span>        buddy = base + buddy_idx;              <span style="color: #b22222;">/* </span><span style="color: #b22222;">&#26377;&#21487;&#33021;&#26159;buddy </span><span style="color: #b22222;">*/</span>
+<span class="linenr">24:  </span>        <span style="color: #a020f0;">if</span> (bad_range(zone, buddy))            <span style="color: #b22222;">/* </span><span style="color: #b22222;">buddy&#28322;&#20986; </span><span style="color: #b22222;">*/</span>
+<span class="linenr">25:  </span>            <span style="color: #a020f0;">break</span>;
+<span class="linenr">26:  </span>        <span style="color: #a020f0;">if</span> (!page_is_buddy(buddy, order)) <span style="color: #b22222;">/* </span><span style="color: #b22222;">&#35265;&#19979; </span><span style="color: #b22222;">*/</span>
+<span class="linenr">27:  </span>            <span style="color: #a020f0;">break</span>;
+<span class="linenr">28:  </span>        list_del(&amp;buddy-&gt;lru);  <span style="color: #b22222;">/* </span><span style="color: #b22222;">&#23558;&#25214;&#21040;&#30340;buddy&#22312;&#20854;&#25152;&#22312;&#30340;&#38142;&#34920;&#20013;&#21024;&#38500; </span><span style="color: #b22222;">*/</span>
+<span class="linenr">29:  </span>        area = zone-&gt;free_area + order; <span style="color: #b22222;">/* </span><span style="color: #b22222;">area&#20026;buddy&#25152;&#22312;&#38142;&#34920;&#22312;free_area&#25968;&#32452;&#20301;&#32622;&#22320;&#22336; </span><span style="color: #b22222;">*/</span>
+<span class="linenr">30:  </span>        area-&gt;nr_free--;                <span style="color: #b22222;">/* </span><span style="color: #b22222;">&#22359;&#20943;&#23569;1 </span><span style="color: #b22222;">*/</span>
+<span class="linenr">31:  </span>        rmv_page_order(buddy);          <span style="color: #b22222;">/* </span><span style="color: #b22222;">&#28165;&#38500;private&#26631;&#24535;&#21644;&#25104;&#21592; </span><span style="color: #b22222;">*/</span>
+<span class="linenr">32:  </span>        page_idx &amp;= buddy_idx;          <span style="color: #b22222;">/* </span><span style="color: #b22222;">&#22914;&#26524;page_idx&#21407;&#26469;&#26159;&#30340;order&#20301;&#20026;1&#65292;&#21017;&#30001;buddy_idx&#30340;&#30001;&#26469;&#21487;&#30693;&#20854;order&#20301;&#20026;0&#65292;&#19982;&#21518;&#20026;0&#65307;</span>
+<span class="linenr">33:  </span><span style="color: #b22222;">                                           &#21516;&#29702;page_idx&#21407;&#26469;&#26159;&#30340;order&#20301;&#20026;0&#65292;&#21017;&#30001;buddy_idx&#30340;&#30001;&#26469;&#21487;&#30693;&#20854;order&#20301;&#20026;1&#65292;&#19982;&#21518;&#20026;0&#65307;</span>
+<span class="linenr">34:  </span><span style="color: #b22222;">                                           &#21363;&#20004;&#20010;buddy&#22359;&#26368;&#23567;&#30340;&#22320;&#22336; </span><span style="color: #b22222;">*/</span>
+<span class="linenr">35:  </span>        order++;
+<span class="linenr">36:  </span>    }
+<span class="linenr">37:  </span>    coalesced = base + page_idx; <span style="color: #b22222;">/* </span><span style="color: #b22222;">&#26032;&#22359;&#30340;&#39318;&#39029;&#22320;&#22336; </span><span style="color: #b22222;">*/</span>
+<span class="linenr">38:  </span>    set_page_order(coalesced, order); <span style="color: #b22222;">/* </span><span style="color: #b22222;">&#35774;&#32622;&#20854;private&#26631;&#24535;&#21644;&#25104;&#21592; </span><span style="color: #b22222;">*/</span>
+<span class="linenr">39:  </span>    list_add(&amp;coalesced-&gt;lru, &amp;zone-&gt;free_area[order].free_list);
+<span class="linenr">40:  </span>    zone-&gt;free_area[order].nr_free++;
+<span class="linenr">41:  </span>}
+<span class="linenr">42:  </span>
+<span class="linenr">43:  </span><span style="color: #b22222;">/*</span>
+<span class="linenr">44:  </span><span style="color: #b22222;"> * 1.&#26816;&#26597;page-&gt;flags&#26159;&#21542;&#35774;&#32622;&#20102;PG_priate</span>
+<span class="linenr">45:  </span><span style="color: #b22222;"> * 2.&#26816;&#26597;page-&gt;private&#26159;&#21542;&#20026;order&#65292;&#21482;&#26377;&#22823;&#23567;&#30456;&#21516;&#26102;&#25165;&#33021;&#21512;&#24182;&#65288;&#25165;&#33021;&#31216;&#20026;buddy&#65289;</span>
+<span class="linenr">46:  </span><span style="color: #b22222;"> * 3.&#24517;&#39035;&#26159;&#21160;&#24577;&#20869;&#23384;&#65292;&#21363;&#19981;&#33021;&#35774;&#32622;&#20445;&#30041;&#20301;</span>
+<span class="linenr">47:  </span><span style="color: #b22222;"> * 4.&#24341;&#29992;&#35745;&#25968;&#24517;&#39035;&#20026;-1&#65292;&#21363;&#27809;&#26377;&#34987;&#20219;&#21153;&#24341;&#29992;</span>
+<span class="linenr">48:  </span><span style="color: #b22222;"> * &#21482;&#33021;&#31526;&#21512;&#20197;&#19978;4&#26465;&#25165;&#33021;&#31216;&#20026;&#25214;&#21040;&#19968;&#20010;&#21512;&#27861;&#30340;buddy&#25165;&#21487;&#20197;&#21512;&#24182;</span>
+<span class="linenr">49:  </span><span style="color: #b22222;"> </span><span style="color: #b22222;">*/</span>
+<span class="linenr">50:  </span><span style="color: #a020f0;">static</span> <span style="color: #a020f0;">inline</span> <span style="color: #228b22;">int</span> <span style="color: #0000ff;">page_is_buddy</span>(<span style="color: #a020f0;">struct</span> <span style="color: #228b22;">page</span> *<span style="color: #a0522d;">page</span>, <span style="color: #228b22;">int</span> <span style="color: #a0522d;">order</span>)
+<span class="linenr">51:  </span>{
+<span class="linenr">52:  </span>       <span style="color: #a020f0;">if</span> (PagePrivate(page)           &amp;&amp;
+<span class="linenr">53:  </span>           (page_order(page) == order) &amp;&amp;
+<span class="linenr">54:  </span>           !PageReserved(page)         &amp;&amp;
+<span class="linenr">55:  </span>            page_count(page) == 0)
+<span class="linenr">56:  </span>               <span style="color: #a020f0;">return</span> 1;
+<span class="linenr">57:  </span>       <span style="color: #a020f0;">return</span> 0;
+<span class="linenr">58:  </span>}
+<span class="linenr">59:  </span><span style="color: #7a378b;">#define</span> <span style="color: #0000ff;">PagePrivate</span>(<span style="color: #a0522d;">page</span>)   test_bit(PG_private, &amp;(page)-&gt;flags)
+</pre>
+
+</p>
+<p>  <br/>
+</p></div>
+</div>
+</div>
+
+<div id="postamble">
+<p class="date">Date: 2012-07-28 00:40:16 CST</p>
+<p class="author">Author: visaya fan</p>
+<p class="creator">Org version 7.8.11 with Emacs version 23</p>
+
+
+</div>
+</body>
+</html>
