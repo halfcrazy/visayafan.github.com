@@ -1,13 +1,13 @@
-<?xml version="1.0" encoding="gb18030"?>
+<?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
                "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<title>Java_Collections</title>
-<meta http-equiv="Content-Type" content="text/html;charset=gb18030"/>
-<meta name="title" content="Java_Collections"/>
+<title>xclipå‰ªåˆ‡æ¿ä¸ç»ˆç«¯çš„é€šé“</title>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
+<meta name="title" content="xclipå‰ªåˆ‡æ¿ä¸ç»ˆç«¯çš„é€šé“"/>
 <meta name="generator" content="Org-mode"/>
-<meta name="generated" content="2012-07-30 02:46:42 CST"/>
+<meta name="generated" content="2012-07-30 02:33:59 CST"/>
 <meta name="author" content="visaya fan"/>
 <meta name="description" content=""/>
 <meta name="keywords" content=""/>
@@ -60,7 +60,7 @@
                                  font-weight:bold; }
   /*]]>*/-->
 </style>
-<link rel="stylesheet" type="text/css" href="../../css/vf.css" />
+<link rel="stylesheet" type="text/css" href="../css/vf.css" />
 <script type="text/javascript">
 <!--/*--><![CDATA[/*><!--*/
  function CodeHighlightOn(elem, id)
@@ -97,104 +97,77 @@
 </div>
 
 <div id="content">
-<h1 class="title">Java_Collections</h1>
+<h1 class="title">xclipå‰ªåˆ‡æ¿ä¸ç»ˆç«¯çš„é€šé“</h1>
 
 
 <div id="table-of-contents">
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#sec-1">1 Í¼±íÊ¾</a></li>
-<li><a href="#sec-2">2 Collection/Map ¼Ì³Ğ½á¹¹</a></li>
-<li><a href="#sec-3">3 Collection½Ó¿Ú</a></li>
-<li><a href="#sec-4">4 hashCode()/equals()</a></li>
-<li><a href="#sec-5">5 TreeSet</a>
-<ul>
-<li><a href="#sec-5-1">5.1 SortedSet&lt;E&gt; headSet(E toElement)</a></li>
-</ul>
-</li>
+<li><a href="#sec-1">1 xclip</a></li>
+<li><a href="#sec-2">2 ç»ˆç«¯è¾“å‡ºä¿å­˜åˆ°å‰ªåˆ‡æ¿ä¸­</a></li>
+<li><a href="#sec-3">3 æ–‡ä»¶å†…å®¹å¤åˆ¶åˆ°å‰ªåˆ‡æ¿ä¸­</a></li>
+<li><a href="#sec-4">4 å‰ªåˆ‡æ¿å†…å®¹è¾“å‡ºåˆ°ç»ˆç«¯</a></li>
+<li><a href="#sec-5">5 å‰ªåˆ‡æ¿å†…å®¹è¾“å‡ºåˆ°æ–‡ä»¶</a></li>
 </ul>
 </div>
 </div>
 
 <div id="outline-container-1" class="outline-2">
-<h2 id="sec-1"><span class="section-number-2">1</span> Í¼±íÊ¾</h2>
+<h2 id="sec-1"><span class="section-number-2">1</span> xclip</h2>
 <div class="outline-text-2" id="text-1">
 
-<p>  ĞéÏß+¿ÕÈı½Ç ±í¼Ì³Ğ<br/>
-  ÊµÏÖ+¿ÕÈı½Ç ±íÊµÏÖ<br/>
-</p>
-<p><br/>
+<p>  xclipå‘½ä»¤å»ºç«‹äº†ç»ˆç«¯å’Œå‰ªåˆ‡æ¿ä¹‹é—´é€šé“ï¼Œå¯ä»¥ç”¨å‘½ä»¤çš„æ–¹å¼å°†ç»ˆç«¯è¾“å‡ºæˆ–æ–‡ä»¶çš„å†…å®¹ä¿å­˜åˆ°å‰ªåˆ‡æ¿ä¸­ï¼Œä¹Ÿå¯ä»¥å°†å‰ªåˆ‡æ¿çš„å†…å®¹è¾“å‡ºåˆ°ç»ˆç«¯æˆ–æ–‡ä»¶<br/>
+  å®‰è£… sudo apat-get xclip<br/>
 </p></div>
 
 </div>
 
 <div id="outline-container-2" class="outline-2">
-<h2 id="sec-2"><span class="section-number-2">2</span> Collection/Map ¼Ì³Ğ½á¹¹</h2>
+<h2 id="sec-2"><span class="section-number-2">2</span> ç»ˆç«¯è¾“å‡ºä¿å­˜åˆ°å‰ªåˆ‡æ¿ä¸­</h2>
 <div class="outline-text-2" id="text-2">
 
-<p>  Collection-&gt;Set-&gt;HanshSet/SortedSet/TreeSet<br/>
-            -&gt;List-&gt;LinkedList/ArrayList<br/>
-  Map-&gt;HashMap<br/>
-     -&gt;TreeMap-&gt;SortedMap<br/>
+<p>  ls -al | xclip<br/>
+  æ­¤æ—¶ls -alçš„è¾“å‡ºå†…å®¹å·²ç»ä¿å­˜åœ¨å‰ªåˆ‡æ¿ä¸­äº†ï¼Œå¯ä»¥æ‰“å¼€ç¼–è¾‘å™¨è¿›è¡Œç²˜è´´æ“ä½œ<br/>
 </p>
-<p>     <br/>
-  CollectionÓëMap½Ó¿ÚÍêÈ«²»Í¬¡£<br/>
-  Collection½Ó¿ÚÊÇÒ»×éÔÊĞíÖØ¸´µÄ¶ÔÏó¡£<br/>
-  Set¼Ì³Ğ×ÔCollectionÎŞĞòµ«²»ÔÊĞíÖØ¸´¡£<br/>
-  List¼Ì³Ğ×ÔCollectionÓĞĞòµ«ÔÊĞíÖØ¸´£¬ÒıÓÃÎ»ÖÃÏÂ±ê¡£<br/>
-  Map½Ó¿Ú¼È²»¼Ì³ĞCollectionÒ²²»¼Ì³ĞSet£¬ÊÇ¼üÖµ¶Ô¡£<br/>
-</p>
-<p>  <br/>
-  ArrayList¾ÉÎªVector£¬LinkedList¾ÉÎªStack¡£<br/>
+<p><br/>
 </p></div>
 
 </div>
 
 <div id="outline-container-3" class="outline-2">
-<h2 id="sec-3"><span class="section-number-2">3</span> Collection½Ó¿Ú</h2>
+<h2 id="sec-3"><span class="section-number-2">3</span> æ–‡ä»¶å†…å®¹å¤åˆ¶åˆ°å‰ªåˆ‡æ¿ä¸­</h2>
 <div class="outline-text-2" id="text-3">
 
-<p>  ÓÃÓÚ±íÊ¾ÈÎºÎ»òÔªËØ×é¡£<br/>
-  Iterator½Ó¿Ú£ºÖ÷ÒªÓÃÀ´Ã¶¾Ù¼¯ºÏÖĞµÄÔªËØ¡£<br/>
+<p>  xclip /etc/apt/sources.list<br/>
+</p>
+<p><br/>
 </p></div>
 
 </div>
 
 <div id="outline-container-4" class="outline-2">
-<h2 id="sec-4"><span class="section-number-2">4</span> hashCode()/equals()</h2>
+<h2 id="sec-4"><span class="section-number-2">4</span> å‰ªåˆ‡æ¿å†…å®¹è¾“å‡ºåˆ°ç»ˆç«¯</h2>
 <div class="outline-text-2" id="text-4">
 
-<p>  hashCodeÏàÍ¬µ«equals²»Ò»¶¨ÏàÍ¬£¬µ«eqalsÏàÍ¬Ê±hashCodeÒ»¶¨ÏàÍ¬¡£<br/>
+<p>  xclip -o<br/>
+</p>
+<p><br/>
 </p></div>
 
 </div>
 
 <div id="outline-container-5" class="outline-2">
-<h2 id="sec-5"><span class="section-number-2">5</span> TreeSet</h2>
+<h2 id="sec-5"><span class="section-number-2">5</span> å‰ªåˆ‡æ¿å†…å®¹è¾“å‡ºåˆ°æ–‡ä»¶</h2>
 <div class="outline-text-2" id="text-5">
 
-<p>  ºìºÚÊ÷ÊµÏÖµÄ<br/>
-</p>
-</div>
-
-<div id="outline-container-5-1" class="outline-3">
-<h3 id="sec-5-1"><span class="section-number-3">5.1</span> SortedSet&lt;E&gt; headSet(E toElement)</h3>
-<div class="outline-text-3" id="text-5-1">
-
-<p>   ·µ»ØÔªËØÑÏ¸ñ±ÈtoElementĞ¡µÄ¼¯ºÏ<br/>
-   <code>headSet(E toElement, boolean inclusive)</code> Èç¹ûinclusive=trueÔò·µ»Ø²»´óÓÚtoElementµÄÔªËØµÄ¼¯ºÏ<br/>
-</p>
-<p>   <br/>
-</p>
-<p><br/>
+<p>  xclip -o &gt; ~/test.txt<br/>
 </p></div>
-</div>
 </div>
 </div>
 
 <div id="postamble">
-<p class="date">Date: 2012-07-30 02:46:42 CST</p>
+<p class="date">Date: 2012-07-30 02:33:59 CST</p>
 <p class="author">Author: visaya fan</p>
 <p class="creator">Org version 7.8.11 with Emacs version 23</p>
 

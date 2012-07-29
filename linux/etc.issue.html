@@ -1,13 +1,13 @@
-<?xml version="1.0" encoding="gb18030"?>
+<?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
                "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<title>Java_Collections</title>
-<meta http-equiv="Content-Type" content="text/html;charset=gb18030"/>
-<meta name="title" content="Java_Collections"/>
+<title>/etc/issue,/etc/issue.net,/etc/motd 登陆显示信息</title>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
+<meta name="title" content="/etc/issue,/etc/issue.net,/etc/motd 登陆显示信息"/>
 <meta name="generator" content="Org-mode"/>
-<meta name="generated" content="2012-07-30 02:46:42 CST"/>
+<meta name="generated" content="2012-07-30 02:34:00 CST"/>
 <meta name="author" content="visaya fan"/>
 <meta name="description" content=""/>
 <meta name="keywords" content=""/>
@@ -60,7 +60,7 @@
                                  font-weight:bold; }
   /*]]>*/-->
 </style>
-<link rel="stylesheet" type="text/css" href="../../css/vf.css" />
+<link rel="stylesheet" type="text/css" href="../css/vf.css" />
 <script type="text/javascript">
 <!--/*--><![CDATA[/*><!--*/
  function CodeHighlightOn(elem, id)
@@ -97,104 +97,111 @@
 </div>
 
 <div id="content">
-<h1 class="title">Java_Collections</h1>
+<h1 class="title">/etc/issue,/etc/issue.net,/etc/motd 登陆显示信息</h1>
 
 
 <div id="table-of-contents">
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#sec-1">1 ͼ��ʾ</a></li>
-<li><a href="#sec-2">2 Collection/Map �̳нṹ</a></li>
-<li><a href="#sec-3">3 Collection�ӿ�</a></li>
-<li><a href="#sec-4">4 hashCode()/equals()</a></li>
-<li><a href="#sec-5">5 TreeSet</a>
-<ul>
-<li><a href="#sec-5-1">5.1 SortedSet&lt;E&gt; headSet(E toElement)</a></li>
-</ul>
-</li>
+<li><a href="#sec-1">1 /etc/issue文件</a></li>
+<li><a href="#sec-2">2 实例</a></li>
+<li><a href="#sec-3">3 Ubuntu查看操作系统版本</a></li>
+<li><a href="#sec-4">4 /etc/issue.net</a></li>
+<li><a href="#sec-5">5 /etc/motd文件</a></li>
 </ul>
 </div>
 </div>
 
 <div id="outline-container-1" class="outline-2">
-<h2 id="sec-1"><span class="section-number-2">1</span> ͼ��ʾ</h2>
+<h2 id="sec-1"><span class="section-number-2">1</span> /etc/issue文件</h2>
 <div class="outline-text-2" id="text-1">
 
-<p>  ����+������ ���̳�<br/>
-  ʵ��+������ ��ʵ��<br/>
+<p>/etc/issue是个纯文本文件，其内容为登陆tty时显示的信息。<br/>
 </p>
+<p><br/>
+可以用换码符来显示需要的信息，换码符的意义是由agetty来解释的，man agetty查看更多的信息。<br/>
+</p><table border="2" cellspacing="0" cellpadding="6" rules="all" frame="all">
+<caption></caption>
+<colgroup><col class="left" /><col class="left" />
+</colgroup>
+<tbody>
+<tr><td class="left">\b</td><td class="left">插入当前行的波特率</td></tr>
+<tr><td class="left">\d</td><td class="left">插入当前日期</td></tr>
+<tr><td class="left">\s</td><td class="left">插入操作系统的名称</td></tr>
+<tr><td class="left">\l</td><td class="left">插入当前tty的名称</td></tr>
+<tr><td class="left">\m</td><td class="left">插入计算机的体系结构id，如i486</td></tr>
+<tr><td class="left">\n</td><td class="left">插入计算机的节点名，即hostname</td></tr>
+<tr><td class="left">\o</td><td class="left">插入计算机的域名</td></tr>
+<tr><td class="left">\r</td><td class="left">插入内核的版本</td></tr>
+<tr><td class="left">\t</td><td class="left">插入当前时间</td></tr>
+<tr><td class="left">\u</td><td class="left">插入当前登陆的用户数</td></tr>
+<tr><td class="left">\U</td><td class="left">插入1                           user  或者  N   users，N是当前登陆的用户数</td></tr>
+<tr><td class="left">\v</td><td class="left">插入当前操作系统的版本</td></tr>
+</tbody>
+</table>
+
+
 <p><br/>
 </p></div>
 
 </div>
 
 <div id="outline-container-2" class="outline-2">
-<h2 id="sec-2"><span class="section-number-2">2</span> Collection/Map �̳нṹ</h2>
+<h2 id="sec-2"><span class="section-number-2">2</span> 实例</h2>
 <div class="outline-text-2" id="text-2">
 
-<p>  Collection-&gt;Set-&gt;HanshSet/SortedSet/TreeSet<br/>
-            -&gt;List-&gt;LinkedList/ArrayList<br/>
-  Map-&gt;HashMap<br/>
-     -&gt;TreeMap-&gt;SortedMap<br/>
+<p>  我现在机子上用cat /etc/issue得到结果是：<br/>
 </p>
-<p>     <br/>
-  Collection��Map�ӿ���ȫ��ͬ��<br/>
-  Collection�ӿ���һ�������ظ��Ķ���<br/>
-  Set�̳���Collection���򵫲������ظ���<br/>
-  List�̳���Collection���������ظ�������λ���±ꡣ<br/>
-  Map�ӿڼȲ��̳�CollectionҲ���̳�Set���Ǽ�ֵ�ԡ�<br/>
-</p>
-<p>  <br/>
-  ArrayList��ΪVector��LinkedList��ΪStack��<br/>
+<p><br/>
+<pre class="example">kernel_study$ cat /etc/issue
+Ubuntu 11.04 \n \l
+
+</pre>
+
+  \n表示显示hostname，\l表示显示tty名称。此时Control+Alt+F1登陆到tty1终端上，可以看到显示的是Ubuntu 11.04 visaayfan@compaq-510 tty1。<br/>
+  下面修改/etc/issue为 Ubuntu 11.04 \n \l \v \t \m，再次Ctrl+Alt+F1切换到tty1上，按下Ctrl+D，此时会看到增加了当前操作系统版本、时间和当前计算机体系结构名称。<br/>
 </p></div>
 
 </div>
 
 <div id="outline-container-3" class="outline-2">
-<h2 id="sec-3"><span class="section-number-2">3</span> Collection�ӿ�</h2>
+<h2 id="sec-3"><span class="section-number-2">3</span> Ubuntu查看操作系统版本</h2>
 <div class="outline-text-2" id="text-3">
 
-<p>  ���ڱ�ʾ�κλ�Ԫ���顣<br/>
-  Iterator�ӿڣ���Ҫ����ö�ټ����е�Ԫ�ء�<br/>
-</p></div>
+<ul>
+<li>Ubuntu操作系统默认情况下issue文件里写的是OS的版本，故可以通过查看此文件来得知当前Ubuntu版本（如果没被人修改的话）。<br/>
+</li>
+<li>还可以 cat /etc/lsb-release<br/>
+</li>
+</ul>
+
+</div>
 
 </div>
 
 <div id="outline-container-4" class="outline-2">
-<h2 id="sec-4"><span class="section-number-2">4</span> hashCode()/equals()</h2>
+<h2 id="sec-4"><span class="section-number-2">4</span> /etc/issue.net</h2>
 <div class="outline-text-2" id="text-4">
 
-<p>  hashCode��ͬ��equals��һ����ͬ����eqals��ͬʱhashCodeһ����ͬ��<br/>
+<p>  通过telnet远程登陆主机显示的信息显示的是/etc/issue.net而非/etc/issue<br/>
 </p></div>
 
 </div>
 
 <div id="outline-container-5" class="outline-2">
-<h2 id="sec-5"><span class="section-number-2">5</span> TreeSet</h2>
+<h2 id="sec-5"><span class="section-number-2">5</span> /etc/motd文件</h2>
 <div class="outline-text-2" id="text-5">
 
-<p>  �����ʵ�ֵ�<br/>
-</p>
-</div>
-
-<div id="outline-container-5-1" class="outline-3">
-<h3 id="sec-5-1"><span class="section-number-3">5.1</span> SortedSet&lt;E&gt; headSet(E toElement)</h3>
-<div class="outline-text-3" id="text-5-1">
-
-<p>   ����Ԫ���ϸ��toElementС�ļ���<br/>
-   <code>headSet(E toElement, boolean inclusive)</code> ���inclusive=true�򷵻ز�����toElement��Ԫ�صļ���<br/>
-</p>
-<p>   <br/>
-</p>
-<p><br/>
+<p>  /etc/issue是登陆前显示的信息，而/etc/motd是登陆后显示的信息。<br/>
+  Ubuntu下/etc/motd是/var/run/motd的符号链接，实际上是由脚本/etc/update-motd.d/00header来控制的。<br/>
+  可以修改/etc/update-motd.d中的文件来得到想要的登陆后提示界面。<br/>
 </p></div>
-</div>
 </div>
 </div>
 
 <div id="postamble">
-<p class="date">Date: 2012-07-30 02:46:42 CST</p>
+<p class="date">Date: 2012-07-30 02:34:00 CST</p>
 <p class="author">Author: visaya fan</p>
 <p class="creator">Org version 7.8.11 with Emacs version 23</p>
 

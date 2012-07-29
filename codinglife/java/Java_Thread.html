@@ -7,7 +7,7 @@
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
 <meta name="title" content="Java_Thread"/>
 <meta name="generator" content="Org-mode"/>
-<meta name="generated" content="2012-07-25 18:05:15 CST"/>
+<meta name="generated" content="2012-07-30 02:46:39 CST"/>
 <meta name="author" content="visaya fan"/>
 <meta name="description" content=""/>
 <meta name="keywords" content=""/>
@@ -60,7 +60,7 @@
                                  font-weight:bold; }
   /*]]>*/-->
 </style>
-<link rel="stylesheet" type="text/css" href="../css/vf.css" />
+<link rel="stylesheet" type="text/css" href="../../css/vf.css" />
 <script type="text/javascript">
 <!--/*--><![CDATA[/*><!--*/
  function CodeHighlightOn(elem, id)
@@ -193,11 +193,11 @@
 </p>
 <p><br/>
 <pre class="src src-java"><span style="color: #a020f0;">class</span> <span style="color: #228b22;">A</span> <span style="color: #a020f0;">extends</span> <span style="color: #228b22;">Thread</span>{
-    ...
+    ../...
     <span style="color: #a020f0;">public</span> <span style="color: #228b22;">void</span> run(){
-        ...
+        ../...
     }
-    ...
+    ../...
 }
 
 <span style="color: #228b22;">A</span> <span style="color: #a0522d;">a</span>=<span style="color: #a020f0;">new</span> <span style="color: #228b22;">A</span>();
@@ -215,11 +215,11 @@ a.start();
 
 <p><br/>
 <pre class="src src-java"><span style="color: #a020f0;">class</span> <span style="color: #228b22;">A</span> <span style="color: #a020f0;">implements</span> <span style="color: #228b22;">Runnable</span>{
-    ...
+    ../...
     <span style="color: #a020f0;">public</span> <span style="color: #228b22;">void</span> run(){
-        ...
+        ../...
     }
-    ...
+    ../...
 }
 <span style="color: #228b22;">Thread</span> <span style="color: #a0522d;">t</span> = <span style="color: #a020f0;">new</span> <span style="color: #228b22;">Thread</span>(<span style="color: #a020f0;">new</span> <span style="color: #228b22;">A</span>);
 t.start();
@@ -489,7 +489,7 @@ lock.lock();
 </div>
 
 <div id="postamble">
-<p class="date">Date: 2012-07-25 18:05:15 CST</p>
+<p class="date">Date: 2012-07-30 02:46:39 CST</p>
 <p class="author">Author: visaya fan</p>
 <p class="creator">Org version 7.8.11 with Emacs version 23</p>
 
