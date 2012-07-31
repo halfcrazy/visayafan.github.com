@@ -135,33 +135,26 @@
     </nav>
 
     <div class="container-fluid">
-
-      <div class="row-fluid">
-        <aside id="application-status" class="span4">
-          <ul class="nav nav-tabs">
-            <li class="active"><a href="#translation" data-toggle="tab">Translation</a></li>
-            <!-- 注意修改下面名称时必须同时修改<div class="tab-pane" id="Other(Git)"> -->
-            <li><a href="#others" data-toggle="tab">Others(Git)</a></li>
-          </ul>
-          <div class="tab-content">
-            <div class="tab-pane active" id="translation">
-              <ul class="nav nav-stacked">
-                <!-- 这里添加文章格式为:<li><a href="文章地址">显示名称</a></li> -->
-              </ul>
-            </div>
-            <div class="tab-pane" id="Others(Git)">
-              <ul class="nav nav-stacked">
-              </ul>
-            </div>
+      <ul class="nav nav-tabs">
+        <li class="active"><a href="#translation" data-toggle="tab">Translation</a></li>
+        <li><a href="#others" data-toggle="tab">Others(Git)</a></li>
+      </ul>
+      <div class="tab-content">
+        <div class="tab-pane active" id="translation">
+          <ol>
+            <!-- 这里添加文章格式为:<li><a href="文章地址">显示名称</a></li> -->
+          </ol>
+        </div>
+        <div class="tab-pane" id="others">
+          <div class="span4">
+            <ol>
+              <li><a href="others/git.html">Git笔记</a></li>
+            </ol>
           </div>
-        </aside>
-
-        <section id="main" class="span8">
-          <!-- <div class="hero-unit"> -->
-          <!-- </div> -->
-        </section>
+        </div>
       </div>
     </div>
+</div>
 
-  </body>
+</body>
 </html>

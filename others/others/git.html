@@ -1,0 +1,461 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+               "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<title>Git笔记</title>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
+<meta name="title" content="Git笔记"/>
+<meta name="generator" content="Org-mode"/>
+<meta name="generated" content="2012-08-01 05:55:13 CST"/>
+<meta name="author" content="visaya fan"/>
+<meta name="description" content=""/>
+<meta name="keywords" content=""/>
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  html { font-family: Times, serif; font-size: 12pt; }
+  .title  { text-align: center; }
+  .todo   { color: red; }
+  .done   { color: green; }
+  .tag    { background-color: #add8e6; font-weight:normal }
+  .target { }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .right  {margin-left:auto; margin-right:0px;  text-align:right;}
+  .left   {margin-left:0px;  margin-right:auto; text-align:left;}
+  .center {margin-left:auto; margin-right:auto; text-align:center;}
+  p.verse { margin-left: 3% }
+  pre {
+	border: 1pt solid #AEBDCC;
+	background-color: #F3F5F7;
+	padding: 5pt;
+	font-family: courier, monospace;
+        font-size: 90%;
+        overflow:auto;
+  }
+  table { border-collapse: collapse; }
+  td, th { vertical-align: top;  }
+  th.right  { text-align:center;  }
+  th.left   { text-align:center;   }
+  th.center { text-align:center; }
+  td.right  { text-align:right;  }
+  td.left   { text-align:left;   }
+  td.center { text-align:center; }
+  dt { font-weight: bold; }
+  div.figure { padding: 0.5em; }
+  div.figure p { text-align: center; }
+  div.inlinetask {
+    padding:10px;
+    border:2px solid gray;
+    margin:10px;
+    background: #ffffcc;
+  }
+  textarea { overflow-x: auto; }
+  .linenr { font-size:smaller }
+  .code-highlighted {background-color:#ffff00;}
+  .org-info-js_info-navigation { border-style:none; }
+  #org-info-js_console-label { font-size:10px; font-weight:bold;
+                               white-space:nowrap; }
+  .org-info-js_search-highlight {background-color:#ffff00; color:#000000;
+                                 font-weight:bold; }
+  /*]]>*/-->
+</style>
+<link rel="stylesheet" type="text/css" href="../../css/vf.css" />
+<script type="text/javascript">
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+
+</head>
+<body>
+<div id="org-div-home-and-up" style="text-align:right;font-size:70%;white-space:nowrap;">
+ <a accesskey="h" href="../index.html"> UP </a>
+ |
+ <a accesskey="H" href="../../index.html"> HOME </a>
+</div>
+
+<div id="preamble">
+
+</div>
+
+<div id="content">
+<h1 class="title">Git笔记</h1>
+
+
+<p><br/>
+</p>
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#sec-1">1 -h</a></li>
+<li><a href="#sec-2">2 git remote add</a></li>
+<li><a href="#sec-3">3 git status</a></li>
+<li><a href="#sec-4">4 git add XXX</a></li>
+<li><a href="#sec-5">5 git reset HEAD filename</a></li>
+<li><a href="#sec-6">6 ignore</a></li>
+<li><a href="#sec-7">7 git commit</a></li>
+<li><a href="#sec-8">8 git log</a></li>
+<li><a href="#sec-9">9 git show</a></li>
+<li><a href="#sec-10">10 gitk</a></li>
+<li><a href="#sec-11">11 git checkout</a></li>
+<li><a href="#sec-12">12 git reset</a></li>
+<li><a href="#sec-13">13 颜色</a></li>
+<li><a href="#sec-14">14 git rm</a></li>
+<li><a href="#sec-15">15 git mergetool</a></li>
+<li><a href="#sec-16">16 git branch</a></li>
+<li><a href="#sec-17">17 git中永久删除一个文件</a></li>
+<li><a href="#sec-18">18 git remote</a></li>
+<li><a href="#sec-19">19 git fetch</a></li>
+<li><a href="#sec-20">20 git pull</a></li>
+<li><a href="#sec-21">21 git push</a></li>
+<li><a href="#sec-22">22 git tag</a></li>
+<li><a href="#sec-23">23 git config &ndash;global</a></li>
+<li><a href="#sec-24">24 </a></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-1" class="outline-2">
+<h2 id="sec-1"><span class="section-number-2">1</span> -h</h2>
+<div class="outline-text-2" id="text-1">
+
+<p>  帮助，例如 git show -h可以查看所有show的option<br/>
+</p></div>
+
+</div>
+
+<div id="outline-container-2" class="outline-2">
+<h2 id="sec-2"><span class="section-number-2">2</span> git remote add</h2>
+<div class="outline-text-2" id="text-2">
+
+<p>  如果项目只有一个人在用，别人不会修改，则不必理会。但有多人共同开发项目时，此命令告诉git当别人在github上修改项目后可以反映到本机。<br/>
+</p></div>
+
+</div>
+
+<div id="outline-container-3" class="outline-2">
+<h2 id="sec-3"><span class="section-number-2">3</span> git status</h2>
+<div class="outline-text-2" id="text-3">
+
+<p>  反映git commit执行之前的变化，git commit执行之后再用此命令将看不到变化<br/>
+</p></div>
+
+</div>
+
+<div id="outline-container-4" class="outline-2">
+<h2 id="sec-4"><span class="section-number-2">4</span> git add XXX</h2>
+<div class="outline-text-2" id="text-4">
+
+<p>  表明xxx将要提交到respository中，如果xxx不想被提交则可以省去此步骤直接commit<br/>
+</p></div>
+
+</div>
+
+<div id="outline-container-5" class="outline-2">
+<h2 id="sec-5"><span class="section-number-2">5</span> git reset HEAD filename</h2>
+<div class="outline-text-2" id="text-5">
+
+<p>  如果add一个file后突然又不想add它了，可以用此命令来将它从add的集合中去掉<br/>
+</p></div>
+
+</div>
+
+<div id="outline-container-6" class="outline-2">
+<h2 id="sec-6"><span class="section-number-2">6</span> ignore</h2>
+<div class="outline-text-2" id="text-6">
+
+<p>  默认情况下会把当前目录下所有文件当成项目文件，如果一个文件未被add则被称为untracked file（可以在git status的第2行看到）<br/>
+  一般某个项目dev过程中都会产生一些中间文件，这些文件是我们不想要追踪的。但git默认会将当前目录下所有文件追踪。于是我们可以使用.gitignore文件来忽略这些文件。<br/>
+  在需要的目录下面 添加 .gitignore文件，文件中每一行表示需要忽略的文件／目录的正则表达式（也可以把自己添加进去，即.gitignore,这样.gitignore也被忽略了）<br/>
+</p></div>
+
+</div>
+
+<div id="outline-container-7" class="outline-2">
+<h2 id="sec-7"><span class="section-number-2">7</span> git commit</h2>
+<div class="outline-text-2" id="text-7">
+
+<p>  -m 'message'  #跟数据库一样保存一个结点以便以后返回<br/>
+  先add后commit，可以直接用命令 git commit -am 'commit message',add的是用git status查看结果的文件<br/>
+</p></div>
+
+</div>
+
+<div id="outline-container-8" class="outline-2">
+<h2 id="sec-8"><span class="section-number-2">8</span> git log</h2>
+<div class="outline-text-2" id="text-8">
+
+<p>  查看历史记录（即git commit的保存结点),显示作者，时间，当时-m指定的信息，一个很长的序列号（唯一的）<br/>
+  git reflog 缩简版本，无作者时间，序列号只显示前几个<br/>
+</p></div>
+
+</div>
+
+<div id="outline-container-9" class="outline-2">
+<h2 id="sec-9"><span class="section-number-2">9</span> git show</h2>
+<div class="outline-text-2" id="text-9">
+
+<p>  显示上一次commit，显示序列号作者时间和diff<br/>
+</p></div>
+
+</div>
+
+<div id="outline-container-10" class="outline-2">
+<h2 id="sec-10"><span class="section-number-2">10</span> gitk</h2>
+<div class="outline-text-2" id="text-10">
+
+<p>  如果commit很多的话会比较乱，gitk以图形的方式显示出所有的commit。(另外安装 sudo apt-get install gitk)<br/>
+</p></div>
+
+</div>
+
+<div id="outline-container-11" class="outline-2">
+<h2 id="sec-11"><span class="section-number-2">11</span> git checkout</h2>
+<div class="outline-text-2" id="text-11">
+
+<p>  将当前正在工作的项目roll back到最近一次保存状态，此命令慎后（毁灭刚才所做的工作）<br/>
+</p></div>
+
+</div>
+
+<div id="outline-container-12" class="outline-2">
+<h2 id="sec-12"><span class="section-number-2">12</span> git reset</h2>
+<div class="outline-text-2" id="text-12">
+
+<ul>
+<li>返回到之前某个commit状态，例如git reset &ndash;hard 8198c8f 此时git push会出错，要加&ndash;force(-f)强制选项，git push &ndash;force<br/>
+</li>
+<li>如果刚刚用git add filename将filename暂存后又不想把它加入暂存了，可以用git reset HEAD filename来撤消暂存。<br/>
+</li>
+</ul>
+
+</div>
+
+</div>
+
+<div id="outline-container-13" class="outline-2">
+<h2 id="sec-13"><span class="section-number-2">13</span> 颜色</h2>
+<div class="outline-text-2" id="text-13">
+
+<p>  git config color.ui true 打开颜色显示<br/>
+  红：表修改但add之前的状态<br/>
+  绿：表add之后到commit之前的状态<br/>
+  黄：表commit之后的状态<br/>
+</p></div>
+
+</div>
+
+<div id="outline-container-14" class="outline-2">
+<h2 id="sec-14"><span class="section-number-2">14</span> git rm</h2>
+<div class="outline-text-2" id="text-14">
+
+<p>  从repository中删除一个文件，但并不在本机删除 git rm &ndash;cached filename，之后再commit再push即可发现此文件在repository中消息但仍存在本地中（如果真心不需要它出现在repository中的话，可以把它文件名加到.gitignore中）<br/>
+</p></div>
+
+</div>
+
+<div id="outline-container-15" class="outline-2">
+<h2 id="sec-15"><span class="section-number-2">15</span> git mergetool</h2>
+<div class="outline-text-2" id="text-15">
+
+<p>  多个人共同维护一个项目时，一个人push一个filename文件，另一个人也要push filename文件时会发生冲突。<br/>
+  此时可以用 git mergetool来调用外部应用程序比较两个文件，由两人协商最终push哪个。<br/>
+  经过比较修改后的文件再push不会冲突（github默认此结果是我们协商的结果）<br/>
+</p></div>
+
+</div>
+
+<div id="outline-container-16" class="outline-2">
+<h2 id="sec-16"><span class="section-number-2">16</span> git branch</h2>
+<div class="outline-text-2" id="text-16">
+
+<p>  git branch -a 绿色的代表本机，红色的代表github<br/>
+  git branch -b newfewature 新建一个newfeature分支，此时再用git branch -a查看可以看到新加一个newfeature，此时用ls查看当前目录，发现并没有什么变化。<br/>
+  此时可以修改代码添加新特性，再 git push origin newfeature，再用git branch -a查看可以看到github上新添加了一个remote/origin/newfeature<br/>
+  git merge newfeature 将新特性添加到master中<br/>
+  git branch -d newfeature 删除本地newfeature分支并没有删除remote上的，可以用git push origin :newfeature来删除remote上的newfeature<br/>
+</p>
+<p>  <br/>
+</p></div>
+
+</div>
+
+<div id="outline-container-17" class="outline-2">
+<h2 id="sec-17"><span class="section-number-2">17</span> git中永久删除一个文件</h2>
+<div class="outline-text-2" id="text-17">
+
+<p>  git rm filename可以从repo中删除一个文件，但仍旧可以其库存历史将其恢复<br/>
+</p>
+<p><br/>
+<pre class="example">$ mkdir t  
+$ cd t  
+$ git init  
+Initialized empty Git repository in  
+ /Users/apple/t/.git/  
+创建一个10M大小的文件
+$ dd if=/dev/urandom of=testme.txt bs=10240 count=1024  
+1024+0 records in  
+1024+0 records out  
+10485760 bytes transferred in 1.684808 secs (6223712 bytes/sec)  
+$ git add testme.txt  
+$ git commit -m "a"  
+[master (root-commit)]: created 6fbb432: "a"  
+ 1 files changed, 0 insertions(+), 0 deletions(-)  
+ create mode 100644 testme.txt  
+从repo中删除文件
+$ git rm testme.txt  
+rm 'testme.txt'  
+$ git commit -m r  
+[master]: created bb38396: "r"  
+ 1 files changed, 0 insertions(+), 0 deletions(-)  
+ delete mode 100644 testme.txt  
+但此时版本库仍旧为10M 表明其仍旧存在历史记录中
+$ du -hs  
+ 10M 
+</pre>
+
+  如果我们不想将其恢复（例如不小心把密码之外的文件上传到repo中），则可以用如下方法实现：<br/>
+</p>
+<p><br/>
+<pre class="example">$ git filter-branch --tree-filter 'rm -f testme.txt' HEAD  
+Rewrite bb383961a2d13e12d92be5f5e5d37491a90dee66 (2/2)  
+Ref 'refs/heads/master'  
+ was rewritten  
+$ git ls-remote .  
+230b8d53e2a6d5669165eed55579b64dccd78d11        HEAD  
+230b8d53e2a6d5669165eed55579b64dccd78d11        refs/heads/master  
+bb383961a2d13e12d92be5f5e5d37491a90dee66        refs/original/refs/heads/master  
+$ git update-ref -d refs/original/refs/heads/master [bb383961a2d13e12d92be5f5e5d37491a90dee66]  
+$ git ls-remote .  
+230b8d53e2a6d5669165eed55579b64dccd78d11        HEAD  
+230b8d53e2a6d5669165eed55579b64dccd78d11        refs/heads/master  
+$ rm -rf .git/logs  
+$ git reflog --all  
+$ git prune  
+$ git gc  
+可以看到大小已经恢复了表明10M文件已经被彻底删除了
+$ du -hs  
+ 84K    .  
+</pre>
+
+</p></div>
+
+</div>
+
+<div id="outline-container-18" class="outline-2">
+<h2 id="sec-18"><span class="section-number-2">18</span> git remote</h2>
+<div class="outline-text-2" id="text-18">
+
+<ul>
+<li>查看当前repo有哪些远程repo，可以用git remote（至少有一个origin，表示这个repo的发起人），可以加-v来查看详细信息（将显示出其远程仓库地址，例如cho45 git://github.com/cho45/grit.git）这样可以方便地把它的repo提交到本地上来查看。<br/>
+</li>
+<li>添加一个远程repo：git remote add shortname address 其中shortname表示简单名字，之后再用git remote -v可以看到多了一个 shortname address的远程仓库<br/>
+</li>
+<li>git remote show [remote-name] 查看远程repo信息<br/>
+</li>
+<li>git remote rename name1 namw2 将远程repo的name1命名为name2<br/>
+</li>
+<li>git remote rm remote-name 删除<br/>
+</li>
+</ul>
+
+</div>
+
+</div>
+
+<div id="outline-container-19" class="outline-2">
+<h2 id="sec-19"><span class="section-number-2">19</span> git fetch</h2>
+<div class="outline-text-2" id="text-19">
+
+<ul>
+<li>如果要抓取所有shortname有但本地没有的，可以git fetch shortname<br/>
+</li>
+<li>如果你本地repo是从别人那里clone来的，可以用git fetch origin来更新本地repo的发起人的repo一致（并没有自动合并到当前本机repo中，只有等你准备好了手工合并）<br/>
+</li>
+</ul>
+
+</div>
+
+</div>
+
+<div id="outline-container-20" class="outline-2">
+<h2 id="sec-20"><span class="section-number-2">20</span> git pull</h2>
+<div class="outline-text-2" id="text-20">
+
+<p>  git fetch只是从远程repo中拉来本地repo但并不合并，git pull则与本地repo自动合并。<br/>
+</p></div>
+
+</div>
+
+<div id="outline-container-21" class="outline-2">
+<h2 id="sec-21"><span class="section-number-2">21</span> git push</h2>
+<div class="outline-text-2" id="text-21">
+
+<p>  git push等价于git push origin master<br/>
+</p></div>
+
+</div>
+
+<div id="outline-container-22" class="outline-2">
+<h2 id="sec-22"><span class="section-number-2">22</span> git tag</h2>
+<div class="outline-text-2" id="text-22">
+
+<p>  查看所有标签，或git tag v1.4查看v1.4标签的详细信息。<br/>
+</p><ul>
+<li>添加轻量级标签（lightweight）：指向一个特定提交对象的引用 使用-l选项<br/>
+</li>
+<li>添加含附注的标签（annotated）：包含更加详细的信息 使用-a选项，后面可以用-m来指定说明<br/>
+</li>
+</ul>
+
+</div>
+
+</div>
+
+<div id="outline-container-23" class="outline-2">
+<h2 id="sec-23"><span class="section-number-2">23</span> git config &ndash;global</h2>
+<div class="outline-text-2" id="text-23">
+
+<p>  git config &ndash;global alias.co checkout 定义co为checkout的别名<br/>
+</p>
+<p>  <br/>
+</p></div>
+
+</div>
+
+<div id="outline-container-24" class="outline-2">
+<h2 id="sec-24"><span class="section-number-2">24</span> </h2>
+<div class="outline-text-2" id="text-24">
+
+</div>
+</div>
+</div>
+
+<div id="postamble">
+<p class="date">Date: 2012-08-01 05:55:13 CST</p>
+<p class="author">Author: visaya fan</p>
+<p class="creator">Org version 7.8.11 with Emacs version 23</p>
+
+
+</div>
+</body>
+</html>

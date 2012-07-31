@@ -7,7 +7,7 @@
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
 <meta name="title" content="Linux内核－内存管理"/>
 <meta name="generator" content="Org-mode"/>
-<meta name="generated" content="2012-07-30 00:40:14 CST"/>
+<meta name="generated" content="2012-08-01 05:29:43 CST"/>
 <meta name="author" content="visaya fan"/>
 <meta name="description" content=""/>
 <meta name="keywords" content=""/>
@@ -141,10 +141,10 @@ org_html_manager.setup();  // activate after the parameters are set
 </script>
 </head>
 <body>
-<div id="org-div-home-and-up" style="text-align:right;font-size:100%;white-space:nowrap;">
- <a accesskey="h" href="index.html">UP </a>
-|
- <a accesskey="H" href="../index.html">HOME </a>
+<div id="org-div-home-and-up" style="text-align:right;font-size:70%;white-space:nowrap;">
+ <a accesskey="h" href="index.html"> UP </a>
+ |
+ <a accesskey="H" href="../index.html"> HOME </a>
 </div>
 
 <div id="preamble">
@@ -173,12 +173,15 @@ org_html_manager.setup();  // activate after the parameters are set
 </li>
 <li><a href="#sec-7">7 Slab</a>
 <ul>
-<li><a href="#sec-7-1">7.1 基本数据结构</a></li>
+<li><a href="#sec-7-1">7.1 数据结构</a></li>
 <li><a href="#sec-7-2">7.2 on_slab和off_slab</a></li>
 <li><a href="#sec-7-3">7.3 colour</a></li>
 <li><a href="#sec-7-4">7.4 local cache</a></li>
 <li><a href="#sec-7-5">7.5 kmem_cache_alloc用来获得指定cache的一个空的object</a></li>
 <li><a href="#sec-7-6">7.6 kmem_cache_free用来释放指定cache的一个object</a></li>
+<li><a href="#sec-7-7">7.7 kmalloc</a></li>
+<li><a href="#sec-7-8">7.8 kfree</a></li>
+<li><a href="#sec-7-9">7.9 内存池</a></li>
 </ul>
 </li>
 </ul>
@@ -395,7 +398,7 @@ $$min\_free\_kbytes=\sqrt(16 \times (total\ size\ of\ zone\_dma\ and\ zone\_norm
 <h2 id="sec-5"><span class="section-number-2">5</span> 分配和释放页</h2>
 <div class="outline-text-2" id="text-5">
 
-<table border="2" cellspacing="0" cellpadding="6" rules="all" frame="all">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
 <caption></caption>
 <colgroup><col class="left" /><col class="left" /><col class="left" />
 </colgroup>
@@ -645,7 +648,7 @@ $$min\_free\_kbytes=\sqrt(16 \times (total\ size\ of\ zone\_dma\ and\ zone\_norm
 </div>
 
 <div id="outline-container-7-1" class="outline-3">
-<h3 id="sec-7-1"><span class="section-number-3">7.1</span> 基本数据结构</h3>
+<h3 id="sec-7-1"><span class="section-number-3">7.1</span> 数据结构</h3>
 <div class="outline-text-3" id="text-7-1">
 
 <ul>
@@ -1207,12 +1210,124 @@ $$min\_free\_kbytes=\sqrt(16 \times (total\ size\ of\ zone\_dma\ and\ zone\_norm
 </p>
 <p>  <br/>
 </p></div>
+
+</div>
+
+<div id="outline-container-7-7" class="outline-3">
+<h3 id="sec-7-7"><span class="section-number-3">7.7</span> kmalloc</h3>
+<div class="outline-text-3" id="text-7-7">
+
+<p>   kmalloc调用了__kmalloc, __kmallloc调用了__cache_alloc，最终效果等价于：<br/>
+</p>
+<p><br/>
+<pre class="src src-c"><span class="linenr"> 1:  </span><span style="color: #228b22;">void</span> * <span style="color: #0000ff;">kmalloc</span>(<span style="color: #228b22;">size_t</span> <span style="color: #a0522d;">size</span>, <span style="color: #228b22;">int</span> <span style="color: #a0522d;">flags</span>)
+<span class="linenr"> 2:  </span>{
+<span class="linenr"> 3:  </span>    <span style="color: #a020f0;">struct</span> <span style="color: #228b22;">cache_sizes</span> *<span style="color: #a0522d;">csizep</span> = malloc_sizes;
+<span class="linenr"> 4:  </span>    <span style="color: #228b22;">kmem_cache_t</span> * <span style="color: #a0522d;">cachep</span>;
+<span class="linenr"> 5:  </span>    <span style="color: #a020f0;">for</span> (; csizep-&gt;cs_size; csizep++) {
+<span class="linenr"> 6:  </span>        <span style="color: #a020f0;">if</span> (size &gt; csizep-&gt;cs_size)
+<span class="linenr"> 7:  </span>            <span style="color: #a020f0;">continue</span>;
+<span class="linenr"> 8:  </span>        <span style="color: #a020f0;">if</span> (flags &amp; _ _GFP_DMA)
+<span class="linenr"> 9:  </span>            cachep = csizep-&gt;cs_dmacachep;
+<span class="linenr">10:  </span>        <span style="color: #a020f0;">else</span>
+<span class="linenr">11:  </span>            cachep = csizep-&gt;cs_cachep;
+<span class="linenr">12:  </span>        <span style="color: #a020f0;">return</span> kmem_cache_alloc(cachep, flags);
+<span class="linenr">13:  </span>    }
+<span class="linenr">14:  </span>    <span style="color: #a020f0;">return</span> <span style="color: #008b8b;">NULL</span>;
+<span class="linenr">15:  </span>}
+</pre>
+
+</p></div>
+
+</div>
+
+<div id="outline-container-7-8" class="outline-3">
+<h3 id="sec-7-8"><span class="section-number-3">7.8</span> kfree</h3>
+<div class="outline-text-3" id="text-7-8">
+
+<p>   Don't free memory not originally allocated by kmalloc() or you will run into trouble.<br/>
+   objp是由kmalloc返回的指针。<br/>
+</p>
+<p><br/>
+<pre class="src src-c"><span class="linenr"> 1:  </span><span style="color: #228b22;">void</span> <span style="color: #0000ff;">kfree</span> (<span style="color: #a020f0;">const</span> <span style="color: #228b22;">void</span> *<span style="color: #a0522d;">objp</span>)
+<span class="linenr"> 2:  </span>{
+<span class="linenr"> 3:  </span>    <span style="color: #228b22;">kmem_cache_t</span> *<span style="color: #a0522d;">c</span>;
+<span class="linenr"> 4:  </span>    <span style="color: #228b22;">unsigned</span> <span style="color: #228b22;">long</span> <span style="color: #a0522d;">flags</span>;
+<span class="linenr"> 5:  </span>
+<span class="linenr"> 6:  </span>    <span style="color: #a020f0;">if</span> (!objp)
+<span class="linenr"> 7:  </span>        <span style="color: #a020f0;">return</span>;
+<span class="linenr"> 8:  </span>    local_irq_save(flags);
+<span class="linenr"> 9:  </span>    kfree_debugcheck(objp);
+<span class="linenr">10:  </span>    c = GET_PAGE_CACHE(virt_to_page(objp));
+<span class="linenr">11:  </span>    __cache_free(c, (<span style="color: #228b22;">void</span>*)objp);
+<span class="linenr">12:  </span>    local_irq_restore(flags);
+<span class="linenr">13:  </span>}
+</pre>
+
+
+</p></div>
+
+</div>
+
+<div id="outline-container-7-9" class="outline-3">
+<h3 id="sec-7-9"><span class="section-number-3">7.9</span> 内存池</h3>
+<div class="outline-text-3" id="text-7-9">
+
+<p>   注意与 <code>保留页框池</code> 的区别：保留页框池只能用在原子操作分配请求，而内存池只能被一些指定的设备使用，是保留的动态内存（一般情况下不会使用，只有当请求普通内存注定失败时才会使用内存池）。<br/>
+   称内存池中的单元为内存元素（memory element）<br/>
+</p>
+<p><br/>
+<pre class="src src-c"><span class="linenr"> 1:  </span><span style="color: #a020f0;">typedef</span> <span style="color: #a020f0;">struct</span> <span style="color: #228b22;">mempool_s</span> {
+<span class="linenr"> 2:  </span>    <span style="color: #228b22;">spinlock_t</span> <span style="color: #a0522d;">lock</span>;
+<span class="linenr"> 3:  </span>    <span style="color: #228b22;">int</span> <span style="color: #a0522d;">min_nr</span>;                 <span style="color: #b22222;">/* </span><span style="color: #b22222;">&#20869;&#23384;&#27744;&#20013;&#20869;&#23384;&#20803;&#32032;&#30340;&#26368;&#22823;&#20010;&#25968;&#65288;&#21021;&#22987;&#26102;&#20010;&#25968;&#65292;&#26368;&#23569;&#21487;&#20197;&#24471;&#21040;&#30340;&#20010;&#25968;&#65289; </span><span style="color: #b22222;">*/</span>
+<span class="linenr"> 4:  </span>    <span style="color: #228b22;">int</span> <span style="color: #a0522d;">curr_nr</span>;                <span style="color: #b22222;">/* </span><span style="color: #b22222;">&#24403;&#21069;&#20869;&#23384;&#27744;&#20013;&#20869;&#23384;&#20803;&#32032;&#30340;&#20010;&#25968; </span><span style="color: #b22222;">*/</span>
+<span class="linenr"> 5:  </span>    <span style="color: #228b22;">void</span> **<span style="color: #a0522d;">elements</span>;            <span style="color: #b22222;">/* </span><span style="color: #b22222;">&#20108;&#32423;&#25351;&#38024;&#65292;&#25351;&#21521; &#25351;&#21521;&#20869;&#23384;&#20803;&#32032;&#25351;&#38024;&#25968;&#32452; &#30340;&#25351;&#38024; </span><span style="color: #b22222;">*/</span>
+<span class="linenr"> 6:  </span>    <span style="color: #228b22;">void</span> *<span style="color: #a0522d;">pool_data</span>;            <span style="color: #b22222;">/* </span><span style="color: #b22222;">&#20869;&#23384;&#27744;&#25317;&#26377;&#32773;&#30340;&#21487;&#29992;&#31169;&#26377;&#25968;&#25454; </span><span style="color: #b22222;">*/</span>
+<span class="linenr"> 7:  </span>    <span style="color: #228b22;">mempool_alloc_t</span> *<span style="color: #a0522d;">alloc</span>;     <span style="color: #b22222;">/* </span><span style="color: #b22222;">&#20998;&#37197;&#20989;&#25968; </span><span style="color: #b22222;">*/</span>
+<span class="linenr"> 8:  </span>    <span style="color: #228b22;">mempool_free_t</span> *<span style="color: #a0522d;">free</span>;       <span style="color: #b22222;">/* </span><span style="color: #b22222;">&#37322;&#25918;&#20989;&#25968; </span><span style="color: #b22222;">*/</span>
+<span class="linenr"> 9:  </span>    <span style="color: #228b22;">wait_queue_head_t</span> <span style="color: #a0522d;">wait</span>;     <span style="color: #b22222;">/* </span><span style="color: #b22222;">&#31561;&#24453;&#38431;&#21015; </span><span style="color: #b22222;">*/</span>
+<span class="linenr">10:  </span>} <span style="color: #a0522d;">mempool_t</span>;
+<span class="linenr">11:  </span><span style="color: #a020f0;">typedef</span> <span style="color: #228b22;">void</span> * (<span style="color: #228b22;">mempool_alloc_t</span>)(<span style="color: #228b22;">int</span> <span style="color: #a0522d;">gfp_mask</span>, <span style="color: #228b22;">void</span> *<span style="color: #a0522d;">pool_data</span>);
+<span class="linenr">12:  </span><span style="color: #a020f0;">typedef</span> <span style="color: #228b22;">void</span> (<span style="color: #228b22;">mempool_free_t</span>)(<span style="color: #228b22;">void</span> *<span style="color: #a0522d;">element</span>, <span style="color: #228b22;">void</span> *<span style="color: #a0522d;">pool_data</span>);
+</pre>
+
+</p><ul>
+<li>如果内存元素是slab中的object，一般常用的alloc和free分别是 <code>mempool_alloc_slab</code> 和 <code>mempool_free_slab</code> ，分别调用的是前面分析过的 <code>kmem_cache_alloc</code> 和 <code>kmem_cache_free</code> 。此时成员pool_data保存的是cache的地址.<br/>
+</li>
+</ul>
+
+
+<p><br/>
+<pre class="src src-c"><span class="linenr"> 1:  </span><span style="color: #228b22;">void</span> *<span style="color: #0000ff;">mempool_alloc_slab</span>(<span style="color: #228b22;">int</span> <span style="color: #a0522d;">gfp_mask</span>, <span style="color: #228b22;">void</span> *<span style="color: #a0522d;">pool_data</span>)
+<span class="linenr"> 2:  </span>{
+<span class="linenr"> 3:  </span>    <span style="color: #228b22;">kmem_cache_t</span> *<span style="color: #a0522d;">mem</span> = (<span style="color: #228b22;">kmem_cache_t</span> *) pool_data;
+<span class="linenr"> 4:  </span>    <span style="color: #a020f0;">return</span> kmem_cache_alloc(mem, gfp_mask);
+<span class="linenr"> 5:  </span>}
+<span class="linenr"> 6:  </span><span style="color: #228b22;">void</span> <span style="color: #0000ff;">mempool_free_slab</span>(<span style="color: #228b22;">void</span> *<span style="color: #a0522d;">element</span>, <span style="color: #228b22;">void</span> *<span style="color: #a0522d;">pool_data</span>)
+<span class="linenr"> 7:  </span>{
+<span class="linenr"> 8:  </span>    <span style="color: #228b22;">kmem_cache_t</span> *<span style="color: #a0522d;">mem</span> = (<span style="color: #228b22;">kmem_cache_t</span> *) pool_data;
+<span class="linenr"> 9:  </span>    kmem_cache_free(mem, element);
+<span class="linenr">10:  </span>}
+</pre>
+
+</p><ul>
+<li><code>mempool_create</code> 和 <code>mempool_destroy</code> 分别用来创建和销毁一个内存池。<br/>
+</li>
+<li><code>mempool_alloc</code> 和 <code>mempool_free</code> 用来分配和释放内存池中的一个内存元素，其参数mempool_t和gfp_mask。<br/>
+</li>
+</ul>
+
+
+<p>     <br/>
+</p>
+<p>     <br/>
+</p></div>
 </div>
 </div>
 </div>
 
 <div id="postamble">
-<p class="date">Date: 2012-07-30 00:40:14 CST</p>
+<p class="date">Date: 2012-08-01 05:29:43 CST</p>
 <p class="author">Author: visaya fan</p>
 <p class="creator">Org version 7.8.11 with Emacs version 23</p>
 
