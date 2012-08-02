@@ -81,7 +81,7 @@
         color: black;
         padding-bottom: 7px;
         margin-bottom: 20px;
-        border-bottom: 1px solid #222;
+        /* border-bottom: 1px solid #222; */
     }
 
     h2 {
@@ -985,10 +985,13 @@
         /* background-image: url(http://orgmode.org/worg-unicorn.png); */
         background-position: 25px 5px;
         background-repeat: no-repeat;
+        background-color: #F9F9F9;
     }
     body #content {
         padding-top: 70px;
-    }
+        padding-left: 12.5%;
+        padding-right:12.5%;
+        width: 75%;    }
     body .title {
         margin-left: 120px;
     }
@@ -1945,7 +1948,7 @@ content: "*** "
         padding: .3em;
         margin-bottom: 1em;
         border: 1px solid gray;
-        background-color: #eeeeee;
+        /* background-color: #eeeeee; */
     }
 
     #show_source {float: right; margin: .7em;}
@@ -1953,9 +1956,9 @@ content: "*** "
     .outline-2 {
         position: relative;
         top: 10px;
-        left: 12.5%;
-        right:12.5%;
-        width: 75%;
+        /* left: 12.5%; */
+        /* right:12.5%; */
+        /* width: 75%; */
         padding-bottom: 2pt;
     }
     
@@ -1996,7 +1999,7 @@ div#postamble {
 	font-style: italic;
 	font-size: 11px;
 	font-family:"Courier New", Courier, monospace;
-    background: white;
+    /* background: white; */
     border: none;
 }
 
