@@ -55,7 +55,7 @@ OL.roman{
 }
 
 A{
-	color: #003;
+	color: black;
 	/* font-weight: bold; */
 	text-decoration: none;
 }
@@ -176,8 +176,8 @@ h2 {
     /* color:#666; */
     color:black;
     font-size: 18px;
-    border-top: solid black 1px;
-    border-bottom: solid black 1px;
+    /* border-top: solid black 1px; */
+    /* border-bottom: solid black 1px; */
     padding: 0.1em;
     padding-top: 0.2em;
     padding-left: 0.3em;
@@ -189,8 +189,8 @@ h2 {
 h3 { 
     color:#003;
     font-size: 16px;
-    border-left: solid black 1px;
-    border-bottom: solid black 1px;
+    /* border-left: solid black 1px; */
+    /* border-bottom: solid black 1px; */
     padding: 0.1em;
     padding-top: 0.2em;
     padding-left: 0.3em;
