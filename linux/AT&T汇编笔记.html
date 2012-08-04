@@ -7,7 +7,7 @@
 <meta http-equiv="Content-Type" content="text/html;charset=gb18030"/>
 <meta name="title" content="AT&amp;T汇编笔记"/>
 <meta name="generator" content="Org-mode"/>
-<meta name="generated" content="2012-08-04 08:49:45 CST"/>
+<meta name="generated" content="2012-08-04 23:50:02 CST"/>
 <meta name="author" content="visaya fan"/>
 <meta name="description" content=""/>
 <meta name="keywords" content=""/>
@@ -163,24 +163,24 @@
 <div class="outline-text-2" id="text-1">
 
 <ol>
-<li>寄存器前加%
+<li>寄存器前加%<br/>
 </li>
-<li>源和目的与x86相反
+<li>源和目的与x86相反<br/>
 </li>
-<li>立即数前面加\(，符号常数直接引用，引用符号地址前面加\)
+<li>立即数前面加\(，符号常数直接引用，引用符号地址前面加\)<br/>
 </li>
-<li>操作数长度b w l 分别表示8、16、32位。
-   movw %ax, %bx 把16位长度的ax寄存器里mov到bx中
+<li>操作数长度b w l 分别表示8、16、32位。<br/>
+   movw %ax, %bx 把16位长度的ax寄存器里mov到bx中<br/>
 </li>
-<li>跳转
+<li>跳转<br/>
 <ul>
-<li>远跳转，Intel为jmp far, call far，AT&amp;T是ljmp, lcall。
+<li>远跳转，Intel为jmp far, call far，AT&amp;T是ljmp, lcall。<br/>
 </li>
-<li>远程返回指令：Intel为ret far，AT&amp;T为 lret。
+<li>远程返回指令：Intel为ret far，AT&amp;T为 lret。<br/>
 </li>
-<li>寻址方式：
-     Intel: section: [base + index*scale + disp]
-     AT&amp;T: section: disp(base, index, scale)
+<li>寻址方式：<br/>
+     Intel: section: [base + index*scale + disp]<br/>
+     AT&amp;T: section: disp(base, index, scale)<br/>
 </li>
 </ul>
 
@@ -188,7 +188,8 @@
 </ol>
 
 
-</div>
+<p><br/>
+</p></div>
 
 </div>
 
@@ -196,17 +197,17 @@
 <h2 id="sec-2"><span class="section-number-2">2</span> 嵌入汇编</h2>
 <div class="outline-text-2" id="text-2">
 
-<p>  格式：_asm<sub>("asm statements": output: inputs: registers_modified)</sub>
-  "a" "b" "c" "d" 分别表示 eax, ebx, ecx, edx
-  "S" "D" 表示 esi, edi
-  "r" 表示任何寄存器
-  0 表示与上面位置相同的同一寄存器
+<p>  格式：_asm<sub>("asm statements": output: inputs: registers_modified)</sub><br/>
+  "a" "b" "c" "d" 分别表示 eax, ebx, ecx, edx<br/>
+  "S" "D" 表示 esi, edi<br/>
+  "r" 表示任何寄存器<br/>
+  0 表示与上面位置相同的同一寄存器<br/>
 </p></div>
 </div>
 </div>
 
 <div id="postamble">
-<p class="date">Date: 2012-08-04 08:49:45 CST</p>
+<p class="date">Date: 2012-08-04 23:50:02 CST</p>
 <p class="author">Author: visaya fan</p>
 <p class="creator">Org version 7.8.11 with Emacs version 23</p>
 

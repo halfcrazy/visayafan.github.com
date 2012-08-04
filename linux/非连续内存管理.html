@@ -7,7 +7,7 @@
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
 <meta name="title" content="Linux内核－非连续内存管理"/>
 <meta name="generator" content="Org-mode"/>
-<meta name="generated" content="2012-08-04 08:50:54 CST"/>
+<meta name="generated" content="2012-08-04 23:49:49 CST"/>
 <meta name="author" content="visaya fan"/>
 <meta name="description" content=""/>
 <meta name="keywords" content=""/>
@@ -134,7 +134,7 @@
 <h2 id="sec-1"><span class="section-number-2">1</span> 简介</h2>
 <div class="outline-text-2" id="text-1">
 
-<p>  <a href="./mm.html">内存管理</a>中涉及的内存分配都是连续的，连续的内存分配有利于减小内存访问时间，但如果所有分配都使用连续内存分配的话，容易造成外部碎片，鉴于此原因，故对于不常访问的内存分配可以考虑非连续内存分配，虽然物理内存上是不连续的，但是通过页表可以使此不连续的内存在逻辑上连续的。
+<p>  <a href="./mm.html">内存管理</a>中涉及的内存分配都是连续的，连续的内存分配有利于减小内存访问时间，但如果所有分配都使用连续内存分配的话，容易造成外部碎片，鉴于此原因，故对于不常访问的内存分配可以考虑非连续内存分配，虽然物理内存上是不连续的，但是通过页表可以使此不连续的内存在逻辑上连续的。<br/>
 </p></div>
 
 </div>
@@ -143,8 +143,8 @@
 <h2 id="sec-2"><span class="section-number-2">2</span> 非连续内存区域线性地址(逻辑地址)的表示范围</h2>
 <div class="outline-text-2" id="text-2">
 
-<p>  从 <code>high_memory</code> 开始，之后有 <code>VMALLOC_OFFSET</code> (8M)安全间隔（捕获越界用），区域之间有4k的安全间隔， <code>PKMAP_BASE</code> 结束。之间的区域都可以用作非连续内存区域的线性地址。
-  真正的非连续内存区域开始结束位置保存在两个宏中 <code>VMALLOC_START</code> 和 <code>VMALLOC_END</code> 。  
+<p>  从 <code>high_memory</code> 开始，之后有 <code>VMALLOC_OFFSET</code> (8M)安全间隔（捕获越界用），区域之间有4k的安全间隔， <code>PKMAP_BASE</code> 结束。之间的区域都可以用作非连续内存区域的线性地址。<br/>
+  真正的非连续内存区域开始结束位置保存在两个宏中 <code>VMALLOC_START</code> 和 <code>VMALLOC_END</code> 。  <br/>
 <center>
 <img src="image/noncont_mem_area_addr.png"></img>
 </center>
@@ -156,10 +156,9 @@
 <h2 id="sec-3"><span class="section-number-2">3</span> 非连续内存区域描述符</h2>
 <div class="outline-text-2" id="text-3">
 
-<p>  每块非连续内存区域都对应一个描述符：
+<p>  每块非连续内存区域都对应一个描述符：<br/>
 </p>
-
-
+<p><br/>
 <pre class="src src-c"><span class="linenr">1:  </span><span style="color: #a020f0;">struct</span> <span style="color: #228b22;">vm_struct</span> {
 <span class="linenr">2:  </span>    <span style="color: #228b22;">void</span>            *<span style="color: #a0522d;">addr</span>;      <span style="color: #b22222;">/* </span><span style="color: #b22222;">&#23545;&#24212;&#38750;&#36830;&#32493;&#20869;&#23384;&#21306;&#22495;&#30340;&#24320;&#22987;&#22320;&#22336; </span><span style="color: #b22222;">*/</span>
 <span class="linenr">3:  </span>    <span style="color: #228b22;">unsigned</span> <span style="color: #228b22;">long</span>       <span style="color: #a0522d;">size</span>;   <span style="color: #b22222;">/* </span><span style="color: #b22222;">&#22823;&#23567; </span><span style="color: #b22222;">*/</span>
@@ -171,8 +170,7 @@
 <span class="linenr">9:  </span>};
 </pre>
 
-<p>
-  描述符通过next成员连接成链表，表头为 <code>vmlist</code> ，
+  描述符通过next成员连接成链表，表头为 <code>vmlist</code> ，<br/>
 <center>
 <img src="image/non_cont_area.jpeg"></img>
 </center>
@@ -191,12 +189,11 @@
 <h3 id="sec-4-1"><span class="section-number-3">4.1</span> get_vm_area</h3>
 <div class="outline-text-3" id="text-4-1">
 
-<p>    struct vm_struct *get_vm_area(unsigned long size, unsigned long flags)
-    参数size表示欲得到虚拟区域大小，flags表标志。
-    实际上调用了 <code>__get_vm_area</code> 。
+<p>    struct vm_struct *get_vm_area(unsigned long size, unsigned long flags)<br/>
+    参数size表示欲得到虚拟区域大小，flags表标志。<br/>
+    实际上调用了 <code>__get_vm_area</code> 。<br/>
 </p>
-
-
+<p><br/>
 <pre class="src src-c"><span class="linenr">1:  </span><span style="color: #a020f0;">return</span> __get_vm_area(size, flags, VMALLOC_START, VMALLOC_END);
 </pre>
 
@@ -271,11 +268,9 @@
 <span class="linenr">68:  </span>}
 </pre>
 
-<p>
-  <code>fls</code> 实际上调用了 <code>generic_fls</code> ：
+  <code>fls</code> 实际上调用了 <code>generic_fls</code> ：<br/>
 </p>
-
-
+<p><br/>
 <pre class="src src-c"><span class="linenr"> 1:  </span><span style="color: #b22222;">/*</span><span style="color: #b22222;">&#20989;&#25968;&#20316;&#29992;&#65306;&#21462;&#24471;x&#25152;&#26377;bit&#20013;&#38750;0&#30340;&#26368;&#23567;&#20301;</span><span style="color: #b22222;">*/</span>
 <span class="linenr"> 2:  </span><span style="color: #a020f0;">static</span> __inline__ <span style="color: #228b22;">int</span> <span style="color: #0000ff;">generic_fls</span>(<span style="color: #228b22;">int</span> <span style="color: #a0522d;">x</span>)
 <span class="linenr"> 3:  </span>{
@@ -307,7 +302,7 @@
 <span class="linenr">29:  </span>}
 </pre>
 
-</div>
+</p></div>
 
 </div>
 
@@ -316,8 +311,7 @@
 <div class="outline-text-3" id="text-4-2">
 
 
-
-
+<p><br/>
 <pre class="src src-c"><span class="linenr"> 1:  </span><span style="color: #a020f0;">struct</span> <span style="color: #228b22;">vm_struct</span> *<span style="color: #0000ff;">remove_vm_area</span>(<span style="color: #228b22;">void</span> *<span style="color: #a0522d;">addr</span>)
 <span class="linenr"> 2:  </span>{
 <span class="linenr"> 3:  </span>    <span style="color: #a020f0;">struct</span> <span style="color: #228b22;">vm_struct</span> **<span style="color: #a0522d;">p</span>, *<span style="color: #a0522d;">tmp</span>;
@@ -338,7 +332,7 @@
 <span class="linenr">18:  </span>}
 </pre>
 
-</div>
+</p></div>
 </div>
 
 </div>
@@ -355,8 +349,7 @@
 <div class="outline-text-3" id="text-5-1">
 
 
-
-
+<p><br/>
 <pre class="src src-c"><span class="linenr">1:  </span><span style="color: #228b22;">void</span> *<span style="color: #0000ff;">vmalloc</span>(<span style="color: #228b22;">unsigned</span> <span style="color: #228b22;">long</span> <span style="color: #a0522d;">size</span>)       <span style="color: #b22222;">/* </span><span style="color: #b22222;">size&#34920;&#27442;&#24471;&#21040;&#38750;&#36830;&#32493;&#20869;&#23384;&#21306;&#22495;&#30340;&#22823;&#23567;</span><span style="color: #b22222;">*/</span>
 <span class="linenr">2:  </span>{
 <span class="linenr">3:  </span>       <span style="color: #a020f0;">return</span> __vmalloc(size, GFP_KERNEL | __GFP_HIGHMEM, PAGE_KERNEL);
@@ -414,15 +407,13 @@
 <span class="linenr">48:  </span>}
 </pre>
 
-<p>
-   要理解 <code>map_vm_area</code> 必须先理解linux内核的分页机制：
+   要理解 <code>map_vm_area</code> 必须先理解linux内核的分页机制：<br/>
 <center>
 <img src="image/pgd_pud_pmd_pte.png"></img>
 </center>
-   <code>map_vm_area</code> 函数分析如下：
+   <code>map_vm_area</code> 函数分析如下：<br/>
 </p>
-
-
+<p><br/>
 <pre class="src src-c"><span class="linenr"> 1:  </span><span style="color: #228b22;">int</span> <span style="color: #0000ff;">map_vm_area</span>(<span style="color: #a020f0;">struct</span> <span style="color: #228b22;">vm_struct</span> *<span style="color: #a0522d;">area</span>, <span style="color: #228b22;">pgprot_t</span> <span style="color: #a0522d;">prot</span>, <span style="color: #a020f0;">struct</span> <span style="color: #228b22;">page</span> ***<span style="color: #a0522d;">pages</span>)
 <span class="linenr"> 2:  </span>{
 <span class="linenr"> 3:  </span>    <span style="color: #228b22;">unsigned</span> <span style="color: #228b22;">long</span> <span style="color: #a0522d;">address</span> = (<span style="color: #228b22;">unsigned</span> <span style="color: #228b22;">long</span>) area-&gt;addr;
@@ -459,11 +450,9 @@
 <span class="linenr">34:  </span>}
 </pre>
 
-<p>
-   各级页目录和页表处理函数：
+   各级页目录和页表处理函数：<br/>
 </p>
-
-
+<p><br/>
 <pre class="src src-c"><span class="linenr"> 1:  </span><span style="color: #a020f0;">static</span> <span style="color: #228b22;">int</span> <span style="color: #0000ff;">map_area_pud</span>(<span style="color: #228b22;">pud_t</span> *<span style="color: #a0522d;">pud</span>, <span style="color: #228b22;">unsigned</span> <span style="color: #228b22;">long</span> <span style="color: #a0522d;">address</span>,
 <span class="linenr"> 2:  </span>                   <span style="color: #228b22;">unsigned</span> <span style="color: #228b22;">long</span> <span style="color: #a0522d;">end</span>, <span style="color: #228b22;">pgprot_t</span> <span style="color: #a0522d;">prot</span>,
 <span class="linenr"> 3:  </span>                   <span style="color: #a020f0;">struct</span> <span style="color: #228b22;">page</span> ***<span style="color: #a0522d;">pages</span>)
@@ -535,7 +524,7 @@
 <span class="linenr">69:  </span>}
 </pre>
 
-</div>
+</p></div>
 
 </div>
 
@@ -543,15 +532,16 @@
 <h3 id="sec-5-2"><span class="section-number-3">5.2</span> vfree</h3>
 <div class="outline-text-3" id="text-5-2">
 
-<p>   和 <code>vmalloc</code> 相反，各级页目录和页表处理函数也相反。
+<p>   和 <code>vmalloc</code> 相反，各级页目录和页表处理函数也相反。<br/>
 </p>
-</div>
+<p><br/>
+</p></div>
 </div>
 </div>
 </div>
 
 <div id="postamble">
-<p class="date">Date: 2012-08-04 08:50:54 CST</p>
+<p class="date">Date: 2012-08-04 23:49:49 CST</p>
 <p class="author">Author: visaya fan</p>
 <p class="creator">Org version 7.8.11 with Emacs version 23</p>
 
