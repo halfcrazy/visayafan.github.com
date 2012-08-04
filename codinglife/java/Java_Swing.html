@@ -7,7 +7,7 @@
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
 <meta name="title" content="Java_Swing"/>
 <meta name="generator" content="Org-mode"/>
-<meta name="generated" content="2012-07-30 09:58:01 CST"/>
+<meta name="generated" content="2012-08-04 08:43:21 CST"/>
 <meta name="author" content="visaya fan"/>
 <meta name="description" content=""/>
 <meta name="keywords" content=""/>
@@ -60,7 +60,6 @@
                                  font-weight:bold; }
   /*]]>*/-->
 </style>
-<link rel="stylesheet" type="text/css" href="../../css/vf.css" />
 <script type="text/javascript">
 <!--/*--><![CDATA[/*><!--*/
  function CodeHighlightOn(elem, id)
@@ -86,22 +85,29 @@
 
 </head>
 <body>
-<div id="org-div-home-and-up" style="text-align:right;font-size:100%;white-space:nowrap;">
- <a accesskey="h" href="../index.html">UP </a>
-|
- <a accesskey="H" href="../../index.html">HOME </a>
+<div id="org-div-home-and-up">
+ <a accesskey="h" href="../index.html"> UP </a>
+ |
+ <a accesskey="H" href="../../index.html"> HOME </a>
 </div>
 
 <div id="preamble">
-
+<a href="#" id="tabzilla" class="tabzilla-opened" role="button" aria-expanded="true" aria-controls="tabzilla-panel" title="Close (Esc)">No_Joking</a>
 </div>
 
 <div id="content">
 <h1 class="title">Java_Swing</h1>
 
 
-<p><br/>
-</p>
+<link rel="stylesheet" type="text/css" href="../../css/bootstrap.mozilla.css" />
+<link rel="stylesheet" type="text/css" href="../../css/tabzilla.css" />
+<link rel="stylesheet" type="text/css" href="../../css/vf.css" />
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"> </script>
+<script src="../../bootstrap/js/bootstrap.js"></script>
+<script src="../../js/tabzilla.js"></script>
+
+
+
 <div id="table-of-contents">
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
@@ -178,8 +184,8 @@
 <h2 id="sec-1"><span class="section-number-2">1</span> JOptionPanel</h2>
 <div class="outline-text-2" id="text-1">
 
-<p>  可以方便地显示对话框。<br/>
-  showInputDialog/ showMessageDialog<br/>
+<p>  可以方便地显示对话框。
+  showInputDialog/ showMessageDialog
 </p></div>
 
 </div>
@@ -195,7 +201,7 @@
 <h3 id="sec-2-1"><span class="section-number-3">2.1</span> JToggleButton</h3>
 <div class="outline-text-3" id="text-2-1">
 
-<p>   按下后不起来，再按才会起来<br/>
+<p>   按下后不起来，再按才会起来
 </p></div>
 
 </div>
@@ -204,7 +210,7 @@
 <h3 id="sec-2-2"><span class="section-number-3">2.2</span> JCheckBox</h3>
 <div class="outline-text-3" id="text-2-2">
 
-<p>   复选框<br/>
+<p>   复选框
 </p></div>
 
 </div>
@@ -213,7 +219,7 @@
 <h3 id="sec-2-3"><span class="section-number-3">2.3</span> JRadioButton</h3>
 <div class="outline-text-3" id="text-2-3">
 
-<p>   单选按钮<br/>
+<p>   单选按钮
 </p></div>
 
 </div>
@@ -222,7 +228,7 @@
 <h3 id="sec-2-4"><span class="section-number-3">2.4</span> BasicArrowButton</h3>
 <div class="outline-text-3" id="text-2-4">
 
-<p>   带箭头的按钮，方向由BasicArrowButton.NORTH SOUTH EAST WEST指定<br/>
+<p>   带箭头的按钮，方向由BasicArrowButton.NORTH SOUTH EAST WEST指定
 </p></div>
 
 </div>
@@ -231,10 +237,9 @@
 <h3 id="sec-2-5"><span class="section-number-3">2.5</span> setPressedIcon(Icon pressIcon)</h3>
 <div class="outline-text-3" id="text-2-5">
 
-<p>   当按钮按下时显示的图片<br/>
+<p>   当按钮按下时显示的图片
 </p>
-<p><br/>
-</p></div>
+</div>
 
 </div>
 
@@ -242,10 +247,9 @@
 <h3 id="sec-2-6"><span class="section-number-3">2.6</span> setDisabledIcon(Icon disableIcon)</h3>
 <div class="outline-text-3" id="text-2-6">
 
-<p>   当JButton不可用时显示的图片<br/>
+<p>   当JButton不可用时显示的图片
 </p>
-<p><br/>
-</p></div>
+</div>
 
 </div>
 
@@ -253,10 +257,9 @@
 <h3 id="sec-2-7"><span class="section-number-3">2.7</span> setToolTipText(String text)</h3>
 <div class="outline-text-3" id="text-2-7">
 
-<p>   显示提示信息<br/>
+<p>   显示提示信息
 </p>
-<p>   <br/>
-</p></div>
+</div>
 </div>
 
 </div>
@@ -272,7 +275,7 @@
 <h3 id="sec-3-1"><span class="section-number-3">3.1</span> addActionListener(ActionEvent t)</h3>
 <div class="outline-text-3" id="text-3-1">
 
-<p>   文本域的事件监听器，当在文本区域内输入回车时响应。<br/>
+<p>   文本域的事件监听器，当在文本区域内输入回车时响应。
 </p></div>
 
 </div>
@@ -281,10 +284,9 @@
 <h3 id="sec-3-2"><span class="section-number-3">3.2</span> setDocument(Document doc)</h3>
 <div class="outline-text-3" id="text-3-2">
 
-<p>   关联当前文本区一document<br/>
+<p>   关联当前文本区一document
 </p>
-<p><br/>
-</p></div>
+</div>
 </div>
 
 </div>
@@ -293,9 +295,9 @@
 <h2 id="sec-4"><span class="section-number-2">4</span> Document</h2>
 <div class="outline-text-2" id="text-4">
 
-<p>  在javax.swing.text中<br/>
-  The Document is a container for text that serves as the model for swing text components. The goal for this interface is to scale from very simple needs (a plain text textfield) to complex needs (an HTML or XML document, for example).<br/>
-  document充当swing文本组件的包含文本的容器，<br/>
+<p>  在javax.swing.text中
+  The Document is a container for text that serves as the model for swing text components. The goal for this interface is to scale from very simple needs (a plain text textfield) to complex needs (an HTML or XML document, for example).
+  document充当swing文本组件的包含文本的容器，
 </p>
 </div>
 
@@ -303,17 +305,16 @@
 <h3 id="sec-4-1"><span class="section-number-3">4.1</span> addDocumentListener(DocumentListener listener)</h3>
 <div class="outline-text-3" id="text-4-1">
 
-<p>   添加事件监听器<br/>
+<p>   添加事件监听器
 </p>
-<p><br/>
-</p>
+
 </div>
 
 <div id="outline-container-4-1-1" class="outline-4">
 <h4 id="sec-4-1-1"><span class="section-number-4">4.1.1</span> changeUpdate(DocumentEvent e)</h4>
 <div class="outline-text-4" id="text-4-1-1">
 
-<p>    Gives notification that an attribute or set of attributes changed.<br/>
+<p>    Gives notification that an attribute or set of attributes changed.
 </p></div>
 
 </div>
@@ -322,7 +323,7 @@
 <h4 id="sec-4-1-2"><span class="section-number-4">4.1.2</span> insertUpdate(DocumentEvent e)</h4>
 <div class="outline-text-4" id="text-4-1-2">
 
-<p>    Gives notification that there was an insert into the document.<br/>
+<p>    Gives notification that there was an insert into the document.
 </p></div>
 
 </div>
@@ -331,10 +332,9 @@
 <h4 id="sec-4-1-3"><span class="section-number-4">4.1.3</span> removeUpdate(DocumentEvent e)</h4>
 <div class="outline-text-4" id="text-4-1-3">
 
-<p>    Gives notification that a portion of the document has been removed.<br/>
+<p>    Gives notification that a portion of the document has been removed.
 </p>
-<p><br/>
-</p></div>
+</div>
 </div>
 
 </div>
@@ -343,10 +343,9 @@
 <h3 id="sec-4-2"><span class="section-number-3">4.2</span> insertString(int offset, String str, AttributeSet a)</h3>
 <div class="outline-text-3" id="text-4-2">
 
-<p>   插入字符串，当DocumentEvent的insertUpdate(ActionEvent e)事件发生的时候会调用此函数。<br/>
+<p>   插入字符串，当DocumentEvent的insertUpdate(ActionEvent e)事件发生的时候会调用此函数。
 </p>
-<p><br/>
-</p></div>
+</div>
 </div>
 
 </div>
@@ -355,8 +354,8 @@
 <h2 id="sec-5"><span class="section-number-2">5</span> JList</h2>
 <div class="outline-text-2" id="text-5">
 
-<p>  与ComboBox不同的是JList把所有的可选项都可见，而ComboBox把所有Item隐藏等待用户下拉后才看见。<br/>
-  原型是JList&lt;E&gt;，是个容器，<br/>
+<p>  与ComboBox不同的是JList把所有的可选项都可见，而ComboBox把所有Item隐藏等待用户下拉后才看见。
+  原型是JList&lt;E&gt;，是个容器，
 </p></div>
 
 </div>
@@ -366,7 +365,8 @@
 <div class="outline-text-2" id="text-6">
 
 
-<p><br/>
+
+
 <pre class="src src-java">JList()
 Constructs a JList with an empty, read-only, <span style="color: #008b8b;">model</span>.
 JList(<span style="color: #228b22;">E</span>[] <span style="color: #a0522d;">listData</span>)
@@ -377,7 +377,7 @@ JList(Vector&lt;? <span style="color: #a020f0;">extends</span> <span style="colo
 Constructs a JList that displays the elements in the specified Vector.
 </pre>
 
-</p></div>
+</div>
 
 </div>
 
@@ -385,7 +385,7 @@ Constructs a JList that displays the elements in the specified Vector.
 <h2 id="sec-7"><span class="section-number-2">7</span> ListMode</h2>
 <div class="outline-text-2" id="text-7">
 
-<p>  This interface defines the methods components like JList use to get the value of each cell in a list and the length of the list. Logically the model is a vector, indices vary from 0 to ListDataModel.getSize() - 1. <br/>
+<p>  This interface defines the methods components like JList use to get the value of each cell in a list and the length of the list. Logically the model is a vector, indices vary from 0 to ListDataModel.getSize() - 1. 
 </p>
 </div>
 
@@ -400,7 +400,7 @@ Constructs a JList that displays the elements in the specified Vector.
 <h4 id="sec-7-1-1"><span class="section-number-4">7.1.1</span> addElement(E element)</h4>
 <div class="outline-text-4" id="text-7-1-1">
 
-<p>    添加元素<br/>
+<p>    添加元素
 </p></div>
 
 </div>
@@ -409,7 +409,7 @@ Constructs a JList that displays the elements in the specified Vector.
 <h4 id="sec-7-1-2"><span class="section-number-4">7.1.2</span> add(int index, E element)</h4>
 <div class="outline-text-4" id="text-7-1-2">
 
-<p>    在指定位置插入指定元素。<br/>
+<p>    在指定位置插入指定元素。
 </p></div>
 </div>
 </div>
@@ -427,7 +427,7 @@ Constructs a JList that displays the elements in the specified Vector.
 <h3 id="sec-8-1"><span class="section-number-3">8.1</span> getSelectedValues()</h3>
 <div class="outline-text-3" id="text-8-1">
 
-<p>   获取所选元素的值<br/>
+<p>   获取所选元素的值
 </p></div>
 
 </div>
@@ -436,7 +436,7 @@ Constructs a JList that displays the elements in the specified Vector.
 <h3 id="sec-8-2"><span class="section-number-3">8.2</span> getSelectedIndices()</h3>
 <div class="outline-text-3" id="text-8-2">
 
-<p>   获取所选元素的索引<br/>
+<p>   获取所选元素的索引
 </p></div>
 </div>
 
@@ -453,7 +453,7 @@ Constructs a JList that displays the elements in the specified Vector.
 <h3 id="sec-9-1"><span class="section-number-3">9.1</span> ListSelectionListener</h3>
 <div class="outline-text-3" id="text-9-1">
 
-<p>   有Item选中时发生事件<br/>
+<p>   有Item选中时发生事件
 </p></div>
 
 </div>
@@ -472,7 +472,8 @@ Constructs a JList that displays the elements in the specified Vector.
 <div class="outline-text-2" id="text-10">
 
 
-<p><br/>
+
+
 <pre class="src src-java"><span style="color: #a020f0;">package</span> xjtu.vf.<span style="color: #008b8b;">swing</span>;
 <span style="color: #a020f0;">import</span> <span style="color: #008b8b;">java</span>.<span style="color: #008b8b;">awt</span>.<span style="color: #228b22;">Color</span>;
 <span style="color: #a020f0;">import</span> <span style="color: #008b8b;">java</span>.<span style="color: #008b8b;">awt</span>.<span style="color: #228b22;">FlowLayout</span>;
@@ -532,9 +533,8 @@ Constructs a JList that displays the elements in the specified Vector.
 }
 </pre>
 
-</p>
-<p>   <br/>
-</p></div>
+
+</div>
 
 </div>
 
@@ -543,7 +543,8 @@ Constructs a JList that displays the elements in the specified Vector.
 <div class="outline-text-2" id="text-11">
 
 
-<p><br/>
+
+
 <pre class="src src-java"><span style="color: #a020f0;">package</span> xjtu.vf.<span style="color: #008b8b;">swing</span>;
 
 <span style="color: #a020f0;">import</span> <span style="color: #008b8b;">java</span>.<span style="color: #008b8b;">awt</span>.<span style="color: #228b22;">BorderLayout</span>;
@@ -582,7 +583,7 @@ Constructs a JList that displays the elements in the specified Vector.
 }
 </pre>
 
-</p></div>
+</div>
 
 </div>
 
@@ -590,10 +591,9 @@ Constructs a JList that displays the elements in the specified Vector.
 <h2 id="sec-12"><span class="section-number-2">12</span> javax.swing.border</h2>
 <div class="outline-text-2" id="text-12">
 
-<p>  AbstractBorder所有边框类的父类<br/>
+<p>  AbstractBorder所有边框类的父类
 </p>
-<p><br/>
-</p></div>
+</div>
 
 </div>
 
@@ -601,7 +601,7 @@ Constructs a JList that displays the elements in the specified Vector.
 <h2 id="sec-13"><span class="section-number-2">13</span> BorderFactory</h2>
 <div class="outline-text-2" id="text-13">
 
-<p>  使用工厂设计模式快速设计边框，隐藏创建细节。<br/>
+<p>  使用工厂设计模式快速设计边框，隐藏创建细节。
 </p></div>
 
 </div>
@@ -610,10 +610,11 @@ Constructs a JList that displays the elements in the specified Vector.
 <h2 id="sec-14"><span class="section-number-2">14</span> LineBorder</h2>
 <div class="outline-text-2" id="text-14">
 
-<p>  LineBorder是围绕组件周围用户义定宽度的单色行边框。他可以具有方角或是圆角。<br/>
-  <b>LineBorder有三个构造函数，两个工厂方法以及两个BorderFactory工厂方法</b><br/>
+<p>  LineBorder是围绕组件周围用户义定宽度的单色行边框。他可以具有方角或是圆角。
+  <b>LineBorder有三个构造函数，两个工厂方法以及两个BorderFactory工厂方法</b>
 </p>
-<p><br/>
+
+
 <pre class="src src-java"><span style="color: #a020f0;">public</span> LineBorder(<span style="color: #228b22;">Color</span> <span style="color: #a0522d;">color</span>)
 Border lineBorder = <span style="color: #a020f0;">new</span> <span style="color: #228b22;">LineBorder</span> (<span style="color: #008b8b;">Color</span>.RED);
 
@@ -636,7 +637,7 @@ Border lineBorder = BorderFactory.createLineBorder(<span style="color: #008b8b;"
 Border lineBorder = BorderFactory.createLineBorder(<span style="color: #008b8b;">Color</span>.RED, 5);
 </pre>
 
-</p></div>
+</div>
 
 </div>
 
@@ -644,9 +645,10 @@ Border lineBorder = BorderFactory.createLineBorder(<span style="color: #008b8b;"
 <h2 id="sec-15"><span class="section-number-2">15</span> MatteBorder</h2>
 <div class="outline-text-2" id="text-15">
 
-<p>  如果我们希望修改不同边的粗细，我们需要使用MatteBorder，<br/>
+<p>  如果我们希望修改不同边的粗细，我们需要使用MatteBorder，
 </p>
-<p><br/>
+
+
 <pre class="src src-java">MatteBorder(<span style="color: #228b22;">Icon</span> <span style="color: #a0522d;">tileIcon</span>)      
 Creates a matte border with the specified tile <span style="color: #008b8b;">icon</span>.
 MatteBorder(<span style="color: #228b22;">Insets</span> <span style="color: #a0522d;">borderInsets</span>, <span style="color: #228b22;">Color</span> <span style="color: #a0522d;">matteColor</span>)
@@ -659,7 +661,7 @@ MatteBorder(<span style="color: #228b22;">int</span> <span style="color: #a0522d
 Creates a matte border with the specified insets and tile icon.
 </pre>
 
-</p></div>
+</div>
 
 </div>
 
@@ -668,8 +670,7 @@ Creates a matte border with the specified insets and tile icon.
 <div class="outline-text-2" id="text-16">
 
 
-<p><br/>
-</p></div>
+</div>
 
 </div>
 
@@ -677,10 +678,11 @@ Creates a matte border with the specified insets and tile icon.
 <h2 id="sec-17"><span class="section-number-2">17</span> BevelBorder</h2>
 <div class="outline-text-2" id="text-17">
 
-<p>  BevelBorder以三维外观绘制边框，其可以表现为升起或是降低。当边框升起时，在边框的底部与右边会出现阴影效果。当降低时，阴影的位置会相反。<br/>
-  <b>BevelBorder有三个构造函数以及一个工厂方法，同时还有BorderFactory创建BevelBorder对象的五个工厂方法：</b><br/>
+<p>  BevelBorder以三维外观绘制边框，其可以表现为升起或是降低。当边框升起时，在边框的底部与右边会出现阴影效果。当降低时，阴影的位置会相反。
+  <b>BevelBorder有三个构造函数以及一个工厂方法，同时还有BorderFactory创建BevelBorder对象的五个工厂方法：</b>
 </p>
-<p><br/>
+
+
 <pre class="src src-java"><span style="color: #a020f0;">public</span> BevelBorder(<span style="color: #228b22;">int</span> <span style="color: #a0522d;">bevelType</span>)
 Border bevelBorder = <span style="color: #a020f0;">new</span> <span style="color: #228b22;">BevelBorder</span>(<span style="color: #008b8b;">BevelBorder</span>.RAISED);
 
@@ -712,7 +714,7 @@ Border bevelBorder = BorderFactory.createBevelBorder(<span style="color: #008b8b
 </pre>
 
 
-</p></div>
+</div>
 
 </div>
 
@@ -720,11 +722,12 @@ Border bevelBorder = BorderFactory.createBevelBorder(<span style="color: #008b8b
 <h2 id="sec-18"><span class="section-number-2">18</span> SoftBevelBorder</h2>
 <div class="outline-text-2" id="text-18">
 
-<p>  oftBevelBorder是BevelBorder的近亲。这个组件会包围四角，所以他们的边并不尖利。<br/>
-  而他使用下边与右边的相应外边颜色只绘制一条线。<br/>
-  <b>SoftBevelBorder有三个构造函数：</b><br/>
+<p>  oftBevelBorder是BevelBorder的近亲。这个组件会包围四角，所以他们的边并不尖利。
+  而他使用下边与右边的相应外边颜色只绘制一条线。
+  <b>SoftBevelBorder有三个构造函数：</b>
 </p>
-<p><br/>
+
+
 <pre class="src src-java"><span style="color: #a020f0;">public</span> SoftBevelBorder(<span style="color: #228b22;">int</span> <span style="color: #a0522d;">bevelType</span>)
 Border softBevelBorder = <span style="color: #a020f0;">new</span> <span style="color: #228b22;">SoftBevelBorder</span>(<span style="color: #008b8b;">SoftBevelBorder</span>.RAISED);
 
@@ -735,7 +738,7 @@ Border softBevelBorder = <span style="color: #a020f0;">new</span> <span style="c
 SoftBevelBorder(<span style="color: #228b22;">int</span> <span style="color: #a0522d;">bevelType</span>, <span style="color: #228b22;">Color</span> <span style="color: #a0522d;">highlightOuterColor</span>, <span style="color: #228b22;">Color</span> <span style="color: #a0522d;">highlightInnerColor</span>, <span style="color: #228b22;">Color</span> <span style="color: #a0522d;">shadowOuterColor</span>, <span style="color: #228b22;">Color</span> <span style="color: #a0522d;">shadowInnerColor</span>)
 </pre>
 
-</p></div>
+</div>
 
 </div>
 
@@ -743,7 +746,7 @@ SoftBevelBorder(<span style="color: #228b22;">int</span> <span style="color: #a0
 <h2 id="sec-19"><span class="section-number-2">19</span> EtchedBorder</h2>
 <div class="outline-text-2" id="text-19">
 
-<p>  建立一个四周有凹痕的边界，也可以指定突边与阴影的颜色.<br/>
+<p>  建立一个四周有凹痕的边界，也可以指定突边与阴影的颜色.
 </p></div>
 
 </div>
@@ -752,13 +755,13 @@ SoftBevelBorder(<span style="color: #228b22;">int</span> <span style="color: #a0
 <h2 id="sec-20"><span class="section-number-2">20</span> CompoundBorder</h2>
 <div class="outline-text-2" id="text-20">
 
-<p>  建立一个复合边界，并可以指定它的内外边界<br/>
+<p>  建立一个复合边界，并可以指定它的内外边界
 </p></div>
 </div>
 </div>
 
 <div id="postamble">
-<p class="date">Date: 2012-07-30 09:58:01 CST</p>
+<p class="date">Date: 2012-08-04 08:43:21 CST</p>
 <p class="author">Author: visaya fan</p>
 <p class="creator">Org version 7.8.11 with Emacs version 23</p>
 

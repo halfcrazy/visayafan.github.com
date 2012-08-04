@@ -7,7 +7,7 @@
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
 <meta name="title" content="Kscope安装及使用"/>
 <meta name="generator" content="Org-mode"/>
-<meta name="generated" content="2012-08-03 07:14:04 CST"/>
+<meta name="generated" content="2012-08-04 08:47:46 CST"/>
 <meta name="author" content="visaya fan"/>
 <meta name="description" content=""/>
 <meta name="keywords" content=""/>
@@ -92,17 +92,20 @@
 </div>
 
 <div id="preamble">
-
+<a href="#" id="tabzilla" class="tabzilla-opened" role="button" aria-expanded="true" aria-controls="tabzilla-panel" title="Close (Esc)">No_Joking</a>
 </div>
 
 <div id="content">
 <h1 class="title">Kscope安装及使用</h1>
 
 
-<link rel="stylesheet" type="text/css" href="../bootstrap/css/bootstrap.css" />
+<link rel="stylesheet" type="text/css" href="../css/bootstrap.mozilla.css" />
+<link rel="stylesheet" type="text/css" href="../css/tabzilla.css" />
 <link rel="stylesheet" type="text/css" href="../css/vf.css" />
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"> </script>
+<script src="../js/tabzilla.js"></script>
 <script src="../bootstrap/js/bootstrap.js"></script>
+
 
 
 <div id="table-of-contents">
@@ -122,9 +125,9 @@
 <h2 id="sec-1"><span class="section-number-2">1</span> Ubuntu 11.04下安装Kscope</h2>
 <div class="outline-text-2" id="text-1">
 
-<p>  到我的网盘下载 <a href="http://pan.baidu.com/netdisk/singlepublic?fid=829364_3068003569">kscope-1.6.2.tar.bz2</a> (包含两个文件：kscope_1.6.2-1_i386.deb和kate_3.5.9.dfsg.1-6_i386.deb)。<br/>
-  双击kscope_1.6.2-1_i386.deb用新立得软件安装（自动解决信赖问题），解压kate_3.5.9.dfsg.1-6_i386.deb将/usr/lib目录下的libkateinterfaces.so.0拷贝到/usr/lib目录下，命令如下：sudo cp libkateinterfaces.so.0 /usr/lib.<br/>
-  之后终端上kscope即可打开程序。<br/>
+<p>  到我的网盘下载 <a href="http://pan.baidu.com/netdisk/singlepublic?fid=829364_3068003569">kscope-1.6.2.tar.bz2</a> (包含两个文件：kscope_1.6.2-1_i386.deb和kate_3.5.9.dfsg.1-6_i386.deb)。
+  双击kscope_1.6.2-1_i386.deb用新立得软件安装（自动解决信赖问题），解压kate_3.5.9.dfsg.1-6_i386.deb将/usr/lib目录下的libkateinterfaces.so.0拷贝到/usr/lib目录下，命令如下：sudo cp libkateinterfaces.so.0 /usr/lib.
+  之后终端上kscope即可打开程序。
 </p></div>
 
 </div>
@@ -134,17 +137,16 @@
 <div class="outline-text-2" id="text-2">
 
 <ol>
-<li>默认字体很难看，可以在 setting-&gt;configure editor-&gt;font&amp;color下配置字体，此配置的是编辑器的字体，file list和tag list的字体可以在setting-&gt;configure kscope-&gt;font下配置。<br/>
+<li>默认字体很难看，可以在 setting-&gt;configure editor-&gt;font&amp;color下配置字体，此配置的是编辑器的字体，file list和tag list的字体可以在setting-&gt;configure kscope-&gt;font下配置。
 </li>
-<li>配置外部编辑器，setting-&gt;configure kscope-&gt;option默认是用kate &ndash;line %L %F，可以配置自己的喜欢的编辑器，emacs %L %F或gvim %L %F。<br/>
+<li>配置外部编辑器，setting-&gt;configure kscope-&gt;option默认是用kate &ndash;line %L %F，可以配置自己的喜欢的编辑器，emacs %L %F或gvim %L %F。
 </li>
-<li>支持汉字：tools-&gt;encoding-&gt;chinese simplified(gb2312)<br/>
+<li>支持汉字：tools-&gt;encoding-&gt;chinese simplified(gb2312)
 </li>
 </ol>
 
 
-<p>  <br/>
-</p></div>
+</div>
 
 </div>
 
@@ -152,33 +154,33 @@
 <h2 id="sec-3"><span class="section-number-2">3</span> 建工程</h2>
 <div class="outline-text-2" id="text-3">
 
-<p>  首先要安装cscope，命令sudo apt-get install cscope即可。<br/>
-  此处以阅读Linux内核源码为例。<br/>
-  两种方法：<br/>
+<p>  首先要安装cscope，命令sudo apt-get install cscope即可。
+  此处以阅读Linux内核源码为例。
+  两种方法：
 </p><ul>
-<li>命令行方式用cscope生成cscope.out，可以查看我以前写的文章：<a href="http://blog.csdn.net/PfanAya/article/details/6400629">Windows + emacs+cscope看源代码</a><br/>
+<li>命令行方式用cscope生成cscope.out，可以查看我以前写的文章：<a href="http://blog.csdn.net/PfanAya/article/details/6400629">Windows + emacs+cscope看源代码</a>
 <ol>
-<li>切换到内核目录 执行命令 find -name '*.[c|h|s|S]' &gt; cscope.files，此时目录下会多出cscope.files文件<br/>
+<li>切换到内核目录 执行命令 find -name '*.[c|h|s|S]' &gt; cscope.files，此时目录下会多出cscope.files文件
 </li>
-<li>再执行cscope -b （因内核太庞大，此处可能需要几分钟时间），之后会生成cscope.out文件。<br/>
+<li>再执行cscope -b （因内核太庞大，此处可能需要几分钟时间），之后会生成cscope.out文件。
 </li>
 </ol>
 
-<p>   然后再在Project-&gt;open cscope.out.即可<br/>
+<p>   然后再在Project-&gt;open cscope.out.即可
 </p></li>
-<li>建工程<br/>
+<li>建工程
 <ol>
-<li>Project-&gt;New Project 输入工程名并指定内核所在目录（例如：/media/d/study/linux/kernel_study/linux-3.1.4），File type中选择文件类型，option中选择kernel project（如果阅读不是内核的话不用选），Refresh database automatically根据需要选择更新时间（如果是内核的话，不需要选，因为文件太大，更新花时间且根本不会有什么变动），之后Create创建。<br/>
+<li>Project-&gt;New Project 输入工程名并指定内核所在目录（例如：/media/d/study/linux/kernel_study/linux-3.1.4），File type中选择文件类型，option中选择kernel project（如果阅读不是内核的话不用选），Refresh database automatically根据需要选择更新时间（如果是内核的话，不需要选，因为文件太大，更新花时间且根本不会有什么变动），之后Create创建。
 </li>
-<li>之后添加工程文件，可以先Tree之后选择内核的根目录，即可看到开始扫描文件。<br/>
+<li>之后添加工程文件，可以先Tree之后选择内核的根目录，即可看到开始扫描文件。
 </li>
-<li>cscope-&gt;rebuild database 开始建立数据库（可能会花费些时间）<br/>
+<li>cscope-&gt;rebuild database 开始建立数据库（可能会花费些时间）
 </li>
-<li>Project-&gt;Properties中project root选择工程的根目录（也可以在1中就选择）<br/>
+<li>Project-&gt;Properties中project root选择工程的根目录（也可以在1中就选择）
 </li>
 </ol>
 
-<p>    之后即可开始查看源码。<br/>
+<p>    之后即可开始查看源码。
 </p></li>
 </ul>
 
@@ -190,9 +192,9 @@
 <h2 id="sec-4"><span class="section-number-2">4</span> 使用Graphviz生成函数关系图</h2>
 <div class="outline-text-2" id="text-4">
 
-<p>  安装graphviz，命令sudo apt-get install graphviz即可。<br/>
-  光标放在一个函数上,快捷键Ctrl+\即可调用graphviz，在函数名上右键可看到选项：此函数调用的函数和调用此函数的函数。可以list/filter过滤查看自己想要查看的函数。<br/>
-  工具栏上可以选择以图形方式还是以树形方式查看。<br/>
+<p>  安装graphviz，命令sudo apt-get install graphviz即可。
+  光标放在一个函数上,快捷键Ctrl+\即可调用graphviz，在函数名上右键可看到选项：此函数调用的函数和调用此函数的函数。可以list/filter过滤查看自己想要查看的函数。
+  工具栏上可以选择以图形方式还是以树形方式查看。
 </p></div>
 
 </div>
@@ -202,15 +204,15 @@
 <div class="outline-text-2" id="text-5">
 
 <ol>
-<li>查看cscope菜单下选项，可以查看变量/函数定义，此函数调用的函数和调用此函数的函数，支持正则表达式查找。<br/>
+<li>查看cscope菜单下选项，可以查看变量/函数定义，此函数调用的函数和调用此函数的函数，支持正则表达式查找。
 </li>
-<li>支持代码折叠：view-&gt;code folding<br/>
+<li>支持代码折叠：view-&gt;code folding
 </li>
-<li>位置记忆：next/previous position和next/previous result和position history<br/>
+<li>位置记忆：next/previous position和next/previous result和position history
 </li>
-<li>设置书签以方便下次快速定位。<br/>
+<li>设置书签以方便下次快速定位。
 </li>
-<li>file-&gt;export html很实用的功能<br/>
+<li>file-&gt;export html很实用的功能
 </li>
 </ol>
 
@@ -219,7 +221,7 @@
 </div>
 
 <div id="postamble">
-<p class="date">Date: 2012-08-03 07:14:04 CST</p>
+<p class="date">Date: 2012-08-04 08:47:46 CST</p>
 <p class="author">Author: visaya fan</p>
 <p class="creator">Org version 7.8.11 with Emacs version 23</p>
 

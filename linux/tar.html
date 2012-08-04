@@ -7,7 +7,7 @@
 <meta http-equiv="Content-Type" content="text/html;charset=gb18030"/>
 <meta name="title" content="tar, gzip, bzip2, zip, unzip 压缩解压"/>
 <meta name="generator" content="Org-mode"/>
-<meta name="generated" content="2012-08-03 06:57:21 CST"/>
+<meta name="generated" content="2012-08-04 08:47:46 CST"/>
 <meta name="author" content="visaya fan"/>
 <meta name="description" content=""/>
 <meta name="keywords" content=""/>
@@ -60,7 +60,6 @@
                                  font-weight:bold; }
   /*]]>*/-->
 </style>
-<link rel="stylesheet" type="text/css" href="../css/vf.css" />
 <script type="text/javascript">
 <!--/*--><![CDATA[/*><!--*/
  function CodeHighlightOn(elem, id)
@@ -93,11 +92,19 @@
 </div>
 
 <div id="preamble">
-
+<a href="#" id="tabzilla" class="tabzilla-opened" role="button" aria-expanded="true" aria-controls="tabzilla-panel" title="Close (Esc)">No_Joking</a>
 </div>
 
 <div id="content">
 <h1 class="title">tar, gzip, bzip2, zip, unzip 压缩解压</h1>
+
+
+<link rel="stylesheet" type="text/css" href="../css/bootstrap.mozilla.css" />
+<link rel="stylesheet" type="text/css" href="../css/tabzilla.css" />
+<link rel="stylesheet" type="text/css" href="../css/vf.css" />
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"> </script>
+<script src="../js/tabzilla.js"></script>
+<script src="../bootstrap/js/bootstrap.js"></script>
 
 
 <div id="table-of-contents">
@@ -148,7 +155,7 @@
 <h2 id="sec-1"><span class="section-number-2">1</span> tar</h2>
 <div class="outline-text-2" id="text-1">
 
-<p>  tar只是对多个文件目录打包并没有压缩<br/>
+<p>  tar只是对多个文件目录打包并没有压缩
 </p>
 </div>
 
@@ -164,14 +171,15 @@
 <div class="outline-text-4" id="text-1-1-1">
 
 
-<p><br/>
+
+
 <pre class="example">--file = archive-name
 -f archive-name
 this option determines the name of the archive file that tar will work on.
 指定要操作的tar文件
 </pre>
 
-</p></div>
+</div>
 
 </div>
 
@@ -180,7 +188,8 @@ this option determines the name of the archive file that tar will work on.
 <div class="outline-text-4" id="text-1-1-2">
 
 
-<p><br/>
+
+
 <pre class="example">   -verbose
    -v
    shows details about the results of running tar. This can be especially useful
@@ -188,7 +197,7 @@ when the results might not be obvious.
    显示tar运行的过程。为用户展现工作过程避免用户错误终止该程序。
 </pre>
 
-</p></div>
+</div>
 
 </div>
 
@@ -197,13 +206,14 @@ when the results might not be obvious.
 <div class="outline-text-4" id="text-1-1-3">
 
 
-<p><br/>
+
+
 <pre class="example">-create
 -c
 create a new archive
 </pre>
 
-</p></div>
+</div>
 
 </div>
 
@@ -212,7 +222,8 @@ create a new archive
 <div class="outline-text-4" id="text-1-1-4">
 
 
-<p><br/>
+
+
 <pre class="example">--list
 -t
 显示archive file中的文件
@@ -221,7 +232,7 @@ tar -tvf vf.tar 显示详细信息（ls -l)
 
 </pre>
 
-</p></div>
+</div>
 
 </div>
 
@@ -230,7 +241,8 @@ tar -tvf vf.tar 显示详细信息（ls -l)
 <div class="outline-text-4" id="text-1-1-5">
 
 
-<p><br/>
+
+
 <pre class="example">--extract
 -x
 uncompress 解压缩。
@@ -238,7 +250,7 @@ tar -xvf vf.tar
 
 </pre>
 
-</p></div>
+</div>
 
 </div>
 
@@ -247,14 +259,15 @@ tar -xvf vf.tar
 <div class="outline-text-4" id="text-1-1-6">
 
 
-<p><br/>
+
+
 <pre class="example">--append
 -r
 向archive file中添加文件
 tar -rf vf.tar exp.cpp       %将exp.cpp添加到vf.tar中
 </pre>
 
-</p></div>
+</div>
 
 </div>
 
@@ -263,7 +276,8 @@ tar -rf vf.tar exp.cpp       %将exp.cpp添加到vf.tar中
 <div class="outline-text-4" id="text-1-1-7">
 
 
-<p><br/>
+
+
 <pre class="example">--concatenate
 -A
 将一个tar文件内容复制到另一个压缩文件中去。
@@ -271,7 +285,7 @@ tar -Af vf.tar a.tar         %将a.tar中内容拷贝到vf.tar中
 
 </pre>
 
-</p></div>
+</div>
 </div>
 
 </div>
@@ -281,14 +295,15 @@ tar -Af vf.tar a.tar         %将a.tar中内容拷贝到vf.tar中
 <div class="outline-text-3" id="text-1-2">
 
 
-<p><br/>
+
+
 <pre class="example">tar -xvf vf.tar               %将vf.tar解压到当前目录
 tar -xvf vf.tar vf            %其中vf是vf.tar中的一个文件夹
 tar -xvf vf.tar vf.cpp        %其中vf.cpp是vf.tar中的一个文件
 tar -xvf vf.tar vf/vf/Debug   %只解压vf/vf/Debug
 </pre>
 
-</p></div>
+</div>
 </div>
 
 </div>
@@ -297,8 +312,8 @@ tar -xvf vf.tar vf/vf/Debug   %只解压vf/vf/Debug
 <h2 id="sec-2"><span class="section-number-2">2</span> gzip, bzip2</h2>
 <div class="outline-text-2" id="text-2">
 
-<p>  gzip对文本文件进行压缩，后缀为gz<br/>
-  bzip2比gzip有更高的压缩比率，后缀为bz2<br/>
+<p>  gzip对文本文件进行压缩，后缀为gz
+  bzip2比gzip有更高的压缩比率，后缀为bz2
 </p>
 </div>
 
@@ -307,12 +322,13 @@ tar -xvf vf.tar vf/vf/Debug   %只解压vf/vf/Debug
 <div class="outline-text-3" id="text-2-1">
 
 
-<p><br/>
+
+
 <pre class="example">gzip vf.tar          %此时压缩vf.tar会变成vf.tar.gz
 gunzip vf.tar.gz     %此时解压vf.tar.gz为vf.tar 等价于gzip -d vf.tar.gz
 </pre>
 
-</p></div>
+</div>
 
 </div>
 
@@ -321,12 +337,13 @@ gunzip vf.tar.gz     %此时解压vf.tar.gz为vf.tar 等价于gzip -d vf.tar.gz
 <div class="outline-text-3" id="text-2-2">
 
 
-<p><br/>
+
+
 <pre class="example">bzip2 vf.tar         %此时压缩vf.tar生成vf.tar.bz2
 bunzip2 vf.tar.bz2   %此时解压生成vf.tar 等价于bzip2 -d vf.tar.bz2
 </pre>
 
-</p></div>
+</div>
 
 </div>
 
@@ -335,7 +352,8 @@ bunzip2 vf.tar.bz2   %此时解压生成vf.tar 等价于bzip2 -d vf.tar.bz2
 <div class="outline-text-3" id="text-2-3">
 
 
-<p><br/>
+
+
 <pre class="example">tar -zxvf vf.tar.gz  %解压vf.tar.gz并拆包vf.tar
 tar -jxvf vf.tar.bz2 解压vf.tar.bz2并拆包vf.tar
 同理将上面的x变成c就可用来直接将打包并压缩生成相应的gz和bz2文件：
@@ -343,9 +361,8 @@ tar -zcvf vf.tar.gz vf1 vf2    %将vf1 vf2两个文件打包生成vf.tar并压缩生成vf.tar.
 tar -jcvf vf.tar.bz2 vf1 vf2   %将vf1 vf2两个文件打包生成vf.tar并压缩生成vf.tar.bz2
 </pre>
 
-</p>
-<p>   <br/>
-</p></div>
+
+</div>
 </div>
 
 </div>
@@ -361,8 +378,8 @@ tar -jcvf vf.tar.bz2 vf1 vf2   %将vf1 vf2两个文件打包生成vf.tar并压缩生成vf.tar.
 <h3 id="sec-3-1"><span class="section-number-3">3.1</span> -@</h3>
 <div class="outline-text-3" id="text-3-1">
 
-<p>   find -maxdepth 1 -name "*.cpp" | zip source -@<br/>
-   read names from stdin <br/>
+<p>   find -maxdepth 1 -name "*.cpp" | zip source -@
+   read names from stdin 
 </p></div>
 
 </div>
@@ -371,8 +388,8 @@ tar -jcvf vf.tar.bz2 vf1 vf2   %将vf1 vf2两个文件打包生成vf.tar并压缩生成vf.tar.
 <h3 id="sec-3-2"><span class="section-number-3">3.2</span> -r</h3>
 <div class="outline-text-3" id="text-3-2">
 
-<p>   添加文件<br/>
-   zip -r vf vf.cpp <br/>
+<p>   添加文件
+   zip -r vf vf.cpp 
 </p></div>
 </div>
 
@@ -383,17 +400,16 @@ tar -jcvf vf.tar.bz2 vf1 vf2   %将vf1 vf2两个文件打包生成vf.tar并压缩生成vf.tar.
 <div class="outline-text-2" id="text-4">
 
 
-<p>  <br/>
-</p>
+
 </div>
 
 <div id="outline-container-4-1" class="outline-3">
 <h3 id="sec-4-1"><span class="section-number-3">4.1</span> -v</h3>
 <div class="outline-text-3" id="text-4-1">
 
-<p>   be verbose/print version info<br/>
-   unzip -v vf.zip<br/>
-   或者 unzip -v vf 自带识别zip文件<br/>
+<p>   be verbose/print version info
+   unzip -v vf.zip
+   或者 unzip -v vf 自带识别zip文件
 </p></div>
 
 </div>
@@ -402,8 +418,8 @@ tar -jcvf vf.tar.bz2 vf1 vf2   %将vf1 vf2两个文件打包生成vf.tar并压缩生成vf.tar.
 <h3 id="sec-4-2"><span class="section-number-3">4.2</span> -l</h3>
 <div class="outline-text-3" id="text-4-2">
 
-<p>   list files (short format)<br/>
-   查看内部文件<br/>
+<p>   list files (short format)
+   查看内部文件
 </p></div>
 
 </div>
@@ -412,15 +428,15 @@ tar -jcvf vf.tar.bz2 vf1 vf2   %将vf1 vf2两个文件打包生成vf.tar并压缩生成vf.tar.
 <h3 id="sec-4-3"><span class="section-number-3">4.3</span> -t</h3>
 <div class="outline-text-3" id="text-4-3">
 
-<p>   test compressed archive data<br/>
-   检查zip文件是否正常，有没有错误<br/>
+<p>   test compressed archive data
+   检查zip文件是否正常，有没有错误
 </p></div>
 </div>
 </div>
 </div>
 
 <div id="postamble">
-<p class="date">Date: 2012-08-03 06:57:21 CST</p>
+<p class="date">Date: 2012-08-04 08:47:46 CST</p>
 <p class="author">Author: visaya fan</p>
 <p class="creator">Org version 7.8.11 with Emacs version 23</p>
 

@@ -7,7 +7,7 @@
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
 <meta name="title" content="Java输入输出笔记"/>
 <meta name="generator" content="Org-mode"/>
-<meta name="generated" content="2012-07-30 09:58:03 CST"/>
+<meta name="generated" content="2012-08-04 08:36:20 CST"/>
 <meta name="author" content="visaya fan"/>
 <meta name="description" content=""/>
 <meta name="keywords" content=""/>
@@ -60,22 +60,6 @@
                                  font-weight:bold; }
   /*]]>*/-->
 </style>
-<link rel="stylesheet" type="text/css" href="../../css/vf.css" />
-<script type="text/javascript" src="../css/org-top-bottom.js"></script>
-<script type="text/javascript" >
-<!--/*--><![CDATA[/*><!--*/
-org_html_manager.set("TOC_DEPTH", "3");
-org_html_manager.set("LINK_HOME", "../../index.html");
-org_html_manager.set("LINK_UP", "../index.html");
-org_html_manager.set("LOCAL_TOC", "1");
-org_html_manager.set("VIEW_BUTTONS", "0");
-org_html_manager.set("MOUSE_HINT", "#cccccc");
-org_html_manager.set("FIXED_TOC", "1");
-org_html_manager.set("TOC", "1");
-org_html_manager.set("VIEW", "content");
-org_html_manager.setup();  // activate after the parameters are set
-/*]]>*///-->
-</script>
 <script type="text/javascript">
 <!--/*--><![CDATA[/*><!--*/
  function CodeHighlightOn(elem, id)
@@ -101,25 +85,33 @@ org_html_manager.setup();  // activate after the parameters are set
 
 </head>
 <body>
-<div id="org-div-home-and-up" style="text-align:right;font-size:100%;white-space:nowrap;">
- <a accesskey="h" href="../index.html">UP </a>
-|
- <a accesskey="H" href="../../index.html">HOME </a>
+<div id="org-div-home-and-up">
+ <a accesskey="h" href="../index.html"> UP </a>
+ |
+ <a accesskey="H" href="../../index.html"> HOME </a>
 </div>
 
 <div id="preamble">
-
+<a href="#" id="tabzilla" class="tabzilla-opened" role="button" aria-expanded="true" aria-controls="tabzilla-panel" title="Close (Esc)">No_Joking</a>
 </div>
 
 <div id="content">
 <h1 class="title">Java输入输出笔记</h1>
 
 
+<link rel="stylesheet" type="text/css" href="../../css/bootstrap.mozilla.css" />
+<link rel="stylesheet" type="text/css" href="../../css/tabzilla.css" />
+<link rel="stylesheet" type="text/css" href="../../css/vf.css" />
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"> </script>
+<script src="../../bootstrap/js/bootstrap.js"></script>
+<script src="../../js/tabzilla.js"></script>
+
+
 <div id="table-of-contents">
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#sec-1">1 java.io!</a>
+<li><a href="#sec-1">1 java.io</a>
 <ul>
 <li><a href="#sec-1-1">1.1 File 文件类</a>
 <ul>
@@ -147,7 +139,7 @@ org_html_manager.setup();  // activate after the parameters are set
 </div>
 
 <div id="outline-container-1" class="outline-2">
-<h2 id="sec-1"><span class="section-number-2">1</span> java.io!</h2>
+<h2 id="sec-1"><span class="section-number-2">1</span> java.io</h2>
 <div class="outline-text-2" id="text-1">
 
 
@@ -157,8 +149,8 @@ org_html_manager.setup();  // activate after the parameters are set
 <h3 id="sec-1-1"><span class="section-number-3">1.1</span> File 文件类</h3>
 <div class="outline-text-3" id="text-1-1">
 
-<p>   提供对文件和目录的基本操作方法，例如：创建/删除 文件/目录，提取各种属性（大小，路径，修改时间，文件名，可执行，可读写&hellip;)，重命名，列出当前目录下的文件等。<br/>
-   该类比较简单，此处只记录部分难点。<br/>
+<p>   提供对文件和目录的基本操作方法，例如：创建/删除 文件/目录，提取各种属性（大小，路径，修改时间，文件名，可执行，可读写&hellip;)，重命名，列出当前目录下的文件等。
+   该类比较简单，此处只记录部分难点。
 </p>
 </div>
 
@@ -166,7 +158,7 @@ org_html_manager.setup();  // activate after the parameters are set
 <h4 id="sec-1-1-1"><span class="section-number-4">1.1.1</span> File.separator</h4>
 <div class="outline-text-4" id="text-1-1-1">
 
-<p>    为使文件分隔符平台无关而创建的一个与平台有关的变量，在Win上是\在*nix上是/<br/>
+<p>    为使文件分隔符平台无关而创建的一个与平台有关的变量，在Win上是\在*nix上是/
 </p></div>
 
 </div>
@@ -175,10 +167,11 @@ org_html_manager.setup();  // activate after the parameters are set
 <h4 id="sec-1-1-2"><span class="section-number-4">1.1.2</span> File getAbsoluteFile()</h4>
 <div class="outline-text-4" id="text-1-1-2">
 
-<p>   File对象调用该方法，返回一个与File对象。<br/>
-   如果调用File对象本身就是绝对路径，则返回File对象与调用File对象没有区别；如果调用File对象是相对路径，则返回File对象与调用File对象区别仅在前者是绝对路径，后者相对路径。<br/>
+<p>   File对象调用该方法，返回一个与File对象。
+   如果调用File对象本身就是绝对路径，则返回File对象与调用File对象没有区别；如果调用File对象是相对路径，则返回File对象与调用File对象区别仅在前者是绝对路径，后者相对路径。
 </p>
-<p><br/>
+
+
 <pre class="src src-java"><span style="color: #228b22;">File</span> <span style="color: #a0522d;">file</span> = <span style="color: #a020f0;">new</span> <span style="color: #228b22;">File</span>(<span style="color: #8b2252;">"/home/visayafan/study/program/java/JavaIO/src/xjtu/test.txt"</span>);
 System.out.println(file);
 System.out.println(file.getAbsoluteFile());
@@ -188,9 +181,7 @@ System.out.println(file);
 System.out.println(file.getAbsoluteFile());
 </pre>
 
-</p>
-<p>   <br/>
-</p></div>
+</div>
 </div>
 
 </div>
@@ -206,24 +197,28 @@ System.out.println(file.getAbsoluteFile());
 <h4 id="sec-1-2-1"><span class="section-number-4">1.2.1</span> 输入输出流简介</h4>
 <div class="outline-text-4" id="text-1-2-1">
 
-<p>   <b>流</b> 任何有能力产生数据源的数据对象或接受数据的接收端对象。<br/>
-   任何继承自InputStream或Reader的类都有read方法，可以从流中读取单个字节或字节数组数据，任何继承自OutputStream/Writer的类都有write方法，可以向流中写单个字节或字节数组数据。<br/>
-   字节处理数据的方法效率是相当低的，于是出现了各种过滤流（处理流／包装流）。创建流对象时很少使用单一的类来创建，通常是用多种类的组合来达到期望的目的，如现有一字符串，想把它作为数据源，可以用 <code>StringReader</code> ，它的构造函数参数为String类型，于是:<br/>
+<p>   <b>流</b> 任何有能力产生数据源的数据对象或接受数据的接收端对象。
+   任何继承自InputStream或Reader的类都有read方法，可以从流中读取单个字节或字节数组数据，任何继承自OutputStream/Writer的类都有write方法，可以向流中写单个字节或字节数组数据。
+   字节处理数据的方法效率是相当低的，于是出现了各种过滤流（处理流／包装流）。创建流对象时很少使用单一的类来创建，通常是用多种类的组合来达到期望的目的，如现有一字符串，想把它作为数据源，可以用 <code>StringReader</code> ，它的构造函数参数为String类型，于是:
 </p>
-<p><br/>
+
+
 <pre class="src src-java"><span style="color: #228b22;">StringReader</span> <span style="color: #a0522d;">sr</span> = <span style="color: #a020f0;">new</span> <span style="color: #228b22;">StrignReader</span>(<span style="color: #8b2252;">"theStringYouHave"</span>)
 </pre>
 
-   也可以用 <code>BufferedReader</code> ，其构造函数参数类型为Reader类型，由于StringReader继承自Reader，于是可以做为其参数：<br/>
+<p>
+   也可以用 <code>BufferedReader</code> ，其构造函数参数类型为Reader类型，由于StringReader继承自Reader，于是可以做为其参数：
 </p>
-<p><br/>
+
+
 <pre class="src src-java"><span style="color: #228b22;">BufferedReader</span> <span style="color: #a0522d;">br</span> = <span style="color: #a020f0;">new</span> <span style="color: #228b22;">BufferedReader</span>(<span style="color: #a020f0;">new</span> <span style="color: #228b22;">StringReader</span>(<span style="color: #8b2252;">"theStringYouHave"</span>)).
 </pre>
 
-   不同包装类有其自己不同其它类的优势，例如： <code>DataOutputStream</code> 可以和 <code>DataInputStream</code> 处理基本类型数据； <code>BufferedInputStream</code> 和 <code>BufferedOutputStream</code> 由于使用了缓冲技术对大批数据的处理速度比较快；<br/>
+<p>
+   不同包装类有其自己不同其它类的优势，例如： <code>DataOutputStream</code> 可以和 <code>DataInputStream</code> 处理基本类型数据； <code>BufferedInputStream</code> 和 <code>BufferedOutputStream</code> 由于使用了缓冲技术对大批数据的处理速度比较快；
 </p>
-<p><br/>
-   Reader和Writer类与InputStream/OutputStream类不同在于前者是面向字符而后才面向字节，通常1字符=2个字节，可以通过 <code>InputStreamReader</code> 和 <code>OutputStreamWriter</code> 实现字节处理到字符处理的转化。<br/>
+<p>
+   Reader和Writer类与InputStream/OutputStream类不同在于前者是面向字符而后才面向字节，通常1字符=2个字节，可以通过 <code>InputStreamReader</code> 和 <code>OutputStreamWriter</code> 实现字节处理到字符处理的转化。
 </p></div>
 
 </div>
@@ -234,16 +229,16 @@ System.out.println(file.getAbsoluteFile());
 
 <ul>
 <li id="sec-1-2-2-1">FilterInputStream<br/>
-     <code>FilterInputStream</code> 包含其它的 <code>InputStream</code> 做为它的数据源，并对输入输出流进行特定的控制。<br/>
-     其子类常用的有：<br/>
+     <code>FilterInputStream</code> 包含其它的 <code>InputStream</code> 做为它的数据源，并对输入输出流进行特定的控制。
+     其子类常用的有：
 <ol>
-<li>DataInputStream：与 <code>DataOutputStream</code> 配合使用，可以按照可移植方式读取基本类型。<br/>
+<li>DataInputStream：与 <code>DataOutputStream</code> 配合使用，可以按照可移植方式读取基本类型。
 </li>
-<li>BufferedInputStream：带缓冲区的<br/>
+<li>BufferedInputStream：带缓冲区的
 </li>
-<li>LinedNumberInputStream：跟踪行号：getLineNumber(), setLineNumber(int)<br/>
+<li>LinedNumberInputStream：跟踪行号：getLineNumber(), setLineNumber(int)
 </li>
-<li>PushbackInputStream：将最后读取的字符退回到流中，例如已知需要从流中获取的数据以特定的字节终结但并不知道具体的数目时，可以用 <code>PushbackInputStream</code> ，此时会把读到的终结字符退回到流中等待下次读取<br/>
+<li>PushbackInputStream：将最后读取的字符退回到流中，例如已知需要从流中获取的数据以特定的字节终结但并不知道具体的数目时，可以用 <code>PushbackInputStream</code> ，此时会把读到的终结字符退回到流中等待下次读取
 </li>
 </ol>
 
@@ -251,17 +246,17 @@ System.out.println(file.getAbsoluteFile());
 </ul>
 <ul>
 <li id="sec-1-2-2-2">FilterOutputStream<br/>
-     常用子类有：<br/>
+     常用子类有：
 <ol>
-<li>DataOutputStream<br/>
+<li>DataOutputStream
 </li>
-<li>BufferedOutputStream<br/>
+<li>BufferedOutputStream
 </li>
-<li>PrintStream:用来方便处理数据输出。<br/>
+<li>PrintStream:用来方便处理数据输出。
 <ul>
-<li>不像其它 <code>OutputStream</code> 输出一样， <code>PrintStream</code> 不会抛出IOException异常，异常仅会设置一个内部标志，可以会 <code>checkError</code> 方法来检查。<br/>
+<li>不像其它 <code>OutputStream</code> 输出一样， <code>PrintStream</code> 不会抛出IOException异常，异常仅会设置一个内部标志，可以会 <code>checkError</code> 方法来检查。
 </li>
-<li><code>PrintStream</code> 可以设置为当字节数组写入时自动调用flush方法来自动刷新<br/>
+<li><code>PrintStream</code> 可以设置为当字节数组写入时自动调用flush方法来自动刷新
 </li>
 </ul>
 
@@ -269,8 +264,7 @@ System.out.println(file.getAbsoluteFile());
 </ol>
 
 
-<p><br/>
-</p></li>
+</li>
 </ul>
 </div>
 
@@ -282,20 +276,20 @@ System.out.println(file.getAbsoluteFile());
 
 <ul>
 <li id="sec-1-2-3-1">Reader<br/>
-     <code>OutputStream</code> 和 <code>InputStream</code> 是 <code>字节</code> 层次的类，而 <code>Reader Writer</code> 是 <code>字符</code> 层次的类，前者不能很好地处理Unicode字符，而后者则支持较好。<br/>
-     常用子类：<br/>
+     <code>OutputStream</code> 和 <code>InputStream</code> 是 <code>字节</code> 层次的类，而 <code>Reader Writer</code> 是 <code>字符</code> 层次的类，前者不能很好地处理Unicode字符，而后者则支持较好。
+     常用子类：
 <ol>
-<li>BufferedReader<br/>
+<li>BufferedReader
 </li>
-<li>CharArrayReader<br/>
+<li>CharArrayReader
 </li>
-<li>InputStreamReader<br/>
+<li>InputStreamReader
 </li>
-<li>StringReader<br/>
+<li>StringReader
 </li>
-<li>PipedReader<br/>
+<li>PipedReader
 </li>
-<li>FilterReader<br/>
+<li>FilterReader
 </li>
 </ol>
 
@@ -304,19 +298,19 @@ System.out.println(file.getAbsoluteFile());
 <ul>
 <li id="sec-1-2-3-2">Writer<br/>
 <ol>
-<li>BufferedWriter<br/>
+<li>BufferedWriter
 </li>
-<li>CharArrayWriter<br/>
+<li>CharArrayWriter
 </li>
-<li>OutStreamWriter<br/>
+<li>OutStreamWriter
 </li>
-<li>PipedWriter<br/>
+<li>PipedWriter
 </li>
-<li>StringWriter<br/>
+<li>StringWriter
 </li>
-<li>FilterWriter<br/>
+<li>FilterWriter
 </li>
-<li>PrintWriter: 可以将格式化的对象输出到输出流，例如format和printf函数。为更容易由 <code>PrintStream</code> 过渡到 <code>PrintWriter</code> ， <code>PrintWriter</code> 即接受Writer对象又接受OutputStream对象，并且还接收File和String对象来初始化。<br/>
+<li>PrintWriter: 可以将格式化的对象输出到输出流，例如format和printf函数。为更容易由 <code>PrintStream</code> 过渡到 <code>PrintWriter</code> ， <code>PrintWriter</code> 即接受Writer对象又接受OutputStream对象，并且还接收File和String对象来初始化。
 </li>
 </ol>
 
@@ -330,21 +324,20 @@ System.out.println(file.getAbsoluteFile());
 <h4 id="sec-1-2-4"><span class="section-number-4">1.2.4</span> RandomAccessFile</h4>
 <div class="outline-text-4" id="text-1-2-4">
 
-<p>    随机存储，其工作方式类似把 <code>DataInputStream</code> 和 <code>DataOutputStream</code> 结合起来并添加了可移动文件指针的相关函数，例如：<br/>
+<p>    随机存储，其工作方式类似把 <code>DataInputStream</code> 和 <code>DataOutputStream</code> 结合起来并添加了可移动文件指针的相关函数，例如：
 </p><ol>
-<li>getFilePointer(): 返回当前偏移<br/>
+<li>getFilePointer(): 返回当前偏移
 </li>
-<li>length(): 返回文件长度<br/>
+<li>length(): 返回文件长度
 </li>
-<li>seek(long pos): 设置文件指针偏移<br/>
+<li>seek(long pos): 设置文件指针偏移
 </li>
-<li>setLength(int n): 设置文件长度<br/>
+<li>setLength(int n): 设置文件长度
 </li>
 </ol>
 
 
-<p>    <br/>
-</p></div>
+</div>
 
 </div>
 
@@ -354,11 +347,12 @@ System.out.println(file.getAbsoluteFile());
 
 <ul>
 <li id="sec-1-2-5-1">in/out/err<br/>
-    <code>System.in System.out System.err</code> 为标准输入输出，标准错误输出流。<br/>
-    <img src="../image/Screenshot.png"  alt="../image/Screenshot.png" /><br/>
-    可以看到out和err是PrintStream类型，而in是未加包装的原始InputStream，所以如果要使用out或err的话，可以直接用System.out或System.err来初始化包装类，而System.in必须加以手工包装。<br/>
+    <code>System.in System.out System.err</code> 为标准输入输出，标准错误输出流。
+    <img src="../image/Screenshot.png"  alt="../image/Screenshot.png" />
+    可以看到out和err是PrintStream类型，而in是未加包装的原始InputStream，所以如果要使用out或err的话，可以直接用System.out或System.err来初始化包装类，而System.in必须加以手工包装。
 
-<p><br/>
+
+
 <pre class="src src-java">        <span style="color: #b22222;">/*</span><span style="color: #b22222;">&#29992; InputStreamReader &#23558; InputStream&#31867;&#22411;&#30340; System.in &#36716;&#21270;&#25104; Reader&#31867;&#22411;&#65292;</span>
 <span style="color: #b22222;">&#24182;&#29992;&#26469;&#21021;&#22987;&#21270;&#19968;&#20010;BufferedREader*/</span>
         <span style="color: #228b22;">BufferedReader</span> <span style="color: #a0522d;">bfr</span> = <span style="color: #a020f0;">new</span> <span style="color: #228b22;">BufferedReader</span>(<span style="color: #a020f0;">new</span> <span style="color: #228b22;">InputStreamReader</span>(System.in));
@@ -372,11 +366,11 @@ System.out.println(file.getAbsoluteFile());
         pw.println(<span style="color: #8b2252;">"helloworld"</span>);
 </pre>
 
-</p></li>
+</li>
 </ul>
 <ul>
 <li id="sec-1-2-5-2">重定向<br/>
-     System.setIn(InputStream)/setOut(PrintStream)/setErr(PrintStream)可以重定向标准输入输出标准错误输出。<br/>
+     System.setIn(InputStream)/setOut(PrintStream)/setErr(PrintStream)可以重定向标准输入输出标准错误输出。
 </li>
 </ul>
 </div>
@@ -396,20 +390,18 @@ System.out.println(file.getAbsoluteFile());
 <h3 id="sec-2-1"><span class="section-number-3">2.1</span> ByteBuffer</h3>
 <div class="outline-text-3" id="text-2-1">
 
-<p>   函数:<br/>
-   <code>ByteBuffer slice()</code> 返回一个ByteBuffer对象，内容为当前ByteBuffer从position开始的内容，<br/>
-   并且二者共用内存（即修改一个会影响另一个）。<br/>
+<p>   函数:
+   <code>ByteBuffer slice()</code> 返回一个ByteBuffer对象，内容为当前ByteBuffer从position开始的内容，
+   并且二者共用内存（即修改一个会影响另一个）。
 </p>
-<p><br/>
-</p>
-<p>   <br/>
-</p></div>
+
+</div>
 </div>
 </div>
 </div>
 
 <div id="postamble">
-<p class="date">Date: 2012-07-30 09:58:03 CST</p>
+<p class="date">Date: 2012-08-04 08:36:20 CST</p>
 <p class="author">Author: visaya fan</p>
 <p class="creator">Org version 7.8.11 with Emacs version 23</p>
 
