@@ -7,7 +7,7 @@
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
 <meta name="title" content="进程的创建与销毁"/>
 <meta name="generator" content="Org-mode"/>
-<meta name="generated" content="2012-08-04 23:50:00 CST"/>
+<meta name="generated" content="2012-08-09 16:59:54 CST"/>
 <meta name="author" content="visaya fan"/>
 <meta name="description" content=""/>
 <meta name="keywords" content=""/>
@@ -105,6 +105,7 @@
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"> </script>
 <script src="../js/tabzilla.js"></script>
 <script src="../bootstrap/js/bootstrap.js"></script>
+<script src="../js/disqus-comment.js"></script>
 
 
 
@@ -113,6 +114,8 @@
 <div id="text-table-of-contents">
 <ul>
 <li><a href="#sec-1">1 clone fork vfork</a></li>
+<li><a href="#sec-2">2 do_fork</a></li>
+<li><a href="#sec-3">3 copy_process</a></li>
 </ul>
 </div>
 </div>
@@ -164,11 +167,156 @@
 </pre>
 
 </p></div>
+
+</div>
+
+<div id="outline-container-2" class="outline-2">
+<h2 id="sec-2"><span class="section-number-2">2</span> do_fork</h2>
+<div class="outline-text-2" id="text-2">
+
+<p>  1中的函数都调用了do_fork。<br/>
+  函数执行过程：<br/>
+</p><ul>
+<li>从pidmap_array中获取一个进程ID，分配失败则出错返回<br/>
+</li>
+<li>检查当前正在运行的进程是否正在被跟踪<br/>
+<ul>
+<li>如果是则检查参数中的flag是否被设置了CLONE_UNTRACE<br/>
+<ul>
+<li>如果没有，则设置标志的CLONE_PTRACE位<br/>
+</li>
+</ul>
+
+</li>
+</ul>
+
+</li>
+</ul>
+
+
+<p><br/>
+<pre class="src src-c"><span class="linenr">1:  </span><span style="color: #a020f0;">if</span> (unlikely(current-&gt;ptrace)) {
+<span class="linenr">2:  </span>        trace = fork_traceflag (clone_flags);
+<span class="linenr">3:  </span>        <span style="color: #a020f0;">if</span> (trace)
+<span class="linenr">4:  </span>            clone_flags |= CLONE_PTRACE;
+<span class="linenr">5:  </span>}
+</pre>
+
+</p><ul>
+<li>用copy_process函数复制父进程的进程描述符，创建新的进程描述符。<br/>
+<ol>
+<li>分配失败则释放分配的进程ID并返回pid，此时pid为随机数<br/>
+</li>
+<li>否则：<br/>
+<ul>
+<li>检查参数flag中是否设置了CLONE_VFORK,如果有则初始化一个completion结构体，并将新建进程描述符的vfork_donw指针指向此结构体。<br/>
+</li>
+</ul>
+
+</li>
+</ol>
+
+</li>
+</ul>
+
+
+<p><br/>
+<pre class="src src-c"><span class="linenr">1:  </span><span style="color: #a020f0;">struct</span> <span style="color: #228b22;">completion</span> <span style="color: #a0522d;">vfork</span>;
+<span class="linenr">2:  </span><span style="color: #a020f0;">if</span> (clone_flags &amp; CLONE_VFORK) {
+<span class="linenr">3:  </span>    p-&gt;vfork_done = &amp;vfork;
+<span class="linenr">4:  </span>    init_completion(&amp;vfork);
+<span class="linenr">5:  </span>}
+</pre>
+
+         completion结构体如下：<br/>
+</p>
+<p><br/>
+<pre class="src src-c"><span class="linenr">1:  </span><span style="color: #a020f0;">struct</span> <span style="color: #228b22;">completion</span> {
+<span class="linenr">2:  </span>    <span style="color: #228b22;">unsigned</span> <span style="color: #228b22;">int</span> <span style="color: #a0522d;">done</span>;
+<span class="linenr">3:  </span>    <span style="color: #228b22;">wait_queue_head_t</span> <span style="color: #a0522d;">wait</span>;
+<span class="linenr">4:  </span>};
+</pre>
+
+         task_struct-&gt;vfork_done是为vfork服务。<br/>
+</p><ul>
+<li>如果标志中的CLONE_STOPPED或父进程的ptrace被设置PT_TRACED，则给新建进程发送SIGSTOP信号<br/>
+</li>
+<li>如果CLONE_STOPPED没有被设置，则调用 wake_up_new_task 唤醒新建的进程。否则设置其状态为 TASK_STOPPED<br/>
+</li>
+<li>如果父进程被跟踪，则设置当前进程描述符的 <code>ptrace_message</code> 为新建进程的ID并调用 <code>ptrace_notify</code> 停止当前进程发送SIGCHLD信号通知调试进程当前进程创建了一个新的子进程，其进程ID可以在通过当前进程的 <code>ptrace_message</code> 来获得<br/>
+</li>
+<li>如果设置了 <code>CLONE_VFORK</code> 则等待子进程执行完毕（等待列表中可能有多个，需要调用 __wake_up_common来遍历唤醒<br/>
+</li>
+</ul>
+
+</div>
+
+</div>
+
+<div id="outline-container-3" class="outline-2">
+<h2 id="sec-3"><span class="section-number-2">3</span> copy_process</h2>
+<div class="outline-text-2" id="text-3">
+
+<p>  利用旧进程描述符创建新进程描述符，但是并不在此函数内开始执行。<br/>
+</p><ul>
+<li>检查参数标志中是否有自相矛盾的地方，例如： CLONE_NEWNS和CLONE_FS同时设置，CLONE_THREAD设了但CLONE_SIGHAND没有设置，CLONE_SIGHAND设置了但CLONE_VM没有设置。<br/>
+</li>
+<li>通过调用 <code>security_task_create</code> 进行额外的安全检查<br/>
+</li>
+<li>高用 <code>dup_task_current</code> 进行复制<br/>
+<ul>
+<li>调用 <code>alloc_task_struct</code> 和 <code>alloc_thread_info</code> 分别分配进程描述符和thread_info并通过内部指针相连<br/>
+</li>
+</ul>
+
+</li>
+<li>检查是否资源越界<br/>
+</li>
+<li>一个用户对应一个用户结构，一个进程必属于某个用户，由 <code>task_struct-&gt;user</code> 指向的 <code>struct user</code> 来描述。<br/>
+    增加新建进程对应用户的用户结构计数（__count表此结构被使用的计数）和进程计数（此用户拥有的进程数量）<br/>
+</li>
+<li>检查是否进程数量越界<br/>
+</li>
+<li>如果标志中有 <code>CLONE_PARENT_SETTID</code> 则将新建进程ID赋给参数中的 parent_tidptr<br/>
+</li>
+<li>设置新建进程的ID，标志，<br/>
+</li>
+<li>初始化兄弟和孩子域<br/>
+</li>
+<li>初始化锁 <code>alloc_lock</code> <code>proc_lock</code><br/>
+</li>
+<li>调用copy_semundo( ), copy_files( ) , copy_fs( ), copy_sighand( ), copy_signal( ), copy_mm( ), and copy_namespace( )根据父进程的相关域来初始化新建进程的域<br/>
+</li>
+<li>如果clone_flag中有 clone_chld_settid或clone_chld_cleartid被设置，则设置新建进程的set_child_tid和clear_child_tid为参数中的child_tidptr(表新建进程的id)<br/>
+</li>
+<li>调用 <code>sched_fork</code> 完成调度器数据结构的初始化工作<br/>
+</li>
+<li>如果clone_flag中设置了clone_parent或clone_thread则设置新建进程的real_parent和parent为当前进程的real_parent，否则设置real_parent为当前进程<br/>
+</li>
+<li><code>SET_LINKS</code> 将新建进程加到进程链表中<br/>
+</li>
+<li>调用 <code>attach_pid</code> 将新建进程加到pidhash[PIDTYPE_PID]中<br/>
+<ul>
+<li>如果新建进程是线程组leader（没有设置CLONE_THREAD)则初始化tgid为自身pid，group_leader为自身<br/>
+      调用attach_pid插入到其它3个pidhash中<br/>
+</li>
+<li>否则如果CLONE_THREAD被设置了（表明新建进程与父进程是同一线程组），则设置tgid为父进程的tgid，设置group_leader为父进程的group_leader.<br/>
+</li>
+</ul>
+
+</li>
+<li>增加nr_threads变量和total_forks变量<br/>
+</li>
+<li>返回新建进程描述符指针<br/>
+</li>
+</ul>
+
+</div>
 </div>
 </div>
 
 <div id="postamble">
-<p class="date">Date: 2012-08-04 23:50:00 CST</p>
+<p class="date">Date: 2012-08-09 16:59:54 CST</p>
 <p class="author">Author: visaya fan</p>
 <p class="creator">Org version 7.8.11 with Emacs version 23</p>
 
