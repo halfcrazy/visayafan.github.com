@@ -1993,7 +1993,13 @@ div#org-div-home-and-up {
     text-align:right;
     white-space:nowrap;
 }
-/* Date Author æ˜¾ç¤ºå­—ä½“åŠèƒŒæ™¯ */
+div#menu{
+    position:fixed;
+    right:1.65em;
+    top:6em;
+    text-align:right;
+    white-space:nowrap;
+}
 div#postamble {
 	margin: 10px 0px 20px 12%;
 	font-style: italic;
@@ -2002,8 +2008,13 @@ div#postamble {
     /* background: white; */
     border: none;
 }
-
-
+div#disqus_thread {
+	margin: 10px 0px 20px 12%;
+	font-style: italic;
+	font-size: 12px;
+	font-family:"Courier New", Courier, monospace;
+    border: none;
+}
 blockquote {
     display: block;
     -webkit-margin-before: 1em;
