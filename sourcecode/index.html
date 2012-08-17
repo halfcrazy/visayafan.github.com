@@ -134,28 +134,27 @@
       </div>
     </nav>
 
+    <!--[if lt IE 9]><br><br><br><![endif]-->
     <div class="container-fluid">
-
-      <div class="row-fluid">
-        <aside id="application-status" class="span4">
-          <ul class="nav nav-tabs">
-            <li class="active"><a href="#translation" data-toggle="tab">#</a></li>
-          </ul>
-          <div class="tab-content">
-            <div class="tab-pane active" id="translation">
-              <ul class="nav nav-stacked">
-                <!-- 这里添加文章格式为:<li><a href="文章地址">显示名称</a></li> -->
-              </ul>
+      <ul class="nav nav-tabs">
+        <li class="active"><a href="#css" data-toggle="tab">CSS特效</a></li>
+      </ul>
+      <div class="tab-content">
+        <div class="tab-pane active" id="css">
+          <div class="span3">
+            <div style="border-right:1px solid">
+              <ol>
+                <li><a href="css/slideshow/index.html">幻灯片播放图片</a></li>
+                <li><a href="css/photos/index.html">图片特效</a></li>
+              </ol>
             </div>
           </div>
-        </aside>
-
-        <section id="main" class="span8">
-          <!-- <div class="hero-unit"> -->
-          <!-- </div> -->
-        </section>
+        </div>
       </div>
-    </div>
-
+      <script type="text/javascript">
+        $('.nav-tabs > li > a').hover( function(){
+        $(this).tab('show');
+        });
+      </script>
   </body>
 </html>
