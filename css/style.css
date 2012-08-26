@@ -1240,14 +1240,10 @@ content: "*** "
         border: 1px solid #dddddd;
         overflow: auto;
 
-        -webkit-box-shadow: 0px 0px 4px rgba(0,0,0,0.23);
-        -moz-box-shadow: 0px 0px 4px rgba(0,0,0,0.23);
-        box-shadow: 0px 0px 4px rgba(0,0,0,0.23);
-
 	    box-shadow: #333 3px 3px 4px;
 	    -o-box-shadow: #333 3px 3px 4px;
-	    -webkit-box-shadow: #333 3px 3px 4px;
-	    -moz-border-radius: 3px;
+	    /* -webkit-box-shadow: #333 3px 3px 4px; */
+	    -webkit-box-shadow: 0 0 4px blue;
 	    -webkit-border-radius: 3px;
 	    border-radius: 3px;
     }
