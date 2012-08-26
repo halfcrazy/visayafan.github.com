@@ -58,6 +58,11 @@
                 </a>
               </li>
               <li>
+                <a href="../sourcecode/index.html">
+                  Source Code
+                </a>
+              </li>
+              <li>
                 <a href="../others/index.html">
                   Other Staff
                 </a>
@@ -186,6 +191,10 @@
     <script type="text/javascript">
       $('.nav-tabs > li > a').hover( function(){
       $(this).tab('show');
+      });
+      $(function () {
+      var activeTab = $('[href=' + location.hash + ']');
+      activeTab && activeTab.tab('show');
       });
     </script>
   </body>
