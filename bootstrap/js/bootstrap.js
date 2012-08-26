@@ -1834,3 +1834,14 @@
   })
 
 }(window.jQuery);
+
+function google_go() {
+    location.href = "http://www.google.com.hk/search?q=" + encodeURIComponent("site:fanhan.tk " + document.getElementById('google_q').value);
+    return false;
+}
+function google_go_enter(event) {
+    if (event.keyCode == 13) {
+        google_go();
+        return false;
+    }
+}
