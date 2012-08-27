@@ -1845,3 +1845,21 @@ function google_go_enter(event) {
         return false;
     }
 }
+
+
+
+
+// vf
+$('.nav-tabs > li > a').hover( function(){
+    $(this).tab('show');
+});
+$(function () {
+    var activeTab = $('[href=' + location.hash + ']');
+    activeTab && activeTab.tab('show');
+});
+
+$("[rel=tooltip]").tooltip();
+
+$(function() {
+    $('a[rel="popover"]').popover();
+});
