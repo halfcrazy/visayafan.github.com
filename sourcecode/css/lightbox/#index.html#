@@ -1,0 +1,30 @@
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <!-- lightbox文件，包括两个JS一个CSS -->
+  <link rel="stylesheet" href="../../../css/jquery.lightbox-0.5.css" type="text/css" media="screen" />
+  <script type="text/javascript" src="../../../js/jquery.js"></script>
+  <script type="text/javascript" src="../../../js/jquery.lightbox-0.5.js"></script>
+ <script type="text/javascript">
+    $(function() {
+	$('a[@rel*=lightbox]').lightBox(); // 选择所有的rel为lightbox的链接
+	$('#gallery a').lightBox(); // 选择id为gallery下的所有链接
+	$('a.lightbox').lightBox(); // 选择所有class为lightbox的链接
+	$('a').lightBox(); // 选择页面中所有的链接
+    });
+  </script>
+</head>
+<body>
+  <center>
+    <!-- 也可以 rel="lightbox" 或者 id="gallery" 或者什么也不用 -->
+    <a class="lightbox" href="images/jQuery_lightbox-300x188.png">
+      <img class="lightbox " title="jQuery.lightbox美化图片显示效果" src="images/jQuery_lightbox-300x188.png" alt="jQuery.lightbox美化图片显示效果" width="100" height="80">
+    </a>
+    <p>点击查看大图
+  </center>
+
+  <br><br>
+  <iframe width="100%" height="50%" src="shan.html">
+  </iframe>
+ 
+</body>
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"> </script>

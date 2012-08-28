@@ -786,7 +786,7 @@
     }
     .outline-text-1, .outline-text-2, .outline-text-3, .outline-text-4, .outline-text-5, .outline-text-6 {
         /* Add more spacing between section. Padding, so that folding with org-info.js works as expected. */
-        padding-bottom:1.4em;
+        /* padding-bottom:1.4em; */
     }
     .org-preprocessor {
         /* font-lock-preprocessor-face */
