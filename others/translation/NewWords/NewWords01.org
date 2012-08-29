@@ -1,0 +1,273 @@
+#+OPTIONS: ^:{} _:{} num:t toc:t \n:t
+#+BEGIN_HTML
+<link rel="stylesheet" type="text/css" href="../../../css/bootstrap.mozilla.css" />
+<link rel="stylesheet" type="text/css" href="../../../css/tabzilla.css" />
+<link rel="stylesheet" type="text/css" href="../../../css/vf.css" />
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"> </script>
+<script src="../../../js/tabzilla.js"></script>
+<script src="../../../bootstrap/js/bootstrap.js"></script>
+<script src="../../../js/disqus-comment.js"></script>
+#+END_HTML
+#+title:
+
+* 2012年08月28日 3:37PM
+** shit/shat/shitter/rug
+   shit 过去式 shat
+   shitter 马桶
+   rug
+   地毯
+#+html:<a href="image/9ZVqR.png"><img class="img-rounded" width="200px" height="240px" src="image/9ZVqR.png"></img></a>
+#+html:<a href="image/GoBWHs.jpg"><img class="img-rounded" width="200px" height="240px" src="image/GoBWHs.jpg"></img></a>
+** synthetic
+   (a)综合的 合成的 (n)合成物
+   synthetical (a)综合的
+#+html:<a href="image/t1SIXs.jpg"><img class="img-rounded" width="200px" height="240px" src="image/t1SIXs.jpg"></img></a>
+** intoxicate
+   toxic 有毒的
+   intoxiciate 使中毒／喝醉
+   intoxicated 中毒的/喝醉的
+   He does not drink at all; a little wine way intoxicate him
+#+html:<a href="image/o26gfs.jpg"><img class="img-rounded" width="200px" height="240px" src="image/o26gfs.jpg"></img></a>
+** orangutan
+   猩猩
+   gorilla 大猩猩
+   chimpanzee 黑猩猩
+#+html:<a href="image/HC9MVs.jpg"><img class="img-rounded" width="200px" height="240px" src="image/HC9MVs.jpg"></img></a>
+** nigger/penguin
+   黑鬼
+   ［俚语］nigga 黑鬼
+   penguin 企鹅
+#+html:<a href="image/vFv5Rs.jpg"><img class="img-rounded" width="200px" height="240px" src="image/vFv5Rs.jpg"></img></a>
+** console/Mafia/reprisal
+   console (n)控制台(v)安慰
+   Mafia 黑手党
+   reprisal 报复行为
+#+begin_example
+Today, I was dumped by my boyfriend. To console me, he claimed that it's because he's an agent fighting the Mafia, and he doesn't want to put my life at risk through reprisal attacks. FML
+#+end_example   
+** fragrance/scent/asthma
+   fragrant (adj)芳香的 ->(n) fragrance 芳香 ->(反)flagrant 臭名昭著的，不能容忍的
+   scent （n）味道／嗅觉（v）闻／发出气味
+   asthma 哮喘
+#+begin_example
+Today, I started my new job at a fragrance store. While training, the manager had me smell all of the scents to become familiar with the products. Before my shift was over, I'd had three asthma attacks. FML
+#+end_example
+** anecdote
+   轶事／糗事
+#+begin_example
+FMyLife is an English-language blog that serves as "a recollection of everyday anecdotes likely to happen to anyone".
+#+end_example
+** reconcile
+   和解
+#+begin_example
+Today, my girlfriend and I reconciled after having a huge fight last week. 
+#+end_example
+** be borke/remorse/pancake/syrup
+   be broke 身无分文
+   remorse 同情
+   pancake 薄煎饼
+   syrup 糖浆／果汁
+#+begin_example
+Today, I'm so broke that I got buyer's remorse after buying a $2 bottle of pancake syrup. FML
+#+end_example
+
+** cipher/perpetually/grossed-out
+   cipher （n）密码，暗号（v）使用密码，将XX译成密码
+   perpetual (a)永久的，永恒的 -> perpetually （adv）持续地
+   grossed-out 恶心的
+#+begin_example
+Today, I accidentally decoded the system my parents use for talking about sex while I'm around. It's a substituion cipher, using literary references. As they're both lit. professors, this has me perpetually grossed-out and wondering, "Are they really talking about Anne Frank, or anal fisting?" FML
+#+end_example
+** faint/slap
+   faint (a)头晕的，虚弱的 (v)昏厥，昏倒
+   slap sb hard across the face 狠扇某人的脸
+#+begin_example
+Today, I fainted during my sister's wedding because my dress was too tight. When I woke up, she slapped me hard across the face. Why? Because I "took all the attention away" from her. FML
+#+end_example
+** stray/parasitology
+   stray (a)迷路的(v)流浪，迷路(n)流浪者，走失的家畜 ->stray dog流浪狗
+   parasite 寄生虫 ->parasitology 寄生虫学
+#+begin_example
+Today, I had to hunt down and collect a stray dog's feces for my parasitology class. FML
+#+end_example
+** swagger/shutter shades/produce one's id/session
+   swagger 趾高气扬地走或行事/大摇大摆
+   shutter shades 百叶窗眼镜 http://en.wikipedia.org/wiki/Shutter_Shades
+   produce his id 出示他的证件
+   session 会议
+#+begin_example
+Today, a thirty-something guy swaggered into my workplace. He was wearing shutter shades and torn jeans, and claimed to be our new boss. I called security to throw him out, at which point he produced his ID and let me know I'd be attending an employee review session next week. FML
+#+end_example
+** bat/genuinely/cuddle
+   bat 蝙蝠／球棒 -> baseball bat棒球棒
+   genuine 真正的 -> genuinely 真正地
+   cuddle 拥抱，偎依，搂抱
+#+begin_example
+Today, a baseball bat fell on my head while my boyfriend and I were cuddling. The same baseball bat that he keeps next to the bed, because he genuinely fears a zombie outbreak. FML
+#+end_example
+** migraine/fainting/tablet
+   migraine 偏头痛
+   faint 昏厥 -> fainting(n)
+   tablet 药片/写入板 ->salt tablet盐片 Tablet 平板电脑
+   heart condition 心脏问题
+#+begin_example
+Today, I have a heart condition that causes migraines and fainting, so I take salt tablets to stop the fainting. The migraines can lead to a stroke, so I have medication for them. The medication has a side effect: fainting. And to avoid migraines, I should avoid salt. FML
+#+end_example   
+** culminate in
+   culminate 到达高潮，到达顶点
+   culminate in sth 以XX结束
+   breath spray 口气清新剂
+   pepper spray 防狼喷雾
+#+begin_example
+Today, while on the bus, I took out my breath spray. The elderly lady beside me thought it was pepper spray. She panicked and started screaming, which culminated in the man near her punching me in the jaw. FML
+#+end_example
+** take a dump/penny/dime/turd
+   take a dump 上大号
+   penny 美分
+   dime 一角硬币
+   turd 粪便
+#+begin_example
+Today, I had a hard time taking a dump. Before flushing, I noticed two pennies and a dime incrusted in my turd. It seems that yesterday, while drunk, I swallowed some change. FML
+#+end_example
+** reprimand
+   (n/v)谴责，训斥
+#+begin_example
+Today, my boss reprimanded me in front of the rest of the staff for "not following instructions" because I went to a company meeting. I have the email from him telling me to go to the meeting. He thinks I faked it. Unemployment sucks. FML
+#+end_example
+** tampon/prankster
+   tampon 卫生棉条/棉塞
+   prankster 爱开玩笑的人，恶作剧的人
+#+begin_example
+Today, after having recently moved into shared accommodations, my prankster of a room-mate has somehow made sure I've yet again woken up with a tampon in my mouth. It's been three times in the past week. FML
+#+end_example
+** confide/reassure
+   confide to sb 向某人坦白，说真话
+   reassure sb 使某人安心，消除某人的疑虑
+#+begin_example
+Today, my boyfriend confided to me that he has a used condom collection. When I reacted with disgust, he "reassured" me that he only keeps the ones he uses with me. FML
+#+end_example
+** belly button/umbilical
+   belly 腹部 ->belly button 肚脐
+   cord 细绳，绳索，umbilicial 脐带的 -> umbilical cord 脐带
+#+begin_example
+Today, I had to slowly explain to my best friend that when babies are born, the umbilical cord is attached to the baby's belly-button, not the mother's. FML
+#+end_example
+** refrain
+   refrain 节制，克制 -> refrain from doing sth 不做某事
+#+begin_example
+Today, I realized how much I hate my girlfriend, when I got excited as the doctor told me I should refrain from having sex for the next two months. FML
+#+end_example
+** spice
+   spice (n)香料，情趣(v)增加情趣
+   spice sth up 增加情趣
+#+begin_example
+Today, my boyfriend and I reached that point in our relationship where just a simple phone conversation was too boring. His idea to spice things up? Playing Minecraft together. FML
+#+end_example
+* 2012年08月29日11:32PM
+** sterile
+   sterile 不育的 -> sterility [泌尿]不育，[妇产]不孕 ->sterilize 使绝育，消毒，杀菌
+#+begin_example
+ Today, I announced to my boyfriend that I'm pregnant. He immediately denied that it was his because "a childhood accident" supposedly left him sterile. He has a child from a previous relationship. FML
+#+end_example
+** intimate/shower head/scalding
+   intimate 亲密的／精通的 -> intimacy 亲密，性行为
+   shower head 喷头
+   scald 烫伤 -> scalding 滚烫的
+   my private 我的私处
+#+begin_example
+Today, yet again, I was getting intimate with my shower head. Some complete genius decided to flush the toilet downstairs halfway through, which sent scalding-hot water all up in my privates. I've yet to find a comfortable sitting position. FML
+#+end_example
+** gansta/suburb/grilled
+   gansta 黑帮
+   suburb 郊区
+   grill 烧烤 -> grilled 烧烤的
+#+begin_example
+Today, my son, who seems to think that he is a "gangsta" despite being a white boy from the suburbs, cried because I accidentally burned his grilled cheese. He's 28. FML
+#+end_example
+** crack of dawn
+   dawn 黎明 crack 破裂 -> crack of dawn 破晓
+#+begin_example
+Today, wanting to be on time for my first job interview, I woke up at the crack of dawn and walked almost an hour through a thunderstorm. When I arrived, I was told that the manager wasn't in today, because of the bad weather. FML
+#+end_example
+** refrigerator／fuzz
+   frige = frigerator = refrigerator 冰箱
+   fuzz 绒毛
+   kiwi fruit 狝猴桃
+#+begin_example
+Today, my girlfriend opened my refrigerator and began her standard moan: "You're a pig, you never clean up. Look at that egg, it makes me want to throw up, it's gone black, it’s covered in fuzz, IT'S GOT HAIR ON IT!" I got up to check it out. It was a Kiwi fruit. FML
+#+end_example
+** lawn／sarcasm
+   lawn 草坪 -> lawn mower 剪草机
+   sarcasm 讽刺 -> sarcastic 讽刺的 -> sarcastically 讽刺地
+#+begin_example
+Today, I was digging in my lawn, trying to ignore the suspicious glances coming from my nosy fuckball of a neighbor. When he asked what I was doing, I replied with dripping sarcasm, that I was digging up the schoolkids I killed last year. Fifteen minutes later, the cops he called arrived. FML
+#+end_example
+** buffet/fortune cookie
+   buffet （n）自助餐（a）自助的
+   fortune cookie 福饼
+#+begin_example
+Today, I was at a Chinese buffet, and I got a fortune cookie. I opened it, and it said, "The love of your life is sitting across from you". The only thing across from me was an empty chair. FML
+#+end_example
+** spontaneous/eyepatch/seductively/slay/pussy/wench
+   spontaneous 自发的，自然的，无意识的 -> spontaneously 自然地 ->spontaneity （n）自发性，自然发生
+   [生物]spontaneous generation
+   patch 眼罩 (v)打补丁 -> eyepatch 眼罩
+   seduce 诱惑,引诱 -> seduction ->seductive 性感的,有魅力的
+   slay 杀死
+   pussy (n)猫咪,阴门
+   wench 少女
+#+begin_example
+Today, I had a chat with my husband, and I convinced him to try being more spontaneous to spice up our sex life. This evening, he burst into our bedroom with an eyepatch on, and "seductively" growled, "I'm gonna slay your pussy, wench." FML
+#+end_example
+** mall/hilarious/storm off/reincarnate/turd
+   hilarious 欢闹的,非常滑稽的,喜不自禁的
+   storm off 生气地走开
+   reincarnate 投胎转世
+   turd 粪
+   mall 购物商场
+   the hell out of (情感更加强烈)
+   beat the absolute the hell of his friend 把他朋友打个半死
+   scare/frighten the hell out of me 吓我个半死
+   get the hell out of here 滚开
+#+begin_example
+Today, I was at the mall, when a guy started screaming at his buddy for sleeping with his sister. It was pretty hilarious, so when he stormed off, I mockingly yelled, "Pussy!" He then whirled around and beat the absolute hell out of his friend. Now I feel like I'm going to reincarnate as a turd. FML
+#+end_example
+** coitus/topic of choice
+   topic of choice 选择的主题
+   coitus 性交 -> coital 性交的
+   post-coitial pillow talk 性交后的枕边谈话
+#+begin_example
+Today, after sex, my boyfriend and I lay in bed for a couple of hours just chatting. This would have been lovely. However, his topic of choice for post-coital pillow talk was his theory about how Chewbacca is secretly the leader of the Rebel Alliance. It actually made sense. FML
+#+end_example
+** introvert
+   introvert 内向 ->introverted 内向的
+   extrovert 外向 ->extroverted 外向的
+#+begin_example
+Today, I discovered how pathetically introverted I am when during a car ride with my family, I said, "I really like this song" and my parents gasped because they didn't realize I was in the back seat. And I'm their only child. FML
+#+end_example
+** tornado/intense fear
+   hurricane 飓风
+   cyclone 旋风
+   typhoon 台风
+   tornado 龙卷风
+   intense fear 强烈恐惧
+   tampon 卫生棉
+#+begin_example
+Today, my mom's intense fear of tornadoes caused her to break into the bathroom, drag me off the toilet while I was changing my tampon, and drag me to the basement with my pants around my ankles to join my father, brother, and my brother's best friend. FML
+#+end_example
+** brain-dead/wannabe/cuss out/pretentious
+   brain-dead 脑残的
+   wannabe (a)想要成为的 -> wannabee (n)对明星的盲目崇拜
+   Jersey Shore wannabe 非常崇拜Jersey Shore的人
+   cuss 诅咒 -> cuss out 驳倒,辱骂,诅咒
+   pretentious 自负的,自命不凡的 ->pretentiousness
+#+begin_example
+Today, at work, I was forced to nod and smile as a pregnant, fifteen-year-old, brain-dead Jersey Shore wannabe cussed me out for being rude by using words from a "foreign language" during our conversation. I used the word "pretentious." FML
+#+end_example
+** pot/rat out/blackmailing
+   pot 壶/盆(推测应该是酒瓶的意思)
+   rat sb out 告密/出卖
+   blackmail (n/v)勒索,敲诈
+#+begin_example
+Today, my mom called me screaming and cussing because she found pot in my room. I come home and my dad says, "I hid some pot in your room and I'm not letting you go to that concert if you rat me out." My dad is apparently a blackmailing 52-year-old stoner. FML
+#+end_example   
