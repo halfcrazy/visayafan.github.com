@@ -92,3 +92,53 @@ Today, I got hypnotized at my school's variety show. Apparently, when asked to d
 emacsrookie ‏@emacsrookie
 @SeyZ_ I would like to show more stuff for the advanced emacs user. Btw I think you confound me with another guy,I never made videos. ;-)
 #+end_example
+* 2012年08月31日 8:26PM
+** refund
+   take a refund 退款
+#+begin_example
+Today, I bought some perfume that I thought smelled absolutely amazing. Later, my boyfriend walked in, sniffed, and said, "What smells like bacon?" The bottle cost 83$. They won't take a refund. FML
+#+end_example
+** rear-ended
+   rear (a)后方,后面 -> rear-ended 追尾
+#+begin_example
+Today, I got rear-ended. An old woman got out and came over to my car window. I thought she was coming to apologize and trade insurance companies. Instead, she poured her soda on my head, ran back into her car, and drove away. FML
+#+end_example
+** cheat on/cheat with/fluster
+   cheat on 对...不忠
+   cheat with 欺骗
+   fluster (v/n)慌张,混乱
+** bail on/laxative
+   bail 保释 -> bail on 放弃,失约
+   laxative 泻药
+#+begin_example
+Today, I had to bail on yet another date with an awesome guy. Every time I make a date, my hateful mother slips laxatives into my food so I'm glued to the shitter until 2am. This is the fourth time. FML
+#+end_example
+** delude
+   delude into 欺骗某人使相信
+#+begin_example
+The manager deluded her into thinking he would give her the job.
+#+end_example
+   delude oneself into 自欺欺人
+#+begin_example
+Don't delude yourself into thinking that the prices will ever fall.
+#+end_example
+#+begin_example
+Today, my girlfriend tried to convince me that she never takes dumps. I told her that as long as she eats, it's a biological impossibility, but she seems to have genuinely deluded herself into thinking it's true, purely because she is a girl. FML
+#+end_example   
+** mutter/battery
+   mutter 咕哝
+   battery (n)电池,殴打->assault and battery 人身攻击
+#+begin_example
+Today, after years of bad blood, my husband decided to invite his parents to dinner. After making rude remarks about my pregnancy, his dad eventually muttered that I'm a slut. My husband punched him, his wife called the police, and now I'm all alone while he sits in a jail cell for battery. FML
+#+end_example
+** ramen/cockroach
+   ramen 面条
+   cockroach 蟑螂
+#+begin_example
+Today, I ordered ramen to go. I looked at my order and discovered a cockroach. Disgusted, I showed it to them, and they apologized by "replacing" it for free. Later on, while I was enjoying the delicious food, I once again discovered a cockroach buried under all the noodles. FML
+#+end_example
+** escort
+   escort (n)陪同,护航舰,护卫队(v)护送,陪同
+#+begin_example
+Today, I was fired from my job. My boss turned to everyone and said, "Allow me to escort this trash out of the office." Everyone cheered. FML
+#+end_example

@@ -64,8 +64,7 @@ Today, my girlfriend and I reconciled after having a huge fight last week.
 #+end_example
 ** be borke/remorse/pancake/syrup
    be broke 身无分文
-   remorse 同情->remorseful 懊悔的 ->remorsefully 极为懊悔的->remorseless冷酷的
-   remorse and reform 悔过自新
+   remorse 同情
    pancake 薄煎饼
    syrup 糖浆／果汁
 #+begin_example
@@ -85,9 +84,8 @@ Today, I accidentally decoded the system my parents use for talking about sex wh
 #+begin_example
 Today, I fainted during my sister's wedding because my dress was too tight. When I woke up, she slapped me hard across the face. Why? Because I "took all the attention away" from her. FML
 #+end_example
-** stray/parasitology/feces
+** stray/parasitology
    stray (a)迷路的(v)流浪，迷路(n)流浪者，走失的家畜 ->stray dog流浪狗
-   feces 粪便
    parasite 寄生虫 ->parasitology 寄生虫学
 #+begin_example
 Today, I had to hunt down and collect a stray dog's feces for my parasitology class. FML
@@ -193,7 +191,6 @@ Today, wanting to be on time for my first job interview, I woke up at the crack 
 #+end_example
 ** refrigerator／fuzz
    frige = frigerator = refrigerator 冰箱
-   = fridge 电冰箱
    fuzz 绒毛
    kiwi fruit 狝猴桃
 #+begin_example
