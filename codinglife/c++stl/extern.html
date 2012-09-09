@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+               "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<title>关键字 extern</title>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
+<meta name="title" content="关键字 extern"/>
+<meta name="generator" content="Org-mode"/>
+<meta name="generated" content="2012-09-10 07:12:30 CST"/>
+<meta name="author" content="visaya fan"/>
+<meta name="description" content=""/>
+<meta name="keywords" content=""/>
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  html { font-family: Times, serif; font-size: 12pt; }
+  .title  { text-align: center; }
+  .todo   { color: red; }
+  .done   { color: green; }
+  .tag    { background-color: #add8e6; font-weight:normal }
+  .target { }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .right  {margin-left:auto; margin-right:0px;  text-align:right;}
+  .left   {margin-left:0px;  margin-right:auto; text-align:left;}
+  .center {margin-left:auto; margin-right:auto; text-align:center;}
+  p.verse { margin-left: 3% }
+  pre {
+	border: 1pt solid #AEBDCC;
+	background-color: #F3F5F7;
+	padding: 5pt;
+	font-family: courier, monospace;
+        font-size: 90%;
+        overflow:auto;
+  }
+  table { border-collapse: collapse; }
+  td, th { vertical-align: top;  }
+  th.right  { text-align:center;  }
+  th.left   { text-align:center;   }
+  th.center { text-align:center; }
+  td.right  { text-align:right;  }
+  td.left   { text-align:left;   }
+  td.center { text-align:center; }
+  dt { font-weight: bold; }
+  div.figure { padding: 0.5em; }
+  div.figure p { text-align: center; }
+  div.inlinetask {
+    padding:10px;
+    border:2px solid gray;
+    margin:10px;
+    background: #ffffcc;
+  }
+  textarea { overflow-x: auto; }
+  .linenr { font-size:smaller }
+  .code-highlighted {background-color:#ffff00;}
+  .org-info-js_info-navigation { border-style:none; }
+  #org-info-js_console-label { font-size:10px; font-weight:bold;
+                               white-space:nowrap; }
+  .org-info-js_search-highlight {background-color:#ffff00; color:#000000;
+                                 font-weight:bold; }
+  /*]]>*/-->
+</style>
+<script type="text/javascript">
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+
+</head>
+<body>
+<div id="org-div-home-and-up">
+ <a accesskey="h" href="index.html"> UP </a>
+ |
+ <a accesskey="H" href="../index.html"> HOME </a>
+</div>
+
+<div id="preamble">
+<a href="#" id="tabzilla" class="tabzilla-opened" role="button" aria-expanded="true" aria-controls="tabzilla-panel" title="Close (Esc)">No_Joking</a>
+</div>
+
+<div id="content">
+<h1 class="title">关键字 extern</h1>
+
+
+<link rel="stylesheet" type="text/css" href="../../css/bootstrap.mozilla.css" />
+<link rel="stylesheet" type="text/css" href="../../css/tabzilla.css" />
+<link rel="stylesheet" type="text/css" href="../../css/vf.css" />
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"> </script>
+<script src="../../bootstrap/js/bootstrap.js"></script>
+<script src="../../js/disqus-comment.js"></script>
+<script src="../../js/tabzilla.js"></script>
+
+
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#sec-1">1 3种使用方法</a></li>
+<li><a href="#sec-2">2 注意事项</a></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-1" class="outline-2">
+<h2 id="sec-1"><span class="section-number-2">1</span> 3种使用方法</h2>
+<div class="outline-text-2" id="text-1">
+
+<ol>
+<li>与变量一起用表示该变量不在该模块中定义，告诉编译器去它所包含的头文件里找，此时 <code>extern int a;</code> 只是一个声明，并不是定义，没有分配内存空间。<br/>
+</li>
+<li>同理与函数名一直使用的时候表示这个函数在别的文件里。<br/>
+</li>
+<li>与 "C" 一起使用表示告诉编译器按照C语言的编译规则来转化函数名，而非C++，因为C++支持函数重载，编译器会把函数名变成比较复杂的形式，而C编译器则不会，例如： <code>extern "C" float f(int a)</code> 。多数编译器会在他们的头文件中处理转换连接指定，不必自己动手指定。<br/>
+</li>
+</ol>
+
+</div>
+
+</div>
+
+<div id="outline-container-2" class="outline-2">
+<h2 id="sec-2"><span class="section-number-2">2</span> 注意事项</h2>
+<div class="outline-text-2" id="text-2">
+
+<ul>
+<li>对于数组，形如：char pch[]="abc"; 使用外部引用时需要 <code>extern char pch[4]</code> ，类型必须严格一致，前面为大小为4的字符数组，所以外部引用时必须指明大小为4，不能简单的 <code>extern char *pch</code> 或 <code>extern char pch[]</code> 。<br/>
+</li>
+<li>一般使用是将定义放在cpp文件中， <code>extern</code> 声明放在h文件中，然后在main文件中include头文件，例如<br/>
+</li>
+</ul>
+
+
+<p><br/>
+<pre class="src src-c++"><span style="color: #b22222;">//</span><span style="color: #b22222;">vf.h</span>
+<span style="color: #a020f0;">extern</span> <span style="color: #228b22;">char</span> *<span style="color: #a0522d;">pch</span>;       (ref:<span style="color: #a020f0;">extern</span>)
+<span style="color: #b22222;">//</span><span style="color: #b22222;">vf.cpp</span>
+<span style="color: #228b22;">char</span> *<span style="color: #a0522d;">pch</span> = <span style="color: #8b2252;">"abc"</span>;
+
+<span style="color: #b22222;">//</span><span style="color: #b22222;">main.cpp</span>
+<span style="color: #7a378b;">#include</span> <span style="color: #8b2252;">&lt;iostream&gt;</span>
+<span style="color: #7a378b;">#include</span> <span style="color: #8b2252;">"vf.h"</span>
+<span style="color: #a020f0;">using</span> <span style="color: #a020f0;">namespace</span> <span style="color: #008b8b;">std</span>;
+<span style="color: #228b22;">int</span> <span style="color: #0000ff;">main</span>(<span style="color: #228b22;">int</span> <span style="color: #a0522d;">argc</span>, <span style="color: #228b22;">char</span> *<span style="color: #a0522d;">argv</span>[])
+{
+    cout&lt;&lt;pch&lt;&lt;endl;
+    <span style="color: #a020f0;">return</span> 0;
+}
+</pre>
+
+</p><ul>
+<li>有的人喜欢声明的时候就定义，例如 extern char* pch="abc"，此时有没有extern没有区别。下面例子编译出错，因为test1.cpp中include了vf.h，test2.cpp中也include了vf.h，展开后两个cpp文件中都有pch声明和定义，所以编译出错： <code>multiple definition of pch</code><br/>
+</li>
+</ul>
+
+
+<p><br/>
+<pre class="src src-c++"><span style="color: #b22222;">//</span><span style="color: #b22222;">vf.h</span>
+<span style="color: #a020f0;">extern</span> <span style="color: #228b22;">char</span> *<span style="color: #a0522d;">pch</span>=<span style="color: #8b2252;">"abd"</span>;
+<span style="color: #b22222;">//</span><span style="color: #b22222;">test1.cpp</span>
+<span style="color: #7a378b;">#include</span> <span style="color: #8b2252;">&lt;iostream&gt;</span>
+<span style="color: #7a378b;">#include</span> <span style="color: #8b2252;">"vf.h"</span>
+<span style="color: #228b22;">void</span> <span style="color: #0000ff;">f</span>(){
+    <span style="color: #008b8b;">std</span>::cout&lt;&lt;pch&lt;&lt;<span style="color: #008b8b;">std</span>::endl;
+}
+<span style="color: #b22222;">//</span><span style="color: #b22222;">test2.cpp</span>
+<span style="color: #7a378b;">#include</span> <span style="color: #8b2252;">&lt;iostream&gt;</span>
+<span style="color: #7a378b;">#include</span> <span style="color: #8b2252;">"vf.h"</span>
+<span style="color: #228b22;">void</span> <span style="color: #0000ff;">g</span>(){
+    <span style="color: #008b8b;">std</span>::cout&lt;&lt;pch&lt;&lt;<span style="color: #008b8b;">std</span>::endl;
+}
+<span style="color: #b22222;">//</span><span style="color: #b22222;">main.cpp</span>
+<span style="color: #7a378b;">#include</span> <span style="color: #8b2252;">&lt;iostream&gt;</span>
+<span style="color: #7a378b;">#include</span> <span style="color: #8b2252;">"vf.h"</span>
+<span style="color: #a020f0;">using</span> <span style="color: #a020f0;">namespace</span> <span style="color: #008b8b;">std</span>;
+<span style="color: #228b22;">int</span> <span style="color: #0000ff;">main</span>(<span style="color: #228b22;">int</span> <span style="color: #a0522d;">argc</span>, <span style="color: #228b22;">char</span> *<span style="color: #a0522d;">argv</span>[])
+{
+    cout&lt;&lt;pch&lt;&lt;endl;
+    <span style="color: #a020f0;">return</span> 0;
+}
+</pre>
+
+</p><ul>
+<li>extern与static的区别： <code>static</code> 声明同时定义，而 <code>extern</code> 可以声明同时定义也可以只声明不定义。<br/>
+</li>
+</ul>
+
+
+<p><br/>
+<pre class="src src-c++"><span style="color: #b22222;">//</span><span style="color: #b22222;">vf.h</span>
+<span style="color: #a020f0;">static</span> <span style="color: #228b22;">char</span> <span style="color: #a0522d;">pch</span>[]={<span style="color: #8b2252;">'a'</span>,<span style="color: #8b2252;">'b'</span>,<span style="color: #8b2252;">'c'</span>};
+<span style="color: #228b22;">void</span> <span style="color: #0000ff;">f</span>();
+<span style="color: #228b22;">void</span> <span style="color: #0000ff;">g</span>();
+<span style="color: #b22222;">//</span><span style="color: #b22222;">test1.cpp</span>
+<span style="color: #7a378b;">#include</span> <span style="color: #8b2252;">"vf.h"</span>
+<span style="color: #228b22;">void</span> <span style="color: #0000ff;">f</span>(){pch[0]=<span style="color: #8b2252;">'0'</span>;}
+<span style="color: #7a378b;">#include</span> <span style="color: #8b2252;">"vf.h"</span>
+<span style="color: #228b22;">void</span> <span style="color: #0000ff;">g</span>(){pch[0]=<span style="color: #8b2252;">'1'</span>;}
+</pre>
+
+   上面的代码可以编译成功，虽然test1中的pch和test2中的pch名称相同但地址不同，彼此互不影响（编译器优化时可能将它们当成地址空间相同来处理，但这只是编译器优化的结果，并不是真正的结果），即pch在test1中声明定义了一次，在test2中声明定义了一次。但如果将static换成extern并将定义写在vf.cpp中，则test1和test2的pch共享同一个地址。<br/>
+</p><ul>
+<li>头文件中 <code>static int a</code> 和 <code>int a</code> 的区别：后者如果有两个cpp文件t1,t2同时include该头文件，则编译出错，因为a被重复定义，因为a是全局的，对t1和t2都是可见的，所以会冲突。而前者则不会static表明a是一个内部连接，t1中的a只对t1有效，即t1和t2中的a互不关联，名字一样但地址空间不同，所以不会冲突。<br/>
+</li>
+</ul>
+
+</div>
+</div>
+</div>
+
+<div id="postamble">
+<p class="date">Date: 2012-09-10 07:12:30 CST</p>
+<p class="author">Author: visaya fan</p>
+<p class="creator">Org version 7.8.11 with Emacs version 23</p>
+
+
+</div>
+</body>
+</html>

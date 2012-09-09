@@ -1,0 +1,293 @@
+<?xml version="1.0" encoding="gb18030"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+               "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<title>Boost: 进度条</title>
+<meta http-equiv="Content-Type" content="text/html;charset=gb18030"/>
+<meta name="title" content="Boost: 进度条"/>
+<meta name="generator" content="Org-mode"/>
+<meta name="generated" content="2012-09-10 07:12:22 CST"/>
+<meta name="author" content="visaya fan"/>
+<meta name="description" content=""/>
+<meta name="keywords" content=""/>
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  html { font-family: Times, serif; font-size: 12pt; }
+  .title  { text-align: center; }
+  .todo   { color: red; }
+  .done   { color: green; }
+  .tag    { background-color: #add8e6; font-weight:normal }
+  .target { }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .right  {margin-left:auto; margin-right:0px;  text-align:right;}
+  .left   {margin-left:0px;  margin-right:auto; text-align:left;}
+  .center {margin-left:auto; margin-right:auto; text-align:center;}
+  p.verse { margin-left: 3% }
+  pre {
+	border: 1pt solid #AEBDCC;
+	background-color: #F3F5F7;
+	padding: 5pt;
+	font-family: courier, monospace;
+        font-size: 90%;
+        overflow:auto;
+  }
+  table { border-collapse: collapse; }
+  td, th { vertical-align: top;  }
+  th.right  { text-align:center;  }
+  th.left   { text-align:center;   }
+  th.center { text-align:center; }
+  td.right  { text-align:right;  }
+  td.left   { text-align:left;   }
+  td.center { text-align:center; }
+  dt { font-weight: bold; }
+  div.figure { padding: 0.5em; }
+  div.figure p { text-align: center; }
+  div.inlinetask {
+    padding:10px;
+    border:2px solid gray;
+    margin:10px;
+    background: #ffffcc;
+  }
+  textarea { overflow-x: auto; }
+  .linenr { font-size:smaller }
+  .code-highlighted {background-color:#ffff00;}
+  .org-info-js_info-navigation { border-style:none; }
+  #org-info-js_console-label { font-size:10px; font-weight:bold;
+                               white-space:nowrap; }
+  .org-info-js_search-highlight {background-color:#ffff00; color:#000000;
+                                 font-weight:bold; }
+  /*]]>*/-->
+</style>
+<script type="text/javascript">
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+
+</head>
+<body>
+<div id="org-div-home-and-up">
+ <a accesskey="h" href="index.html"> UP </a>
+ |
+ <a accesskey="H" href="../index.html"> HOME </a>
+</div>
+
+<div id="preamble">
+<a href="#" id="tabzilla" class="tabzilla-opened" role="button" aria-expanded="true" aria-controls="tabzilla-panel" title="Close (Esc)">No_Joking</a>
+</div>
+
+<div id="content">
+<h1 class="title">Boost: 进度条</h1>
+
+
+<link rel="stylesheet" type="text/css" href="../../css/bootstrap.mozilla.css" />
+<link rel="stylesheet" type="text/css" href="../../css/tabzilla.css" />
+<link rel="stylesheet" type="text/css" href="../../css/vf.css" />
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"> </script>
+<script src="../../bootstrap/js/bootstrap.js"></script>
+<script src="../../js/disqus-comment.js"></script>
+<script src="../../js/tabzilla.js"></script>
+
+
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#sec-1">1 timer</a></li>
+<li><a href="#sec-2">2 progress_timer</a></li>
+<li><a href="#sec-3">3 progress_display</a></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-1" class="outline-2">
+<h2 id="sec-1"><span class="section-number-2">1</span> timer</h2>
+<div class="outline-text-2" id="text-1">
+
+<p>  timer t; //声明一个timer类对象t，调用构造函数开始计时<br/>
+  timer t(t0); //调用默认的复制构造函数，t的流逝时间与t0相同<br/>
+  成员函数：<br/>
+</p><ol>
+<li>elapsed() 流逝的时间<br/>
+</li>
+<li>elapsed_max() 计时器最大范围<br/>
+</li>
+<li>elapsed_min() 计时器最小范围<br/>
+</li>
+<li>restart() 重新开始计时<br/>
+</li>
+</ol>
+
+</div>
+
+</div>
+
+<div id="outline-container-2" class="outline-2">
+<h2 id="sec-2"><span class="section-number-2">2</span> progress_timer</h2>
+<div class="outline-text-2" id="text-2">
+
+<p>  该类构造函数开始计时，析构函数则在适当的位置以适当的形式打印自构造函数调用开始到析构函数调用的时间。<br/>
+</p></div>
+
+</div>
+
+<div id="outline-container-3" class="outline-2">
+<h2 id="sec-3"><span class="section-number-2">3</span> progress_display</h2>
+<div class="outline-text-2" id="text-3">
+
+<p>  以进度条的形式显示进度：<br/>
+</p>
+<p><br/>
+<pre class="example">0%   10   20   30   40   50   60   70   80   90   100%
+|----|----|----|----|----|----|----|----|----|----|
+************************************
+</pre>
+
+
+<pre class="src src-java">progress_display( unsigned <span style="color: #228b22;">long</span> <span style="color: #a0522d;">expected_count</span>,
+                  std::ostream&amp; os,  <span style="color: #b22222;">// </span><span style="color: #b22222;">os is hint; implementation may ignore</span>
+                  <span style="color: #a020f0;">const</span> <span style="color: #228b22;">std</span>::string &amp; s1 = <span style="color: #8b2252;">"\n"</span>, <span style="color: #b22222;">//</span><span style="color: #b22222;">leading strings</span>
+                  <span style="color: #a020f0;">const</span> <span style="color: #228b22;">std</span>::string &amp; s2 = <span style="color: #8b2252;">""</span>,
+                  <span style="color: #a020f0;">const</span> <span style="color: #228b22;">std</span>::string &amp; s3 = <span style="color: #8b2252;">""</span> )
+</pre>
+
+  成员函数：<br/>
+</p><ol>
+<li>count() 进度计数<br/>
+</li>
+<li>expected_count() 返回初始化该类对象的expected_count值<br/>
+</li>
+<li>restart(unsigned long expected_count) 中止当前进度条的显示，并重新赋值<br/>
+</li>
+</ol>
+
+
+<p><br/>
+文档中给的例子：<br/>
+</p>
+<p><br/>
+<pre class="src src-c++"><span style="color: #b22222;">//  </span><span style="color: #b22222;">timer, job_timer, and progress_display sample program  -------------------//</span>
+
+<span style="color: #b22222;">//  </span><span style="color: #b22222;">Copyright Beman Dawes 1998.  Distributed under the Boost</span>
+<span style="color: #b22222;">//  </span><span style="color: #b22222;">Software License, Version 1.0. (See accompanying file</span>
+<span style="color: #b22222;">//  </span><span style="color: #b22222;">LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)</span>
+
+<span style="color: #b22222;">//  </span><span style="color: #b22222;">See http://www.boost.org/libs/timer for documentation.</span>
+
+<span style="color: #b22222;">//  </span><span style="color: #b22222;">Revision History</span>
+<span style="color: #b22222;">//  </span><span style="color: #b22222;">12 Jan 01  Cut time to 1.0 secs to speed regression tests (Beman Dawes)</span>
+<span style="color: #b22222;">//  </span><span style="color: #b22222;">25 Sep 99  added elapsed_min() and elapsed_max() reporting</span>
+<span style="color: #b22222;">//  </span><span style="color: #b22222;">16 Jul 99  Second beta</span>
+<span style="color: #b22222;">//   </span><span style="color: #b22222;">6 Jul 99  Initial boost version</span>
+
+<span style="color: #7a378b;">#include</span> <span style="color: #8b2252;">&lt;boost/progress.hpp&gt;</span>
+<span style="color: #7a378b;">#include</span> <span style="color: #8b2252;">&lt;iostream&gt;</span>
+<span style="color: #7a378b;">#include</span> <span style="color: #8b2252;">&lt;climits&gt;</span>
+
+<span style="color: #a020f0;">using</span> <span style="color: #008b8b;">boost</span>::<span style="color: #228b22;">timer</span>;
+<span style="color: #a020f0;">using</span> <span style="color: #008b8b;">boost</span>::<span style="color: #228b22;">progress_timer</span>;
+<span style="color: #a020f0;">using</span> <span style="color: #008b8b;">boost</span>::<span style="color: #228b22;">progress_display</span>;
+<span style="color: #a020f0;">using</span> <span style="color: #008b8b;">std</span>::<span style="color: #228b22;">cout</span>;
+<span style="color: #a020f0;">using</span> <span style="color: #008b8b;">std</span>::<span style="color: #228b22;">endl</span>;
+
+<span style="color: #228b22;">int</span> <span style="color: #0000ff;">main</span>()
+{
+
+    <span style="color: #228b22;">timer</span> <span style="color: #a0522d;">t0</span>;  <span style="color: #b22222;">// </span><span style="color: #b22222;">used only for elapsed_max() and elapsed_min()</span>
+
+    cout &lt;&lt; <span style="color: #8b2252;">"timer::elapsed_min() reports "</span> &lt;&lt; t0.elapsed_min() &lt;&lt; <span style="color: #8b2252;">" seconds\n"</span>;
+    cout &lt;&lt; <span style="color: #8b2252;">"timer::elapsed_max() reports "</span> &lt;&lt; t0.elapsed_max()
+         &lt;&lt; <span style="color: #8b2252;">" seconds, which is "</span> &lt;&lt; t0.elapsed_max()/3600.0 &lt;&lt; <span style="color: #8b2252;">" hours\n"</span>;
+
+    cout &lt;&lt; <span style="color: #8b2252;">"\nverify progress_display(0) doesn't divide by zero"</span> &lt;&lt; endl;
+    <span style="color: #228b22;">progress_display</span> <span style="color: #a0522d;">zero</span>( 0 );  <span style="color: #b22222;">// </span><span style="color: #b22222;">verify 0 doesn't divide by zero</span>
+    ++zero;
+
+    <span style="color: #228b22;">long</span> <span style="color: #a0522d;">loops</span>;
+    <span style="color: #228b22;">timer</span> <span style="color: #a0522d;">loop_timer</span>;
+    <span style="color: #a020f0;">const</span> <span style="color: #228b22;">double</span> <span style="color: #a0522d;">time</span> = 1.0;
+
+    cout &lt;&lt; <span style="color: #8b2252;">"\ndetermine "</span> &lt;&lt; time &lt;&lt; <span style="color: #8b2252;">" second iteration count"</span> &lt;&lt; endl;
+    <span style="color: #a020f0;">for</span> ( loops = 0; loops &lt; LONG_MAX
+            &amp;&amp; loop_timer.elapsed() &lt; time; ++loops ) {}
+    cout &lt;&lt; loops &lt;&lt; <span style="color: #8b2252;">" iterations"</span>&lt;&lt; endl;
+
+    <span style="color: #228b22;">long</span> <span style="color: #a0522d;">i</span>;
+    <span style="color: #228b22;">bool</span> <span style="color: #a0522d;">time_waster</span>; <span style="color: #b22222;">// </span><span style="color: #b22222;">defeat [some] optimizers by storing result here</span>
+
+    <span style="color: #228b22;">progress_timer</span> <span style="color: #a0522d;">pt</span>;
+    <span style="color: #228b22;">timer</span> <span style="color: #a0522d;">t1</span>;
+    <span style="color: #228b22;">timer</span> <span style="color: #a0522d;">t4</span>;
+    <span style="color: #228b22;">timer</span> <span style="color: #a0522d;">t5</span>;
+
+    cout &lt;&lt; <span style="color: #8b2252;">"\nburn about "</span> &lt;&lt; time &lt;&lt; <span style="color: #8b2252;">" seconds"</span> &lt;&lt; endl;
+    <span style="color: #228b22;">progress_display</span> <span style="color: #a0522d;">pd</span>( loops );
+    <span style="color: #a020f0;">for</span> ( i = loops; i--; ) {
+        time_waster = loop_timer.elapsed() &lt; time;
+        ++pd;
+    }
+
+    <span style="color: #228b22;">timer</span> <span style="color: #a0522d;">t2</span>( t1 );
+    <span style="color: #228b22;">timer</span> <span style="color: #a0522d;">t3</span>;
+    t4 = t3;
+    t5.restart();
+
+    cout &lt;&lt; <span style="color: #8b2252;">"\nburn about "</span> &lt;&lt; time &lt;&lt; <span style="color: #8b2252;">" seconds again"</span> &lt;&lt; endl;
+    pd.restart( loops );
+    <span style="color: #a020f0;">for</span> ( i = loops; i--; ) {
+        time_waster = loop_timer.elapsed() &lt; time;
+        ++pd;
+    }
+
+    <span style="color: #a020f0;">if</span> ( time_waster ) cout &lt;&lt; <span style="color: #8b2252;">' '</span>;  <span style="color: #b22222;">// </span><span style="color: #b22222;">using time_waster quiets compiler warnings</span>
+    <span style="color: #228b22;">progress_display</span> <span style="color: #a0522d;">pd2</span>( 50, cout, <span style="color: #8b2252;">"\nLead string 1 "</span>, <span style="color: #8b2252;">"Lead string 2 "</span>, <span style="color: #8b2252;">"Lead string 3 "</span> );
+    <span style="color: #a020f0;">for</span> ( ; pd2.count() &lt; 50; ++pd2 ) {}
+
+    cout &lt;&lt; <span style="color: #8b2252;">"\nt1 elapsed: "</span> &lt;&lt; t1.elapsed() &lt;&lt; <span style="color: #8b2252;">'\n'</span>;
+    cout &lt;&lt; <span style="color: #8b2252;">"t2 elapsed: "</span> &lt;&lt; t2.elapsed() &lt;&lt; <span style="color: #8b2252;">'\n'</span>;
+    cout &lt;&lt; <span style="color: #8b2252;">"t3 elapsed: "</span> &lt;&lt; t3.elapsed() &lt;&lt; <span style="color: #8b2252;">'\n'</span>;
+    cout &lt;&lt; <span style="color: #8b2252;">"t4 elapsed: "</span> &lt;&lt; t4.elapsed() &lt;&lt; <span style="color: #8b2252;">'\n'</span>;
+    cout &lt;&lt; <span style="color: #8b2252;">"t5 elapsed: "</span> &lt;&lt; t5.elapsed() &lt;&lt; <span style="color: #8b2252;">'\n'</span>;
+    cout &lt;&lt; <span style="color: #8b2252;">"t1 and t2 should report the same times (very approximately "</span>
+         &lt;&lt; 2*time &lt;&lt; <span style="color: #8b2252;">" seconds).\n"</span>;
+    cout &lt;&lt; <span style="color: #8b2252;">"t3, t4 and t5 should report about the same times,\n"</span>;
+    cout &lt;&lt; <span style="color: #8b2252;">"and these should be about half the t1 and t2 times.\n"</span>;
+    cout &lt;&lt; <span style="color: #8b2252;">"The following elapsed time should be slightly greater than t1."</span>
+         &lt;&lt; endl;
+    <span style="color: #a020f0;">return</span> 0;
+} <span style="color: #b22222;">// </span><span style="color: #b22222;">main</span>
+
+</pre>
+
+</p></div>
+</div>
+</div>
+
+<div id="postamble">
+<p class="date">Date: 2012-09-10 07:12:22 CST</p>
+<p class="author">Author: visaya fan</p>
+<p class="creator">Org version 7.8.11 with Emacs version 23</p>
+
+
+</div>
+</body>
+</html>

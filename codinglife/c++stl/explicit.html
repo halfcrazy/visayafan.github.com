@@ -1,0 +1,240 @@
+<?xml version="1.0" encoding="gb18030"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+               "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<title>关键字 explicit</title>
+<meta http-equiv="Content-Type" content="text/html;charset=gb18030"/>
+<meta name="title" content="关键字 explicit"/>
+<meta name="generator" content="Org-mode"/>
+<meta name="generated" content="2012-09-10 07:12:32 CST"/>
+<meta name="author" content="visaya fan"/>
+<meta name="description" content=""/>
+<meta name="keywords" content=""/>
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  html { font-family: Times, serif; font-size: 12pt; }
+  .title  { text-align: center; }
+  .todo   { color: red; }
+  .done   { color: green; }
+  .tag    { background-color: #add8e6; font-weight:normal }
+  .target { }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .right  {margin-left:auto; margin-right:0px;  text-align:right;}
+  .left   {margin-left:0px;  margin-right:auto; text-align:left;}
+  .center {margin-left:auto; margin-right:auto; text-align:center;}
+  p.verse { margin-left: 3% }
+  pre {
+	border: 1pt solid #AEBDCC;
+	background-color: #F3F5F7;
+	padding: 5pt;
+	font-family: courier, monospace;
+        font-size: 90%;
+        overflow:auto;
+  }
+  table { border-collapse: collapse; }
+  td, th { vertical-align: top;  }
+  th.right  { text-align:center;  }
+  th.left   { text-align:center;   }
+  th.center { text-align:center; }
+  td.right  { text-align:right;  }
+  td.left   { text-align:left;   }
+  td.center { text-align:center; }
+  dt { font-weight: bold; }
+  div.figure { padding: 0.5em; }
+  div.figure p { text-align: center; }
+  div.inlinetask {
+    padding:10px;
+    border:2px solid gray;
+    margin:10px;
+    background: #ffffcc;
+  }
+  textarea { overflow-x: auto; }
+  .linenr { font-size:smaller }
+  .code-highlighted {background-color:#ffff00;}
+  .org-info-js_info-navigation { border-style:none; }
+  #org-info-js_console-label { font-size:10px; font-weight:bold;
+                               white-space:nowrap; }
+  .org-info-js_search-highlight {background-color:#ffff00; color:#000000;
+                                 font-weight:bold; }
+  /*]]>*/-->
+</style>
+<script type="text/javascript">
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+
+</head>
+<body>
+<div id="org-div-home-and-up">
+ <a accesskey="h" href="index.html"> UP </a>
+ |
+ <a accesskey="H" href="../index.html"> HOME </a>
+</div>
+
+<div id="preamble">
+<a href="#" id="tabzilla" class="tabzilla-opened" role="button" aria-expanded="true" aria-controls="tabzilla-panel" title="Close (Esc)">No_Joking</a>
+</div>
+
+<div id="content">
+<h1 class="title">关键字 explicit</h1>
+
+
+<link rel="stylesheet" type="text/css" href="../../css/bootstrap.mozilla.css" />
+<link rel="stylesheet" type="text/css" href="../../css/tabzilla.css" />
+<link rel="stylesheet" type="text/css" href="../../css/vf.css" />
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"> </script>
+<script src="../../bootstrap/js/bootstrap.js"></script>
+<script src="../../js/disqus-comment.js"></script>
+<script src="../../js/tabzilla.js"></script>
+
+
+<p>
+这个 《ANSI/ISO C++ Professional Programmer's Handbook 》是这样说的<br/>
+</p>
+<p><br/>
+explicit Constructors<br/>
+A constructor that takes a single argument is, by default, an implicit conversion operator, which converts its argument to<br/>
+an object of its class (see also Chapter 3, "Operator Overloading"). Examine the following concrete example:<br/>
+</p>
+<p><br/>
+<pre class="src src-c++"><span style="color: #a020f0;">class</span> <span style="color: #228b22;">string</span>
+{
+<span style="color: #a020f0;">private</span>:
+    <span style="color: #228b22;">int</span> <span style="color: #a0522d;">size</span>;
+    <span style="color: #228b22;">int</span> <span style="color: #a0522d;">capacity</span>;
+    <span style="color: #228b22;">char</span> *<span style="color: #a0522d;">buff</span>;
+<span style="color: #a020f0;">public</span>:
+    <span style="color: #0000ff;">string</span>();
+    <span style="color: #0000ff;">string</span>(<span style="color: #228b22;">int</span> <span style="color: #a0522d;">size</span>); <span style="color: #b22222;">// </span><span style="color: #b22222;">constructor and implicit conversion operator</span>
+    <span style="color: #0000ff;">string</span>(<span style="color: #a020f0;">const</span> <span style="color: #228b22;">char</span> *); <span style="color: #b22222;">// </span><span style="color: #b22222;">constructor and implicit conversion operator</span>
+    ~<span style="color: #0000ff;">string</span>();
+};
+</pre>
+
+Class string has three constructors: a default constructor, a constructor that takes int, and a constructor that<br/>
+constructs a string from const char *. The second constructor is used to create an empty string object with an<br/>
+initial preallocated buffer at the specified size. However, in the case of class string, the automatic conversion is<br/>
+dubious. Converting an int into a string object doesn't make sense, although this is exactly what this constructor does.<br/>
+</p>
+<p><br/>
+Consider the following:<br/>
+</p>
+<p><br/>
+<pre class="src src-c++"><span style="color: #228b22;">int</span> <span style="color: #0000ff;">main</span>()
+{
+    <span style="color: #228b22;">string</span> <span style="color: #a0522d;">s</span> = <span style="color: #8b2252;">"hello"</span>; <span style="color: #b22222;">//</span><span style="color: #b22222;">OK, convert a C-string into a string object</span>
+    <span style="color: #228b22;">int</span> <span style="color: #a0522d;">ns</span> = 0;
+    s = 1; <span style="color: #b22222;">// </span><span style="color: #b22222;">1 oops, programmer intended to write ns = 1,</span>
+}
+</pre>
+
+In the expression s= 1;, the programmer simply mistyped the name of the variable ns, typing s instead. Normally,<br/>
+the compiler detects the incompatible types and issues an error message. However, before ruling it out, the compiler first<br/>
+searches for a user-defined conversion that allows this expression; indeed, it finds the constructor that takes int.<br/>
+Consequently, the compiler interprets the expression s= 1; as if the programmer had written<br/>
+s = string(1);<br/>
+You might encounter a similar problem when calling a function that takes a string argument. The following example<br/>
+can either be a cryptic coding style or simply a programmer's typographical error. However, due to the implicit<br/>
+conversion constructor of class string, it will pass unnoticed:<br/>
+</p>
+<p><br/>
+<pre class="src src-c++"><span style="color: #228b22;">int</span> <span style="color: #0000ff;">f</span>(<span style="color: #228b22;">string</span> <span style="color: #a0522d;">s</span>);
+<span style="color: #228b22;">int</span> <span style="color: #0000ff;">main</span>()
+{
+    f(1); <span style="color: #b22222;">// </span><span style="color: #b22222;">without a an explicit constructor,</span>
+<span style="color: #b22222;">//</span><span style="color: #b22222;">this call is expanded into: f ( string(1) );</span>
+<span style="color: #b22222;">//</span><span style="color: #b22222;">was that intentional or merely a programmer's typo?</span>
+}
+</pre>
+
+'In order to avoid such implicit conversions, a constructor that takes one argument needs to be declared explicit:<br/>
+</p>
+<p><br/>
+<pre class="src src-c++"><span style="color: #a020f0;">class</span> <span style="color: #228b22;">string</span>
+{
+<span style="color: #b22222;">//</span><span style="color: #b22222;">...</span>
+<span style="color: #a020f0;">public</span>:
+    <span style="color: #a020f0;">explicit</span> <span style="color: #0000ff;">string</span>(<span style="color: #228b22;">int</span> <span style="color: #a0522d;">size</span>); <span style="color: #b22222;">// </span><span style="color: #b22222;">block implicit conversion</span>
+    <span style="color: #0000ff;">string</span>(<span style="color: #a020f0;">const</span> <span style="color: #228b22;">char</span> *); <span style="color: #b22222;">//</span><span style="color: #b22222;">implicit conversion</span>
+    ~<span style="color: #0000ff;">string</span>();
+};
+</pre>
+
+An explicit constructor does not behave as an implicit conversion operator, which enables the compiler to catch the<br/>
+typographical error this time:<br/>
+</p>
+<p><br/>
+<pre class="src src-c++"><span style="color: #228b22;">int</span> <span style="color: #0000ff;">main</span>()
+{
+    <span style="color: #228b22;">string</span> <span style="color: #a0522d;">s</span> = <span style="color: #8b2252;">"hello"</span>; <span style="color: #b22222;">//</span><span style="color: #b22222;">OK, convert a C-string into a string object</span>
+    <span style="color: #228b22;">int</span> <span style="color: #a0522d;">ns</span> = 0;
+    s = 1; <span style="color: #b22222;">// </span><span style="color: #b22222;">compile time error ; this time the compiler catches the typo</span>
+}
+</pre>
+
+Why aren't all constructors automatically declared explicit? Under some conditions, the automatic type conversion is<br/>
+useful and well behaved. A good example of this is the third constructor of string:<br/>
+string(const char *);<br/>
+</p>
+<p><br/>
+The implicit type conversion of const char * to a string object enables its users to write the following:<br/>
+string s;<br/>
+s = "Hello";<br/>
+The compiler implicitly transforms this into<br/>
+string s;<br/>
+//pseudo C++ code:<br/>
+s = string ("Hello"); //create a temporary and assign it to s<br/>
+On the other hand, if you declare this constructor explicit, you have to use explicit type conversion:<br/>
+</p>
+<p><br/>
+<pre class="src src-c++"><span style="color: #a020f0;">class</span> <span style="color: #228b22;">string</span>
+{
+<span style="color: #b22222;">//</span><span style="color: #b22222;">...</span>
+<span style="color: #a020f0;">public</span>:
+    <span style="color: #a020f0;">explicit</span> <span style="color: #0000ff;">string</span>(<span style="color: #a020f0;">const</span> <span style="color: #228b22;">char</span> *);
+};
+<span style="color: #228b22;">int</span> <span style="color: #0000ff;">main</span>()
+{
+    <span style="color: #228b22;">string</span> <span style="color: #a0522d;">s</span>;
+    s = string(<span style="color: #8b2252;">"Hello"</span>); <span style="color: #b22222;">//</span><span style="color: #b22222;">explicit conversion now required</span>
+    <span style="color: #a020f0;">return</span> 0;
+}
+</pre>
+
+Extensive amounts of legacy C++ code rely on the implicit conversion of constructors. The C++ Standardization<br/>
+committee was aware of that. In order to not make existing code break, the implicit conversion was retained. However, a<br/>
+new keyword, explicit, was introduced to the languageto enable the programmer to block the implicit conversion<br/>
+when it is undesirable. As a rule, a constructor that can be invoked with a single argument needs to be declared<br/>
+explicit. When the implicit type conversion is intentional and well behaved, the constructor can be used as an<br/>
+implicit conversion operator.<br/>
+</p></div>
+
+<div id="postamble">
+<p class="date">Date: 2012-09-10 07:12:32 CST</p>
+<p class="author">Author: visaya fan</p>
+<p class="creator">Org version 7.8.11 with Emacs version 23</p>
+
+
+</div>
+</body>
+</html>

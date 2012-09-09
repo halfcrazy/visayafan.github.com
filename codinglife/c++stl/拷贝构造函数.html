@@ -1,0 +1,364 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+               "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<title>拷贝构造函数</title>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
+<meta name="title" content="拷贝构造函数"/>
+<meta name="generator" content="Org-mode"/>
+<meta name="generated" content="2012-09-10 07:12:18 CST"/>
+<meta name="author" content="visaya fan"/>
+<meta name="description" content=""/>
+<meta name="keywords" content=""/>
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  html { font-family: Times, serif; font-size: 12pt; }
+  .title  { text-align: center; }
+  .todo   { color: red; }
+  .done   { color: green; }
+  .tag    { background-color: #add8e6; font-weight:normal }
+  .target { }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .right  {margin-left:auto; margin-right:0px;  text-align:right;}
+  .left   {margin-left:0px;  margin-right:auto; text-align:left;}
+  .center {margin-left:auto; margin-right:auto; text-align:center;}
+  p.verse { margin-left: 3% }
+  pre {
+	border: 1pt solid #AEBDCC;
+	background-color: #F3F5F7;
+	padding: 5pt;
+	font-family: courier, monospace;
+        font-size: 90%;
+        overflow:auto;
+  }
+  table { border-collapse: collapse; }
+  td, th { vertical-align: top;  }
+  th.right  { text-align:center;  }
+  th.left   { text-align:center;   }
+  th.center { text-align:center; }
+  td.right  { text-align:right;  }
+  td.left   { text-align:left;   }
+  td.center { text-align:center; }
+  dt { font-weight: bold; }
+  div.figure { padding: 0.5em; }
+  div.figure p { text-align: center; }
+  div.inlinetask {
+    padding:10px;
+    border:2px solid gray;
+    margin:10px;
+    background: #ffffcc;
+  }
+  textarea { overflow-x: auto; }
+  .linenr { font-size:smaller }
+  .code-highlighted {background-color:#ffff00;}
+  .org-info-js_info-navigation { border-style:none; }
+  #org-info-js_console-label { font-size:10px; font-weight:bold;
+                               white-space:nowrap; }
+  .org-info-js_search-highlight {background-color:#ffff00; color:#000000;
+                                 font-weight:bold; }
+  /*]]>*/-->
+</style>
+<script type="text/javascript">
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+
+</head>
+<body>
+<div id="org-div-home-and-up">
+ <a accesskey="h" href="index.html"> UP </a>
+ |
+ <a accesskey="H" href="../index.html"> HOME </a>
+</div>
+
+<div id="preamble">
+<a href="#" id="tabzilla" class="tabzilla-opened" role="button" aria-expanded="true" aria-controls="tabzilla-panel" title="Close (Esc)">No_Joking</a>
+</div>
+
+<div id="content">
+<h1 class="title">拷贝构造函数</h1>
+
+
+<link rel="stylesheet" type="text/css" href="../../css/bootstrap.mozilla.css" />
+<link rel="stylesheet" type="text/css" href="../../css/tabzilla.css" />
+<link rel="stylesheet" type="text/css" href="../../css/vf.css" />
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"> </script>
+<script src="../../bootstrap/js/bootstrap.js"></script>
+<script src="../../js/disqus-comment.js"></script>
+<script src="../../js/tabzilla.js"></script>
+
+
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#sec-1">1 位拷贝和值拷贝</a></li>
+<li><a href="#sec-2">2 拷贝构造函数</a></li>
+<li><a href="#sec-3">3 成员指针</a></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-1" class="outline-2">
+<h2 id="sec-1"><span class="section-number-2">1</span> 位拷贝和值拷贝</h2>
+<div class="outline-text-2" id="text-1">
+
+<p>  位拷贝只是拷贝地址，值拷贝拷贝内容。下面例子：<br/>
+</p>
+<p><br/>
+<pre class="src src-c++"><span style="color: #a020f0;">class</span> <span style="color: #228b22;">A</span>
+{
+<span style="color: #a020f0;">public</span>:
+    <span style="color: #228b22;">int</span> *<span style="color: #a0522d;">p</span>;
+};
+<span style="color: #228b22;">int</span> <span style="color: #0000ff;">main</span>()
+{
+    <span style="color: #228b22;">A</span> <span style="color: #a0522d;">a</span>, <span style="color: #a0522d;">b</span>;
+    a.p=<span style="color: #a020f0;">new</span> <span style="color: #228b22;">int</span>(1);
+    b.p=<span style="color: #a020f0;">new</span> <span style="color: #228b22;">int</span>(2);
+    cout&lt;&lt;a.p&lt;&lt;<span style="color: #8b2252;">" "</span>&lt;&lt;b.p&lt;&lt;endl;
+    a=b;
+    cout&lt;&lt;a.p&lt;&lt;<span style="color: #8b2252;">" "</span>&lt;&lt;b.p&lt;&lt;endl;
+    <span style="color: #a020f0;">return</span> 0;
+}
+</pre>
+
+  a=b;只是把b中p的地址传给a，即a，b只向同一块内存区域，此时由于a.p所指向的内存区域没有释放，造成了内存泄露。所以对于有指针的类一定在用值拷贝，要自己实现拷贝构造函数或重载=运算符。<br/>
+</p>
+<p><br/>
+<pre class="src src-c++"><span style="color: #a020f0;">class</span> <span style="color: #228b22;">A</span>
+{
+<span style="color: #a020f0;">public</span>:
+    <span style="color: #228b22;">int</span> *<span style="color: #a0522d;">p</span>;
+    <span style="color: #228b22;">A</span>&amp; <span style="color: #a020f0;">operator</span><span style="color: #0000ff;">=</span>(<span style="color: #a020f0;">const</span> <span style="color: #228b22;">A</span>&amp;<span style="color: #a0522d;">a</span>){
+        *p=*(a.p);
+    }
+};
+<span style="color: #228b22;">int</span> <span style="color: #0000ff;">main</span>()
+{
+    <span style="color: #228b22;">A</span> <span style="color: #a0522d;">a</span>, <span style="color: #a0522d;">b</span>;
+    a.p=<span style="color: #a020f0;">new</span> <span style="color: #228b22;">int</span>(1);
+    b.p=<span style="color: #a020f0;">new</span> <span style="color: #228b22;">int</span>(2);
+    cout&lt;&lt;a.p&lt;&lt;<span style="color: #8b2252;">" "</span>&lt;&lt;b.p&lt;&lt;endl;
+    a=b;
+    cout&lt;&lt;a.p&lt;&lt;<span style="color: #8b2252;">" "</span>&lt;&lt;b.p&lt;&lt;endl;
+    <span style="color: #a020f0;">return</span> 0;
+}
+</pre>
+
+  此时a.p和b.p仍旧指向各自的位置只是a.p指向的内容变成了b.p指向的内容。<br/>
+</p></div>
+
+</div>
+
+<div id="outline-container-2" class="outline-2">
+<h2 id="sec-2"><span class="section-number-2">2</span> 拷贝构造函数</h2>
+<div class="outline-text-2" id="text-2">
+
+<p>  "Thinking in C++" 中的例子<br/>
+</p>
+<p><br/>
+<pre class="src src-c++"><span style="color: #7a378b;">#include</span> <span style="color: #8b2252;">&lt;fstream&gt;</span>
+<span style="color: #7a378b;">#include</span> <span style="color: #8b2252;">&lt;string&gt;</span>
+<span style="color: #7a378b;">#include</span> <span style="color: #8b2252;">&lt;iostream&gt;</span>
+<span style="color: #a020f0;">using</span> <span style="color: #a020f0;">namespace</span> <span style="color: #008b8b;">std</span>;
+
+<span style="color: #228b22;">ofstream</span> <span style="color: #0000ff;">out</span>(<span style="color: #8b2252;">"HowMany.out"</span>);
+
+<span style="color: #a020f0;">class</span> <span style="color: #228b22;">HowMany</span>{
+    <span style="color: #a020f0;">static</span> <span style="color: #228b22;">int</span> <span style="color: #a0522d;">objCnt</span>;
+    <span style="color: #228b22;">string</span> <span style="color: #a0522d;">name</span>;
+<span style="color: #a020f0;">public</span>:
+    <span style="color: #0000ff;">HowMany</span>(<span style="color: #a020f0;">const</span> <span style="color: #228b22;">string</span>&amp; <span style="color: #a0522d;">id</span>=<span style="color: #8b2252;">""</span>):name(id){
+        ++objCnt;
+        print(<span style="color: #8b2252;">"HowMany()"</span>);
+    }
+    ~<span style="color: #0000ff;">HowMany</span>(){
+        --objCnt;
+        print(<span style="color: #8b2252;">"~HowMany()"</span>);
+    }
+    <span style="color: #0000ff;">HowMany</span>(<span style="color: #a020f0;">const</span> <span style="color: #228b22;">HowMany</span>&amp; <span style="color: #a0522d;">h</span>):name(h.name){
+        name += <span style="color: #8b2252;">" copy"</span>;
+        ++objCnt;
+        print(<span style="color: #8b2252;">"HowMany Copy_Constructor"</span>);
+    }
+    <span style="color: #228b22;">void</span> <span style="color: #0000ff;">print</span>(<span style="color: #a020f0;">const</span> <span style="color: #228b22;">string</span>&amp; <span style="color: #a0522d;">msg</span>=<span style="color: #8b2252;">""</span>) <span style="color: #a020f0;">const</span>{
+        <span style="color: #a020f0;">if</span>(msg.size() != 0) out&lt;&lt;msg&lt;&lt;<span style="color: #8b2252;">":"</span>;
+        out&lt;&lt;<span style="color: #8b2252;">"\t"</span>&lt;&lt;name&lt;&lt;<span style="color: #8b2252;">":"</span>&lt;&lt;<span style="color: #8b2252;">"objcnt:"</span>&lt;&lt;objCnt&lt;&lt;endl;
+    }
+};
+<span style="color: #228b22;">int</span> <span style="color: #008b8b;">HowMany</span>::<span style="color: #a0522d;">objCnt</span> = 0;
+
+<span style="color: #228b22;">HowMany</span> <span style="color: #0000ff;">f</span>(<span style="color: #228b22;">HowMany</span> <span style="color: #a0522d;">h</span>){
+    h.print(<span style="color: #8b2252;">"inside f()"</span>);
+    out&lt;&lt;<span style="color: #8b2252;">"returning from f()"</span>&lt;&lt;endl;
+    <span style="color: #a020f0;">return</span> h;
+}
+
+<span style="color: #228b22;">int</span> <span style="color: #0000ff;">main</span>(<span style="color: #228b22;">int</span> <span style="color: #a0522d;">argc</span>, <span style="color: #228b22;">char</span> *<span style="color: #a0522d;">argv</span>[])
+{
+    <span style="color: #228b22;">HowMany</span> <span style="color: #a0522d;">h</span>(<span style="color: #8b2252;">"h"</span>);
+    out&lt;&lt;<span style="color: #8b2252;">"Entering f()"</span>&lt;&lt;endl;
+    <span style="color: #228b22;">HowMany</span> <span style="color: #a0522d;">h2</span>=f(h);
+    h2.print(<span style="color: #8b2252;">"h2 after call to f()"</span>);
+    out&lt;&lt;<span style="color: #8b2252;">"Call f(), no return value"</span>&lt;&lt;endl;
+    f(h);
+    out&lt;&lt;<span style="color: #8b2252;">"after call to f()"</span>&lt;&lt;endl;
+    <span style="color: #a020f0;">return</span> 0;
+}
+</pre>
+
+  结果分析:<br/>
+</p>
+<p><br/>
+<pre class="example">HowMany():  h:objcnt:1          
+Entering f()
+HowMany Copy_Constructor:   h copy:objcnt:2             //调用拷贝构造函数将参数h拷贝到f中的局部变量中
+inside f(): h copy:objcnt:2             //此时的局部变量名为h copy
+returning from f()
+HowMany Copy_Constructor:   h copy copy:objcnt:3                //调用拷贝构造函数将h copy拷贝给h copy copy 即返回值
+~HowMany(): h copy:objcnt:2             //h copy 生命终结
+h2 after call to f():   h copy copy:objcnt:2            //h2为h copy copy
+Call f(), no return value
+HowMany Copy_Constructor:   h copy:objcnt:3
+inside f(): h copy:objcnt:3
+returning from f()
+HowMany Copy_Constructor:   h copy copy:objcnt:4                //h copy copy为返回值 是个临时量
+~HowMany(): h copy copy:objcnt:3                //由于f(h)没有保存返回值 故销毁
+~HowMany(): h copy:objcnt:2             //f中局部变量销毁
+after call to f()
+~HowMany(): h copy copy:objcnt:1
+~HowMany(): h:objcnt:0
+</pre>
+
+</p></div>
+
+</div>
+
+<div id="outline-container-3" class="outline-2">
+<h2 id="sec-3"><span class="section-number-2">3</span> 成员指针</h2>
+<div class="outline-text-2" id="text-3">
+
+<p>  成员指针是指向类成员的指针，基本语法为：<br/>
+</p>
+<p><br/>
+<pre class="src src-c++"><span style="color: #228b22;">int</span> <span style="color: #008b8b;">ObjectClass</span>::*<span style="color: #a0522d;">pointerToMember</span> = &amp;<span style="color: #008b8b;">ObjectClass</span>::Member
+</pre>
+
+  使用：<br/>
+</p>
+<p><br/>
+<pre class="src src-c++">object.*pointerToMember=value;
+objectPointer-&gt;*pointerToMember=value;
+</pre>
+
+  例如：<br/>
+</p>
+<p><br/>
+<pre class="src src-c++"><span style="color: #7a378b;">#include</span> <span style="color: #8b2252;">&lt;iostream&gt;</span>
+<span style="color: #a020f0;">using</span> <span style="color: #a020f0;">namespace</span> <span style="color: #008b8b;">std</span>;
+
+<span style="color: #a020f0;">class</span> <span style="color: #228b22;">Data</span>{
+<span style="color: #a020f0;">public</span>:
+    <span style="color: #228b22;">int</span> <span style="color: #a0522d;">a</span>, <span style="color: #a0522d;">b</span>, <span style="color: #a0522d;">c</span>;
+    <span style="color: #228b22;">void</span> <span style="color: #0000ff;">print</span>(){cout&lt;&lt;<span style="color: #8b2252;">"a:"</span>&lt;&lt;a&lt;&lt;<span style="color: #8b2252;">" b:"</span>&lt;&lt;b&lt;&lt;<span style="color: #8b2252;">" c:"</span>&lt;&lt;c&lt;&lt;endl;}
+};
+<span style="color: #228b22;">int</span> <span style="color: #0000ff;">main</span>(<span style="color: #228b22;">int</span> <span style="color: #a0522d;">argc</span>, <span style="color: #228b22;">char</span> *<span style="color: #a0522d;">argv</span>[])
+{
+    <span style="color: #228b22;">Data</span> <span style="color: #a0522d;">d</span>, *<span style="color: #a0522d;">pd</span>=&amp;d;
+    <span style="color: #228b22;">int</span> <span style="color: #008b8b;">Data</span>::*<span style="color: #a0522d;">p</span>=&amp;<span style="color: #008b8b;">Data</span>::a;
+    pd-&gt;*p=1;
+    p=&amp;<span style="color: #008b8b;">Data</span>::b;
+    d.*p=2;
+    p=&amp;<span style="color: #008b8b;">Data</span>::c;
+    pd-&gt;*p=3;
+    pd-&gt;print();
+    <span style="color: #a020f0;">return</span> 0;
+}
+</pre>
+
+  同理对于函数也类似：<br/>
+</p>
+<p><br/>
+<pre class="src src-c++"><span style="color: #a020f0;">class</span> <span style="color: #228b22;">Fun</span>{
+<span style="color: #a020f0;">public</span>:
+    <span style="color: #228b22;">void</span> <span style="color: #0000ff;">f</span>(<span style="color: #228b22;">float</span> <span style="color: #a0522d;">f</span>) <span style="color: #a020f0;">const</span> {cout&lt;&lt;f&lt;&lt;endl;}
+};
+<span style="color: #228b22;">int</span> <span style="color: #0000ff;">main</span>(<span style="color: #228b22;">int</span> <span style="color: #a0522d;">argc</span>, <span style="color: #228b22;">char</span> *<span style="color: #a0522d;">argv</span>[])
+{
+    <span style="color: #228b22;">void</span> (<span style="color: #008b8b;">Fun</span>::*<span style="color: #a0522d;">pf</span>)(<span style="color: #228b22;">float</span>) <span style="color: #a020f0;">const</span> = &amp;<span style="color: #008b8b;">Fun</span>::f;
+    <span style="color: #228b22;">Fun</span> <span style="color: #a0522d;">f</span>;
+    (f.*pf)(2);
+}
+</pre>
+
+  "Thinking in C++"中的例子：<br/>
+</p>
+<p><br/>
+<pre class="src src-c++"><span style="color: #7a378b;">#include</span> <span style="color: #8b2252;">&lt;iostream&gt;</span>
+<span style="color: #a020f0;">using</span> <span style="color: #a020f0;">namespace</span> <span style="color: #008b8b;">std</span>;
+
+<span style="color: #a020f0;">class</span> <span style="color: #228b22;">Widget</span>{
+    <span style="color: #228b22;">void</span> <span style="color: #0000ff;">f</span>(<span style="color: #228b22;">int</span>) <span style="color: #a020f0;">const</span> {cout&lt;&lt;<span style="color: #8b2252;">"f()"</span>&lt;&lt;endl;}
+    <span style="color: #228b22;">void</span> <span style="color: #0000ff;">g</span>(<span style="color: #228b22;">int</span>) <span style="color: #a020f0;">const</span> {cout&lt;&lt;<span style="color: #8b2252;">"g()"</span>&lt;&lt;endl;}
+    <span style="color: #228b22;">void</span> <span style="color: #0000ff;">h</span>(<span style="color: #228b22;">int</span>) <span style="color: #a020f0;">const</span> {cout&lt;&lt;<span style="color: #8b2252;">"h()"</span>&lt;&lt;endl;}
+    <span style="color: #228b22;">void</span> <span style="color: #0000ff;">j</span>(<span style="color: #228b22;">int</span>) <span style="color: #a020f0;">const</span> {cout&lt;&lt;<span style="color: #8b2252;">"j()"</span>&lt;&lt;endl;}
+    <span style="color: #a020f0;">enum</span>{<span style="color: #a0522d;">cnt</span> =4;}
+    <span style="color: #228b22;">void</span> (<span style="color: #008b8b;">Widget</span>::*<span style="color: #228b22;">p</span>[cnt])(<span style="color: #228b22;">int</span>) <span style="color: #a020f0;">const</span>;
+<span style="color: #a020f0;">public</span>:
+    <span style="color: #0000ff;">Widget</span>(){
+        p[0]=&amp;<span style="color: #008b8b;">Widget</span>::f;
+        p[1]=&amp;<span style="color: #008b8b;">Widget</span>::g;
+        p[2]=&amp;<span style="color: #008b8b;">Widget</span>::h;
+        p[3]=&amp;<span style="color: #008b8b;">Widget</span>::j;
+    }
+    <span style="color: #228b22;">void</span> <span style="color: #0000ff;">select</span>(<span style="color: #228b22;">int</span> <span style="color: #a0522d;">i</span>, <span style="color: #228b22;">int</span> <span style="color: #a0522d;">j</span>){
+        <span style="color: #a020f0;">if</span>(i&lt;0 | i&gt;cnt) <span style="color: #a020f0;">return</span>;
+        (<span style="color: #a020f0;">this</span>-&gt;*p[i])(j);
+    }
+    <span style="color: #228b22;">int</span> <span style="color: #0000ff;">count</span>(){<span style="color: #a020f0;">return</span> cnt;}
+};
+
+<span style="color: #228b22;">int</span> <span style="color: #0000ff;">main</span>(<span style="color: #228b22;">int</span> <span style="color: #a0522d;">argc</span>, <span style="color: #228b22;">char</span> *<span style="color: #a0522d;">argv</span>[])
+{
+    <span style="color: #228b22;">Widget</span> <span style="color: #a0522d;">w</span>;
+    <span style="color: #a020f0;">for</span>(<span style="color: #228b22;">int</span> <span style="color: #a0522d;">i</span>=0; i&lt;w.count(); i++){
+        w.select(i,4);
+    }
+    <span style="color: #a020f0;">return</span> 0;
+}
+</pre>
+
+</p></div>
+</div>
+</div>
+
+<div id="postamble">
+<p class="date">Date: 2012-09-10 07:12:18 CST</p>
+<p class="author">Author: visaya fan</p>
+<p class="creator">Org version 7.8.11 with Emacs version 23</p>
+
+
+</div>
+</body>
+</html>

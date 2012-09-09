@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+               "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<title>成员模板函数</title>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
+<meta name="title" content="成员模板函数"/>
+<meta name="generator" content="Org-mode"/>
+<meta name="generated" content="2012-09-10 07:12:27 CST"/>
+<meta name="author" content="visaya fan"/>
+<meta name="description" content=""/>
+<meta name="keywords" content=""/>
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  html { font-family: Times, serif; font-size: 12pt; }
+  .title  { text-align: center; }
+  .todo   { color: red; }
+  .done   { color: green; }
+  .tag    { background-color: #add8e6; font-weight:normal }
+  .target { }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .right  {margin-left:auto; margin-right:0px;  text-align:right;}
+  .left   {margin-left:0px;  margin-right:auto; text-align:left;}
+  .center {margin-left:auto; margin-right:auto; text-align:center;}
+  p.verse { margin-left: 3% }
+  pre {
+	border: 1pt solid #AEBDCC;
+	background-color: #F3F5F7;
+	padding: 5pt;
+	font-family: courier, monospace;
+        font-size: 90%;
+        overflow:auto;
+  }
+  table { border-collapse: collapse; }
+  td, th { vertical-align: top;  }
+  th.right  { text-align:center;  }
+  th.left   { text-align:center;   }
+  th.center { text-align:center; }
+  td.right  { text-align:right;  }
+  td.left   { text-align:left;   }
+  td.center { text-align:center; }
+  dt { font-weight: bold; }
+  div.figure { padding: 0.5em; }
+  div.figure p { text-align: center; }
+  div.inlinetask {
+    padding:10px;
+    border:2px solid gray;
+    margin:10px;
+    background: #ffffcc;
+  }
+  textarea { overflow-x: auto; }
+  .linenr { font-size:smaller }
+  .code-highlighted {background-color:#ffff00;}
+  .org-info-js_info-navigation { border-style:none; }
+  #org-info-js_console-label { font-size:10px; font-weight:bold;
+                               white-space:nowrap; }
+  .org-info-js_search-highlight {background-color:#ffff00; color:#000000;
+                                 font-weight:bold; }
+  /*]]>*/-->
+</style>
+<script type="text/javascript">
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+
+</head>
+<body>
+<div id="org-div-home-and-up">
+ <a accesskey="h" href="index.html"> UP </a>
+ |
+ <a accesskey="H" href="../index.html"> HOME </a>
+</div>
+
+<div id="preamble">
+<a href="#" id="tabzilla" class="tabzilla-opened" role="button" aria-expanded="true" aria-controls="tabzilla-panel" title="Close (Esc)">No_Joking</a>
+</div>
+
+<div id="content">
+<h1 class="title">成员模板函数</h1>
+
+
+<link rel="stylesheet" type="text/css" href="../../css/bootstrap.mozilla.css" />
+<link rel="stylesheet" type="text/css" href="../../css/tabzilla.css" />
+<link rel="stylesheet" type="text/css" href="../../css/vf.css" />
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"> </script>
+<script src="../../bootstrap/js/bootstrap.js"></script>
+<script src="../../js/disqus-comment.js"></script>
+<script src="../../js/tabzilla.js"></script>
+
+<p>
+It is also possible to define a member template function. Let's look at an example and then walk through it:<br/>
+</p>
+<p><br/>
+<pre class="src src-c++"><span style="color: #a020f0;">class</span> <span style="color: #228b22;">PrintIt</span> { 
+<span style="color: #a020f0;">public</span>: 
+    <span style="color: #0000ff;">PrintIt</span>( <span style="color: #228b22;">ostream</span> &amp;<span style="color: #a0522d;">os</span> ) 
+           : _os( os ){} 
+    <span style="color: #b22222;">// </span><span style="color: #b22222;">a member template function </span>
+    <span style="color: #a020f0;">template</span> &lt;<span style="color: #a020f0;">typename</span> <span style="color: #228b22;">elemType</span>&gt; 
+    <span style="color: #228b22;">void</span> <span style="color: #0000ff;">print</span>( <span style="color: #a020f0;">const</span> <span style="color: #228b22;">elemType</span> &amp;<span style="color: #a0522d;">elem</span>, <span style="color: #228b22;">char</span> <span style="color: #a0522d;">delimiter</span> = <span style="color: #8b2252;">'\n'</span> ) 
+              { _os &lt;&lt; elem &lt;&lt; delimiter; } 
+<span style="color: #a020f0;">private</span>: 
+    <span style="color: #228b22;">ostream</span>&amp; <span style="color: #a0522d;">_os</span>; 
+}; 
+</pre>
+
+PrintIt is a nontemplate class that is initialized to an output stream. It provides a member template print() function that writes an object of an arbitrary type to that output stream. By making print() a member template function, we can provide a single instance that supports any type for which an instance of the output operator can be applied. Were we to parameterize PrintIt by the type of element we wish to output, we would create a new class template for each distinct type. Under this implementation, there is only a single PrintIt class. Here is how we might use it:<br/>
+</p>
+<p><br/>
+<pre class="src src-c++"><span style="color: #228b22;">int</span> <span style="color: #0000ff;">main</span>() 
+{ 
+    <span style="color: #228b22;">PrintIt</span> <span style="color: #a0522d;">to_standard_out</span>( cout ); 
+    to_standard_out.print( <span style="color: #8b2252;">"hello"</span> ); 
+    to_standard_out.print( 1024 ); 
+    <span style="color: #228b22;">string</span> <span style="color: #a0522d;">my_string</span>( <span style="color: #8b2252;">"i am a string"</span> ); 
+    to_standard_out.print( my_string ); 
+} 
+</pre>
+
+When compiled and executed, this generates the following output:<br/>
+hello <br/>
+1024 <br/>
+i am a string <br/>
+</p>
+<p><br/>
+A template class can also define a member template function. For example, we might parameterize PrintIt by its ostream type while maintaining print() as a member template function:<br/>
+</p>
+<p><br/>
+<pre class="src src-c++"><span style="color: #a020f0;">template</span> &lt;<span style="color: #a020f0;">typename</span> <span style="color: #228b22;">OutStream</span>&gt; 
+<span style="color: #a020f0;">class</span> <span style="color: #228b22;">PrintIt</span> { 
+<span style="color: #a020f0;">public</span>: 
+    <span style="color: #0000ff;">PrintIt</span>( <span style="color: #228b22;">OutStream</span> &amp;<span style="color: #a0522d;">os</span> ) 
+           : _os( os ){} 
+    <span style="color: #a020f0;">template</span> &lt;<span style="color: #a020f0;">typename</span> <span style="color: #228b22;">elemType</span>&gt; 
+    <span style="color: #228b22;">void</span> <span style="color: #0000ff;">print</span>( <span style="color: #a020f0;">const</span> <span style="color: #228b22;">elemType</span> &amp;<span style="color: #a0522d;">elem</span>, <span style="color: #228b22;">char</span> <span style="color: #a0522d;">delimiter</span> = <span style="color: #8b2252;">'\n'</span> ) 
+              { _os &lt;&lt; elem &lt;&lt; delimiter; } 
+<span style="color: #a020f0;">private</span>: 
+    <span style="color: #228b22;">ostream</span>&amp; <span style="color: #a0522d;">_os</span>; 
+}; 
+<span style="color: #b22222;">//</span><span style="color: #b22222;">Here is our modified program:</span>
+<span style="color: #228b22;">int</span> <span style="color: #0000ff;">main</span>() 
+{ 
+    <span style="color: #228b22;">PrintIt</span>&lt;<span style="color: #228b22;">ostream</span>&gt; <span style="color: #a0522d;">to_standard_out</span>( cout ); 
+    to_standard_out.print( <span style="color: #8b2252;">"hello"</span> ); 
+    to_standard_out.print( 1024 ); 
+    <span style="color: #228b22;">string</span> <span style="color: #a0522d;">my_string</span>( <span style="color: #8b2252;">"i am a string"</span> ); 
+    to_standard_out.print( my_string ); 
+} 
+</pre>
+
+</p></div>
+
+<div id="postamble">
+<p class="date">Date: 2012-09-10 07:12:27 CST</p>
+<p class="author">Author: visaya fan</p>
+<p class="creator">Org version 7.8.11 with Emacs version 23</p>
+
+
+</div>
+</body>
+</html>
