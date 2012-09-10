@@ -2,7 +2,6 @@
 import subprocess
 import sys
 
-subprocess.Popen(args='git add .', shell=True)
-cmt = sys.argv[1]
-subprocess.Popen(args='git commit -m'+cmt, shell=True)
-subprocess.Popen(args='git push')
+subprocess.call('git add .', shell=True)
+subprocess.call(['git', 'commit', '-m', sys.argv[1]])
+subprocess.call('git push', shell=True)
