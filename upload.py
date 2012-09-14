@@ -1,7 +1,8 @@
 #!/usr/bin/python
-import subprocess
+#usage: ./filename.py "commit content"
+from subprocess import call
 import sys
 
-subprocess.call('git add .', shell=True)
-subprocess.call(['git', 'commit', '-m', sys.argv[1]])
-subprocess.call('git push', shell=True)
+call('git add .', shell=True)
+call(['git', 'commit', '-m', sys.argv[1]])
+call('git push', shell=True)
