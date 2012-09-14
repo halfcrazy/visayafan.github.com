@@ -1,0 +1,435 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+               "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<title>Lex使用</title>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
+<meta name="title" content="Lex使用"/>
+<meta name="generator" content="Org-mode"/>
+<meta name="generated" content="2012-09-15 05:41:38 CST"/>
+<meta name="author" content="visaya fan"/>
+<meta name="description" content=""/>
+<meta name="keywords" content=""/>
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  html { font-family: Times, serif; font-size: 12pt; }
+  .title  { text-align: center; }
+  .todo   { color: red; }
+  .done   { color: green; }
+  .tag    { background-color: #add8e6; font-weight:normal }
+  .target { }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .right  {margin-left:auto; margin-right:0px;  text-align:right;}
+  .left   {margin-left:0px;  margin-right:auto; text-align:left;}
+  .center {margin-left:auto; margin-right:auto; text-align:center;}
+  p.verse { margin-left: 3% }
+  pre {
+	border: 1pt solid #AEBDCC;
+	background-color: #F3F5F7;
+	padding: 5pt;
+	font-family: courier, monospace;
+        font-size: 90%;
+        overflow:auto;
+  }
+  table { border-collapse: collapse; }
+  td, th { vertical-align: top;  }
+  th.right  { text-align:center;  }
+  th.left   { text-align:center;   }
+  th.center { text-align:center; }
+  td.right  { text-align:right;  }
+  td.left   { text-align:left;   }
+  td.center { text-align:center; }
+  dt { font-weight: bold; }
+  div.figure { padding: 0.5em; }
+  div.figure p { text-align: center; }
+  div.inlinetask {
+    padding:10px;
+    border:2px solid gray;
+    margin:10px;
+    background: #ffffcc;
+  }
+  textarea { overflow-x: auto; }
+  .linenr { font-size:smaller }
+  .code-highlighted {background-color:#ffff00;}
+  .org-info-js_info-navigation { border-style:none; }
+  #org-info-js_console-label { font-size:10px; font-weight:bold;
+                               white-space:nowrap; }
+  .org-info-js_search-highlight {background-color:#ffff00; color:#000000;
+                                 font-weight:bold; }
+  /*]]>*/-->
+</style>
+<script type="text/javascript">
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+
+</head>
+<body>
+<div id="org-div-home-and-up">
+ <a accesskey="h" href="../index.html"> UP </a>
+ |
+ <a accesskey="H" href="../../index.html"> HOME </a>
+</div>
+
+<div id="preamble">
+<a href="#" id="tabzilla" class="tabzilla-opened" role="button" aria-expanded="true" aria-controls="tabzilla-panel" title="Close (Esc)">No_Joking</a>
+</div>
+
+<div id="content">
+<h1 class="title">Lex使用</h1>
+
+
+<link rel="stylesheet" type="text/css" href="../../css/bootstrap.mozilla.css" />
+<link rel="stylesheet" type="text/css" href="../../css/tabzilla.css" />
+<link rel="stylesheet" type="text/css" href="../../css/vf.css" />
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"> </script>
+<script src="../../bootstrap/js/bootstrap.js"></script>
+<script src="../../js/disqus-comment.js"></script>
+<script src="../../js/tabzilla.js"></script>
+
+
+<p>
+Manual: <a href="http://flex.sourceforge.net/manual">http://flex.sourceforge.net/manual</a><br/>
+</p>
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#sec-1">1 基本格式</a>
+<ul>
+<li><a href="#sec-1-1">1.1 正则定义</a></li>
+<li><a href="#sec-1-2">1.2 转换规则</a></li>
+</ul>
+</li>
+<li><a href="#sec-2">2 内置变量和函数</a>
+<ul>
+<li><a href="#sec-2-1">2.1 变量</a></li>
+<li><a href="#sec-2-2">2.2 函数</a></li>
+<li><a href="#sec-2-3">2.3 yylex</a></li>
+<li><a href="#sec-2-4">2.4 yywrap</a></li>
+<li><a href="#sec-2-5">2.5 yymore</a></li>
+<li><a href="#sec-2-6">2.6 yyless</a></li>
+<li><a href="#sec-2-7">2.7 REJECT</a></li>
+</ul>
+</li>
+<li><a href="#sec-3">3 编译</a></li>
+<li><a href="#sec-4">4 例子</a></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-1" class="outline-2">
+<h2 id="sec-1"><span class="section-number-2">1</span> 基本格式</h2>
+<div class="outline-text-2" id="text-1">
+
+
+<p><br/>
+<pre class="example">%{
+这里的代码会原封不动地移到lex编译后的lex.yy.c中
+%}
+正则定义
+%%
+转换规则
+%%
+辅助函数
+</pre>
+
+</p>
+</div>
+
+<div id="outline-container-1-1" class="outline-3">
+<h3 id="sec-1-1"><span class="section-number-3">1.1</span> 正则定义</h3>
+<div class="outline-text-3" id="text-1-1">
+
+<p>   形如：letter [a-zA-z]，要使用正则定义符号则要在符号外加{}，例如：fuword [aeiou]{letter}*<br/>
+</p></div>
+
+</div>
+
+<div id="outline-container-1-2" class="outline-3">
+<h3 id="sec-1-2"><span class="section-number-3">1.2</span> 转换规则</h3>
+<div class="outline-text-3" id="text-1-2">
+
+<p>   转换规则形如：pattern {action}，例如：<br/>
+</p>
+<p><br/>
+<pre class="example">{fuword}      {printf ("%s%s",yytext, "ay");}
+</pre>
+
+</p></div>
+</div>
+
+</div>
+
+<div id="outline-container-2" class="outline-2">
+<h2 id="sec-2"><span class="section-number-2">2</span> 内置变量和函数</h2>
+<div class="outline-text-2" id="text-2">
+
+
+</div>
+
+<div id="outline-container-2-1" class="outline-3">
+<h3 id="sec-2-1"><span class="section-number-3">2.1</span> 变量</h3>
+<div class="outline-text-3" id="text-2-1">
+
+
+<p><br/>
+<pre class="example">yytext   char *  当前匹配的字符串
+yyleng   int     当前匹配的字符串长度
+yyin     FILE *  lex当前的解析文件，默认为标准输入
+yyout    FILE *  lex解析后的输出文件，默认为标准输出
+yylineno int     当前的行数信息
+</pre>
+
+
+<pre class="example">如果命令行参数指定读取来源则打开该文件将FILE指针传递给yyin，否则为标准输入：
+int main(int argc, char *argv[])
+{
+    if (argc&gt;1)
+        yyin = fopen(argv[1], "r");
+    else
+        yyin = stdin;
+    yylex();
+    return 0;
+}
+</pre>
+
+
+
+<pre class="example">ECHO     #define ECHO fwrite(yytext, yyleng, 1, yyout)  也是未匹配字符的
+         默认动作
+</pre>
+
+</p></div>
+
+</div>
+
+<div id="outline-container-2-2" class="outline-3">
+<h3 id="sec-2-2"><span class="section-number-3">2.2</span> 函数</h3>
+<div class="outline-text-3" id="text-2-2">
+
+</div>
+
+</div>
+
+<div id="outline-container-2-3" class="outline-3">
+<h3 id="sec-2-3"><span class="section-number-3">2.3</span> yylex</h3>
+<div class="outline-text-3" id="text-2-3">
+
+<p>int yylex(void)    调用Lex进行词法分析<br/>
+</p></div>
+
+</div>
+
+<div id="outline-container-2-4" class="outline-3">
+<h3 id="sec-2-4"><span class="section-number-3">2.4</span> yywrap</h3>
+<div class="outline-text-3" id="text-2-4">
+
+
+<p><br/>
+<pre class="example">int yywrap(void)   在文件(或输入)的末尾调用。如果函数的返回值是1，就停止解
+                   析。 因此它可以用来解析多个文件。代码可以写在第三段，这
+                   样可以解析多个文件。 方法是使用 yyin 文件指针指向不同的
+                   文件，直到所有的文件都被解析。最后，yywrap() 可以返回1
+                   来表示解析的结束。
+</pre>
+
+</p></div>
+
+</div>
+
+<div id="outline-container-2-5" class="outline-3">
+<h3 id="sec-2-5"><span class="section-number-3">2.5</span> yymore</h3>
+<div class="outline-text-3" id="text-2-5">
+
+<p>   yymore()           告诉扫描器下次扫描结果连接在当前yytext后而非覆盖当前yytext<br/>
+</p>
+<p><br/>
+<pre class="example"> \"[^"]*        {
+                if (yytext[yyleng-1] == '\\')
+                        yymore();
+                else
+                        ... normal user processing
+                }
+对于"abc\"def"情况，第一次扫描得yytex为abc\，判断最后一个字符为\后调用yymore()，则继续扫描得"def并将结果连接到上次结果中得：abc\"def
+</pre>
+
+</p></div>
+
+</div>
+
+<div id="outline-container-2-6" class="outline-3">
+<h3 id="sec-2-6"><span class="section-number-3">2.6</span> yyless</h3>
+<div class="outline-text-3" id="text-2-6">
+
+<p>   yyless()     回退字符，例如 yyless(yyleng-1)将最后一个字符回退，yyless(yyleng-2)回退两个字符。<br/>
+</p></div>
+
+</div>
+
+<div id="outline-container-2-7" class="outline-3">
+<h3 id="sec-2-7"><span class="section-number-3">2.7</span> REJECT</h3>
+<div class="outline-text-3" id="text-2-7">
+
+<p>   REJECT使用后会进行次好匹配，<br/>
+</p>
+<p><br/>
+<pre class="example">%{
+#include &lt;stdio.h&gt;
+%}
+
+%%
+a[bc]+  {printf("%s:%s\n","first rule", yytext); REJECT;}
+a[cd]+  {printf ("%s:%s\n","second rule", yytext); REJECT;}
+%%
+</pre>
+
+   对于accb,输出：<br/>
+</p>
+<p><br/>
+<pre class="example">first rule:accb
+first rule:acc
+second rule:acc
+first rule:ac
+second rule:ac
+accb
+</pre>
+
+   第1次由a[bc]+匹配到accb，最长，故匹配成功；之后进行次好匹配，a[bc]+匹配到acc，a[cd]+匹配到acc，长度一样，故按照顺序输出，之后a[cb]+又匹配到ac，最后a[cd]+匹配ac，由于它是REJECT的故还想再重新开始匹配，由于没有再匹配的了，所以accb采用默认动作：ECHO－输出。<br/>
+</p>
+<p><br/>
+   将第2个printf中的REJECT删除后：<br/>
+</p>
+<p><br/>
+<pre class="example">first rule:accb
+first rule:acc
+second rule:acc
+b
+</pre>
+
+   与上面一样，最后a[cd]+匹配到acc之后由于没有REJECT，forward指针指向b，b没有匹配，默认输出，<br/>
+</p></div>
+</div>
+
+</div>
+
+<div id="outline-container-3" class="outline-2">
+<h2 id="sec-3"><span class="section-number-2">3</span> 编译</h2>
+<div class="outline-text-2" id="text-3">
+
+<p>  lex文件以l结尾，lex test.l生成lex.yy.c，之后 cc lex.yy.c -ll生成a.out，再执行./a.out即可。<br/>
+</p></div>
+
+</div>
+
+<div id="outline-container-4" class="outline-2">
+<h2 id="sec-4"><span class="section-number-2">4</span> 例子</h2>
+<div class="outline-text-2" id="text-4">
+
+<ul>
+<li>单词序列，如果一个单词第一个字母为元音则将它移动到单词尾并加上ay，否则只在单词后加ay<br/>
+</li>
+</ul>
+
+
+<p><br/>
+<pre class="example">compiler$ cat test.l
+%{
+    #include &lt;stdio.h&gt;
+%}
+
+letter          [a-zA-Z]
+yuanword        [aeiou]{letter}*
+fuword          [bcdfghjklmnpqrstvwxyz]{letter}*
+
+%%
+
+{yuanword}        {printf("%s%c%s",yytext+1, *yytext, "ay");}
+{fuword}      {printf ("%s%s",yytext, "ay");}
+%%
+
+compiler$ cat test.c
+int main main abc 
+compiler$ lex test.l 
+compiler$ cc lex.yy.c -o test -ll
+compiler$ ./test &lt; test.c
+ntiay mainay mainay bcaay 
+</pre>
+
+</p><ul>
+<li>将C源程序中所有float关键字变成double<br/>
+</li>
+</ul>
+
+
+<p><br/>
+<pre class="example">compiler$ cat test.l
+/* 注意不能将 "a float b"中的float变成double */
+/* 所有float声明变量特点是声明或定义，即以;或=紧跟在标识符之后 */
+%{
+#include &lt;stdio.h&gt;
+%}
+/* regular definitions */
+letter          [a-zA-Z]
+digit           [0-9]
+id              {letter}({letter}|{digit})*
+delim           [ \t]
+%%
+"float"/{delim}{id}{delim}*(";"|"=")     {printf("%s","double");}
+%%
+
+compiler$ cat test.c
+int main(int argc, char *argv[])
+{
+    float i;
+    float ii = 1.0;
+    char *str = "float";
+    char *str2 = "a float b";
+    return 0;
+}
+compiler$ lex test.l
+compiler$ cc lex.yy.c -o test -ll
+compiler$ ./test &lt; test.c
+int main(int argc, char *argv[])
+{
+    double i;
+    double ii = 1.0;
+    char *str = "float";
+    char *str2 = "a float b";
+    return 0;
+}
+</pre>
+
+</p></div>
+</div>
+</div>
+
+<div id="postamble">
+<p class="date">Date: 2012-09-15 05:41:38 CST</p>
+<p class="author">Author: visaya fan</p>
+<p class="creator">Org version 7.8.11 with Emacs version 23</p>
+
+
+</div>
+</body>
+</html>
