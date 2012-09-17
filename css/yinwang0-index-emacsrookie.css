@@ -19,7 +19,7 @@ body.ascii{
 }
 
 P{
-    /* text-indent : 2em; */
+    font-size: 12px;
 }
 
 p.banner {

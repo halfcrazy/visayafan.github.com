@@ -2022,3 +2022,7 @@ blockquote {
     border-left-style:solid;
     padding-left: 1em;
 }
+
+p{
+    white-space:pre;
+}
