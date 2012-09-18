@@ -2024,5 +2024,5 @@ blockquote {
 }
 
 p{
-    white-space:pre;
+    /* white-space:pre; */
 }
