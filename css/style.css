@@ -87,7 +87,7 @@
     h2 {
         font-size: 12pt;
         padding-bottom: 4px;
-        margin-bottom: 5px;
+        /* margin-bottom: 5px; */
         border-bottom: 3px solid #DDD;
     }
 
@@ -886,15 +886,6 @@
 
 
 
-@media screen
-{
-    #table-of-contents {
-        float: right;
-        border: 1px solid #CCC;
-        max-width: 50%;
-        overflow: auto;
-    }
-} /* END OF @media screen */
 
 @media all
 {
@@ -980,7 +971,7 @@
         line-height: 21px;
         color: #333;
 
-        max-width: 95%;
+        max-width: 60%;
         margin: auto;
         /* background-image: url(http://orgmode.org/worg-unicorn.png); */
         background-position: 25px 5px;
@@ -988,10 +979,11 @@
         background-color: #F9F9F9;
     }
     body #content {
-        padding-top: 70px;
-        padding-left: 12.5%;
-        padding-right:12.5%;
-        width: 75%;    }
+        padding-top: 40px;
+        /* padding-left: 12.5%; */
+        /* padding-right:12.5%; */
+        /* width: 75%; */
+    }
     body .title {
         margin-left: 120px;
     }
@@ -1008,7 +1000,7 @@
         z-index:999;
         font-size: 10pt;
         position: fixed;
-        min-width: 115px;
+        /* min-width: 115px; */
         right: 0em;
         top: 0em;
         background: white;

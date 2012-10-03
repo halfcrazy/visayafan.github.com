@@ -7,7 +7,7 @@
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
 <meta name="title" content="Ubunt下配置GAE（Google App Engine）翻墙"/>
 <meta name="generator" content="Org-mode"/>
-<meta name="generated" content="2012-09-08 09:38:00 CST"/>
+<meta name="generated" content="2012-10-03 21:18:07 CST"/>
 <meta name="author" content="visaya fan"/>
 <meta name="description" content=""/>
 <meta name="keywords" content=""/>
@@ -92,7 +92,7 @@
 </div>
 
 <div id="preamble">
-<a href="#" id="tabzilla" class="tabzilla-opened" role="button" aria-expanded="true" aria-controls="tabzilla-panel" title="Close (Esc)">No_Joking</a>
+<!-- <a href="#" id="tabzilla" class="tabzilla-opened" role="button" aria-expanded="true" aria-controls="tabzilla-panel" title="Close (Esc)">No_Joking</a> --> <a href="http://www.fanhan.tk">Home</a>
 </div>
 
 <div id="content">
@@ -108,7 +108,7 @@
 <script src="../js/disqus-comment.js"></script>
 
 <div id="table-of-contents">
-<h2>Table of Contents</h2>
+<h2>TOC</h2>
 <div id="text-table-of-contents">
 <ul>
 <li><a href="#sec-1">1 写在前面</a></li>
@@ -231,19 +231,21 @@ urllib2.URLError: &lt;urlopen error [Errno 32] Broken pipe&gt;
 </li>
 <li>配置成功<br/>
 </li>
+<li>访问twitter和G+的时候遇到证书不信任问题：<br/>
+</li>
 </ul>
 
-</div>
+
+<p><br/>
+<pre class="example">$certutil -d sql:$HOME/.pki/nssdb -A -t "C,," -n GoAgent -i ~/goagent/local/CA.crt
+</pre>
+
+</p>
+<p>    <br/>
+</p></div>
 </div>
 </div>
 </div>
 
-<div id="postamble">
-<p class="date">Date: 2012-09-08 09:38:00 CST</p>
-<p class="author">Author: visaya fan</p>
-<p class="creator">Org version 7.8.11 with Emacs version 23</p>
-
-
-</div>
 </body>
 </html>
