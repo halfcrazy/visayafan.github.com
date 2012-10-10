@@ -1,0 +1,13 @@
+#OPTOINS: "\n:t"
+* 快捷键
+#+BEGIN_EXAMPLE
+C-/                注释当前行／块
+C-Q              返回上次编辑的地方
+C-.                返回下个注释（Annotation）
+C-,                返回上个注释（Annotation）
+M-Left          Back
+M-Right        Forward
+C-M-Up        复制当前行到上一行
+C-M-Down   复制当前行到下一行
+
+#+END_EXAMPLE

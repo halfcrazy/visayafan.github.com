@@ -1,0 +1,56 @@
+#+OPTIONS: ^:{} _:{} num:t toc:t \n:t
+#+include "../../template.org"
+#+title: 成员模板函数
+It is also possible to define a member template function. Let's look at an example and then walk through it:
+#+BEGIN_SRC c++
+class PrintIt { 
+public: 
+    PrintIt( ostream &os ) 
+           : _os( os ){} 
+    // a member template function 
+    template <typename elemType> 
+    void print( const elemType &elem, char delimiter = '\n' ) 
+              { _os << elem << delimiter; } 
+private: 
+    ostream& _os; 
+}; 
+#+END_SRC  
+PrintIt is a nontemplate class that is initialized to an output stream. It provides a member template print() function that writes an object of an arbitrary type to that output stream. By making print() a member template function, we can provide a single instance that supports any type for which an instance of the output operator can be applied. Were we to parameterize PrintIt by the type of element we wish to output, we would create a new class template for each distinct type. Under this implementation, there is only a single PrintIt class. Here is how we might use it:
+#+BEGIN_SRC c++
+int main() 
+{ 
+    PrintIt to_standard_out( cout ); 
+    to_standard_out.print( "hello" ); 
+    to_standard_out.print( 1024 ); 
+    string my_string( "i am a string" ); 
+    to_standard_out.print( my_string ); 
+} 
+#+END_SRC  
+When compiled and executed, this generates the following output:
+hello 
+1024 
+i am a string 
+
+A template class can also define a member template function. For example, we might parameterize PrintIt by its ostream type while maintaining print() as a member template function:
+#+BEGIN_SRC c++
+template <typename OutStream> 
+class PrintIt { 
+public: 
+    PrintIt( OutStream &os ) 
+           : _os( os ){} 
+    template <typename elemType> 
+    void print( const elemType &elem, char delimiter = '\n' ) 
+              { _os << elem << delimiter; } 
+private: 
+    ostream& _os; 
+}; 
+//Here is our modified program:
+int main() 
+{ 
+    PrintIt<ostream> to_standard_out( cout ); 
+    to_standard_out.print( "hello" ); 
+    to_standard_out.print( 1024 ); 
+    string my_string( "i am a string" ); 
+    to_standard_out.print( my_string ); 
+} 
+#+END_SRC  

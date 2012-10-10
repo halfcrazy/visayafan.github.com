@@ -1,0 +1,55 @@
+#+OPTIONS: ^:{} _:{} num:t toc:t \n:t
+#+include "../../template.org"
+#+title:
+#+TITLE: little-big endian
+*小端字节序*
+  x86系列是little endian
+  是指在存储时低位放在低地址。
+*大端字节序*
+  PowerPC是big endian
+  存储时高位放在低地址。
+ 
+例如存储0x1234，12是高位，34是低位。
+*big endian存储：*
+内存地址 低->高
+存储内容 12 34
+*little endian存储：*
+内存地址 低->高
+存储内容 34 12
+
+*程序验证当前使用CPU的字节序：*
+- 使用普通方法：强制类型转化
+#+BEGIN_SRC c
+#include <stdio.h>
+
+int main(int argc, char *argv[])
+{
+    int num = 0;
+    int *p = &num;
+    *((char *)p) = 0xff;
+    if(num == 0xff)
+        printf("little endian");
+    else                        // 0xff000000
+        printf("big endian");
+    return 0;
+}
+#+END_SRC  
+- 使用UNION方法
+#+BEGIN_SRC c
+bool checkCPU(){
+    union A{
+        int i;
+        char c;
+    }a;
+    a.i = 1;
+    return (a.c == 1);          // little endian will return 0
+                                // big endian will return 1
+}
+#+END_SRC  
+- LINUX中实现：
+若为little endian则l与long的低位占同内存，若big endian则b与long的低位占同内存。
+所以若为little endian则ENDIANESS则为l否则为b。
+#+BEGIN_SRC c
+static union { char c[4]; unsigned long mylong; } endian_test = {{ 'l', '?', '?', 'b' } };
+#define ENDIANNESS ((char)endian_test.mylong
+#+END_SRC    

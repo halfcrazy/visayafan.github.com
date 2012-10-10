@@ -1,0 +1,39 @@
+#+OPTIONS: ^:{} _:{} num:t toc:t \n:t
+#+include "../../template.org"
+#+title: 模板特化与偏特化
+* template specialization 模板特化
+  一般情况下类模板定义如下：
+#+BEGIN_SRC c++
+template<class Window, class Controller>
+class Widget
+{
+    ... 泛化实现代码 ...
+};
+#+END_SRC  
+  特化是指把类模板中指定的class T变成具体的类型：
+#+BEGIN_SRC c++
+class Widget<ModalDialog, MyController>
+{
+    ... 特化实现代码 ...
+};
+#+END_SRC    
+   其中ModalDialog和MyController是你自己另外定义的类.
+   有了这个Widget的特化定义之后,如果你以后定义了Widget<ModalDialog, MyController>对象时,编译器就会使用上述的特化定义.
+   如果定义了其它泛型对象,那么编译器就是用原本的泛化定义.
+   这就是模板的特化.
+* template partial specialization 模板偏特化
+  模板特化是通过"给模板中的所有模板参数一个具体的类"的方式来实现的.而模板偏特化则是通过"给模板中的部分模板参数以具体的类,而留下剩余的模板参数仍然使用原来的泛化定义"的方式来实现的.
+#+BEGIN_SRC c++
+template<class Window>                        //仍然使用原来的泛化定义;
+class Widget<Window, MyController>            //MyController是具体的类,是特化定义;
+{
+    ... 偏特化实现代码 ...
+};
+#+END_SRC
+  模板的偏特化能力很强大.当你实例化一个模板时,编译器会把目前存在的偏特化模板和全特化模板做比较,并找出其中最合适、最匹配的实现.
+  这样,灵活性就很大.
+  模板的偏特化机制不能用在函数身上,不论成员函数还是非成员函数.
+* 注意
+1. 虽然你可以全特化类模板中的成员函数,但是你不能偏特化他们;
+2. 你不能偏特化命名空间级别(namespace-level)的函数(non-member).最接近"命名空间级别模板函数"的偏特化机制就是函数重载,那就意味着你对"函数参数"(而非返回值类型或内部所用类型)有很精致的特化能力;
+3. 特化或全特化时,template后面的尖括号中不带任何内容;

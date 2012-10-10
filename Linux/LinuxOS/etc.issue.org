@@ -1,0 +1,39 @@
+#+OPTIONS: ^:{} _:{} num:t toc:t \n:t
+#+include "../../template.org"
+#+title: /etc/issue,/etc/issue.net,/etc/motd 登陆显示信息
+
+* /etc/issue文件
+/etc/issue是个纯文本文件，其内容为登陆tty时显示的信息。
+
+可以用换码符来显示需要的信息，换码符的意义是由agetty来解释的，man agetty查看更多的信息。
+| \b | 插入当前行的波特率                                                         |
+| \d | 插入当前日期                                                               |
+| \s | 插入操作系统的名称                                                         |
+| \l | 插入当前tty的名称                                                          |
+| \m | 插入计算机的体系结构id，如i486                                             |
+| \n | 插入计算机的节点名，即hostname                                             |
+| \o | 插入计算机的域名                                                           |
+| \r | 插入内核的版本                                                             |
+| \t | 插入当前时间                                                               |
+| \u | 插入当前登陆的用户数                                                       |
+| \U | 插入1                           user  或者  N   users，N是当前登陆的用户数 |
+| \v | 插入当前操作系统的版本                                                     |
+
+* 实例
+  我现在机子上用cat /etc/issue得到结果是：
+#+begin_example
+kernel_study$ cat /etc/issue
+Ubuntu 11.04 \n \l
+
+#+end_example
+  \n表示显示hostname，\l表示显示tty名称。此时Control+Alt+F1登陆到tty1终端上，可以看到显示的是Ubuntu 11.04 visaayfan@compaq-510 tty1。
+  下面修改/etc/issue为 Ubuntu 11.04 \n \l \v \t \m，再次Ctrl+Alt+F1切换到tty1上，按下Ctrl+D，此时会看到增加了当前操作系统版本、时间和当前计算机体系结构名称。
+* Ubuntu查看操作系统版本
+  * Ubuntu操作系统默认情况下issue文件里写的是OS的版本，故可以通过查看此文件来得知当前Ubuntu版本（如果没被人修改的话）。
+  * 还可以 cat /etc/lsb-release
+* /etc/issue.net
+  通过telnet远程登陆主机显示的信息显示的是/etc/issue.net而非/etc/issue
+* /etc/motd文件
+  /etc/issue是登陆前显示的信息，而/etc/motd是登陆后显示的信息。
+  Ubuntu下/etc/motd是/var/run/motd的符号链接，实际上是由脚本/etc/update-motd.d/00header来控制的。
+  可以修改/etc/update-motd.d中的文件来得到想要的登陆后提示界面。

@@ -1,0 +1,18 @@
+#+OPTIONS: ^:{} _:{} num:t toc:t \n:t
+#+include "../../template.org"
+#+TITLE: 函数属性
+* alias ("function name")
+  例如：void f(int i) __attribute__ ((weak, alias ("__f")))
+  之后调用函数f时会自动调用__f，同时f的参数将传递给__f
+* deprecated
+  使用有此属性的函数将报错。
+  当将要在未来版本中去除某个函数的时候可以使用此属性。
+* section ("section name")
+  默认情况下是将函数放到.text段中，此属性可以将函数放到指定段中。
+* noreturn
+  有些标准函数，例如exit、abort无return，GCC可以自动判断。
+  我们也可写自己没有return的函数，此属性可以指定，编译器会做稍些优化。
+* nothrow
+  此属性告诉编译器此函数不能抛出异常。
+* aligned (alignment)
+  对齐

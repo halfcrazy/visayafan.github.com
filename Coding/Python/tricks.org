@@ -1,0 +1,59 @@
+#+OPTIONS: ^:{} _:{} num:t toc:t \n:t
+#+include "../../template.org"
+#+title:Python 技巧
+
+* 判断文件是否存在
+#+begin_src python
+import os.path
+os.path.exists("filename")
+#+end_src
+
+* Python中执行shell命令
+#+begin_src python
+from subprocess import call
+call(["ls", "-l"])
+#+end_src
+* 函数参数若是元组则用*若为字典则用** 或用 apply 函数
+  apply函数为__builtin__模块（自动加载）中的函数：
+#+begin_src python
+apply(object[, args[, kwargs]]) -> value
+#+end_src
+  其中args为元组，kwargs为字典
+#+begin_src python
+def fun(a, b):
+    print a, b
+x=('aa','bb')
+apply(fun,x)
+y={'a':'aa', 'b':'bb'}
+#apply(obj[,args[,kargs]])第2个参数是tuple类型，为空，所以用()
+apply(fun,(),y)
+fun(*x)
+fun(**y)
+#+end_src  
+* 字典值排序
+  http://stackoverflow.com/questions/613183/python-sort-a-dictionary-by-value
+  没有直接对字典值进行排序的函数
+** 利用sorted+operator.itemgetter来实现：
+#+begin_example
+import operator
+x = {1: 2, 3: 4, 4:3, 2:1, 0:0}
+sorted_x = sorted(x.iteritems(), key=operator.itemgetter(1))
+dict(sorted_x)
+#+end_example
+#+begin_example
+  dict.iteritems()返回(key,value)迭代器，key函数作用在每个(key,value)上结果为(key,value)[1]即value
+#+end_example
+  *注意：sorted第一个参数是个可迭代对象，参数key是个函数*
+** 或者用dict.get函数也可以：
+#+begin_src python
+sorted_x = sorted(x.iteritems(), key=d.get)
+#+end_src
+** 或者自己写lambda表达式： 
+#+begin_src python
+sorted_x = sorted(x.items(), key=lambda x:x[1])
+#+end_src
+  此时应用items而非iteritems，前者返回一个形如：[(key1,value1), (key2,value2)]列表，后者返回一个前面列表的迭代对象（可以调用next()方法来获取下一个值）。
+  sorted对字典排序的时候用的是key值，所以可以这么写：
+#+begin_src python
+sorted_x = sorted(x, key=lambda i: x[i])
+#+end_src

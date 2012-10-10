@@ -1,0 +1,51 @@
+#OPTOINS: "\n:t"
+* list()
+* append(ojbect) extend(list)
+#+BEGIN_EXAMPLE
+前者只能在list最后插入一个，而extend可以在最后插入多个。
+#+END_EXAMPLE
+
+* reverse() reversed(list)
+前者是成员函数，后者是内置函数
+* sort() sorted()x
+#+BEGIN_EXAMPLE
+sorted(iterable, cmp=None, key=None, reverse=False) --> new sorted list
+L.sort(cmp=None, key=None, reverse=False) -- stable sort *IN PLACE*;
+
+区别在：sorted是built-in 函数， sort是list的成员函数。前者作用于列表但并不对列表造成影响，后才修改了列表。
+
+iterable 可迭代的类药
+cmp 比较函数
+key 用列表元素的某个属性和函数进行作为关键字
+reverse 排序规则
+一般cmp，key 可以用lambda表达式，效率key>cmp
+
+>>>L = [('b',2),('a',1),('c',3),('d',4)]
+>>>print sorted(L, cmp=lambda x,y:cmp(x[1],y[1]))
+[('a', 1), ('b', 2), ('c', 3), ('d', 4)]
+
+>>>L = [('b',2),('a',1),('c',3),('d',4)]
+>>>print sorted(L, key=lambda x:x[1]))
+[('a', 1), ('b', 2), ('c', 3), ('d', 4)]
+
+>>> print sorted([5, 2, 3, 1, 4], reverse=True)
+[5, 4, 3, 2, 1]
+>>> print sorted([5, 2, 3, 1, 4], reverse=False)
+[1, 2, 3, 4, 5]
+#+END_EXAMPLE
+
+* insert()
+#+BEGIN_EXAMPLE
+L.insert(index, object)   # Insert object before index
+#+END_EXAMPLE
+* pop([index])  
+L.pop([index]) # Remove and return item at index (defaut last)
+* remove(value)
+#+BEGIN_EXAMPLE
+L.remove(value)   # Remove fist occurence of value.
+#+END_EXAMPLE
+
+* del
+del L[index]
+* count(value)
+L.count(value) # Return number of occurrences of value.

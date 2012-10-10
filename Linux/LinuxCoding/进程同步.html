@@ -1,0 +1,299 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+               "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<title>两道有趣的进程同步题</title>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
+<meta name="title" content="两道有趣的进程同步题"/>
+<meta name="generator" content="Org-mode"/>
+<meta name="generated" content="2012-10-10 16:43:40 CST"/>
+<meta name="author" content="visaya fan"/>
+<meta name="description" content=""/>
+<meta name="keywords" content=""/>
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  html { font-family: Times, serif; font-size: 12pt; }
+  .title  { text-align: center; }
+  .todo   { color: red; }
+  .done   { color: green; }
+  .tag    { background-color: #add8e6; font-weight:normal }
+  .target { }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .right  {margin-left:auto; margin-right:0px;  text-align:right;}
+  .left   {margin-left:0px;  margin-right:auto; text-align:left;}
+  .center {margin-left:auto; margin-right:auto; text-align:center;}
+  p.verse { margin-left: 3% }
+  pre {
+	border: 1pt solid #AEBDCC;
+	background-color: #F3F5F7;
+	padding: 5pt;
+	font-family: courier, monospace;
+        font-size: 90%;
+        overflow:auto;
+  }
+  table { border-collapse: collapse; }
+  td, th { vertical-align: top;  }
+  th.right  { text-align:center;  }
+  th.left   { text-align:center;   }
+  th.center { text-align:center; }
+  td.right  { text-align:right;  }
+  td.left   { text-align:left;   }
+  td.center { text-align:center; }
+  dt { font-weight: bold; }
+  div.figure { padding: 0.5em; }
+  div.figure p { text-align: center; }
+  div.inlinetask {
+    padding:10px;
+    border:2px solid gray;
+    margin:10px;
+    background: #ffffcc;
+  }
+  textarea { overflow-x: auto; }
+  .linenr { font-size:smaller }
+  .code-highlighted {background-color:#ffff00;}
+  .org-info-js_info-navigation { border-style:none; }
+  #org-info-js_console-label { font-size:10px; font-weight:bold;
+                               white-space:nowrap; }
+  .org-info-js_search-highlight {background-color:#ffff00; color:#000000;
+                                 font-weight:bold; }
+  /*]]>*/-->
+</style>
+<script type="text/javascript">
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+
+</head>
+<body>
+<div id="org-div-home-and-up">
+ <a accesskey="H" href="../../index.html#linuxcoding"> HOME </a>
+</div>
+
+
+<div id="content">
+<h1 class="title">两道有趣的进程同步题</h1>
+
+
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"> </script>
+<link rel="stylesheet" type="text/css" href="../../Layout/CSS/vf.css" />
+<script src="../../Layout/JS/bootstrap_old.js"></script>
+<script src="../../Layout/JS/disqus-comment.js"></script>
+
+<p>
+考研复习OS中，直到认真看起来才发现自己原来什么都不懂。 ——2012年10月9日11:18PM<br/>
+</p>
+<p><br/>
+</p>
+<div id="outline-container-1" class="outline-2">
+<h2 id="sec-1">需知</h2>
+<div class="outline-text-2" id="text-1">
+
+<p>  信号量：<br/>
+</p>
+<p><br/>
+<pre class="src src-c"><span style="color: #a020f0;">typedef</span> <span style="color: #a020f0;">struct</span> {
+        <span style="color: #228b22;">int</span> <span style="color: #a0522d;">value</span>;
+        <span style="color: #a020f0;">struct</span> <span style="color: #228b22;">process</span> *<span style="color: #a0522d;">L</span>;
+}<span style="color: #a0522d;">semaphore</span>;
+</pre>
+
+  P操作：<br/>
+</p>
+<p><br/>
+<pre class="src src-c"><span style="color: #0000ff;">P</span>(S){
+        S.value--;
+        <span style="color: #a020f0;">if</span>(S.value &lt; 0){&#25226;&#27492;&#36827;&#31243;&#22238;&#21040;&#21040;&#19982;&#27492;&#36164;&#28304;&#30456;&#20851;&#30340;&#31561;&#24453;&#38431;&#21015;&#20013;&#24182;&#23558;&#27492;&#36827;&#31243;&#25346;&#36215;}
+}
+</pre>
+
+  V操作：<br/>
+</p>
+<p><br/>
+<pre class="src src-c"><span style="color: #0000ff;">V</span>(S){
+        s.value++;
+        <span style="color: #a020f0;">if</span>(S.value &lt;= 0){&#20174;&#27492;&#36164;&#28304;&#30456;&#20851;&#30340;&#31561;&#24453;&#38431;&#21015;&#20013;&#21796;&#37266;&#19968;&#20010;&#36827;&#31243;;}
+}
+</pre>
+
+</p></div>
+
+</div>
+
+<div id="outline-container-2" class="outline-2">
+<h2 id="sec-2">题目1：</h2>
+<div class="outline-text-2" id="text-2">
+
+
+<b>
+<p>
+  一个仓库中只库存两种产品：A和B，需要满足条件如下：<br/>
+</p><ol>
+<li>A的产品数量-B的产品数量 &lt; M<br/>
+</li>
+<li>B的产品数量-A的产品数量 &lt; N<br/>
+</li>
+<li>每次只能存一种产品<br/>
+</li>
+</ol>
+
+<p>  其中M，N均为整数。<br/>
+</b>
+</p>
+<p>  <br/>
+  A数量与B数量相互制约，假设当前时刻A最多可以再存Sa个，B最多可以再存Sb个，则Sa开始时为M-1，Sb开始为N-1，A每库存一个，Sa应该减1（减少一个），Sb应该加1（从题目中2式看出，A加1，B同样加1，不等式仍旧成立）；同理B每库存一个Sb减1，Sa加1。<br/>
+  每次只能存一种产品表明仓库中临界资源。<br/>
+</p>
+<p><br/>
+<pre class="src src-c"><span style="color: #228b22;">semaphore</span> <span style="color: #a0522d;">mutex</span>=1;
+<span style="color: #228b22;">semaphore</span> <span style="color: #a0522d;">Sa</span>=M-1, <span style="color: #a0522d;">Sb</span>=N-1;
+
+<span style="color: #0000ff;">ProcessA</span>(){
+    P(Sa);
+    P(mutex);
+    &#23384;&#19968;&#20010;A&#20135;&#21697;;
+    V(Sb);
+    V(mutex);
+}
+
+<span style="color: #0000ff;">ProcessB</span>(){
+    P(Sb);
+    P(mutex);
+    &#23384;&#19968;&#20010;B&#20135;&#21697;;
+    V(Sa);
+    V(mutex);
+}
+</pre>
+
+</p></div>
+
+</div>
+
+<div id="outline-container-3" class="outline-2">
+<h2 id="sec-3">题目2：</h2>
+<div class="outline-text-2" id="text-3">
+
+
+<b>
+<p>
+  三个合作进程A，B，C，需要依次通过同一台输入设备输入各自的数据a，b，c，且输入设备互斥，A接受a，B接受b，C接受c。<br/>
+  A，B，C分别进程如下运算：<br/>
+  A: x=a+b<br/>
+  B: y=a*b<br/>
+  C: z=y+c-a<br/>
+  最终由A进程负责将x，y，z结果打印出来。<br/>
+</b><br/>
+
+  前趋图：<br/>
+</p>
+<div style="text-align: center">
+<p><img src="./image/进程同步.jpg"  alt="./image/进程同步.jpg" /><br/>
+</p>
+</div>
+
+<p><br/>
+  由于依次通过同一设备，故顺序为A-&gt;B-&gt;C，即图中的1，4.<br/>
+  A中需要B输入的数据b，所以必须在B接收完b后A的计算才能运行。即图的2<br/>
+  C需要B的运算结果，故C要等B计算完后才能计算，即图的5<br/>
+  A需要B，C的运算结果y，z，所以必须B，C计算完成后A才能打印，即图的3，6<br/>
+  输入设备是互斥的，需要互斥信号量。<br/>
+</p>
+<p><br/>
+<pre class="src src-c"><span style="color: #228b22;">semaphore</span> <span style="color: #a0522d;">mutex</span>=1;
+<span style="color: #228b22;">semaphore</span> <span style="color: #a0522d;">s1</span>=s2=s3=s4=s5=s6=0;
+
+<span style="color: #0000ff;">ProcessA</span>(){
+    P(mutex);                   <span style="color: #b22222;">// </span><span style="color: #b22222;">&#33719;&#24471;&#36755;&#20837;&#35774;&#22791;</span>
+    &#36755;&#20837;a;
+    V(mutex);
+    V(s1);
+    P(s2);
+    x=a+b;
+    P(s3);
+    P(s6);
+    &#25171;&#21360;x,y,z;
+}
+
+<span style="color: #0000ff;">ProcessB</span>(){
+    P(s1);
+    P(mutex);
+    &#36755;&#20837;b;
+    V(mutex);
+    V(s4);
+    V(s2);
+    y=a*b;
+    V(s5);
+    V(s3);
+}
+
+<span style="color: #0000ff;">ProcessC</span>(){
+    P(s4);
+    P(mutex);
+    &#36755;&#20837;c;
+    V(mutex);
+    P(s5);
+    z=y+c-a;
+    V(s6);
+}
+</pre>
+
+
+  只要理解一个同步的情况，上面6个同步的情况就非常简单：<br/>
+</p>
+<div style="text-align: center">
+<p><img src="./image/进程同步1.jpg"  alt="./image/进程同步1.jpg" /><br/>
+</p>
+</div>
+
+<p><br/>
+  A必须先于B完成，可以使用一个信号量来实现：<br/>
+</p>
+<p><br/>
+<pre class="src src-c"><span style="color: #228b22;">semaphore</span> <span style="color: #a0522d;">S</span>=0;
+<span style="color: #0000ff;">A</span>(){
+    ....;
+    V(S);
+}
+<span style="color: #0000ff;">B</span>(){
+    P(S);
+    ....;
+}
+</pre>
+
+  若B先于A执行，则P(S)由于S.value&ndash;后&lt;0故挂起；当A执行V(S)后执行S.value++后S.value=0满足value&lt;=0唤醒B，即A先于B执行。<br/>
+</p>
+<p><br/>
+  为方便记忆：<br/>
+</p>
+<div style="text-align: center">
+<p><img src="./image/进程同步2.jpg"  alt="./image/进程同步2.jpg" /><br/>
+</p>
+</div>
+
+<p><br/>
+  这样再看6个同步的题目2便简单多了。<br/>
+</p></div>
+</div>
+</div>
+
+</body>
+</html>

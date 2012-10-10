@@ -1,0 +1,105 @@
+#+OPTIONS: ^:{} _:{} num:t toc:t \n:t
+#+include "../../template.org"
+#+TITLE: 折腾Ubuntu 12.04
+* Ctrl+Super快捷键：
+  * Ctrl+Super+Up 键：最大化当前窗口
+  * Ctrl+Super+Down键：最小化当前窗口
+  * Ctrl+Super+D：最小化所有窗口
+  * Ctrl+Super+Left：半最大化当前窗口（左边）
+  * Ctrl+Super+Right：半最大化当前窗口（右边）
+* Alt快捷键
+  * Alt+F1 –将键盘焦点移到Launcher上，使用箭头键进行移动，按回车即可启动一个应用程序，按下右箭头键显示Quicklist。
+  * Alt+F2 –以特殊模式打开dash，以便运行任何命令。
+  * Alt+F10 – 在最大化/非最大化之间切换当前窗口。
+  * Alt+F9 – 最小化当前窗口。
+  * Alt+Tab – 在当前打开的窗口之间切换。
+  * Alt+F4 – 关闭当前窗口。
+  * Alt+F7 –移动当前窗口（可以使用键盘或鼠标移动）。
+
+* 鼠标快捷键
+  将鼠标移动到最左上角 相当于按下win键
+* Navigation
+  |-----------------+-------------------------------------------|
+  | *Screenshot*    |                                           |
+  |-----------------+-------------------------------------------|
+  | Print           | Take a screenshot                         |
+  | Alt+Print       | screenshot on a window                    |
+  | Shitft+Print    | screenshot on a area                      |
+  | Ctrl+Print      | copy screenshot to clipboard              |
+  | Ctrl+Alt+Print  | copy screenshot of a windows to clipboard |
+  | Ctrl+Shit+Print | copy screenshot of a area to clipboard    |
+  |-----------------+-------------------------------------------|
+  | *System*        |                                           |
+  |-----------------+-------------------------------------------|
+  | Log out         | Ctrl+Alt+Delete                           |
+  | Alt+F1 or Win   | show activities overview                  |
+  |-----------------+-------------------------------------------|
+  | *Window*        |                                           |
+  |-----------------+-------------------------------------------|
+  | Alt+Escape      | Switch windows directly                   |
+  | Ctrl+Super+D    | hide all windows                          |
+  | Ctrl+F10        | Toggle fullsceen mode                     |
+  | Ctrl+Alt+S      | Toggle maximization state                 |
+  | Ctrl+Super+Down | Restore Window                            |
+  |-----------------+-------------------------------------------|
+* Window Minimize and Maximize 默认
+  1. Minimize window: Ctrl+Alt+numpad 0
+  2. Maxminze window: Super+Up   
+* 安装gnome-shell-extension
+  官网 http://extensions.gnome.org 安装（安装方法 每个可安装程序旁边有个on/off 点击on即可）
+  我现在正在使用的扩展：
+  1. Alternative Status Menu: 新加一个power off选项（点击后可出现restart选项）
+  2. Application Menu: 增加一个类似gnome2的菜单
+  3. Hide Dash: 隐藏Dash（按Win键出现的最左边的竖条 没什么用）
+  4. Maximus: 最大化（不是全屏）隐藏标题栏
+  5. Media Player Indicator: 播放音乐的时候，panel上的音量控制比平时丰富
+  6. Panel Setting: 在panel上的用户名下面多一个system setting
+  7. Places Status Indicator: 音量旁边增加一个类似gnome2中的文件夹按钮
+  8. Remove Accessibility: 删掉panel上的accessibility按钮（没什么用）
+  9. Move Clock: 将时钟移到用户名的左边而非正中间
+  10. Status only icon: 去掉用户名，只显示一个按钮
+  11. Brightness Control: 控制显示器亮度
+  非gnome官方安装：
+  添加更新源：
+  sudo add-apt-repository ppa:upubuntu-com/ext
+  sudo apt-get update
+  1. 自动隐藏top panel: sudo apt-get install autohidetopbar-ext 双击调出
+  2. 将top panel移到下面：sudo apt-get install reflection-ext
+     将完之后可以在gnome-tweak-tool－>shell extensions中启用 然后Alt+F2 r Enter重新加载gnome-shell
+  参考 http://www.upubuntu.com/2012/05/collection-of-20-top-extensions-for.html
+* 安装gnome-tweak-tool
+  可以设置主题
+  shell->Arrangement of buttons on the titlebar->all
+* 安装dconf-editor
+  整个gnome-shell的配置数据库（相当于win下的注册表）
+  有些快捷键在system-setting->keyboard中设置没用，可以在dconf-editor中设置：
+  org->gnome->desktop->wm->keybindings
+  例如我把 minmize设置为 '<Control><Alt>x‘ 即C-M-x即可最小窗口
+  close： '<Control><Alt>z' 即C-M-z关闭窗口
+  有了这两个快捷键就不必在gnome-tweak->shell->Arrangment of buttons on the titlebar中设置最大最小化(最大化为Alt+F10 or Win-Up)
+* 关掉烦人的错误报告
+  sudo emacs /etc/default/apport 将enabled=1改为enabled=0即可，退出 sudo service apport restart
+* 设置Application中图标大小和间距
+  在/usr/share/gnome-shell/theme/gnome-shell.css中查找 grid。设置
+#+begin_src css
+-shell-grid-horizontal-item-size: 100px;
+-shell-grid-vertical-item-size: 100px;
+
+-shell-grid-horizontal-item-size: 272px; /* 2 * -shell-grid-horizontal-item-size + spacing */
+-shell-grid-vertical-item-size: 118px;
+#+end_src
+  即可。
+* apt-fast/apt-proz/apt-metalink
+  替代apt-get来加速下载
+#+begin_example
+sudo sudo apt-add-repository ppa:tldm217/tahutek.net
+sudo apt-get update
+sudo apt-get install apt-proz
+#+end_example
+
+#+begin_example
+sudo add-apt-repository ppa:tldm217/tahutek.net 
+sudo apt-get update 
+sudo apt-get install apt-fast
+#+end_example
+

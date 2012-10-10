@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="gb18030"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+               "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<title></title>
+<meta http-equiv="Content-Type" content="text/html;charset=gb18030"/>
+<meta name="title" content=""/>
+<meta name="generator" content="Org-mode"/>
+<meta name="generated" content="2012-10-10 17:12:44 CST"/>
+<meta name="author" content="visaya fan"/>
+<meta name="description" content=""/>
+<meta name="keywords" content=""/>
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  html { font-family: Times, serif; font-size: 12pt; }
+  .title  { text-align: center; }
+  .todo   { color: red; }
+  .done   { color: green; }
+  .tag    { background-color: #add8e6; font-weight:normal }
+  .target { }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .right  {margin-left:auto; margin-right:0px;  text-align:right;}
+  .left   {margin-left:0px;  margin-right:auto; text-align:left;}
+  .center {margin-left:auto; margin-right:auto; text-align:center;}
+  p.verse { margin-left: 3% }
+  pre {
+	border: 1pt solid #AEBDCC;
+	background-color: #F3F5F7;
+	padding: 5pt;
+	font-family: courier, monospace;
+        font-size: 90%;
+        overflow:auto;
+  }
+  table { border-collapse: collapse; }
+  td, th { vertical-align: top;  }
+  th.right  { text-align:center;  }
+  th.left   { text-align:center;   }
+  th.center { text-align:center; }
+  td.right  { text-align:right;  }
+  td.left   { text-align:left;   }
+  td.center { text-align:center; }
+  dt { font-weight: bold; }
+  div.figure { padding: 0.5em; }
+  div.figure p { text-align: center; }
+  div.inlinetask {
+    padding:10px;
+    border:2px solid gray;
+    margin:10px;
+    background: #ffffcc;
+  }
+  textarea { overflow-x: auto; }
+  .linenr { font-size:smaller }
+  .code-highlighted {background-color:#ffff00;}
+  .org-info-js_info-navigation { border-style:none; }
+  #org-info-js_console-label { font-size:10px; font-weight:bold;
+                               white-space:nowrap; }
+  .org-info-js_search-highlight {background-color:#ffff00; color:#000000;
+                                 font-weight:bold; }
+  /*]]>*/-->
+</style>
+<script type="text/javascript">
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+
+</head>
+<body>
+<div id="org-div-home-and-up">
+ <a accesskey="H" href="../../index.html#python"> HOME </a>
+</div>
+
+
+<div id="content">
+<h1 class="title"></h1>
+
+
+<div id="table-of-contents">
+<h2>TOC</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#sec-1">1 “多维数组”陷阱</a></li>
+<li><a href="#sec-2">2 处于函数之中循环之下的函数</a></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-1" class="outline-2">
+<h2 id="sec-1"><span class="section-number-2">1</span> “多维数组”陷阱</h2>
+<div class="outline-text-2" id="text-1">
+
+<p>  a=[<sup><a class="footref" name="fnr.1" href="#fn.1">1</a></sup>*4]*3 如此构造a得到的a的第一行其实都是同一个列表对象的引用，所以修改列中一个元素会引起整个列的改变，同理修改行中的一个元素会引起整个行的改变。
+  如此这不是你想要的结果，可以如此初始化
+</p>
+
+
+<pre class="src src-python">&gt;&gt;&gt; a=[[0]*4]*3
+&gt;&gt;&gt; <span style="color: #a020f0;">print</span> a
+[[0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]]
+&gt;&gt;&gt; a[0][0]=1
+&gt;&gt;&gt; <span style="color: #a020f0;">print</span> a
+[[1, 0, 0, 0], [1, 0, 0, 0], [1, 0, 0, 0]]
+<span style="color: #b22222;">###&#25913;&#21464;&#21015;&#20013;&#19968;&#20010;&#20803;&#32032;&#20250;&#25913;&#21464;&#25972;&#20010;&#21015;</span>
+
+&gt;&gt;&gt; a=[[0 <span style="color: #a020f0;">for</span> column <span style="color: #a020f0;">in</span> <span style="color: #7a378b;">range</span>(4)] <span style="color: #a020f0;">for</span> row <span style="color: #a020f0;">in</span> <span style="color: #7a378b;">range</span>(3)]
+&gt;&gt;&gt; <span style="color: #a020f0;">print</span> a
+[[0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]]
+&gt;&gt;&gt; a[0][0]=1
+&gt;&gt;&gt; <span style="color: #a020f0;">print</span> a
+[[1, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]]
+&gt;&gt;&gt; 
+</pre>
+
+</div>
+
+</div>
+
+<div id="outline-container-2" class="outline-2">
+<h2 id="sec-2"><span class="section-number-2">2</span> 处于函数之中循环之下的函数</h2>
+<div class="outline-text-2" id="text-2">
+
+<p>  如果lambda或def在函数之中定义，且嵌套在一个循环中，且引用了一个被循环使用的上层作用域的变量，则在这个循环中产生的所有函数会有相同的值。
+  如果这不是你想要的结果，可以修改 acts.append(lambda x, i=i: i**x)
+</p>
+
+
+<pre class="src src-python"><span style="color: #a020f0;">def</span> <span style="color: #0000ff;">makeActions</span>():
+    acts=[]
+    <span style="color: #a020f0;">for</span> i <span style="color: #a020f0;">in</span> <span style="color: #7a378b;">range</span>(5):
+        acts.append(<span style="color: #a020f0;">lambda</span> x: i**x)
+    <span style="color: #a020f0;">return</span> acts
+<span style="color: #a0522d;">acts</span>=makeActions()
+<span style="color: #a020f0;">print</span> acts[0](2)
+<span style="color: #a020f0;">print</span> acts[1](2)
+<span style="color: #a020f0;">print</span> acts[2](2)
+<span style="color: #b22222;">##&#32467;&#26524;&#37117;&#26159;&#19968;&#26679;&#30340;</span>
+</pre>
+
+
+<div id="footnotes">
+<h2 class="footnotes">Footnotes: </h2>
+<div id="text-footnotes">
+<p class="footnote"><sup><a class="footnum" name="fn.1" href="#fnr.1">1</a></sup> DEFINITION NOT FOUND: 0
+</p></div>
+</div>
+
+</div>
+</div>
+</div>
+
+</body>
+</html>

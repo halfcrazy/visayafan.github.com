@@ -1,0 +1,31 @@
+#+OPTIONS: ^:{} _:{} num:t toc:t \n:t
+#+include "../../template.org"
+* 图表示
+  虚线+空三角 表继承
+  实现+空三角 表实现
+
+* Collection/Map 继承结构
+  Collection->Set->HanshSet/SortedSet/TreeSet
+            ->List->LinkedList/ArrayList
+  Map->HashMap
+     ->TreeMap->SortedMap
+     
+  Collection与Map接口完全不同。
+  Collection接口是一组允许重复的对象。
+  Set继承自Collection无序但不允许重复。
+  List继承自Collection有序但允许重复，引用位置下标。
+  Map接口既不继承Collection也不继承Set，是键值对。
+  
+  ArrayList旧为Vector，LinkedList旧为Stack。
+* Collection接口
+  用于表示任何或元素组。
+  Iterator接口：主要用来枚举集合中的元素。
+* hashCode()/equals()
+  hashCode相同但equals不一定相同，但eqals相同时hashCode一定相同。
+* TreeSet
+  红黑树实现的
+** SortedSet<E> headSet(E toElement)
+   返回元素严格比toElement小的集合
+   =headSet(E toElement, boolean inclusive)= 如果inclusive=true则返回不大于toElement的元素的集合
+   
+

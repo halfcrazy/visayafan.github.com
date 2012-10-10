@@ -1,0 +1,52 @@
+#+OPTIONS: ^:{} _:{} num:t toc:t \n:t
+#+include "../../template.org"
+#+title: STL：映射 集合
+* map
+** key_type mapped_type value_type
+   前两个分别为键值。
+   最后一个是(key_type, mapped_type)即pair类型。
+** map.insert()
+#+BEGIN_SRC c++
+pair<iterator,bool> insert( const TYPE& pair )
+void insert( input_iterator start, input_iterator end );
+iterator insert( iterator pos, const TYPE& pair );
+#+END_SRC  
+** key_comp()与value_comp()
+  key_compare key_comp() const;
+  The function key_comp() returns the function that compares keys. 
+#+BEGIN_SRC c++
+    m2[0]=1;
+    m2[1]=2;
+    m2[2]=1;
+    m2[3]=2;
+    for(int i=0; i<4; i++){
+        if(!m2.key_comp()(i, m2[i]))
+            cout<<m2[i]<<endl;
+    }
+#+END_SRC  
+- 解析 ::
+  m2.key_comp() 返回比较函数。i, m2[i]作为返回函数的参数，若i<m2[i]为真，否则为假，又有!所以若i>m[i]为真，所以i=0,1时均为假，i=2,3时为真，输出1，2.
+
+** equal_range()
+- 形式 ::
+   pair<iterator, iterator> equal_range( const key_type& key );
+- 返回值 ::
+   The function equal_range() returns two iterators - one to the first element that contains key, another to a point just after the last element that contains key. 
+   返回第一个find的iterator与最后一个find的下一个iterator。
+** upper_bound lower_bound
+   iterator upper_bound( const key_type& key );
+   iterator lower_bound( const key_type& key );
+   返回第一个大于/小于的iterator.
+** size() max_size()
+   前者返回map大小，后者返回map最大的存储个数。
+
+* set
+** insert
+   使用方法与map完全相同。当参数为iterator时返回值为void，当参数为value_type时返回一个iterator和bool。
+#+BEGIN_SRC c++
+     set<int> iset;
+     iset.insert(1);
+     pair<set<int>::iterator, bool> bset = iset.insert(1);
+     if(!bset.second)
+         cout<<"Already exist"<<endl;
+#+END_SRC     

@@ -1,0 +1,169 @@
+#+OPTIONS: ^:{} _:{} num:t toc:t \n:t
+#+include "../../template.org"
+#+title: Lex使用
+
+Manual: http://flex.sourceforge.net/manual
+* 基本格式
+#+begin_example
+%{
+这里的代码会原封不动地移到lex编译后的lex.yy.c中
+%}
+正则定义
+%%
+转换规则
+%%
+辅助函数
+#+end_example  
+** 正则定义
+   形如：letter [a-zA-z]，要使用正则定义符号则要在符号外加{}，例如：fuword [aeiou]{letter}*
+** 转换规则
+   转换规则形如：pattern {action}，例如：
+#+begin_example
+{fuword}      {printf ("%s%s",yytext, "ay");}
+#+end_example
+* 内置变量和函数
+** 变量
+#+begin_example
+yytext   char *  当前匹配的字符串
+yyleng   int     当前匹配的字符串长度
+yyin     FILE *  lex当前的解析文件，默认为标准输入
+yyout    FILE *  lex解析后的输出文件，默认为标准输出
+yylineno int     当前的行数信息
+#+end_example
+#+begin_example
+如果命令行参数指定读取来源则打开该文件将FILE指针传递给yyin，否则为标准输入：
+int main(int argc, char *argv[])
+{
+    if (argc>1)
+        yyin = fopen(argv[1], "r");
+    else
+        yyin = stdin;
+    yylex();
+    return 0;
+}
+#+end_example
+
+#+begin_example
+ECHO     #define ECHO fwrite(yytext, yyleng, 1, yyout)  也是未匹配字符的
+         默认动作
+#+end_example
+** 函数
+** yylex
+int yylex(void)    调用Lex进行词法分析
+** yywrap
+#+begin_example
+int yywrap(void)   在文件(或输入)的末尾调用。如果函数的返回值是1，就停止解
+                   析。 因此它可以用来解析多个文件。代码可以写在第三段，这
+                   样可以解析多个文件。 方法是使用 yyin 文件指针指向不同的
+                   文件，直到所有的文件都被解析。最后，yywrap() 可以返回1
+                   来表示解析的结束。
+#+end_example   
+** yymore
+   yymore()           告诉扫描器下次扫描结果连接在当前yytext后而非覆盖当前yytext
+#+begin_example
+ \"[^"]*        {
+                if (yytext[yyleng-1] == '\\')
+                        yymore();
+                else
+                        ... normal user processing
+                }
+对于"abc\"def"情况，第一次扫描得yytex为abc\，判断最后一个字符为\后调用yymore()，则继续扫描得"def并将结果连接到上次结果中得：abc\"def
+#+end_example   
+** yyless
+   yyless()     回退字符，例如 yyless(yyleng-1)将最后一个字符回退，yyless(yyleng-2)回退两个字符。
+** REJECT
+   REJECT使用后会进行次好匹配，
+#+begin_example
+%{
+#include <stdio.h>
+%}
+
+%%
+a[bc]+  {printf("%s:%s\n","first rule", yytext); REJECT;}
+a[cd]+  {printf ("%s:%s\n","second rule", yytext); REJECT;}
+%%
+#+end_example
+   对于accb,输出：
+#+begin_example
+first rule:accb
+first rule:acc
+second rule:acc
+first rule:ac
+second rule:ac
+accb
+#+end_example
+   第1次由a[bc]+匹配到accb，最长，故匹配成功；之后进行次好匹配，a[bc]+匹配到acc，a[cd]+匹配到acc，长度一样，故按照顺序输出，之后a[cb]+又匹配到ac，最后a[cd]+匹配ac，由于它是REJECT的故还想再重新开始匹配，由于没有再匹配的了，所以accb采用默认动作：ECHO－输出。
+
+   将第2个printf中的REJECT删除后：
+#+begin_example
+first rule:accb
+first rule:acc
+second rule:acc
+b
+#+end_example
+   与上面一样，最后a[cd]+匹配到acc之后由于没有REJECT，forward指针指向b，b没有匹配，默认输出，
+* 编译
+  lex文件以l结尾，lex test.l生成lex.yy.c，之后 cc lex.yy.c -ll生成a.out，再执行./a.out即可。
+* 例子
+  * 单词序列，如果一个单词第一个字母为元音则将它移动到单词尾并加上ay，否则只在单词后加ay
+#+begin_example
+compiler$ cat test.l
+%{
+    #include <stdio.h>
+%}
+
+letter          [a-zA-Z]
+yuanword        [aeiou]{letter}*
+fuword          [bcdfghjklmnpqrstvwxyz]{letter}*
+
+%%
+
+{yuanword}        {printf("%s%c%s",yytext+1, *yytext, "ay");}
+{fuword}      {printf ("%s%s",yytext, "ay");}
+%%
+
+compiler$ cat test.c
+int main main abc 
+compiler$ lex test.l 
+compiler$ cc lex.yy.c -o test -ll
+compiler$ ./test < test.c
+ntiay mainay mainay bcaay 
+#+end_example
+  * 将C源程序中所有float关键字变成double
+#+begin_example
+compiler$ cat test.l
+/* 注意不能将 "a float b"中的float变成double */
+/* 所有float声明变量特点是声明或定义，即以;或=紧跟在标识符之后 */
+%{
+#include <stdio.h>
+%}
+/* regular definitions */
+letter          [a-zA-Z]
+digit           [0-9]
+id              {letter}({letter}|{digit})*
+delim           [ \t]
+%%
+"float"/{delim}{id}{delim}*(";"|"=")     {printf("%s","double");}
+%%
+
+compiler$ cat test.c
+int main(int argc, char *argv[])
+{
+    float i;
+    float ii = 1.0;
+    char *str = "float";
+    char *str2 = "a float b";
+    return 0;
+}
+compiler$ lex test.l
+compiler$ cc lex.yy.c -o test -ll
+compiler$ ./test < test.c
+int main(int argc, char *argv[])
+{
+    double i;
+    double ii = 1.0;
+    char *str = "float";
+    char *str2 = "a float b";
+    return 0;
+}
+#+end_example

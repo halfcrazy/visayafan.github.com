@@ -1,0 +1,322 @@
+#+OPTIONS: "\n:t
+#+OPTIONS: ^:{} _:{} num:t toc:t \n:t
+#+LaTeX_CLASS: cn-article
+#+STYLE: <link rel="stylesheet" type="text/css" href="../style/style.css" />
+##+INFOJS_OPT: view:content mouse:#cccccc toc:t ftoc:t  path:../style/org-info.js
+
+* /usr/bin/python与/usr/bin/env python的区别
+#+BEGIN_EXAMPLE
+前者指定具体路径，必须确保python在/usr/bin下。
+后者通过env在PATH路径中寻找python,
+~$ echo $PATH
+/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games
+就会在 /usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games目录下寻找python  
+#+END_EXAMPLE
+* Reference Semantic
+#+BEGIN_EXAMPLE
+此时ab是同一个变量的别名
+>>> a = [1,2,3]
+>>> b=a
+>>> a.append(4)
+>>> print b
+[1, 2, 3, 4]
+
+>>> a=1
+>>> b=a
+>>> a=a+1
+此时a b不再是同一个变量的别名
+>>> a
+2
+>>> b
+1
+#+END_EXAMPLE
+* 执行
+#+BEGIN_EXAMPLE
+1 $python script.py
+2 $python -i script.py   //可以保持交互
+3 $python
+   >>>import script   //此时无py后缀
+4 $python
+  >>>execfile('script.py')
+#+END_EXAMPLE
+
+* import from
+#+BEGIN_EXAMPLE
+import re
+from re import match
+
+import re as regex
+from re import matchas m
+#+END_EXAMPLE
+* Packages
+#+BEGIN_EXAMPLE
+useful packages:
+Numeric: good fro numberical algebra, trigonometry.
+NumPy: Similar to Numeric, but handles arrays slightly differently and ahs a few other built-in commands and functions.
+SciPy: based on NumPy. useful for numerical integration, ODE soluton, interpolations.  
+#+END_EXAMPLE
+#+BEGIN_EXAMPLE
+import syntax:
+from P.Q.M import foo; print foo()
+from P.Q import M; print M.foo()
+import P.Q.M; print P.Q.M.foo()
+import P.Q.M as M; print M.foo()
+#+END_EXAMPLE
+* Python data types
+Dynamic typing
+Strong typing
+** numbers
+   integer long float complex:3+4j
+** Strings
+#+BEGIN_EXAMPLE
+   访问s[i:j:k]下标从0开始，包括i不包括j,间隔为k
+   s[-n]倒数第n个字符
+#+END_EXAMPLE
+** Lists
+#+BEGIN_EXAMPLE
+    a= [0,[0,1,2],1,2,'hello']; a=[]; 可变 a=[0,1] a[2]=3=>a=[0,1,2]
+    Indexing: L[i], L[i][j]
+    Slicing: L[i:j]
+    Concatenation: L1=[0,1] L2=[2,3] =>L1+L2=[0,1,2,3]
+    Repetion: L * 3
+    Appending: L.append(3)
+    Sorting: L=[2,1,4,3] L.sort()
+    Reverseal: L=[1,2] L.revese()=[2,1]
+    Shrinking: del L[2]
+    Index and slice assignment: L[1]=1 L[1:4]=[4,5,6]
+    Making a list of integers: range(4)=>[1,2,3,4]  range(1,5)=>[1,2,3,4]
+#+END_EXAMPLE
+** tuple
+individual elements can't be reassigned.
+** Arrary
+#+BEGIN_EXAMPLE
+   Not a basic built-in python type.
+必须导入: from numpy import *
+
+vec=array([1,2,3])
+mat=array([1,2,3],[4,5,6],[7,8,9])
+
+Difference between array and lists:
+1 The + and * don't refer to concatenation or repetitions.
+2 It's much faster to carry out operations on arrays.
++ - * / **
+ar=(pi/4)*arange(3)
+sin(ar)
+#+END_EXAMPLE
+** Dictionaries
+#+BEGIN_EXAMPLE
+Hash Tables:
+    d={"duck":"eend", "water": "water"}   
+Lookup
+Delete, insert, overwirte
+Keys, values, items
+Presence check
+#+END_EXAMPLE
+
+BinaryData RegExp
+
+* 通配符
+* print(通配符支持，重定向支持)
+* 运算符
+* 变量和赋值
+
+* 集合元素
+#+BEGIN_EXAMPLE
+[]
+()
+{}
+可变对象、不可变对象
+#+END_EXAMPLE
+
+* 字符串
+* 列表和元组
+
+* 字典
+
+* 控制语句
+** if
+
+** while
+#+BEGIN_EXAMPLE
+>>> a = 1
+>>> while a<10:
+...     print a,
+...     a+=1
+... 
+#+END_EXAMPLE
+
+#+BEGIN_EXAMPLE
+>>> a = 1  
+>>> while a<10:
+...     print a
+...     a+=1
+... 
+#+END_EXAMPLE
+
+** for
+#+BEGIN_EXAMPLE
+>>> a = 'adaffad'
+>>> for x in a:
+...     print x,
+... 
+a d a f f a d   
+#+END_EXAMPLE
+
+#+BEGIN_EXAMPLE
+>>> for x in range(len(a)):
+...     print x,
+... 
+0 1 2 3 4 5 6
+>>> for x in range(len(a)):
+...     print a[x],
+... 
+a d a f f a d
+#+END_EXAMPLE
+
+#+BEGIN_EXAMPLE
+>>> a=[1,2,3,4]
+>>> for index, value in enumerate(a):
+...     print '{%d}: %d' % (index, value)
+... 
+{0}: 1
+{1}: 2
+{2}: 3
+{3}: 4
+#+END_EXAMPLE
+
+#+BEGIN_EXAMPLE
+>>> [x * x for x in a if x % 2 == 0]
+[4, 16]
+#+END_EXAMPLE
+
+* 异常
+try
+raise
+except
+finally
+
+* 函数
+** 常用函数
+#+BEGIN_EXAMPLE
+dir()
+help()
+len()
+int()   
+range([start], end, [step])
+type() 返回类型
+sum() 求和函数
+sys.exit()
+pass()
+append()
+linesep()
+lstrip() rstrip() strip() 去掉左/右/左右的空格
+0b 0 0x 二进制、八进制、十六进制
+#+END_EXAMPLE
+* 类
+#+BEGIN_EXAMPLE
+>>> class A:
+...     pass
+... 
+>>> type(A)
+<type 'classobj'>
+
+>>> class B(object):
+...     pass
+... 
+>>> type(B)
+<type 'type'>
+#+END_EXAMPLE
+  
+* range,xrange
+* help(range)
+* repr和str的区别
+  repr无歧义的标识对象，当执行后与原来的对象相同；str是为方便阅读。
+#+begin_src python
+>>> s="""w'o"w"""
+>>> repr(s)
+'\'w\\\'o"w\''
+>>> str(s)
+'w\'o"w'
+>>> eval(str(s))==s
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+  File "<string>", line 1
+    w'o"w
+       ^
+SyntaxError: EOL while scanning single-quoted string
+>>> eval(repr(s))==s
+True
+#+end_src
+  如果没有适合阅读的方法可供调用则str将调用repr
+#+begin_src python
+>>> class Sic(object): 
+...   def __repr__(object): return 'foo'
+... 
+>>> print str(Sic())
+foo
+>>> print repr(Sic())
+foo
+>>> class Sic(object):
+...   def __str__(object): return 'foo'
+... 
+>>> print str(Sic())
+foo
+>>> print repr(Sic())
+<__main__.Sic object at 0x2617f0>
+#+end_src
+  默认的是一样且无用的：
+#+begin_src python
+>>> class Sic(object): pass
+... 
+>>> print str(Sic())
+<__main__.Sic object at 0x8b7d0>
+>>> print repr(Sic())
+<__main__.Sic object at 0x8b7d0>
+#+end_src
+   Many values, such as numbers or structures like lists and dictionaries, have the same representation using either function. Strings and floating point numbers, in particular, have two distinct representations. 
+* import module和 __import__(module)
+  前者在源码最开始导入，后者是函数加参数形式导入（无后缀）
+  __import__返回module，故可直接调用方法：
+#+begin_src python
+__import__(os).getcwd()
+#+end_src
+* locals(), vars()
+#+begin_src python
+locals() -> dictionary
+update and rturn a dictionary contatining the current scope's lcoal variables.
+#+end_src
+#+begin_src python
+vars([object]) ->dictionary
+无参时等价于locals()
+有参时等价于object.__dict__
+#+end_src
+* isinstance(obj, type-or-class-or-tuple)
+  判断obj是不是type类型 or
+  class或其子类的实例(此处可以用issubclass函数判断是否子类(包括当前类))
+  instatnce(obj, (A, B, C))即obj是不是A,B,C中任何一个的实例，或关系
+* callable(obj)
+  obj是否可被调用
+  类是可调用的（调用它会生成实例）
+  如果类有__call__方法则其实例是可调用的，否则其实例是不可调用的
+* @classmethod
+  类方法
+  下面例子，main做为类MineSweep的类方法，当MineSweep.main()调用时MineSweep做为默认第一个参数cls传递，此时不会调用构造函数（构造函数有4个参数，如果调用构造函数的话肯定会因参数不匹配而出错）
+  在main里面构造了一个实例window。此时cls相当于MineSweep。
+  更进一步封装(Encapsulation)
+#+begin_src python
+class MineSweep(tkinter.Frame):
+    
+    @classmethod
+    def main(cls, width, height, mines):
+        root = tkinter.Tk()
+        window = cls(root, width, height, mines)
+        root.mainloop()
+        
+    def __init__(self, root, width, height, mines):
+        super().__init__(root)
+        self.__width = width
+        self.__height = height
+        self.__mines = mines
+if __name__ == '__main__':
+    MineSweep.main(10, 10, 10)
+#+end_src

@@ -1,0 +1,110 @@
+#+include "../../template.org"
+#+OPTIONS: ^:{} _:{} num:t toc:t \n:t
+
+* convential process
+** static priority
+   范围为100-139(MAX_RT_PRIO - MAX_PRIO-1)
+   内核2.6中的静态优先级相当于内核2.4中的nice值，但转到MAX_RT_PRIO到MAX_PRIO-1取值范围，其公式为：
+   static priority = nice + 20 + MAX_RT_PRIO
+   内核定义两个宏来实现此转化：nice_to_prio() and prio_to_nice()
+#+BEGIN_SRC c++
+#define NICE_TO_PRIO(nice)	(MAX_RT_PRIO + (nice) + 20)
+#define PRIO_TO_NICE(prio)	((prio) - MAX_RT_PRIO - 20)
+#+END_SRC
+   在进程task_struct中用int static_prio表示。
+   一个进程继承其父进程的静态优先级。也可以通过nice() or setpriority()指定。决定了Base Time Quantum大小。
+#+ATTR_HTML: border="2" rules="all" frame="all"
+   |-----------------+-------------------------------|
+   | static priority | Base Time Quantum             |
+   |-----------------+-------------------------------|
+   | < 120           | (140 - static priority) × 20 |
+   | >= 120          | (140 - static priority) × 5  |
+   |-----------------+-------------------------------|
+
+#+BEGIN_SRC c++
+#define DEF_TIMESLICE		(100 * HZ / 1000)
+
+#define SCALE_PRIO(x, prio) \
+	max(x * (MAX_PRIO - prio) / (MAX_USER_PRIO/2), MIN_TIMESLICE)
+
+static unsigned int task_timeslice(task_t *p)
+{
+	if (p->static_prio < NICE_TO_PRIO(0))
+		return SCALE_PRIO(DEF_TIMESLICE*4, p->static_prio);
+	else
+		return SCALE_PRIO(DEF_TIMESLICE, p->static_prio);
+}
+#+END_SRC  
+DEF_TIMESLICE = 100, MAX_PRIO = 140, MAX_USER_PRIO = 40, 故得到上表中的公式.
+
+   静态优先级数值越大，进程的优先级越小，分配的基时间量就越少。
+** dynamic priority
+   范围与静态优先级相同。
+   动态优先级是调度器选择一个进程时实际参考的值。
+   dynamic priority = max( 100, min((static priority - bonus + 5), 139))
+   即动态优先级与静态优先级和bonus值有关，而bonus取值范围为0-10，其值大小与平均睡眠时间（average sleeping time）有关。
+   平均睡眠时间越大，bonus值越大，其动态优先级越大。（睡眠时间长了自然要提高其动态优先级以避免发生饥饿现象）
+   在task_struct中用int prio来表示。
+   动态优先级的计算过程在各个进程的运行过程中进行，同时影响动态优先级大小的因素集中反映在sleep_avg上。
+   task_struct中的成员 	unsigned long sleep_avg;
+   进程创建时，在wake_up_forked_process()中子进程继承了父进程的动态优先级，并添加到父进程的就绪队列中，如果父进程不在任何就绪队列中，则通过effective_prio()来计算出子进程的动态优先级并根据计算结果将子进程放置到相应的就绪队列中。
+   动态优先级的计算只要由effective_prio()函数来完成：
+#+BEGIN_SRC c++
+static int effective_prio(task_t *p)
+{
+	int bonus, prio;
+
+	if (rt_task(p))             ;;如果是实时进程则返回（实时进程的动态优先级是由setscheduler()函数设置且一经设置不再改变）
+		return p->prio;
+
+	bonus = CURRENT_BONUS(p) - MAX_BONUS / 2; ;;根据睡眠时间设置bonus值
+
+	prio = p->static_prio - bonus; ;;由静态优先级和bonus值来设置动态优先级
+	if (prio < MAX_RT_PRIO)        ;;动态优先级范围不能小于MAX_RT_PRIO也不能超过MAX_PRIO，所以此处做下判断。
+		prio = MAX_RT_PRIO;
+	if (prio > MAX_PRIO-1)
+		prio = MAX_PRIO-1;
+	return prio;
+}
+#+END_SRC
+
+#+BEGIN_SRC c++
+#define CURRENT_BONUS(p) \
+	(NS_TO_JIFFIES((p)->sleep_avg) * MAX_BONUS / \ ;;把睡眠时间转化为bonus值
+		MAX_SLEEP_AVG)
+#+END_SRC
+  最大bonus值的计算如下：
+#+BEGIN_SRC c++
+#define USER_PRIO(p)		((p)-MAX_RT_PRIO)
+#define MAX_USER_PRIO		(USER_PRIO(MAX_PRIO))       ;;40
+#define PRIO_BONUS_RATIO	 25
+#define MAX_BONUS		(MAX_USER_PRIO * PRIO_BONUS_RATIO / 100) ;;结果为10
+#+END_SRC
+  最大平均睡眠时间计算如下：
+#+BEGIN_SRC c++
+#define DEF_TIMESLICE		(100 * HZ / 1000)
+#define MAX_SLEEP_AVG		(DEF_TIMESLICE * MAX_BONUS)
+#+END_SRC  
+* real-time process
+** static priority
+   与非实时进程相同。
+** dynamic priority
+   其值是在setscheduler()中设置的且一经设置便不再改变。
+   非实时进程的动态优先级会在进程运行过程中动态计算而实时进程的动态优先级不会改变。
+** real time priority
+   每个实时进程都有一与其相关的实时优先级，取值范围0-MAX_RT_PRIO-1。
+   其大小可以通过sched_setscheduler()和sched_setparam()来改变。
+   实时进程被一个进程替换，可能的情况有：
+   1) 进程被拥有更高优先级的进程抢占。
+   2) 进程发生阻塞进入睡眠状态。
+   3) 进程被终止（状态为TASK_STOPPED OR TASK_TRACED）或者被杀死（EXIT_DEAD OR EXIT_ZOMBIE）。
+   4) 进程通过调用sched_yield()自愿放弃处理器。
+   5) 进程是轮回实时（SCHED_RR）且其时间片执行完毕。
+   当在SCHED_RR时调用nice()和set_priority()函数并不影响实时优先级，只会影响静态优先级（从而影响基时间片）。
+* 调度策略
+  task_struct中unsigned long policy;指定调度策略，其值可以取:
+#+BEGIN_SRC c++
+#define SCHED_NORMAL    0       //非实时进程，基于优先级的轮回法（Round Robin）
+#define SCHED_FIFO		1       //实时进程，先进先出
+#define SCHED_RR		2       //实时进程，基于优先级的轮回法（Round Robin）
+#+END_SRC    

@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+               "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<title>eclpse_pydev</title>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
+<meta name="title" content="eclpse_pydev"/>
+<meta name="generator" content="Org-mode"/>
+<meta name="generated" content="2012-10-10 17:12:49 CST"/>
+<meta name="author" content="visaya fan"/>
+<meta name="description" content=""/>
+<meta name="keywords" content=""/>
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  html { font-family: Times, serif; font-size: 12pt; }
+  .title  { text-align: center; }
+  .todo   { color: red; }
+  .done   { color: green; }
+  .tag    { background-color: #add8e6; font-weight:normal }
+  .target { }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .right  {margin-left:auto; margin-right:0px;  text-align:right;}
+  .left   {margin-left:0px;  margin-right:auto; text-align:left;}
+  .center {margin-left:auto; margin-right:auto; text-align:center;}
+  p.verse { margin-left: 3% }
+  pre {
+	border: 1pt solid #AEBDCC;
+	background-color: #F3F5F7;
+	padding: 5pt;
+	font-family: courier, monospace;
+        font-size: 90%;
+        overflow:auto;
+  }
+  table { border-collapse: collapse; }
+  td, th { vertical-align: top;  }
+  th.right  { text-align:center;  }
+  th.left   { text-align:center;   }
+  th.center { text-align:center; }
+  td.right  { text-align:right;  }
+  td.left   { text-align:left;   }
+  td.center { text-align:center; }
+  dt { font-weight: bold; }
+  div.figure { padding: 0.5em; }
+  div.figure p { text-align: center; }
+  div.inlinetask {
+    padding:10px;
+    border:2px solid gray;
+    margin:10px;
+    background: #ffffcc;
+  }
+  textarea { overflow-x: auto; }
+  .linenr { font-size:smaller }
+  .code-highlighted {background-color:#ffff00;}
+  .org-info-js_info-navigation { border-style:none; }
+  #org-info-js_console-label { font-size:10px; font-weight:bold;
+                               white-space:nowrap; }
+  .org-info-js_search-highlight {background-color:#ffff00; color:#000000;
+                                 font-weight:bold; }
+  /*]]>*/-->
+</style>
+<link rel="stylesheet" type="text/css" href="../style/style.css" />
+<script type="text/javascript">
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+
+</head>
+<body>
+<div id="org-div-home-and-up">
+ <a accesskey="H" href="../../index.html#python"> HOME </a>
+</div>
+
+
+<div id="content">
+<h1 class="title">eclpse_pydev</h1>
+
+
+<p><br/>
+</p>
+<div id="table-of-contents">
+<h2>TOC</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#sec-1">1 shortcuts</a></li>
+<li><a href="#sec-2">2 改变eclipse菜单/outline等所有perspective字体</a></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-1" class="outline-2">
+<h2 id="sec-1"><span class="section-number-2">1</span> shortcuts</h2>
+<div class="outline-text-2" id="text-1">
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+<caption></caption>
+<colgroup><col class="left" /><col class="left" />
+</colgroup>
+<tbody>
+<tr><td class="left">M-S-n</td><td class="left">new project</td></tr>
+<tr><td class="left">S-Enter</td><td class="left">next line</td></tr>
+<tr><td class="left">C-S-o</td><td class="left">import</td></tr>
+<tr><td class="left">C-1</td><td class="left">create code quick fix error</td></tr>
+<tr><td class="left">C-2 r</td><td class="left">rename occurrences of variable in current module</td></tr>
+<tr><td class="left">M-S-a</td><td class="left">start/stop rectangular editing</td></tr>
+<tr><td class="left">F12</td><td class="left">focus on editor</td></tr>
+<tr><td class="left">C-F9</td><td class="left">unit test</td></tr>
+<tr><td class="left">C-M-up/down</td><td class="left">duplicate current line up/down</td></tr>
+<tr><td class="left">M-up/down</td><td class="left">move current line up/down</td></tr>
+<tr><td class="left">M-S-r</td><td class="left">refactor: rename variable</td></tr>
+<tr><td class="left">M-left/right</td><td class="left">go back/forward among locations</td></tr>
+<tr><td class="left">F3</td><td class="left">go to definition</td></tr>
+<tr><td class="left">M-S-l</td><td class="left">extract local variable</td></tr>
+<tr><td class="left">M-S-m</td><td class="left">extract local method</td></tr>
+<tr><td class="left">C-o</td><td class="left">show quick outline</td></tr>
+<tr><td class="left">C-9</td><td class="left">collapse all</td></tr>
+<tr><td class="left">C-0</td><td class="left">uncollapse all</td></tr>
+<tr><td class="left">C-=</td><td class="left">uncollapse current code</td></tr>
+<tr><td class="left">C&ndash;</td><td class="left">collapse current code</td></tr>
+<tr><td class="left">C-S-up/down</td><td class="left">go prvious/next class/method</td></tr>
+<tr><td class="left">C-4</td><td class="left">add comment block</td></tr>
+<tr><td class="left">C-5</td><td class="left">remove comment block</td></tr>
+<tr><td class="left">C-S-4</td><td class="left">add single comment block</td></tr>
+<tr><td class="left">F2</td><td class="left">show tooltip description</td></tr>
+<tr><td class="left">C-m</td><td class="left">maximize editor</td></tr>
+<tr><td class="left">C-F6</td><td class="left">next editor</td></tr>
+<tr><td class="left">C-S-F6</td><td class="left">previous editor</td></tr>
+<tr><td class="left">C-F11</td><td class="left">run</td></tr>
+<tr><td class="left">F11</td><td class="left">debug</td></tr>
+</tbody>
+</table>
+
+</div>
+
+</div>
+
+<div id="outline-container-2" class="outline-2">
+<h2 id="sec-2"><span class="section-number-2">2</span> 改变eclipse菜单/outline等所有perspective字体</h2>
+<div class="outline-text-2" id="text-2">
+
+<p>  家目录下创建文件（比如.gtkrc-eclipse），添加内容：<br/>
+</p>
+<p><br/>
+<pre class="src src-css"><span style="color: #0000ff;">style </span><span style="color: #8b2252;">"eclipse"</span><span style="color: #0000ff;"> </span>{
+        font_name = <span style="color: #8b2252;">"Sans Condensed 9"</span>
+}
+class <span style="color: #8b2252;">"GtkWidget"</span> style <span style="color: #8b2252;">"eclipse"</span>
+</pre>
+
+  启动：GTK2_RC_FILES=/usr/share/themes/Clearlooks/gtk-2.0/gtkrc:/home/visayafan/.gtkrc-eclipse eclipse<br/>
+  可以在.bashrc中添加别名以方便以后调用：alias ec="GTK2_RC_FILES=/usr/share/themes/Clearlooks/gtk-2.0/gtkrc:/home/visayafan/.gtkrc-eclipse eclipse &amp;"<br/>
+</p></div>
+</div>
+</div>
+
+</body>
+</html>

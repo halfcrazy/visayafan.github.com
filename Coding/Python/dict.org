@@ -1,0 +1,114 @@
+#OPTOINS: "\n:t"
+* 初始化
+#+BEGIN_EXAMPLE
+
+>>> d = dict(name='visaya', age=20)
+
+>>> d = dict(zip(['name', 'age'], ['visaya', 20]))
+
+#dict.fromkeys(listkeys, default=0) 把listkeys中的元素作为key均赋值为value，默认为0
+>>> d = dict.fromkeys(['a', 'b'], 1)
+>>> d
+{'a': 1, 'b': 1}
+#+END_EXAMPLE
+
+
+* 字典视图和几何
+#+BEGIN_EXAMPLE
+dict.keys()类似信使可以进行交集和并集等集合操作（类似集合，因为不存在重复的项），但dict.values()不可以进行如上操作。
+
+>>> k = d.keys()
+>>> k
+dict_keys(['a', 'b'])
+>>> list(k)
+['a', 'b']
+>>> k | {'x': 3}
+{'a', 'x', 'b'}
+>>> k | {'x'}
+{'a', 'x', 'b'}
+>>> k | {'x', 'y'}
+{'a', 'y', 'b', 'x'}
+>>> k & {'x'}
+set()
+>>> v = d.values()
+>>> v
+dict_values([1, 2])
+>>> v | {'x'}
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+TypeError: unsupported operand type(s) for |: 'dict_values' and 'set'
+#+END_EXAMPLE
+
+* 排序字典键
+两种方法:
+** sort:
+#+BEGIN_EXAMPLE
+>>> Ks = list(d.keys())
+>>> Ks.sort()
+>>> for k in Ks:
+...     print(k, d[k])
+... 
+a 1
+b 2
+#+END_EXAMPLE
+** sorted:
+#+BEGIN_EXAMPLE
+>>> for k in sorted(d.keys()):
+...     print(k, d[k])
+... 
+a 1
+b 2
+
+#+END_EXAMPLE
+** 注意
+#+BEGIN_EXAMPLE
+>>> for k in list(d.keys()).sort():
+...     print(k, d[k])
+... 
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+TypeError: 'NoneType' object is not iterable
+
+出错原因：
+list.sort() list.append()函数都是对自身的操作，没有返回值，故需先将list(d.keys())的结果保存下来，在结果上进行sort()
+#+END_EXAMPLE
+
+* 常用函数
+** get()
+#+BEGIN_EXAMPLE
+D.get(k[, d])   => D[k] if k in D else d. d defaults to none.
+#+END_EXAMPLE
+
+** pop()
+#+BEGIN_EXAMPLE
+D.pop(value[, d])   => Remove specified key and return the corresponding value. If key is not found, d is returned if given, otherwise KeyError is raised.
+#+END_EXAMPLE
+
+** udpate()
+#+BEGIN_EXAMPLE
+    D.update(E, **F) -> None.  Update D from dict/iterable E and F.
+    If E has a .keys() method, does:     for k in E: D[k] = E[k]
+    If E lacks .keys() method, does:     for (k, v) in E: D[k] = v
+    In either case, this is followed by: for k in F: D[k] = F[k]
+
+>>> d = dict(name='visaya', age=21)
+>>> d1= {'age': 20, 'sex': 'male'}
+>>> d2 = zip(['a', 'b'], [1, 2])
+
+>>> d.update(d1)
+>>> d
+{'age': 20, 'name': 'visaya', 'sex': 'male'}
+#for k in d1: d[k] = d1[k]
+
+>>> d.update(d2)
+>>> d
+{'age': 20, 'name': 'visaya', 'sex': 'male'}
+#for (k, v) in d2: d[k] = v
+#+END_EXAMPLE
+
+** del()
+#+BEGIN_EXAMPLE
+del D[key]
+#+END_EXAMPLE
+** clear()
+** copy()

@@ -1,0 +1,66 @@
+#+OPTIONS: ^:{} _:{} num:t toc:t \n:t
+#+include "../../template.org"
+#+title: 关键字 extern
+* 3种使用方法
+  1. 与变量一起用表示该变量不在该模块中定义，告诉编译器去它所包含的头文件里找，此时 =extern int a;= 只是一个声明，并不是定义，没有分配内存空间。
+  2. 同理与函数名一直使用的时候表示这个函数在别的文件里。
+  3. 与 "C" 一起使用表示告诉编译器按照C语言的编译规则来转化函数名，而非C++，因为C++支持函数重载，编译器会把函数名变成比较复杂的形式，而C编译器则不会，例如： =extern "C" float f(int a)= 。多数编译器会在他们的头文件中处理转换连接指定，不必自己动手指定。
+* 注意事项
+   - 对于数组，形如：char pch[]="abc"; 使用外部引用时需要 =extern char pch[4]= ，类型必须严格一致，前面为大小为4的字符数组，所以外部引用时必须指明大小为4，不能简单的 =extern char *pch= 或 =extern char pch[]= 。
+   - 一般使用是将定义放在cpp文件中， =extern= 声明放在h文件中，然后在main文件中include头文件，例如
+#+begin_src c++ -r
+//vf.h
+extern char *pch;       (ref:extern)
+//vf.cpp
+char *pch = "abc";
+
+//main.cpp
+#include <iostream>
+#include "vf.h"
+using namespace std;
+int main(int argc, char *argv[])
+{
+    cout<<pch<<endl;
+    return 0;
+}
+#+end_src
+   - 有的人喜欢声明的时候就定义，例如 extern char* pch="abc"，此时有没有extern没有区别。下面例子编译出错，因为test1.cpp中include了vf.h，test2.cpp中也include了vf.h，展开后两个cpp文件中都有pch声明和定义，所以编译出错： =multiple definition of pch=
+#+begin_src c++
+//vf.h
+extern char *pch="abd";
+//test1.cpp
+#include <iostream>
+#include "vf.h"
+void f(){
+    std::cout<<pch<<std::endl;
+}
+//test2.cpp
+#include <iostream>
+#include "vf.h"
+void g(){
+    std::cout<<pch<<std::endl;
+}
+//main.cpp
+#include <iostream>
+#include "vf.h"
+using namespace std;
+int main(int argc, char *argv[])
+{
+    cout<<pch<<endl;
+    return 0;
+}
+#+end_src
+   - extern与static的区别： =static= 声明同时定义，而 =extern= 可以声明同时定义也可以只声明不定义。
+#+begin_src c++
+//vf.h
+static char pch[]={'a','b','c'};
+void f();
+void g();
+//test1.cpp
+#include "vf.h"
+void f(){pch[0]='0';}
+#include "vf.h"
+void g(){pch[0]='1';}
+#+end_src     
+   上面的代码可以编译成功，虽然test1中的pch和test2中的pch名称相同但地址不同，彼此互不影响（编译器优化时可能将它们当成地址空间相同来处理，但这只是编译器优化的结果，并不是真正的结果），即pch在test1中声明定义了一次，在test2中声明定义了一次。但如果将static换成extern并将定义写在vf.cpp中，则test1和test2的pch共享同一个地址。
+   - 头文件中 =static int a= 和 =int a= 的区别：后者如果有两个cpp文件t1,t2同时include该头文件，则编译出错，因为a被重复定义，因为a是全局的，对t1和t2都是可见的，所以会冲突。而前者则不会static表明a是一个内部连接，t1中的a只对t1有效，即t1和t2中的a互不关联，名字一样但地址空间不同，所以不会冲突。

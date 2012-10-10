@@ -1,0 +1,13 @@
+#+OPTIONS: ^:{} _:{} num:t toc:t \n:t
+#+include "../../template.org"
+#+title: Komodo 笔记
+* Shortkeys
+  |----------+-----------------------|
+  | F5       | Debug                 |
+  | Ctrl+F7  | run without debugging |
+  | F10      | step over             |
+  | F11      | step in               |
+  | Ctrl+F11 | step out              |
+  | Ctrl+R   | run command           |
+  | Ctrl+3   | comment               |
+  | Ctrl+2   | uncomment             |

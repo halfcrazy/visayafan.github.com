@@ -1,0 +1,23 @@
+#+OPTIONS: ^:{} _:{} num:t toc:t \n:t
+#+include "../../template.org"
+#+TITLE: 关键字 const
+
+1) 尽管函数名和参数列表都相同，void foo( ) const成员函数是可以与void foo( )并存的，可以形成重载! 我们假设调用语句为obj.foo()，如果obj为non-const对象，则调用foo()。如果obj为const对象，则调用foo()const。另外要注意，假如没有提供foo()const，则const obj调用foo()将会报错。但假如是没有提供foo()，则non-const obj调用foo()const是完全没有问题的。也就是说，non-const对象可以调用const函数，但const对象不能调用non-const函数.
+2) const关键字所起作用的本质，就是把隐藏着的默认的this指针参数，改成const类型。也就是说：假如void foo( )函数被编译器改写为 void foo(T* pThis)，则void foo( ) const将会被改写为void foo(const T* pThis) 。i.e. 在函数末尾添加一个const，就相当于在隐藏的this参数类型前加一个const.
+3) 这样做有两个效果，第一：编译器将不允许foo()const修改pThis指向的对象的成员。第二、const对象只能调用const成员函数，否则就会报错说把const T* 转化为T* 会丢失qualifier
+－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－
+//Only member functions declared as const can be invoked for a class object that is const. The const keyword is placed between the parameter list and the body of the member function. A const member function defined outside the class body must specify the constkeyword in both its declaration and its definition. For example:
+#+BEGIN_SRC c++
+class Screen 
+{ 
+    public:      
+    bool isEqual( char ch ) const;      // ... private:      
+    string::size_type    _cursor;      
+    string               _screen;      // ... 
+}; 
+bool Screen::isEqual( char ch ) const 
+{      
+    return ch == _screen[_cursor]; 
+}
+
+#+END_SRC  

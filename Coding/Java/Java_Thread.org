@@ -1,0 +1,155 @@
+#+OPTIONS: ^:{} _:{} num:t toc:t \n:t
+#+include "../../template.org"
+
+* Java进程
+  1. 高优先级比低优先级优先执行，优先级可以用 =setPriority(int newPriority)= 来设置，默认优先级为5，最大为10，最小为0，其静态常量： =MAX_PRIORITY= =MIN_PRIORITY=, =NORM_PRIORITY= 分别表10,0,5.
+  2. 默认一个进程的子进程的优先级和该进程相同
+  3. 后台进程的子进程是后台进程，可以用 =isDaemon()= 函数判断进程是否是后台进程，可以用 =setDaemon(boolean on)= 来设置该进程为后台进程
+  4. JVM开始执行的时候一般只有一个非后台进程（一般是main进程），当下面两种情况之一发生时进程退出：
+     - Runtime的 =exit= 方法被调用
+     - 所有非后台进程都died时，不论是执行 =run= 函数返回还是抛出异常被传到了 =run= 方法之外
+  5. 进程休眠， =sleep(long millis)= 以毫秒为单位， =java.util.concurrent.TimeUnit= 提供了更加方便的方法： =TimeUnit.MILLISECONDS.sleep(long timeout)= 可以指定纳秒 =NANOSECONDS= 毫秒 =MILLISECONDS= 秒 =SECONDS= 分 =MINUTES= 小时 =HOURS= 天 =DAYS=
+  6. =yield()= 向调度器暗示当前线程自愿让出处理器使用权
+  7. =setName()= 设置线程的名称，可以用 =getName()= 方法来获取线程的名称
+  8. =join()= 在A线程中有 =B.join()= 则A要等待B执行完毕后再执行
+  9. =interrupt()= 中断当前线程， =interrupted()= 用来测试当前线程是否被中断
+  10. =currentThread()= 返回当前线程引用
+     
+* 创建Java线程的两种方法
+** 声明一个类是Thread类的子类
+   必须重新重载run方法
+#+begin_src java
+class A extends Thread{
+    ../...
+    public void run(){
+        ../...
+    }
+    ../...
+}
+
+A a=new A();
+a.start();
+#+end_src
+** 实现Runnable接口，其实例做为创建thread时的参数
+#+begin_src java
+class A implements Runnable{
+    ../...
+    public void run(){
+        ../...
+    }
+    ../...
+}
+Thread t = new Thread(new A);
+t.start();
+#+end_src
+   
+* Executor
+** Executors
+   1. =static ExecutorService newCachedThreadPool()= 创建一个线程池，根据需要来创建线程
+   2. =static ExecutorService newFixedThreadPool(int nThreads)= 创建固定大小的线程池
+   3. =static ExecutorService newSingleThreadExecutor()= 创建单个线程
+      上面三个函数都有参数 =ThreadFactory= 版本。
+** ThreadFactory
+   根据需求创建新线程，使用线程工厂从而去除难写的 =new Thread= 的调用，可以使用程序使用特殊的线程子类，优先级等。
+   要实现此接口必须实现 =newThread(Runnable r)= 方法，参数为一个 =Runnable= 类对象
+   + 下面是最简单的 =ThreadFactory= 应用，它返回一个 =Runnable= 对象创建的一个线程对象：
+#+begin_src java
+class SimpleThreadFactory implements ThreadFactory{
+    public Thread newThread(Runnable r){
+        return new Thread(r);
+    }
+}
+#+end_src   
+   + 下面的例子设置进程为后台进程的线程工厂
+#+begin_src java
+public class DaemonThreadFactory implements ThreadFactory{
+    public Thread newThread(Runnable r){
+        Thread t = new Thread(r);
+        t.setDaemon(true);
+        return r;
+    }
+}
+#+end_src
+
+** ExecutorService
+   用来创建和管理系统中的任务
+   1. =execute(Runnable command)= 在未来的某个时间执行 =command= (调用command的run函数)
+   2. =submit(Runnable task)= or =Future<T> submit(Callable<T> task)= 提交执行一个有返回值的任务，返回值类型 =Future= 表任务结果未知
+   3. Shutdown
+      - =shutdown()= 关闭之前执行先前提交的任务
+      - =shutdownNow()= 立即关闭
+** Future
+   =Future= 代表异步计算的结果，有方法可以用来检查计算是否完成、等待其完成、得到其结果。
+   1. =Get()= 方法可以得到其计算结果，如果完成就直接返回，如果未完成就阻塞等待其完成。此方法有重载版本 =get(long timeout, TimeUnit unit)= 等待最多timeout时间，时间单位是unit
+   2. =Cancel()= 方法可以取消计算
+   3. 如果你对计算结果并不感兴趣但又想使用其 =cancel= 方法，那你可以声明类型为 =Future<?>= 此时会返回null
+* 捕获异常
+  =Thread.UncaughtExceptionHandler= 是处理未捕获异常处理器接口(需要实现的方法是 =public void uncaughtException(Thread t, Throwable e)= )，通过 =Thread.setUncaughExceptionHandler(UncaughtExceptionHandler)= 来设置线程的异常处理器。
+#+begin_src java
+//一个异常类实现Runnable接口
+class ExceptionThread implements Runnable{
+    public void run(){
+        Throw new RuntimeException();
+    }
+}
+//未捕获异常处理器
+class MyUncaughtExceptionHandler implements Thread.UncaughtExceptionHandler{
+    public void uncaughtException(Thread t, Throwable e){
+        System.out.println("Caught: "+e);
+    }
+}
+
+public class CaptureException{
+    public static void main(String[] args){
+        Thread t = new Thread(new ExceptionThread());
+        //为t添加未捕获异常处理器，可以将下面语句注释掉对比结果
+        t.setUncaughExceptioniHandler(new MyUncaughtExceptionHandler);
+        t.start();
+    }
+}
+#+end_src  
+* 临界资源
+** synchronized关键字
+   一个类中如果将方法声明为 =synchronized= ，如果一个线程得到一个 =synchronized= 则得到所有 =synchronized= 方法，即其它线程不能访问 =synchronized= 声明的方法。
+** Lock
+   =java.util.concurrent.locks= 中 =Lock接口= 显式锁住资源：
+   基本使用方法：
+#+begin_src java
+Lock lock = new LockReentrant();
+lock.lock();
+try{
+    //访问资源
+}finally{
+    lock.unlock();
+}
+#+end_src
+   其方法有：
+   1. =lock()= 得到锁
+   2. =unlock()= 释放锁
+   3. =tryLock()= 尝试得到锁 =tryLock(long time, TimeUnit unit)=
+*** ReentrantLock
+    允许尝试获取但最终未获取锁，这样如果其它人已经获取了这个锁，那你就可以离开去执行其它一些事情而不是等待考虑到这个锁被释放。
+*** 原子类
+    =java.util.concurrent.atomic= 提供了例如 =AtomicInteger= =AtomicLong= =AtomicReference= 之类的原子性变量类。
+#+begin_src java
+class Sequencer{
+    private final AtomaicLong sequenceNumber = new AtomicLong(0);
+    // next方法作用是原子环境下自增（i++操作不是原子操作）
+    public long next(){
+        return sequenceNumber.getAndIncrement(); 
+    }
+}
+#+end_src    
+**** AtomicInteger
+     1. =addAndGet(int)=  增加给定值 同理 =decrementAndGet()= 减少给定值
+     2. =compareAndSet(int expect, int update)= 与expect比较，若相等则更新为update
+     3. =get()= 得到当前值 =set(int)= 设置为指定值
+     4. =getAndAdd(int)= 得到并加上给定值 =getAndDecrement(int)= 得到并减少给定值 =getAndIncrement()= =getAndDecrement()= 自增自减
+     5. 
+** 临界区
+#+begin_src java
+synchronized(syncObject){
+    //此为临界区，一次只能被一个线程访问
+}
+#+end_src
+   

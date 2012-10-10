@@ -1,0 +1,237 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+               "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<title>network</title>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
+<meta name="title" content="network"/>
+<meta name="generator" content="Org-mode"/>
+<meta name="generated" content="2012-10-10 17:12:46 CST"/>
+<meta name="author" content="visaya fan"/>
+<meta name="description" content=""/>
+<meta name="keywords" content=""/>
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  html { font-family: Times, serif; font-size: 12pt; }
+  .title  { text-align: center; }
+  .todo   { color: red; }
+  .done   { color: green; }
+  .tag    { background-color: #add8e6; font-weight:normal }
+  .target { }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .right  {margin-left:auto; margin-right:0px;  text-align:right;}
+  .left   {margin-left:0px;  margin-right:auto; text-align:left;}
+  .center {margin-left:auto; margin-right:auto; text-align:center;}
+  p.verse { margin-left: 3% }
+  pre {
+	border: 1pt solid #AEBDCC;
+	background-color: #F3F5F7;
+	padding: 5pt;
+	font-family: courier, monospace;
+        font-size: 90%;
+        overflow:auto;
+  }
+  table { border-collapse: collapse; }
+  td, th { vertical-align: top;  }
+  th.right  { text-align:center;  }
+  th.left   { text-align:center;   }
+  th.center { text-align:center; }
+  td.right  { text-align:right;  }
+  td.left   { text-align:left;   }
+  td.center { text-align:center; }
+  dt { font-weight: bold; }
+  div.figure { padding: 0.5em; }
+  div.figure p { text-align: center; }
+  div.inlinetask {
+    padding:10px;
+    border:2px solid gray;
+    margin:10px;
+    background: #ffffcc;
+  }
+  textarea { overflow-x: auto; }
+  .linenr { font-size:smaller }
+  .code-highlighted {background-color:#ffff00;}
+  .org-info-js_info-navigation { border-style:none; }
+  #org-info-js_console-label { font-size:10px; font-weight:bold;
+                               white-space:nowrap; }
+  .org-info-js_search-highlight {background-color:#ffff00; color:#000000;
+                                 font-weight:bold; }
+  /*]]>*/-->
+</style>
+<link rel="stylesheet" type="text/css" href="../style/style.css" />
+<script type="text/javascript">
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+
+</head>
+<body>
+<div id="org-div-home-and-up">
+ <a accesskey="H" href="../../index.html#python"> HOME </a>
+</div>
+
+
+<div id="content">
+<h1 class="title">network</h1>
+
+
+<p><br/>
+</p>
+<div id="table-of-contents">
+<h2>TOC</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#sec-1">1 BASIC</a></li>
+<li><a href="#sec-2">2 asynchat</a></li>
+<li><a href="#sec-3">3 asyncore</a></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-1" class="outline-2">
+<h2 id="sec-1"><span class="section-number-2">1</span> BASIC</h2>
+<div class="outline-text-2" id="text-1">
+
+<ul>
+<li>socket是个类似file的对象，它允许程序接受请求的连接和建立发送的连接和接收数据，两台机器进行通信之前必须创建一个socket对象<br/>
+</li>
+<li>一个连接必须绑定在一个端口上使用客户端用来唯一标识服务器<br/>
+</li>
+<li>端口号0-65535，1-1023被系统保留被用来通常的网络协议<br/>
+    常用端口号及其对应的协议：<br/>
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+<caption></caption>
+<colgroup><col class="right" /><col class="left" />
+</colgroup>
+<tbody>
+<tr><td class="right"><b>端口</b></td><td class="left"><b>协议名称</b></td></tr>
+<tr><td class="right">20</td><td class="left">ftp-data</td></tr>
+<tr><td class="right">21</td><td class="left">ftp-control</td></tr>
+<tr><td class="right">22</td><td class="left">ssh</td></tr>
+<tr><td class="right">23</td><td class="left">telnet</td></tr>
+<tr><td class="right">25</td><td class="left">smtp</td></tr>
+<tr><td class="right">37</td><td class="left">time(tcp/udp)</td></tr>
+<tr><td class="right">53</td><td class="left">dns</td></tr>
+<tr><td class="right">80</td><td class="left">http</td></tr>
+<tr><td class="right">110</td><td class="left">pop3</td></tr>
+<tr><td class="right">143</td><td class="left">imap</td></tr>
+<tr><td class="right">161</td><td class="left">snmp</td></tr>
+<tr><td class="right">443</td><td class="left">https</td></tr>
+</tbody>
+</table>
+
+</li>
+</ul>
+
+</div>
+
+</div>
+
+<div id="outline-container-2" class="outline-2">
+<h2 id="sec-2"><span class="section-number-2">2</span> asynchat</h2>
+<div class="outline-text-2" id="text-2">
+
+<p>  要使用此模块，必须定义一个继承asynchat.async_chat的类，必须实现两个方法：<br/>
+</p><ol>
+<li>collect_incoming_data() 只要有数据进来此方法就会被调用<br/>
+</li>
+<li>found_terminator() 当有终结请求时被调用<br/>
+</li>
+</ol>
+
+<p>  方法：<br/>
+</p><ul>
+<li>async_chat.close_when_done() 在FIFO队列中压入一个None标识当writer接收到时关闭此通道<br/>
+</li>
+<li>async_chat.discard_buffers() 丢弃IO缓冲区和FIFO队列中的数据<br/>
+</li>
+<li>async_chat.push(data) 将数据data压到FIFO队列中等待发送<br/>
+</li>
+<li>async_chat.found_terminator() 用户自己实现，在collect_coming_data()方法调用之前被调用以判断是否终结<br/>
+</li>
+<li>async_chat.set_terminator(term) 设置通道的终结条件，可能是字符串，数字或None。如果是字符串，每有数据出现在输入流中时会调用found_terminator()方法来判断是否终结<br/>
+</li>
+<li>async_chat.get_terminator() 返回term<br/>
+</li>
+<li>async_chat.push_with_producer(producer) 压入FIFO队列中一个producer（可能有方法more(), 每次调用more()都会产生一个字符串，最后产生一个空串表数据终结），writer遇到此对象时将持续调用more()方法直到没有数据产生<br/>
+</li>
+<li>async_chat.simple_producer(data [, buffer_size]) 产生一个producer，从data中取数据，buffer_size指定大小，默认是512字节。<br/>
+</li>
+</ul>
+
+</div>
+
+</div>
+
+<div id="outline-container-3" class="outline-2">
+<h2 id="sec-3"><span class="section-number-2">3</span> asyncore</h2>
+<div class="outline-text-2" id="text-3">
+
+<p>  自定义一个继承class asyncore.dispatcher的类：<br/>
+</p><ul>
+<li>handle_connect() 在一个监听socket接到一个连接时调用<br/>
+</li>
+<li>handle_close() 关闭时调用<br/>
+</li>
+<li>handle_connect() 当连接建立时调用<br/>
+</li>
+<li>handle_error() 当无捕获异常出现时调用<br/>
+</li>
+<li>handle_read() 当有数据可读时调用<br/>
+</li>
+<li>handle_wirte() 当尝试写数据时被调用<br/>
+</li>
+<li>readable() 判断对象是否愿意读数据，此方法被调用用来判断对新来的数据handle_read()方法是否应该被调用<br/>
+</li>
+<li>writable() 判断对象是否想写数据，此方法被调用用来判断handle_wirte()方法是否应该被调用产生输出<br/>
+</li>
+<li>loop([timeout [, use_poll [, map [, count]]]]) 开始事件循环和处理事件<br/>
+</li>
+</ul>
+
+<p>  以下方法与socket模块方法差不多：<br/>
+</p><ul>
+<li>d.accept() 接受连接返回 (client, addr) client是个socket对象用来接收和发送数据，addr是地址<br/>
+</li>
+<li>d.bind((host,port)) 绑定socket到主机host的端口号port<br/>
+</li>
+<li>d.close() 关闭socket<br/>
+</li>
+<li>d.connect((host,port)) 连接到主机host的端口号port<br/>
+</li>
+<li>d.create_socket(family,type) 创建新的socket，参数和socket.socket()一样<br/>
+</li>
+<li>d.listen([backlog]) 监听<br/>
+</li>
+<li>d.recv(size) 接收最多指定大小size的数据，空串表示客户端已经关闭了连接<br/>
+</li>
+<li>d.send(data) 发送数据<br/>
+</li>
+</ul>
+
+</div>
+</div>
+</div>
+
+</body>
+</html>

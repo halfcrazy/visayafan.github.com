@@ -1,0 +1,57 @@
+#+OPTIONS: "\n:t
+* 基本思路
+  将循环小数化为分数的思想：
+  0.3333……循环先把它*10再相减再/9即可得到1/3。
+  0.32(692307)先把它*100，得32.(692307)再*10^6 后减去32.(692307)再/(10^6-1)。
+  思想就是这样。
+  第一次自己没有看网上参考答案做下来的，虽是水题但还是挺激动的，写个解题报告记录下记录下吧:)
+* hdu 2.1.8 源码
+#+BEGIN_SRC c++
+#include <iostream>
+#include <string>
+#include <cmath>
+#include <cstdlib>
+using namespace std;
+int gcd(int a, int b)
+{
+        if(b == 0) return a;
+        return gcd(b, a%b );
+}
+int main(int argc, char *argv[])
+{
+        int n, i, j, k;         // i 表（位置 j表）位置 k表循环部分位数
+        long long x, y, g;      // x做为分子 y做分母 g表示xy的最大公约数
+        string str;
+        while(cin>>n){
+                while(n--){
+                        cin>>str;
+                        // 分为有循环部分和无循环部分
+                        if(str.find("(") != string::npos){
+                                i = str.find("(");
+                                j = str.find(")");
+                                k = j - i - 1;
+                                if(i == 2){ // 有循环部分又分为循环部分前面有没有数字
+                                        x = atoi(str.substr(i+1, j).c_str());
+                                        y = pow((long double)10, (long double)k)-1;
+                                        g = gcd(x, y);
+                                }else{
+                                        x = atoi(str.substr(2, i).c_str());
+                                        y = atoi(str.substr(i+1, j).c_str());
+                                        x = pow((long double)10, (long double)k)*x + y - x;
+                                        y = pow((long double)10, (long double)(i-2))*(pow((long double)10, (long double)k)-1);
+                                        g = gcd(x, y);
+                                }
+                        }else{
+                                str = str.substr(2);
+                                k = str.length();
+                                x = atoi(str.c_str());
+                                y = pow((long double)10, (long double)k);
+                                g = gcd(x, y);
+                        }
+                        cout<<x/g<<"/"<<y/g<<endl;
+                }
+                
+        }
+        return 0;
+}
+#+END_SRC  

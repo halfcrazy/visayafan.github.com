@@ -1,0 +1,248 @@
+#+OPTIONS: "\n:t
+#+OPTIONS: ^:{}
+#+OPTIONS: _:{}
+#+TITLE: 
+
+参考自《C++ Template》一书，解释得很详细，英语也比较简单应该可以看懂，如果看不懂得话可以找侯捷的翻译版本。
+
+5.4 Template Template Parameters
+It can be useful to allow a template parameter itself to be a class template. Again, our stack class template can be used as an example.
+模板参数列表里面可以存在模板，称之为模板参数模板。
+To use a different internal container for stacks, the application programmer has to specify the element type twice. Thus, to specify the type of the internal container, you have to pass the type of the container and the type of its elements again:
+PS:下面的Stack实现用到了该章节以前的代码。
+#+BEGIN_SRC c++
+Stack<int,std::vector<int> > vStack;  // integer stack that uses a vector 
+#+END_SRC  
+Using template template parameters allows you to declare the Stack class template by specifying the type of the container without respecifying the type of its elements:
+#+BEGIN_SRC c++
+stack<int,std::vector> vStack;        // integer stack that uses a vector 
+#+END_SRC  
+To do this you must specify the second template parameter as a template template parameter. In principle, this looks as follows [2]:
+There is a problem with this version that we explain in a minute. However, this problem affects only the default value std::deque. Thus, we can illustrate the general features of template template parameters with this example.
+
+PS:此代码是运行不通过的，原因[[file:template_template_argument.org][在这]]。
+#+BEGIN_SRC c++
+// basics/stack7decl.hpp 
+template <typename T, 
+          template <typename ELEM> class CONT = std::deque > 
+class Stack { 
+  private: 
+    CONT<T> elems;         // elements 
+
+  public: 
+    void push(T const&);   // push element 
+    void pop();            // pop element 
+    T top() const;         // return top element 
+    bool empty() const {   // return whether the stack is empty 
+        return elems.empty(); 
+    } 
+};
+#+END_SRC  
+
+The difference is that the second template parameter is declared as being a class template:
+#+BEGIN_SRC c++
+template <typename ELEM> class CONT 
+#+END_SRC  
+The default value has changed from std::deque<T> to std::deque. This parameter has to be a class template, which is instantiated for the type that is passed as the first template parameter:
+#+BEGIN_SRC c++
+CONT<T> elems; 
+#+END_SRC  
+This use of the first template parameter for the instantiation of the second template parameter is particular to this example. In general, you can instantiate a template template parameter with any type inside a class template.
+As usual, instead of typename you could use the keyword class for template parameters. However, CONT is used to define a class and must be declared by using the keyword class. Thus, the following is fine:
+#+BEGIN_SRC c++
+template <typename T, 
+          template <class ELEM> class CONT = std::deque>  // OK 
+class Stack { 
+  … 
+}; 
+#+END_SRC  
+but the following is not:
+#+BEGIN_SRC c++
+template <typename T, 
+          template <typename ELEM> typename CONT = std::deque> 
+class Stack {                                             // ERROR 
+  … 
+}; 
+#+END_SRC  
+
+Because the template parameter of the template template parameter is not used, you can omit its name:
+因为模板参数模板的模板参数并未使用，所以可以把忽略掉：
+#+BEGIN_SRC c++
+template <typename T, 
+          template <typename> class CONT = std::deque > 
+class Stack { 
+  … 
+}; 
+#+END_SRC  
+
+Member functions must be modified accordingly. Thus, you have to specify the second template parameter as the template template parameter. The same applies to the implementation of the member function. The push() member function, for example, is implemented as follows:
+修改相应的成员函数：
+#+BEGIN_SRC c++
+template <typename T, template <typename> class CONT> 
+void Stack<T,CONT>::push (T const& elem) 
+{ 
+    elems.push_back(elem);    // append copy of passed elem 
+} 
+#+END_SRC  
+
+Template template parameters for function templates are not allowed.
+
+ *Template Template Argument Matching*
+
+If you try to use the new version of Stack, you get an error message saying that the default value std::deque is not compatible with the template template parameter CONT. The problem is that a template template argument must be a template with parameters that exactly match the parameters of the template template parameter it substitutes. Default template arguments of template template arguments are not considered, so that a match cannot be achieved by leaving out arguments that have default values.
+如果你使用上面实现的Stack，你将会得到错误信息说：默认的std::deque与模板参数模板不匹配。
+The problem in this example is that the std::deque template of the standard library has more than one parameter: The second parameter (which describes a so-called allocator) has a default value, but this is not considered when matching std::deque to the CONT parameter.
+原因在于std::deque的模板参数有两个：
+template <typename T, typename Alloc = std::allocator>  //默认第2个参数是std里面定义的空间适配器(《STL源码剖析》中如是翻译)
+
+There is a workaround, however. We can rewrite the class declaration so that the CONT parameter expects containers with two template parameters:
+#+BEGIN_SRC c++
+template <typename T, 
+          template <typename ELEM, 
+                    typename ALLOC = std::allocator<ELEM> > 
+                    class CONT = std::deque> 
+class Stack { 
+  private: 
+    CONT<T> elems;         // elements 
+    … 
+}; 
+#+END_SRC  
+Again, you can omit ALLOC because it is not used.
+同理因为用不到Alloc，所以可以把它忽略掉。
+
+The final version of our Stack template (including member templates for assignments of stacks of different element types) now looks as follows:
+
+#+BEGIN_SRC c++
+// basics/stack8.hpp 
+#ifndef STACK_HPP 
+#define STACK_HPP 
+
+#include <deque> 
+#include <stdexcept> 
+#include <allocator> 
+
+template <typename T, 
+          template <typename ELEM, 
+                    typename = std::allocator<ELEM> > 
+                    class CONT = std::deque> 
+class Stack { 
+  private: 
+    CONT<T> elems;        // elements 
+
+  public: 
+    void push(T const&);  // push element 
+    void pop();            // pop element 
+    T top() const;         // return top element 
+    bool empty() const {   // return whether the stack is empty 
+        return elems.empty(); 
+    } 
+
+    // assign stack of elements of type T2 
+    template<typename T2, 
+             template<typename ELEM2, 
+                      typename = std::allocator<ELEM2> 
+                      >class CONT2> 
+    Stack<T,CONT>& operator= (Stack<T2,CONT2> const&); 
+}; 
+
+template <typename T, template <typename,typename> class CONT> 
+void Stack<T,CONT>::push (T const& elem) 
+{ 
+    elems.push_back(elem);    // append copy of passed elem 
+} 
+
+template<typename T, template <typename,typename> class CONT> 
+void Stack<T,CONT>::pop () 
+{ 
+    if (elems.empty()) { 
+        throw std::out_of_range("Stack<>::pop(): empty stack"); 
+    } 
+    elems.pop_back();         // remove last element 
+} 
+
+template <typename T, template <typename,typename> class CONT> 
+T Stack<T,CONT>::top () const 
+{ 
+    if (elems.empty()) { 
+        throw std::out_of_range("Stack<>::top(): empty stack"); 
+    } 
+    return elems.back();      // return copy of last element 
+} 
+template <typename T, template <typename,typename> class CONT> 
+ template <typename T2, template <typename,typename> class CONT2> 
+Stack<T,CONT>& 
+Stack<T,CONT>::operator= (Stack<T2,CONT2> const& op2) 
+{ 
+    if ((void*)this == (void*)&op2) {    // assignment to itself? 
+        return *this; 
+    } 
+
+    Stack<T2> tmp(op2);              // create a copy of the assigned stack 
+
+    elems.clear();                   // remove existing elements 
+    while (!tmp.empty()) {           // copy all elements 
+        elems.push_front(tmp.top()); 
+        tmp.pop(); 
+    } 
+    return *this; 
+} 
+
+#endif // STACK_HPP 
+#+END_SRC  
+
+The following program uses all features of this final version:
+
+#+BEGIN_SRC c++
+// basics/stack8test.cpp 
+#include <iostream> 
+#include <string> 
+#include <cstdlib> 
+#include <vector> 
+#include "stack8.hpp" 
+
+int main() 
+{ 
+    try { 
+        Stack<int> intStack;        // stack of ints 
+        Stack<float> floatStack;    // stack of floats 
+
+        // manipulate int stack 
+        intStack.push(42); 
+        intStack.push(7); 
+
+        // manipulate float stack 
+        floatStack.push(7.7); 
+
+        // assign stacks of different type 
+        floatStack = intStack; 
+
+        // print float stack 
+        std::cout << floatStack.top() << std::endl; 
+        floatStack.pop(); 
+        std::cout << floatStack.top() << std::endl; 
+        floatStack.pop(); 
+        std::cout << floatStack.top() << std::endl; 
+        floatStack.pop(); 
+    } 
+    catch (std::exception const& ex) { 
+        std::cerr << "Exception: " << ex.what() << std::endl; 
+    } 
+
+    // stack for ints using a vector as an internal container 
+    Stack<int,std::vector> vStack; 
+    … 
+    vStack.push(42); 
+    vStack.push(7); 
+    std::cout << vStack.top() << std::endl; 
+    vStack.pop(); 
+} 
+#+END_SRC  
+
+The program has the following output:
+#+BEGIN_SRC c++
+7 
+42 
+Exception: Stack<>::top(): empty stack 
+7 
+#+END_SRC  
+Note that template template parameters are one of the most recent features required for compilers to conform to the standard. Thus, this program is a good evaluation of the conformity of your compiler regarding template features.

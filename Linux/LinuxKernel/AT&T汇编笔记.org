@@ -1,0 +1,24 @@
+#+include "../../template.org"
+#+OPTIONS: ^:{} _:{} num:t toc:t \n:t
+
+* 与x86差别
+1) 寄存器前加%
+2) 源和目的与x86相反
+3) 立即数前面加$，符号常数直接引用，引用符号地址前面加$
+4) 操作数长度b w l 分别表示8、16、32位。
+   movw %ax, %bx 把16位长度的ax寄存器里mov到bx中
+5) 跳转
+   * 远跳转，Intel为jmp far, call far，AT&T是ljmp, lcall。
+   * 远程返回指令：Intel为ret far，AT&T为 lret。
+   * 寻址方式：
+     Intel: section: [base + index*scale + disp]
+     AT&T: section: disp(base, index, scale)
+
+* 嵌入汇编
+#+begin_example
+  格式：_asm_("asm statements": output: inputs: registers_modified)
+  "a" "b" "c" "d" 分别表示 eax, ebx, ecx, edx
+  "S" "D" 表示 esi, edi
+  "r" 表示任何寄存器
+  0 表示与上面位置相同的同一寄存器
+#+end_example

@@ -1,0 +1,72 @@
+#+OPTIONS: num:t toc:t \n:nil
+#+include "../../template.org"
+#+title:一道关于fork的面试题
+此博文参考[[http://coolshell.cn/articles/7965.html][ CoolShell]] ，通过对增加循环次数来更加深入理解fork并利用推算总结一般规律。
+
+  问下面程序一共输出多少个"-"?
+
+
+
+
+  
+#+begin_src c 
+#include <stdio.h>
+#include <sys/types.h>
+#include <unistd.h>
+ 
+int main(void)
+{
+   int i;
+   for(i=0; i<2; i++){
+      fork();
+      printf("-");
+   }
+ 
+   return 0;
+}
+#+end_src
+  由于printf语句将输出内容放到buffer中且被子进程复制，故比 printf("-\n"); 多2个-
+#+begin_src c 
+#include <stdio.h>
+#include <sys/types.h>
+#include <unistd.h>
+int main(void)
+{
+   int i;
+   for(i=0; i<2; i++){
+      fork();
+      //注意：下面的printf有“\n”
+      printf("ppid=%d, pid=%d, i=%d \n", getppid(), getpid(), i);
+   }
+   sleep(10); //让进程停留十秒，这样我们可以用pstree查看一下进程树
+   return 0;
+}
+#+end_src
+  结果：
+#+begin_example
+ppid=8858, pid=8518, i=0
+ppid=8858, pid=8518, i=1
+ppid=8518, pid=8519, i=0
+ppid=8518, pid=8519, i=1
+ppid=8518, pid=8520, i=1
+ppid=8519, pid=8521, i=1
+#+end_example
+  分析：
+  其中椭圆代表shell，每个方块执行一个输出语句。
+  #+html:<center>
+  #+html:<img src="image/fork.jpg"></img>
+  #+html:</center>
+  同理将迭代次数换成3可得14个"-"
+  #+html:<center>
+  #+html:<img src="image/fork2.jpg"></img>
+  #+html:</center>
+  规律：设迭代n次最终打印 a_n 个-。通过观察上图可得
+  当k=n时：
+$$a_k=2a_{k-1}$$
+  当k<n时：
+$$a_k=2a_{k-1}+1$$
+  且有：
+$$a_0=1$$  
+  最终得:
+$$a_n=2^{n+1}-2$$
+  即迭代次数为2时打印2^{2+1}-2=6个，迭代次数为3时2^{3+1}-2=14个，迭代次数为4时打印2^{4+1}-2=30个……

@@ -1,0 +1,37 @@
+#+OPTIONS: ^:{} _:{} num:t toc:t \n:t
+#+include "../../template.org"
+#+title:Kscope安装及使用
+
+* Ubuntu 11.04下安装Kscope
+  到我的网盘下载 [[http://pan.baidu.com/netdisk/singlepublic?fid%3D829364_3068003569][kscope-1.6.2.tar.bz2]] (包含两个文件：kscope_1.6.2-1_i386.deb和kate_3.5.9.dfsg.1-6_i386.deb)。
+  双击kscope_1.6.2-1_i386.deb用新立得软件安装（自动解决信赖问题），解压kate_3.5.9.dfsg.1-6_i386.deb将/usr/lib目录下的libkateinterfaces.so.0拷贝到/usr/lib目录下，命令如下：sudo cp libkateinterfaces.so.0 /usr/lib.
+  之后终端上kscope即可打开程序。
+* 配置
+  1. 默认字体很难看，可以在 setting->configure editor->font&color下配置字体，此配置的是编辑器的字体，file list和tag list的字体可以在setting->configure kscope->font下配置。
+  2. 配置外部编辑器，setting->configure kscope->option默认是用kate --line %L %F，可以配置自己的喜欢的编辑器，emacs %L %F或gvim %L %F。
+  3. 支持汉字：tools->encoding->chinese simplified(gb2312)
+  
+* 建工程
+  首先要安装cscope，命令sudo apt-get install cscope即可。
+  此处以阅读Linux内核源码为例。
+  两种方法：
+  * 命令行方式用cscope生成cscope.out，可以查看我以前写的文章：[[http://blog.csdn.net/PfanAya/article/details/6400629][Windows + emacs+cscope看源代码]]
+    1. 切换到内核目录 执行命令 find -name '*.[c|h|s|S]' > cscope.files，此时目录下会多出cscope.files文件
+    2. 再执行cscope -b （因内核太庞大，此处可能需要几分钟时间），之后会生成cscope.out文件。
+   然后再在Project->open cscope.out.即可
+  * 建工程
+    1. Project->New Project 输入工程名并指定内核所在目录（例如：/media/d/study/linux/kernel_study/linux-3.1.4），File type中选择文件类型，option中选择kernel project（如果阅读不是内核的话不用选），Refresh database automatically根据需要选择更新时间（如果是内核的话，不需要选，因为文件太大，更新花时间且根本不会有什么变动），之后Create创建。
+    2. 之后添加工程文件，可以先Tree之后选择内核的根目录，即可看到开始扫描文件。
+    3. cscope->rebuild database 开始建立数据库（可能会花费些时间）
+    4. Project->Properties中project root选择工程的根目录（也可以在1中就选择）
+    之后即可开始查看源码。
+* 使用Graphviz生成函数关系图
+  安装graphviz，命令sudo apt-get install graphviz即可。
+  光标放在一个函数上,快捷键Ctrl+\即可调用graphviz，在函数名上右键可看到选项：此函数调用的函数和调用此函数的函数。可以list/filter过滤查看自己想要查看的函数。
+  工具栏上可以选择以图形方式还是以树形方式查看。
+* 阅读源码
+  1. 查看cscope菜单下选项，可以查看变量/函数定义，此函数调用的函数和调用此函数的函数，支持正则表达式查找。
+  2. 支持代码折叠：view->code folding
+  3. 位置记忆：next/previous position和next/previous result和position history
+  4. 设置书签以方便下次快速定位。
+  5. file->export html很实用的功能

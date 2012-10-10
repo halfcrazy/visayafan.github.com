@@ -1,0 +1,78 @@
+#+OPTIONS: ^:{} _:{} num:t toc:t \n:t
+#+include "../template2.org"
+#+title: Linux下时间函数
+* 时间类型。
+  Linux下常用的时间类型有4个：time_t，struct timeval，struct timespec，struct tm。
+  * time_t是一个长整型，一般用来表示用1970年以来的秒数。
+  * truct timeval有两个成员，一个是秒，一个是微妙。
+#+BEGIN_SRC java
+struct timeval
+{
+    long tv_sec;
+    long tv_usec;
+};
+#+END_SRC
+   * struct timespec有两个成员，一个是秒，一个是纳秒。
+#+BEGIN_SRC java
+struct timespec
+{
+    time_t tv_sec;
+    long tv_nsec;
+};
+#+END_SRC  
+    * truct tm是直观意义上的时间表示方法：
+#+BEGIN_SRC java
+struct tm
+{
+    int tm_sec;
+    int tm_min;
+    int tm_hour;
+    int tm_mday;
+    int tm_mon;
+    int tm_year;
+    int tm_wday;
+    int tm_yday;
+    int tm_isdst;
+};
+#+END_SRC
+* 时间操作
+（1） 时间格式间的转换函数
+主要是 time_t、struct tm、时间的字符串格式之间的转换。看下面的函数参数类型以及返回值类型：
+#+BEGIN_SRC java
+char *asctime(const struct tm *tm);
+char *ctime(const time_t *timep);
+struct tm *gmtime(const time_t *timep);
+struct tm *localtime(const time_t *timep);
+time_t mktime(struct tm *tm);
+#+END_SRC  
+gmtime和localtime的参数以及返回值类型相同，区别是前者返回的格林威治标准时间，后者是当地时间。
+（2） 获取时间函数
+两个函数，获取的时间类型看原型就知道了：
+#+BEGIN_SRC java
+time_t time(time_t *t);
+int gettimeofday(struct timeval *tv, struct timezone *tz);
+#+END_SRC  
+前者获取time_t类型，后者获取struct timeval类型，因为类型的缘故，前者只能精确到秒，后者可以精确到微秒。
+* 延时函数
+主要的延迟函数有：sleep(),usleep(),nanosleep(),select(),pselect().
+#+BEGIN_SRC java
+unsigned int sleep(unsigned int seconds);
+void usleep(unsigned long usec);
+int nanosleep(const struct timespec *req, struct timespec *rem);
+int select(int n, fd_set *readfds, fd_set *writefds, fd_set *exceptfds,struct timeval *timeout);
+int pselect(int n, fd_set *readfds, fd_set *writefds, fd_set *exceptfds, const struct timespec *timeout, const sigset_t *sigmask);
+#+END_SRC  
+alarm函数是信号方式的延迟，这种方式不直观，这里不说了。
+仅通过函数原型中时间参数类型，可以猜测sleep可以精确到秒级，usleep/select可以精确到微妙级，nanosleep和pselect可以精确到纳秒级。
+而实际实现中，linux上的nanosleep和alarm相同，都是基于内核时钟机制实现，受linux内核时钟实现的影响，并不能达到纳秒级的精度，man nanosleep也可以看到这个说明，man里给出的精度是：Linux/i386上是10 ms ，Linux/Alpha上是1ms。
+这里有一篇文章http://blog.csdn.net/zhoujunyi/archive/2007/03/30/1546330.aspx，
+测试了不同延迟函数之间的精确度。文章给出的结论是linux上精度最高的是select，10ms级别。我在本机器测试select和pselect相当，都达到了1ms级的精度，精度高于文章中给出的10ms，sleep在秒级以上和usleep/nanosleep相当。下面贴下我机器上1ms时候的测试结果，其他不贴了：
+
+sleep 1000 0 -1000
+usleep 1000 2974 1974
+nanosleep 1000 2990 1990
+select 1000 991 -9
+pselect 1000 990 -10
+gettimeofday 1000 1000 0
+而使用gettimeofday循环不停检测时间，可精确微秒级，不过不适宜用来做定时器模块。
+因此后面的定时器模块将选择select为延迟函数。

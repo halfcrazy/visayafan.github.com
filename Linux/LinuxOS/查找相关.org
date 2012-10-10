@@ -1,0 +1,11 @@
+#+OPTIONS: ^:{} _:{} num:t toc:t \n:t
+#+include "../../template.org"
+#+title: Linux查找
+
+
+* 查找某目录内指定文本
+#+begin_example
+  grep -lr "text-to-find" absolute-directory
+#+end_example
+  -l 表示只列出文件名，否则会列出文件中每次出现的地方
+  -r 表递归

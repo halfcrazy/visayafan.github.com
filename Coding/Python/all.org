@@ -1,0 +1,22 @@
+#+OPTIONS: "\n:t
+#+OPTIONS: ^:{} _:{} num:t toc:t \n:t
+#+LaTeX_CLASS: cn-article
+#+STYLE: <link rel="stylesheet" type="text/css" href="../style/style.css" />
+##+INFOJS_OPT: view:content mouse:#cccccc toc:t ftoc:t  path:../style/org-info.js
+
+
+* sys.modules
+  保存所有已经import的模块名，有新import时先在此搜索是否已经存在，若已存在则不必再编译。
+* reload/imp.reload
+  重新加载模块
+  2.x中reload是内置函数
+  3.x中被放到imp中(必须先导入imp：from imp import reload)
+* 模块加载时搜索路径
+  1. 当前目录：如果是交互模式则是当前目录，如果是文件则是文件所在目录
+  2. PYTHONPATH 环境变量（当需要的模块在其它目录时可以设置其值）
+  3. 标准模块目录：固定的
+  4. .pth 当前目录下的.pth结尾的文件（每行一个目录）
+  可通过sys.path变量来查看具体路径，可以修改此值，但只会影响此程序运行（暂时的）
+* 删除一个模块
+  dele moduleName
+* 

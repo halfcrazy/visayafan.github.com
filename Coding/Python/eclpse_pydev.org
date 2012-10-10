@@ -1,0 +1,48 @@
+#+OPTIONS: "\n:t
+#+OPTIONS: ^:{} _:{} num:t toc:t \n:t
+#+LaTeX_CLASS: cn-article
+#+STYLE: <link rel="stylesheet" type="text/css" href="../style/style.css" />
+##+INFOJS_OPT: view:content mouse:#cccccc toc:t ftoc:t  path:../style/org-info.js
+
+
+* shortcuts
+  | M-S-n        | new project                                      |
+  | S-Enter      | next line                                        |
+  | C-S-o        | import                                           |
+  | C-1          | create code quick fix error                      |
+  | C-2 r        | rename occurrences of variable in current module |
+  | M-S-a        | start/stop rectangular editing                   |
+  | F12          | focus on editor                                  |
+  | C-F9         | unit test                                        |
+  | C-M-up/down  | duplicate current line up/down                   |
+  | M-up/down    | move current line up/down                        |
+  | M-S-r        | refactor: rename variable                        |
+  | M-left/right | go back/forward among locations                  |
+  | F3           | go to definition                                 |
+  | M-S-l        | extract local variable                           |
+  | M-S-m        | extract local method                             |
+  | C-o          | show quick outline                               |
+  | C-9          | collapse all                                     |
+  | C-0          | uncollapse all                                   |
+  | C-=          | uncollapse current code                          |
+  | C--          | collapse current code                            |
+  | C-S-up/down  | go prvious/next class/method                     |
+  | C-4          | add comment block                                |
+  | C-5          | remove comment block                             |
+  | C-S-4        | add single comment block                         |
+  | F2           | show tooltip description                         |
+  | C-m          | maximize editor                                  |
+  | C-F6         | next editor                                      |
+  | C-S-F6       | previous editor                                  |
+  | C-F11        | run                                              |
+  | F11          | debug                                            |
+* 改变eclipse菜单/outline等所有perspective字体
+  家目录下创建文件（比如.gtkrc-eclipse），添加内容：
+#+begin_src css
+style "eclipse" {
+        font_name = "Sans Condensed 9"
+}
+class "GtkWidget" style "eclipse"
+#+end_src
+  启动：GTK2_RC_FILES=/usr/share/themes/Clearlooks/gtk-2.0/gtkrc:/home/visayafan/.gtkrc-eclipse eclipse
+  可以在.bashrc中添加别名以方便以后调用：alias ec="GTK2_RC_FILES=/usr/share/themes/Clearlooks/gtk-2.0/gtkrc:/home/visayafan/.gtkrc-eclipse eclipse &"

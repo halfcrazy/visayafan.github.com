@@ -1,0 +1,100 @@
+#OPTOINS: "\n:t"
+* 3.X中print()
+#+BEGIN_EXAMPLE
+在python3.2:
+print(value, ..., sep=' ', end='\n', file=sys.stdout)
+sep表示输出之间的符号，end表示整个输出的结束符。
+
+>>> print('hello', 'world')
+hello world
+>>> print('hello', 'world', sep='\n')
+hello  #Because sep is \n, this is a new line.
+world
+>>> print('hello', 'world', end=' ')
+hello world >>>  #Because end is ' ', so this is no newline.
+#+END_EXAMPLE
+
+* lists:
+** list()
+** reverse() 
+** sort() sorted()
+#+BEGIN_EXAMPLE
+sorted(iterable, cmp=None, key=None, reverse=False) --> new sorted list
+L.sort(cmp=None, key=None, reverse=False) -- stable sort *IN PLACE*;
+
+区别在：sorted是built-in 函数， sort是list的成员函数。前者作用于列表但并不对列表造成影响，后才修改了列表。
+
+iterable 可迭代的类药
+cmp 比较函数
+key 用列表元素的某个属性和函数进行作为关键字
+reverse 排序规则
+一般cmp，key 可以用lambda表达式，效率key>cmp
+
+>>>L = [('b',2),('a',1),('c',3),('d',4)]
+>>>print sorted(L, cmp=lambda x,y:cmp(x[1],y[1]))
+[('a', 1), ('b', 2), ('c', 3), ('d', 4)]
+
+>>>L = [('b',2),('a',1),('c',3),('d',4)]
+>>>print sorted(L, key=lambda x:x[1]))
+[('a', 1), ('b', 2), ('c', 3), ('d', 4)]
+
+>>> print sorted([5, 2, 3, 1, 4], reverse=True)
+[5, 4, 3, 2, 1]
+>>> print sorted([5, 2, 3, 1, 4], reverse=False)
+[1, 2, 3, 4, 5]
+#+END_EXAMPLE
+
+** insert()
+#+BEGIN_EXAMPLE
+L.insert(index, object)   # Insert object before index
+#+END_EXAMPLE
+** pop([index])  
+L.pop([index]) # Remove and return item at index (defaut last)
+** remove(value)
+#+BEGIN_EXAMPLE
+L.remove(value)   # Remove fist occurence of value.
+#+END_EXAMPLE
+
+** count(value)
+L.count(value) # Return number of occurrences of value.
+   
+* integers:
+** ord()
+#+BEGIN_EXAMPLE
+  ord('字符') #返回ASCII码
+#+END_EXAMPLE
+
+* string
+** count(sub, [start [, end]])
+** find(sub, [start [, end]])
+** isalpha isdigit isalnum islower isupper istitle isspace
+** lower upper title swapcase 
+** ljust rjust center
+** split rsplit lsplit
+** strip lstrip rstrip
+** replace(old, new[, count]) ->string
+** startswith
+* map
+** keys values
+** get(k[, d])
+   Dict.get(k[, d])等价于 Dict[k] if k in Dict else d
+   避免获取不存在的字典键而产生错误
+* set
+** set(sequence)
+   X=set('spam') 等价于 X = {'s', 'p', 'a', 'm'}
+** |
+   X|Y 等价于 X.union(Y)
+** &
+   intersection
+** -
+   difference
+** symmetric_difference
+   对称差
+** add
+   添加一个元素（保证集合的不重复性）
+** clear
+** pop remove
+** update union_update intersection_update difference_update symmetric_difference_update
+   更新、用取并结果更新原来集合……
+** issubset issuperset isdisjoint
+   子集、父集、不相交集

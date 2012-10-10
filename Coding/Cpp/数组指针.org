@@ -1,0 +1,3 @@
+#+OPTIONS: ^:{} _:{} num:t toc:t \n:t
+#+include "../template2.org"
+#+title: 数组指针

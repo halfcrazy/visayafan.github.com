@@ -1,0 +1,127 @@
+#+OPTIONS: ^:{} _:{} num:t toc:t \n:t
+#+include "../../template.org"
+#+title:模板参数推导
+* 模板参数推导在迭代器中的使用
+在算法中运用迭代器时，可能会用到其相应类型（associative type），即迭代器所指向对象的类别。但C++只支持sizeof()，并不存在typeof()之说（即使运用RTTI性质中的typeid()获得的也只是类型名称不能用来做变量声明之用）。
+为解决此问题，可以利用函数模板（function template）的参数推导（argument deduction）机制：
+#+BEGIN_SRC c++
+template <class I, class T>
+void fun_impl(I iter, T t){     // 此处该函数利用模板参数推导得知T为*iter类型
+    T tmp;                      // 可以声明变量
+    //...
+};
+
+template <class I>
+inline void fun(I iter){
+    fun_impl(iter, *iter); //此处把*iter作为第二个参数传递给fun_impl()
+}
+int main(int argc, char *argv[])
+{
+    int i;
+    fun(&i);
+    return 0;
+}
+#+END_SRC
+
+再例如：
+#+BEGIN_SRC c++
+template<class I, class Cmp>  
+void insertSort(const I& begin, const I& end, Cmp lessThan);  
+  
+template <class I, class T>  
+void _insertSort(const I& begin, const I& end, const T t);  
+  
+template<class I, class T, class Cmp>  
+void _insertSort(const I& begin, const I& end, Cmp lessThan, const T& t);  
+  
+template <class I>  
+void insertSort(const I& begin, const I& end){  
+    if(begin != end)  
+        _insertSort(begin, end, *begin); // 把*begin传递做为第三个参数
+}  
+  
+template <class I, class T>  
+// 此时__insertSort利用模板参数推导机制推测出T的类型，其实就是上个函数insertSort(const I& begin, const I& end)中迭代器begin所指向对象的类型
+void _insertSort(const I& begin, const I& end, const T t){ 
+    insertSort(begin, end, less<T>());                     //此时T已被推测出来可以直接使用
+}  
+
+template<class I, class Cmp>  
+void insertSort(const I& begin, const I& end, Cmp lessThan){  
+    if(begin != end)  
+        _insertSort(begin, end, lessThan, *begin);
+}  
+  
+//算法的具体实现  
+template<class I, class T, class Cmp>  
+void _insertSort(const I& begin, const I& end, Cmp lessThan, const T& t){  
+    I j;  
+    for(I i = begin+1; i != end; ++i){  
+        T tmp = *i; //通过参数推导确定T类型  
+        for(j = i; j != begin && lessThan(tmp, *(j-1)); --j)  
+            *j = *(j-1);  
+        *j = tmp;  
+    }  
+}
+#+END_SRC  
+
+参数为两个迭代器的函数insertSort把其中一个迭代器解引用后传递给参数为两个迭代器和一个迭代器指向对象类型的三个参数的__insertSort函数，用户并不关心底层如何实现，只需要传递两个参数即可，并未告知函数迭代器指向对象的类型但可以通过模板参数推导机制来推测，从而方便用户。
+* 模板参数引用与非引用的区别
+  当模板参数是非引用时会导致模板参数推断衰减(decaying)(把数组和函数类型变成指针类型、去掉const, volatile等修饰符)。
+  例如：
+#+BEGIN_SRC c++
+template<typename T> void f(T);    //PisT 
+
+template<typename T> void g(T&);  // P is also T 
+
+double x[20]; 
+
+int const seven = 7; 
+
+f(x);      // nonreference parameter: T is double* 
+g(x);      // reference parameter:    T is double[20] 
+f(seven);  // nonreference parameter: T is int 
+g(seven);  // reference parameter:    T is int const 
+f(7);      // nonreference parameter: T is int 
+g(7);      // reference parameter:    T is int => ERROR: can't pass 7 to int& 
+#+END_SRC    
+  f是非引用模板参数，所以会decaying 把double[]变成double*，同理int const => int，最后一个传递是非法的，因为不能把常数作为int&。
+  
+  再例如：
+#+BEGIN_SRC c++
+#include <iostream>
+#include <typeinfo>
+using namespace std;
+
+template <typename T>
+inline const T& Max(const T& a, const T& b){
+    return a<b?b:a;
+}
+
+template <typename T>
+inline T MMax(T a, T b){
+    return a<b?b:a;
+}
+
+template <typename T>
+void ref(const T& t){
+    cout<<"Ref: "<<typeid(t).name()<<endl;
+}
+
+template <typename T>
+void nonref(T t){
+    cout<<"Nonref: "<<typeid(t).name()<<endl;
+}
+
+int main(int argc, char *argv[])
+{
+    ref("hello");               // const char [6]
+    nonref("hello");            // const char *
+    Max("abcd", "cdef");        // 都是const char [4]类型
+    // Max("abc", "abcde");     //error 前者const char [3]，后者const char [5]，不一致，所以出错。
+    MMax("abc", "abcde");       // 都是const char *类型，匹配所以可以运行
+    Max(1, 1.1);
+    return 0;
+}
+#+END_SRC
+

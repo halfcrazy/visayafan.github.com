@@ -1,0 +1,19 @@
+#+OPTIONS: ^:{} _:{} num:t toc:t \n:t
+#+include "../../template.org"
+#+TITLE: TheMatrix
+* the matrix
+1. *grand*
+   two grand 两千美元
+2. *R and R*
+   R and R = Rest and Recreation 休息和娱乐
+3. *what good is*
+   what good is a phone call if you're unable to speak?
+   有什么用
+4. *the honor is mine*
+   -It's an honor to meet you. -No... the honor is mine.
+5. *prophesy*
+   As long as the Matrix exists, the human race will never be free. after he died, the Oracle prophesy his return and that his coming would hail the destruction of the Matrix end the war bring freedom to the people.
+   Oracle神谕 Prophecy预言
+* the matrix reloaded
+  
+* the matrix revolutions

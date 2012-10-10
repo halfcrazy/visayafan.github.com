@@ -1,0 +1,106 @@
+#+OPTIONS: ^:{} _:{} num:t toc:t \n:t
+#+include "../../template.org"
+
+显示所有man文档的编号
+man -f man 显示man程序的所有文档
+
+在man中查询
+apropos keywords
+man -k keywords
+
+重建man库
+makewhatis
+
+查询man文档位置
+whereis man 查询man的文档位置
+
+查看当前man的文档目录
+manpath
+
+打印man文档
+man -t finger | lpr 打印
+lpstat -p -d 查看打印机状态
+
+用浏览器打开
+man -Hfirefox bash
+
+将man的结果保存在文件内
+man bash | col -b > bash.txt
+col是用来对文本进行转换的命令，这里是去掉所有的退格符号
+
+名称
+man-显示线上求助手册(manualpage)manpath-决定线上手册的搜寻路径
+
+摘要
+man[-acdfhkKtwW][-msystem][-pstring][-Cconfig_file][-Mpath][-Ppager][-Ssection_list][section]name...
+
+描述
+man是用来排版并显示线上求助手册,此版本了解MANPATH与(MAN)PAGER这两个环境变数,所以你可以拥有个人的线上手册,并选择任何程式来显示已排版的手册。如果指定了section,则man只会显示该手册的特定章节。您也可以利用选项或是环境变数来指定搜寻的次序或是排版之前的处理工具。如果name包含了`/'则man会先搜寻所指定的档案,所以您可以man./foo.5或者是man/cd/foo/bar.1.gz。
+
+选项
+-Cconfig_file指定设定档man.conf;内定值是/etc/man.conf。(Seeman.conf(5).)
+-M
+path指定了线上手册的搜寻路径,如果没有指定则使用环境变数MANPATH的设定;如果没有使用MANPATH,则会使用/usr/lib/man.conf内的设定;如果MANPATH是空字串则表示使用内定值。
+-P
+pager指定使用何种pager.man会优先使用此选项设定,然后是依环境变数MANPAGER设定,然后是环境变数PAGER;man内定使用/usr/bin/less-is。
+-S
+section_listman所搜寻的章节列表(以冒号分隔),此选项会覆盖环境变数MANSECT的设定。
+-a
+man内定在显示第一个找到的手册之后就会停止搜寻,使用此选项会强迫man显示所有符合name的线上手册。
+-c
+即使有最新的catpage,还是对线上手册重新作排版,本选项在萤幕的行列数改变时或已排版的线上手册损坏时特别有意义。
+-d
+不要真的显示线上手册,只显示除错讯息。
+-D
+同时显示线上手册与除错讯息。
+-f
+功能同whatis。
+-h
+显示求助讯息然后结束程式。
+-k
+功能同apropos。
+-K
+对所有的线上手册搜寻所指定的字串。警告:本功能回应速度可能很慢!如果指定section会对速度有帮助。
+-m
+system依所指定的system名称而指定另一组的线上手册。
+-p
+string指定在nroff或troff之前所执行的处理程式不是所有的安装都会有完整的前处理器。各个前处理器所代表的字母分别为:eqn(e),grap(g),pic(p),tbl(t),vgrind(v),refer(r).本选项覆盖环境变数MANROFFSEQ的设定。
+-t
+使用/usr/bin/groff-Tps-mandoc来对线上手册排版,并将结果显示至stdout。/usr/bin/groff-Tps-mandoc的输出结果可能还需要特定的过滤器才能列印(如bg5ps)。
+-w或--path
+不要真的显示线上手册,但显示线上手册的位置.如果没有指定引数则显示man所搜寻的目录列表。如果manpath是man的□结,则玬anpath?功能同玬an--path?。
+-W
+功能类-w,但每行只印出一个档名,不印出额外的讯息.这在下面的状况特别有用:man-aWman|xargsls-l。
+
+
+man会试着存下已排版的线上手册,以节省下回排版所需要的时间。传统上,位于DIR/X的手册在排版完成后会存于DIR/catX,但在这里是存于/var/ctaman/catX。如果系统没有所需要的目录,则不会有任何catpage存档。
+
+Itispossibletomakemansuidtoauserman.Then,ifacatdirectoryhasownermanandmode0755(onlywritablebyman),andthecatfileshaveownermanandmode0644or0444(onlywritablebyman,ornotwritableatall),noordinaryusercanchangethecatpagesorputotherfilesinthecatdirectory.Ifmanisnotmadesuid,thenacatdirectoryshouldhavemode0777ifallusersshouldbeabletoleavecatpagesthere.
+
+选项-c强迫对线上手册重新作排版。
+
+环境变数
+MANPATHMANPATH用来设定man的搜寻路径。
+MANROFFSEQ
+MANROFFSEQ用来设定在nroff或troff执行前所需要的前处理器。内定在nroff前会先执行tablepreprocessor。
+MANSECT
+MANSECT决定man搜寻的章节。
+MANWIDTH
+MANWIDTH用来设定显示的宽度。若无设定,则手册会填满您萤幕的宽度。
+MANPAGER
+MANPAGER决定了显示线上手册的工具。如果无MANPAGER则使用PAGER,如果两者皆未设定则使用/usr/bin/less-is。
+
+LANGLANG决定了man先搜寻的的子目录的名称所以`LANG=dkman1foo'会使man先搜寻[path]/dk/man1/foo.1,如果找不到该档,man才去寻找[path]/man1/foo.1,[path]是指预设的搜寻路径。
+
+NLSPATH,LC_MESSAGES,LANG
+环境变数NLSPATH与LC_MESSAGES(如果LC_MESSAGE不存在则使用LANG)用来指定讯息的语言种类.(英文讯息是编译时即内定,故不需另外设定.)请注意,man所呼叫的程式,如col(1)也会使用这些环境变数。
+
+PATHPATH是用来设定man的搜寻线上手册的路径。
+
+SYSTEMSYSTEM用来设定替代的系统名(此为选项-m所使用)。
+
+相关说明
+apropos(1),whatis(1),less(1),groff(1)。
+
+臭虫
+选项-t只会在有类似troff工具存在时才有功用。在gnome-help-browser还看不到中文。在kdehelp中可看到中文,但固定字型建建议选取courier或lucidatyperiter。（BP1.0）

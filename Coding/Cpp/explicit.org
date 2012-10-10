@@ -1,0 +1,107 @@
+#+OPTIONS: ^:{} _:{} num:t toc:t \n:t
+#+include "../../template.org"
+#+title:关键字 explicit
+
+这个 《ANSI/ISO C++ Professional Programmer's Handbook 》是这样说的
+
+explicit Constructors
+A constructor that takes a single argument is, by default, an implicit conversion operator, which converts its argument to
+an object of its class (see also Chapter 3, "Operator Overloading"). Examine the following concrete example:
+#+BEGIN_SRC c++
+class string
+{
+private:
+    int size;
+    int capacity;
+    char *buff;
+public:
+    string();
+    string(int size); // constructor and implicit conversion operator
+    string(const char *); // constructor and implicit conversion operator
+    ~string();
+};
+#+END_SRC  
+Class string has three constructors: a default constructor, a constructor that takes int, and a constructor that
+constructs a string from const char *. The second constructor is used to create an empty string object with an
+initial preallocated buffer at the specified size. However, in the case of class string, the automatic conversion is
+dubious. Converting an int into a string object doesn't make sense, although this is exactly what this constructor does.
+
+Consider the following:
+#+BEGIN_SRC c++
+int main()
+{
+    string s = "hello"; //OK, convert a C-string into a string object
+    int ns = 0;
+    s = 1; // 1 oops, programmer intended to write ns = 1,
+}
+#+END_SRC  
+In the expression s= 1;, the programmer simply mistyped the name of the variable ns, typing s instead. Normally,
+the compiler detects the incompatible types and issues an error message. However, before ruling it out, the compiler first
+searches for a user-defined conversion that allows this expression; indeed, it finds the constructor that takes int.
+Consequently, the compiler interprets the expression s= 1; as if the programmer had written
+s = string(1);
+You might encounter a similar problem when calling a function that takes a string argument. The following example
+can either be a cryptic coding style or simply a programmer's typographical error. However, due to the implicit
+conversion constructor of class string, it will pass unnoticed:
+#+BEGIN_SRC c++
+int f(string s);
+int main()
+{
+    f(1); // without a an explicit constructor,
+//this call is expanded into: f ( string(1) );
+//was that intentional or merely a programmer's typo?
+}
+#+END_SRC  
+'In order to avoid such implicit conversions, a constructor that takes one argument needs to be declared explicit:
+#+BEGIN_SRC c++
+class string
+{
+//...
+public:
+    explicit string(int size); // block implicit conversion
+    string(const char *); //implicit conversion
+    ~string();
+};
+#+END_SRC  
+An explicit constructor does not behave as an implicit conversion operator, which enables the compiler to catch the
+typographical error this time:
+#+BEGIN_SRC c++
+int main()
+{
+    string s = "hello"; //OK, convert a C-string into a string object
+    int ns = 0;
+    s = 1; // compile time error ; this time the compiler catches the typo
+}
+#+END_SRC  
+Why aren't all constructors automatically declared explicit? Under some conditions, the automatic type conversion is
+useful and well behaved. A good example of this is the third constructor of string:
+string(const char *);
+
+The implicit type conversion of const char * to a string object enables its users to write the following:
+string s;
+s = "Hello";
+The compiler implicitly transforms this into
+string s;
+//pseudo C++ code:
+s = string ("Hello"); //create a temporary and assign it to s
+On the other hand, if you declare this constructor explicit, you have to use explicit type conversion:
+#+BEGIN_SRC c++
+class string
+{
+//...
+public:
+    explicit string(const char *);
+};
+int main()
+{
+    string s;
+    s = string("Hello"); //explicit conversion now required
+    return 0;
+}
+#+END_SRC  
+Extensive amounts of legacy C++ code rely on the implicit conversion of constructors. The C++ Standardization
+committee was aware of that. In order to not make existing code break, the implicit conversion was retained. However, a
+new keyword, explicit, was introduced to the languageto enable the programmer to block the implicit conversion
+when it is undesirable. As a rule, a constructor that can be invoked with a single argument needs to be declared
+explicit. When the implicit type conversion is intentional and well behaved, the constructor can be used as an
+implicit conversion operator.

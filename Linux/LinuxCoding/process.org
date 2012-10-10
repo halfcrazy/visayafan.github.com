@@ -1,0 +1,317 @@
+#+OPTIONS: ^:{} _:{} num:t toc:t \n:t
+#+include "../../template.org"
+#+title: Unix环境高级编程－进程基础与控制
+
+* atexit
+  用来注册函数，当_exit被调用时这些注册的函数会被调用，调用顺序与注册顺序相反。
+* 取得、设置、删除环境变量
+  * getenv
+  用来获取环境变量（保存在环境列表中，形式为 name=value）
+  printf ("%s\n",getenv("HOME"));
+  * setenv用来设置环境变量：
+  int setenv(const char *name, const char *value, int overwrite);//overwrite为正则表覆盖
+  * putenv以name=value形式来设置环境变量
+  int putenv(char *string);
+  * unsetenv用来删除环境变量：
+  int unsetenv(const char *name);
+  *获得当前程序所有环境变量*
+#+begin_src c
+    extern char** environ;
+    char **ppc = environ;
+    while(*ppc)
+        printf ("%s\n",*ppc++);
+#+end_src  
+* 从输入流中获取字符（串）
+  int fgetc(FILE *stream);
+  int getc(FILE *stream);
+  int getchar(void);
+  getc等价于fgetc，getchar等价于getc(stdin)
+  
+  char *fgets(char *s, int size, FILE *stream);
+  char *gets(char *s);
+  gets从stdin中获取字符串，遇到换行或者EOF停止。fgets指定最多接收size-1个字符（最后以NULL结尾）
+  使用gets函数编译时会提示警告gets函数很危险应当小心使用。因为它没有指定大小，容易越界。
+  get成功则返回s，出错或没有字符读入则返回NULL。
+
+  int ungetc(int c, FILE *stream);
+  退回c到stream中
+* 向输出流中put字符
+  int fputc(int c, FILE *stream);
+  int putc(int c, FILE *stream);
+  向stream中放一个字符
+  int putchar(int c);
+  等价于putc(c, stdout)
+  
+  int fputs(const char *s, FILE *stream);
+  向stream中放一个字符串
+  int puts(const char *s);
+  等价于fputs(s, stdout)
+* setjmp/longjmp
+  首先定义一个jmp_buf结构体类型的变量，set_jmp如果不是从longjmp函数返回调用会初始化jmp_buf变量且返回值是0，如果从longjmp函数返回调用则返回值非0.
+#+begin_src c
+#include <stdio.h>
+#include <stdlib.h>
+#include <setjmp.h>
+jmp_buf jmpbuffer;
+void error_occured();
+
+typedef int aaa[8];
+int main(int argc, char *argv[])
+{
+    if(setjmp(jmpbuffer) != 0){
+        printf ("%s\n","error occured");
+        exit(0);
+    }
+    printf ("%s\n","this line shows");
+    int i;
+    for(i=0; i<sizeof(aaa)/sizeof(int); i++)
+        aaa[i]=i;
+    for(i=0; i<sizeof(aaa)/sizeof(int); i++)
+        printf("%d ", aaa[i]);
+        
+    error_occured();
+    printf ("%s\n","this line doesn't show");
+    return 0;
+}
+void error_occured(){
+    longjmp(jmpbuffer, 1);
+}
+#+end_src
+* 资源界限
+  参考[[../kernel/process.html#sec-9][Linux内核－进程管理基础]]
+#+begin_html
+<a href="#ModalID1" class="btn" data-toggle="modal">打印资源界限</a>
+<div id="ModalID1" class="modal hide">
+<div class="modal-header">
+<button type="button" class="close" data-dismiss="modal">x</button>
+<h3></h3>
+</div>
+<div class="modal-body">
+#+end_html
+#+begin_src c -n
+#include <stdio.h>
+#include <sys/resource.h>
+#include <sys/time.h>
+#include <stdlib.h>
+#include <setjmp.h>
+
+#define doit(name) pr_lmt(#name, name) /* #字符串创建运算符 */
+#define err_sys(error_msg) {printf("%s",error_msg); return;}
+
+void pr_lmt(char* name, int rsc){
+    struct rlimit rlmt;
+    if(getrlimit(rsc, &rlmt)<0)
+        err_sys(name)
+    printf("%-20s ", name);
+    if(rlmt.rlim_cur == RLIM_INFINITY)
+        printf("%13s","Infinity");
+    else
+        printf("%13d", rlmt.rlim_cur);
+    if(rlmt.rlim_max == RLIM_INFINITY)
+        printf("%13s","Infinity");
+    else
+        printf("%13d", rlmt.rlim_max);
+    putchar((int)'\n');
+}
+int main(int argc, char *argv[])
+{
+    doit(RLIMIT_AS);            /* 最大进程地址空间 address space */
+    doit(RLIMIT_CORE);           /* 最大core文件大小 */
+    doit(RLIMIT_CPU);            /* 最大CPU时间，秒为单位 */
+    doit(RLIMIT_DATA);           /* 最大数据段 */
+    doit(RLIMIT_FSIZE);          /* 进程创建的最大文件大小 */
+    doit(RLIMIT_MEMLOCK);        /* 锁住内存的最大区域 */
+    doit(RLIMIT_MSGQUEUE);       /* 最大消息队列 */
+    doit(RLIMIT_NICE);           /* 最大nice值 */
+    doit(RLIMIT_NOFILE);         /* 最多文件数 */
+    doit(RLIMIT_NPROC);          /* 最多进程数 */
+    doit(RLIMIT_RTPRIO);          /* 实时优先级 */
+    doit(RLIMIT_STACK);          /* 进程最大栈大小 */
+    return 0;
+}
+#+end_src
+#+begin_html
+</div>
+<div class="modal-footer">
+<a href="#" class="btn" data-dismiss="modal">Close</a>
+</div>
+</div>
+#+end_html
+  命令行下可以用ulimit -a命令查看资源限制
+* fork
+  链接：[[fork.html][一道fork面试题]]
+#+begin_src c
+#include <stdio.h>
+#include <unistd.h>
+
+int glb = 1;
+int main(int argc, char *argv[])
+{
+    pid_t pid;
+    printf("pid=%d, glb=%d\n", getpid(), glb);
+    if((pid=fork())==0){
+        glb++;
+    }else{
+        sleep(2);
+    }
+    printf("pid=%d, glb=%d\n", getpid(), glb);
+    return 0;
+}
+#+end_src
+  结果：
+#+begin_example
+pid=8208, glb=1
+pid=8209, glb=2
+pid=8208, glb=1
+#+end_example
+  先是父进程执行fork前的printf，fork后由于了进程拷贝了父进程的进程空间（包括程序计数器，即fork之前的代码子进程不会执行，只会执行fork后面的代码），之后由于父进程sleep2秒，假设系统不忙的话，2s之内子进程会执行（如果系统忙的话，2s之内可能子进程仍没有执行，之后父子哪个先是不确定的）。
+  但如果命令行下 a.out > text.txt，则text.txt中的结果是：
+#+begin_example
+pid=8212, glb=1
+pid=8213, glb=2
+pid=8212, glb=1
+pid=8212, glb=1
+#+end_example
+  pid=8212, glb=1出现两次，原因是重定向的时候先把欲定向的内容存放在缓冲中，子进程被fork的时候拷贝了父进程的缓冲区内容，最后冲刷的时候出现两个。
+* wait/waitpid
+  pid_t wait(int *status);
+  如果子进程仍活着，则wait将悬挂父进程，直到了进程退出或者调用exec，子进程状态保存在status指向int中。如果子进程已经终止则释放其资源并返回（如果没有wait则子进程将变成zombie进程）。
+  pid_t waitpid(pid_t pid, int *status, int options);
+  与wait不同在于可以指定等待退出进程的id，可以通过options选项选择是否悬挂父进程。
+  若pid=-1表任意子进程终止则退出悬挂，0表示任意一与父进程同进程组的子进程终止则退出悬挂；<-1表示任一组id＝pid绝对值的子进程终止则退出悬挂；>0则表示指定进程号。
+  options为1表父进程并不悬挂，0表悬挂。
+  故wait等价于waitpid(-1,status,0)
+#+begin_html
+<a href="#MOdal2" class="btn" data-toggle="modal">代码：通过宏来查看子进程退出状态</a>
+<div id="MOdal2" class="modal hide">
+<div class="modal-header">
+<button type="button" class="close" data-dismiss="modal">x</button>
+<h3></h3>
+</div>
+<div class="modal-body">
+#+end_html
+#+begin_src c
+#include <stdio.h>
+#include <sys/wait.h>
+#include <unistd.h>
+void pr_exit(int status){
+    if(WIFEXITED(status))       /* 正常exit，exit code可以用 WEXITSTATUS(status)宏得到 */
+        printf("normal termination, exit code %d\n", WEXITSTATUS(status));
+    if(WIFSIGNALED(status))     /* 信号引发非正常终止，exit code可以用 WTERMSIG(status)得到 */
+        printf("abnormal termination, exit code %d\n", WTERMSIG(status));
+    if(WCOREDUMP(status))       /* 是否产生core dump */
+        printf("core dump produced");
+    if(WIFSTOPPED(status))      /* 是否为TASK_STOPPED状态 */
+        printf("stopped by a signal, signal code %d\n", WSTOPSIG(status));
+    if(WIFCONTINUED(status))    /* 是否通过信号SIGCONT激活进程 */
+        printf("resumed by signal SIGCONT\n");        
+}
+
+int main(int argc, char *argv[])
+{
+    pid_t pid;
+    int status;
+
+    if((pid=fork())==0)
+        exit(7);
+    if(wait(&status) == pid)
+        pr_exit(status);
+
+    if((pid=fork())==0)
+        abort();                /* 异常退赔，abort对应6 */
+    if(wait(&status) == pid)
+        pr_exit(status);
+    if((pid=fork())==0)
+        status /= 0;            /* 除0，对应代码8 */
+    if(wait(&status) == pid)
+        pr_exit(status);
+    return 0;
+}
+#+end_src
+  运行结果：
+#+begin_example
+normal termination, exit code 7
+abnormal termination, exit code 6
+abnormal termination, exit code 8
+#+end_example  
+#+begin_html
+</div>
+<div class="modal-footer">
+<a href="#" class="btn" data-dismiss="modal">Close</a>
+</div>
+</div>
+#+end_html
+* waitid
+  int waitid(idtype_t idtype, id_t id, siginfo_t *infop, int options);
+  wait与waitpid功能差不多，只是不像waitpid用-1 0 >0 <-1来表示是任一子进程还是组id还是进程id，而是通过idtype来指明：
+  P_PID表是进程ID，此时id为进程id号
+  P_PGID表进程组，此时id表进程组的id
+  P_ALL表明任一进程，此时id无效
+* wait3/wait4
+  pid_t wait3(int *status, int options, struct rusage *rusage);
+  pid_t wait4(pid_t pid, int *status, int options, struct rusage *rusage);
+
+  wait3 <=> waitpid(-1, status, options) + 资源使用情况
+  wait4 <=> waitpid(pid, status, options) + 资源使用情况
+
+  struct rusage定义在 /usr/include/bits/resource.h
+#+begin_html
+<a href="#rusage" class="btn" data-toggle="modal">结构体rusage源码</a>
+<div id="rusage" class="modal hide">
+<div class="modal-header">
+<button type="button" class="close" data-dismiss="modal">x</button>
+<h3></h3>
+</div>
+<div class="modal-body">
+#+end_html
+#+begin_src c
+struct rusage
+  {
+    /* Total amount of user time used.  */
+    struct timeval ru_utime;
+    /* Total amount of system time used.  */
+    struct timeval ru_stime;
+    /* Maximum resident set size (in kilobytes).  */
+    long int ru_maxrss;
+    /* Amount of sharing of text segment memory
+       with other processes (kilobyte-seconds).  */
+    long int ru_ixrss;
+    /* Amount of data segment memory used (kilobyte-seconds).  */
+    long int ru_idrss;
+    /* Amount of stack memory used (kilobyte-seconds).  */
+    long int ru_isrss;
+    /* Number of soft page faults (i.e. those serviced by reclaiming
+       a page from the list of pages awaiting reallocation.  */
+    long int ru_minflt;
+    /* Number of hard page faults (i.e. those that required I/O).  */
+    long int ru_majflt;
+    /* Number of times a process was swapped out of physical memory.  */
+    long int ru_nswap;
+    /* Number of input operations via the file system.  Note: This
+       and `ru_oublock' do not include operations with the cache.  */
+    long int ru_inblock;
+    /* Number of output operations via the file system.  */
+    long int ru_oublock;
+    /* Number of IPC messages sent.  */
+    long int ru_msgsnd;
+    /* Number of IPC messages received.  */
+    long int ru_msgrcv;
+    /* Number of signals delivered.  */
+    long int ru_nsignals;
+    /* Number of voluntary context switches, i.e. because the process
+       gave up the process before it had to (usually to wait for some
+       resource to be available).  */
+    long int ru_nvcsw;
+    /* Number of involuntary context switches, i.e. a higher priority process
+       became runnable or the current process used up its time slice.  */
+    long int ru_nivcsw;
+  }
+#+end_src
+#+begin_html
+</div>
+<div class="modal-footer">
+<a href="#" class="btn" data-dismiss="modal">Close</a>
+</div>
+</div>
+#+end_html
+

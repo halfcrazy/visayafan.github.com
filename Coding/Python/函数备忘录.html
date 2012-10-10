@@ -1,0 +1,515 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+               "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<title>函数备忘录</title>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
+<meta name="title" content="函数备忘录"/>
+<meta name="generator" content="Org-mode"/>
+<meta name="generated" content="2012-10-10 17:12:43 CST"/>
+<meta name="author" content="visaya fan"/>
+<meta name="description" content=""/>
+<meta name="keywords" content=""/>
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  html { font-family: Times, serif; font-size: 12pt; }
+  .title  { text-align: center; }
+  .todo   { color: red; }
+  .done   { color: green; }
+  .tag    { background-color: #add8e6; font-weight:normal }
+  .target { }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .right  {margin-left:auto; margin-right:0px;  text-align:right;}
+  .left   {margin-left:0px;  margin-right:auto; text-align:left;}
+  .center {margin-left:auto; margin-right:auto; text-align:center;}
+  p.verse { margin-left: 3% }
+  pre {
+	border: 1pt solid #AEBDCC;
+	background-color: #F3F5F7;
+	padding: 5pt;
+	font-family: courier, monospace;
+        font-size: 90%;
+        overflow:auto;
+  }
+  table { border-collapse: collapse; }
+  td, th { vertical-align: top;  }
+  th.right  { text-align:center;  }
+  th.left   { text-align:center;   }
+  th.center { text-align:center; }
+  td.right  { text-align:right;  }
+  td.left   { text-align:left;   }
+  td.center { text-align:center; }
+  dt { font-weight: bold; }
+  div.figure { padding: 0.5em; }
+  div.figure p { text-align: center; }
+  div.inlinetask {
+    padding:10px;
+    border:2px solid gray;
+    margin:10px;
+    background: #ffffcc;
+  }
+  textarea { overflow-x: auto; }
+  .linenr { font-size:smaller }
+  .code-highlighted {background-color:#ffff00;}
+  .org-info-js_info-navigation { border-style:none; }
+  #org-info-js_console-label { font-size:10px; font-weight:bold;
+                               white-space:nowrap; }
+  .org-info-js_search-highlight {background-color:#ffff00; color:#000000;
+                                 font-weight:bold; }
+  /*]]>*/-->
+</style>
+<script type="text/javascript">
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+
+</head>
+<body>
+<div id="org-div-home-and-up">
+ <a accesskey="H" href="../../index.html#python"> HOME </a>
+</div>
+
+
+<div id="content">
+<h1 class="title">函数备忘录</h1>
+
+
+<div id="table-of-contents">
+<h2>TOC</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#sec-1">1 3.X中print()</a></li>
+<li><a href="#sec-2">2 lists:</a>
+<ul>
+<li><a href="#sec-2-1">2.1 list()</a></li>
+<li><a href="#sec-2-2">2.2 reverse()</a></li>
+<li><a href="#sec-2-3">2.3 sort() sorted()</a></li>
+<li><a href="#sec-2-4">2.4 insert()</a></li>
+<li><a href="#sec-2-5">2.5 pop([index])</a></li>
+<li><a href="#sec-2-6">2.6 remove(value)</a></li>
+<li><a href="#sec-2-7">2.7 count(value)</a></li>
+</ul>
+</li>
+<li><a href="#sec-3">3 integers:</a>
+<ul>
+<li><a href="#sec-3-1">3.1 ord()</a></li>
+</ul>
+</li>
+<li><a href="#sec-4">4 string</a>
+<ul>
+<li><a href="#sec-4-1">4.1 count(sub, [start [, end]])</a></li>
+<li><a href="#sec-4-2">4.2 find(sub, [start [, end]])</a></li>
+<li><a href="#sec-4-3">4.3 isalpha isdigit isalnum islower isupper istitle isspace</a></li>
+<li><a href="#sec-4-4">4.4 lower upper title swapcase</a></li>
+<li><a href="#sec-4-5">4.5 ljust rjust center</a></li>
+<li><a href="#sec-4-6">4.6 split rsplit lsplit</a></li>
+<li><a href="#sec-4-7">4.7 strip lstrip rstrip</a></li>
+<li><a href="#sec-4-8">4.8 replace(old, new[, count]) -&gt;string</a></li>
+<li><a href="#sec-4-9">4.9 startswith</a></li>
+</ul>
+</li>
+<li><a href="#sec-5">5 map</a>
+<ul>
+<li><a href="#sec-5-1">5.1 keys values</a></li>
+<li><a href="#sec-5-2">5.2 get(k[, d])</a></li>
+</ul>
+</li>
+<li><a href="#sec-6">6 set</a>
+<ul>
+<li><a href="#sec-6-1">6.1 set(sequence)</a></li>
+<li><a href="#sec-6-2">6.2 |</a></li>
+<li><a href="#sec-6-3">6.3 &amp;</a></li>
+<li><a href="#sec-6-4">6.4 -</a></li>
+<li><a href="#sec-6-5">6.5 symmetric<sub>difference</sub></a></li>
+<li><a href="#sec-6-6">6.6 add</a></li>
+<li><a href="#sec-6-7">6.7 clear</a></li>
+<li><a href="#sec-6-8">6.8 pop remove</a></li>
+<li><a href="#sec-6-9">6.9 update union<sub>update</sub> intersection<sub>update</sub> difference<sub>update</sub> symmetric<sub>difference</sub><sub>update</sub></a></li>
+<li><a href="#sec-6-10">6.10 issubset issuperset isdisjoint</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-1" class="outline-2">
+<h2 id="sec-1"><span class="section-number-2">1</span> 3.X中print()</h2>
+<div class="outline-text-2" id="text-1">
+
+
+
+
+<pre class="example">在python3.2:
+print(value, ..., sep=' ', end='\n', file=sys.stdout)
+sep表示输出之间的符号，end表示整个输出的结束符。
+
+&gt;&gt;&gt; print('hello', 'world')
+hello world
+&gt;&gt;&gt; print('hello', 'world', sep='\n')
+hello  #Because sep is \n, this is a new line.
+world
+&gt;&gt;&gt; print('hello', 'world', end=' ')
+hello world &gt;&gt;&gt;  #Because end is ' ', so this is no newline.
+</pre>
+
+
+</div>
+
+</div>
+
+<div id="outline-container-2" class="outline-2">
+<h2 id="sec-2"><span class="section-number-2">2</span> lists:</h2>
+<div class="outline-text-2" id="text-2">
+
+
+</div>
+
+<div id="outline-container-2-1" class="outline-3">
+<h3 id="sec-2-1"><span class="section-number-3">2.1</span> list()</h3>
+<div class="outline-text-3" id="text-2-1">
+
+</div>
+
+</div>
+
+<div id="outline-container-2-2" class="outline-3">
+<h3 id="sec-2-2"><span class="section-number-3">2.2</span> reverse()</h3>
+<div class="outline-text-3" id="text-2-2">
+
+</div>
+
+</div>
+
+<div id="outline-container-2-3" class="outline-3">
+<h3 id="sec-2-3"><span class="section-number-3">2.3</span> sort() sorted()</h3>
+<div class="outline-text-3" id="text-2-3">
+
+
+
+
+<pre class="example">sorted(iterable, cmp=None, key=None, reverse=False) --&gt; new sorted list
+L.sort(cmp=None, key=None, reverse=False) -- stable sort *IN PLACE*;
+
+区别在：sorted是built-in 函数， sort是list的成员函数。前者作用于列表但并不对列表造成影响，后才修改了列表。
+
+iterable 可迭代的类药
+cmp 比较函数
+key 用列表元素的某个属性和函数进行作为关键字
+reverse 排序规则
+一般cmp，key 可以用lambda表达式，效率key&gt;cmp
+
+&gt;&gt;&gt;L = [('b',2),('a',1),('c',3),('d',4)]
+&gt;&gt;&gt;print sorted(L, cmp=lambda x,y:cmp(x[1],y[1]))
+[('a', 1), ('b', 2), ('c', 3), ('d', 4)]
+
+&gt;&gt;&gt;L = [('b',2),('a',1),('c',3),('d',4)]
+&gt;&gt;&gt;print sorted(L, key=lambda x:x[1]))
+[('a', 1), ('b', 2), ('c', 3), ('d', 4)]
+
+&gt;&gt;&gt; print sorted([5, 2, 3, 1, 4], reverse=True)
+[5, 4, 3, 2, 1]
+&gt;&gt;&gt; print sorted([5, 2, 3, 1, 4], reverse=False)
+[1, 2, 3, 4, 5]
+</pre>
+
+
+</div>
+
+</div>
+
+<div id="outline-container-2-4" class="outline-3">
+<h3 id="sec-2-4"><span class="section-number-3">2.4</span> insert()</h3>
+<div class="outline-text-3" id="text-2-4">
+
+
+
+
+<pre class="example">L.insert(index, object)   # Insert object before index
+</pre>
+
+</div>
+
+</div>
+
+<div id="outline-container-2-5" class="outline-3">
+<h3 id="sec-2-5"><span class="section-number-3">2.5</span> pop([index])</h3>
+<div class="outline-text-3" id="text-2-5">
+
+<p>L.pop([index]) # Remove and return item at index (defaut last)
+</p></div>
+
+</div>
+
+<div id="outline-container-2-6" class="outline-3">
+<h3 id="sec-2-6"><span class="section-number-3">2.6</span> remove(value)</h3>
+<div class="outline-text-3" id="text-2-6">
+
+
+
+
+<pre class="example">L.remove(value)   # Remove fist occurence of value.
+</pre>
+
+
+</div>
+
+</div>
+
+<div id="outline-container-2-7" class="outline-3">
+<h3 id="sec-2-7"><span class="section-number-3">2.7</span> count(value)</h3>
+<div class="outline-text-3" id="text-2-7">
+
+<p>L.count(value) # Return number of occurrences of value.
+</p>
+</div>
+</div>
+
+</div>
+
+<div id="outline-container-3" class="outline-2">
+<h2 id="sec-3"><span class="section-number-2">3</span> integers:</h2>
+<div class="outline-text-2" id="text-3">
+
+
+</div>
+
+<div id="outline-container-3-1" class="outline-3">
+<h3 id="sec-3-1"><span class="section-number-3">3.1</span> ord()</h3>
+<div class="outline-text-3" id="text-3-1">
+
+
+
+
+<pre class="example">ord('字符') #返回ASCII码
+</pre>
+
+
+</div>
+</div>
+
+</div>
+
+<div id="outline-container-4" class="outline-2">
+<h2 id="sec-4"><span class="section-number-2">4</span> string</h2>
+<div class="outline-text-2" id="text-4">
+
+
+</div>
+
+<div id="outline-container-4-1" class="outline-3">
+<h3 id="sec-4-1"><span class="section-number-3">4.1</span> count(sub, [start [, end]])</h3>
+<div class="outline-text-3" id="text-4-1">
+
+</div>
+
+</div>
+
+<div id="outline-container-4-2" class="outline-3">
+<h3 id="sec-4-2"><span class="section-number-3">4.2</span> find(sub, [start [, end]])</h3>
+<div class="outline-text-3" id="text-4-2">
+
+</div>
+
+</div>
+
+<div id="outline-container-4-3" class="outline-3">
+<h3 id="sec-4-3"><span class="section-number-3">4.3</span> isalpha isdigit isalnum islower isupper istitle isspace</h3>
+<div class="outline-text-3" id="text-4-3">
+
+</div>
+
+</div>
+
+<div id="outline-container-4-4" class="outline-3">
+<h3 id="sec-4-4"><span class="section-number-3">4.4</span> lower upper title swapcase</h3>
+<div class="outline-text-3" id="text-4-4">
+
+</div>
+
+</div>
+
+<div id="outline-container-4-5" class="outline-3">
+<h3 id="sec-4-5"><span class="section-number-3">4.5</span> ljust rjust center</h3>
+<div class="outline-text-3" id="text-4-5">
+
+</div>
+
+</div>
+
+<div id="outline-container-4-6" class="outline-3">
+<h3 id="sec-4-6"><span class="section-number-3">4.6</span> split rsplit lsplit</h3>
+<div class="outline-text-3" id="text-4-6">
+
+</div>
+
+</div>
+
+<div id="outline-container-4-7" class="outline-3">
+<h3 id="sec-4-7"><span class="section-number-3">4.7</span> strip lstrip rstrip</h3>
+<div class="outline-text-3" id="text-4-7">
+
+</div>
+
+</div>
+
+<div id="outline-container-4-8" class="outline-3">
+<h3 id="sec-4-8"><span class="section-number-3">4.8</span> replace(old, new[, count]) -&gt;string</h3>
+<div class="outline-text-3" id="text-4-8">
+
+</div>
+
+</div>
+
+<div id="outline-container-4-9" class="outline-3">
+<h3 id="sec-4-9"><span class="section-number-3">4.9</span> startswith</h3>
+<div class="outline-text-3" id="text-4-9">
+
+</div>
+</div>
+
+</div>
+
+<div id="outline-container-5" class="outline-2">
+<h2 id="sec-5"><span class="section-number-2">5</span> map</h2>
+<div class="outline-text-2" id="text-5">
+
+
+</div>
+
+<div id="outline-container-5-1" class="outline-3">
+<h3 id="sec-5-1"><span class="section-number-3">5.1</span> keys values</h3>
+<div class="outline-text-3" id="text-5-1">
+
+</div>
+
+</div>
+
+<div id="outline-container-5-2" class="outline-3">
+<h3 id="sec-5-2"><span class="section-number-3">5.2</span> get(k[, d])</h3>
+<div class="outline-text-3" id="text-5-2">
+
+<p>   Dict.get(k[, d])等价于 Dict[k] if k in Dict else d
+   避免获取不存在的字典键而产生错误
+</p></div>
+</div>
+
+</div>
+
+<div id="outline-container-6" class="outline-2">
+<h2 id="sec-6"><span class="section-number-2">6</span> set</h2>
+<div class="outline-text-2" id="text-6">
+
+
+</div>
+
+<div id="outline-container-6-1" class="outline-3">
+<h3 id="sec-6-1"><span class="section-number-3">6.1</span> set(sequence)</h3>
+<div class="outline-text-3" id="text-6-1">
+
+<p>   X=set('spam') 等价于 X = {'s', 'p', 'a', 'm'}
+</p></div>
+
+</div>
+
+<div id="outline-container-6-2" class="outline-3">
+<h3 id="sec-6-2"><span class="section-number-3">6.2</span> |</h3>
+<div class="outline-text-3" id="text-6-2">
+
+<p>   X|Y 等价于 X.union(Y)
+</p></div>
+
+</div>
+
+<div id="outline-container-6-3" class="outline-3">
+<h3 id="sec-6-3"><span class="section-number-3">6.3</span> &amp;</h3>
+<div class="outline-text-3" id="text-6-3">
+
+<p>   intersection
+</p></div>
+
+</div>
+
+<div id="outline-container-6-4" class="outline-3">
+<h3 id="sec-6-4"><span class="section-number-3">6.4</span> -</h3>
+<div class="outline-text-3" id="text-6-4">
+
+<p>   difference
+</p></div>
+
+</div>
+
+<div id="outline-container-6-5" class="outline-3">
+<h3 id="sec-6-5"><span class="section-number-3">6.5</span> symmetric<sub>difference</sub></h3>
+<div class="outline-text-3" id="text-6-5">
+
+<p>   对称差
+</p></div>
+
+</div>
+
+<div id="outline-container-6-6" class="outline-3">
+<h3 id="sec-6-6"><span class="section-number-3">6.6</span> add</h3>
+<div class="outline-text-3" id="text-6-6">
+
+<p>   添加一个元素（保证集合的不重复性）
+</p></div>
+
+</div>
+
+<div id="outline-container-6-7" class="outline-3">
+<h3 id="sec-6-7"><span class="section-number-3">6.7</span> clear</h3>
+<div class="outline-text-3" id="text-6-7">
+
+</div>
+
+</div>
+
+<div id="outline-container-6-8" class="outline-3">
+<h3 id="sec-6-8"><span class="section-number-3">6.8</span> pop remove</h3>
+<div class="outline-text-3" id="text-6-8">
+
+</div>
+
+</div>
+
+<div id="outline-container-6-9" class="outline-3">
+<h3 id="sec-6-9"><span class="section-number-3">6.9</span> update union<sub>update</sub> intersection<sub>update</sub> difference<sub>update</sub> symmetric<sub>difference</sub><sub>update</sub></h3>
+<div class="outline-text-3" id="text-6-9">
+
+<p>   更新、用取并结果更新原来集合……
+</p></div>
+
+</div>
+
+<div id="outline-container-6-10" class="outline-3">
+<h3 id="sec-6-10"><span class="section-number-3">6.10</span> issubset issuperset isdisjoint</h3>
+<div class="outline-text-3" id="text-6-10">
+
+<p>   子集、父集、不相交集
+</p></div>
+</div>
+</div>
+</div>
+
+</body>
+</html>

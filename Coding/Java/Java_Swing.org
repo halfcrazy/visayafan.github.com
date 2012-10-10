@@ -1,0 +1,275 @@
+#+OPTIONS: ^:{} _:{} num:t toc:t \n:t
+#+include "../../template.org"
+
+* JOptionPanel
+  可以方便地显示对话框。
+  showInputDialog/ showMessageDialog
+* JButton
+** JToggleButton
+   按下后不起来，再按才会起来
+** JCheckBox
+   复选框
+** JRadioButton
+   单选按钮
+** BasicArrowButton
+   带箭头的按钮，方向由BasicArrowButton.NORTH SOUTH EAST WEST指定
+** setPressedIcon(Icon pressIcon)
+   当按钮按下时显示的图片
+
+** setDisabledIcon(Icon disableIcon)
+   当JButton不可用时显示的图片
+
+** setToolTipText(String text)
+   显示提示信息
+   
+* JTextField
+** addActionListener(ActionEvent t)
+   文本域的事件监听器，当在文本区域内输入回车时响应。
+** setDocument(Document doc)
+   关联当前文本区一document
+
+* Document
+  在javax.swing.text中
+  The Document is a container for text that serves as the model for swing text components. The goal for this interface is to scale from very simple needs (a plain text textfield) to complex needs (an HTML or XML document, for example).
+  document充当swing文本组件的包含文本的容器，
+** addDocumentListener(DocumentListener listener)
+   添加事件监听器
+
+*** changeUpdate(DocumentEvent e)
+    Gives notification that an attribute or set of attributes changed.
+*** insertUpdate(DocumentEvent e)
+    Gives notification that there was an insert into the document.
+*** removeUpdate(DocumentEvent e)
+    Gives notification that a portion of the document has been removed.
+
+** insertString(int offset, String str, AttributeSet a)
+   插入字符串，当DocumentEvent的insertUpdate(ActionEvent e)事件发生的时候会调用此函数。
+
+* JList
+  与ComboBox不同的是JList把所有的可选项都可见，而ComboBox把所有Item隐藏等待用户下拉后才看见。
+  原型是JList<E>，是个容器，
+* 构造函数 
+#+BEGIN_SRC java
+JList()
+Constructs a JList with an empty, read-only, model.
+JList(E[] listData)
+Constructs a JList that displays the elements in the specified array.
+JList(ListModel<E> dataModel)
+Constructs a JList that displays elements from the specified, non-null, model.
+JList(Vector<? extends E> listData)
+Constructs a JList that displays the elements in the specified Vector.
+#+END_SRC  
+* ListMode
+  This interface defines the methods components like JList use to get the value of each cell in a list and the length of the list. Logically the model is a vector, indices vary from 0 to ListDataModel.getSize() - 1. 
+** DefaultListMode
+*** addElement(E element)
+    添加元素
+*** add(int index, E element)
+    在指定位置插入指定元素。
+* JList 几个函数
+** getSelectedValues()
+   获取所选元素的值
+** getSelectedIndices()
+   获取所选元素的索引
+* addListSelectionListener(ListSelectionListener)
+** ListSelectionListener
+   有Item选中时发生事件
+** valueChanged(ListSelectionEvent e)
+* 程序示例
+#+BEGIN_SRC java
+package xjtu.vf.swing;
+import java.awt.Color;
+import java.awt.FlowLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import javax.swing.BorderFactory;
+import javax.swing.DefaultListModel;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JList;
+import javax.swing.JTextArea;
+import javax.swing.border.Border;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
+public class List extends JFrame {
+	private String[] flavors = { "A", "B", "C", "D", "E", "F" };
+	private DefaultListModel lItems = new DefaultListModel();
+	private JList lst = new JList(lItems);
+	private JTextArea t = new JTextArea(flavors.length, 20);
+	private JButton b = new JButton("Add Item");
+	private ActionListener bl = new ActionListener() {
+		public void actionPerformed(ActionEvent e) {
+			if (count < flavors.length)
+				lItems.add(0, flavors[count++]);
+			else
+				b.setEnabled(false);
+		}
+	};
+	private ListSelectionListener lsl = new ListSelectionListener() {
+		@SuppressWarnings("deprecation")
+		public void valueChanged(ListSelectionEvent e) {
+			if (e.getValueIsAdjusting())
+				return;
+			t.setText("");
+			for (Object item : lst.getSelectedValues())
+				t.append(item + "\n");
+		}
+	};
+	private int count = 0;
+	public List() {
+		t.setEditable(true);
+		setLayout(new FlowLayout());
+		Border brd = BorderFactory.createMatteBorder(1, 1, 2, 2, Color.black);
+		lst.setBorder(brd);
+		t.setBorder(brd);
+		for (int i = 0; i < 4; i++)
+			lItems.addElement(flavors[count++]);
+		add(t);
+		add(lst);
+		add(b);
+		b.addActionListener(bl);
+		lst.addListSelectionListener(lsl);
+	}
+	public static void main(String[] args) {
+		SwingConsole.run(new List(), 250, 375);
+	}
+}
+#+END_SRC  
+   
+* 例子代码与结果
+#+BEGIN_SRC java
+package xjtu.vf.swing;
+
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.GridLayout;
+
+import javax.swing.*;
+import javax.swing.border.*;
+
+public class Borders extends JFrame {
+	static JPanel showBorder(Border b) {
+		JPanel jp = new JPanel();
+		jp.setLayout(new BorderLayout());
+		String mm = b.getClass().toString();
+		mm = mm.substring(mm.lastIndexOf('.') + 1);
+		jp.add(new JLabel(mm, JLabel.CENTER), BorderLayout.CENTER);
+		jp.setBorder(b);
+		return jp;
+	}
+
+	public Borders() {
+		setLayout(new GridLayout(2, 4));
+		add(showBorder(new TitledBorder("Title")));
+		add(showBorder(new EtchedBorder()));
+		add(showBorder(new LineBorder(Color.blue)));
+		add(showBorder(new MatteBorder(5, 5, 30, 30, Color.GREEN)));
+		add(showBorder(new BevelBorder(BevelBorder.RAISED)));
+		add(showBorder(new SoftBevelBorder(BevelBorder.LOWERED)));
+		add(showBorder(new CompoundBorder(new EtchedBorder(), new LineBorder(
+				Color.RED))));
+	}
+
+	public static void main(String[] args) {
+		SwingConsole.run(new Borders(), 500, 300);
+	}
+}
+#+END_SRC  
+* javax.swing.border
+  AbstractBorder所有边框类的父类
+
+* BorderFactory
+  使用工厂设计模式快速设计边框，隐藏创建细节。
+* LineBorder
+  LineBorder是围绕组件周围用户义定宽度的单色行边框。他可以具有方角或是圆角。
+  *LineBorder有三个构造函数，两个工厂方法以及两个BorderFactory工厂方法*
+#+BEGIN_SRC java
+public LineBorder(Color color)
+Border lineBorder = new LineBorder (Color.RED);
+ 
+public LineBorder(Color color, int thickness)
+Border lineBorder = new LineBorder (Color.RED, 5);
+ 
+public LineBorder (Color color, int thickness, boolean roundedCorners)
+Border lineBorder = new LineBorder (Color.RED, 5, true);
+ 
+public static Border createBlackLineBorder()
+Border blackLine = LineBorder.createBlackLineBorder();
+ 
+public static Border createGrayLineBorder()
+Border grayLine = LineBorder.createGrayLineBorder();
+ 
+public static Border createLineBorder(Color color)
+Border lineBorder = BorderFactory.createLineBorder(Color.RED);
+ 
+public static Border createLineBorder(Color color, int thickness)
+Border lineBorder = BorderFactory.createLineBorder(Color.RED, 5);
+#+END_SRC  
+* MatteBorder
+  如果我们希望修改不同边的粗细，我们需要使用MatteBorder，
+#+BEGIN_SRC java
+MatteBorder(Icon tileIcon)      
+Creates a matte border with the specified tile icon.
+MatteBorder(Insets borderInsets, Color matteColor)
+Creates a matte border with the specified insets and color.
+MatteBorder(Insets borderInsets, Icon tileIcon)
+Creates a matte border with the specified insets and tile icon.
+MatteBorder(int top, int left, int bottom, int right, Color matteColor)
+Creates a matte border with the specified insets and color.
+MatteBorder(int top, int left, int bottom, int right, Icon tileIcon)
+Creates a matte border with the specified insets and tile icon.
+#+END_SRC    
+* TitleBorder
+
+* BevelBorder
+  BevelBorder以三维外观绘制边框，其可以表现为升起或是降低。当边框升起时，在边框的底部与右边会出现阴影效果。当降低时，阴影的位置会相反。
+  *BevelBorder有三个构造函数以及一个工厂方法，同时还有BorderFactory创建BevelBorder对象的五个工厂方法：*
+#+BEGIN_SRC java
+public BevelBorder(int bevelType)
+Border bevelBorder = new BevelBorder(BevelBorder.RAISED);
+ 
+public BevelBorder(int bevelType, Color highlight, Color shadow)
+Border bevelBorder = new BevelBorder(BevelBorder.RAISED, Color.PINK, Color.RED);
+
+public BevelBorder(int bevelType, Color highlightOuter, Color highlightInner,
+  Color shadowOuter, Color shadowInner)
+Border bevelBorder = new BevelBorder(BevelBorder.RAISED, Color.PINK,
+  Color.PINK.brighter(), Color.RED, Color.RED.darker());
+
+public static Border createBevelBorder(int bevelType)
+Border bevelBorder = BorderFactory.createBevelBorder(BevelBorder.RAISED);
+ 
+public static Border createLoweredBevelBorder()
+Border bevelBorder = BorderFactory.createLoweredBevelBorder();
+ 
+public static Border createRaisedBevelBorder()
+Border bevelBorder = BorderFactory.createRaisedBevelBorder();
+ 
+public static Border createBevelBorder(int bevelType, Color highlight, Color shadow)
+Border bevelBorder = BorderFactory.createBevelBorder(BevelBorder.RAISED,
+  Color.PINK, Color.RED);
+ 
+public static Border createBevelBorder(int bevelType, Color highlightOuter,
+  Color highlightInner, Color shadowOuter, Color shadowInner)
+Border bevelBorder = BorderFactory.createBevelBorder(BevelBorder.RAISED,
+  Color.PINK, Color.PINK.brighter(), Color.RED, Color.RED.darker());
+#+END_SRC    
+
+* SoftBevelBorder
+  oftBevelBorder是BevelBorder的近亲。这个组件会包围四角，所以他们的边并不尖利。
+  而他使用下边与右边的相应外边颜色只绘制一条线。
+  *SoftBevelBorder有三个构造函数：*
+#+BEGIN_SRC java
+public SoftBevelBorder(int bevelType)
+Border softBevelBorder = new SoftBevelBorder(SoftBevelBorder.RAISED);
+
+public SoftBevelBorder(int bevelType, Color highlight, Color shadow)
+Border softBevelBorder = new SoftBevelBorder(SoftBevelBorder.RAISED, Color.RED,
+  Color.PINK);
+
+SoftBevelBorder(int bevelType, Color highlightOuterColor, Color highlightInnerColor, Color shadowOuterColor, Color shadowInnerColor)
+#+END_SRC  
+* EtchedBorder
+  建立一个四周有凹痕的边界，也可以指定突边与阴影的颜色.
+* CompoundBorder
+  建立一个复合边界，并可以指定它的内外边界

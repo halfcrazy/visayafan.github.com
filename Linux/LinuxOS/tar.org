@@ -1,0 +1,107 @@
+#+OPTIONS: ^:{} _:{} num:t toc:t \n:t
+#+include "../../template.org"
+#+title: tar, gzip, bzip2, zip, unzip 压缩解压
+* tar
+  tar只是对多个文件目录打包并没有压缩
+** options
+*** -f
+#+BEGIN_EXAMPLE
+   --file = archive-name
+   -f archive-name
+   this option determines the name of the archive file that tar will work on.
+   指定要操作的tar文件
+#+END_EXAMPLE
+*** -v
+#+BEGIN_EXAMPLE
+   -verbose
+   -v
+   shows details about the results of running tar. This can be especially useful
+when the results might not be obvious.
+   显示tar运行的过程。为用户展现工作过程避免用户错误终止该程序。
+#+END_EXAMPLE
+*** -c
+#+BEGIN_EXAMPLE
+   -create
+   -c
+   create a new archive
+#+END_EXAMPLE
+*** -t
+#+BEGIN_EXAMPLE
+   --list
+   -t
+   显示archive file中的文件
+   tar -tf vf.tar
+   tar -tvf vf.tar 显示详细信息（ls -l)
+
+#+END_EXAMPLE
+*** -x
+#+BEGIN_EXAMPLE
+   --extract
+   -x
+   uncompress 解压缩。
+   tar -xvf vf.tar
+
+#+END_EXAMPLE
+*** -r
+#+BEGIN_EXAMPLE
+   --append
+   -r
+   向archive file中添加文件
+   tar -rf vf.tar exp.cpp       %将exp.cpp添加到vf.tar中
+#+END_EXAMPLE
+*** -A
+#+BEGIN_EXAMPLE
+   --concatenate
+   -A
+   将一个tar文件内容复制到另一个压缩文件中去。
+   tar -Af vf.tar a.tar         %将a.tar中内容拷贝到vf.tar中
+
+#+END_EXAMPLE
+** 解压指定文件
+#+BEGIN_EXAMPLE
+  tar -xvf vf.tar               %将vf.tar解压到当前目录
+  tar -xvf vf.tar vf            %其中vf是vf.tar中的一个文件夹
+  tar -xvf vf.tar vf.cpp        %其中vf.cpp是vf.tar中的一个文件
+  tar -xvf vf.tar vf/vf/Debug   %只解压vf/vf/Debug
+#+END_EXAMPLE  
+* gzip, bzip2
+  gzip对文本文件进行压缩，后缀为gz
+  bzip2比gzip有更高的压缩比率，后缀为bz2
+** gzip gunzip
+#+BEGIN_EXAMPLE
+   gzip vf.tar          %此时压缩vf.tar会变成vf.tar.gz
+   gunzip vf.tar.gz     %此时解压vf.tar.gz为vf.tar 等价于gzip -d vf.tar.gz
+#+END_EXAMPLE
+** bzip2 bunzip2
+#+BEGIN_EXAMPLE
+   bzip2 vf.tar         %此时压缩vf.tar生成vf.tar.bz2
+   bunzip2 vf.tar.bz2   %此时解压生成vf.tar 等价于bzip2 -d vf.tar.bz2
+#+END_EXAMPLE
+** 利用tar命令直接解压gz和bz2文件
+#+BEGIN_EXAMPLE
+   tar -zxvf vf.tar.gz  %解压vf.tar.gz并拆包vf.tar
+   tar -jxvf vf.tar.bz2 解压vf.tar.bz2并拆包vf.tar
+   同理将上面的x变成c就可用来直接将打包并压缩生成相应的gz和bz2文件：
+   tar -zcvf vf.tar.gz vf1 vf2    %将vf1 vf2两个文件打包生成vf.tar并压缩生成vf.tar.gz
+   tar -jcvf vf.tar.bz2 vf1 vf2   %将vf1 vf2两个文件打包生成vf.tar并压缩生成vf.tar.bz2
+#+END_EXAMPLE
+   
+* zip
+** -@
+   find -maxdepth 1 -name "*.cpp" | zip source -@
+   read names from stdin 
+** -r
+   添加文件
+   zip -r vf vf.cpp 
+* unzip
+  
+** -v
+   be verbose/print version info
+   unzip -v vf.zip
+   或者 unzip -v vf 自带识别zip文件
+** -l
+   list files (short format)
+   查看内部文件
+** -t
+   test compressed archive data
+   检查zip文件是否正常，有没有错误

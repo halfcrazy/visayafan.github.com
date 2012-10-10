@@ -1,0 +1,22 @@
+#+OPTIONS: ^:{} _:{} num:t toc:t \n:t
+#+include "../../template.org"
+#+title: 批量修改文件
+
+利用grep和sed来实现：
+#+begin_example
+sed -i "s/old/new/g" `grep "old" -rl directory`
+#+end_example
+grep命令的-r选项表递归，-l选项表--files-with-matches匹配的文件，即将匹配的文件作为sed的参数。
+sed命令-i表示 --in-place即原地修改，s表替换，g表全局。
+
+如果没有子目录，只使用sed即可：
+#+begin_example
+sed -i "s/old/new/g" *
+#+end_example
+*表匹配，即所有文件。
+
+例如下面命令把当前目录及其子目录下所有../template2.org替换成../../template.org：
+#+begin_example
+sed -i "s|../template2.org|../../template.org|g" `grep "../template2.org" -rl .`
+#+end_example
+利用得当可以极大提高效率。

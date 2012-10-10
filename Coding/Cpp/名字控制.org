@@ -1,0 +1,103 @@
+#+OPTIONS: ^:{} _:{} num:t toc:t \n:t
+#+include "../../template.org"
+#+title:名字控制
+* 静态成员
+  - 函数内静态成员只在函数第一次调用时初始化
+  - 类中静态成员变量需要在类外初始化
+  - 类中静态成员函数只能调用类中静态成员函数和静态成员变量
+* namespace
+  命名空间把全局名字空间分成多个可管理的小命令空间。
+  1. 结尾不用分号
+  2. 命令空间可以赋值：
+#+begin_src c++
+namespace X{
+}
+namespace Y=X;
+#+end_src
+#+begin_src c++
+namespace X{
+    class Y{
+        static int i;
+    public:
+        Y(int ii){}
+    };
+    class Z;
+    void fun();
+}
+int X::Y::i=10;
+class X::Z {
+    int x;
+public:
+    Z(int xx);
+};
+X::Z::Z(int xx){x=xx;}
+void X::fun(){}
+#+end_src  
+  使用的2种方式：
+  1. =using directive=  例如 using namespace Name;
+  2. =using declarationi= 例如：using Name::Fun;
+* 静态数组和静态const初始化
+#+begin_src c++
+class Values{
+    static const int ary[2];
+    static const int ary2[];
+};
+const int Values::ary[2]={1,2};
+const int Values::ary2[]={1,2,3,4};
+#+end_src  
+* 静态初始化的相依性
+** 技术一：添加负责静态对象初始化的额外类
+#+begin_src c++
+//Initializer.h
+#ifndef INITIALIZER_H
+#define INITIALIZER_H
+#include <iostream>
+extern int x;
+extern int y;
+class Initializer{
+    static int initCount;
+public:
+    Initializer(){
+        std::cout<<"Initizlizer()"<<std::endl;
+        if(initCount++ == 0){
+            std::cout<<"Performing Initizlization"<<std::endl;
+            x=100;
+            y=100;
+        }
+    }
+    ~Initializer(){
+        std::cout<<"~Initializer()"<<std::endl;
+        if(--initCount == 0){
+            std::cout<<"Performing cleanup"<<std::endl;
+        }
+    }
+};
+static Initializer init;
+#endif
+
+//Initializer.cpp
+#include "Initializer.h"
+
+//InitializerDefs.cpp
+#include "Initializer.h"
+int x;
+int y;
+int Initializer::initCount;
+
+//InitializerMain.cpp
+#include "Initializer.h"
+using namespace std;
+
+int main(int argc, char *argv[])
+{
+    cout<<"inside main()"<<endl;
+    cout<<"leaving main()"<<endl;
+    return 0;
+}
+#+end_src  
+   每次包含 =Initializer.h= 时都会创建一个 =Initializer= 对象（因为是 =static= 类型的，所以不会出现重定义的现象），只有第一次才会执行x=100,y=100（因为第一次 initCount=0，而后自增），且只有最后一次析构才会执行if下的语句（每调用一次析构initCount自减，直到最后一次为0时执行if下语句）。
+   这种方法所有做的有：
+   1. 创建一个 =Initializer.h= 头文件，把想要进行初始工作的声明放在此处，并写一个类，类中声明静态类型计数器(作用是保证初始化工作只进行一次)，并声明一个该类的静态对象。
+   2. 在 =Initializer.cpp= 中 #include "Initializer.h" 并初始化 =Initializer.h= 中的计数器
+   3. 在main函数所在的文件中 #include "Initializer.h"
+   这样就能保证变量在使用前肯定完成了初始化工作，与连接顺序无关了。

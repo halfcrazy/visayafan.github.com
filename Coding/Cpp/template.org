@@ -1,0 +1,97 @@
+#+OPTIONS: "\n:t
+#+OPTIONS: ^:{}
+#+OPTIONS: _:{}
+#+TITLE: 
+
+* 术语
+** type parameter
+   类型参数(STL源码剖析中翻译为型别参数)
+   template <typename T> 其中T就是type parameter
+
+** instantiation
+   实例化
+   用一具体的参数代替类型参数叫instantiation
+** template argument
+   模板参数 就是用typename声明的参数
+** call argument
+   调用参数 实际调用中向其传递的参数
+
+* 注意
+  1) 模板不支持automatic type conversion自动类型转换
+  2) 类成员函数要等调用的时候才实例化
+     Note that code is instantiated only for member functions that are called.
+     For class templates, member functions are instantiated only when they are used. 
+     - 省时省空间
+     - you can instantiate a class even for those types that cannot perform all the operations of all the member functions, as long as these member functions are not called.
+      你可以用一此类型实例化一个类，即使这个类型不能满足所有的成员函数的所有操作要求（只要不调用这个成员函数就可以了）。
+  3) 静态成员被实例化时每种类型只调用一次
+* 特化与偏特化
+   1) specialization
+#+BEGIN_SRC c++
+template <>
+class<std::string> Queue{
+public:
+    void push(const std::string&);
+    //....
+}
+void Queue<std::string>::push(const std::string&){
+    //....
+}
+#+END_SRC  
+   2) partial specialization 
+#+BEGIN_SRC c++
+template <typename T1, typename T2>
+class A{                        // 无偏特化的正常模板类
+    //....
+};
+
+template <typename T>
+class A<T, T>{                  // 偏特化，两个参数一样
+    //....
+};
+
+template <typename T>
+class A<T, int>{                // 偏特化，其中一个参数为int型
+    //....
+};
+
+template <typename T1, typename T2>
+class A<T1*, T2*>{              // 偏特化，两个模板参数都是指针类型
+    //....
+};
+#+END_SRC
+     则：
+#+BEGIN_SRC c++
+则：
+MyClass<int,float> mif;    // uses MyClass<T1,T2> 
+MyClass<float,float> mff;  // uses MyClass<T,T> 
+MyClass<float,int> mfi;    // uses MyClass<T,int> 
+MyClass<int*,float*> mp;   // uses MyClass<T1*,T2*> 
+#+END_SRC  
+    当出现两个都匹配的偏特化类时会报错：
+#+BEGIN_SRC c++
+MyClass<int,int> m;        // ERROR: matches MyClass<T,T> 
+                           //        and MyClass<T,int> 
+MyClass<int*,int*> m;      // ERROR: matches MyClass<T,T> 
+                           //        and MyClass<T1*,T2*> 
+#+END_SRC
+    上面第2个问题的解决可以再提供一个两个指针的偏特化类。
+#+BEGIN_SRC java
+template <typename T>
+class A<T*, T*>{
+    //....
+};
+#+END_SRC      
+
+* 默认模板参数(default template argument)
+  当实例化时若没有实例化默认模板参数，则会采用默认值。
+* 无类型模板参数
+  没有类型只有数值的模板参数。
+#+BEGIN_SRC c++
+template <typename T, int MAXSIZE /* = 200 */>  //同理这里也可以使用默认值
+class A{
+public:
+    T t[MAXSIZE];
+    //....
+};
+#+END_SRC    

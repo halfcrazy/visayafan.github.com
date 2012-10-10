@@ -1,0 +1,18 @@
+#+OPTIONS: ^:{} _:{} num:t toc:t \n:t
+#+include "../../template.org"
+#+TITLE: xclip剪切板与终端的通道
+* xclip
+  xclip命令建立了终端和剪切板之间通道，可以用命令的方式将终端输出或文件的内容保存到剪切板中，也可以将剪切板的内容输出到终端或文件
+  安装 sudo apat-get xclip
+* 终端输出保存到剪切板中
+  ls -al | xclip
+  此时ls -al的输出内容已经保存在剪切板中了，可以打开编辑器进行粘贴操作
+
+* 文件内容复制到剪切板中
+  xclip /etc/apt/sources.list
+
+* 剪切板内容输出到终端
+  xclip -o
+
+* 剪切板内容输出到文件
+  xclip -o > ~/test.txt

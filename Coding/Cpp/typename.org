@@ -1,0 +1,59 @@
+#+OPTIONS: ^:{} _:{} num:t toc:t \n:t
+#+include "../../template.org"
+#+title: template typename
+* 模板参数列表中与class关键字可相互替换
+#+BEGIN_SRC c++
+  template<typename T>
+  template<class T>
+  是一样的
+
+#+END_SRC  
+
+* 嵌套从属名称(nested dependent names)
+  假如template内出现的名称如果依赖于某个模板参数，则称其为从属名称(dependent names)，如果从属名称在class内呈嵌套状则称之为嵌套从属名称(nested dependent names)。
+  例如：
+#+BEGIN_SRC c++
+templaet <typename T>
+void myPrint(const T& t){
+    t::const_iterator iter(t.begin());
+}
+#+END_SRC  
+
+  假设模板参数列表中的参数表示一个容器类型，则我们知道t::const_iterator一个依赖模板参数并且在容器内部，所以t::const_iterator是一个嵌套从属名称。
+
+  在我们知道t是什么之前没有办法可以知道t::const_iterator是否是一个类型，因为有还可能是个静态(static)成员变量，考虑下面的例子：
+#+BEGIN_SRC c++
+template <typename T>
+void myPrint(const T& t){
+    t::const_iterator * x;
+}
+#+END_SRC  
+  如果const_iterator是t的静态成员变量，则上面的t::const_iterator * x;中的*表示乘法，如果是个类型则表示声明一个指向t::const_iterator类型的指针。
+  从而给编译器造成困惑（因为我们不知道t是什么）。
+
+  C++有个规定：当解析器在模板中遇到一个嵌套从属名称时便假定这个名称不是类型，除非你用关键字typename指定它是：
+#+BEGIN_SRC c++
+template <typename T>
+void myPrint(const T& t){
+    typename t::const_iterator * x;     //这样便不会造成困惑了
+}
+#+END_SRC  
+
+  同理不仅在内部，在参数列表里也是：
+#+BEGIN_SRC c++
+template <typename T>
+void f(const T& t, typename T::const_iterator cit){     //T不是嵌套从属名称，而T::const_iterator是，所以要在T::const_iterator前面加上typename
+        //....
+}
+#+END_SRC  
+* 是嵌套从属名称但不用加typename的两种情况
+  基类列表(base list)和成员初始化列表(member initializaiton list)
+#+BEGIN_SRC c++
+template <typename T>
+class Derived: public Base<T>::Nested {                 //基类列表中不允许使用typename
+public:
+    explicit Derived(int x): Base<T>::Nested(int x){    //初始化列表中不允许使用typename
+        typename Base<T>::Nested temp;                  //嵌套从属名称(既不在基类列表中又不在初始化列表中)前面必须要加typename
+    }
+}
+#+END_SRC  

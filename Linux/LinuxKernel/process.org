@@ -1,0 +1,463 @@
+#+include "../../template.org"
+#+OPTIONS: ^:{} _:{} num:t toc:t \n:t
+#+title: 进程管理基础
+   每个进程/线程对应一个进程描述符 =struct task_struct= ，其成员描述了与进程相关的各种属性，例如：进程的状态，进程ID，资源使用情况（内存，CPU，打开文件，进程地址空间etc）。
+* 进程状态
+  一个进程的状态可以有以下几种，由 =task_struct->state= 来描述。
+#+begin_src c -n
+#define TASK_RUNNING		0
+#define TASK_INTERRUPTIBLE	1
+#define TASK_UNINTERRUPTIBLE	2
+#define TASK_STOPPED		4
+#define TASK_TRACED		8
+#define EXIT_ZOMBIE		16
+#define EXIT_DEAD		32
+#+end_src  
+  1. =TASK_RUNNING= :当前进程正在执行 or 正在等待被执行
+  2. =TASK_STOPPED= ：当前进程停止执行
+  3. =TASK_ZOMBIE= :进程已经执行完，但由于父进程没有调用 =wait= 函数，故OS认为此进程对其父进程来说还有用，还没有被删除
+  4. =TASK_DEAD= ：进程已经执行完且父进程调用了 =wait= 函数，表明此进程已经没有用了，可以被释放掉了
+  5. =TASK_INTERRUPTIBLE= :此进程目前在休眠状态，中断 or 需要资源被释放 or 收到信号 可能会由中断状态转变为RUNNING状态
+  6. =TASK_UNINTERRUPTIBLE= :与TASK_INTERRUPTIBLE相似，区别在于收到信号不会改变状态（特殊情况下会有用，例如当进程打开一个设备文件，而此设备文件正在查找与之相对应的文件，此时设备驱动不能被中断）
+  7. =TASK_TRACED= :调试时状态
+* 进程ID
+  1. 一个进程拥有一个ID，由 =task_struct->pid= 来描述。
+  2. 有时几个进程形成组，组ID由 =task_struct->pgid= 来描述。
+  3. 有时几个线程形成组，组ID由 =task_struct->tgid= 来描述，同一线程组中的线程的pid=tgid。且每个线程组都有一个leader，由 =task_struct->group_leader= 来描述。
+  4. PID最大是由 =PID_MAX_DEFAULT= 来决定，linux可以通过查看 /proc/sys/kernel/pid_max 来得到和修改最大PID，32位系统是 2^15. 64位是2^22.
+  内核通过维护一个位图 =pidmap_array= 来管理PID，32位系统正好1页（2^12*8=2^15 bit），位为1表示已经被分配，0表示没有被分配，可以使用。
+* thread_info
+  由于进程是动态实体，故内核应该把进程描述符分配在动态内存区，又由于内核模式下的动态内存很小，故把进程描述符很小一部分（ =task_struct->thread_info= ）存储在内核动态内存中，通过指针（ =thread_info->task= ）链接到外部进程描述符.
+  内核内的部分描述符大小为 =THREAD_SIZE= 1页或2页，且对齐方式为 =THRAD_SIZE2= (1页或2页)，存在于栈中，指针ESP指向当前正在执行进程的 =thread_union= 。
+#+begin_src c -n
+#ifdef CONFIG_4KSTACKS
+#define THREAD_SIZE            (4096)
+#else
+#define THREAD_SIZE		(8192)
+#endif
+union thread_union {
+	struct thread_info thread_info;
+	unsigned long stack[THREAD_SIZE/sizeof(long)];
+};
+#+end_src  
+  进程通过 =current= 宏来获得当前正在执行程序以的进程描述符：
+#+begin_src c -n
+static inline struct task_struct * get_current(void)
+{
+	return current_thread_info()->task;
+}
+ 
+#define current get_current()
+#+end_src
+#+begin_src c -n
+static inline struct thread_info *current_thread_info(void)
+{
+	struct thread_info *ti;
+	__asm__("andl %%esp,%0; ":"=r" (ti) : "0" (~(THREAD_SIZE - 1)));
+	return ti;
+}
+#+end_src  
+  实际上是通过获得当前正在执行程序的 thread_info,再通过thread_info->task得到其描述符。
+  由于thread_info是通过THREAD_SIZE方式来对齐的且 thread_info放在联合休前面且栈是向下扩展的，故ESP与 ~(THREAD_SIZE-1) 求与结果便是 =thread_info= 地址。
+  #+html:<center>
+  #+html:<img src="image/thread_info.png"></img>
+  #+html:</center>
+
+* 数据结构
+** list_head及原语操作
+  内核通过双链表将所有进程描述符串起来，为方便操作，linux内核定义了一组原语。
+  =list_head= 此结构被用于内核中所有链表。
+#+begin_src c -n
+struct list_head {
+	struct list_head *next, *prev;
+};
+#+end_src
+  #+html:<center>
+  #+html:<img src="image/list_head.png"></img>
+  #+html:</center>
+*** LIST_HEAD(name)
+#+begin_src c -n
+#define LIST_HEAD_INIT(name) { &(name), &(name) }
+#define LIST_HEAD(name) \
+	struct list_head name = LIST_HEAD_INIT(name)
+#+end_src
+   初始化一个名为name的list_head变量，name的next和pre指向指向自身。
+*** list_add(n,p)
+   在p的前面插入n
+#+begin_src c -n
+static inline void __list_add(struct list_head *new,
+			      struct list_head *prev,
+			      struct list_head *next)
+{
+	next->prev = new;
+	new->next = next;
+	new->prev = prev;
+	prev->next = new;
+}
+static inline void list_add(struct list_head *new, struct list_head *head)
+{
+	__list_add(new, head, head->next);
+}
+#+end_src
+*** list_add_tail(n,p)
+    在p的前面插入n
+*** list_del(p)
+#+begin_src c -n
+/*这此非空指针的使用会造成中断，从而确保list_head使用前必须被初始化*/
+#define LIST_POISON1  ((void *) 0x00100100)
+#define LIST_POISON2  ((void *) 0x00200200)
+static inline void __list_del(struct list_head * prev, struct list_head * next)
+{
+	next->prev = prev;
+	prev->next = next;
+}
+static inline void list_del(struct list_head *entry)
+{
+	__list_del(entry->prev, entry->next);
+	entry->next = LIST_POISON1;
+	entry->prev = LIST_POISON2;
+}
+#+end_src
+
+*** list_empty(p)
+    判断p所在的队列是否为空
+*** list_entry(p,type, member)
+   list_head指针类型的p所在实体类型为type，成员名称为member，通过list_head的指针返回其所在type的指针。
+   基本思想就是p减去member在type中的偏移量。
+#+begin_src c -n
+#define container_of(ptr, type, member) ({			\
+        const typeof( ((type *)0)->member ) *__mptr = (ptr);	\
+        (type *)( (char *)__mptr - offsetof(type,member) );})
+#define list_entry(ptr, type, member) \
+	container_of(ptr, type, member)
+#+end_src   
+*** list_for_each(p,h)
+   遍历以h开头的链表，相应的实体存放在p中。
+#+begin_src c -n
+#define list_for_each(pos, head) \
+	for (pos = (head)->next; prefetch(pos->next), pos != (head); \
+        	pos = pos->next)
+#+end_src
+*** list_for_each_entry(p,h,m)	
+   与list_for_each区别在于：此宏返回每次迭代p指向list_head所在的实体,是list_for_each和list_entry的结合。
+#+begin_src c -n
+#define list_for_each_entry(pos, head, member)				\
+	for (pos = list_entry((head)->next, typeof(*pos), member);	\
+	     prefetch(pos->member.next), &pos->member != (head); 	\
+	     pos = list_entry(pos->member.next, typeof(*pos), member))
+#+end_src
+** 进程操作
+   =task_struct->tasks= 为list_head类型，用来链接进程。所有进程形成一个链表，其表头为 =init_task= .
+*** 遍历进程链表
+#+begin_src c -n
+#define next_task(p)	list_entry((p)->tasks.next, struct task_struct, tasks)
+#define prev_task(p)	list_entry((p)->tasks.prev, struct task_struct, tasks)
+#define for_each_process(p) \
+	for (p = &init_task ; (p = next_task(p)) != &init_task ; )
+#+end_src    
+*** 添加删除进程描述符
+#+begin_src c -n
+#define remove_parent(p)	list_del_init(&(p)->sibling)
+//添加到父进程描述符的子进程描述符链表的尾部（parent为p的父进程，则也是p的兄弟进程的父进程，相当于合并链表）
+#define add_parent(p, parent)	list_add_tail(&(p)->sibling,&(parent)->children)
+
+// 删除结点并重新初始化结点
+static inline void list_del_init(struct list_head *entry)
+{
+	__list_del(entry->prev, entry->next);
+	INIT_LIST_HEAD(entry);
+}
+
+#define REMOVE_LINKS(p) do {					\
+	if (thread_group_leader(p))				\
+		list_del_init(&(p)->tasks);			\
+	remove_parent(p);					\
+	} while (0)
+
+#define SET_LINKS(p) do {					\
+	if (thread_group_leader(p))				\
+		list_add_tail(&(p)->tasks,&init_task.tasks);	\
+	add_parent(p, (p)->parent);				\
+	} while (0)
+#+end_src
+* 父／子进程
+  一个进程的所有子进程形成一个链表，表头在父进程的 =task_struct->children= 。
+  进程的 =sibling= next,pre用来链接其兄弟进程。
+#+begin_src c
+struct list_head children;	/* list of my children */
+struct list_head sibling;	/* linkage in my parent's children list */
+#+end_src
+  进程的 =parent= 指向其父进程。如果其父进程被销毁，则指向 init 进程（pid为1）。
+#+begin_src c
+struct task_struct *real_parent; /* real parent process (when being debugged) */
+struct task_struct *parent;	/* parent process */
+#+end_src
+  =ptrace_children= 和 =ptrace_list= 调试时，前者表示此进程所有子进程的构成的链表的表头。
+* 运行队列
+  为提高效率，2.6内核并没有把所有状态为TASK_RUNNING的进程描述符链在一起（因为当CPU要选择一个最高优先级进程时，必须遍历链表），而是根据优化级数量（140）构造一个140大小的数组，数组中第i个元素是优先级为i的进程链表表头。
+  以数据结构的复杂来换取时间。
+#+begin_src c -n
+typedef struct prio_array prio_array_t;
+//(MAX_PRIO+1+7)/8表比max_prio/8上取整，故若max_prio=140，则bitmap_size＝20
+#define BITMAP_SIZE ((((MAX_PRIO+1+7)/8)+sizeof(long)-1)/sizeof(long))
+struct prio_array {
+	unsigned int nr_active;     //表示活动进程一共有多少个
+	unsigned long bitmap[BITMAP_SIZE];  //一共160 bit，第j位为1表queue[j]链表不空，否则为空
+	struct list_head queue[MAX_PRIO]; //140个链表表头
+};
+#+end_src
+* PID哈希表
+  为了由进程的ID快速定位到进程描述符，2.6引入了4个hash表。由 =task_struct->pids[PIDTYPE_MAX]= 来描述。
+#+begin_src c
+//技巧，利用enum来替代#define PIDTYPE_PID 0之类的语句，并且自动PIDTYPE_MAX定义为PIDTYPE最大数目
+enum pid_type
+{
+	PIDTYPE_PID,
+	PIDTYPE_TGID,
+	PIDTYPE_PGID,
+	PIDTYPE_SID,
+	PIDTYPE_MAX
+};
+#+end_src
+#+begin_src c
+struct pid
+{
+	int nr;     //进程描述符个数
+	struct hlist_node pid_chain;        //用来链接冲突的不同PID的进程描述符
+	struct list_head pid_list;          //用来链接冲突的但拥有相同PID的进程描述符
+};
+#+end_src
+  #+html:<center>
+  #+html:<img src="image/pidhash.png"></img>
+  #+html:</center>
+  宏操作：
+  * do_each_task_pid(nr, type, task)和while_each_task_pid(nr, type, task)构成一个do while循环宏
+    type指明pid_type中的类别，nr指明进程ID，task指向是每次迭代时的进程描述符。
+  * find_task_by_pid_type(type, pid)
+    指定类型的进程ID来获得其进程描述符指针
+  * find_task_by_pid(pid)
+    <==> find_task_by_pid_type(PIDTYPE_PID, pid)
+  * attach_pid(task, type, pid)
+    将task指向的进程ID为PID的进程描述符插入到type类型的hash表中
+  * detach_pid(task,type)
+    将task指向的进程描述符在type类型的hash表中删除
+  * next_thread(task)
+    返回task指向的进程描述符在类型为PIDTYPE_TGID中拥有相同进程ID的下一个线程
+* 等待队列
+  处于状态为 task_interruptible和task_uninterruptible的进程需要放在等待队列中。
+  等待队列表头 =wait_queue_head_t= ,一个锁和一个用于链接的list_head结构：
+#+begin_src c -n
+struct __wait_queue_head {
+	spinlock_t lock;
+	struct list_head task_list;
+};
+typedef struct __wait_queue_head wait_queue_head_t;
+#+end_src
+  等待队列链表成员 =wait_queue_t= :
+#+begin_src c -n
+typedef struct __wait_queue wait_queue_t;
+typedef int (*wait_queue_func_t)(wait_queue_t *wait, unsigned mode, int sync, void *key);
+int default_wake_function(wait_queue_t *wait, unsigned mode, int sync, void *key);
+
+struct __wait_queue {
+	unsigned int flags;         //标志，0表示非互斥，1表示互斥
+#define WQ_FLAG_EXCLUSIVE	0x01
+	struct task_struct * task;  //指向其代表进程的进程描述符
+	wait_queue_func_t func;     //函数，用来表示此正在睡眠中的进程应该如何被唤醒
+	struct list_head task_list; //用于链接
+};
+#+end_src
+  * 宏操作用来构造表头和链表成员： =DECLARE_WAITQUEUE_HEAD= 和 =DECLARE_WAITQUEUE=
+#+begin_src c -n
+#define __WAITQUEUE_INITIALIZER(name, tsk) {				\
+	.task		= tsk,						\
+	.func		= default_wake_function,			\
+	.task_list	= { NULL, NULL } }
+
+#define DECLARE_WAITQUEUE(name, tsk)					\
+	wait_queue_t name = __WAITQUEUE_INITIALIZER(name, tsk)
+
+#define __WAIT_QUEUE_HEAD_INITIALIZER(name) {				\
+	.lock		= SPIN_LOCK_UNLOCKED,				\
+	.task_list	= { &(name).task_list, &(name).task_list } }
+
+#define DECLARE_WAIT_QUEUE_HEAD(name) \
+	wait_queue_head_t name = __WAIT_QUEUE_HEAD_INITIALIZER(name)
+#+end_src
+  * 初始化表头和链表成员： =init_waitqueue_head= 和 =init_waitqueue_entry=
+#+begin_src c -n
+static inline void init_waitqueue_head(wait_queue_head_t *q)
+{
+	q->lock = SPIN_LOCK_UNLOCKED;
+	INIT_LIST_HEAD(&q->task_list);
+}
+
+static inline void init_waitqueue_entry(wait_queue_t *q, struct task_struct *p)
+{
+	q->flags = 0;
+	q->task = p;
+	q->func = default_wake_function;
+}
+#+end_src
+  * 非互斥的进程唤醒函数为 =default_wake_function=
+  * =DEFINE_WAIT= 利用当前正在运行的进程初始化一个链表结点（表明此进程将要进入等待队列中）
+  * =add_wait_queue= 将已经初始好的链表结点加入到链表中，非互斥进程。 *加入到表头*
+    =add_wait_queue_exclusive= 与add_wait_queue的区别在于，互斥进程 *加到表尾*
+    之所以加到不同的位置是为了之后用函数 =wake_up= 唤醒等待队列中的进程时，逐一遍历，由于所有非互斥进程都在表首，互斥进程都在表尾，先唤醒非互斥进程，至多唤醒一个互斥进程。
+#+begin_src c -n
+ #define wake_up(x)			__wake_up(x, TASK_UNINTERRUPTIBLE | TASK_INTERRUPTIBLE, 1, NULL)
+//q表示表头，mode表模式是互斥还是非互斥，nr_exclusive表唤醒几个互斥进程
+void fastcall __wake_up(wait_queue_head_t *q, unsigned int mode, int nr_exclusive, void *key)
+{
+	unsigned long flags;
+
+	spin_lock_irqsave(&q->lock, flags);
+	__wake_up_common(q, mode, nr_exclusive, 0, key);
+	spin_unlock_irqrestore(&q->lock, flags);
+}
+static void __wake_up_common(wait_queue_head_t *q, unsigned int mode,
+			     int nr_exclusive, int sync, void *key)
+{
+	struct list_head *tmp, *next;
+
+	list_for_each_safe(tmp, next, &q->task_list) {
+		wait_queue_t *curr;
+		unsigned flags;
+		curr = list_entry(tmp, wait_queue_t, task_list);
+		flags = curr->flags;
+//函数执行成功 且 互斥 且 互斥个数已经达到了 则退出唤醒循环
+		if (curr->func(curr, mode, sync, key) &&
+		    (flags & WQ_FLAG_EXCLUSIVE) &&
+		    !--nr_exclusive)
+			break;
+	}
+}
+#+end_src
+   * =sleep_on= 将当前进程加入到等待队列中,之后开始 schedule 调度其它进程，之后再 __remove_wait_queue(q, &wait)将其从队列中删除。
+#+begin_src c -n
+#define	SLEEP_ON_VAR					\
+	unsigned long flags;				\
+	wait_queue_t wait;				\
+	init_waitqueue_entry(&wait, current);
+
+#define SLEEP_ON_HEAD					\
+	spin_lock_irqsave(&q->lock,flags);		\
+	__add_wait_queue(q, &wait);			\
+	spin_unlock(&q->lock);
+
+#define	SLEEP_ON_TAIL					\
+	spin_lock_irq(&q->lock);			\
+	__remove_wait_queue(q, &wait);			\
+	spin_unlock_irqrestore(&q->lock, flags);
+void fastcall __sched sleep_on(wait_queue_head_t *q)
+{
+	SLEEP_ON_VAR
+
+	current->state = TASK_UNINTERRUPTIBLE;
+
+	SLEEP_ON_HEAD
+	schedule();
+	SLEEP_ON_TAIL
+}
+#+end_src
+  * 其它版本的sleep_on
+    1. =interruptible_sleep_on= 与sleep_on不同之处在于，此函数将进程的状态设置为 TASK_INTERRUPTIBLE 而非TASK_UNINTERRUPTIBLE
+    2. =sleep_on_timeout= 和 =interruptible_sleep_on_timeout= 与没有timeout版本区别在于，调用schedule_timeout而非schedule，在指定时间后会被唤醒。
+  * 将当前进程加入到等待队列中 =DEFINE_WAIT=, =prepare_to_wait= , =prepare_to_wait_exclusive= , =finish_wait= 。
+#+begin_src c -n
+void fastcall prepare_to_wait(wait_queue_head_t *q, wait_queue_t *wait, int state)
+{
+	unsigned long flags;
+	wait->flags &= ~WQ_FLAG_EXCLUSIVE;
+	spin_lock_irqsave(&q->lock, flags);
+	if (list_empty(&wait->task_list))
+		__add_wait_queue(q, wait);
+	if (is_sync_wait(wait))
+		set_current_state(state);
+	spin_unlock_irqrestore(&q->lock, flags);
+}
+void fastcall prepare_to_wait_exclusive(wait_queue_head_t *q, wait_queue_t *wait, int state)
+{
+	unsigned long flags;
+	wait->flags |= WQ_FLAG_EXCLUSIVE;
+	spin_lock_irqsave(&q->lock, flags);
+	if (list_empty(&wait->task_list))
+		__add_wait_queue_tail(q, wait);
+	if (is_sync_wait(wait))
+		set_current_state(state);
+	spin_unlock_irqrestore(&q->lock, flags);
+}
+void fastcall finish_wait(wait_queue_head_t *q, wait_queue_t *wait)
+{
+	unsigned long flags;
+	__set_current_state(TASK_RUNNING);
+	if (!list_empty_careful(&wait->task_list)) {
+		spin_lock_irqsave(&q->lock, flags);
+		list_del_init(&wait->task_list);
+		spin_unlock_irqrestore(&q->lock, flags);
+	}
+}
+#+end_src
+    典型用法：
+#+begin_src c -n
+DEFINE_WAIT(wait);
+prepare_to_wait_exclusive(&wq, &wait, TASK_INTERRUPTIBLE); /* wq is the head of the wait queue */
+....
+if (!condition)
+    schedule();
+finish_wait(&wq, &wait);
+#+end_src
+   * =wait_event=, =wait_event_interruptible= 封装了上面讲的 =prepare_to_wait= 和 =finish_wait= 更加简化了将当前进程加入到等待队列操作，wait_event有两个参数，一个等待队列表头，一个条件，等到条件满足的时候把它唤醒，wait_event(wq, condition)
+#+begin_src c -n
+#define __wait_event(wq, condition) 					\
+do {									\
+	DEFINE_WAIT(__wait); //用当前进程初始化一个链表结点						\
+									\
+	for (;;) {							\
+		prepare_to_wait(&wq, &__wait, TASK_UNINTERRUPTIBLE);	\
+		if (condition)						\
+			break;						\
+		schedule();						\
+	}								\
+	finish_wait(&wq, &__wait);					\
+} while (0)
+
+#define wait_event(wq, condition) 					\
+do {									\
+	if (condition)	 						\
+		break;							\
+	__wait_event(wq, condition);					\
+} while (0)
+#+end_src
+    其它版本包括 =wait_event_timeout= =wait_event_interruptible= =wait_event_interruptible_timeout=  =wait_event_interruptible_exclusive= 
+   * wake_up其它版本：
+     wake_up, wake_up_nr, wake_up_all, wake_up_interruptible, wake_up_interruptible_nr, wake_up_interruptible_all, wake_up_interruptible_sync, wake_up_locked
+     1. 加nr的表示唤醒等待进程的个数，不加nr的表示个数为1
+     2. 加interruptible的表示唤醒状态为TASK_INTERRUPTIBLE的进程，不加的表示可以考虑唤醒task_uninterruptible的进程
+     3. 加locked的表示先将表头加锁
+     4. 不加sync的表示检查唤醒的优先级中有没有比当前运行的高的，如果有则替换之，加sync的则不检查，所以加sync的高优先级进程可能比不加sync的延后执行。
+
+* 资源限制
+#+begin_src c
+struct rlimit {
+	unsigned long	rlim_cur;   //表当前正在使用的资源个数
+	unsigned long	rlim_max;   //表可用资源的最大个数
+};
+#+end_src  
+  资源各类：
+#+begin_src c -n
+#define RLIMIT_CPU		0	/* CPU time in ms */
+#define RLIMIT_FSIZE		1	/* Maximum filesize */
+#define RLIMIT_DATA		2	/* max data size */
+#define RLIMIT_STACK		3	/* max stack size */
+#define RLIMIT_CORE		4	/* max core file size */
+#define RLIMIT_RSS		5	/* max resident set size */
+#define RLIMIT_NPROC		6	/* max number of processes */
+#define RLIMIT_NOFILE		7	/* max number of open files */
+#define RLIMIT_MEMLOCK		8	/* max locked-in-memory address space */
+#define RLIMIT_AS		9	/* address space limit */
+#define RLIMIT_LOCKS		10	/* maximum file locks held */
+#define RLIMIT_SIGPENDING	11	/* max number of pending signals */
+#define RLIMIT_MSGQUEUE		12	/* maximum bytes in POSIX mqueues */
+#+end_src
+  rlim_max来表示资源界限最大值，getrlimit()和setrlimit()来取得和改变资源当前值 rlim_cur。

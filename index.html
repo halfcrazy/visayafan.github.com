@@ -2,117 +2,268 @@
 <html lang="en">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap_homepage.css" />
-    <link rel="stylesheet" type="text/css" href="css/yinwang0-index-emacsrookie.css" />
-    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"> </script>
-    <script src="bootstrap/js/bootstrap_old.js"></script>
-    <style type="text/css" media="screen">
-      .popover-title { display:none; }
-    </style>
+    <meta charset="utf-8">
+    <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+    <!--[if lt IE 9]>
+		<script src="Layout/JS/html5.js"></script>
+		<![endif]-->
+    <script src="Layout/JS/jquery_1.7.1.js" type="text/javascript"> </script>
+    <script src="Layout/JS/bootstrap_old.js"> </script>
+    <link href="Layout/CSS/Grails_Bootstrap.css" type="text/css" rel="stylesheet" media="screen, projection">
+    <link href="Layout/CSS/index_template.css" type="text/css" rel="stylesheet" media="screen, projection">
   </head>
+
   <body>
-
-    <!-- topbar -->
-    <header id="topbar">
-      <h1>No Joking </h1> 
-    </header>
-
-    <!-- main -->
-    <div id="main" role="main">
-      <br><br>
-      <div id="gropucoding" class="accordion">
-        <div class="accordion-heading">
-          <a href="#collapsecoding" data-toggle="collapse" data-parent="#accordionParent" class="accordion-toggle"><h2>Coding Life</h2></a>
-        </div>
-        <div class="accordion-body collapse" style="height: 0px" id="collapsecoding">
-          <div class="accordion-inner">
-            <ul class="tab tab-stacked">
-              <li><h3><a href="codinglife/index.html#python">Python</a></h3></li>
-              <li><h3><a href="codinglife/index.html#cpp">C++/Stl</a></h3></li>
-              <li><h3><a href="codinglife/index.html#java">Java</a></h3></li>
-              <li><h3><a href="codinglife/index.html#algorithm">Algorithm</a></h3></li>
-            </ul>
+    <div class="container-fluid">
+      <ul class="nav nav-tabs">
+        <li class="active"><a href="#cpp" data-toggle="tab">C++</a></li>
+        <li><a href="#python" data-toggle="tab">Python</a></li>
+        <li><a href="#java" data-toggle="tab">Java</a></li>
+        <li><a href="#algorithm" data-toggle="tab">Algorithm</a></li>
+        <li><a href="#linuxos" data-toggle="tab">Linux操作系统</a></li>
+        <li><a href="#linuxcoding" data-toggle="tab">Linux编程</a></li>
+        <li><a href="#linuxkernel" data-toggle="tab">Linux内核</a></li>
+        <li><a href="#compiler" data-toggle="tab">编译器</a></li>
+        <li><a href="#english" data-toggle="tab">英语</a></li>
+        <li><a href="#links" data-toggle="tab">链接</a></li>
+        <li><a href="#others" data-toggle="tab">其它</a></li>
+        <li>
+          <a href="#aboutme" data-toggle="modal">About Me</a>
+          <div id="aboutme" class="modal hide fade" style="display: none; ">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal"> x </button>
+              <h3> About  Me </h3>
+            </div>
+            <div class="modal-body">
+              <p> @visayafan,<a href="http://www.xjtu.edu.cn">西安交大</a>(Xi'an Jiaotong University)大四本科生，热爱自由与开源，曾在<a href="http://blog.csdn.net/pfanaya">CSDN</a>和<a href="http://cnblogs.com/visayafan">博客园</a>写博，不过最终决定在Github上建立个人主页<!-- (<a href="http://visayafan.github.com">http://visayafan.github.com</a> or <a href="http://visayafan.github.com">http://www.fanhan.tk</a>) -->，目的在于更方便地整理记录所学知识。您可以通过此邮件与我联系: <a href="mailto:visayafan@gmail.com">visayafan@gmail.com</a>。 ——2012年7月23日<br/>
+            </div>
           </div>
-        </div>
-      </div>
-      <!-- } -->
-      <!-- {linux -->
-      <div id="grouplinux" class="accordion">
-        <div class="accordion-heading">
-          <a href="#collapselinux" data-toggle="collapse" data-parent="#accordionParent" class="accordion-toggle"><h2>Linux</h2></a>
-        </div>
-        <div class="accordion-body collapse" style="height: 0px" id="collapselinux">
-          <div class="accordion-inner">
-            <ul class="tab tab-stacked">
-              <li><h3><a href="linux/index.html#linuxcommand" rel="popover" data-content="Useful linux command lines to boost your productivity">Linux Cmd</a></h3></li>
-              <li><h3><a href="linux/index.html#linuxos" rel="popover"  data-content="Linux operating system, mainly about Ubuntu">Linux OS</a></h3></li>
-              <li><h3><a href="linux/index.html#linuxc" rel="popover"  data-content="Linux enviroment C programming">Linux C</a></h3></li>
-              <li><h3><a href="linux/index.html#linuxkernel" rel="popover"  data-content="Linux Kernel notes">Linux Kernel</a></h3></li>
-            </ul>
-          </div>
-        </div>
-      </div>
-      <!-- } -->
-
-      <!-- {source code -->
-      <div id="groupsource" class="accordion">
-        <div class="accordion-heading">
-          <a href="#collapsesource" data-toggle="collapse" data-parent="#accordionParent" class="accordion-toggle"><h2>Source Code</h2></a>
-        </div>
-        <div class="accordion-body collapse" style="height: 0px" id="collapsesource">
-          <div class="accordion-inner">
-            <ul class="tab tab-stacked">
-              <li><h3><a href="sourcecode/index.html#css" rel="popover"  data-content="">Css</a></h3></li>
-            </ul>
-          </div>
-        </div>
-      </div>
-      <!-- } -->
-
-      <!-- {others -->
-      <div id="groupothers" class="accordion">
-        <div class="accordion-heading">
-          <a href="#collapseothers" data-toggle="collapse" data-parent="#accordionParent" class="accordion-toggle"><h2>Other Staff</h2></a>
-        </div>
-        <div class="accordion-body collapse" style="height: 0px" id="collapseothers">
-          <div class="accordion-inner">
-            <ul class="tab tab-stacked">
-              <li><h3><a href="others/index.html#translation" rel="popover"  data-content="我翻译的比较有意义的文章或文档和英语生词整理">Translation</a></h3></li>
-              <li><h3><a href="others/index.html#compiler" rel="popover"  data-content="和编译器相关的知识">Compiler</a></h3></li>
-              <li><h3><a href="others/index.html#thinking">Thinking</a></h3></li>
-              <li><h3><a href="others/index.html#links" rel="popover"  data-content="个人收藏的有用链接">Links</a></h3></li>
-              <li><h3><a href="others/index.html#others" rel="popover"  data-content="Others that are really difficult to categorize">Others</a></h3></li>
-            </ul>
-          </div>
-        </div>
-      </div>
+        </li>
+      </ul>
       
-      <!-- {about me -->
-      <div id="groupme" class="accordion">
-        <div class="accordion-heading">
-          <a href="#collapseme" data-toggle="collapse" data-parent="#accordionParent" class="accordion-toggle"><h2>About Me</h2></a>
-        </div>
-        <div class="accordion-body collapse" style="height: 0px" id="collapseme">
-          <div class="accordion-inner">
-            <!-- 内部 -->
-            <div class="outline-text-2" id="text-4">
-              <p>
-                &nbsp &nbsp &nbsp@visayafan,<a href="http://www.xjtu.edu.cn">西安交大</a>(Xi'an Jiaotong University)大四本科生，热爱自由与开源，曾在<a href="http://blog.csdn.net/pfanaya">CSDN</a>和<a href="http://cnblogs.com/visayafan">博客园</a>写博，不过最终决定在Github上建立个人主页<!-- (<a href="http://visayafan.github.com">http://visayafan.github.com</a> or <a href="http://visayafan.github.com">http://www.fanhan.tk</a>) -->，目的在于更方便地整理记录所学知识。您可以通过此邮件与我联系: <a href="mailto:visayafan@gmail.com">visayafan@gmail.com</a>。 ——2012年7月23日<br/>
-              </p>
+      <div class="tab-content">
+
+        <!-- c++ -->
+        <div class="tab-pane active" id="cpp">
+          <div class="span3">
+            <div style="border-right:1px solid">
+              <ol>
+                <li><a href="Coding/Cpp/GCC.html">GCC使用笔记</a></li>
+                <li><a href="Coding/Cpp/浮点数正负无穷.html">浮点数正负无穷的表示方法</a></li>
+                <li><a href="Coding/Cpp/extern.html">关键字 extern</a></li>
+                <li><a href="Coding/Cpp/explicit.html">关键字 explicit</a></li>
+                <li><a href="Coding/Cpp/const.html">关键字 const</a></li>
+                <li><a href="Coding/Cpp/const-static.html">const, static, const staic理解</a></li>
+                <li><a href="Coding/Cpp/名字控制.html">名字控制</a></li>
+                <li><a href="Coding/Cpp/static_dynamic_cast.html">static_dynamic_cast</a></li>
+                <li><a href="Coding/Cpp/拷贝构造函数.html">拷贝构造函数</a></li>
+                <li><a href="Coding/Cpp/member_template_function.html">成员模板函数</a></li>
+                <li><a href="Coding/Cpp/模板特化与偏特化.html">模板特化与偏特化</a></li>
+                <li><a href="Coding/Cpp/littleBigEndian.html">字节序</a></li>
+                <li><a href="Coding/Cpp/auto_ptr.html">智能指针 auto ptr</a></li>
+                <li><a href="Coding/Cpp/template_argument_deduction.html">模板参数推导</a></li>
+                <li><a href="Coding/Cpp/map_set.html">STL：映射 集合</a></li>
+                <li><a href="Coding/Cpp/timer_progress_timer_display.html">Boost: 进度条</a></li>
+              </ol>
             </div>
           </div>
         </div>
+
+        <!-- python -->
+        <div class="tab-pane" id="python">
+          <div class="span3">
+            <div style="border-right:1px solid">
+              <ol>
+              </ol>
+            </div>
+          </div>
+        </div>
+
+        <!-- java -->
+        <div class="tab-pane" id="java">
+          <div class="span3">
+            <div style="border-right:1px solid">
+              <ol>
+                <li> <a href="Coding/Java/Java_Collections.html"> Java_Collections笔记 </a> </li>
+                <li> <a href="Coding/Java/Java_IO.html"> Java输入输出流 </a> </li>
+                <li> <a href="Coding/Java/Java_Swing.html"> Java_Swing GUI编程笔记 </a> </li>
+                <li> <a href="Coding/Java/Java_Thread.html"> Java多线程并发笔记 </a> </li>
+                <li> <a href="Coding/Java/Java_Others.html"> Java琐碎笔记 </a>  </li>
+                <li> <a href="Coding/Java/Emacs_JavaMode_Note.html"> Emacs_JavaMode笔记 </a> </li>
+                <li> <a href="Coding/Java/Java_Eclipse.html"> Java_Eclipse使用笔记 </a> </li>
+              </ol>
+            </div>
+          </div>
+        </div>
+
+        <!-- Algorithm -->
+        <div class="tab-pane" id="algorithm">
+          <div class="span3">
+            <div style="border-right:1px solid">
+              <ol>
+              </ol>
+            </div>
+          </div>
+        </div>
+
+        <!-- linux操作系统 -->
+        <div class="tab-pane" id="linuxos">
+          <div class="span3">
+            <div style="border-right:1px solid">
+              <ol>
+                <li><a href="Linux/LinuxOS/tar.html">Linux命令行解压压缩</a></li>
+                <li><a href="Linux/LinuxOS/xclip.html">Xclip剪切板与终端的通道</a></li>
+                <li><a href="Linux/LinuxOS/tree.html">Tree 命令</a></li>
+                <li><a href="Linux/LinuxOS/批量修改文件.html">批量修改文件</a></li>
+              </ol>
+            </div>
+          </div>
+          <div class="span3">
+            <div style="border-right:1px solid">
+              <ol>
+                <li><a href="Linux/LinuxOS/Ubuntu12.04配置.html">Ubuntu12.04配置</a></li>
+                <li><a href="Linux/LinuxOS/etc.issue.html">/etc/issue,/etc/motd 登陆显示信息</a></li>
+                <li><a href="Linux/LinuxOS/kscope.html">Kscope安装及使用</a></li>
+                <li><a href="Linux/LinuxOS/Ubuntu下配置GAE翻墙.html">Ubuntu下配置GAE翻墙</a></li>
+              </ol>
+            </div>
+          </div>
+        </div>
+
+        <!-- linux下编程 -->
+        <div class="tab-pane" id="linuxcoding">
+          <div class="span3">
+            <div style="border-right:1px solid">
+              <ol>
+                <li><a href="Linux/LinuxCoding/fork.html">一道fork面试题</a></li>
+                <li><a href="Linux/LinuxCoding/linux_time.html">Linux下时间函数</a></li>
+                <li><a href="Linux/LinuxCoding/attribute.html">函数属性</a></li>
+                <li><a href="Linux/LinuxCoding/进程同步.html">两道有趣的进程同步题</a></li>
+              </ol>
+            </div>
+          </div>
+        </div>
+        
+        <!-- linux内核 -->
+        <div class="tab-pane" id="linuxkernel">
+          <div class="span3">
+            <div style="border-right:1px solid">
+              <ol>
+                <li><a href="Linux/LinuxKernel/传统和实时进程.html">传统与实时进程</a></li>
+                <li><a href="Linux/LinuxKernel/AT&T汇编笔记.html">AT&T汇编笔记</a></li>
+                <li><a href="Linux/LinuxKernel/process.html">Linux内核－进程管理基础</a></li>
+                <li><a href="Linux/LinuxKernel/mm.html">Linux内核－内存管理</a></li>
+                <li><a href="Linux/LinuxKernel/非连续内存管理.html">Linux内核－非连续内存管理</a></li>
+              </ol>
+            </div>
+          </div>
+        </div>
+
+        <!-- compiler -->
+        <div class="tab-pane" id="compiler">
+          <div class="span3">
+            <div style="border-right:1px solid">
+              <ol>
+                <li><a href="Compiler/o/lex.html">Flex 使用笔记</a></li>
+              </ol>
+            </div>
+          </div>
+        </div>
+
+        <!-- 英语 -->
+        <div class="tab-pane" id="english">
+          <div class="span3">
+            <div style="border-right:1px solid">
+              <h4>译</h4>
+              <ol>
+                <li><a href="English/Advice_For_CS_College_Students/index.html">给计算机科学大学毕业生的建议</a></li>
+              </ol>
+              <h4>单词</h4>
+              <ol>
+                <li><a href="English/NewWords/NewWords01.html">New Words 01</a></li>
+                <li><a href="English/NewWords/NewWords02.html">New Words 02</a></li>
+                <li><a href="English/NewWords/NewWords03.html">New Words 03</a></li>
+                <li><a href="English/NewWords/money.html">USA/UK Money</a></li>
+                <li><a href="English/NewWords/TheMatrix.html">The Matrix</a></li>
+              </ol>
+            </div>
+          </div>
+        </div>
+        
+        <!-- 链接 -->
+        <div class="tab-pane" id="links">
+          <div class="span3">
+            <div style="border-right:1px solid">
+              <h4>EN</h4>
+              <ol>
+                <li><a href="http://www.reddit.com/">Reddit</a></li>
+                <li><a href="http://www.ted.com/">TED</a></li>
+                <li><a href="http://news.ycombinator.com">HackerNews</a></li>
+                <li><a href="http://venturebeat.com">venturebeat</a></li>
+                <li><a href="http://www.fmylife.com/" rel="popover" data-replacement="right" data-content="美版糗事百科">FMyLife</a></li>
+              </ol>
+              <h4>CN</h4>
+              <ol>
+                <li><a href="http://oschina.net/" rel="popover" data-replacement="right" data-content="开源中国">OSChina</a></li>
+              </ol>
+              <h4>Tools</h4>
+              <ol>
+                <li><a href="http://regexpal.com/" rel="popover" data-replacement="right" data-content="正则表达式在线测试">regexpal</a></li>
+              </ol>
+              <h4>Programming</h4>
+              <ol>
+                <li><a href="http://www.pythonchallenge.com/" rel="popover" data-replacement="right" data-content="练习Python网站">PythonChallenge</a></li>
+                <li><a href="http://www.stanford.edu/class/cs143" rel="popover" data-replacement="right" data-content="斯坦福大学编译原理课程">Stanford Compiler CS143</a></li>
+                <li><a href="http://suif.stanford.edu/~courses/cs243" rel="popover" data-replacement="right" data-content="斯坦福大学高级编译原理课程">Stanford Advanced Compiler CS243</a></li>
+              </ol>
+              <h4>Personal Homepage EN</h4>
+              <ol>
+                <li><a href="http://sachachua.com/">Sacha Chua</a></li>
+                <li><a href="http://www.joelonsoftware.com/" rel="popover" data-placement="right" data-content="Cofounder of StackOverflow">Joel Spolsky</a></li>
+                <li><a href="http://www.markhneedham.com/">Mark Needham</a></li>
+              </ol>
+              <h4>Personal Homepage CN</h4>
+              <ol>
+                <li><a href="http://coolshell.cn/">CoolShell</a></li>
+              </ol>
+            </div>
+          </div>
+          <div class="span3">
+            <div style="border-right:1px solid">
+              <h4>博文收藏</h4>
+              <ol>
+                <li><a href="http://blog.sina.com.cn/s/blog_5d90e82f01014k5j.html">Unix的缺陷</a></li>
+              </ol>
+            </div>
+          </div>
+        </div>
+
+        <!-- 其它 -->
+        <div class="tab-pane" id="others">
+          <div class="span3">
+            <div style="border-right:1px solid">
+              <ol>
+                <li><a href="Others/o/git.html">Git笔记</a></li>
+              </ol>
+            </div>
+          </div>
+        </div>
+        
+        <!-- 关于我 -->
+        <div class="tab-pane" id="aboutme">
+          <div class="span3">
+            <div style="border-right:1px solid">
+              <ol>
+              </ol>
+            </div>
+          </div>
+        </div>
+        
       </div>
-      <!-- } -->
-
-      <h3 align="right">
-        <!-- <a href="index_swf/index_swf.html">Swf Mode</a> -->
-        <!-- <br> -->
-        Computer Is Girlfriend
-      </h3>
     </div>
-
     <script type="text/javascript">
     </script>
+    <script src="Layout/JS/common.js" type="text/javascript"> </script>
   </body>
 </html>
+

@@ -1,0 +1,408 @@
+<?xml version="1.0" encoding="gb18030"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+               "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<title></title>
+<meta http-equiv="Content-Type" content="text/html;charset=gb18030"/>
+<meta name="title" content=""/>
+<meta name="generator" content="Org-mode"/>
+<meta name="generated" content="2012-10-10 17:13:11 CST"/>
+<meta name="author" content="visaya fan"/>
+<meta name="description" content=""/>
+<meta name="keywords" content=""/>
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  html { font-family: Times, serif; font-size: 12pt; }
+  .title  { text-align: center; }
+  .todo   { color: red; }
+  .done   { color: green; }
+  .tag    { background-color: #add8e6; font-weight:normal }
+  .target { }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .right  {margin-left:auto; margin-right:0px;  text-align:right;}
+  .left   {margin-left:0px;  margin-right:auto; text-align:left;}
+  .center {margin-left:auto; margin-right:auto; text-align:center;}
+  p.verse { margin-left: 3% }
+  pre {
+	border: 1pt solid #AEBDCC;
+	background-color: #F3F5F7;
+	padding: 5pt;
+	font-family: courier, monospace;
+        font-size: 90%;
+        overflow:auto;
+  }
+  table { border-collapse: collapse; }
+  td, th { vertical-align: top;  }
+  th.right  { text-align:center;  }
+  th.left   { text-align:center;   }
+  th.center { text-align:center; }
+  td.right  { text-align:right;  }
+  td.left   { text-align:left;   }
+  td.center { text-align:center; }
+  dt { font-weight: bold; }
+  div.figure { padding: 0.5em; }
+  div.figure p { text-align: center; }
+  div.inlinetask {
+    padding:10px;
+    border:2px solid gray;
+    margin:10px;
+    background: #ffffcc;
+  }
+  textarea { overflow-x: auto; }
+  .linenr { font-size:smaller }
+  .code-highlighted {background-color:#ffff00;}
+  .org-info-js_info-navigation { border-style:none; }
+  #org-info-js_console-label { font-size:10px; font-weight:bold;
+                               white-space:nowrap; }
+  .org-info-js_search-highlight {background-color:#ffff00; color:#000000;
+                                 font-weight:bold; }
+  /*]]>*/-->
+</style>
+<script type="text/javascript">
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+
+</head>
+<body>
+<div id="org-div-home-and-up">
+ <a accesskey="H" href="../../index.html#cpp"> HOME </a>
+</div>
+
+
+<div id="content">
+<h1 class="title"></h1>
+
+<p>参考自《C++ Template》一书，解释得很详细，英语也比较简单应该可以看懂，如果看不懂得话可以找侯捷的翻译版本。
+</p>
+<p>
+5.4 Template Template Parameters
+It can be useful to allow a template parameter itself to be a class template. Again, our stack class template can be used as an example.
+模板参数列表里面可以存在模板，称之为模板参数模板。
+To use a different internal container for stacks, the application programmer has to specify the element type twice. Thus, to specify the type of the internal container, you have to pass the type of the container and the type of its elements again:
+PS:下面的Stack实现用到了该章节以前的代码。
+</p>
+
+
+<pre class="src src-c++"><span style="color: #228b22;">Stack</span>&lt;<span style="color: #228b22;">int</span>,<span style="color: #008b8b;">std</span>::<span style="color: #228b22;">vector</span>&lt;<span style="color: #228b22;">int</span>&gt; &gt; <span style="color: #a0522d;">vStack</span>;  <span style="color: #b22222;">// </span><span style="color: #b22222;">integer stack that uses a vector </span>
+</pre>
+
+<p>
+Using template template parameters allows you to declare the Stack class template by specifying the type of the container without respecifying the type of its elements:
+</p>
+
+
+<pre class="src src-c++"><span style="color: #228b22;">stack</span>&lt;<span style="color: #228b22;">int</span>,<span style="color: #008b8b;">std</span>::vector&gt; <span style="color: #a0522d;">vStack</span>;        <span style="color: #b22222;">// </span><span style="color: #b22222;">integer stack that uses a vector </span>
+</pre>
+
+<p>
+To do this you must specify the second template parameter as a template template parameter. In principle, this looks as follows <sup><a class="footref" name="fnr.1" href="#fn.1">1</a></sup>:
+There is a problem with this version that we explain in a minute. However, this problem affects only the default value std::deque. Thus, we can illustrate the general features of template template parameters with this example.
+</p>
+<p>
+PS:此代码是运行不通过的，原因<a href="template_template_argument.html">在这</a>。
+</p>
+
+
+<pre class="src src-c++"><span style="color: #b22222;">// </span><span style="color: #b22222;">basics/stack7decl.hpp </span>
+<span style="color: #a020f0;">template</span> &lt;<span style="color: #a020f0;">typename</span> <span style="color: #228b22;">T</span>, 
+          <span style="color: #a020f0;">template</span> &lt;<span style="color: #a020f0;">typename</span> <span style="color: #228b22;">ELEM</span>&gt; <span style="color: #a020f0;">class</span> <span style="color: #228b22;">CONT</span> = <span style="color: #008b8b;">std</span>::<span style="color: #228b22;">deque</span> &gt; 
+<span style="color: #a020f0;">class</span> <span style="color: #228b22;">Stack</span> { 
+  <span style="color: #a020f0;">private</span>: 
+    <span style="color: #228b22;">CONT</span>&lt;<span style="color: #228b22;">T</span>&gt; <span style="color: #a0522d;">elems</span>;         <span style="color: #b22222;">// </span><span style="color: #b22222;">elements </span>
+
+  <span style="color: #a020f0;">public</span>: 
+    <span style="color: #228b22;">void</span> <span style="color: #0000ff;">push</span>(T <span style="color: #a020f0;">const</span>&amp;);   <span style="color: #b22222;">// </span><span style="color: #b22222;">push element </span>
+    <span style="color: #228b22;">void</span> <span style="color: #0000ff;">pop</span>();            <span style="color: #b22222;">// </span><span style="color: #b22222;">pop element </span>
+    <span style="color: #228b22;">T</span> <span style="color: #0000ff;">top</span>() <span style="color: #a020f0;">const</span>;         <span style="color: #b22222;">// </span><span style="color: #b22222;">return top element </span>
+    <span style="color: #228b22;">bool</span> <span style="color: #0000ff;">empty</span>() <span style="color: #a020f0;">const</span> {   <span style="color: #b22222;">// </span><span style="color: #b22222;">return whether the stack is empty </span>
+        <span style="color: #a020f0;">return</span> elems.empty(); 
+    } 
+};
+</pre>
+
+
+<p>
+The difference is that the second template parameter is declared as being a class template:
+</p>
+
+
+<pre class="src src-c++"><span style="color: #a020f0;">template</span> &lt;<span style="color: #a020f0;">typename</span> <span style="color: #228b22;">ELEM</span>&gt; <span style="color: #a020f0;">class</span> <span style="color: #228b22;">CONT</span> 
+</pre>
+
+<p>
+The default value has changed from std::deque&lt;T&gt; to std::deque. This parameter has to be a class template, which is instantiated for the type that is passed as the first template parameter:
+</p>
+
+
+<pre class="src src-c++"><span style="color: #228b22;">CONT</span>&lt;T&gt; <span style="color: #a0522d;">elems</span>; 
+</pre>
+
+<p>
+This use of the first template parameter for the instantiation of the second template parameter is particular to this example. In general, you can instantiate a template template parameter with any type inside a class template.
+As usual, instead of typename you could use the keyword class for template parameters. However, CONT is used to define a class and must be declared by using the keyword class. Thus, the following is fine:
+</p>
+
+
+<pre class="src src-c++"><span style="color: #a020f0;">template</span> &lt;<span style="color: #a020f0;">typename</span> <span style="color: #228b22;">T</span>, 
+          <span style="color: #a020f0;">template</span> &lt;<span style="color: #a020f0;">class</span> <span style="color: #228b22;">ELEM</span>&gt; <span style="color: #a020f0;">class</span> <span style="color: #228b22;">CONT</span> = <span style="color: #008b8b;">std</span>::<span style="color: #228b22;">deque</span>&gt;  <span style="color: #b22222;">// </span><span style="color: #b22222;">OK </span>
+<span style="color: #a020f0;">class</span> <span style="color: #228b22;">Stack</span> { 
+  &#8230; 
+}; 
+</pre>
+
+<p>
+but the following is not:
+</p>
+
+
+<pre class="src src-c++"><span style="color: #a020f0;">template</span> &lt;<span style="color: #a020f0;">typename</span> <span style="color: #228b22;">T</span>, 
+          <span style="color: #a020f0;">template</span> &lt;<span style="color: #a020f0;">typename</span> <span style="color: #228b22;">ELEM</span>&gt; <span style="color: #a020f0;">typename</span> <span style="color: #228b22;">CONT</span> = <span style="color: #008b8b;">std</span>::<span style="color: #228b22;">deque</span>&gt; 
+<span style="color: #a020f0;">class</span> <span style="color: #228b22;">Stack</span> {                                             <span style="color: #b22222;">// </span><span style="color: #b22222;">ERROR </span>
+  &#8230; 
+}; 
+</pre>
+
+
+<p>
+Because the template parameter of the template template parameter is not used, you can omit its name:
+因为模板参数模板的模板参数并未使用，所以可以把忽略掉：
+</p>
+
+
+<pre class="src src-c++"><span style="color: #a020f0;">template</span> &lt;<span style="color: #a020f0;">typename</span> <span style="color: #228b22;">T</span>, 
+          <span style="color: #a020f0;">template</span> &lt;<span style="color: #a020f0;">typename</span>&gt; <span style="color: #a020f0;">class</span> <span style="color: #228b22;">CONT</span> = <span style="color: #008b8b;">std</span>::<span style="color: #228b22;">deque</span> &gt; 
+<span style="color: #a020f0;">class</span> <span style="color: #228b22;">Stack</span> { 
+  &#8230; 
+}; 
+</pre>
+
+
+<p>
+Member functions must be modified accordingly. Thus, you have to specify the second template parameter as the template template parameter. The same applies to the implementation of the member function. The push() member function, for example, is implemented as follows:
+修改相应的成员函数：
+</p>
+
+
+<pre class="src src-c++"><span style="color: #a020f0;">template</span> &lt;<span style="color: #a020f0;">typename</span> <span style="color: #228b22;">T</span>, <span style="color: #a020f0;">template</span> &lt;<span style="color: #a020f0;">typename</span>&gt; <span style="color: #a020f0;">class</span> <span style="color: #228b22;">CONT</span>&gt; 
+<span style="color: #228b22;">void</span> <span style="color: #008b8b;">Stack</span>&lt;<span style="color: #228b22;">T</span>,<span style="color: #228b22;">CONT</span>&gt;::<span style="color: #0000ff;">push</span> (T <span style="color: #a020f0;">const</span>&amp; <span style="color: #a0522d;">elem</span>) 
+{ 
+    elems.push_back(elem);    <span style="color: #b22222;">// </span><span style="color: #b22222;">append copy of passed elem </span>
+} 
+</pre>
+
+
+<p>
+Template template parameters for function templates are not allowed.
+</p>
+<p>
+ <b>Template Template Argument Matching</b>
+</p>
+<p>
+If you try to use the new version of Stack, you get an error message saying that the default value std::deque is not compatible with the template template parameter CONT. The problem is that a template template argument must be a template with parameters that exactly match the parameters of the template template parameter it substitutes. Default template arguments of template template arguments are not considered, so that a match cannot be achieved by leaving out arguments that have default values.
+如果你使用上面实现的Stack，你将会得到错误信息说：默认的std::deque与模板参数模板不匹配。
+The problem in this example is that the std::deque template of the standard library has more than one parameter: The second parameter (which describes a so-called allocator) has a default value, but this is not considered when matching std::deque to the CONT parameter.
+原因在于std::deque的模板参数有两个：
+template &lt;typename T, typename Alloc = std::allocator&gt;  //默认第2个参数是std里面定义的空间适配器(《STL源码剖析》中如是翻译)
+</p>
+<p>
+There is a workaround, however. We can rewrite the class declaration so that the CONT parameter expects containers with two template parameters:
+</p>
+
+
+<pre class="src src-c++"><span style="color: #a020f0;">template</span> &lt;<span style="color: #a020f0;">typename</span> <span style="color: #228b22;">T</span>, 
+          <span style="color: #a020f0;">template</span> &lt;<span style="color: #a020f0;">typename</span> <span style="color: #228b22;">ELEM</span>, 
+                    <span style="color: #a020f0;">typename</span> <span style="color: #228b22;">ALLOC</span> = <span style="color: #008b8b;">std</span>::<span style="color: #228b22;">allocator</span>&lt;<span style="color: #228b22;">ELEM</span>&gt; &gt; 
+                    <span style="color: #a020f0;">class</span> <span style="color: #228b22;">CONT</span> = <span style="color: #008b8b;">std</span>::<span style="color: #228b22;">deque</span>&gt; 
+<span style="color: #a020f0;">class</span> <span style="color: #228b22;">Stack</span> { 
+  <span style="color: #a020f0;">private</span>: 
+    <span style="color: #228b22;">CONT</span>&lt;<span style="color: #228b22;">T</span>&gt; <span style="color: #a0522d;">elems</span>;         <span style="color: #b22222;">// </span><span style="color: #b22222;">elements </span>
+    &#8230; 
+}; 
+</pre>
+
+<p>
+Again, you can omit ALLOC because it is not used.
+同理因为用不到Alloc，所以可以把它忽略掉。
+</p>
+<p>
+The final version of our Stack template (including member templates for assignments of stacks of different element types) now looks as follows:
+</p>
+
+
+
+<pre class="src src-c++"><span style="color: #b22222;">// </span><span style="color: #b22222;">basics/stack8.hpp </span>
+<span style="color: #7a378b;">#if</span><span style="color: #7a378b;">n</span><span style="color: #7a378b;">def</span> STACK_HPP 
+<span style="color: #7a378b;">#define</span> <span style="color: #a0522d;">STACK_HPP</span> 
+
+<span style="color: #7a378b;">#include</span> <span style="color: #8b2252;">&lt;deque&gt;</span> 
+<span style="color: #7a378b;">#include</span> <span style="color: #8b2252;">&lt;stdexcept&gt;</span> 
+<span style="color: #7a378b;">#include</span> <span style="color: #8b2252;">&lt;allocator&gt;</span> 
+
+<span style="color: #a020f0;">template</span> &lt;<span style="color: #a020f0;">typename</span> <span style="color: #228b22;">T</span>, 
+          <span style="color: #a020f0;">template</span> &lt;<span style="color: #a020f0;">typename</span> <span style="color: #228b22;">ELEM</span>, 
+                    <span style="color: #a020f0;">typename</span> = <span style="color: #008b8b;">std</span>::<span style="color: #228b22;">allocator</span>&lt;<span style="color: #228b22;">ELEM</span>&gt; &gt; 
+                    <span style="color: #a020f0;">class</span> <span style="color: #228b22;">CONT</span> = <span style="color: #008b8b;">std</span>::<span style="color: #228b22;">deque</span>&gt; 
+<span style="color: #a020f0;">class</span> <span style="color: #228b22;">Stack</span> { 
+  <span style="color: #a020f0;">private</span>: 
+    <span style="color: #228b22;">CONT</span>&lt;<span style="color: #228b22;">T</span>&gt; <span style="color: #a0522d;">elems</span>;        <span style="color: #b22222;">// </span><span style="color: #b22222;">elements </span>
+
+  <span style="color: #a020f0;">public</span>: 
+    <span style="color: #228b22;">void</span> <span style="color: #0000ff;">push</span>(T <span style="color: #a020f0;">const</span>&amp;);  <span style="color: #b22222;">// </span><span style="color: #b22222;">push element </span>
+    <span style="color: #228b22;">void</span> <span style="color: #0000ff;">pop</span>();            <span style="color: #b22222;">// </span><span style="color: #b22222;">pop element </span>
+    <span style="color: #228b22;">T</span> <span style="color: #0000ff;">top</span>() <span style="color: #a020f0;">const</span>;         <span style="color: #b22222;">// </span><span style="color: #b22222;">return top element </span>
+    <span style="color: #228b22;">bool</span> <span style="color: #0000ff;">empty</span>() <span style="color: #a020f0;">const</span> {   <span style="color: #b22222;">// </span><span style="color: #b22222;">return whether the stack is empty </span>
+        <span style="color: #a020f0;">return</span> elems.empty(); 
+    } 
+
+    <span style="color: #b22222;">// </span><span style="color: #b22222;">assign stack of elements of type T2 </span>
+    <span style="color: #a020f0;">template</span>&lt;<span style="color: #a020f0;">typename</span> <span style="color: #228b22;">T2</span>, 
+             <span style="color: #a020f0;">template</span>&lt;<span style="color: #a020f0;">typename</span> <span style="color: #228b22;">ELEM2</span>, 
+                      <span style="color: #a020f0;">typename</span> = <span style="color: #008b8b;">std</span>::<span style="color: #228b22;">allocator</span>&lt;<span style="color: #228b22;">ELEM2</span>&gt; 
+                      &gt;<span style="color: #a020f0;">class</span> <span style="color: #228b22;">CONT2</span>&gt; 
+    <span style="color: #228b22;">Stack</span>&lt;<span style="color: #228b22;">T</span>,CONT&gt;&amp; <span style="color: #a020f0;">operator</span><span style="color: #0000ff;">=</span> (<span style="color: #228b22;">Stack</span>&lt;<span style="color: #228b22;">T2</span>,<span style="color: #228b22;">CONT2</span>&gt; <span style="color: #a020f0;">const</span>&amp;); 
+}; 
+
+<span style="color: #a020f0;">template</span> &lt;<span style="color: #a020f0;">typename</span> <span style="color: #228b22;">T</span>, <span style="color: #a020f0;">template</span> &lt;<span style="color: #a020f0;">typename</span>,<span style="color: #a020f0;">typename</span>&gt; <span style="color: #a020f0;">class</span> <span style="color: #228b22;">CONT</span>&gt; 
+<span style="color: #228b22;">void</span> <span style="color: #008b8b;">Stack</span>&lt;<span style="color: #228b22;">T</span>,<span style="color: #228b22;">CONT</span>&gt;::<span style="color: #0000ff;">push</span> (T <span style="color: #a020f0;">const</span>&amp; <span style="color: #a0522d;">elem</span>) 
+{ 
+    elems.push_back(elem);    <span style="color: #b22222;">// </span><span style="color: #b22222;">append copy of passed elem </span>
+} 
+
+<span style="color: #a020f0;">template</span>&lt;<span style="color: #a020f0;">typename</span> <span style="color: #228b22;">T</span>, <span style="color: #a020f0;">template</span> &lt;<span style="color: #a020f0;">typename</span>,<span style="color: #a020f0;">typename</span>&gt; <span style="color: #a020f0;">class</span> <span style="color: #228b22;">CONT</span>&gt; 
+<span style="color: #228b22;">void</span> <span style="color: #008b8b;">Stack</span>&lt;<span style="color: #228b22;">T</span>,<span style="color: #228b22;">CONT</span>&gt;::<span style="color: #0000ff;">pop</span> () 
+{ 
+    <span style="color: #a020f0;">if</span> (elems.empty()) { 
+        <span style="color: #a020f0;">throw</span> <span style="color: #008b8b;">std</span>::out_of_range(<span style="color: #8b2252;">"Stack&lt;&gt;::pop(): empty stack"</span>); 
+    } 
+    elems.pop_back();         <span style="color: #b22222;">// </span><span style="color: #b22222;">remove last element </span>
+} 
+
+<span style="color: #a020f0;">template</span> &lt;<span style="color: #a020f0;">typename</span> <span style="color: #228b22;">T</span>, <span style="color: #a020f0;">template</span> &lt;<span style="color: #a020f0;">typename</span>,<span style="color: #a020f0;">typename</span>&gt; <span style="color: #a020f0;">class</span> <span style="color: #228b22;">CONT</span>&gt; 
+<span style="color: #228b22;">T</span> <span style="color: #008b8b;">Stack</span>&lt;<span style="color: #228b22;">T</span>,<span style="color: #228b22;">CONT</span>&gt;::<span style="color: #0000ff;">top</span> () <span style="color: #a020f0;">const</span> 
+{ 
+    <span style="color: #a020f0;">if</span> (elems.empty()) { 
+        <span style="color: #a020f0;">throw</span> <span style="color: #008b8b;">std</span>::out_of_range(<span style="color: #8b2252;">"Stack&lt;&gt;::top(): empty stack"</span>); 
+    } 
+    <span style="color: #a020f0;">return</span> elems.back();      <span style="color: #b22222;">// </span><span style="color: #b22222;">return copy of last element </span>
+} 
+<span style="color: #a020f0;">template</span> &lt;<span style="color: #a020f0;">typename</span> <span style="color: #228b22;">T</span>, <span style="color: #a020f0;">template</span> &lt;<span style="color: #a020f0;">typename</span>,<span style="color: #a020f0;">typename</span>&gt; <span style="color: #a020f0;">class</span> <span style="color: #228b22;">CONT</span>&gt; 
+ <span style="color: #a020f0;">template</span> &lt;<span style="color: #a020f0;">typename</span> <span style="color: #228b22;">T2</span>, <span style="color: #a020f0;">template</span> &lt;<span style="color: #a020f0;">typename</span>,<span style="color: #a020f0;">typename</span>&gt; <span style="color: #a020f0;">class</span> <span style="color: #228b22;">CONT2</span>&gt; 
+<span style="color: #228b22;">Stack</span>&lt;<span style="color: #228b22;">T</span>,<span style="color: #228b22;">CONT</span>&gt;&amp; 
+<span style="color: #008b8b;">Stack</span>&lt;<span style="color: #228b22;">T</span>,<span style="color: #228b22;">CONT</span>&gt;::<span style="color: #a020f0;">operator</span><span style="color: #0000ff;">=</span> (<span style="color: #228b22;">Stack</span>&lt;<span style="color: #228b22;">T2</span>,<span style="color: #228b22;">CONT2</span>&gt; <span style="color: #a020f0;">const</span>&amp; <span style="color: #a0522d;">op2</span>) 
+{ 
+    <span style="color: #a020f0;">if</span> ((<span style="color: #228b22;">void</span>*)<span style="color: #a020f0;">this</span> == (<span style="color: #228b22;">void</span>*)&amp;op2) {    <span style="color: #b22222;">// </span><span style="color: #b22222;">assignment to itself? </span>
+        <span style="color: #a020f0;">return</span> *<span style="color: #a020f0;">this</span>; 
+    } 
+
+    <span style="color: #228b22;">Stack</span>&lt;<span style="color: #228b22;">T2</span>&gt; <span style="color: #a0522d;">tmp</span>(op2);              <span style="color: #b22222;">// </span><span style="color: #b22222;">create a copy of the assigned stack </span>
+
+    elems.clear();                   <span style="color: #b22222;">// </span><span style="color: #b22222;">remove existing elements </span>
+    <span style="color: #a020f0;">while</span> (!tmp.empty()) {           <span style="color: #b22222;">// </span><span style="color: #b22222;">copy all elements </span>
+        elems.push_front(tmp.top()); 
+        tmp.pop(); 
+    } 
+    <span style="color: #a020f0;">return</span> *<span style="color: #a020f0;">this</span>; 
+} 
+
+<span style="color: #7a378b;">#endif</span> <span style="color: #b22222;">// </span><span style="color: #b22222;">STACK_HPP </span>
+</pre>
+
+
+<p>
+The following program uses all features of this final version:
+</p>
+
+
+
+<pre class="src src-c++"><span style="color: #b22222;">// </span><span style="color: #b22222;">basics/stack8test.cpp </span>
+<span style="color: #7a378b;">#include</span> <span style="color: #8b2252;">&lt;iostream&gt;</span> 
+<span style="color: #7a378b;">#include</span> <span style="color: #8b2252;">&lt;string&gt;</span> 
+<span style="color: #7a378b;">#include</span> <span style="color: #8b2252;">&lt;cstdlib&gt;</span> 
+<span style="color: #7a378b;">#include</span> <span style="color: #8b2252;">&lt;vector&gt;</span> 
+<span style="color: #7a378b;">#include</span> <span style="color: #8b2252;">"stack8.hpp"</span> 
+
+<span style="color: #228b22;">int</span> <span style="color: #0000ff;">main</span>() 
+{ 
+    <span style="color: #a020f0;">try</span> { 
+        <span style="color: #228b22;">Stack</span>&lt;<span style="color: #228b22;">int</span>&gt; <span style="color: #a0522d;">intStack</span>;        <span style="color: #b22222;">// </span><span style="color: #b22222;">stack of ints </span>
+        <span style="color: #228b22;">Stack</span>&lt;<span style="color: #228b22;">float</span>&gt; <span style="color: #a0522d;">floatStack</span>;    <span style="color: #b22222;">// </span><span style="color: #b22222;">stack of floats </span>
+
+        <span style="color: #b22222;">// </span><span style="color: #b22222;">manipulate int stack </span>
+        intStack.push(42); 
+        intStack.push(7); 
+
+        <span style="color: #b22222;">// </span><span style="color: #b22222;">manipulate float stack </span>
+        floatStack.push(7.7); 
+
+        <span style="color: #b22222;">// </span><span style="color: #b22222;">assign stacks of different type </span>
+        floatStack = intStack; 
+
+        <span style="color: #b22222;">// </span><span style="color: #b22222;">print float stack </span>
+        <span style="color: #008b8b;">std</span>::cout &lt;&lt; floatStack.top() &lt;&lt; <span style="color: #008b8b;">std</span>::endl; 
+        floatStack.pop(); 
+        <span style="color: #008b8b;">std</span>::cout &lt;&lt; floatStack.top() &lt;&lt; <span style="color: #008b8b;">std</span>::endl; 
+        floatStack.pop(); 
+        <span style="color: #008b8b;">std</span>::cout &lt;&lt; floatStack.top() &lt;&lt; <span style="color: #008b8b;">std</span>::endl; 
+        floatStack.pop(); 
+    } 
+    <span style="color: #a020f0;">catch</span> (<span style="color: #008b8b;">std</span>::exception <span style="color: #a020f0;">const</span>&amp; <span style="color: #a0522d;">ex</span>) { 
+        <span style="color: #008b8b;">std</span>::cerr &lt;&lt; <span style="color: #8b2252;">"Exception: "</span> &lt;&lt; ex.what() &lt;&lt; <span style="color: #008b8b;">std</span>::endl; 
+    } 
+
+    <span style="color: #b22222;">// </span><span style="color: #b22222;">stack for ints using a vector as an internal container </span>
+    <span style="color: #228b22;">Stack</span>&lt;<span style="color: #228b22;">int</span>,<span style="color: #008b8b;">std</span>::vector&gt; <span style="color: #a0522d;">vStack</span>; 
+    &#8230; 
+    vStack.push(42); 
+    vStack.push(7); 
+    <span style="color: #008b8b;">std</span>::cout &lt;&lt; vStack.top() &lt;&lt; <span style="color: #008b8b;">std</span>::endl; 
+    vStack.pop(); 
+} 
+</pre>
+
+
+<p>
+The program has the following output:
+</p>
+
+
+<pre class="src src-c++">7 
+42 
+Exception: <span style="color: #008b8b;">Stack</span>&lt;&gt;::top(): empty stack 
+7 
+</pre>
+
+<p>
+Note that template template parameters are one of the most recent features required for compilers to conform to the standard. Thus, this program is a good evaluation of the conformity of your compiler regarding template features.
+</p>
+<div id="footnotes">
+<h2 class="footnotes">Footnotes: </h2>
+<div id="text-footnotes">
+<p class="footnote"><sup><a class="footnum" name="fn.1" href="#fnr.1">1</a></sup> DEFINITION NOT FOUND: 2
+</p>
+</div>
+</div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,101 @@
+#+OPTIONS: ^:{} _:{} num:t toc:t \n:t
+#+include "../../template.org"
+#+title: 进程的创建与销毁
+
+* clone fork vfork
+  为了提高进程创建的效率，Linux内核采用了3种技术：
+  * 轻量级进程（Light Weight Process）：子进程和父进程共享地址空间，从而减少复制开销。利用 =clone= 函数实现。下面的fork和vfork都是通过调用clone通过传参不同达到不同效果。
+  * 写时拷贝（Copy On Write）：即子进程与父进程共享地址空间，但当其中一个进程要写时必须由内核把将被修改的页拷贝到一个新的页中并在此页中写。 =fork= 便是用此方法来创建新进程。 *此时父进程与子进程是并行执行的* 这是与vfork最大的区别之1。
+  * 子进程和父进程共享地址空间，为防止父进程修改地址空间，将父进程阻塞直到子进程被释放。 =vfork= 便是用此方法来创建新进程。 *子进程修改内存区域对父进程是可见的* 这是与fork最大的区别之2
+#+begin_src c -n
+int clone(int (*fn)(void *), void *child_stack,
+                 int flags, void *arg, 
+                 /* pid_t *ptid, struct user_desc *tls, pid_t *ctid */ );
+/*
+ * kernel 2.6.11 之后的内核版本中引入了许多其它的标志，例如:
+ * CLONE_NEWNET在一新的网络namespce中创建子进程
+ * CLONE_NEWPID在一新的PID namespace中创建一个新的进程
+ * CLONE_NEWIPC在一新的IPC namespace中创建一个新的进程
+ * CLONE_IO共享IO
+ */
+#define CSIGNAL		0x000000ff             /* 退出时标志signal mask to be sent at exit */
+#define CLONE_VM	0x00000100             /* 共享地址空间set if VM shared between processes */
+#define CLONE_FS	0x00000200             /* 共享文件系统set if fs info shared between processes */
+#define CLONE_FILES	0x00000400             /* 共享打开文件set if open files shared between processes */
+#define CLONE_SIGHAND	0x00000800         /* 共享信息处理器和阻塞信号？,如果此位被置，则CLONE_VM必须也被置 set if signal handlers and blocked signals shared */
+#define CLONE_PTRACE	0x00002000         /* 父进程被跟踪时子进程也被跟踪set if we want to let tracing continue on the child too */
+#define CLONE_VFORK	0x00004000             /* 父进程被挂起直到子进程释放虚拟内存 set if the parent wants the child to wake it up on mm_release */
+#define CLONE_PARENT	0x00008000         /* 共享父进程，即改变父子关系为兄弟关系set if we want to have the same parent as the cloner */
+#define CLONE_THREAD	0x00010000         /* 子进程加入父进程的线程组，设置子进程的tgid和group_leader, Same thread group? */
+#define CLONE_NEWNS	0x00020000             /* 在新的namespce启动子进程？New namespace group? */
+#define CLONE_SYSVSEM	0x00040000         /* share system V SEM_UNDO semantics */
+#define CLONE_SETTLS	0x00080000         /* 子进程创建新的thread local segment？？？create a new TLS for the child */
+#define CLONE_PARENT_SETTID	0x00100000     /* 设置参数中的pid为子进程的进程号 set the TID in the parent */
+#define CLONE_CHILD_CLEARTID	0x00200000 /* 清除子进程的tid， clear the TID in the child */
+#define CLONE_DETACHED		0x00400000     /* 保留Unused, ignored */
+#define CLONE_UNTRACED		0x00800000 /* 子进程不要被跟踪set if the tracing process can't force CLONE_PTRACE on this clone */
+#define CLONE_CHILD_SETTID	0x01000000 /* 设置子进程的tid变量为子进程的ID， set the TID in the child */
+#define CLONE_STOPPED		0x02000000 /* 子进程初始状态为TASK_STOPPED, Start in stopped state */
+#+end_src
+* do_fork
+  1中的函数都调用了do_fork。
+  函数执行过程：
+  * 从pidmap_array中获取一个进程ID，分配失败则出错返回
+  * 检查当前正在运行的进程是否正在被跟踪
+    - 如果是则检查参数中的flag是否被设置了CLONE_UNTRACE
+      + 如果没有，则设置标志的CLONE_PTRACE位
+#+begin_src c -n
+if (unlikely(current->ptrace)) {
+		trace = fork_traceflag (clone_flags);
+		if (trace)
+			clone_flags |= CLONE_PTRACE;
+}
+#+end_src
+  * 用copy_process函数复制父进程的进程描述符，创建新的进程描述符。
+    1. 分配失败则释放分配的进程ID并返回pid，此时pid为随机数
+    2. 否则：
+       - 检查参数flag中是否设置了CLONE_VFORK,如果有则初始化一个completion结构体，并将新建进程描述符的vfork_donw指针指向此结构体。
+#+begin_src c -n
+struct completion vfork;
+if (clone_flags & CLONE_VFORK) {
+    p->vfork_done = &vfork;
+    init_completion(&vfork);
+}
+#+end_src
+         completion结构体如下：
+#+begin_src c -n
+struct completion {
+	unsigned int done;
+	wait_queue_head_t wait;
+};
+#+end_src
+         task_struct->vfork_done是为vfork服务。
+       - 如果标志中的CLONE_STOPPED或父进程的ptrace被设置PT_TRACED，则给新建进程发送SIGSTOP信号
+       - 如果CLONE_STOPPED没有被设置，则调用 wake_up_new_task 唤醒新建的进程。否则设置其状态为 TASK_STOPPED
+       - 如果父进程被跟踪，则设置当前进程描述符的 =ptrace_message= 为新建进程的ID并调用 =ptrace_notify= 停止当前进程发送SIGCHLD信号通知调试进程当前进程创建了一个新的子进程，其进程ID可以在通过当前进程的 =ptrace_message= 来获得
+       - 如果设置了 =CLONE_VFORK= 则等待子进程执行完毕（等待列表中可能有多个，需要调用 __wake_up_common来遍历唤醒
+* copy_process
+  利用旧进程描述符创建新进程描述符，但是并不在此函数内开始执行。
+  * 检查参数标志中是否有自相矛盾的地方，例如： CLONE_NEWNS和CLONE_FS同时设置，CLONE_THREAD设了但CLONE_SIGHAND没有设置，CLONE_SIGHAND设置了但CLONE_VM没有设置。
+  * 通过调用 =security_task_create= 进行额外的安全检查
+  * 高用 =dup_task_current= 进行复制
+    * 调用 =alloc_task_struct= 和 =alloc_thread_info= 分别分配进程描述符和thread_info并通过内部指针相连
+  * 检查是否资源越界
+  * 一个用户对应一个用户结构，一个进程必属于某个用户，由 =task_struct->user= 指向的 =struct user= 来描述。
+    增加新建进程对应用户的用户结构计数（__count表此结构被使用的计数）和进程计数（此用户拥有的进程数量）
+  * 检查是否进程数量越界
+  * 如果标志中有 =CLONE_PARENT_SETTID= 则将新建进程ID赋给参数中的 parent_tidptr
+  * 设置新建进程的ID，标志，
+  * 初始化兄弟和孩子域
+  * 初始化锁 =alloc_lock= =proc_lock=
+  * 调用copy_semundo( ), copy_files( ) , copy_fs( ), copy_sighand( ), copy_signal( ), copy_mm( ), and copy_namespace( )根据父进程的相关域来初始化新建进程的域
+  * 如果clone_flag中有 clone_chld_settid或clone_chld_cleartid被设置，则设置新建进程的set_child_tid和clear_child_tid为参数中的child_tidptr(表新建进程的id)
+  * 调用 =sched_fork= 完成调度器数据结构的初始化工作
+  * 如果clone_flag中设置了clone_parent或clone_thread则设置新建进程的real_parent和parent为当前进程的real_parent，否则设置real_parent为当前进程
+  * =SET_LINKS= 将新建进程加到进程链表中
+  * 调用 =attach_pid= 将新建进程加到pidhash[PIDTYPE_PID]中
+    * 如果新建进程是线程组leader（没有设置CLONE_THREAD)则初始化tgid为自身pid，group_leader为自身
+      调用attach_pid插入到其它3个pidhash中
+    * 否则如果CLONE_THREAD被设置了（表明新建进程与父进程是同一线程组），则设置tgid为父进程的tgid，设置group_leader为父进程的group_leader.
+  * 增加nr_threads变量和total_forks变量
+  * 返回新建进程描述符指针

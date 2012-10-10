@@ -1,0 +1,6 @@
+#+OPTIONS: ^:{} _:{} num:t toc:t \n:t
+#+include "../../template.org"
+* 快捷键
+  1) C-c C-v C-z 自动import所需要包
+  2) C-c C-v C-. JDE的AutoCompletion
+

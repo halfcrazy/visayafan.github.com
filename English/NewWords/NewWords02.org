@@ -1,0 +1,134 @@
+#+OPTIONS: ^:{} _:{} num:t toc:t \n:t
+#+include "../../template.org"
+#+title:
+* 几何
+  pon 做后缀表X边形
+** 1-9
+   tri 三 -> trigon/triangle 三边形
+   tetragon 四角形
+   penta 五 -> pentagon 五边形
+   hexa 六 -> hexagon 六边形
+   hepta 七 -> heptagon 七边形
+   octa 八 -> octagon 八边形
+   enneagon/nonagon 九边形
+** 10-20
+   后面加上deca表十:
+   decagon 十边形
+   hendecagon 十一边形
+   dodecagon 十二边形
+   triskaidecogon 十三边形
+   tetradecagon 十四边形
+   pentadecagon 十五边形
+   hexadecagon 十六边形
+   heptadecagon 十七边形
+   octadecagon 十八边形
+   enneadecagon 十九边形
+** 十倍数
+   加conta
+   icosagon 二十边形
+   tricontagon 三十边形
+   pentacontagon 四十边形
+   hexacontagon 六十边形
+** 其它
+   XX-sized polygon
+   tetrogon means four-sided polygon
+* 2012年08月30日11:34PM
+** restroom/drill/pack into
+   restroom 休息室,更衣室,厕所/洗手间
+   drill (v/n)钻孔,训练 ->tornado drill龙卷风演习
+   pack into 挤进...里;塞进;挤在一个地方;涌入某个场所
+#+begin_example
+Today, I had to force myself to take a dump at school, even though I have severe restroom anxiety and shyness. I had finally relaxed enough to go when the tornado drills went off mid-dump, and 46 students and teachers proceeded to pack into the bathroom with me. FML
+#+end_example   
+** rant/antidote
+   rant 痛骂/咆哮
+   antidote 解药/解毒剂
+#+begin_example
+Today, while I was at work, a coworker began ranting about his theory that the government is going to create a disease that sterilises everyone, and use the antidote to control the population. I was just trying to take a crap in the stall next to him. FML
+#+end_example
+** pharmacist/antibiotics/gastrointestinal/distress/john/drench
+   pharmacy 药房/药剂学/制药业->pharmacology药理学->pharmacologist药理学家->pharmaceutical制药的 ->pharmacist药剂师
+   pharmaceutical industry 制药工业 
+   gastro 胃 intestine肠->intestinal和肠相关的 intestinal cancer 肠癌 intestinal bacteria肠道细菌
+   => gastrointestinal肠胃相关的
+   distress 不适/悲痛
+   biotic 生物的 ->antibiotic抗生的->antibiotics抗生素
+   john 马桶/厕所 on the john 也有人名John 约翰
+#+begin_example
+Today, the pharmacist warned me that my antibiotics might cause slight gastrointestinal distress. The fact that I have been on the john for the past 90 minutes drenched in sweat would lead me to believe our definitions of "slight" are a bit different. FML
+#+end_example   
+** squirt/pimple
+   squirt 喷出 -> squirt gun水枪
+   pimple 疙瘩
+#+begin_example
+Today, I bit my boyfriend's neck. I felt something squirt into my mouth. Turns out I had just popped a pimple on his neck. Into my mouth. FML
+#+end_example
+** jack off/cunt
+   jack off 手淫 = masturbate = wank
+   cunt 阴道/淫妇
+#+begin_example
+Today, I heard my daughter scream at my son through the bathroom door, "Are you jacking off in there or something?" and him scream back at her "Shut up you fucking cunt!" My daughter is 7 and my son is 8. FML
+#+end_example
+** hypnotize
+   hypnotize 使着迷,施催眠术
+   区别:hypothesize假设 hypothetic hypothesis
+#+begin_example
+Today, I got hypnotized at my school's variety show. Apparently, when asked to do something I enjoy doing, I began to violently hump the floor. FML
+#+end_example
+** confound
+   confound (v)混淆,搞混 ->confounded (a)糊涂的,困惑的
+   confounding (n)混杂,混淆
+#+begin_example
+emacsrookie ‏@emacsrookie
+@SeyZ_ I would like to show more stuff for the advanced emacs user. Btw I think you confound me with another guy,I never made videos. ;-)
+#+end_example
+* 2012年08月31日 8:26PM
+** refund
+   take a refund 退款
+#+begin_example
+Today, I bought some perfume that I thought smelled absolutely amazing. Later, my boyfriend walked in, sniffed, and said, "What smells like bacon?" The bottle cost 83$. They won't take a refund. FML
+#+end_example
+** rear-ended
+   rear (a)后方,后面 -> rear-ended 追尾
+#+begin_example
+Today, I got rear-ended. An old woman got out and came over to my car window. I thought she was coming to apologize and trade insurance companies. Instead, she poured her soda on my head, ran back into her car, and drove away. FML
+#+end_example
+** cheat on/cheat with/fluster
+   cheat on 对...不忠
+   cheat with 欺骗
+   fluster (v/n)慌张,混乱
+** bail on/laxative
+   bail 保释 -> bail on 放弃,失约
+   laxative 泻药
+#+begin_example
+Today, I had to bail on yet another date with an awesome guy. Every time I make a date, my hateful mother slips laxatives into my food so I'm glued to the shitter until 2am. This is the fourth time. FML
+#+end_example
+** delude
+   delude into 欺骗某人使相信
+#+begin_example
+The manager deluded her into thinking he would give her the job.
+#+end_example
+   delude oneself into 自欺欺人
+#+begin_example
+Don't delude yourself into thinking that the prices will ever fall.
+#+end_example
+#+begin_example
+Today, my girlfriend tried to convince me that she never takes dumps. I told her that as long as she eats, it's a biological impossibility, but she seems to have genuinely deluded herself into thinking it's true, purely because she is a girl. FML
+#+end_example   
+** mutter/battery
+   mutter 咕哝
+   battery (n)电池,殴打->assault and battery 人身攻击
+#+begin_example
+Today, after years of bad blood, my husband decided to invite his parents to dinner. After making rude remarks about my pregnancy, his dad eventually muttered that I'm a slut. My husband punched him, his wife called the police, and now I'm all alone while he sits in a jail cell for battery. FML
+#+end_example
+** ramen/cockroach
+   ramen 面条
+   cockroach 蟑螂
+#+begin_example
+Today, I ordered ramen to go. I looked at my order and discovered a cockroach. Disgusted, I showed it to them, and they apologized by "replacing" it for free. Later on, while I was enjoying the delicious food, I once again discovered a cockroach buried under all the noodles. FML
+#+end_example
+** escort
+   escort (n)陪同,护航舰,护卫队(v)护送,陪同
+#+begin_example
+Today, I was fired from my job. My boss turned to everyone and said, "Allow me to escort this trash out of the office." Everyone cheered. FML
+#+end_example

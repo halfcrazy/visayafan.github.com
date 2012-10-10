@@ -1,0 +1,103 @@
+#+OPTIONS: ^:{} _:{} num:t toc:t \n:t
+#+include "../../template.org"
+#+TITLE: const、static、const staic理解
+* static的理解
+- 理解 ::
+   1. 变量被存储在全局存储区里，可以下次调用的时候仍旧保持原来的值，这是与堆栈变量的区别。
+   2. 变量前static告知编译器，此变量仅在变量的作用范围内有效，这是与全局变量的区别。
+- 一个选择题 ::
+关于static变量，请选择下面所有说法正确的内容： 
+   1. 若全局变量仅在单个C文件中访问，则可以将这个变量修改为静态全局变量，以降低模块间的耦合度； 
+   2. 若全局变量仅由单个函数访问，则可以将这个变量改为该函数的静态局部变量，以降低模块间的耦合度； 
+   3. 设计和使用访问动态全局变量、静态全局变量、静态局部变量的函数时，需要考虑重入问题； 
+   4. 静态全局变量过大，可那会导致堆栈溢出。 
+- 答案与分析 ::
+对于A，B：根据本篇概述部分的说明b)，我们知道，A,B都是正确的。 
+对于C：根据本篇概述部分的说明a)，我们知道，C是正确的（所谓的函数重入问题，下面会详细阐述）。 
+对于D：静态变量放在程序的全局数据区，而不是在堆栈中分配，所以不可能导致堆栈溢出，D是错误的。 
+因此，答案是A、B、C。 
+* const 新自定义类型 p; 则p不可变
+#+BEGIN_SRC c++
+#include <iostream>
+using namespace std;
+typedef char* pchar;
+int main()
+{
+        char str[10] = "abcdef";
+        const char* p1 = str;
+        const pchar p2 = str;
+        p1++;
+        p2++;
+        return 0;
+}
+#+END_SRC  
+- 上面程序出错的原因 ::
+const char* p1 = str; 其中p1是可变指针指向不可变的字符串。所以p1++正确。
+typedef char* pchar; 定义了一种新类型，所以 const pchar p2; p2是const类型的，所以p2++出错。
+* 不可重入函数
+所谓可重入函数就是结果可预测（即只要输入数据相同，输出结果就相同）。
+下面的函数就不是可重入函数，因为static的缘故。
+#+BEGIN_SRC c++
+unsigned int sum_int( unsigned int base)
+{ 
+        　unsigned int index; 
+        　static unsigned int sum = 0; // 注意，是static类型的。 
+        　for (index = 1; index <= base; index++) 
+                　　sum += index; 
+        　return sum; 
+} 
+#+END_SRC    
+
+* 类的static成员变量
+#+BEGIN_SRC c++
+class A
+{
+public:
+    static int cnt;
+    A(){cnt++;}
+    static int how_many_instance(){
+        return cnt;
+    }
+};
+int A::cnt = 0;         //类的static成员变量必须在类外初始化，并且在加上其类型和类名::
+int main()
+{
+    cout<<A::how_many_instance()<<endl;
+    A a, b, c, d;
+    cout<<A::how_many_instance()<<endl;
+    return 0;
+}
+#+END_SRC  
+
+* 类的const成员变量
+- 类的const成员变量只能以初始化列表的形式初始化 ::
+#+BEGIN_SRC c++
+class A
+{
+public:
+    const int a;
+    A(){a=0;}
+};
+#+END_SRC  
+
+#+BEGIN_SRC c++
+class A
+{
+public:
+    const int a;
+    A():a(10){}
+};
+#+END_SRC
+
+上面程序第一个报错，因为类的const成员变量只能以初始化列表的形式初始化。
+* 类的static const成员变量
+- static const变量与static变量初始化方式一样 ::
+#+BEGIN_SRC c++
+class A
+{
+public:
+    static const int a;
+};
+const int A::a = 0;
+#+END_SRC  
+static const变量与static变量初始化方式一样，只是前者在变量名前加上const。

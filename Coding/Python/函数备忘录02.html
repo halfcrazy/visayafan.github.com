@@ -1,0 +1,453 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+               "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<title>函数总结2</title>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
+<meta name="title" content="函数总结2"/>
+<meta name="generator" content="Org-mode"/>
+<meta name="generated" content="2012-10-10 17:12:42 CST"/>
+<meta name="author" content="visaya fan"/>
+<meta name="description" content=""/>
+<meta name="keywords" content=""/>
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  html { font-family: Times, serif; font-size: 12pt; }
+  .title  { text-align: center; }
+  .todo   { color: red; }
+  .done   { color: green; }
+  .tag    { background-color: #add8e6; font-weight:normal }
+  .target { }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .right  {margin-left:auto; margin-right:0px;  text-align:right;}
+  .left   {margin-left:0px;  margin-right:auto; text-align:left;}
+  .center {margin-left:auto; margin-right:auto; text-align:center;}
+  p.verse { margin-left: 3% }
+  pre {
+	border: 1pt solid #AEBDCC;
+	background-color: #F3F5F7;
+	padding: 5pt;
+	font-family: courier, monospace;
+        font-size: 90%;
+        overflow:auto;
+  }
+  table { border-collapse: collapse; }
+  td, th { vertical-align: top;  }
+  th.right  { text-align:center;  }
+  th.left   { text-align:center;   }
+  th.center { text-align:center; }
+  td.right  { text-align:right;  }
+  td.left   { text-align:left;   }
+  td.center { text-align:center; }
+  dt { font-weight: bold; }
+  div.figure { padding: 0.5em; }
+  div.figure p { text-align: center; }
+  div.inlinetask {
+    padding:10px;
+    border:2px solid gray;
+    margin:10px;
+    background: #ffffcc;
+  }
+  textarea { overflow-x: auto; }
+  .linenr { font-size:smaller }
+  .code-highlighted {background-color:#ffff00;}
+  .org-info-js_info-navigation { border-style:none; }
+  #org-info-js_console-label { font-size:10px; font-weight:bold;
+                               white-space:nowrap; }
+  .org-info-js_search-highlight {background-color:#ffff00; color:#000000;
+                                 font-weight:bold; }
+  /*]]>*/-->
+</style>
+<script type="text/javascript">
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+
+</head>
+<body>
+<div id="org-div-home-and-up">
+ <a accesskey="H" href="../../index.html#python"> HOME </a>
+</div>
+
+
+<div id="content">
+<h1 class="title">函数总结2</h1>
+
+
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"> </script>
+<link rel="stylesheet" type="text/css" href="../../Layout/CSS/vf.css" />
+<script src="../../Layout/JS/bootstrap_old.js"></script>
+<script src="../../Layout/JS/disqus-comment.js"></script>
+
+
+<div id="table-of-contents">
+<h2>TOC</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#sec-1">1 len()</a></li>
+<li><a href="#sec-2">2 type()</a></li>
+<li><a href="#sec-3">3 str()</a></li>
+<li><a href="#sec-4">4 repr()</a></li>
+<li><a href="#sec-5">5 //除</a></li>
+<li><a href="#sec-6">6 print 默认回车</a></li>
+<li><a href="#sec-7">7 math.trunc()</a></li>
+<li><a href="#sec-8">8 math.floor()</a></li>
+<li><a href="#sec-9">9 oct() hex() bin()</a></li>
+<li><a href="#sec-10">10 int()</a></li>
+<li><a href="#sec-11">11 eval()</a></li>
+<li><a href="#sec-12">12 bit_length()</a></li>
+<li><a href="#sec-13">13 math.pi math.e math.sin() math.sqrt() math.pow() pow() abs() min() max()</a></li>
+<li><a href="#sec-14">14 random module</a>
+<ul>
+<li><a href="#sec-14-1">14.1 random.random()</a></li>
+<li><a href="#sec-14-2">14.2 random.randint(a, b)</a></li>
+<li><a href="#sec-14-3">14.3 random.choice(self, seq)</a></li>
+</ul>
+</li>
+<li><a href="#sec-15">15 zip</a>
+<ul>
+<li><a href="#sec-15-1">15.1 利用zip构造字典</a></li>
+</ul>
+</li>
+<li><a href="#sec-16">16 enumerate</a></li>
+<li><a href="#sec-17">17 reduce</a></li>
+<li><a href="#sec-18">18 str.maketrans/str.translate</a></li>
+<li><a href="#sec-19">19 chr/ord</a></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-1" class="outline-2">
+<h2 id="sec-1"><span class="section-number-2">1</span> len()</h2>
+<div class="outline-text-2" id="text-1">
+
+</div>
+
+</div>
+
+<div id="outline-container-2" class="outline-2">
+<h2 id="sec-2"><span class="section-number-2">2</span> type()</h2>
+<div class="outline-text-2" id="text-2">
+
+<p>  查看类型<br/>
+  type(X) == set    #判断X是不是set类型<br/>
+  type(D) == dict<br/>
+  isinstance(D, dict) 与上行等价<br/>
+</p></div>
+
+</div>
+
+<div id="outline-container-3" class="outline-2">
+<h2 id="sec-3"><span class="section-number-2">3</span> str()</h2>
+<div class="outline-text-2" id="text-3">
+
+</div>
+
+</div>
+
+<div id="outline-container-4" class="outline-2">
+<h2 id="sec-4"><span class="section-number-2">4</span> repr()</h2>
+<div class="outline-text-2" id="text-4">
+
+</div>
+
+</div>
+
+<div id="outline-container-5" class="outline-2">
+<h2 id="sec-5"><span class="section-number-2">5</span> //除</h2>
+<div class="outline-text-2" id="text-5">
+
+</div>
+
+</div>
+
+<div id="outline-container-6" class="outline-2">
+<h2 id="sec-6"><span class="section-number-2">6</span> print 默认回车</h2>
+<div class="outline-text-2" id="text-6">
+
+
+<p><br/>
+</p></div>
+
+</div>
+
+<div id="outline-container-7" class="outline-2">
+<h2 id="sec-7"><span class="section-number-2">7</span> math.trunc()</h2>
+<div class="outline-text-2" id="text-7">
+
+
+<p><br/>
+<pre class="example">去除浮点后面的
+因为版本问题：在2.6中 3/2=&gt;1，而在3.0中 3/2 =&gt;1.5。为避免版本引起的问题，可以用math.trunc().math.trunc(3/2)=&gt;1
+</pre>
+
+</p></div>
+
+</div>
+
+<div id="outline-container-8" class="outline-2">
+<h2 id="sec-8"><span class="section-number-2">8</span> math.floor()</h2>
+<div class="outline-text-2" id="text-8">
+
+
+<p><br/>
+<pre class="example">&gt;&gt;&gt; math.floor(2.5)
+2.0
+&gt;&gt;&gt; math.floor(-2.5)
+-3.0
+</pre>
+
+
+</p></div>
+
+</div>
+
+<div id="outline-container-9" class="outline-2">
+<h2 id="sec-9"><span class="section-number-2">9</span> oct() hex() bin()</h2>
+<div class="outline-text-2" id="text-9">
+
+
+<p><br/>
+<pre class="example">把10进制整数转化成8 16 2进制字符串
+2.6版本中8进制前面加0，3.0版本中前面加0o
+&gt;&gt;&gt; oct(64), hex(64), bin(64)
+('0100', '0x40', '0b1000000')
+</pre>
+
+</p></div>
+
+</div>
+
+<div id="outline-container-10" class="outline-2">
+<h2 id="sec-10"><span class="section-number-2">10</span> int()</h2>
+<div class="outline-text-2" id="text-10">
+
+
+<p><br/>
+<pre class="example">int(x[, base]) -&gt; integer
+把一个数字的字符串变换为整数，其中base指定指定x的进制。
+&gt;&gt;&gt; int('64'), int('100', 8), int('40', 16), int('1000000', 2)
+(64, 64, 64, 64)
+&gt;&gt;&gt; int('0x40', 16), int('0b1000000', 2) #与上面等价
+(64, 64)
+</pre>
+
+</p></div>
+
+</div>
+
+<div id="outline-container-11" class="outline-2">
+<h2 id="sec-11"><span class="section-number-2">11</span> eval()</h2>
+<div class="outline-text-2" id="text-11">
+
+</div>
+
+</div>
+
+<div id="outline-container-12" class="outline-2">
+<h2 id="sec-12"><span class="section-number-2">12</span> bit_length()</h2>
+<div class="outline-text-2" id="text-12">
+
+
+<p><br/>
+<pre class="example">#以二进制查询表示一个数字的什所需的位数
+&gt;&gt;&gt; (256).bit_length()
+9
+&gt;&gt;&gt; len(bin(256)) - 2
+9
+</pre>
+
+
+</p></div>
+
+</div>
+
+<div id="outline-container-13" class="outline-2">
+<h2 id="sec-13"><span class="section-number-2">13</span> math.pi math.e math.sin() math.sqrt() math.pow() pow() abs() min() max()</h2>
+<div class="outline-text-2" id="text-13">
+
+
+<p><br/>
+<pre class="example">python中有三种方法可以计算平方根：
+import math
+math.sqrt(144)
+pow(144, .5)
+144 ** .5
+</pre>
+
+
+</p>
+<hr/>
+
+<p><br/>
+<pre class="example">pow(x, y[, z]) -&gt; number
+通常是两个参数，若三个则表示 (x ** y) % z
+</pre>
+
+</p></div>
+
+</div>
+
+<div id="outline-container-14" class="outline-2">
+<h2 id="sec-14"><span class="section-number-2">14</span> random module</h2>
+<div class="outline-text-2" id="text-14">
+
+
+</div>
+
+<div id="outline-container-14-1" class="outline-3">
+<h3 id="sec-14-1"><span class="section-number-3">14.1</span> random.random()</h3>
+<div class="outline-text-3" id="text-14-1">
+
+<p>随机生成0-1之间的小数<br/>
+</p></div>
+
+</div>
+
+<div id="outline-container-14-2" class="outline-3">
+<h3 id="sec-14-2"><span class="section-number-3">14.2</span> random.randint(a, b)</h3>
+<div class="outline-text-3" id="text-14-2">
+
+<p>随机生成a-b之间的娄<br/>
+&gt;&gt;&gt; random.randint(1, 10)<br/>
+5<br/>
+</p></div>
+
+</div>
+
+<div id="outline-container-14-3" class="outline-3">
+<h3 id="sec-14-3"><span class="section-number-3">14.3</span> random.choice(self, seq)</h3>
+<div class="outline-text-3" id="text-14-3">
+
+<p>随机从序列中挑选<br/>
+&gt;&gt;&gt; random.choice(['a', 'b', 'c'])<br/>
+'c'<br/>
+</p></div>
+</div>
+
+</div>
+
+<div id="outline-container-15" class="outline-2">
+<h2 id="sec-15"><span class="section-number-2">15</span> zip</h2>
+<div class="outline-text-2" id="text-15">
+
+
+<p><br/>
+<pre class="example">zip(seq1, seq2, seq3...)=&gt; [(seq1[0], seq2[0]...), (seq1[1], seq2[1]...), ...]
+</pre>
+
+</p>
+</div>
+
+<div id="outline-container-15-1" class="outline-3">
+<h3 id="sec-15-1"><span class="section-number-3">15.1</span> 利用zip构造字典</h3>
+<div class="outline-text-3" id="text-15-1">
+
+
+<p><br/>
+<pre class="src src-python">&gt;&gt;&gt; d1=(<span style="color: #8b2252;">'a'</span>, <span style="color: #8b2252;">'b'</span>, <span style="color: #8b2252;">'c'</span>)
+&gt;&gt;&gt; d2=(1,2,3)
+&gt;&gt;&gt; <span style="color: #7a378b;">dict</span>(<span style="color: #7a378b;">zip</span>(d1,d2))
+{<span style="color: #8b2252;">'a'</span>: 1, <span style="color: #8b2252;">'c'</span>: 3, <span style="color: #8b2252;">'b'</span>: 2}
+&gt;&gt;&gt; d = <span style="color: #7a378b;">dict</span>(<span style="color: #7a378b;">zip</span>(d1,d2))
+&gt;&gt;&gt; d[<span style="color: #8b2252;">"a"</span>]
+1
+</pre>
+
+</p></div>
+</div>
+
+</div>
+
+<div id="outline-container-16" class="outline-2">
+<h2 id="sec-16"><span class="section-number-2">16</span> enumerate</h2>
+<div class="outline-text-2" id="text-16">
+
+
+<p><br/>
+<pre class="example">enumerate(iterable[, start]) -&gt; iterator for index, value of iterable
+</pre>
+
+
+<pre class="src src-python">&gt;&gt;&gt; s=<span style="color: #8b2252;">'spam'</span>
+&gt;&gt;&gt; <span style="color: #a020f0;">for</span> (offset, item) <span style="color: #a020f0;">in</span> <span style="color: #7a378b;">enumerate</span>(s):
+...     <span style="color: #a020f0;">print</span> (offset, item)
+... 
+(0, <span style="color: #8b2252;">'s'</span>)
+(1, <span style="color: #8b2252;">'p'</span>)
+(2, <span style="color: #8b2252;">'a'</span>)
+(3, <span style="color: #8b2252;">'m'</span>)
+</pre>
+
+</p></div>
+
+</div>
+
+<div id="outline-container-17" class="outline-2">
+<h2 id="sec-17"><span class="section-number-2">17</span> reduce</h2>
+<div class="outline-text-2" id="text-17">
+
+
+<p><br/>
+<pre class="example">reduce(function, sequence[, initial]) -&gt; value
+</pre>
+
+  initial可选，当sequence为空结果为该值。<br/>
+</p>
+<p><br/>
+<pre class="src src-python"><span style="color: #7a378b;">reduce</span>(<span style="color: #a020f0;">lambda</span> x,y:x*y, [1,2,3,4,5,6,7]) =&gt;(((((1*2)*3)*4)*5)*6)*7
+</pre>
+
+</p></div>
+
+</div>
+
+<div id="outline-container-18" class="outline-2">
+<h2 id="sec-18"><span class="section-number-2">18</span> str.maketrans/str.translate</h2>
+<div class="outline-text-2" id="text-18">
+
+<p>  用来从一个字符串翻译到另一个字符串<br/>
+</p>
+<p><br/>
+<pre class="src src-python"><span style="color: #a0522d;">before</span> = <span style="color: #8b2252;">'koe'</span>
+<span style="color: #a0522d;">after</span> = <span style="color: #8b2252;">'mqg'</span>
+<span style="color: #a0522d;">trantab</span> = maketrans(before, after)
+<span style="color: #a020f0;">print</span> <span style="color: #8b2252;">'koe'</span>.translate(trantab)
+</pre>
+
+</p></div>
+
+</div>
+
+<div id="outline-container-19" class="outline-2">
+<h2 id="sec-19"><span class="section-number-2">19</span> chr/ord</h2>
+<div class="outline-text-2" id="text-19">
+
+<p>  chr(数字) 将数字转换为对应的ASCII码<br/>
+  ord(char) 将char转换为对应的ASCII值<br/>
+</p></div>
+</div>
+</div>
+
+</body>
+</html>

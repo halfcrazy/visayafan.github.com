@@ -1,0 +1,51 @@
+#+OPTIONS: ^:{} _:{} num:t toc:t \n:t
+#+include "../../template.org"
+* eclilpse 快捷键
+#+ATTR_HTML: border="2" rules="all" frame="all"
+|-------------+--------------------------------|
+| M-/         | 提示                           |
+| syso        | system.out.println(" ");       |
+| main        | 写出main语句                   |
+| C-e         | 调出隐藏的tab                  |
+| C-d         | 删除当前行                     |
+| C-M-down    | 复制当前行到下一行             |
+| C-M-up      | 复制当前行到上一行             |
+| M-up        | 当前行与上一行换位置           |
+| M-down      | 当前行与下一行换位置           |
+| M-right     | 下一个编辑页面                 |
+| M-left      | 上                             |
+| C-q         | 定位到最后编辑的地方           |
+| C-l         | goto-line                      |
+| C-m         | 最大化当前的edit或view         |
+| C-/         | comment/uncomment              |
+| C-o         | outline                        |
+| C-t         | 快捷键显示当前类的继承结构     |
+| C-w         | close 当前 editor              |
+| C-S-F4      | close all editor               |
+| C-k         | 参照选中的word快速定位到下一个 |
+| M-enter     | 显示当前资源的属性             |
+| S-enter     | 在当前行的下一行插入空行       |
+| C-S-enter   | 在当前行插入空行               |
+| C-/(小键盘) | 折叠当前类中所有代码           |
+| C-*(小键盘) | 展开当前类中所有代码           |
+| C-S-x       | upper region                   |
+| C-S-y       | lowwer region                  |
+| C-S-f       | format region                  |
+| C-f11       | run                            |
+| f11         | debug                          |
+|-------------+--------------------------------|
+* 技巧
+** refactor
+   重构，一次性修改所有与修改内容有关的
+   在要refactor的词上右键refactor->rename即可
+** File-Switch workspace
+   切换工作空间
+* 在eclipse中为main传参
+#+BEGIN_SRC java
+public class hello {
+	public static void main(String[] args) {
+		System.out.println("hello world "+ args[0]);
+	}
+}
+#+END_SRC    
+在src中右键run as-run configuration-arguments中输入想要传入的参数

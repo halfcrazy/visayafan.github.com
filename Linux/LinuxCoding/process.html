@@ -1,0 +1,529 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+               "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<title>Unix环境高级编程－进程基础与控制</title>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
+<meta name="title" content="Unix环境高级编程－进程基础与控制"/>
+<meta name="generator" content="Org-mode"/>
+<meta name="generated" content="2012-10-10 16:43:42 CST"/>
+<meta name="author" content="visaya fan"/>
+<meta name="description" content=""/>
+<meta name="keywords" content=""/>
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  html { font-family: Times, serif; font-size: 12pt; }
+  .title  { text-align: center; }
+  .todo   { color: red; }
+  .done   { color: green; }
+  .tag    { background-color: #add8e6; font-weight:normal }
+  .target { }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .right  {margin-left:auto; margin-right:0px;  text-align:right;}
+  .left   {margin-left:0px;  margin-right:auto; text-align:left;}
+  .center {margin-left:auto; margin-right:auto; text-align:center;}
+  p.verse { margin-left: 3% }
+  pre {
+	border: 1pt solid #AEBDCC;
+	background-color: #F3F5F7;
+	padding: 5pt;
+	font-family: courier, monospace;
+        font-size: 90%;
+        overflow:auto;
+  }
+  table { border-collapse: collapse; }
+  td, th { vertical-align: top;  }
+  th.right  { text-align:center;  }
+  th.left   { text-align:center;   }
+  th.center { text-align:center; }
+  td.right  { text-align:right;  }
+  td.left   { text-align:left;   }
+  td.center { text-align:center; }
+  dt { font-weight: bold; }
+  div.figure { padding: 0.5em; }
+  div.figure p { text-align: center; }
+  div.inlinetask {
+    padding:10px;
+    border:2px solid gray;
+    margin:10px;
+    background: #ffffcc;
+  }
+  textarea { overflow-x: auto; }
+  .linenr { font-size:smaller }
+  .code-highlighted {background-color:#ffff00;}
+  .org-info-js_info-navigation { border-style:none; }
+  #org-info-js_console-label { font-size:10px; font-weight:bold;
+                               white-space:nowrap; }
+  .org-info-js_search-highlight {background-color:#ffff00; color:#000000;
+                                 font-weight:bold; }
+  /*]]>*/-->
+</style>
+<script type="text/javascript">
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+
+</head>
+<body>
+<div id="org-div-home-and-up">
+ <a accesskey="H" href="../../index.html#linuxcoding"> HOME </a>
+</div>
+
+
+<div id="content">
+<h1 class="title">Unix环境高级编程－进程基础与控制</h1>
+
+
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"> </script>
+<link rel="stylesheet" type="text/css" href="../../Layout/CSS/vf.css" />
+<script src="../../Layout/JS/bootstrap_old.js"></script>
+<script src="../../Layout/JS/disqus-comment.js"></script>
+
+
+
+<div id="table-of-contents">
+<h2>TOC</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#sec-1">1 atexit</a></li>
+<li><a href="#sec-2">2 取得、设置、删除环境变量</a></li>
+<li><a href="#sec-3">3 从输入流中获取字符（串）</a></li>
+<li><a href="#sec-4">4 向输出流中put字符</a></li>
+<li><a href="#sec-5">5 setjmp/longjmp</a></li>
+<li><a href="#sec-6">6 资源界限</a></li>
+<li><a href="#sec-7">7 fork</a></li>
+<li><a href="#sec-8">8 wait/waitpid</a></li>
+<li><a href="#sec-9">9 waitid</a></li>
+<li><a href="#sec-10">10 wait3/wait4</a></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-1" class="outline-2">
+<h2 id="sec-1"><span class="section-number-2">1</span> atexit</h2>
+<div class="outline-text-2" id="text-1">
+
+<p>  用来注册函数，当_exit被调用时这些注册的函数会被调用，调用顺序与注册顺序相反。<br/>
+</p></div>
+
+</div>
+
+<div id="outline-container-2" class="outline-2">
+<h2 id="sec-2"><span class="section-number-2">2</span> 取得、设置、删除环境变量</h2>
+<div class="outline-text-2" id="text-2">
+
+<ul>
+<li>getenv<br/>
+</li>
+</ul>
+
+<p>  用来获取环境变量（保存在环境列表中，形式为 name=value）<br/>
+  printf ("%s\n",getenv("HOME"));<br/>
+</p><ul>
+<li>setenv用来设置环境变量：<br/>
+</li>
+</ul>
+
+<p>  int setenv(const char *name, const char *value, int overwrite);//overwrite为正则表覆盖<br/>
+</p><ul>
+<li>putenv以name=value形式来设置环境变量<br/>
+</li>
+</ul>
+
+<p>  int putenv(char *string);<br/>
+</p><ul>
+<li>unsetenv用来删除环境变量：<br/>
+</li>
+</ul>
+
+<p>  int unsetenv(const char <b>name);   *获得当前程序所有环境变量</b><br/>
+</p>
+<p><br/>
+<pre class="src src-c"><span style="color: #a020f0;">extern</span> <span style="color: #228b22;">char</span>** <span style="color: #a0522d;">environ</span>;
+<span style="color: #228b22;">char</span> **<span style="color: #a0522d;">ppc</span> = environ;
+<span style="color: #a020f0;">while</span>(*ppc)
+    printf (<span style="color: #8b2252;">"%s\n"</span>,*ppc++);
+</pre>
+
+</p></div>
+
+</div>
+
+<div id="outline-container-3" class="outline-2">
+<h2 id="sec-3"><span class="section-number-2">3</span> 从输入流中获取字符（串）</h2>
+<div class="outline-text-2" id="text-3">
+
+<p>  int fgetc(FILE *stream);<br/>
+  int getc(FILE *stream);<br/>
+  int getchar(void);<br/>
+  getc等价于fgetc，getchar等价于getc(stdin)<br/>
+</p>
+<p>  <br/>
+  char *fgets(char *s, int size, FILE *stream);<br/>
+  char *gets(char *s);<br/>
+  gets从stdin中获取字符串，遇到换行或者EOF停止。fgets指定最多接收size-1个字符（最后以NULL结尾）<br/>
+  使用gets函数编译时会提示警告gets函数很危险应当小心使用。因为它没有指定大小，容易越界。<br/>
+  get成功则返回s，出错或没有字符读入则返回NULL。<br/>
+</p>
+<p><br/>
+  int ungetc(int c, FILE *stream);<br/>
+  退回c到stream中<br/>
+</p></div>
+
+</div>
+
+<div id="outline-container-4" class="outline-2">
+<h2 id="sec-4"><span class="section-number-2">4</span> 向输出流中put字符</h2>
+<div class="outline-text-2" id="text-4">
+
+<p>  int fputc(int c, FILE *stream);<br/>
+  int putc(int c, FILE *stream);<br/>
+  向stream中放一个字符<br/>
+  int putchar(int c);<br/>
+  等价于putc(c, stdout)<br/>
+</p>
+<p>  <br/>
+  int fputs(const char *s, FILE *stream);<br/>
+  向stream中放一个字符串<br/>
+  int puts(const char *s);<br/>
+  等价于fputs(s, stdout)<br/>
+</p></div>
+
+</div>
+
+<div id="outline-container-5" class="outline-2">
+<h2 id="sec-5"><span class="section-number-2">5</span> setjmp/longjmp</h2>
+<div class="outline-text-2" id="text-5">
+
+<p>  首先定义一个jmp_buf结构体类型的变量，set_jmp如果不是从longjmp函数返回调用会初始化jmp_buf变量且返回值是0，如果从longjmp函数返回调用则返回值非0.<br/>
+</p>
+<p><br/>
+<pre class="src src-c"><span style="color: #7a378b;">#include</span> <span style="color: #8b2252;">&lt;stdio.h&gt;</span>
+<span style="color: #7a378b;">#include</span> <span style="color: #8b2252;">&lt;stdlib.h&gt;</span>
+<span style="color: #7a378b;">#include</span> <span style="color: #8b2252;">&lt;setjmp.h&gt;</span>
+<span style="color: #228b22;">jmp_buf</span> <span style="color: #a0522d;">jmpbuffer</span>;
+<span style="color: #228b22;">void</span> <span style="color: #0000ff;">error_occured</span>();
+
+<span style="color: #a020f0;">typedef</span> <span style="color: #228b22;">int</span> <span style="color: #228b22;">aaa</span>[8];
+<span style="color: #228b22;">int</span> <span style="color: #0000ff;">main</span>(<span style="color: #228b22;">int</span> <span style="color: #a0522d;">argc</span>, <span style="color: #228b22;">char</span> *<span style="color: #a0522d;">argv</span>[])
+{
+    <span style="color: #a020f0;">if</span>(setjmp(jmpbuffer) != 0){
+        printf (<span style="color: #8b2252;">"%s\n"</span>,<span style="color: #8b2252;">"error occured"</span>);
+        exit(0);
+    }
+    printf (<span style="color: #8b2252;">"%s\n"</span>,<span style="color: #8b2252;">"this line shows"</span>);
+    <span style="color: #228b22;">int</span> <span style="color: #a0522d;">i</span>;
+    <span style="color: #a020f0;">for</span>(i=0; i&lt;<span style="color: #a020f0;">sizeof</span>(aaa)/<span style="color: #a020f0;">sizeof</span>(<span style="color: #228b22;">int</span>); i++)
+        aaa[i]=i;
+    <span style="color: #a020f0;">for</span>(i=0; i&lt;<span style="color: #a020f0;">sizeof</span>(aaa)/<span style="color: #a020f0;">sizeof</span>(<span style="color: #228b22;">int</span>); i++)
+        printf(<span style="color: #8b2252;">"%d "</span>, aaa[i]);
+
+    error_occured();
+    printf (<span style="color: #8b2252;">"%s\n"</span>,<span style="color: #8b2252;">"this line doesn't show"</span>);
+    <span style="color: #a020f0;">return</span> 0;
+}
+<span style="color: #228b22;">void</span> <span style="color: #0000ff;">error_occured</span>(){
+    longjmp(jmpbuffer, 1);
+}
+</pre>
+
+</p></div>
+
+</div>
+
+<div id="outline-container-6" class="outline-2">
+<h2 id="sec-6"><span class="section-number-2">6</span> 资源界限</h2>
+<div class="outline-text-2" id="text-6">
+
+<p>  参考<a href="../kernel/process.html#sec-9">Linux内核－进程管理基础</a><br/>
+<a href="#ModalID1" class="btn" data-toggle="modal">打印资源界限</a>
+<div id="ModalID1" class="modal hide">
+<div class="modal-header">
+<button type="button" class="close" data-dismiss="modal">x</button>
+<h3></h3>
+</div>
+<div class="modal-body">
+
+<pre class="src src-c"><span class="linenr"> 1:  </span><span style="color: #7a378b;">#include</span> <span style="color: #8b2252;">&lt;stdio.h&gt;</span>
+<span class="linenr"> 2:  </span><span style="color: #7a378b;">#include</span> <span style="color: #8b2252;">&lt;sys/resource.h&gt;</span>
+<span class="linenr"> 3:  </span><span style="color: #7a378b;">#include</span> <span style="color: #8b2252;">&lt;sys/time.h&gt;</span>
+<span class="linenr"> 4:  </span><span style="color: #7a378b;">#include</span> <span style="color: #8b2252;">&lt;stdlib.h&gt;</span>
+<span class="linenr"> 5:  </span><span style="color: #7a378b;">#include</span> <span style="color: #8b2252;">&lt;setjmp.h&gt;</span>
+<span class="linenr"> 6:  </span>
+<span class="linenr"> 7:  </span><span style="color: #7a378b;">#define</span> <span style="color: #0000ff;">doit</span>(<span style="color: #a0522d;">name</span>) pr_lmt(#name, name) <span style="color: #b22222;">/* </span><span style="color: #b22222;">#&#23383;&#31526;&#20018;&#21019;&#24314;&#36816;&#31639;&#31526; </span><span style="color: #b22222;">*/</span>
+<span class="linenr"> 8:  </span><span style="color: #7a378b;">#define</span> <span style="color: #0000ff;">err_sys</span>(<span style="color: #a0522d;">error_msg</span>) {printf(<span style="color: #8b2252;">"%s"</span>,error_msg); <span style="color: #a020f0;">return</span>;}
+<span class="linenr"> 9:  </span>
+<span class="linenr">10:  </span><span style="color: #228b22;">void</span> <span style="color: #0000ff;">pr_lmt</span>(<span style="color: #228b22;">char</span>* <span style="color: #a0522d;">name</span>, <span style="color: #228b22;">int</span> <span style="color: #a0522d;">rsc</span>){
+<span class="linenr">11:  </span>    <span style="color: #a020f0;">struct</span> <span style="color: #228b22;">rlimit</span> <span style="color: #a0522d;">rlmt</span>;
+<span class="linenr">12:  </span>    <span style="color: #a020f0;">if</span>(getrlimit(rsc, &amp;rlmt)&lt;0)
+<span class="linenr">13:  </span>        err_sys(name)
+<span class="linenr">14:  </span>    printf(<span style="color: #8b2252;">"%-20s "</span>, name);
+<span class="linenr">15:  </span>    <span style="color: #a020f0;">if</span>(rlmt.rlim_cur == RLIM_INFINITY)
+<span class="linenr">16:  </span>        printf(<span style="color: #8b2252;">"%13s"</span>,<span style="color: #8b2252;">"Infinity"</span>);
+<span class="linenr">17:  </span>    <span style="color: #a020f0;">else</span>
+<span class="linenr">18:  </span>        printf(<span style="color: #8b2252;">"%13d"</span>, rlmt.rlim_cur);
+<span class="linenr">19:  </span>    <span style="color: #a020f0;">if</span>(rlmt.rlim_max == RLIM_INFINITY)
+<span class="linenr">20:  </span>        printf(<span style="color: #8b2252;">"%13s"</span>,<span style="color: #8b2252;">"Infinity"</span>);
+<span class="linenr">21:  </span>    <span style="color: #a020f0;">else</span>
+<span class="linenr">22:  </span>        printf(<span style="color: #8b2252;">"%13d"</span>, rlmt.rlim_max);
+<span class="linenr">23:  </span>    putchar((<span style="color: #228b22;">int</span>)<span style="color: #8b2252;">'\n'</span>);
+<span class="linenr">24:  </span>}
+<span class="linenr">25:  </span><span style="color: #228b22;">int</span> <span style="color: #0000ff;">main</span>(<span style="color: #228b22;">int</span> <span style="color: #a0522d;">argc</span>, <span style="color: #228b22;">char</span> *<span style="color: #a0522d;">argv</span>[])
+<span class="linenr">26:  </span>{
+<span class="linenr">27:  </span>    doit(RLIMIT_AS);            <span style="color: #b22222;">/* </span><span style="color: #b22222;">&#26368;&#22823;&#36827;&#31243;&#22320;&#22336;&#31354;&#38388; address space </span><span style="color: #b22222;">*/</span>
+<span class="linenr">28:  </span>    doit(RLIMIT_CORE);           <span style="color: #b22222;">/* </span><span style="color: #b22222;">&#26368;&#22823;core&#25991;&#20214;&#22823;&#23567; </span><span style="color: #b22222;">*/</span>
+<span class="linenr">29:  </span>    doit(RLIMIT_CPU);            <span style="color: #b22222;">/* </span><span style="color: #b22222;">&#26368;&#22823;CPU&#26102;&#38388;&#65292;&#31186;&#20026;&#21333;&#20301; </span><span style="color: #b22222;">*/</span>
+<span class="linenr">30:  </span>    doit(RLIMIT_DATA);           <span style="color: #b22222;">/* </span><span style="color: #b22222;">&#26368;&#22823;&#25968;&#25454;&#27573; </span><span style="color: #b22222;">*/</span>
+<span class="linenr">31:  </span>    doit(RLIMIT_FSIZE);          <span style="color: #b22222;">/* </span><span style="color: #b22222;">&#36827;&#31243;&#21019;&#24314;&#30340;&#26368;&#22823;&#25991;&#20214;&#22823;&#23567; </span><span style="color: #b22222;">*/</span>
+<span class="linenr">32:  </span>    doit(RLIMIT_MEMLOCK);        <span style="color: #b22222;">/* </span><span style="color: #b22222;">&#38145;&#20303;&#20869;&#23384;&#30340;&#26368;&#22823;&#21306;&#22495; </span><span style="color: #b22222;">*/</span>
+<span class="linenr">33:  </span>    doit(RLIMIT_MSGQUEUE);       <span style="color: #b22222;">/* </span><span style="color: #b22222;">&#26368;&#22823;&#28040;&#24687;&#38431;&#21015; </span><span style="color: #b22222;">*/</span>
+<span class="linenr">34:  </span>    doit(RLIMIT_NICE);           <span style="color: #b22222;">/* </span><span style="color: #b22222;">&#26368;&#22823;nice&#20540; </span><span style="color: #b22222;">*/</span>
+<span class="linenr">35:  </span>    doit(RLIMIT_NOFILE);         <span style="color: #b22222;">/* </span><span style="color: #b22222;">&#26368;&#22810;&#25991;&#20214;&#25968; </span><span style="color: #b22222;">*/</span>
+<span class="linenr">36:  </span>    doit(RLIMIT_NPROC);          <span style="color: #b22222;">/* </span><span style="color: #b22222;">&#26368;&#22810;&#36827;&#31243;&#25968; </span><span style="color: #b22222;">*/</span>
+<span class="linenr">37:  </span>    doit(RLIMIT_RTPRIO);          <span style="color: #b22222;">/* </span><span style="color: #b22222;">&#23454;&#26102;&#20248;&#20808;&#32423; </span><span style="color: #b22222;">*/</span>
+<span class="linenr">38:  </span>    doit(RLIMIT_STACK);          <span style="color: #b22222;">/* </span><span style="color: #b22222;">&#36827;&#31243;&#26368;&#22823;&#26632;&#22823;&#23567; </span><span style="color: #b22222;">*/</span>
+<span class="linenr">39:  </span>    <span style="color: #a020f0;">return</span> 0;
+<span class="linenr">40:  </span>}
+</pre>
+
+</div>
+<div class="modal-footer">
+<a href="#" class="btn" data-dismiss="modal">Close</a>
+</div>
+</div>
+  命令行下可以用ulimit -a命令查看资源限制<br/>
+</p></div>
+
+</div>
+
+<div id="outline-container-7" class="outline-2">
+<h2 id="sec-7"><span class="section-number-2">7</span> fork</h2>
+<div class="outline-text-2" id="text-7">
+
+<p>  链接：<a href="#fork.html">一道fork面试题</a><br/>
+</p>
+<p><br/>
+<pre class="src src-c"><span style="color: #7a378b;">#include</span> <span style="color: #8b2252;">&lt;stdio.h&gt;</span>
+<span style="color: #7a378b;">#include</span> <span style="color: #8b2252;">&lt;unistd.h&gt;</span>
+
+<span style="color: #228b22;">int</span> <span style="color: #a0522d;">glb</span> = 1;
+<span style="color: #228b22;">int</span> <span style="color: #0000ff;">main</span>(<span style="color: #228b22;">int</span> <span style="color: #a0522d;">argc</span>, <span style="color: #228b22;">char</span> *<span style="color: #a0522d;">argv</span>[])
+{
+    <span style="color: #228b22;">pid_t</span> <span style="color: #a0522d;">pid</span>;
+    printf(<span style="color: #8b2252;">"pid=%d, glb=%d\n"</span>, getpid(), glb);
+    <span style="color: #a020f0;">if</span>((pid=fork())==0){
+        glb++;
+    }<span style="color: #a020f0;">else</span>{
+        sleep(2);
+    }
+    printf(<span style="color: #8b2252;">"pid=%d, glb=%d\n"</span>, getpid(), glb);
+    <span style="color: #a020f0;">return</span> 0;
+}
+</pre>
+
+  结果：<br/>
+</p>
+<p><br/>
+<pre class="example">pid=8208, glb=1
+pid=8209, glb=2
+pid=8208, glb=1
+</pre>
+
+  先是父进程执行fork前的printf，fork后由于了进程拷贝了父进程的进程空间（包括程序计数器，即fork之前的代码子进程不会执行，只会执行fork后面的代码），之后由于父进程sleep2秒，假设系统不忙的话，2s之内子进程会执行（如果系统忙的话，2s之内可能子进程仍没有执行，之后父子哪个先是不确定的）。<br/>
+  但如果命令行下 a.out &gt; text.txt，则text.txt中的结果是：<br/>
+</p>
+<p><br/>
+<pre class="example">pid=8212, glb=1
+pid=8213, glb=2
+pid=8212, glb=1
+pid=8212, glb=1
+</pre>
+
+  pid=8212, glb=1出现两次，原因是重定向的时候先把欲定向的内容存放在缓冲中，子进程被fork的时候拷贝了父进程的缓冲区内容，最后冲刷的时候出现两个。<br/>
+</p></div>
+
+</div>
+
+<div id="outline-container-8" class="outline-2">
+<h2 id="sec-8"><span class="section-number-2">8</span> wait/waitpid</h2>
+<div class="outline-text-2" id="text-8">
+
+<p>  pid_t wait(int *status);<br/>
+  如果子进程仍活着，则wait将悬挂父进程，直到了进程退出或者调用exec，子进程状态保存在status指向int中。如果子进程已经终止则释放其资源并返回（如果没有wait则子进程将变成zombie进程）。<br/>
+  pid_t waitpid(pid_t pid, int *status, int options);<br/>
+  与wait不同在于可以指定等待退出进程的id，可以通过options选项选择是否悬挂父进程。<br/>
+  若pid=-1表任意子进程终止则退出悬挂，0表示任意一与父进程同进程组的子进程终止则退出悬挂；&lt;-1表示任一组id＝pid绝对值的子进程终止则退出悬挂；&gt;0则表示指定进程号。<br/>
+  options为1表父进程并不悬挂，0表悬挂。<br/>
+  故wait等价于waitpid(-1,status,0)<br/>
+<a href="#MOdal2" class="btn" data-toggle="modal">代码：通过宏来查看子进程退出状态</a>
+<div id="MOdal2" class="modal hide">
+<div class="modal-header">
+<button type="button" class="close" data-dismiss="modal">x</button>
+<h3></h3>
+</div>
+<div class="modal-body">
+
+<pre class="src src-c"><span style="color: #7a378b;">#include</span> <span style="color: #8b2252;">&lt;stdio.h&gt;</span>
+<span style="color: #7a378b;">#include</span> <span style="color: #8b2252;">&lt;sys/wait.h&gt;</span>
+<span style="color: #7a378b;">#include</span> <span style="color: #8b2252;">&lt;unistd.h&gt;</span>
+<span style="color: #228b22;">void</span> <span style="color: #0000ff;">pr_exit</span>(<span style="color: #228b22;">int</span> <span style="color: #a0522d;">status</span>){
+    <span style="color: #a020f0;">if</span>(WIFEXITED(status))       <span style="color: #b22222;">/* </span><span style="color: #b22222;">&#27491;&#24120;exit&#65292;exit code&#21487;&#20197;&#29992; WEXITSTATUS(status)&#23439;&#24471;&#21040; </span><span style="color: #b22222;">*/</span>
+        printf(<span style="color: #8b2252;">"normal termination, exit code %d\n"</span>, WEXITSTATUS(status));
+    <span style="color: #a020f0;">if</span>(WIFSIGNALED(status))     <span style="color: #b22222;">/* </span><span style="color: #b22222;">&#20449;&#21495;&#24341;&#21457;&#38750;&#27491;&#24120;&#32456;&#27490;&#65292;exit code&#21487;&#20197;&#29992; WTERMSIG(status)&#24471;&#21040; </span><span style="color: #b22222;">*/</span>
+        printf(<span style="color: #8b2252;">"abnormal termination, exit code %d\n"</span>, WTERMSIG(status));
+    <span style="color: #a020f0;">if</span>(WCOREDUMP(status))       <span style="color: #b22222;">/* </span><span style="color: #b22222;">&#26159;&#21542;&#20135;&#29983;core dump </span><span style="color: #b22222;">*/</span>
+        printf(<span style="color: #8b2252;">"core dump produced"</span>);
+    <span style="color: #a020f0;">if</span>(WIFSTOPPED(status))      <span style="color: #b22222;">/* </span><span style="color: #b22222;">&#26159;&#21542;&#20026;TASK_STOPPED&#29366;&#24577; </span><span style="color: #b22222;">*/</span>
+        printf(<span style="color: #8b2252;">"stopped by a signal, signal code %d\n"</span>, WSTOPSIG(status));
+    <span style="color: #a020f0;">if</span>(WIFCONTINUED(status))    <span style="color: #b22222;">/* </span><span style="color: #b22222;">&#26159;&#21542;&#36890;&#36807;&#20449;&#21495;SIGCONT&#28608;&#27963;&#36827;&#31243; </span><span style="color: #b22222;">*/</span>
+        printf(<span style="color: #8b2252;">"resumed by signal SIGCONT\n"</span>);        
+}
+
+<span style="color: #228b22;">int</span> <span style="color: #0000ff;">main</span>(<span style="color: #228b22;">int</span> <span style="color: #a0522d;">argc</span>, <span style="color: #228b22;">char</span> *<span style="color: #a0522d;">argv</span>[])
+{
+    <span style="color: #228b22;">pid_t</span> <span style="color: #a0522d;">pid</span>;
+    <span style="color: #228b22;">int</span> <span style="color: #a0522d;">status</span>;
+
+    <span style="color: #a020f0;">if</span>((pid=fork())==0)
+        exit(7);
+    <span style="color: #a020f0;">if</span>(wait(&amp;status) == pid)
+        pr_exit(status);
+
+    <span style="color: #a020f0;">if</span>((pid=fork())==0)
+        abort();                <span style="color: #b22222;">/* </span><span style="color: #b22222;">&#24322;&#24120;&#36864;&#36180;&#65292;abort&#23545;&#24212;6 </span><span style="color: #b22222;">*/</span>
+    <span style="color: #a020f0;">if</span>(wait(&amp;status) == pid)
+        pr_exit(status);
+    <span style="color: #a020f0;">if</span>((pid=fork())==0)
+        status /= 0;            <span style="color: #b22222;">/* </span><span style="color: #b22222;">&#38500;0&#65292;&#23545;&#24212;&#20195;&#30721;8 </span><span style="color: #b22222;">*/</span>
+    <span style="color: #a020f0;">if</span>(wait(&amp;status) == pid)
+        pr_exit(status);
+    <span style="color: #a020f0;">return</span> 0;
+}
+</pre>
+
+  运行结果：<br/>
+</p>
+<p><br/>
+<pre class="example">normal termination, exit code 7
+abnormal termination, exit code 6
+abnormal termination, exit code 8
+</pre>
+
+</div>
+<div class="modal-footer">
+<a href="#" class="btn" data-dismiss="modal">Close</a>
+</div>
+</div>
+</p></div>
+
+</div>
+
+<div id="outline-container-9" class="outline-2">
+<h2 id="sec-9"><span class="section-number-2">9</span> waitid</h2>
+<div class="outline-text-2" id="text-9">
+
+<p>  int waitid(idtype_t idtype, id_t id, siginfo_t *infop, int options);<br/>
+  wait与waitpid功能差不多，只是不像waitpid用-1 0 &gt;0 &lt;-1来表示是任一子进程还是组id还是进程id，而是通过idtype来指明：<br/>
+  P_PID表是进程ID，此时id为进程id号<br/>
+  P_PGID表进程组，此时id表进程组的id<br/>
+  P_ALL表明任一进程，此时id无效<br/>
+</p></div>
+
+</div>
+
+<div id="outline-container-10" class="outline-2">
+<h2 id="sec-10"><span class="section-number-2">10</span> wait3/wait4</h2>
+<div class="outline-text-2" id="text-10">
+
+<p>  pid_t wait3(int *status, int options, struct rusage *rusage);<br/>
+  pid_t wait4(pid_t pid, int *status, int options, struct rusage *rusage);<br/>
+</p>
+<p><br/>
+  wait3 &lt;=&gt; waitpid(-1, status, options) + 资源使用情况<br/>
+  wait4 &lt;=&gt; waitpid(pid, status, options) + 资源使用情况<br/>
+</p>
+<p><br/>
+  struct rusage定义在 /usr/include/bits/resource.h<br/>
+<a href="#rusage" class="btn" data-toggle="modal">结构体rusage源码</a>
+<div id="rusage" class="modal hide">
+<div class="modal-header">
+<button type="button" class="close" data-dismiss="modal">x</button>
+<h3></h3>
+</div>
+<div class="modal-body">
+
+<pre class="src src-c"><span style="color: #a020f0;">struct</span> <span style="color: #228b22;">rusage</span>
+  {
+    <span style="color: #b22222;">/* </span><span style="color: #b22222;">Total amount of user time used.  </span><span style="color: #b22222;">*/</span>
+    <span style="color: #a020f0;">struct</span> <span style="color: #228b22;">timeval</span> <span style="color: #a0522d;">ru_utime</span>;
+    <span style="color: #b22222;">/* </span><span style="color: #b22222;">Total amount of system time used.  </span><span style="color: #b22222;">*/</span>
+    <span style="color: #a020f0;">struct</span> <span style="color: #228b22;">timeval</span> <span style="color: #a0522d;">ru_stime</span>;
+    <span style="color: #b22222;">/* </span><span style="color: #b22222;">Maximum resident set size (in kilobytes).  </span><span style="color: #b22222;">*/</span>
+    <span style="color: #228b22;">long</span> <span style="color: #228b22;">int</span> <span style="color: #a0522d;">ru_maxrss</span>;
+    <span style="color: #b22222;">/* </span><span style="color: #b22222;">Amount of sharing of text segment memory</span>
+<span style="color: #b22222;">       with other processes (kilobyte-seconds).  </span><span style="color: #b22222;">*/</span>
+    <span style="color: #228b22;">long</span> <span style="color: #228b22;">int</span> <span style="color: #a0522d;">ru_ixrss</span>;
+    <span style="color: #b22222;">/* </span><span style="color: #b22222;">Amount of data segment memory used (kilobyte-seconds).  </span><span style="color: #b22222;">*/</span>
+    <span style="color: #228b22;">long</span> <span style="color: #228b22;">int</span> <span style="color: #a0522d;">ru_idrss</span>;
+    <span style="color: #b22222;">/* </span><span style="color: #b22222;">Amount of stack memory used (kilobyte-seconds).  </span><span style="color: #b22222;">*/</span>
+    <span style="color: #228b22;">long</span> <span style="color: #228b22;">int</span> <span style="color: #a0522d;">ru_isrss</span>;
+    <span style="color: #b22222;">/* </span><span style="color: #b22222;">Number of soft page faults (i.e. those serviced by reclaiming</span>
+<span style="color: #b22222;">       a page from the list of pages awaiting reallocation.  </span><span style="color: #b22222;">*/</span>
+    <span style="color: #228b22;">long</span> <span style="color: #228b22;">int</span> <span style="color: #a0522d;">ru_minflt</span>;
+    <span style="color: #b22222;">/* </span><span style="color: #b22222;">Number of hard page faults (i.e. those that required I/O).  </span><span style="color: #b22222;">*/</span>
+    <span style="color: #228b22;">long</span> <span style="color: #228b22;">int</span> <span style="color: #a0522d;">ru_majflt</span>;
+    <span style="color: #b22222;">/* </span><span style="color: #b22222;">Number of times a process was swapped out of physical memory.  </span><span style="color: #b22222;">*/</span>
+    <span style="color: #228b22;">long</span> <span style="color: #228b22;">int</span> <span style="color: #a0522d;">ru_nswap</span>;
+    <span style="color: #b22222;">/* </span><span style="color: #b22222;">Number of input operations via the file system.  Note: This</span>
+<span style="color: #b22222;">       and `ru_oublock' do not include operations with the cache.  </span><span style="color: #b22222;">*/</span>
+    <span style="color: #228b22;">long</span> <span style="color: #228b22;">int</span> <span style="color: #a0522d;">ru_inblock</span>;
+    <span style="color: #b22222;">/* </span><span style="color: #b22222;">Number of output operations via the file system.  </span><span style="color: #b22222;">*/</span>
+    <span style="color: #228b22;">long</span> <span style="color: #228b22;">int</span> <span style="color: #a0522d;">ru_oublock</span>;
+    <span style="color: #b22222;">/* </span><span style="color: #b22222;">Number of IPC messages sent.  </span><span style="color: #b22222;">*/</span>
+    <span style="color: #228b22;">long</span> <span style="color: #228b22;">int</span> <span style="color: #a0522d;">ru_msgsnd</span>;
+    <span style="color: #b22222;">/* </span><span style="color: #b22222;">Number of IPC messages received.  </span><span style="color: #b22222;">*/</span>
+    <span style="color: #228b22;">long</span> <span style="color: #228b22;">int</span> <span style="color: #a0522d;">ru_msgrcv</span>;
+    <span style="color: #b22222;">/* </span><span style="color: #b22222;">Number of signals delivered.  </span><span style="color: #b22222;">*/</span>
+    <span style="color: #228b22;">long</span> <span style="color: #228b22;">int</span> <span style="color: #a0522d;">ru_nsignals</span>;
+    <span style="color: #b22222;">/* </span><span style="color: #b22222;">Number of voluntary context switches, i.e. because the process</span>
+<span style="color: #b22222;">       gave up the process before it had to (usually to wait for some</span>
+<span style="color: #b22222;">       resource to be available).  </span><span style="color: #b22222;">*/</span>
+    <span style="color: #228b22;">long</span> <span style="color: #228b22;">int</span> <span style="color: #a0522d;">ru_nvcsw</span>;
+    <span style="color: #b22222;">/* </span><span style="color: #b22222;">Number of involuntary context switches, i.e. a higher priority process</span>
+<span style="color: #b22222;">       became runnable or the current process used up its time slice.  </span><span style="color: #b22222;">*/</span>
+    <span style="color: #228b22;">long</span> <span style="color: #228b22;">int</span> <span style="color: #a0522d;">ru_nivcsw</span>;
+  }
+</pre>
+
+</div>
+<div class="modal-footer">
+<a href="#" class="btn" data-dismiss="modal">Close</a>
+</div>
+</div>
+
+</p></div>
+</div>
+</div>
+
+</body>
+</html>

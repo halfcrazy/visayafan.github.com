@@ -1,0 +1,271 @@
+* %
+#+BEGIN_EXAMPLE
+>>> '%-*s' % (10, 'hello')
+'hello     '
+>>> '%*s' % (10, 'hello')
+'     hello'
+- 代表左对齐
+*后面括号中有数字，代表长度  
+#+END_EXAMPLE
+* 不言而喻
+#+BEGIN_EXAMPLE
+append()
+len()
+#+END_EXAMPLE
+* find()
+#+BEGIN_EXAMPLE
+   find(sub[, start[, end]]) 返回最先找到的sub的索引，若查找失败则返回-1
+#+END_EXAMPLE
+* replace()
+S.replace(old, new [, count]) -> string
+* split() rsplit()
+#+BEGIN_EXAMPLE
+str.split([sep [,maxsplit]]) -> list of strings
+
+>>> line = '1,2,3,4,5,6'
+>>> line.split(',')
+['1', '2', '3', '4', '5', '6']
+>>> line.split(',', 4)
+['1', '2', '3', '4', '5,6']
+>>> line.rsplit(',', 4)
+['1,2', '3', '4', '5', '6']
+#+END_EXAMPLE
+* strip rstrip lstrip
+#+BEGIN_EXAMPLE
+str.strip() #Return a copy of the string S with leading and trailing whitespace removed.
+rstrip() #Return a copy of the string S with trailing whitespace removed.
+lstrip() #Return a copy of the string S with leading whitespace removed.
+#+END_EXAMPLE
+* center() ljust() rjust()
+#+BEGIN_EXAMPLE
+center(...)
+    S.center(width[, fillchar]) -> str
+
+>>> s.ljust(10, 'x')
+'1.2xxxxxxx'
+>>> s.rjust(10, 'x')
+'xxxxxxx1.2'
+>>> s.center(10, 'x')
+'xxx1.2xxxx'
+#+END_EXAMPLE
+* partition() rpartition()
+#+BEGIN_EXAMPLE
+rpartition(...)
+    S.rpartition(sep) -> (head, sep, tail)
+    
+    Search for the separator sep in S, starting at the end of S, and return
+    the part before it, the separator itself, and the part after it.  If the
+    separator is not found, return two empty strings and S.
+
+>>> str = 'hello world'
+>>> str.rpartition(' ') 
+('hello', ' ', 'world')
+>>> str.partition(' ')
+('hello', ' ', 'world')
+>>> str.rpartition('l')  #只分一次
+('hello wor', 'l', 'd')
+>>> str.partition('l') #返回tuple，并且显示分隔的sep
+('he', 'l', 'lo world')
+>>> str.split(' ') #返回 list
+['hello', 'world']
+#+END_EXAMPLE
+
+* isdigit() isnumeric()
+好像没有什么区别？
+#+BEGIN_EXAMPLE
+isdigit(...)
+    S.isdigit() -> bool
+    
+    Return True if all characters in S are digits
+    and there is at least one character in S, False otherwise
+isnumeric(...)
+    S.isnumeric() -> bool
+    
+    Return True if there are only numeric characters in S,
+    False otherwise.
+    
+#+END_EXAMPLE
+
+* swapcase()
+#+BEGIN_EXAMPLE
+#返回大小写相互转化的结果
+>>> line = 'HellO WOrld'
+>>> line.swapcase()
+'hELLo woRLD'
+#+END_EXAMPLE
+* zfill()
+#+BEGIN_EXAMPLE
+#字符串左边填充0
+>>> line.zfill(15)
+'0000HellO WOrld'   
+#+END_EXAMPLE
+
+* expandtabs()
+#+BEGIN_EXAMPLE
+S.expandtabs([tabsize]) -> str
+The default tabsize is 8.
+>>> line
+'a\tb\tc'
+>>> line.expandtabs()
+'a       b       c'
+#+END_EXAMPLE
+
+* isalpha isdigit isalnum islower isspace istitle isupper istitle title capitalize
+并没有iscapitalize函数，不过可以自己实现：
+#+BEGIN_SRC python
+def iscapitalize(s):
+   return s == s.capitalize()
+#+END_SRCH
+#+BEGIN_SRC python
+>>> a = 'hello world'
+>>> a.capitalize()
+'Hello world'
+>>> a.title()
+'Hello World'
+>>> a  = 'Hello world'
+>>> a.istitle()
+False
+>>> a  = 'Hello World'
+>>> a.istitle()
+True
+#+END_SRCH
+
+* maketrans translate
+3.X中实现：
+#+BEGIN_EXAMPLE
+>>> map = str.maketrans('he', 'sh')
+>>> str.translate(map)
+'shllo world'
+>>> str
+'hello world'
+#+END_EXAMPLE
+2.X中下面的方法可靠，但在3.X中不行
+#+BEGIN_EXAMPLE
+string.maketrans(from, to) #from to must have the same length.
+string.translate(s, table[, deletechars])
+str.translate(table[, deletechars])
+unicode.translate(table)
+#+END_EXAMPLE
+#+BEGIN_EXAMPLE
+>>> import string
+>>> map = string.maketrans('123', 'abc')
+>>> s = '2341321234232123'
+>>> s.translate(map)
+'bc4acbabc4bcbabc'
+#+END_EXAMPLE
+#+BEGIN_SRC Python
+import string 
+def translator(frm='', to='', delete='', keep=None): 
+if len(to) == 1: 
+        to = to * len(frm) 
+    trans = string.maketrans(frm, to) 
+    if keep is not None: 
+        allchars = string.maketrans('', '') 
+        delete = allchars.translate(allchars, keep.translate(allchars,delete))
+    def translate(s): 
+        return s.translate(trans, delete) 
+    return translate
+#+END_SRCH
+
+* format()
+** 基本格式
+#+BEGIN_EXAMPLE
+{fieldname ! conversionflag : formatspec}
+fieldname: number(a potitional argument) or keyword(named keyword argument)
+                   .name or [index]
+                   "Weight in tons {0.weight}"
+                   "Units destroyed: {players[1]}"
+conversionflag: s r a ==>str repr ascii
+formatspec: [[fill]align[sign] [#] [0] [width] [.percision] [typecode]]
+                     fill ==> 除{} 外的所有字符都可以
+                     align==>    > < = ^
+                     sign ==> '+' '-' ' '
+                                      '-' 为默认情况 正数不显示＋负数显示－
+                                      '+'表正负数都显示符号
+                                      'space' 表示数字前面显示一空格
+                     width precision ==> integer
+                     type ==>  b c d e E f F g G n o   
+#+END_EXAMPLE
+** Accessing arguments by potition:
+#+BEGIN_EXAMPLE
+>>> print '{0} {1} {2}'.format('a', 'b', 'c')
+a b c
+>>> '{2}, {1}, {0}'.format(*'abc')   ### *
+'c, b, a'
+
+>>> 'My {1[spam]} runs {0.platform}'.format(sys, {'spam': 'laptop'})
+'My laptop runs linux2'
+#+END_EXAMPLE
+** Accessing arguments by name:
+#+BEGIN_EXAMPLE
+>>> 'Coordinates: {latitude}, {longtitude}'.format(latitude = '23.2N', longtitude = '-112.32W')
+'Coordinates: 23.2N, -112.32W'
+
+>>> coord = {'latitude': '23.12N', 'longtitude': '-23.23W'}
+>>> 'Coordinates: {latitude}, {longtitude}'.format(**coord)
+'Coordinates: 23.12N, -23.23W'
+
+>>> print '{name} {age}'.format(age=12, name='admin')
+admin 12
+
+>>> 'My {config[spam]} runs {sys.platform}'.format(sys=sys, config={'spam': 'laptop'})
+'My laptop runs linux2'
+#+END_EXAMPLE
+** Accessing arguments' attributes:
+#+BEGIN_EXAMPLE
+>>> c = 3 -5j
+>>> 'The complex number {0} is formed from the real part {0.real} and the imaginary part {0.imag}'.format(c)
+'The complex number (3-5j) is formed from the real part 3.0 and the imaginary part -5.0'
+
+#+END_EXAMPLE
+** Accessing argument's items:
+#+BEGIN_EXAMPLE
+>>> coord = (3, 5)
+>>> 'X: {0[0]}; Y: 0[1]'.format(coord)
+'X: 3; Y: 0[1]'
+>>> print '{array[2]}'.format(array=range(10))
+2
+#+END_EXAMPLE
+** !s !r
+#+BEGIN_EXAMPLE
+>>> "repr() show quotes: {!r}; str() doesn't: {!s}".format('test1', 'test2')
+"repr() show quotes: 'test1'; str() doesn't: test2"
+#+END_EXAMPLE
+** Aligning the text and specifying a width
+#+BEGIN_EXAMPLE
+>>> '{: <30}'.format('left aligned')
+'left aligned                  '
+>>> '{: >30}'.format('right aligned')
+'                 right aligned'
+>>> '{: ^30}'.format('centered')
+'           centered           '
+>>> '{:*^30}'.format('centered')
+'***********centered***********'
+#+END_EXAMPLE
+** +f -f 
+#+BEGIN_EXAMPLE
+>>> '{:-f}; {:-f}'.format(3.14, -3.14)
+'3.140000; -3.140000'
+>>> '{:+f}; {:+f}'.format(3.14, -3.14)
+'+3.140000; -3.140000'
+>>> '{:f}; {:f}'.format(3.14, -3.14)
+'3.140000; -3.140000'
+#+END_EXAMPLE
+** b o x 
+#+BEGIN_EXAMPLE
+>>> 'int: {0: d}; hex: {0: x}; oct: {0: o}; bin{0: b}'.format(42)
+'int:  42; hex:  2a; oct:  52; bin 101010'
+# # with 0x, 0o, or 0b as prefix:
+>>> 'int: {0: d}; hex: {0: #x}; oct: {0: #o}; bin{0: #b}'.format(42)
+'int:  42; hex:  0x2a; oct:  0o52; bin 0b101010'
+#+END_EXAMPLE
+** Using , as a thousand seperator
+#+BEGIN_EXAMPLE
+>>> '{: ,}'.format(12345678)
+' 12,345,678'
+#+END_EXAMPLE
+** More==>Refer to doc-pdf(Python 参考手册)-library.pdf-->String services.
+#+BEGIN_EXAMPLE
+>>> print '{attr.__class__}'.format(attr=0)
+<type 'int'>
+#+END_EXAMPLE

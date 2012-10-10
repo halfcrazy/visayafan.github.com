@@ -1,0 +1,198 @@
+#+OPTIONS: ^:{} _:{} num:t toc:t \n:t
+#+include "../../template.org"
+#+title:拷贝构造函数
+* 位拷贝和值拷贝
+  位拷贝只是拷贝地址，值拷贝拷贝内容。下面例子：
+#+begin_src c++
+class A
+{
+public:
+    int *p;
+};
+int main()
+{
+    A a, b;
+    a.p=new int(1);
+    b.p=new int(2);
+    cout<<a.p<<" "<<b.p<<endl;
+    a=b;
+    cout<<a.p<<" "<<b.p<<endl;
+    return 0;
+}
+#+end_src
+  a=b;只是把b中p的地址传给a，即a，b只向同一块内存区域，此时由于a.p所指向的内存区域没有释放，造成了内存泄露。所以对于有指针的类一定在用值拷贝，要自己实现拷贝构造函数或重载=运算符。
+#+begin_src c++
+class A
+{
+public:
+    int *p;
+    A& operator=(const A&a){
+        *p=*(a.p);
+    }
+};
+int main()
+{
+    A a, b;
+    a.p=new int(1);
+    b.p=new int(2);
+    cout<<a.p<<" "<<b.p<<endl;
+    a=b;
+    cout<<a.p<<" "<<b.p<<endl;
+    return 0;
+}
+#+end_src  
+  此时a.p和b.p仍旧指向各自的位置只是a.p指向的内容变成了b.p指向的内容。
+* 拷贝构造函数
+  "Thinking in C++" 中的例子
+#+begin_src c++
+#include <fstream>
+#include <string>
+#include <iostream>
+using namespace std;
+
+ofstream out("HowMany.out");
+
+class HowMany{
+    static int objCnt;
+    string name;
+public:
+    HowMany(const string& id=""):name(id){
+        ++objCnt;
+        print("HowMany()");
+    }
+    ~HowMany(){
+        --objCnt;
+        print("~HowMany()");
+    }
+    HowMany(const HowMany& h):name(h.name){
+        name += " copy";
+        ++objCnt;
+        print("HowMany Copy_Constructor");
+    }
+    void print(const string& msg="") const{
+        if(msg.size() != 0) out<<msg<<":";
+        out<<"\t"<<name<<":"<<"objcnt:"<<objCnt<<endl;
+    }
+};
+int HowMany::objCnt = 0;
+
+HowMany f(HowMany h){
+    h.print("inside f()");
+    out<<"returning from f()"<<endl;
+    return h;
+}
+
+int main(int argc, char *argv[])
+{
+    HowMany h("h");
+    out<<"Entering f()"<<endl;
+    HowMany h2=f(h);
+    h2.print("h2 after call to f()");
+    out<<"Call f(), no return value"<<endl;
+    f(h);
+    out<<"after call to f()"<<endl;
+    return 0;
+}
+#+end_src
+  结果分析:
+#+begin_example
+HowMany():	h:objcnt:1          
+Entering f()
+HowMany Copy_Constructor:	h copy:objcnt:2             //调用拷贝构造函数将参数h拷贝到f中的局部变量中
+inside f():	h copy:objcnt:2             //此时的局部变量名为h copy
+returning from f()
+HowMany Copy_Constructor:	h copy copy:objcnt:3                //调用拷贝构造函数将h copy拷贝给h copy copy 即返回值
+~HowMany():	h copy:objcnt:2             //h copy 生命终结
+h2 after call to f():	h copy copy:objcnt:2            //h2为h copy copy
+Call f(), no return value
+HowMany Copy_Constructor:	h copy:objcnt:3
+inside f():	h copy:objcnt:3
+returning from f()
+HowMany Copy_Constructor:	h copy copy:objcnt:4                //h copy copy为返回值 是个临时量
+~HowMany():	h copy copy:objcnt:3                //由于f(h)没有保存返回值 故销毁
+~HowMany():	h copy:objcnt:2             //f中局部变量销毁
+after call to f()
+~HowMany():	h copy copy:objcnt:1
+~HowMany():	h:objcnt:0
+#+end_example  
+* 成员指针
+  成员指针是指向类成员的指针，基本语法为：
+#+begin_src c++
+int ObjectClass::*pointerToMember = &ObjectClass::Member
+#+end_src
+  使用：
+#+begin_src c++
+object.*pointerToMember=value;
+objectPointer->*pointerToMember=value;
+#+end_src
+  例如：
+#+begin_src c++
+#include <iostream>
+using namespace std;
+
+class Data{
+public:
+    int a, b, c;
+    void print(){cout<<"a:"<<a<<" b:"<<b<<" c:"<<c<<endl;}
+};
+int main(int argc, char *argv[])
+{
+    Data d, *pd=&d;
+    int Data::*p=&Data::a;
+    pd->*p=1;
+    p=&Data::b;
+    d.*p=2;
+    p=&Data::c;
+    pd->*p=3;
+    pd->print();
+    return 0;
+}
+#+end_src  
+  同理对于函数也类似：
+#+begin_src c++
+class Fun{
+public:
+    void f(float f) const {cout<<f<<endl;}
+};
+int main(int argc, char *argv[])
+{
+    void (Fun::*pf)(float) const = &Fun::f;
+    Fun f;
+    (f.*pf)(2);
+}
+#+end_src
+  "Thinking in C++"中的例子：
+#+begin_src c++
+#include <iostream>
+using namespace std;
+
+class Widget{
+    void f(int) const {cout<<"f()"<<endl;}
+    void g(int) const {cout<<"g()"<<endl;}
+    void h(int) const {cout<<"h()"<<endl;}
+    void j(int) const {cout<<"j()"<<endl;}
+    enum{cnt =4;}
+    void (Widget::*p[cnt])(int) const;
+public:
+    Widget(){
+        p[0]=&Widget::f;
+        p[1]=&Widget::g;
+        p[2]=&Widget::h;
+        p[3]=&Widget::j;
+    }
+    void select(int i, int j){
+        if(i<0 | i>cnt) return;
+        (this->*p[i])(j);
+    }
+    int count(){return cnt;}
+};
+
+int main(int argc, char *argv[])
+{
+    Widget w;
+    for(int i=0; i<w.count(); i++){
+        w.select(i,4);
+    }
+    return 0;
+}
+#+end_src  

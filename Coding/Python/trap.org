@@ -1,0 +1,39 @@
+#+OPTIONS: "\n:t
+#+OPTIONS: ^:{}
+#+OPTIONS: _:{}
+#+TITLE: 
+* “多维数组”陷阱
+  a=[[0]*4]*3 如此构造a得到的a的第一行其实都是同一个列表对象的引用，所以修改列中一个元素会引起整个列的改变，同理修改行中的一个元素会引起整个行的改变。
+  如此这不是你想要的结果，可以如此初始化
+#+BEGIN_SRC python
+>>> a=[[0]*4]*3
+>>> print a
+[[0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]]
+>>> a[0][0]=1
+>>> print a
+[[1, 0, 0, 0], [1, 0, 0, 0], [1, 0, 0, 0]]
+###改变列中一个元素会改变整个列
+
+>>> a=[[0 for column in range(4)] for row in range(3)]
+>>> print a
+[[0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]]
+>>> a[0][0]=1
+>>> print a
+[[1, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]]
+>>> 
+#+END_SRC  
+* 处于函数之中循环之下的函数
+  如果lambda或def在函数之中定义，且嵌套在一个循环中，且引用了一个被循环使用的上层作用域的变量，则在这个循环中产生的所有函数会有相同的值。
+  如果这不是你想要的结果，可以修改 acts.append(lambda x, i=i: i**x)
+#+BEGIN_SRC python
+def makeActions():
+    acts=[]
+    for i in range(5):
+        acts.append(lambda x: i**x)
+    return acts
+acts=makeActions()
+print acts[0](2)
+print acts[1](2)
+print acts[2](2)
+##结果都是一样的
+#+END_SRC    

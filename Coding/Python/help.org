@@ -1,0 +1,47 @@
+#+OPTIONS: "\n:t
+#+OPTIONS: ^:{}
+#+OPTIONS: _:{}
+#+TITLE: 
+
+ 
+ 
+查看所有的关键字：help("keywords")
+
+查看所有的modules：help("modules")
+
+单看所有的modules中包含指定字符串的modules： help("modules yourstr")
+
+查看中常见的topics： help("topics")
+#+BEGIN_EXAMPLE
+>>> help("topics")
+
+Here is a list of available topics.  Enter any topic name to get more help.
+
+ASSERTION           DEBUGGING           LITERALS            SEQUENCEMETHODS2
+ASSIGNMENT          DELETION            LOOPING             SEQUENCES
+ATTRIBUTEMETHODS    DICTIONARIES        MAPPINGMETHODS      SHIFTING
+ATTRIBUTES          DICTIONARYLITERALS  MAPPINGS            SLICINGS
+AUGMENTEDASSIGNMENT DYNAMICFEATURES     METHODS             SPECIALATTRIBUTES
+BACKQUOTES          ELLIPSIS            MODULES             SPECIALIDENTIFIERS
+BASICMETHODS        EXCEPTIONS          NAMESPACES          SPECIALMETHODS
+BINARY              EXECUTION           NONE                STRINGMETHODS
+BITWISE             EXPRESSIONS         NUMBERMETHODS       STRINGS
+BOOLEAN             FILES               NUMBERS             SUBSCRIPTS
+CALLABLEMETHODS     FLOAT               OBJECTS             TRACEBACKS
+CALLS               FORMATTING          OPERATORS           TRUTHVALUE
+CLASSES             FRAMEOBJECTS        PACKAGES            TUPLELITERALS
+CODEOBJECTS         FRAMES              POWER               TUPLES
+COERCIONS           FUNCTIONS           PRECEDENCE          TYPEOBJECTS
+COMPARISON          IDENTIFIERS         PRINTING            TYPES
+COMPLEX             IMPORTING           PRIVATENAMES        UNARY
+CONDITIONAL         INTEGER             RETURNING           UNICODE
+CONTEXTMANAGERS     LISTLITERALS        SCOPING             
+CONVERSIONS         LISTS               SEQUENCEMETHODS1    
+#+END_EXAMPLE
+例如想要查看CALLS主题的帮助，则：help("CALLS")
+
+查看标准库中的module：import os.path + help("os.path")
+查看内置的类型：help("list")
+查看类型的成员方法：help("str.find") 
+查看内置函数：help("open")
+ 

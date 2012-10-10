@@ -1,0 +1,773 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+               "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<title>Note</title>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
+<meta name="title" content="Note"/>
+<meta name="generator" content="Org-mode"/>
+<meta name="generated" content="2012-10-10 17:12:54 CST"/>
+<meta name="author" content="visaya fan"/>
+<meta name="description" content=""/>
+<meta name="keywords" content=""/>
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  html { font-family: Times, serif; font-size: 12pt; }
+  .title  { text-align: center; }
+  .todo   { color: red; }
+  .done   { color: green; }
+  .tag    { background-color: #add8e6; font-weight:normal }
+  .target { }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .right  {margin-left:auto; margin-right:0px;  text-align:right;}
+  .left   {margin-left:0px;  margin-right:auto; text-align:left;}
+  .center {margin-left:auto; margin-right:auto; text-align:center;}
+  p.verse { margin-left: 3% }
+  pre {
+	border: 1pt solid #AEBDCC;
+	background-color: #F3F5F7;
+	padding: 5pt;
+	font-family: courier, monospace;
+        font-size: 90%;
+        overflow:auto;
+  }
+  table { border-collapse: collapse; }
+  td, th { vertical-align: top;  }
+  th.right  { text-align:center;  }
+  th.left   { text-align:center;   }
+  th.center { text-align:center; }
+  td.right  { text-align:right;  }
+  td.left   { text-align:left;   }
+  td.center { text-align:center; }
+  dt { font-weight: bold; }
+  div.figure { padding: 0.5em; }
+  div.figure p { text-align: center; }
+  div.inlinetask {
+    padding:10px;
+    border:2px solid gray;
+    margin:10px;
+    background: #ffffcc;
+  }
+  textarea { overflow-x: auto; }
+  .linenr { font-size:smaller }
+  .code-highlighted {background-color:#ffff00;}
+  .org-info-js_info-navigation { border-style:none; }
+  #org-info-js_console-label { font-size:10px; font-weight:bold;
+                               white-space:nowrap; }
+  .org-info-js_search-highlight {background-color:#ffff00; color:#000000;
+                                 font-weight:bold; }
+  /*]]>*/-->
+</style>
+<link rel="stylesheet" type="text/css" href="../style/style.css" />
+<script type="text/javascript">
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+
+</head>
+<body>
+<div id="org-div-home-and-up">
+ <a accesskey="H" href="../../index.html#python"> HOME </a>
+</div>
+
+
+<div id="content">
+<h1 class="title">Note</h1>
+
+
+<div id="table-of-contents">
+<h2>TOC</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#sec-1">1 /usr/bin/python与/usr/bin/env python的区别</a></li>
+<li><a href="#sec-2">2 Reference Semantic</a></li>
+<li><a href="#sec-3">3 执行</a></li>
+<li><a href="#sec-4">4 import from</a></li>
+<li><a href="#sec-5">5 Packages</a></li>
+<li><a href="#sec-6">6 Python data types</a>
+<ul>
+<li><a href="#sec-6-1">6.1 numbers</a></li>
+<li><a href="#sec-6-2">6.2 Strings</a></li>
+<li><a href="#sec-6-3">6.3 Lists</a></li>
+<li><a href="#sec-6-4">6.4 tuple</a></li>
+<li><a href="#sec-6-5">6.5 Arrary</a></li>
+<li><a href="#sec-6-6">6.6 Dictionaries</a></li>
+</ul>
+</li>
+<li><a href="#sec-7">7 通配符</a></li>
+<li><a href="#sec-8">8 print(通配符支持，重定向支持)</a></li>
+<li><a href="#sec-9">9 运算符</a></li>
+<li><a href="#sec-10">10 变量和赋值</a></li>
+<li><a href="#sec-11">11 集合元素</a></li>
+<li><a href="#sec-12">12 字符串</a></li>
+<li><a href="#sec-13">13 列表和元组</a></li>
+<li><a href="#sec-14">14 字典</a></li>
+<li><a href="#sec-15">15 控制语句</a>
+<ul>
+<li><a href="#sec-15-1">15.1 if</a></li>
+<li><a href="#sec-15-2">15.2 while</a></li>
+<li><a href="#sec-15-3">15.3 for</a></li>
+</ul>
+</li>
+<li><a href="#sec-16">16 异常</a></li>
+<li><a href="#sec-17">17 函数</a>
+<ul>
+<li><a href="#sec-17-1">17.1 常用函数</a></li>
+</ul>
+</li>
+<li><a href="#sec-18">18 类</a></li>
+<li><a href="#sec-19">19 range,xrange</a></li>
+<li><a href="#sec-20">20 help(range)</a></li>
+<li><a href="#sec-21">21 repr和str的区别</a></li>
+<li><a href="#sec-22">22 import module和 __import_<sub>(module)</sub></a></li>
+<li><a href="#sec-23">23 locals(), vars()</a></li>
+<li><a href="#sec-24">24 isinstance(obj, type-or-class-or-tuple)</a></li>
+<li><a href="#sec-25">25 callable(obj)</a></li>
+<li><a href="#sec-26">26 @classmethod</a></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-1" class="outline-2">
+<h2 id="sec-1"><span class="section-number-2">1</span> /usr/bin/python与/usr/bin/env python的区别</h2>
+<div class="outline-text-2" id="text-1">
+
+
+<p><br/>
+<pre class="example">前者指定具体路径，必须确保python在/usr/bin下。
+后者通过env在PATH路径中寻找python,
+~$ echo $PATH
+/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games
+就会在 /usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games目录下寻找python  
+</pre>
+
+</p></div>
+
+</div>
+
+<div id="outline-container-2" class="outline-2">
+<h2 id="sec-2"><span class="section-number-2">2</span> Reference Semantic</h2>
+<div class="outline-text-2" id="text-2">
+
+
+<p><br/>
+<pre class="example">此时ab是同一个变量的别名
+&gt;&gt;&gt; a = [1,2,3]
+&gt;&gt;&gt; b=a
+&gt;&gt;&gt; a.append(4)
+&gt;&gt;&gt; print b
+[1, 2, 3, 4]
+
+&gt;&gt;&gt; a=1
+&gt;&gt;&gt; b=a
+&gt;&gt;&gt; a=a+1
+此时a b不再是同一个变量的别名
+&gt;&gt;&gt; a
+2
+&gt;&gt;&gt; b
+1
+</pre>
+
+</p></div>
+
+</div>
+
+<div id="outline-container-3" class="outline-2">
+<h2 id="sec-3"><span class="section-number-2">3</span> 执行</h2>
+<div class="outline-text-2" id="text-3">
+
+
+<p><br/>
+<pre class="example">1 $python script.py
+2 $python -i script.py   //可以保持交互
+3 $python
+   &gt;&gt;&gt;import script   //此时无py后缀
+4 $python
+  &gt;&gt;&gt;execfile('script.py')
+</pre>
+
+
+</p></div>
+
+</div>
+
+<div id="outline-container-4" class="outline-2">
+<h2 id="sec-4"><span class="section-number-2">4</span> import from</h2>
+<div class="outline-text-2" id="text-4">
+
+
+<p><br/>
+<pre class="example">import re
+from re import match
+
+import re as regex
+from re import matchas m
+</pre>
+
+</p></div>
+
+</div>
+
+<div id="outline-container-5" class="outline-2">
+<h2 id="sec-5"><span class="section-number-2">5</span> Packages</h2>
+<div class="outline-text-2" id="text-5">
+
+
+<p><br/>
+<pre class="example">useful packages:
+Numeric: good fro numberical algebra, trigonometry.
+NumPy: Similar to Numeric, but handles arrays slightly differently and ahs a few other built-in commands and functions.
+SciPy: based on NumPy. useful for numerical integration, ODE soluton, interpolations.  
+</pre>
+
+
+<pre class="example">import syntax:
+from P.Q.M import foo; print foo()
+from P.Q import M; print M.foo()
+import P.Q.M; print P.Q.M.foo()
+import P.Q.M as M; print M.foo()
+</pre>
+
+</p></div>
+
+</div>
+
+<div id="outline-container-6" class="outline-2">
+<h2 id="sec-6"><span class="section-number-2">6</span> Python data types</h2>
+<div class="outline-text-2" id="text-6">
+
+<p>Dynamic typing<br/>
+Strong typing<br/>
+</p>
+</div>
+
+<div id="outline-container-6-1" class="outline-3">
+<h3 id="sec-6-1"><span class="section-number-3">6.1</span> numbers</h3>
+<div class="outline-text-3" id="text-6-1">
+
+<p>   integer long float complex:3+4j<br/>
+</p></div>
+
+</div>
+
+<div id="outline-container-6-2" class="outline-3">
+<h3 id="sec-6-2"><span class="section-number-3">6.2</span> Strings</h3>
+<div class="outline-text-3" id="text-6-2">
+
+
+<p><br/>
+<pre class="example">访问s[i:j:k]下标从0开始，包括i不包括j,间隔为k
+s[-n]倒数第n个字符
+</pre>
+
+</p></div>
+
+</div>
+
+<div id="outline-container-6-3" class="outline-3">
+<h3 id="sec-6-3"><span class="section-number-3">6.3</span> Lists</h3>
+<div class="outline-text-3" id="text-6-3">
+
+
+<p><br/>
+<pre class="example">a= [0,[0,1,2],1,2,'hello']; a=[]; 可变 a=[0,1] a[2]=3=&gt;a=[0,1,2]
+Indexing: L[i], L[i][j]
+Slicing: L[i:j]
+Concatenation: L1=[0,1] L2=[2,3] =&gt;L1+L2=[0,1,2,3]
+Repetion: L * 3
+Appending: L.append(3)
+Sorting: L=[2,1,4,3] L.sort()
+Reverseal: L=[1,2] L.revese()=[2,1]
+Shrinking: del L[2]
+Index and slice assignment: L[1]=1 L[1:4]=[4,5,6]
+Making a list of integers: range(4)=&gt;[1,2,3,4]  range(1,5)=&gt;[1,2,3,4]
+</pre>
+
+</p></div>
+
+</div>
+
+<div id="outline-container-6-4" class="outline-3">
+<h3 id="sec-6-4"><span class="section-number-3">6.4</span> tuple</h3>
+<div class="outline-text-3" id="text-6-4">
+
+<p>individual elements can't be reassigned.<br/>
+</p></div>
+
+</div>
+
+<div id="outline-container-6-5" class="outline-3">
+<h3 id="sec-6-5"><span class="section-number-3">6.5</span> Arrary</h3>
+<div class="outline-text-3" id="text-6-5">
+
+
+<p><br/>
+<pre class="example">   Not a basic built-in python type.
+必须导入: from numpy import *
+
+vec=array([1,2,3])
+mat=array([1,2,3],[4,5,6],[7,8,9])
+
+Difference between array and lists:
+1 The + and * don't refer to concatenation or repetitions.
+2 It's much faster to carry out operations on arrays.
++ - * / **
+ar=(pi/4)*arange(3)
+sin(ar)
+</pre>
+
+</p></div>
+
+</div>
+
+<div id="outline-container-6-6" class="outline-3">
+<h3 id="sec-6-6"><span class="section-number-3">6.6</span> Dictionaries</h3>
+<div class="outline-text-3" id="text-6-6">
+
+
+<p><br/>
+<pre class="example">Hash Tables:
+    d={"duck":"eend", "water": "water"}   
+Lookup
+Delete, insert, overwirte
+Keys, values, items
+Presence check
+</pre>
+
+
+BinaryData RegExp<br/>
+</p>
+<p><br/>
+</p></div>
+</div>
+
+</div>
+
+<div id="outline-container-7" class="outline-2">
+<h2 id="sec-7"><span class="section-number-2">7</span> 通配符</h2>
+<div class="outline-text-2" id="text-7">
+
+</div>
+
+</div>
+
+<div id="outline-container-8" class="outline-2">
+<h2 id="sec-8"><span class="section-number-2">8</span> print(通配符支持，重定向支持)</h2>
+<div class="outline-text-2" id="text-8">
+
+</div>
+
+</div>
+
+<div id="outline-container-9" class="outline-2">
+<h2 id="sec-9"><span class="section-number-2">9</span> 运算符</h2>
+<div class="outline-text-2" id="text-9">
+
+</div>
+
+</div>
+
+<div id="outline-container-10" class="outline-2">
+<h2 id="sec-10"><span class="section-number-2">10</span> 变量和赋值</h2>
+<div class="outline-text-2" id="text-10">
+
+
+<p><br/>
+</p></div>
+
+</div>
+
+<div id="outline-container-11" class="outline-2">
+<h2 id="sec-11"><span class="section-number-2">11</span> 集合元素</h2>
+<div class="outline-text-2" id="text-11">
+
+
+<p><br/>
+<pre class="example">[]
+()
+{}
+可变对象、不可变对象
+</pre>
+
+
+</p></div>
+
+</div>
+
+<div id="outline-container-12" class="outline-2">
+<h2 id="sec-12"><span class="section-number-2">12</span> 字符串</h2>
+<div class="outline-text-2" id="text-12">
+
+</div>
+
+</div>
+
+<div id="outline-container-13" class="outline-2">
+<h2 id="sec-13"><span class="section-number-2">13</span> 列表和元组</h2>
+<div class="outline-text-2" id="text-13">
+
+
+<p><br/>
+</p></div>
+
+</div>
+
+<div id="outline-container-14" class="outline-2">
+<h2 id="sec-14"><span class="section-number-2">14</span> 字典</h2>
+<div class="outline-text-2" id="text-14">
+
+
+<p><br/>
+</p></div>
+
+</div>
+
+<div id="outline-container-15" class="outline-2">
+<h2 id="sec-15"><span class="section-number-2">15</span> 控制语句</h2>
+<div class="outline-text-2" id="text-15">
+
+
+</div>
+
+<div id="outline-container-15-1" class="outline-3">
+<h3 id="sec-15-1"><span class="section-number-3">15.1</span> if</h3>
+<div class="outline-text-3" id="text-15-1">
+
+
+<p><br/>
+</p></div>
+
+</div>
+
+<div id="outline-container-15-2" class="outline-3">
+<h3 id="sec-15-2"><span class="section-number-3">15.2</span> while</h3>
+<div class="outline-text-3" id="text-15-2">
+
+
+<p><br/>
+<pre class="example">&gt;&gt;&gt; a = 1
+&gt;&gt;&gt; while a&lt;10:
+...     print a,
+...     a+=1
+... 
+</pre>
+
+
+
+<pre class="example">&gt;&gt;&gt; a = 1  
+&gt;&gt;&gt; while a&lt;10:
+...     print a
+...     a+=1
+... 
+</pre>
+
+
+</p></div>
+
+</div>
+
+<div id="outline-container-15-3" class="outline-3">
+<h3 id="sec-15-3"><span class="section-number-3">15.3</span> for</h3>
+<div class="outline-text-3" id="text-15-3">
+
+
+<p><br/>
+<pre class="example">&gt;&gt;&gt; a = 'adaffad'
+&gt;&gt;&gt; for x in a:
+...     print x,
+... 
+a d a f f a d   
+</pre>
+
+
+
+<pre class="example">&gt;&gt;&gt; for x in range(len(a)):
+...     print x,
+... 
+0 1 2 3 4 5 6
+&gt;&gt;&gt; for x in range(len(a)):
+...     print a[x],
+... 
+a d a f f a d
+</pre>
+
+
+
+<pre class="example">&gt;&gt;&gt; a=[1,2,3,4]
+&gt;&gt;&gt; for index, value in enumerate(a):
+...     print '{%d}: %d' % (index, value)
+... 
+{0}: 1
+{1}: 2
+{2}: 3
+{3}: 4
+</pre>
+
+
+
+<pre class="example">&gt;&gt;&gt; [x * x for x in a if x % 2 == 0]
+[4, 16]
+</pre>
+
+
+</p></div>
+</div>
+
+</div>
+
+<div id="outline-container-16" class="outline-2">
+<h2 id="sec-16"><span class="section-number-2">16</span> 异常</h2>
+<div class="outline-text-2" id="text-16">
+
+<p>try<br/>
+raise<br/>
+except<br/>
+finally<br/>
+</p>
+<p><br/>
+</p></div>
+
+</div>
+
+<div id="outline-container-17" class="outline-2">
+<h2 id="sec-17"><span class="section-number-2">17</span> 函数</h2>
+<div class="outline-text-2" id="text-17">
+
+
+</div>
+
+<div id="outline-container-17-1" class="outline-3">
+<h3 id="sec-17-1"><span class="section-number-3">17.1</span> 常用函数</h3>
+<div class="outline-text-3" id="text-17-1">
+
+
+<p><br/>
+<pre class="example">dir()
+help()
+len()
+int()   
+range([start], end, [step])
+type() 返回类型
+sum() 求和函数
+sys.exit()
+pass()
+append()
+linesep()
+lstrip() rstrip() strip() 去掉左/右/左右的空格
+0b 0 0x 二进制、八进制、十六进制
+</pre>
+
+</p></div>
+</div>
+
+</div>
+
+<div id="outline-container-18" class="outline-2">
+<h2 id="sec-18"><span class="section-number-2">18</span> 类</h2>
+<div class="outline-text-2" id="text-18">
+
+
+<p><br/>
+<pre class="example">&gt;&gt;&gt; class A:
+...     pass
+... 
+&gt;&gt;&gt; type(A)
+&lt;type 'classobj'&gt;
+
+&gt;&gt;&gt; class B(object):
+...     pass
+... 
+&gt;&gt;&gt; type(B)
+&lt;type 'type'&gt;
+</pre>
+
+</p>
+<p>  <br/>
+</p></div>
+
+</div>
+
+<div id="outline-container-19" class="outline-2">
+<h2 id="sec-19"><span class="section-number-2">19</span> range,xrange</h2>
+<div class="outline-text-2" id="text-19">
+
+</div>
+
+</div>
+
+<div id="outline-container-20" class="outline-2">
+<h2 id="sec-20"><span class="section-number-2">20</span> help(range)</h2>
+<div class="outline-text-2" id="text-20">
+
+</div>
+
+</div>
+
+<div id="outline-container-21" class="outline-2">
+<h2 id="sec-21"><span class="section-number-2">21</span> repr和str的区别</h2>
+<div class="outline-text-2" id="text-21">
+
+<p>  repr无歧义的标识对象，当执行后与原来的对象相同；str是为方便阅读。<br/>
+</p>
+<p><br/>
+<pre class="src src-python">&gt;&gt;&gt; s=<span style="color: #8b2252;">"""w'o"w"""</span>
+&gt;&gt;&gt; <span style="color: #7a378b;">repr</span>(s)
+<span style="color: #8b2252;">'\'w\\\'o"w\''</span>
+&gt;&gt;&gt; <span style="color: #7a378b;">str</span>(s)
+<span style="color: #8b2252;">'w\'o"w'</span>
+&gt;&gt;&gt; <span style="color: #7a378b;">eval</span>(<span style="color: #7a378b;">str</span>(s))==s
+Traceback (most recent call last):
+  File <span style="color: #8b2252;">"&lt;stdin&gt;"</span>, line 1, <span style="color: #a020f0;">in</span> &lt;module&gt;
+  File <span style="color: #8b2252;">"&lt;string&gt;"</span>, line 1
+    w<span style="color: #8b2252;">'o"w</span>
+<span style="color: #8b2252;">       ^</span>
+<span style="color: #8b2252;">SyntaxError: EOL while scanning single-quoted string</span>
+<span style="color: #8b2252;">&gt;&gt;&gt; eval(repr(s))==s</span>
+<span style="color: #8b2252;">True</span>
+</pre>
+
+  如果没有适合阅读的方法可供调用则str将调用repr<br/>
+</p>
+<p><br/>
+<pre class="src src-python">&gt;&gt;&gt; <span style="color: #a020f0;">class</span> <span style="color: #228b22;">Sic</span>(<span style="color: #7a378b;">object</span>): 
+...   <span style="color: #a020f0;">def</span> <span style="color: #0000ff;">__repr__</span>(<span style="color: #7a378b;">object</span>): <span style="color: #a020f0;">return</span> <span style="color: #8b2252;">'foo'</span>
+... 
+&gt;&gt;&gt; <span style="color: #a020f0;">print</span> <span style="color: #7a378b;">str</span>(Sic())
+foo
+&gt;&gt;&gt; <span style="color: #a020f0;">print</span> <span style="color: #7a378b;">repr</span>(Sic())
+foo
+&gt;&gt;&gt; <span style="color: #a020f0;">class</span> <span style="color: #228b22;">Sic</span>(<span style="color: #7a378b;">object</span>):
+...   <span style="color: #a020f0;">def</span> <span style="color: #0000ff;">__str__</span>(<span style="color: #7a378b;">object</span>): <span style="color: #a020f0;">return</span> <span style="color: #8b2252;">'foo'</span>
+... 
+&gt;&gt;&gt; <span style="color: #a020f0;">print</span> <span style="color: #7a378b;">str</span>(Sic())
+foo
+&gt;&gt;&gt; <span style="color: #a020f0;">print</span> <span style="color: #7a378b;">repr</span>(Sic())
+&lt;__main__.Sic <span style="color: #7a378b;">object</span> at 0x2617f0&gt;
+</pre>
+
+  默认的是一样且无用的：<br/>
+</p>
+<p><br/>
+<pre class="src src-python">&gt;&gt;&gt; <span style="color: #a020f0;">class</span> <span style="color: #228b22;">Sic</span>(<span style="color: #7a378b;">object</span>): <span style="color: #a020f0;">pass</span>
+... 
+&gt;&gt;&gt; <span style="color: #a020f0;">print</span> <span style="color: #7a378b;">str</span>(Sic())
+&lt;__main__.Sic <span style="color: #7a378b;">object</span> at 0x8b7d0&gt;
+&gt;&gt;&gt; <span style="color: #a020f0;">print</span> <span style="color: #7a378b;">repr</span>(Sic())
+&lt;__main__.Sic <span style="color: #7a378b;">object</span> at 0x8b7d0&gt;
+</pre>
+
+   Many values, such as numbers or structures like lists and dictionaries, have the same representation using either function. Strings and floating point numbers, in particular, have two distinct representations. <br/>
+</p></div>
+
+</div>
+
+<div id="outline-container-22" class="outline-2">
+<h2 id="sec-22"><span class="section-number-2">22</span> import module和 __import_<sub>(module)</sub></h2>
+<div class="outline-text-2" id="text-22">
+
+<p>  前者在源码最开始导入，后者是函数加参数形式导入（无后缀）<br/>
+  __import__返回module，故可直接调用方法：<br/>
+</p>
+<p><br/>
+<pre class="src src-python"><span style="color: #7a378b;">__import__</span>(os).getcwd()
+</pre>
+
+</p></div>
+
+</div>
+
+<div id="outline-container-23" class="outline-2">
+<h2 id="sec-23"><span class="section-number-2">23</span> locals(), vars()</h2>
+<div class="outline-text-2" id="text-23">
+
+
+<p><br/>
+<pre class="src src-python"><span style="color: #7a378b;">locals</span>() -&gt; dictionary
+update <span style="color: #a020f0;">and</span> rturn a dictionary contatining the current scope<span style="color: #8b2252;">'s lcoal variables.</span>
+</pre>
+
+
+<pre class="src src-python"><span style="color: #7a378b;">vars</span>([<span style="color: #7a378b;">object</span>]) -&gt;dictionary
+&#26080;&#21442;&#26102;&#31561;&#20215;&#20110;locals()
+&#26377;&#21442;&#26102;&#31561;&#20215;&#20110;object.__dict__
+</pre>
+
+</p></div>
+
+</div>
+
+<div id="outline-container-24" class="outline-2">
+<h2 id="sec-24"><span class="section-number-2">24</span> isinstance(obj, type-or-class-or-tuple)</h2>
+<div class="outline-text-2" id="text-24">
+
+<p>  判断obj是不是type类型 or<br/>
+  class或其子类的实例(此处可以用issubclass函数判断是否子类(包括当前类))<br/>
+  instatnce(obj, (A, B, C))即obj是不是A,B,C中任何一个的实例，或关系<br/>
+</p></div>
+
+</div>
+
+<div id="outline-container-25" class="outline-2">
+<h2 id="sec-25"><span class="section-number-2">25</span> callable(obj)</h2>
+<div class="outline-text-2" id="text-25">
+
+<p>  obj是否可被调用<br/>
+  类是可调用的（调用它会生成实例）<br/>
+  如果类有__call__方法则其实例是可调用的，否则其实例是不可调用的<br/>
+</p></div>
+
+</div>
+
+<div id="outline-container-26" class="outline-2">
+<h2 id="sec-26"><span class="section-number-2">26</span> @classmethod</h2>
+<div class="outline-text-2" id="text-26">
+
+<p>  类方法<br/>
+  下面例子，main做为类MineSweep的类方法，当MineSweep.main()调用时MineSweep做为默认第一个参数cls传递，此时不会调用构造函数（构造函数有4个参数，如果调用构造函数的话肯定会因参数不匹配而出错）<br/>
+  在main里面构造了一个实例window。此时cls相当于MineSweep。<br/>
+  更进一步封装(Encapsulation)<br/>
+</p>
+<p><br/>
+<pre class="src src-python"><span style="color: #a020f0;">class</span> <span style="color: #228b22;">MineSweep</span>(tkinter.Frame):
+
+    <span style="color: #228b22;">@classmethod</span>
+    <span style="color: #a020f0;">def</span> <span style="color: #0000ff;">main</span>(cls, width, height, mines):
+        root = tkinter.Tk()
+        window = cls(root, width, height, mines)
+        root.mainloop()
+
+    <span style="color: #a020f0;">def</span> <span style="color: #0000ff;">__init__</span>(<span style="color: #a020f0;">self</span>, root, width, height, mines):
+        <span style="color: #7a378b;">super</span>().__init__(root)
+        <span style="color: #a020f0;">self</span>.__width = width
+        <span style="color: #a020f0;">self</span>.__height = height
+        <span style="color: #a020f0;">self</span>.__mines = mines
+<span style="color: #a020f0;">if</span> <span style="color: #7a378b;">__name__</span> == <span style="color: #8b2252;">'__main__'</span>:
+    MineSweep.main(10, 10, 10)
+</pre>
+
+</p></div>
+</div>
+</div>
+
+</body>
+</html>

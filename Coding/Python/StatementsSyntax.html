@@ -1,0 +1,269 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+               "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<title>StatementsSyntax</title>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
+<meta name="title" content="StatementsSyntax"/>
+<meta name="generator" content="Org-mode"/>
+<meta name="generated" content="2012-10-10 17:12:53 CST"/>
+<meta name="author" content="visaya fan"/>
+<meta name="description" content=""/>
+<meta name="keywords" content=""/>
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  html { font-family: Times, serif; font-size: 12pt; }
+  .title  { text-align: center; }
+  .todo   { color: red; }
+  .done   { color: green; }
+  .tag    { background-color: #add8e6; font-weight:normal }
+  .target { }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .right  {margin-left:auto; margin-right:0px;  text-align:right;}
+  .left   {margin-left:0px;  margin-right:auto; text-align:left;}
+  .center {margin-left:auto; margin-right:auto; text-align:center;}
+  p.verse { margin-left: 3% }
+  pre {
+	border: 1pt solid #AEBDCC;
+	background-color: #F3F5F7;
+	padding: 5pt;
+	font-family: courier, monospace;
+        font-size: 90%;
+        overflow:auto;
+  }
+  table { border-collapse: collapse; }
+  td, th { vertical-align: top;  }
+  th.right  { text-align:center;  }
+  th.left   { text-align:center;   }
+  th.center { text-align:center; }
+  td.right  { text-align:right;  }
+  td.left   { text-align:left;   }
+  td.center { text-align:center; }
+  dt { font-weight: bold; }
+  div.figure { padding: 0.5em; }
+  div.figure p { text-align: center; }
+  div.inlinetask {
+    padding:10px;
+    border:2px solid gray;
+    margin:10px;
+    background: #ffffcc;
+  }
+  textarea { overflow-x: auto; }
+  .linenr { font-size:smaller }
+  .code-highlighted {background-color:#ffff00;}
+  .org-info-js_info-navigation { border-style:none; }
+  #org-info-js_console-label { font-size:10px; font-weight:bold;
+                               white-space:nowrap; }
+  .org-info-js_search-highlight {background-color:#ffff00; color:#000000;
+                                 font-weight:bold; }
+  /*]]>*/-->
+</style>
+<script type="text/javascript">
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+
+</head>
+<body>
+<div id="org-div-home-and-up">
+ <a accesskey="H" href="../../index.html#python"> HOME </a>
+</div>
+
+
+<div id="content">
+<h1 class="title">StatementsSyntax</h1>
+
+
+<div id="table-of-contents">
+<h2>TOC</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#sec-1">1 对齐即为同一级</a></li>
+<li><a href="#sec-2">2 tuple/lists-unpacking-assignment</a></li>
+<li><a href="#sec-3">3 sequence-assignments</a></li>
+<li><a href="#sec-4">4 extended-sequence-unpacking</a></li>
+<li><a href="#sec-5">5 </a></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-1" class="outline-2">
+<h2 id="sec-1"><span class="section-number-2">1</span> 对齐即为同一级</h2>
+<div class="outline-text-2" id="text-1">
+
+<p>except与else对齐，是一级的。
+</p>
+
+
+<pre class="src src-python"><span style="color: #a020f0;">while</span> <span style="color: #a020f0;">True</span>:
+    reply = <span style="color: #7a378b;">input</span>(<span style="color: #8b2252;">'Enter text: '</span>)
+    <span style="color: #a020f0;">if</span> reply == <span style="color: #8b2252;">'stop'</span>:   <span style="color: #a020f0;">break</span>
+    <span style="color: #a020f0;">try</span>:
+        <span style="color: #7a378b;">int</span>(reply)
+    <span style="color: #a020f0;">except</span>:
+        <span style="color: #a020f0;">print</span>(<span style="color: #8b2252;">'Bad '</span> * 8)
+    <span style="color: #a020f0;">else</span>:
+        <span style="color: #a020f0;">print</span>(<span style="color: #7a378b;">int</span>(reply) ** 2)
+<span style="color: #a020f0;">print</span>(<span style="color: #8b2252;">'Bye!'</span>)
+</pre>
+
+
+</div>
+
+</div>
+
+<div id="outline-container-2" class="outline-2">
+<h2 id="sec-2"><span class="section-number-2">2</span> tuple/lists-unpacking-assignment</h2>
+<div class="outline-text-2" id="text-2">
+
+
+
+
+<pre class="src src-python">a, b = <span style="color: #8b2252;">'a'</span>, <span style="color: #8b2252;">'b'</span>
+a, b = [<span style="color: #8b2252;">'a'</span>, <span style="color: #8b2252;">'b'</span>]
+</pre>
+
+
+</div>
+
+</div>
+
+<div id="outline-container-3" class="outline-2">
+<h2 id="sec-3"><span class="section-number-2">3</span> sequence-assignments</h2>
+<div class="outline-text-2" id="text-3">
+
+
+
+
+<pre class="src src-python">a, b, c, d = <span style="color: #8b2252;">'spam'</span>
+</pre>
+
+<p>
+两边数目一定要相同，否则报错。
+</p>
+
+
+<pre class="src src-python">&gt;&gt;&gt; ((a, b), c) = (<span style="color: #8b2252;">'sp'</span>, <span style="color: #8b2252;">'am'</span>)
+&gt;&gt;&gt; a, b, c
+(<span style="color: #8b2252;">'s'</span>, <span style="color: #8b2252;">'p'</span>, <span style="color: #8b2252;">'am'</span>)
+</pre>
+
+
+<pre class="src src-python">&gt;&gt;&gt; <span style="color: #a020f0;">for</span> (a, b, c) <span style="color: #a020f0;">in</span> [(1, 2, 3), (4, 5, 6)]:
+...     <span style="color: #a020f0;">print</span>(a, b, c)
+... 
+1 2 3
+4 5 6
+&gt;&gt;&gt; <span style="color: #a020f0;">for</span> ((a, b), c) <span style="color: #a020f0;">in</span> [((1, 2), 3), ((4, 5), 6)]:
+...     <span style="color: #a020f0;">print</span>(a, b, c)
+... 
+1 2 3
+4 5 6
+</pre>
+
+
+
+<pre class="src src-python">&gt;&gt;&gt; L = [1, 2, 3, 4]
+&gt;&gt;&gt; <span style="color: #a020f0;">while</span> L:
+...     front, L = L[0], L[1:]
+...     <span style="color: #a020f0;">print</span>(front, L)
+... 
+1 [2, 3, 4]
+2 [3, 4]
+3 [4]
+4 []
+</pre>
+
+</div>
+
+</div>
+
+<div id="outline-container-4" class="outline-2">
+<h2 id="sec-4"><span class="section-number-2">4</span> extended-sequence-unpacking</h2>
+<div class="outline-text-2" id="text-4">
+
+<p>  *是个标识，标志着下个variable是个list，并收集所有未被赋值的所有其它变量
+</p>
+
+
+<pre class="src src-python">a, *b = <span style="color: #8b2252;">'spam'</span>
+==&gt;a = <span style="color: #8b2252;">'s'</span>, b = [<span style="color: #8b2252;">'p'</span>, <span style="color: #8b2252;">'a'</span>, <span style="color: #8b2252;">'m'</span>]
+
+&gt;&gt;&gt; a, b = <span style="color: #8b2252;">'spam'</span>
+Traceback (most recent call last):
+  File <span style="color: #8b2252;">"&lt;stdin&gt;"</span>, line 1, <span style="color: #a020f0;">in</span> &lt;module&gt;
+<span style="color: #228b22;">ValueError</span>: too many values to unpack (expected 2)
+
+</pre>
+
+<p>
+  *可以出现在任何地方，总是先赋完其它亦是再最后赋 *
+</p>
+
+
+<pre class="src src-python">&gt;&gt;&gt; x = [1, 2, 3, 4]
+&gt;&gt;&gt; *a, b = x
+&gt;&gt;&gt; b
+4
+&gt;&gt;&gt; a
+[1, 2, 3]
+&gt;&gt;&gt; a, *b, c = x
+&gt;&gt;&gt; a
+1
+&gt;&gt;&gt; b
+[2, 3]
+&gt;&gt;&gt; c
+4
+</pre>
+
+<p>
+  与slicing的区别: a sequence unpacking alignment return a list for multipe matched items. while slicing returns a sequence of the same type as the object model.
+</p>
+
+
+<pre class="src src-python">&gt;&gt;&gt; x = <span style="color: #8b2252;">'01234'</span>
+&gt;&gt;&gt; x[0], x[1:4], x[4]
+(<span style="color: #8b2252;">'0'</span>, <span style="color: #8b2252;">'123'</span>, <span style="color: #8b2252;">'4'</span>)         <span style="color: #b22222;">#x[1:4]&#31867;&#22411;&#19982;'01234'&#30456;&#21516;</span>
+&gt;&gt;&gt; a, *b, c = x
+&gt;&gt;&gt; a
+<span style="color: #8b2252;">'0'</span>
+&gt;&gt;&gt; b                     <span style="color: #b22222;"># b&#20026;list&#31867;&#22411;</span>
+[<span style="color: #8b2252;">'1'</span>, <span style="color: #8b2252;">'2'</span>, <span style="color: #8b2252;">'3'</span>]
+&gt;&gt;&gt; c
+<span style="color: #8b2252;">'4'</span>
+</pre>
+
+</div>
+
+</div>
+
+<div id="outline-container-5" class="outline-2">
+<h2 id="sec-5"><span class="section-number-2">5</span> </h2>
+<div class="outline-text-2" id="text-5">
+
+</div>
+</div>
+</div>
+
+</body>
+</html>

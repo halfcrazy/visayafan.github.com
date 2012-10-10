@@ -1,0 +1,124 @@
+#+OPTIONS: ^:{} _:{} num:t toc:t \n:t
+#+include "../../template.org"
+#+title:函数总结2
+* len()
+* type()
+  查看类型
+  type(X) == set    #判断X是不是set类型
+  type(D) == dict
+  isinstance(D, dict) 与上行等价
+* str()
+* repr()
+* //除
+* print 默认回车
+
+* math.trunc()
+#+BEGIN_EXAMPLE
+去除浮点后面的
+因为版本问题：在2.6中 3/2=>1，而在3.0中 3/2 =>1.5。为避免版本引起的问题，可以用math.trunc().math.trunc(3/2)=>1
+#+END_EXAMPLE
+* math.floor()
+#+BEGIN_EXAMPLE
+>>> math.floor(2.5)
+2.0
+>>> math.floor(-2.5)
+-3.0
+#+END_EXAMPLE
+
+* oct() hex() bin()
+#+BEGIN_EXAMPLE
+把10进制整数转化成8 16 2进制字符串
+2.6版本中8进制前面加0，3.0版本中前面加0o
+>>> oct(64), hex(64), bin(64)
+('0100', '0x40', '0b1000000')
+#+END_EXAMPLE
+* int()
+#+BEGIN_EXAMPLE
+int(x[, base]) -> integer
+把一个数字的字符串变换为整数，其中base指定指定x的进制。
+>>> int('64'), int('100', 8), int('40', 16), int('1000000', 2)
+(64, 64, 64, 64)
+>>> int('0x40', 16), int('0b1000000', 2) #与上面等价
+(64, 64)
+#+END_EXAMPLE
+* eval()
+* bit_length()
+#+BEGIN_EXAMPLE
+#以二进制查询表示一个数字的什所需的位数
+>>> (256).bit_length()
+9
+>>> len(bin(256)) - 2
+9
+#+END_EXAMPLE
+
+* math.pi math.e math.sin() math.sqrt() math.pow() pow() abs() min() max()
+#+BEGIN_EXAMPLE
+python中有三种方法可以计算平方根：
+import math
+math.sqrt(144)
+pow(144, .5)
+144 ** .5
+#+END_EXAMPLE
+----------------------------------------
+#+BEGIN_EXAMPLE
+ pow(x, y[, z]) -> number
+ 通常是两个参数，若三个则表示 (x ** y) % z
+#+END_EXAMPLE
+* random module
+** random.random()
+随机生成0-1之间的小数
+** random.randint(a, b)
+随机生成a-b之间的娄
+>>> random.randint(1, 10)
+5
+** random.choice(self, seq)
+随机从序列中挑选
+>>> random.choice(['a', 'b', 'c'])
+'c'
+* zip
+#+BEGIN_EXAMPLE
+zip(seq1, seq2, seq3...)=> [(seq1[0], seq2[0]...), (seq1[1], seq2[1]...), ...]
+#+END_EXAMPLE
+** 利用zip构造字典
+#+BEGIN_SRC python
+>>> d1=('a', 'b', 'c')
+>>> d2=(1,2,3)
+>>> dict(zip(d1,d2))
+{'a': 1, 'c': 3, 'b': 2}
+>>> d = dict(zip(d1,d2))
+>>> d["a"]
+1
+#+END_SRC     
+* enumerate
+#+BEGIN_EXAMPLE
+enumerate(iterable[, start]) -> iterator for index, value of iterable
+#+END_EXAMPLE
+#+BEGIN_SRC python
+>>> s='spam'
+>>> for (offset, item) in enumerate(s):
+...     print (offset, item)
+... 
+(0, 's')
+(1, 'p')
+(2, 'a')
+(3, 'm')
+#+END_SRC  
+* reduce
+#+BEGIN_EXAMPLE
+reduce(function, sequence[, initial]) -> value
+#+END_EXAMPLE
+  initial可选，当sequence为空结果为该值。
+#+BEGIN_SRC python
+reduce(lambda x,y:x*y, [1,2,3,4,5,6,7]) =>(((((1*2)*3)*4)*5)*6)*7
+#+END_SRC  
+* str.maketrans/str.translate
+  用来从一个字符串翻译到另一个字符串
+#+begin_src python
+before = 'koe'
+after = 'mqg'
+trantab = maketrans(before, after)
+print 'koe'.translate(trantab)
+#+end_src
+* chr/ord
+  chr(数字) 将数字转换为对应的ASCII码
+  ord(char) 将char转换为对应的ASCII值

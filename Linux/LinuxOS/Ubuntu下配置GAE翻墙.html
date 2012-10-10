@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+               "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<title>Ubunt下配置GAE（Google App Engine）翻墙</title>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
+<meta name="title" content="Ubunt下配置GAE（Google App Engine）翻墙"/>
+<meta name="generator" content="Org-mode"/>
+<meta name="generated" content="2012-10-10 16:45:15 CST"/>
+<meta name="author" content="visaya fan"/>
+<meta name="description" content=""/>
+<meta name="keywords" content=""/>
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  html { font-family: Times, serif; font-size: 12pt; }
+  .title  { text-align: center; }
+  .todo   { color: red; }
+  .done   { color: green; }
+  .tag    { background-color: #add8e6; font-weight:normal }
+  .target { }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .right  {margin-left:auto; margin-right:0px;  text-align:right;}
+  .left   {margin-left:0px;  margin-right:auto; text-align:left;}
+  .center {margin-left:auto; margin-right:auto; text-align:center;}
+  p.verse { margin-left: 3% }
+  pre {
+	border: 1pt solid #AEBDCC;
+	background-color: #F3F5F7;
+	padding: 5pt;
+	font-family: courier, monospace;
+        font-size: 90%;
+        overflow:auto;
+  }
+  table { border-collapse: collapse; }
+  td, th { vertical-align: top;  }
+  th.right  { text-align:center;  }
+  th.left   { text-align:center;   }
+  th.center { text-align:center; }
+  td.right  { text-align:right;  }
+  td.left   { text-align:left;   }
+  td.center { text-align:center; }
+  dt { font-weight: bold; }
+  div.figure { padding: 0.5em; }
+  div.figure p { text-align: center; }
+  div.inlinetask {
+    padding:10px;
+    border:2px solid gray;
+    margin:10px;
+    background: #ffffcc;
+  }
+  textarea { overflow-x: auto; }
+  .linenr { font-size:smaller }
+  .code-highlighted {background-color:#ffff00;}
+  .org-info-js_info-navigation { border-style:none; }
+  #org-info-js_console-label { font-size:10px; font-weight:bold;
+                               white-space:nowrap; }
+  .org-info-js_search-highlight {background-color:#ffff00; color:#000000;
+                                 font-weight:bold; }
+  /*]]>*/-->
+</style>
+<script type="text/javascript">
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+
+</head>
+<body>
+<div id="org-div-home-and-up">
+ <a accesskey="H" href="../../index.html#linuxos"> HOME </a>
+</div>
+
+
+<div id="content">
+<h1 class="title">Ubunt下配置GAE（Google App Engine）翻墙</h1>
+
+
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"> </script>
+<link rel="stylesheet" type="text/css" href="../../Layout/CSS/vf.css" />
+<script src="../../Layout/JS/bootstrap_old.js"></script>
+<script src="../../Layout/JS/disqus-comment.js"></script>
+
+
+<div id="table-of-contents">
+<h2>TOC</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#sec-1">1 写在前面</a></li>
+<li><a href="#sec-2">2 配置过程</a>
+<ul>
+<li><a href="#sec-2-1">2.1 申请google app engine</a></li>
+<li><a href="#sec-2-2">2.2 Ubuntu下配置GAE</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-1" class="outline-2">
+<h2 id="sec-1"><span class="section-number-2">1</span> 写在前面</h2>
+<div class="outline-text-2" id="text-1">
+
+<p>  用GAE半年了，一直以为自己在用5个ID，每天有5G流量，直到昨天在Youtube上看Google IO（两个小时）突然不能用了，登陆<a href="https://appengine.google.com">https://appengine.google.com</a> 查看后才知道自己一直只用了一个号，只有1G，所以很快用完了。不想再等一天（1天1G，1天过后流量会恢复），想重新配置但由于上传需要翻墙而我的流量又用完了（我第一次配置用的是教育网IPv6，现在没有了），所以没有办法，先在51vpn上注册，临时使用了它的免费vpn后才上传成功。<br/>
+  中间遇到的问题有下面讲的：Broken pipe<br/>
+</p></div>
+
+</div>
+
+<div id="outline-container-2" class="outline-2">
+<h2 id="sec-2"><span class="section-number-2">2</span> 配置过程</h2>
+<div class="outline-text-2" id="text-2">
+
+
+</div>
+
+<div id="outline-container-2-1" class="outline-3">
+<h3 id="sec-2-1"><span class="section-number-3">2.1</span> 申请google app engine</h3>
+<div class="outline-text-3" id="text-2-1">
+
+<p>   网上搜索申请教程即可 例如这篇：<a href="http://www.5ishare.com/snews/354700.shtml">http://www.5ishare.com/snews/354700.shtml</a><br/>
+</p></div>
+
+</div>
+
+<div id="outline-container-2-2" class="outline-3">
+<h3 id="sec-2-2"><span class="section-number-3">2.2</span> Ubuntu下配置GAE</h3>
+<div class="outline-text-3" id="text-2-2">
+
+<ul>
+<li>确保系统装有Python 版本为2.x而非3.x版本<br/>
+</li>
+<li>下载goagent：<a href="http://code.google.com/p/goagent/">http://code.google.com/p/goagent/</a> （简易教程中有下载地址）<br/>
+</li>
+<li>下载SwitchyOption.bak: <a href="https://code.google.com/p/goagent/downloads/list">https://code.google.com/p/goagent/downloads/list</a> (Chrome代理需要)<br/>
+</li>
+<li>修改local/proxy.ini中appid为你申请的id，最多可以申请10个，可以申请多个，一个一天限量1G，足够用了，例如我申请两个visayafan，visayafan1<br/>
+</li>
+<li>命令行下$python server/uploader.zip，依次输入visayafan，email和password(是Application密码，而非邮箱密码，如果没有，申请：<a href="https://www.google.com/accounts/IssuedAuthSubTokens">https://www.google.com/accounts/IssuedAuthSubTokens</a>， 用邮箱密码登陆后会给你的手机发送verify code短信，接着generator一个)，需要输入两次。成功后接着输入第2个ID：visayafan1，依此类推。<br/>
+    如果这里出现问题，类似：<br/>
+</li>
+</ul>
+
+
+<p><br/>
+<pre class="example">server$ python uploader.zip 
+APPID:visayafan
+Application: visayafan
+Host: appengine.google.com
+INFO - - [Sep  8 08:32:21] Server: appengine.google.com
+Rolling back the update.
+Email: visayafan@gmail.com
+Password for visayafan@gmail.com: 
+Traceback (most recent call last):
+  File "/usr/lib/python2.7/runpy.py", line 162, in _run_module_as_main
+    "__main__", fname, loader, pkg_name)
+  File "/usr/lib/python2.7/runpy.py", line 72, in _run_code
+    exec code in run_globals
+  File "uploader.zip/__main__.py", line 10, in &lt;module&gt;
+  File "uploader.zip/__main__.py", line 6, in main
+  File "uploader.zip/appcfg.py", line 206, in main
+  File "uploader.zip/appcfg.py", line 197, in upload
+  File "uploader.zip/google/appengine/tools/appcfg.py", line 3873, in main
+  File "uploader.zip/google/appengine/tools/appcfg.py", line 2443, in Run
+  File "uploader.zip/google/appengine/tools/appcfg.py", line 3638, in __call__
+  File "uploader.zip/google/appengine/tools/appcfg.py", line 3141, in Rollback
+  File "uploader.zip/google/appengine/tools/appcfg.py", line 3158, in _Rollback
+  File "uploader.zip/google/appengine/tools/appcfg.py", line 2018, in Rollback
+  File "uploader.zip/google/appengine/tools/appcfg.py", line 1698, in Send
+  File "uploader.zip/google/appengine/tools/appengine_rpc.py", line 378, in Send
+  File "uploader.zip/google/appengine/tools/appengine_rpc.py", line 436, in _Authenticate
+  File "uploader.zip/google/appengine/tools/appengine_rpc.py", line 280, in _Authenticate
+  File "uploader.zip/google/appengine/tools/appengine_rpc.py", line 219, in _GetAuthToken
+  File "/usr/lib/python2.7/urllib2.py", line 391, in open
+    response = self._open(req, data)
+  File "/usr/lib/python2.7/urllib2.py", line 409, in _open
+    '_open', req)
+  File "/usr/lib/python2.7/urllib2.py", line 369, in _call_chain
+    result = func(*args)
+  File "/usr/lib/python2.7/urllib2.py", line 1193, in https_open
+    return self.do_open(httplib.HTTPSConnection, req)
+  File "uploader.zip/fancy_urllib/__init__.py", line 367, in do_open
+    
+urllib2.URLError: &lt;urlopen error [Errno 32] Broken pipe&gt;
+</pre>
+
+  解决办法：<br/>
+</p>
+<p><br/>
+<pre class="example">1. Unzip uploader.zip
+   $ unzip uploader.zip
+2. Edit appcfg.py, comment out this line from
+   fancy_urllib._create_connection = socket_create_connection
+   to
+   #fancy_urllib._create_connection = socket_create_connection
+3. Run
+   $ (export uploaddir=python; python __main__.py )
+</pre>
+
+</p><ul>
+<li>Chrome安装插件 Proxy SwitchySharp，插件的options-&gt;improt/export-&gt;restore from file选中下载的SwitchyOption.bak<br/>
+</li>
+<li>切换Proxy SwitchySharp为Auto Switch Mode<br/>
+</li>
+<li>终端运行命令：$python local/proxy.sh<br/>
+</li>
+<li>配置成功<br/>
+</li>
+<li>访问twitter和G+的时候遇到证书不信任问题：<br/>
+</li>
+</ul>
+
+
+<p><br/>
+<pre class="example">$certutil -d sql:$HOME/.pki/nssdb -A -t "C,," -n GoAgent -i ~/goagent/local/CA.crt
+</pre>
+
+</p>
+<p>    <br/>
+</p></div>
+</div>
+</div>
+</div>
+
+</body>
+</html>

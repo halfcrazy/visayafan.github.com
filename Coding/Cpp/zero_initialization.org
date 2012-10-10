@@ -1,0 +1,38 @@
+#+OPTIONS: "\n:t
+#+OPTIONS: ^:{}
+#+OPTIONS: _:{}
+#+TITLE: 
+
+#+BEGIN_SRC c++
+#include <iostream>
+using namespace std;
+
+template <typename T>
+void f(const T&){
+    // T x = T();
+    T x;
+    cout<<x<<endl;
+}
+
+template <typename T>
+class A{
+private:
+    T x;
+    T y;
+    T z;
+public:
+    // A():x(), y(), z(){}
+    void MyPrint(){
+        cout<<x<<" "<<y<<" "<<z<<endl;
+    }
+};
+int main(int argc, char *argv[])
+{
+    f(1);
+    f(1.1);
+    A<int> a;
+    a.MyPrint();
+    return 0;
+}
+
+#+END_SRC  

@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="gb18030"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+               "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<title>template typename</title>
+<meta http-equiv="Content-Type" content="text/html;charset=gb18030"/>
+<meta name="title" content="template typename"/>
+<meta name="generator" content="Org-mode"/>
+<meta name="generated" content="2012-10-10 17:13:07 CST"/>
+<meta name="author" content="visaya fan"/>
+<meta name="description" content=""/>
+<meta name="keywords" content=""/>
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  html { font-family: Times, serif; font-size: 12pt; }
+  .title  { text-align: center; }
+  .todo   { color: red; }
+  .done   { color: green; }
+  .tag    { background-color: #add8e6; font-weight:normal }
+  .target { }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .right  {margin-left:auto; margin-right:0px;  text-align:right;}
+  .left   {margin-left:0px;  margin-right:auto; text-align:left;}
+  .center {margin-left:auto; margin-right:auto; text-align:center;}
+  p.verse { margin-left: 3% }
+  pre {
+	border: 1pt solid #AEBDCC;
+	background-color: #F3F5F7;
+	padding: 5pt;
+	font-family: courier, monospace;
+        font-size: 90%;
+        overflow:auto;
+  }
+  table { border-collapse: collapse; }
+  td, th { vertical-align: top;  }
+  th.right  { text-align:center;  }
+  th.left   { text-align:center;   }
+  th.center { text-align:center; }
+  td.right  { text-align:right;  }
+  td.left   { text-align:left;   }
+  td.center { text-align:center; }
+  dt { font-weight: bold; }
+  div.figure { padding: 0.5em; }
+  div.figure p { text-align: center; }
+  div.inlinetask {
+    padding:10px;
+    border:2px solid gray;
+    margin:10px;
+    background: #ffffcc;
+  }
+  textarea { overflow-x: auto; }
+  .linenr { font-size:smaller }
+  .code-highlighted {background-color:#ffff00;}
+  .org-info-js_info-navigation { border-style:none; }
+  #org-info-js_console-label { font-size:10px; font-weight:bold;
+                               white-space:nowrap; }
+  .org-info-js_search-highlight {background-color:#ffff00; color:#000000;
+                                 font-weight:bold; }
+  /*]]>*/-->
+</style>
+<script type="text/javascript">
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+
+</head>
+<body>
+<div id="org-div-home-and-up">
+ <a accesskey="H" href="../../index.html#cpp"> HOME </a>
+</div>
+
+
+<div id="content">
+<h1 class="title">template typename</h1>
+
+
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"> </script>
+<link rel="stylesheet" type="text/css" href="../../Layout/CSS/vf.css" />
+<script src="../../Layout/JS/bootstrap_old.js"></script>
+<script src="../../Layout/JS/disqus-comment.js"></script>
+
+
+<div id="table-of-contents">
+<h2>TOC</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#sec-1">1 模板参数列表中与class关键字可相互替换</a></li>
+<li><a href="#sec-2">2 嵌套从属名称(nested dependent names)</a></li>
+<li><a href="#sec-3">3 是嵌套从属名称但不用加typename的两种情况</a></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-1" class="outline-2">
+<h2 id="sec-1"><span class="section-number-2">1</span> 模板参数列表中与class关键字可相互替换</h2>
+<div class="outline-text-2" id="text-1">
+
+
+<p><br/>
+<pre class="src src-c++"><span style="color: #a020f0;">template</span>&lt;<span style="color: #a020f0;">typename</span> <span style="color: #228b22;">T</span>&gt;
+<span style="color: #a020f0;">template</span>&lt;<span style="color: #a020f0;">class</span> <span style="color: #228b22;">T</span>&gt;
+<span style="color: #228b22;">&#26159;&#19968;&#26679;&#30340;</span>
+
+</pre>
+
+
+</p></div>
+
+</div>
+
+<div id="outline-container-2" class="outline-2">
+<h2 id="sec-2"><span class="section-number-2">2</span> 嵌套从属名称(nested dependent names)</h2>
+<div class="outline-text-2" id="text-2">
+
+<p>  假如template内出现的名称如果依赖于某个模板参数，则称其为从属名称(dependent names)，如果从属名称在class内呈嵌套状则称之为嵌套从属名称(nested dependent names)。<br/>
+  例如：<br/>
+</p>
+<p><br/>
+<pre class="src src-c++"><span style="color: #228b22;">templaet</span> &lt;<span style="color: #a020f0;">typename</span> <span style="color: #228b22;">T</span>&gt;
+<span style="color: #228b22;">void</span> myPrint(<span style="color: #a020f0;">const</span> <span style="color: #228b22;">T</span>&amp; <span style="color: #a0522d;">t</span>){
+    <span style="color: #008b8b;">t</span>::<span style="color: #228b22;">const_iterator</span> <span style="color: #a0522d;">iter</span>(t.begin());
+}
+</pre>
+
+
+  假设模板参数列表中的参数表示一个容器类型，则我们知道t::const_iterator一个依赖模板参数并且在容器内部，所以t::const_iterator是一个嵌套从属名称。<br/>
+</p>
+<p><br/>
+  在我们知道t是什么之前没有办法可以知道t::const_iterator是否是一个类型，因为有还可能是个静态(static)成员变量，考虑下面的例子：<br/>
+</p>
+<p><br/>
+<pre class="src src-c++"><span style="color: #a020f0;">template</span> &lt;<span style="color: #a020f0;">typename</span> <span style="color: #228b22;">T</span>&gt;
+<span style="color: #228b22;">void</span> <span style="color: #0000ff;">myPrint</span>(<span style="color: #a020f0;">const</span> <span style="color: #228b22;">T</span>&amp; <span style="color: #a0522d;">t</span>){
+    <span style="color: #008b8b;">t</span>::<span style="color: #228b22;">const_iterator</span> * <span style="color: #a0522d;">x</span>;
+}
+</pre>
+
+  如果const_iterator是t的静态成员变量，则上面的t::const_iterator * x;中的*表示乘法，如果是个类型则表示声明一个指向t::const_iterator类型的指针。<br/>
+  从而给编译器造成困惑（因为我们不知道t是什么）。<br/>
+</p>
+<p><br/>
+  C++有个规定：当解析器在模板中遇到一个嵌套从属名称时便假定这个名称不是类型，除非你用关键字typename指定它是：<br/>
+</p>
+<p><br/>
+<pre class="src src-c++"><span style="color: #a020f0;">template</span> &lt;<span style="color: #a020f0;">typename</span> <span style="color: #228b22;">T</span>&gt;
+<span style="color: #228b22;">void</span> <span style="color: #0000ff;">myPrint</span>(<span style="color: #a020f0;">const</span> <span style="color: #228b22;">T</span>&amp; <span style="color: #a0522d;">t</span>){
+    <span style="color: #a020f0;">typename</span> <span style="color: #008b8b;">t</span>::<span style="color: #228b22;">const_iterator</span> * <span style="color: #a0522d;">x</span>;     <span style="color: #b22222;">//</span><span style="color: #b22222;">&#36825;&#26679;&#20415;&#19981;&#20250;&#36896;&#25104;&#22256;&#24785;&#20102;</span>
+}
+</pre>
+
+
+  同理不仅在内部，在参数列表里也是：<br/>
+</p>
+<p><br/>
+<pre class="src src-c++"><span style="color: #a020f0;">template</span> &lt;<span style="color: #a020f0;">typename</span> <span style="color: #228b22;">T</span>&gt;
+<span style="color: #228b22;">void</span> <span style="color: #0000ff;">f</span>(<span style="color: #a020f0;">const</span> <span style="color: #228b22;">T</span>&amp; <span style="color: #a0522d;">t</span>, <span style="color: #a020f0;">typename</span> <span style="color: #008b8b;">T</span>::<span style="color: #228b22;">const_iterator</span> <span style="color: #a0522d;">cit</span>){     <span style="color: #b22222;">//</span><span style="color: #b22222;">T&#19981;&#26159;&#23884;&#22871;&#20174;&#23646;&#21517;&#31216;&#65292;&#32780;T::const_iterator&#26159;&#65292;&#25152;&#20197;&#35201;&#22312;T::const_iterator&#21069;&#38754;&#21152;&#19978;typename</span>
+        <span style="color: #b22222;">//</span><span style="color: #b22222;">....</span>
+}
+</pre>
+
+</p></div>
+
+</div>
+
+<div id="outline-container-3" class="outline-2">
+<h2 id="sec-3"><span class="section-number-2">3</span> 是嵌套从属名称但不用加typename的两种情况</h2>
+<div class="outline-text-2" id="text-3">
+
+<p>  基类列表(base list)和成员初始化列表(member initializaiton list)<br/>
+</p>
+<p><br/>
+<pre class="src src-c++"><span style="color: #a020f0;">template</span> &lt;<span style="color: #a020f0;">typename</span> <span style="color: #228b22;">T</span>&gt;
+<span style="color: #a020f0;">class</span> <span style="color: #228b22;">Derived</span>: <span style="color: #a020f0;">public</span> <span style="color: #008b8b;">Base</span>&lt;<span style="color: #228b22;">T</span>&gt;::<span style="color: #228b22;">Nested</span> {                 <span style="color: #b22222;">//</span><span style="color: #b22222;">&#22522;&#31867;&#21015;&#34920;&#20013;&#19981;&#20801;&#35768;&#20351;&#29992;typename</span>
+<span style="color: #a020f0;">public</span>:
+    <span style="color: #a020f0;">explicit</span> <span style="color: #0000ff;">Derived</span>(<span style="color: #228b22;">int</span> <span style="color: #a0522d;">x</span>): <span style="color: #008b8b;">Base</span>&lt;<span style="color: #228b22;">T</span>&gt;::Nested(<span style="color: #228b22;">int</span> <span style="color: #a0522d;">x</span>){    <span style="color: #b22222;">//</span><span style="color: #b22222;">&#21021;&#22987;&#21270;&#21015;&#34920;&#20013;&#19981;&#20801;&#35768;&#20351;&#29992;typename</span>
+        <span style="color: #a020f0;">typename</span> <span style="color: #008b8b;">Base</span>&lt;<span style="color: #228b22;">T</span>&gt;::<span style="color: #228b22;">Nested</span> <span style="color: #a0522d;">temp</span>;                  <span style="color: #b22222;">//</span><span style="color: #b22222;">&#23884;&#22871;&#20174;&#23646;&#21517;&#31216;(&#26082;&#19981;&#22312;&#22522;&#31867;&#21015;&#34920;&#20013;&#21448;&#19981;&#22312;&#21021;&#22987;&#21270;&#21015;&#34920;&#20013;)&#21069;&#38754;&#24517;&#39035;&#35201;&#21152;typename</span>
+    }
+}
+</pre>
+
+</p></div>
+</div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,307 @@
+<?xml version="1.0" encoding="gb18030"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+               "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<title>const、static、const staic理解</title>
+<meta http-equiv="Content-Type" content="text/html;charset=gb18030"/>
+<meta name="title" content="const、static、const staic理解"/>
+<meta name="generator" content="Org-mode"/>
+<meta name="generated" content="2012-10-10 17:13:22 CST"/>
+<meta name="author" content="visaya fan"/>
+<meta name="description" content=""/>
+<meta name="keywords" content=""/>
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  html { font-family: Times, serif; font-size: 12pt; }
+  .title  { text-align: center; }
+  .todo   { color: red; }
+  .done   { color: green; }
+  .tag    { background-color: #add8e6; font-weight:normal }
+  .target { }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .right  {margin-left:auto; margin-right:0px;  text-align:right;}
+  .left   {margin-left:0px;  margin-right:auto; text-align:left;}
+  .center {margin-left:auto; margin-right:auto; text-align:center;}
+  p.verse { margin-left: 3% }
+  pre {
+	border: 1pt solid #AEBDCC;
+	background-color: #F3F5F7;
+	padding: 5pt;
+	font-family: courier, monospace;
+        font-size: 90%;
+        overflow:auto;
+  }
+  table { border-collapse: collapse; }
+  td, th { vertical-align: top;  }
+  th.right  { text-align:center;  }
+  th.left   { text-align:center;   }
+  th.center { text-align:center; }
+  td.right  { text-align:right;  }
+  td.left   { text-align:left;   }
+  td.center { text-align:center; }
+  dt { font-weight: bold; }
+  div.figure { padding: 0.5em; }
+  div.figure p { text-align: center; }
+  div.inlinetask {
+    padding:10px;
+    border:2px solid gray;
+    margin:10px;
+    background: #ffffcc;
+  }
+  textarea { overflow-x: auto; }
+  .linenr { font-size:smaller }
+  .code-highlighted {background-color:#ffff00;}
+  .org-info-js_info-navigation { border-style:none; }
+  #org-info-js_console-label { font-size:10px; font-weight:bold;
+                               white-space:nowrap; }
+  .org-info-js_search-highlight {background-color:#ffff00; color:#000000;
+                                 font-weight:bold; }
+  /*]]>*/-->
+</style>
+<script type="text/javascript">
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+
+</head>
+<body>
+<div id="org-div-home-and-up">
+ <a accesskey="H" href="../../index.html#cpp"> HOME </a>
+</div>
+
+
+<div id="content">
+<h1 class="title">const、static、const staic理解</h1>
+
+
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"> </script>
+<link rel="stylesheet" type="text/css" href="../../Layout/CSS/vf.css" />
+<script src="../../Layout/JS/bootstrap_old.js"></script>
+<script src="../../Layout/JS/disqus-comment.js"></script>
+
+
+<div id="table-of-contents">
+<h2>TOC</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#sec-1">1 static的理解</a></li>
+<li><a href="#sec-2">2 const 新自定义类型 p; 则p不可变</a></li>
+<li><a href="#sec-3">3 不可重入函数</a></li>
+<li><a href="#sec-4">4 类的static成员变量</a></li>
+<li><a href="#sec-5">5 类的const成员变量</a></li>
+<li><a href="#sec-6">6 类的static const成员变量</a></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-1" class="outline-2">
+<h2 id="sec-1"><span class="section-number-2">1</span> static的理解</h2>
+<div class="outline-text-2" id="text-1">
+
+<dl>
+<dt>理解</dt><dd>
+<p><br/>
+</p><ol>
+<li>变量被存储在全局存储区里，可以下次调用的时候仍旧保持原来的值，这是与堆栈变量的区别。<br/>
+</li>
+<li>变量前static告知编译器，此变量仅在变量的作用范围内有效，这是与全局变量的区别。<br/>
+</li>
+</ol>
+
+</dd>
+<dt>一个选择题</dt><dd>
+<p><br/>
+</p></dd>
+</dl>
+
+<p>关于static变量，请选择下面所有说法正确的内容： <br/>
+</p><ol>
+<li>若全局变量仅在单个C文件中访问，则可以将这个变量修改为静态全局变量，以降低模块间的耦合度； <br/>
+</li>
+<li>若全局变量仅由单个函数访问，则可以将这个变量改为该函数的静态局部变量，以降低模块间的耦合度； <br/>
+</li>
+<li>设计和使用访问动态全局变量、静态全局变量、静态局部变量的函数时，需要考虑重入问题； <br/>
+</li>
+<li>静态全局变量过大，可那会导致堆栈溢出。 <br/>
+</li>
+<li>
+<p><br/>
+</p></li>
+</ol>
+
+<p>对于A，B：根据本篇概述部分的说明b)，我们知道，A,B都是正确的。 <br/>
+对于C：根据本篇概述部分的说明a)，我们知道，C是正确的（所谓的函数重入问题，下面会详细阐述）。 <br/>
+对于D：静态变量放在程序的全局数据区，而不是在堆栈中分配，所以不可能导致堆栈溢出，D是错误的。 <br/>
+因此，答案是A、B、C。 <br/>
+</p></div>
+
+</div>
+
+<div id="outline-container-2" class="outline-2">
+<h2 id="sec-2"><span class="section-number-2">2</span> const 新自定义类型 p; 则p不可变</h2>
+<div class="outline-text-2" id="text-2">
+
+
+<p><br/>
+<pre class="src src-c++"><span style="color: #7a378b;">#include</span> <span style="color: #8b2252;">&lt;iostream&gt;</span>
+<span style="color: #a020f0;">using</span> <span style="color: #a020f0;">namespace</span> <span style="color: #008b8b;">std</span>;
+<span style="color: #a020f0;">typedef</span> <span style="color: #228b22;">char</span>* <span style="color: #228b22;">pchar</span>;
+<span style="color: #228b22;">int</span> <span style="color: #0000ff;">main</span>()
+{
+        <span style="color: #228b22;">char</span> <span style="color: #a0522d;">str</span>[10] = <span style="color: #8b2252;">"abcdef"</span>;
+        <span style="color: #a020f0;">const</span> <span style="color: #228b22;">char</span>* <span style="color: #a0522d;">p1</span> = str;
+        <span style="color: #a020f0;">const</span> <span style="color: #228b22;">pchar</span> <span style="color: #a0522d;">p2</span> = str;
+        p1++;
+        p2++;
+        <span style="color: #a020f0;">return</span> 0;
+}
+</pre>
+
+</p><dl>
+<dt>上面程序出错的原因</dt><dd>
+<p><br/>
+</p></dd>
+</dl>
+
+<p>const char* p1 = str; 其中p1是可变指针指向不可变的字符串。所以p1++正确。<br/>
+typedef char* pchar; 定义了一种新类型，所以 const pchar p2; p2是const类型的，所以p2++出错。<br/>
+</p></div>
+
+</div>
+
+<div id="outline-container-3" class="outline-2">
+<h2 id="sec-3"><span class="section-number-2">3</span> 不可重入函数</h2>
+<div class="outline-text-2" id="text-3">
+
+<p>所谓可重入函数就是结果可预测（即只要输入数据相同，输出结果就相同）。<br/>
+下面的函数就不是可重入函数，因为static的缘故。<br/>
+</p>
+<p><br/>
+<pre class="src src-c++"><span style="color: #228b22;">unsigned</span> <span style="color: #228b22;">int</span> <span style="color: #0000ff;">sum_int</span>( <span style="color: #228b22;">unsigned</span> <span style="color: #228b22;">int</span> <span style="color: #a0522d;">base</span>)
+{ 
+        &#12288;<span style="color: #228b22;">unsigned</span> <span style="color: #228b22;">int</span> index; 
+        &#12288;<span style="color: #a020f0;">static</span> <span style="color: #228b22;">unsigned</span> <span style="color: #228b22;">int</span> sum = 0; <span style="color: #b22222;">// </span><span style="color: #b22222;">&#27880;&#24847;&#65292;&#26159;static&#31867;&#22411;&#30340;&#12290; </span>
+        &#12288;<span style="color: #a020f0;">for</span> (index = 1; index &lt;= base; index++) 
+                &#12288;&#12288;sum += index; 
+        &#12288;<span style="color: #a020f0;">return</span> sum; 
+} 
+</pre>
+
+
+</p></div>
+
+</div>
+
+<div id="outline-container-4" class="outline-2">
+<h2 id="sec-4"><span class="section-number-2">4</span> 类的static成员变量</h2>
+<div class="outline-text-2" id="text-4">
+
+
+<p><br/>
+<pre class="src src-c++"><span style="color: #a020f0;">class</span> <span style="color: #228b22;">A</span>
+{
+<span style="color: #a020f0;">public</span>:
+    <span style="color: #a020f0;">static</span> <span style="color: #228b22;">int</span> <span style="color: #a0522d;">cnt</span>;
+    <span style="color: #0000ff;">A</span>(){cnt++;}
+    <span style="color: #a020f0;">static</span> <span style="color: #228b22;">int</span> <span style="color: #0000ff;">how_many_instance</span>(){
+        <span style="color: #a020f0;">return</span> cnt;
+    }
+};
+<span style="color: #228b22;">int</span> <span style="color: #008b8b;">A</span>::<span style="color: #a0522d;">cnt</span> = 0;         <span style="color: #b22222;">//</span><span style="color: #b22222;">&#31867;&#30340;static&#25104;&#21592;&#21464;&#37327;&#24517;&#39035;&#22312;&#31867;&#22806;&#21021;&#22987;&#21270;&#65292;&#24182;&#19988;&#22312;&#21152;&#19978;&#20854;&#31867;&#22411;&#21644;&#31867;&#21517;::</span>
+<span style="color: #228b22;">int</span> <span style="color: #0000ff;">main</span>()
+{
+    cout&lt;&lt;<span style="color: #008b8b;">A</span>::how_many_instance()&lt;&lt;endl;
+    <span style="color: #228b22;">A</span> <span style="color: #a0522d;">a</span>, <span style="color: #a0522d;">b</span>, <span style="color: #a0522d;">c</span>, <span style="color: #a0522d;">d</span>;
+    cout&lt;&lt;<span style="color: #008b8b;">A</span>::how_many_instance()&lt;&lt;endl;
+    <span style="color: #a020f0;">return</span> 0;
+}
+</pre>
+
+
+</p></div>
+
+</div>
+
+<div id="outline-container-5" class="outline-2">
+<h2 id="sec-5"><span class="section-number-2">5</span> 类的const成员变量</h2>
+<div class="outline-text-2" id="text-5">
+
+<dl>
+<dt>类的const成员变量只能以初始化列表的形式初始化</dt><dd>
+<p><br/>
+</p></dd>
+</dl>
+
+
+<p><br/>
+<pre class="src src-c++"><span style="color: #a020f0;">class</span> <span style="color: #228b22;">A</span>
+{
+<span style="color: #a020f0;">public</span>:
+    <span style="color: #a020f0;">const</span> <span style="color: #228b22;">int</span> <span style="color: #a0522d;">a</span>;
+    <span style="color: #0000ff;">A</span>(){a=0;}
+};
+</pre>
+
+
+
+<pre class="src src-c++"><span style="color: #a020f0;">class</span> <span style="color: #228b22;">A</span>
+{
+<span style="color: #a020f0;">public</span>:
+    <span style="color: #a020f0;">const</span> <span style="color: #228b22;">int</span> <span style="color: #a0522d;">a</span>;
+    <span style="color: #0000ff;">A</span>():a(10){}
+};
+</pre>
+
+
+上面程序第一个报错，因为类的const成员变量只能以初始化列表的形式初始化。<br/>
+</p></div>
+
+</div>
+
+<div id="outline-container-6" class="outline-2">
+<h2 id="sec-6"><span class="section-number-2">6</span> 类的static const成员变量</h2>
+<div class="outline-text-2" id="text-6">
+
+<dl>
+<dt>static const变量与static变量初始化方式一样</dt><dd>
+<p><br/>
+</p></dd>
+</dl>
+
+
+<p><br/>
+<pre class="src src-c++"><span style="color: #a020f0;">class</span> <span style="color: #228b22;">A</span>
+{
+<span style="color: #a020f0;">public</span>:
+    <span style="color: #a020f0;">static</span> <span style="color: #a020f0;">const</span> <span style="color: #228b22;">int</span> <span style="color: #a0522d;">a</span>;
+};
+<span style="color: #a020f0;">const</span> <span style="color: #228b22;">int</span> <span style="color: #008b8b;">A</span>::<span style="color: #a0522d;">a</span> = 0;
+</pre>
+
+static const变量与static变量初始化方式一样，只是前者在变量名前加上const。<br/>
+</p></div>
+</div>
+</div>
+
+</body>
+</html>

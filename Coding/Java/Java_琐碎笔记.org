@@ -1,0 +1,11 @@
+#+OPTIONS: ^:{} _:{} num:t toc:t \n:t
+#+include "../../template.org"
+#+TITLE: Java_琐碎笔记
+
+* java.lang
+默认导入到java文件中。
+
+* Array.toString(ArrayName)
+将数组转化为字符串（以便输出等……）
+
+* Array.sort(ArrayName)

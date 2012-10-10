@@ -1,0 +1,42 @@
+#+OPTIONS: "\n:t
+* spotlight
+  n 聚光灯
+  v 用聚光灯照明、引起公众的注意
+
+* prime mover
+  原动力
+
+* salute
+  敬礼
+* venerable
+  受人尊敬的
+
+* bottleneck
+  瓶颈、障碍
+* pervasive
+  普遍的
+* homage
+  尊崇
+  pay homage to
+* troubleshoot
+  检修
+
+* sluggish
+  缓慢的程序
+
+* indispensable
+  不可或缺的
+* standby
+  备用品、可依赖的
+
+* encryption
+  n 加密
+
+* asterisk
+  星
+
+* round out
+  完成
+
+* lapse
+  过失

@@ -1,0 +1,99 @@
+#+OPTIONS: "\n:t"
+#+TITLE:     StatementsSyntax
+* 对齐即为同一级
+except与else对齐，是一级的。
+#+BEGIN_SRC python
+while True:
+    reply = input('Enter text: ')
+    if reply == 'stop':   break
+    try:
+        int(reply)
+    except:
+        print('Bad ' * 8)
+    else:
+        print(int(reply) ** 2)
+print('Bye!')
+#+END_SRC
+
+* tuple/lists-unpacking-assignment
+#+BEGIN_SRC python
+a, b = 'a', 'b'
+a, b = ['a', 'b']
+#+END_SRC
+
+* sequence-assignments
+#+BEGIN_SRC python
+a, b, c, d = 'spam'
+#+END_SRC
+两边数目一定要相同，否则报错。
+#+BEGIN_SRC python
+>>> ((a, b), c) = ('sp', 'am')
+>>> a, b, c
+('s', 'p', 'am')
+#+END_SRC
+#+BEGIN_SRC python
+>>> for (a, b, c) in [(1, 2, 3), (4, 5, 6)]:
+...     print(a, b, c)
+... 
+1 2 3
+4 5 6
+>>> for ((a, b), c) in [((1, 2), 3), ((4, 5), 6)]:
+...     print(a, b, c)
+... 
+1 2 3
+4 5 6
+#+END_SRC
+
+#+BEGIN_SRC python
+>>> L = [1, 2, 3, 4]
+>>> while L:
+...     front, L = L[0], L[1:]
+...     print(front, L)
+... 
+1 [2, 3, 4]
+2 [3, 4]
+3 [4]
+4 []
+#+END_SRC
+* extended-sequence-unpacking
+  *是个标识，标志着下个variable是个list，并收集所有未被赋值的所有其它变量
+#+BEGIN_SRC python
+a, *b = 'spam'
+==>a = 's', b = ['p', 'a', 'm']
+
+>>> a, b = 'spam'
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+ValueError: too many values to unpack (expected 2)
+
+#+END_SRC
+  *可以出现在任何地方，总是先赋完其它亦是再最后赋 *
+#+BEGIN_SRC python
+>>> x = [1, 2, 3, 4]
+>>> *a, b = x
+>>> b
+4
+>>> a
+[1, 2, 3]
+>>> a, *b, c = x
+>>> a
+1
+>>> b
+[2, 3]
+>>> c
+4
+#+END_SRC
+  与slicing的区别: a sequence unpacking alignment return a list for multipe matched items. while slicing returns a sequence of the same type as the object model.
+#+BEGIN_SRC python
+>>> x = '01234'
+>>> x[0], x[1:4], x[4]
+('0', '123', '4')         #x[1:4]类型与'01234'相同
+>>> a, *b, c = x
+>>> a
+'0'
+>>> b                     # b为list类型
+['1', '2', '3']
+>>> c
+'4'
+#+END_SRC
+* 

@@ -1,0 +1,60 @@
+#+OPTIONS: "\n:t
+#+OPTIONS: ^:{} _:{} num:t toc:t \n:t
+#+TITLE:
+#+LaTeX_CLASS: cn-article
+* competent
+Someone who is competent is effective and efficient.
+Examples:
+1 He was a loyal, distinguished and very competent civil servant.
+2 The government performed competently in the face of multiple challenges.
+Extension:
+incompetent: not having the ability to do a job properly.
+* topple
+If someone or something topples somewhere or if you topple them, they become unsteady or unstable and fall over.
+topple over = topple  ===>  The three is so badly damaged they are worried it might toppled over.
+                      ===>  We lost our balance and topple over on to a table.
+* intervene
+If you intervene in a situation, you become involoved in it and try to change it.
+Examples:
+1 I'm powerless to intervene in the matter.
+2 I intervened on her behalf to try to get the decision changed.
+intervention(n)
+* interpret
+If you interpret something in a particular way, you decide that this is its meaning or significance.
+Examples:
+In ancient times people who were thought to have the ability to interpret dreams were likely to be highly respected.
+* cope
+If you cope with a problem or task, you deal with it successfully.
+Examples:
+1 It was amazing how my mother coped with bring up three children on less than three pounds a week.
+2 The problem were an annoyance, but we managed to cope.
+* irritate
+If something irritate you, it keeps annoying you.
+1. Their attitued irritated me.
+2. Please do not be irritated by his bad manners since he is merely trying to attract attention.   
+* distort
+If you distort a statement, fact or idea, you report or represent it in an untrue way.
+distorted ==> These figures give a distorted view of the significance for the local economy.
+* hamper
+If someone or something hampers you, they make it difficult for you to do what you are trying to do.
+Examples:
+1 The bad weather hampered the rescue operations.
+2 The local business wasn't much hampered by the sudden outbreak of the epidemic 
+* insulate
+1 If a person or group is insulated from the rest of society or from outside influences, they are protected from them.
+2 If a piece of equipment is insulated, it's covered with rubber or plastic to precent electricity passing through it and giving the person using it an electric shock.
+Examples:
+1 The wealthy families had further insulated them from reality with the privilige that money could buy.
+2 In order to make it safe, the element is electrically insulated.
+* under the impression
+I was under the impression that Khan Academy is for people new to the subject?
+* be akin to
+  be likely to
+  EXAMPLES:
+  I'm very happy to see the process is slow and well thought out and isn't rushed. The process is akin to moving a sky-scraper.这个过程就好像建座摩天大楼一样
+* colossal
+  huge
+  EXAMPLE:
+  but the effort [required to move and evolve it] is colossal.
+
+

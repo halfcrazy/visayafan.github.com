@@ -1,0 +1,8 @@
+#+OPTIONS: ^:{} _:{} num:t toc:t \n:t
+#+include "../../template.org"
+#+title: GCC 使用笔记
+
+* options
+** -E
+   显示预处理完成后（编译前）的代码。（展开宏定义等）
+   例如要查看ssize_t具体是什么，可以 gcc -E test.c生成预处理后代码查看。

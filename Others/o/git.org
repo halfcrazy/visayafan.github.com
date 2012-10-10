@@ -1,0 +1,238 @@
+#+OPTIONS: ^:{} _:{} num:t toc:t \n:t
+#+include "../../template.org"
+#+title: Git笔记
+
+git中文件分为4类：未追踪文件，修改文件，暂存文件，仓库文件。
+新建一个文件，此时文件为未追踪状态；已经被追踪的文件发生修改则为修改状态；新建或修改文件添加到了暂存区则成为暂存文件；暂存文件commit到仓库中则成为仓库文件。
+* help
+  帮助，例如 git show --help(或者 git help show 或者 man git-show)可以查看所有show的option
+  其中show可以替换成其它动作
+* 颜色
+  git config color.ui true 打开颜色显示
+  红：表修改但add之前的状态(修改文件或者未跟踪文件)
+  绿：表add之后到commit之前的状态（暂存状态）
+  黄：表commit之后的状态（仓库文件）
+* git config
+** 定义别名
+#+begin_example
+git config --global alias.co checkout 定义co为checkout的别名
+或者 git config --global "alias co=checkout"
+#+end_example
+   要删除别名直接修改~/.gitconfig文件即可
+** 用户名和邮件
+#+begin_example
+git config --global user.name visayafan
+git config --global user.email visayafan@gmail.com
+#+end_example
+** 编辑器
+#+begin_example
+git config --global core.editor emacs
+#+end_example
+** 差异分析工具
+#+begin_example
+git config --global merge.tool vimdiff
+#+end_example
+** 查看
+#+begin_example
+git config --list
+#+end_example
+   或者直接查看~/.gitconfig文件内容
+* git status
+  反映git commit执行之前的变化，git commit执行之后再用此命令将看不到变化
+* git add
+  将未追踪文件或者修改文件添加到暂存区。之后便可以commit到仓库中。
+  表明xxx将要提交到respository中，如果xxx不想被提交则可以省去此步骤直接commit
+  -p 选项：对于每个改变的文件都以交互的方式来询问是否add此文件
+  -u 只查看跟踪文件，不会暂存文件，如果跟踪文件在工作目录下被删除，则这些跟踪文件被删除
+
+  add一个文件后又后悔了（commit之前），可以用 git reset HEAD filename来取消对filename的add
+* ignore
+  一般某个项目dev过程中都会产生一些中间文件，这些文件是我们不想要追踪的。但git默认会将当前目录下所有文件追踪。于是我们可以使用.gitignore文件来忽略这些文件。
+  在需要的目录下面 添加 .gitignore文件，文件中每一行表示需要忽略的文件／目录的正则表达式（也可以把自己添加进去，即.gitignore,这样.gitignore也被忽略了）
+#+begin_example
+# 此为注释 – 将被 Git 忽略
+*.a # 忽略所有 .a 结尾的文件
+!lib.a # 但 lib.a 除外
+/TODO # 仅仅忽略项目根目录下的 TODO 文件,不包括 subdir/TODO
+build/ # 忽略 build/ 目录下的所有文件
+doc/*.txt # 会忽略 doc/notes.txt 但不包括 doc/server/arch.txt
+
+#+end_example
+* git rm
+  git rm filename 把filename从仓库中删除
+  
+  如果已经把一个文件add到暂存区后又后悔了，可以用git rm --cached filename来将此文件从暂存区中删除，但此文件仍然存在于当前工作目录中，通过git status可以看到此文件处于未跟踪或者修改状态。
+  
+  如果真心不想要这个文件，可以git rm -f filename，-f选项会把此文件从暂存区和当前工作目录中删除，即从你的硬盘中删除filename文件
+  如果想把它保存在硬盘上又不想提交到暂存区或者仓库中，可以把它加到.gitignore中
+
+  如果使用rm命令将此文件从硬盘上删除，此时git status看到此文件仍在暂存区，需要使用git rm 来将其从暂存区删除，否则此文件虽然已经不在硬盘上了但还是会被提交到仓库中。
+
+  使用正则表达式：
+  git rm log/\*.log 删除log目录下的log后缀文件，*前加\是因为 Git 有它自己的文件模式扩展匹配方式,所以我们不用 shell 来帮忙展开
+  git rm \*~ 没有指定目录，默认当前目录，递归删除所有~后缀文件
+* git mv
+  等价操作：
+#+begin_example
+mv a b
+git rm a
+git add b
+#+end_example
+* git log
+  查看历史记录（即git commit的保存结点),显示作者，时间，当时-m指定的信息，一个很长的序列号（唯一的）
+  git log -2 查看最近2次的log
+  git log -p 显示每次提交与上次提交的差异
+  git log --stat 只显示差异统计信息，例如文件增加数目，修改行数。。
+  git log --pretty=oneline/short/full/fuller/format 每个commit一行／无日期／默认／更加详细/自定义输出方式
+#+begin_example
+$ git log --pretty=format:"%h - %an, %ar : %s"
+ca82a6d - Scott Chacon, 11 months ago : changed the version number
+085bb3b - Scott Chacon, 11 months ago : removed unnecessary test code
+a11bef0 - Scott Chacon, 11 months ago : first commit
+#+end_example
+#+begin_example
+%H 提交对象(commit)的完整哈希字串
+%h 提交对象的简短哈希字串
+%T 树对象(tree)的完整哈希字串
+%t 树对象的简短哈希字串
+%P 父对象(parent)的完整哈希字串
+%p 父对象的简短哈希字串
+%an 作者(author)的名字
+%ae 作者的电子邮件地址
+%ad 作者修订日期(可以用 -date= 选项定制格式)
+%ar 作者修订日期,按多久以前的方式显示
+%cn 提交者(committer)的名字
+%ce 提交者的电子邮件地址
+%cd 提交日期
+%cr 提交日期,按多久以前的方式显示
+%s 提交说明
+#+end_example  
+  git reflog 缩简版本，无作者时间，序列号只显示前几个
+  git log --oneline 只显示一行（更精简模式）
+  git log --oneline branchname 只查看某个分支的log
+  --graph 图形方式查看
+  git log branchA ^branchB 只有branchA有而branchB没有的部分（git log branchA ^master 查看分支branchA上没有merge进master的部分）
+  git log --since=日期 从某一日期开始到现在的提交历史 --after
+  同理--until指定日期之前的提交历史 --before
+#+begin_example
+test$ git log --since="2012-10-1" --pretty=oneline #从2012-9-1到现在的提交历史
+test$ git log --since="2 weeks 3 days ago" --pretty=oneline #2周3天前到现在的提交历史
+test$ git log --since=2.weeks --pretty=oneline #2周前
+#+end_example
+  git log --author=visayafan 只查看某作者提交历史
+  git log --committer=visayafan 提交者不一定是作者，作者也不一定是提交者
+  git log --grep "keyword" 只查看提交信息中有keyword的提交历史
+  gitk 打开图形界面gitk以查看提交日志
+* git commit
+** -m
+   -m 'message'  #跟数据库一样保存一个结点以便以后返回
+   先add后commit，可以直接用命令 git commit -am 'commit message' 但只暂存跟踪文件，未跟踪文件不会被暂存，如果当前工作目录中有想被提交的新建文件时不要这么用。
+** -amend
+   修复，如果commit后发现有文件忘记add了，可以add后commit -amend
+#+begin_example
+$ git commit -m 'initial commit'
+$ git add forgotten_file
+$ git commit --amend
+#+end_example
+   forgotten_file的commit信息为initial commit
+* git checkout
+  将当前正在工作的项目roll back到最近一次保存状态，此命令慎后（毁灭刚才所做的工作）
+* git remote
+  如果项目只有一个人在用，别人不会修改，则不必理会。
+  但有多人共同开发项目时，此命令告诉git当别人在github上修改项目后可以反映到本机。
+#+begin_example
+git remote add pb git://github.com/paulboone/ticgit.git
+git remote -v
+#+end_example
+  git remote show origin
+  git remote rename from to
+  git remote rm remove_remote_name
+  
+* git show
+  显示上一次commit，显示序列号作者时间和diff
+* gitk
+  如果commit很多的话会比较乱，gitk以图形的方式显示出所有的commit。(另外安装 sudo apt-get install gitk)
+* git reset
+  * 返回到之前某个commit状态，例如git reset --hard 8198c8f 此时git push会出错，要加--force(-f)强制选项，git push --force
+  * 如果刚刚用git add filename将filename暂存后又不想把它加入暂存了，可以用git reset HEAD filename来撤消暂存。
+* git mergetool
+  多个人共同维护一个项目时，一个人push一个filename文件，另一个人也要push filename文件时会发生冲突。
+  此时可以用 git mergetool来调用外部应用程序比较两个文件，由两人协商最终push哪个。
+  经过比较修改后的文件再push不会冲突（github默认此结果是我们协商的结果）
+* git branch
+  git branch -a 绿色的代表本机，红色的代表github
+  git branch -b newfewature 新建一个newfeature分支，此时再用git branch -a查看可以看到新加一个newfeature，此时用ls查看当前目录，发现并没有什么变化。
+  此时可以修改代码添加新特性，再 git push origin newfeature，再用git branch -a查看可以看到github上新添加了一个remote/origin/newfeature
+  git merge newfeature 将新特性添加到master中
+  git branch -d newfeature 删除本地newfeature分支并没有删除remote上的，可以用git push origin :newfeature来删除remote上的newfeature
+* git remote
+  * 查看当前repo有哪些远程repo，可以用git remote（至少有一个origin，表示这个repo的发起人），可以加-v来查看详细信息（将显示出其远程仓库地址，例如cho45 git://github.com/cho45/grit.git）这样可以方便地把它的repo提交到本地上来查看。
+  * 添加一个远程repo：git remote add shortname address 其中shortname表示简单名字，之后再用git remote -v可以看到多了一个 shortname address的远程仓库
+  * git remote show [remote-name] 查看远程repo信息
+  * git remote rename name1 namw2 将远程repo的name1命名为name2
+  * git remote rm remote-name 删除
+* git fetch
+  * 如果要抓取所有shortname有但本地没有的，可以git fetch shortname
+  * 如果你本地repo是从别人那里clone来的，此命令会自动将远程仓库归于origin名下，于是可以用git fetch origin来更新本地repo的发起人的repo一致（并没有自动合并到当前本机repo中，只有等你准备好了手工合并）
+* git pull
+  git fetch只是从远程repo中拉来本地repo但并不合并，git pull则与本地repo自动合并。
+* git push
+  git push等价于git push origin master
+* git tag
+  查看所有标签，或git tag v1.4查看v1.4标签的详细信息。
+  * 添加轻量级标签（lightweight）：指向一个特定提交对象的引用 使用-l选项
+  * 添加含附注的标签（annotated）：包含更加详细的信息 使用-a选项，后面可以用-m来指定说明
+* git diff
+  查看没有暂存的改动，如果暂存后立即用git diff则看不到差异。
+* tricks
+** git中永久删除一个文件
+  git rm filename可以从repo中删除一个文件，但仍旧可以其库存历史将其恢复
+#+begin_example
+$ mkdir t  
+$ cd t  
+$ git init  
+Initialized empty Git repository in  
+ /Users/apple/t/.git/  
+创建一个10M大小的文件
+$ dd if=/dev/urandom of=testme.txt bs=10240 count=1024  
+1024+0 records in  
+1024+0 records out  
+10485760 bytes transferred in 1.684808 secs (6223712 bytes/sec)  
+$ git add testme.txt  
+$ git commit -m "a"  
+[master (root-commit)]: created 6fbb432: "a"  
+ 1 files changed, 0 insertions(+), 0 deletions(-)  
+ create mode 100644 testme.txt  
+从repo中删除文件
+$ git rm testme.txt  
+rm 'testme.txt'  
+$ git commit -m r  
+[master]: created bb38396: "r"  
+ 1 files changed, 0 insertions(+), 0 deletions(-)  
+ delete mode 100644 testme.txt  
+但此时版本库仍旧为10M 表明其仍旧存在历史记录中
+$ du -hs  
+ 10M 
+#+end_example  
+  如果我们不想将其恢复（例如不小心把密码之外的文件上传到repo中），则可以用如下方法实现：
+#+begin_example
+$ git filter-branch --tree-filter 'rm -f testme.txt' HEAD  
+Rewrite bb383961a2d13e12d92be5f5e5d37491a90dee66 (2/2)  
+Ref 'refs/heads/master'  
+ was rewritten  
+$ git ls-remote .  
+230b8d53e2a6d5669165eed55579b64dccd78d11        HEAD  
+230b8d53e2a6d5669165eed55579b64dccd78d11        refs/heads/master  
+bb383961a2d13e12d92be5f5e5d37491a90dee66        refs/original/refs/heads/master  
+$ git update-ref -d refs/original/refs/heads/master [bb383961a2d13e12d92be5f5e5d37491a90dee66]  
+$ git ls-remote .  
+230b8d53e2a6d5669165eed55579b64dccd78d11        HEAD  
+230b8d53e2a6d5669165eed55579b64dccd78d11        refs/heads/master  
+$ rm -rf .git/logs  
+$ git reflog --all  
+$ git prune  
+$ git gc  
+可以看到大小已经恢复了表明10M文件已经被彻底删除了
+$ du -hs  
+ 84K    .  
+#+end_example

@@ -1,0 +1,339 @@
+#+include "../../template.org"
+#+OPTIONS: ^:{} _:{} num:t toc:t \n:t
+#+title: Linux内核－非连续内存管理
+* 简介
+  [[./mm.html][内存管理]]中涉及的内存分配都是连续的，连续的内存分配有利于减小内存访问时间，但如果所有分配都使用连续内存分配的话，容易造成外部碎片，鉴于此原因，故对于不常访问的内存分配可以考虑非连续内存分配，虽然物理内存上是不连续的，但是通过页表可以使此不连续的内存在逻辑上连续的。
+* 非连续内存区域线性地址(逻辑地址)的表示范围
+  从 =high_memory= 开始，之后有 =VMALLOC_OFFSET= (8M)安全间隔（捕获越界用），区域之间有4k的安全间隔， =PKMAP_BASE= 结束。之间的区域都可以用作非连续内存区域的线性地址。
+  真正的非连续内存区域开始结束位置保存在两个宏中 =VMALLOC_START= 和 =VMALLOC_END= 。  
+#+begin_html
+<center>
+<img src="image/noncont_mem_area_addr.png"></img>
+</center>
+#+end_html  
+* 非连续内存区域描述符
+  每块非连续内存区域都对应一个描述符：
+#+begin_src c -n
+struct vm_struct {
+	void			*addr;      /* 对应非连续内存区域的开始地址 */
+	unsigned long		size;   /* 大小 */
+	unsigned long		flags;  /* 标志 */
+	struct page		**pages;    /* 指向一个含有nr_pages个page指针的数组，是page的二级指针 */
+	unsigned int		nr_pages; /* 此区域内含有page个数 */
+	unsigned long		phys_addr; /* 除非此区域被用来映射IO硬件设备共享内存，否则置0 */
+	struct vm_struct	*next;     /* 用于链接链表 */
+};
+#+end_src
+  描述符通过next成员连接成链表，表头为 =vmlist= ，
+#+begin_html
+<center>
+<img src="image/non_cont_area.jpeg"></img>
+</center>
+#+end_html  
+* 获得/释放虚拟内存区域
+** get_vm_area
+    struct vm_struct *get_vm_area(unsigned long size, unsigned long flags)
+    参数size表示欲得到虚拟区域大小，flags表标志。
+    实际上调用了 =__get_vm_area= 。
+#+begin_src c -n
+return __get_vm_area(size, flags, VMALLOC_START, VMALLOC_END);
+#+end_src
+#+begin_src c -n
+struct vm_struct *__get_vm_area(unsigned long size, unsigned long flags,
+				unsigned long start, unsigned long end)
+{
+	struct vm_struct **p, *tmp, *area;
+	unsigned long align = 1;
+	unsigned long addr;
+
+	if (flags & VM_IOREMAP) {           /*如果是IOREMAP*/
+		int bit = fls(size);            /*fls取得size最小的非0位，分析见下*/
+
+		if (bit > IOREMAP_MAX_ORDER)    
+			bit = IOREMAP_MAX_ORDER;
+		else if (bit < PAGE_SHIFT)
+			bit = PAGE_SHIFT;
+		align = 1ul << bit;             /*设置对齐大小*/
+	}
+	addr = ALIGN(start, align); /* 对齐 */
+
+	area = kmalloc(sizeof(*area), GFP_KERNEL); /* 分配虚拟内存区域描述符空间 */
+	if (unlikely(!area))
+		return NULL;
+
+	size += PAGE_SIZE;          /* 大小＋安全区域 */
+	if (unlikely(!size)) {
+		kfree (area);
+		return NULL;
+	}
+
+	write_lock(&vmlist_lock);   /* 锁住链表 */
+	for (p = &vmlist; (tmp = *p) != NULL ;p = &tmp->next) { /* 遍历链表找到合适的区域 */
+		if ((unsigned long)tmp->addr < addr) {
+            /* addr在一个已经被分配的地址区域内部则修改addr为此地址区域块的末地址（对齐） */
+			if((unsigned long)tmp->addr + tmp->size >= addr) 
+				addr = ALIGN(tmp->size + 
+					     (unsigned long)tmp->addr, align);
+			continue;
+		}
+		if ((size + addr) < addr)
+			goto out;
+        /* 找到合适的连续地址空间 */
+		if (size + addr <= (unsigned long)tmp->addr)
+			goto found;
+		addr = ALIGN(tmp->size + (unsigned long)tmp->addr, align);
+		if (addr > end - size)
+			goto out;
+	}
+
+found:
+	area->next = *p;            /* 将此描述符插入到链表头 */
+	*p = area;
+
+	area->flags = flags;        /* 修改标志，地址，大小，页个数等成员 */
+	area->addr = (void *)addr;
+	area->size = size;
+	area->pages = NULL;
+	area->nr_pages = 0;
+	area->phys_addr = 0;
+	write_unlock(&vmlist_lock);
+
+	return area;
+
+out:                            /* 没有合适的区域则释放锁并释放已经分配的描述符空间，打印错误信息 */
+	write_unlock(&vmlist_lock);
+	kfree(area);
+	if (printk_ratelimit())
+		printk(KERN_WARNING "allocation failed: out of vmalloc space - use vmalloc=<size> to increase size.\n");
+	return NULL;
+}
+#+end_src
+  =fls= 实际上调用了 =generic_fls= ：
+#+begin_src c -n
+/*函数作用：取得x所有bit中非0的最小位*/
+static __inline__ int generic_fls(int x)
+{
+	int r = 32;
+
+	if (!x)
+		return 0;
+	if (!(x & 0xffff0000u)) {
+		x <<= 16;
+		r -= 16;
+	}
+	if (!(x & 0xff000000u)) {
+		x <<= 8;
+		r -= 8;
+	}
+	if (!(x & 0xf0000000u)) {
+		x <<= 4;
+		r -= 4;
+	}
+	if (!(x & 0xc0000000u)) {
+		x <<= 2;
+		r -= 2;
+	}
+	if (!(x & 0x80000000u)) {
+		x <<= 1;
+		r -= 1;
+	}
+	return r;
+}
+#+end_src
+** remove_vm_area
+#+begin_src c -n
+struct vm_struct *remove_vm_area(void *addr)
+{
+	struct vm_struct **p, *tmp;
+
+	write_lock(&vmlist_lock);
+	for (p = &vmlist ; (tmp = *p) != NULL ;p = &tmp->next) {
+		 if (tmp->addr == addr)
+			 goto found;
+	}
+	write_unlock(&vmlist_lock);
+	return NULL;
+
+found:
+	unmap_vm_area(tmp);         /*分析见vmalloc和vfree*/
+	*p = tmp->next;
+	write_unlock(&vmlist_lock);
+	return tmp;
+}
+#+end_src    
+* 分配/释放非连续内存区域
+** vmalloc
+#+begin_src c -n
+void *vmalloc(unsigned long size)       /* size表欲得到非连续内存区域的大小*/
+{
+       return __vmalloc(size, GFP_KERNEL | __GFP_HIGHMEM, PAGE_KERNEL);
+}
+#+end_src   
+#+begin_src c -n
+void *__vmalloc(unsigned long size, int gfp_mask, pgprot_t prot)
+{
+	struct vm_struct *area;
+	struct page **pages;
+	unsigned int nr_pages, array_size, i;
+
+	size = PAGE_ALIGN(size);    /* 大小对齐 */
+	if (!size || (size >> PAGE_SHIFT) > num_physpages)
+		return NULL;
+
+    /* 分配描述符及地址空间，并设置其标志位VM_ALLOC，表明是通过vmalloc分配而来 */
+	area = get_vm_area(size, VM_ALLOC); 
+	if (!area)
+		return NULL;
+
+	nr_pages = size >> PAGE_SHIFT;
+    /* vm_struct->pages指向array-size大小的数组 */
+	array_size = (nr_pages * sizeof(struct page *));
+
+	area->nr_pages = nr_pages;
+    /* 此递归肯定可以终结，因为__vmalloc参数size以(2^PAGE_SHIFT/sizeof(struct page*))指数级下降 */
+	if (array_size > PAGE_SIZE) /* 大于一页，则递归调用此程序 */
+		pages = __vmalloc(array_size, gfp_mask, PAGE_KERNEL);
+	else                        /* 小于一页用kmalloc分配 */
+		pages = kmalloc(array_size, (gfp_mask & ~__GFP_HIGHMEM));
+	area->pages = pages;
+	if (!area->pages) {         /* 分配失败 */
+		remove_vm_area(area->addr); /* 释放地址空间 */
+		kfree(area);                /* 释放描述符 */
+		return NULL;
+	}
+	memset(area->pages, 0, array_size);
+	for (i = 0; i < area->nr_pages; i++) {
+		area->pages[i] = alloc_page(gfp_mask); /* 数组中每项指向一个页 */
+		if (unlikely(!area->pages[i])) {       /* 半道出错，更新area页个数成功分配的个数 */
+			area->nr_pages = i;
+			goto fail;
+		}
+	}
+	/* 更新页表，分析见下 */
+	if (map_vm_area(area, prot, &pages))
+		goto fail;
+	return area->addr;
+
+fail:
+	vfree(area->addr);
+	return NULL;
+}
+#+end_src
+   要理解 =map_vm_area= 必须先理解linux内核的分页机制：
+#+begin_html
+<center>
+<img src="image/pgd_pud_pmd_pte.png"></img>
+</center>
+#+end_html     
+   =map_vm_area= 函数分析如下：
+#+begin_src c -n
+int map_vm_area(struct vm_struct *area, pgprot_t prot, struct page ***pages)
+{
+	unsigned long address = (unsigned long) area->addr;
+	unsigned long end = address + (area->size-PAGE_SIZE);
+	unsigned long next;
+	pgd_t *pgd;
+	int err = 0;
+	int i;
+
+	pgd = pgd_offset_k(address); /* address在内核页全局目录里的索引 */
+	spin_lock(&init_mm.page_table_lock);
+    /* pdg_index(address)表示address在页全局目录里的索引（与pdg_offset_k区别：不是内核） */
+	for (i = pgd_index(address); i <= pgd_index(end-1); i++) {
+		pud_t *pud = pud_alloc(&init_mm, pgd, address);
+		if (!pud) {
+			err = -ENOMEM;
+			break;
+		}
+		next = (address + PGDIR_SIZE) & PGDIR_MASK;
+		if (next < address || next > end)
+			next = end;
+        /* 处理page upper directory */
+		if (map_area_pud(pud, address, next, prot, pages)) {
+			err = -ENOMEM;
+			break;
+		}
+		address = next;
+		pgd++;
+	}
+
+	spin_unlock(&init_mm.page_table_lock);
+	flush_cache_vmap((unsigned long) area->addr, end);
+	return err;
+}
+#+end_src
+   各级页目录和页表处理函数：
+#+begin_src c -n
+static int map_area_pud(pud_t *pud, unsigned long address,
+			       unsigned long end, pgprot_t prot,
+			       struct page ***pages)
+{
+	do {
+		pmd_t *pmd = pmd_alloc(&init_mm, pud, address);
+		if (!pmd)
+			return -ENOMEM;
+        /* 处理page middle directory */
+		if (map_area_pmd(pmd, address, end - address, prot, pages))
+			return -ENOMEM;
+		address = (address + PUD_SIZE) & PUD_MASK;
+		pud++;
+	} while (address && address < end);
+
+	return 0;
+}
+
+static int map_area_pmd(pmd_t *pmd, unsigned long address,
+			       unsigned long size, pgprot_t prot,
+			       struct page ***pages)
+{
+	unsigned long base, end;
+
+	base = address & PUD_MASK;
+	address &= ~PUD_MASK;
+	end = address + size;
+	if (end > PUD_SIZE)
+		end = PUD_SIZE;
+
+	do {
+		pte_t * pte = pte_alloc_kernel(&init_mm, pmd, base + address);
+		if (!pte)
+			return -ENOMEM;
+        /* 处理page table entry */
+		if (map_area_pte(pte, address, end - address, prot, pages))
+			return -ENOMEM;
+		address = (address + PMD_SIZE) & PMD_MASK;
+		pmd++;
+	} while (address < end);
+
+	return 0;
+}
+
+static int map_area_pte(pte_t *pte, unsigned long address,
+			       unsigned long size, pgprot_t prot,
+			       struct page ***pages)
+{
+	unsigned long end;
+
+	address &= ~PMD_MASK;
+	end = address + size;
+	if (end > PMD_SIZE)
+		end = PMD_SIZE;
+    /* pte里存放的是实际物理地址，将要放到新分配的页表实体里 */
+	do {
+		struct page *page = **pages;
+		WARN_ON(!pte_none(*pte));
+		if (!page)
+			return -ENOMEM;
+        /* mk_pte分配一个页表entry，并用set_pte为新分配的页表entry赋值pte */
+        /* pte是pte_t类型，其实是32b unsigned long包装结构体 */
+		set_pte(pte, mk_pte(page, prot));
+		address += PAGE_SIZE;
+		pte++;
+		(*pages)++;
+	} while (address < end);
+	return 0;
+}
+#+end_src
+** vfree
+   和 =vmalloc= 相反，各级页目录和页表处理函数也相反。
+

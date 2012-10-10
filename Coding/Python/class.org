@@ -1,0 +1,48 @@
+#+OPTIONS: "\n:t
+#+OPTIONS: ^:{} _:{} num:t toc:t \n:t
+#+LaTeX_CLASS: cn-article
+#+STYLE: <link rel="stylesheet" type="text/css" href="../style/style.css" />
+##+INFOJS_OPT: view:content mouse:#cccccc toc:t ftoc:t  path:../style/org-info.js
+
+
+* 运算符重载
+#+attr_html: border="1" cellpadding="0" cellspacing="0" frame="void"
+|-------+-------------------------------------------|
+| +     | __add__,__radd__                          |
+| -     | __sub__,__rsub__                          |
+| *     | __mul__,__rmul__                          |
+| /     | __div__,__rdiv__,__truediv__,__rtruediv__ |
+| //    | __floordiv__,__rfloordiv__                |
+| %     | __mod__,__rmod__                          |
+| **    | __pow__,__rpow__                          |
+| <<    | __lshift__,__rlshift__                    |
+| >>    | __rshift__,__rrshift__                    |
+| &     | __and__,__rand__                          |
+|       | __or__,__ror__                            |
+| +=    | __iaddr__                                 |
+| -=    | __isub__                                  |
+| *=    | __imul__                                  |
+| /=    | __idiv__,__itruediv__                     |
+| //=   | __ifloordiv__                             |
+| %=    | __imod__                                  |
+| **=   | __ipow__                                  |
+| <<=   | __ilshift__                               |
+| >>=   | __irshift__                               |
+| &=    | __iand__                                  |
+| ^=    | __ixor__                                  |
+|       | #ERROR                                    |
+| ==    | __eq__                                    |
+| !=,<> | __ne__                                    |
+| >     | __get__                                   |
+| <     | __lt__                                    |
+| >=    | __ge__                                    |
+| <=    | __le__                                    |
+|-------+-------------------------------------------|
+* 缺省传参和关键字传参
+#+begin_src python
+def __init__(self, name, job=None, pay=0): #缺省传参
+
+bob = Person('bob', pay=100, job='dev') #关键字传参顺序不必与函数一致
+#+end_src
+
+  

@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+               "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<title>Python 技巧</title>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
+<meta name="title" content="Python 技巧"/>
+<meta name="generator" content="Org-mode"/>
+<meta name="generated" content="2012-10-10 17:12:44 CST"/>
+<meta name="author" content="visaya fan"/>
+<meta name="description" content=""/>
+<meta name="keywords" content=""/>
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  html { font-family: Times, serif; font-size: 12pt; }
+  .title  { text-align: center; }
+  .todo   { color: red; }
+  .done   { color: green; }
+  .tag    { background-color: #add8e6; font-weight:normal }
+  .target { }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .right  {margin-left:auto; margin-right:0px;  text-align:right;}
+  .left   {margin-left:0px;  margin-right:auto; text-align:left;}
+  .center {margin-left:auto; margin-right:auto; text-align:center;}
+  p.verse { margin-left: 3% }
+  pre {
+	border: 1pt solid #AEBDCC;
+	background-color: #F3F5F7;
+	padding: 5pt;
+	font-family: courier, monospace;
+        font-size: 90%;
+        overflow:auto;
+  }
+  table { border-collapse: collapse; }
+  td, th { vertical-align: top;  }
+  th.right  { text-align:center;  }
+  th.left   { text-align:center;   }
+  th.center { text-align:center; }
+  td.right  { text-align:right;  }
+  td.left   { text-align:left;   }
+  td.center { text-align:center; }
+  dt { font-weight: bold; }
+  div.figure { padding: 0.5em; }
+  div.figure p { text-align: center; }
+  div.inlinetask {
+    padding:10px;
+    border:2px solid gray;
+    margin:10px;
+    background: #ffffcc;
+  }
+  textarea { overflow-x: auto; }
+  .linenr { font-size:smaller }
+  .code-highlighted {background-color:#ffff00;}
+  .org-info-js_info-navigation { border-style:none; }
+  #org-info-js_console-label { font-size:10px; font-weight:bold;
+                               white-space:nowrap; }
+  .org-info-js_search-highlight {background-color:#ffff00; color:#000000;
+                                 font-weight:bold; }
+  /*]]>*/-->
+</style>
+<script type="text/javascript">
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+
+</head>
+<body>
+<div id="org-div-home-and-up">
+ <a accesskey="H" href="../../index.html#python"> HOME </a>
+</div>
+
+
+<div id="content">
+<h1 class="title">Python 技巧</h1>
+
+
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"> </script>
+<link rel="stylesheet" type="text/css" href="../../Layout/CSS/vf.css" />
+<script src="../../Layout/JS/bootstrap_old.js"></script>
+<script src="../../Layout/JS/disqus-comment.js"></script>
+
+
+
+<div id="table-of-contents">
+<h2>TOC</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#sec-1">1 判断文件是否存在</a></li>
+<li><a href="#sec-2">2 Python中执行shell命令</a></li>
+<li><a href="#sec-3">3 函数参数若是元组则用*若为字典则用** 或用 apply 函数</a></li>
+<li><a href="#sec-4">4 字典值排序</a>
+<ul>
+<li><a href="#sec-4-1">4.1 利用sorted+operator.itemgetter来实现：</a></li>
+<li><a href="#sec-4-2">4.2 或者用dict.get函数也可以：</a></li>
+<li><a href="#sec-4-3">4.3 或者自己写lambda表达式：</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-1" class="outline-2">
+<h2 id="sec-1"><span class="section-number-2">1</span> 判断文件是否存在</h2>
+<div class="outline-text-2" id="text-1">
+
+
+<p><br/>
+<pre class="src src-python"><span style="color: #a020f0;">import</span> os.path
+os.path.exists(<span style="color: #8b2252;">"filename"</span>)
+</pre>
+
+
+</p></div>
+
+</div>
+
+<div id="outline-container-2" class="outline-2">
+<h2 id="sec-2"><span class="section-number-2">2</span> Python中执行shell命令</h2>
+<div class="outline-text-2" id="text-2">
+
+
+<p><br/>
+<pre class="src src-python"><span style="color: #a020f0;">from</span> subprocess <span style="color: #a020f0;">import</span> call
+call([<span style="color: #8b2252;">"ls"</span>, <span style="color: #8b2252;">"-l"</span>])
+</pre>
+
+</p></div>
+
+</div>
+
+<div id="outline-container-3" class="outline-2">
+<h2 id="sec-3"><span class="section-number-2">3</span> 函数参数若是元组则用*若为字典则用** 或用 apply 函数</h2>
+<div class="outline-text-2" id="text-3">
+
+<p>  apply函数为__builtin__模块（自动加载）中的函数：<br/>
+</p>
+<p><br/>
+<pre class="src src-python"><span style="color: #7a378b;">apply</span>(<span style="color: #7a378b;">object</span>[, args[, kwargs]]) -&gt; value
+</pre>
+
+  其中args为元组，kwargs为字典<br/>
+</p>
+<p><br/>
+<pre class="src src-python"><span style="color: #a020f0;">def</span> <span style="color: #0000ff;">fun</span>(a, b):
+    <span style="color: #a020f0;">print</span> a, b
+<span style="color: #a0522d;">x</span>=(<span style="color: #8b2252;">'aa'</span>,<span style="color: #8b2252;">'bb'</span>)
+<span style="color: #7a378b;">apply</span>(fun,x)
+<span style="color: #a0522d;">y</span>={<span style="color: #8b2252;">'a'</span>:<span style="color: #8b2252;">'aa'</span>, <span style="color: #8b2252;">'b'</span>:<span style="color: #8b2252;">'bb'</span>}
+<span style="color: #b22222;">#apply(obj[,args[,kargs]])&#31532;2&#20010;&#21442;&#25968;&#26159;tuple&#31867;&#22411;&#65292;&#20026;&#31354;&#65292;&#25152;&#20197;&#29992;()</span>
+<span style="color: #7a378b;">apply</span>(fun,(),y)
+fun(*x)
+fun(**y)
+</pre>
+
+</p></div>
+
+</div>
+
+<div id="outline-container-4" class="outline-2">
+<h2 id="sec-4"><span class="section-number-2">4</span> 字典值排序</h2>
+<div class="outline-text-2" id="text-4">
+
+<p>  <a href="http://stackoverflow.com/questions/613183/python-sort-a-dictionary-by-value">http://stackoverflow.com/questions/613183/python-sort-a-dictionary-by-value</a><br/>
+  没有直接对字典值进行排序的函数<br/>
+</p>
+</div>
+
+<div id="outline-container-4-1" class="outline-3">
+<h3 id="sec-4-1"><span class="section-number-3">4.1</span> 利用sorted+operator.itemgetter来实现：</h3>
+<div class="outline-text-3" id="text-4-1">
+
+
+<p><br/>
+<pre class="example">import operator
+x = {1: 2, 3: 4, 4:3, 2:1, 0:0}
+sorted_x = sorted(x.iteritems(), key=operator.itemgetter(1))
+dict(sorted_x)
+</pre>
+
+
+<pre class="example">dict.iteritems()返回(key,value)迭代器，key函数作用在每个(key,value)上结果为(key,value)[1]即value
+</pre>
+
+  <b>注意：sorted第一个参数是个可迭代对象，参数key是个函数</b><br/>
+</p></div>
+
+</div>
+
+<div id="outline-container-4-2" class="outline-3">
+<h3 id="sec-4-2"><span class="section-number-3">4.2</span> 或者用dict.get函数也可以：</h3>
+<div class="outline-text-3" id="text-4-2">
+
+
+<p><br/>
+<pre class="src src-python"><span style="color: #a0522d;">sorted_x</span> = <span style="color: #7a378b;">sorted</span>(x.iteritems(), key=d.get)
+</pre>
+
+</p></div>
+
+</div>
+
+<div id="outline-container-4-3" class="outline-3">
+<h3 id="sec-4-3"><span class="section-number-3">4.3</span> 或者自己写lambda表达式：</h3>
+<div class="outline-text-3" id="text-4-3">
+
+
+<p><br/>
+<pre class="src src-python"><span style="color: #a0522d;">sorted_x</span> = <span style="color: #7a378b;">sorted</span>(x.items(), key=<span style="color: #a020f0;">lambda</span> x:x[1])
+</pre>
+
+  此时应用items而非iteritems，前者返回一个形如：[(key1,value1), (key2,value2)]列表，后者返回一个前面列表的迭代对象（可以调用next()方法来获取下一个值）。<br/>
+  sorted对字典排序的时候用的是key值，所以可以这么写：<br/>
+</p>
+<p><br/>
+<pre class="src src-python"><span style="color: #a0522d;">sorted_x</span> = <span style="color: #7a378b;">sorted</span>(x, key=<span style="color: #a020f0;">lambda</span> i: x[i])
+</pre>
+
+</p></div>
+</div>
+</div>
+</div>
+
+</body>
+</html>

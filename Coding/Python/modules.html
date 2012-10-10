@@ -1,0 +1,681 @@
+<?xml version="1.0" encoding="gb18030"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+               "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<title>模块总结</title>
+<meta http-equiv="Content-Type" content="text/html;charset=gb18030"/>
+<meta name="title" content="模块总结"/>
+<meta name="generator" content="Org-mode"/>
+<meta name="generated" content="2012-10-10 17:12:47 CST"/>
+<meta name="author" content="visaya fan"/>
+<meta name="description" content=""/>
+<meta name="keywords" content=""/>
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  html { font-family: Times, serif; font-size: 12pt; }
+  .title  { text-align: center; }
+  .todo   { color: red; }
+  .done   { color: green; }
+  .tag    { background-color: #add8e6; font-weight:normal }
+  .target { }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .right  {margin-left:auto; margin-right:0px;  text-align:right;}
+  .left   {margin-left:0px;  margin-right:auto; text-align:left;}
+  .center {margin-left:auto; margin-right:auto; text-align:center;}
+  p.verse { margin-left: 3% }
+  pre {
+	border: 1pt solid #AEBDCC;
+	background-color: #F3F5F7;
+	padding: 5pt;
+	font-family: courier, monospace;
+        font-size: 90%;
+        overflow:auto;
+  }
+  table { border-collapse: collapse; }
+  td, th { vertical-align: top;  }
+  th.right  { text-align:center;  }
+  th.left   { text-align:center;   }
+  th.center { text-align:center; }
+  td.right  { text-align:right;  }
+  td.left   { text-align:left;   }
+  td.center { text-align:center; }
+  dt { font-weight: bold; }
+  div.figure { padding: 0.5em; }
+  div.figure p { text-align: center; }
+  div.inlinetask {
+    padding:10px;
+    border:2px solid gray;
+    margin:10px;
+    background: #ffffcc;
+  }
+  textarea { overflow-x: auto; }
+  .linenr { font-size:smaller }
+  .code-highlighted {background-color:#ffff00;}
+  .org-info-js_info-navigation { border-style:none; }
+  #org-info-js_console-label { font-size:10px; font-weight:bold;
+                               white-space:nowrap; }
+  .org-info-js_search-highlight {background-color:#ffff00; color:#000000;
+                                 font-weight:bold; }
+  /*]]>*/-->
+</style>
+<script type="text/javascript">
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+
+</head>
+<body>
+<div id="org-div-home-and-up">
+ <a accesskey="H" href="../../index.html#python"> HOME </a>
+</div>
+
+
+<div id="content">
+<h1 class="title">模块总结</h1>
+
+
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"> </script>
+<link rel="stylesheet" type="text/css" href="../../Layout/CSS/vf.css" />
+<script src="../../Layout/JS/bootstrap_old.js"></script>
+<script src="../../Layout/JS/disqus-comment.js"></script>
+
+
+<div id="table-of-contents">
+<h2>TOC</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#sec-1">1 math</a>
+<ul>
+<li><a href="#sec-1-1">1.1 e</a></li>
+<li><a href="#sec-1-2">1.2 pi</a></li>
+<li><a href="#sec-1-3">1.3 cos sin tan acos asin atan</a></li>
+<li><a href="#sec-1-4">1.4 sqrt pow exp log10 log log1p</a></li>
+<li><a href="#sec-1-5">1.5 floor ceil trunc</a></li>
+</ul>
+</li>
+<li><a href="#sec-2">2 random</a>
+<ul>
+<li><a href="#sec-2-1">2.1 random()</a></li>
+<li><a href="#sec-2-2">2.2 choice(sequence)</a></li>
+<li><a href="#sec-2-3">2.3 randint(a, b)</a></li>
+</ul>
+</li>
+<li><a href="#sec-3">3 re</a>
+<ul>
+<li><a href="#sec-3-1">3.1 findall</a></li>
+</ul>
+</li>
+<li><a href="#sec-4">4 decimal</a></li>
+<li><a href="#sec-5">5 fraction</a></li>
+<li><a href="#sec-6">6 struct</a></li>
+<li><a href="#sec-7">7 copy</a></li>
+<li><a href="#sec-8">8 itertools</a>
+<ul>
+<li><a href="#sec-8-1">8.1 permutations</a></li>
+</ul>
+</li>
+<li><a href="#sec-9">9 operator</a></li>
+<li><a href="#sec-10">10 os</a>
+<ul>
+<li><a href="#sec-10-1">10.1 os.path</a></li>
+<li><a href="#sec-10-2">10.2 os.access(path, mode)</a></li>
+</ul>
+</li>
+<li><a href="#sec-11">11 glob</a></li>
+<li><a href="#sec-12">12 time</a></li>
+<li><a href="#sec-13">13 mimetypes</a></li>
+<li><a href="#sec-14">14 collections</a>
+<ul>
+<li><a href="#sec-14-1">14.1 deque</a></li>
+</ul>
+</li>
+<li><a href="#sec-15">15 select</a></li>
+<li><a href="#sec-16">16 random</a></li>
+<li><a href="#sec-17">17 functools</a></li>
+<li><a href="#sec-18">18 pickle</a></li>
+<li><a href="#sec-19">19 webbrowser</a></li>
+<li><a href="#sec-20">20 subprocess</a></li>
+<li><a href="#sec-21">21 urllib</a>
+<ul>
+<li><a href="#sec-21-1">21.1 获取网页内容</a></li>
+<li><a href="#sec-21-2">21.2 下载文件</a></li>
+</ul>
+</li>
+<li><a href="#sec-22">22 zipfile</a></li>
+<li><a href="#sec-23">23 operator</a>
+<ul>
+<li><a href="#sec-23-1">23.1 itemgetter</a></li>
+<li><a href="#sec-23-2">23.2 attrgetter</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-1" class="outline-2">
+<h2 id="sec-1"><span class="section-number-2">1</span> math</h2>
+<div class="outline-text-2" id="text-1">
+
+
+</div>
+
+<div id="outline-container-1-1" class="outline-3">
+<h3 id="sec-1-1"><span class="section-number-3">1.1</span> e</h3>
+<div class="outline-text-3" id="text-1-1">
+
+</div>
+
+</div>
+
+<div id="outline-container-1-2" class="outline-3">
+<h3 id="sec-1-2"><span class="section-number-3">1.2</span> pi</h3>
+<div class="outline-text-3" id="text-1-2">
+
+</div>
+
+</div>
+
+<div id="outline-container-1-3" class="outline-3">
+<h3 id="sec-1-3"><span class="section-number-3">1.3</span> cos sin tan acos asin atan</h3>
+<div class="outline-text-3" id="text-1-3">
+
+</div>
+
+</div>
+
+<div id="outline-container-1-4" class="outline-3">
+<h3 id="sec-1-4"><span class="section-number-3">1.4</span> sqrt pow exp log10 log log1p</h3>
+<div class="outline-text-3" id="text-1-4">
+
+</div>
+
+</div>
+
+<div id="outline-container-1-5" class="outline-3">
+<h3 id="sec-1-5"><span class="section-number-3">1.5</span> floor ceil trunc</h3>
+<div class="outline-text-3" id="text-1-5">
+
+</div>
+</div>
+
+</div>
+
+<div id="outline-container-2" class="outline-2">
+<h2 id="sec-2"><span class="section-number-2">2</span> random</h2>
+<div class="outline-text-2" id="text-2">
+
+
+</div>
+
+<div id="outline-container-2-1" class="outline-3">
+<h3 id="sec-2-1"><span class="section-number-3">2.1</span> random()</h3>
+<div class="outline-text-3" id="text-2-1">
+
+</div>
+
+</div>
+
+<div id="outline-container-2-2" class="outline-3">
+<h3 id="sec-2-2"><span class="section-number-3">2.2</span> choice(sequence)</h3>
+<div class="outline-text-3" id="text-2-2">
+
+</div>
+
+</div>
+
+<div id="outline-container-2-3" class="outline-3">
+<h3 id="sec-2-3"><span class="section-number-3">2.3</span> randint(a, b)</h3>
+<div class="outline-text-3" id="text-2-3">
+
+<p>   [a, b]之间任意整数<br/>
+</p></div>
+</div>
+
+</div>
+
+<div id="outline-container-3" class="outline-2">
+<h2 id="sec-3"><span class="section-number-2">3</span> re</h2>
+<div class="outline-text-2" id="text-3">
+
+
+</div>
+
+<div id="outline-container-3-1" class="outline-3">
+<h3 id="sec-3-1"><span class="section-number-3">3.1</span> findall</h3>
+<div class="outline-text-3" id="text-3-1">
+
+<p>   re.findall(pattern, string, flag=0)<br/>
+   在string中查找所非覆盖的pattern匹配，返回值为tuple类型，每个匹配项做为一个元素<br/>
+</p></div>
+</div>
+
+</div>
+
+<div id="outline-container-4" class="outline-2">
+<h2 id="sec-4"><span class="section-number-2">4</span> decimal</h2>
+<div class="outline-text-2" id="text-4">
+
+</div>
+
+</div>
+
+<div id="outline-container-5" class="outline-2">
+<h2 id="sec-5"><span class="section-number-2">5</span> fraction</h2>
+<div class="outline-text-2" id="text-5">
+
+</div>
+
+</div>
+
+<div id="outline-container-6" class="outline-2">
+<h2 id="sec-6"><span class="section-number-2">6</span> struct</h2>
+<div class="outline-text-2" id="text-6">
+
+<p>  p251<br/>
+</p></div>
+
+</div>
+
+<div id="outline-container-7" class="outline-2">
+<h2 id="sec-7"><span class="section-number-2">7</span> copy</h2>
+<div class="outline-text-2" id="text-7">
+
+<p>  p258<br/>
+</p></div>
+
+</div>
+
+<div id="outline-container-8" class="outline-2">
+<h2 id="sec-8"><span class="section-number-2">8</span> itertools</h2>
+<div class="outline-text-2" id="text-8">
+
+
+</div>
+
+<div id="outline-container-8-1" class="outline-3">
+<h3 id="sec-8-1"><span class="section-number-3">8.1</span> permutations</h3>
+<div class="outline-text-3" id="text-8-1">
+
+<p>   permutations(iterable[, r]) &ndash;&gt; permutations objects<br/>
+   返回iterable中长度为r的所有排列<br/>
+   例如：permutations(range(3), 2) &ndash;&gt; (0,1), (0,2), (1,0), (1,2), (2,0), (2,1)<br/>
+</p></div>
+</div>
+
+</div>
+
+<div id="outline-container-9" class="outline-2">
+<h2 id="sec-9"><span class="section-number-2">9</span> operator</h2>
+<div class="outline-text-2" id="text-9">
+
+<p>  包含各种运算：比较、逻辑、加减乘除模等算术运算<br/>
+  应用：reduce(operator.truediv, [1,2,3,4])<br/>
+  注意truediv和itruediv的区别（前加i和不加i的区别）：前者是a/b，后者是a/=b<br/>
+</p></div>
+
+</div>
+
+<div id="outline-container-10" class="outline-2">
+<h2 id="sec-10"><span class="section-number-2">10</span> os</h2>
+<div class="outline-text-2" id="text-10">
+
+
+</div>
+
+<div id="outline-container-10-1" class="outline-3">
+<h3 id="sec-10-1"><span class="section-number-3">10.1</span> os.path</h3>
+<div class="outline-text-3" id="text-10-1">
+
+<p>   包括多个跟目录文件相关的函数<br/>
+</p><ol>
+<li>exists(path) 是否存在<br/>
+</li>
+<li>isfile/isdir/islink/ismount(path)<br/>
+</li>
+<li>getctime/getatime/getctime(path)<br/>
+</li>
+<li>abspath/basename/dirname<br/>
+</li>
+<li>splitext(path) 返回元组(root, ext)前者表路径，后者表扩展名（带.号）<br/>
+</li>
+<li>getsize(path) 以byte形式返回path大小<br/>
+</li>
+</ol>
+
+</div>
+
+</div>
+
+<div id="outline-container-10-2" class="outline-3">
+<h3 id="sec-10-2"><span class="section-number-3">10.2</span> os.access(path, mode)</h3>
+<div class="outline-text-3" id="text-10-2">
+
+<p>   F_OK判断path是否存在，R_OK判断path是否可读，W_OK是否可写，X_OK是否可执行<br/>
+</p></div>
+</div>
+
+</div>
+
+<div id="outline-container-11" class="outline-2">
+<h2 id="sec-11"><span class="section-number-2">11</span> glob</h2>
+<div class="outline-text-2" id="text-11">
+
+<p>  查找匹配指定模式的路径名<br/>
+</p>
+<p><br/>
+<pre class="src src-python">&gt;&gt;&gt; <span style="color: #a020f0;">import</span> glob
+&gt;&gt;&gt; glob.glob(<span style="color: #8b2252;">'./[0-9].*'</span>)
+[<span style="color: #8b2252;">'./1.gif'</span>, <span style="color: #8b2252;">'./2.txt'</span>]
+&gt;&gt;&gt; glob.glob(<span style="color: #8b2252;">'*.gif'</span>)
+[<span style="color: #8b2252;">'1.gif'</span>, <span style="color: #8b2252;">'card.gif'</span>]
+&gt;&gt;&gt; glob.glob(<span style="color: #8b2252;">'?.gif'</span>)
+[<span style="color: #8b2252;">'1.gif'</span>]
+</pre>
+
+</p></div>
+
+</div>
+
+<div id="outline-container-12" class="outline-2">
+<h2 id="sec-12"><span class="section-number-2">12</span> time</h2>
+<div class="outline-text-2" id="text-12">
+
+<ul>
+<li>class time.struct_time 成员包括：<br/>
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+<caption></caption>
+<colgroup><col class="left" /><col class="left" />
+</colgroup>
+<tbody>
+<tr><td class="left">tm_year</td><td class="left">year</td></tr>
+<tr><td class="left">tm_mon</td><td class="left">month 1-12</td></tr>
+<tr><td class="left">tm_mday</td><td class="left">month day 1-31</td></tr>
+<tr><td class="left">tm_hour</td><td class="left">hour 0-23</td></tr>
+<tr><td class="left">tm_min</td><td class="left">minute 0-59</td></tr>
+<tr><td class="left">tm_sec</td><td class="left">second 0-61</td></tr>
+<tr><td class="left">tm_wday</td><td class="left">week Monday=0&hellip;Sunday=6</td></tr>
+<tr><td class="left">tm_yday</td><td class="left">day of the year 1-366</td></tr>
+<tr><td class="left">tm_isdst</td><td class="left">is daylight saving time? -1 0 1 夏令时</td></tr>
+</tbody>
+</table>
+
+</li>
+<li>time.time() 以秒的形式返回自1970.1.1 00:00:00以来的时间<br/>
+</li>
+<li>time.ctime(sec) 将秒形式的时间转化成可阅读形式的时间，例如：Fri Jul 20 22:01:19 2012<br/>
+</li>
+<li>time.asctime([t]) 无参：以Fri Jul 20 22:01:19 2012形式返回当前时间；有参：将一个time tuple或者struct_time转化成Fri Jul 20 22:01:19 2012形式字符串(24个字符)<br/>
+</li>
+<li>time.clock() 第一次调用返回程序运行的实际时间(以浮点数形式显示)，第二次之后调用返回第一次调用到此次调用的间隔时间(用来为程序计时)<br/>
+</li>
+<li>time.sleep(secs) 休眠<br/>
+</li>
+<li>time.gmtime([seconds]) 无参：将当前时间转化为一个struct_time；有参：将参数秒转化成一个struct_time<br/>
+</li>
+<li>time.localtime([seconds]) 与gmtime相似，只是转化成当前时区的struct_time<br/>
+</li>
+<li>time.mktime(t) 与localtime功能相反，将struct_time转化成浮点数<br/>
+</li>
+<li>time.strftime(format[,t]) 将时间以指定格式输出"%a, %d %b %Y %H:%M:%S %Y"表式出来的时间形式为24字符的：Fri Jul 20 22:01:19 2012<br/>
+</li>
+</ul>
+
+
+<p><br/>
+</p></div>
+
+</div>
+
+<div id="outline-container-13" class="outline-2">
+<h2 id="sec-13"><span class="section-number-2">13</span> mimetypes</h2>
+<div class="outline-text-2" id="text-13">
+
+<p>  mimetypes实现URL或者文件名和MIME类型<sup><a class="footref" name="fnr.1" href="#fn.1">1</a></sup>的转换。<br/>
+  ＊ mimetypes.guess_type(url) =&gt; (type, encoding) 根据扩展名来猜文件类型<br/>
+</p></div>
+
+</div>
+
+<div id="outline-container-14" class="outline-2">
+<h2 id="sec-14"><span class="section-number-2">14</span> collections</h2>
+<div class="outline-text-2" id="text-14">
+
+
+</div>
+
+<div id="outline-container-14-1" class="outline-3">
+<h3 id="sec-14-1"><span class="section-number-3">14.1</span> deque</h3>
+<div class="outline-text-3" id="text-14-1">
+
+</div>
+</div>
+
+</div>
+
+<div id="outline-container-15" class="outline-2">
+<h2 id="sec-15"><span class="section-number-2">15</span> select</h2>
+<div class="outline-text-2" id="text-15">
+
+</div>
+
+</div>
+
+<div id="outline-container-16" class="outline-2">
+<h2 id="sec-16"><span class="section-number-2">16</span> random</h2>
+<div class="outline-text-2" id="text-16">
+
+<ul>
+<li>shuffle(list) 将一个list中的元素重新随机排序<br/>
+</li>
+</ul>
+
+</div>
+
+</div>
+
+<div id="outline-container-17" class="outline-2">
+<h2 id="sec-17"><span class="section-number-2">17</span> functools</h2>
+<div class="outline-text-2" id="text-17">
+
+<ul>
+<li>partial(func, *args, **kargs) 返回结果为函数，但此函数为经过传参后的函数<br/>
+</li>
+</ul>
+
+</div>
+
+</div>
+
+<div id="outline-container-18" class="outline-2">
+<h2 id="sec-18"><span class="section-number-2">18</span> pickle</h2>
+<div class="outline-text-2" id="text-18">
+
+
+<p><br/>
+<pre class="src src-python"><span style="color: #a020f0;">def</span> <span style="color: #0000ff;">load</span>(<span style="color: #a020f0;">self</span>, filename):
+     <span style="color: #a020f0;">self</span>.__data = pickle.load(<span style="color: #7a378b;">open</span>(filename, <span style="color: #8b2252;">'rb'</span>))
+
+<span style="color: #a020f0;">def</span> <span style="color: #0000ff;">save</span>(<span style="color: #a020f0;">self</span>, filename):
+     pickle.dump(<span style="color: #a020f0;">self</span>.__data, <span style="color: #7a378b;">open</span>(filename, <span style="color: #8b2252;">'wb'</span>))
+</pre>
+
+
+</p></div>
+
+</div>
+
+<div id="outline-container-19" class="outline-2">
+<h2 id="sec-19"><span class="section-number-2">19</span> webbrowser</h2>
+<div class="outline-text-2" id="text-19">
+
+<p>  webbrowser.open('http://google.com')可以调用默认浏览器打开网页<br/>
+  webbrowser.open('<i>home/visayafan</i>.emacs')调用系统默认编辑器打开指定目录下的文件<br/>
+</p></div>
+
+</div>
+
+<div id="outline-container-20" class="outline-2">
+<h2 id="sec-20"><span class="section-number-2">20</span> subprocess</h2>
+<div class="outline-text-2" id="text-20">
+
+<p>  执行系统命令：<br/>
+</p><ol>
+<li>subprocess.call(['ls', '-l']) 参数为列表形式，要想使用字符串形式必须加上shell=True: subprocess.call("ls -l", shell=True)，返回值为命令执行返回值<br/>
+</li>
+<li>proc=subprocess.Popen('ls -l', shell=True) ，需要使用returnCode=proc.wait()等待命令执行结束获得返回值<br/>
+</li>
+</ol>
+
+
+<p>  <br/>
+</p></div>
+
+</div>
+
+<div id="outline-container-21" class="outline-2">
+<h2 id="sec-21"><span class="section-number-2">21</span> urllib</h2>
+<div class="outline-text-2" id="text-21">
+
+<p>  用于获取网络数据<br/>
+</p>
+</div>
+
+<div id="outline-container-21-1" class="outline-3">
+<h3 id="sec-21-1"><span class="section-number-3">21.1</span> 获取网页内容</h3>
+<div class="outline-text-3" id="text-21-1">
+
+
+<p><br/>
+<pre class="src src-python"><span style="color: #a020f0;">import</span> urllib
+<span style="color: #a0522d;">url</span> = <span style="color: #8b2252;">'http://www.pythonchallenge.com/pc/def/ocr.html'</span>
+<span style="color: #a0522d;">wp</span> = urllib.urlopen(url)
+<span style="color: #a0522d;">content</span> = wp.read()
+<span style="color: #a020f0;">print</span> content
+</pre>
+
+</p></div>
+
+</div>
+
+<div id="outline-container-21-2" class="outline-3">
+<h3 id="sec-21-2"><span class="section-number-3">21.2</span> 下载文件</h3>
+<div class="outline-text-3" id="text-21-2">
+
+<p>   urllib.retrieve(url,filename)<br/>
+</p></div>
+</div>
+
+</div>
+
+<div id="outline-container-22" class="outline-2">
+<h2 id="sec-22"><span class="section-number-2">22</span> zipfile</h2>
+<div class="outline-text-2" id="text-22">
+
+<p>  此模块用来创建，读写，添加，列出zip压缩文件。<br/>
+  首先用ZipFile函数打开文件，可以添加选项，r表只读，w表写，a表添加（此时如果zip文件不存在则创建一个）<br/>
+</p>
+<p><br/>
+<pre class="src src-python"><span style="color: #b22222;">#&#24403;&#21069;&#30446;&#24405;&#19979;&#26080;NewZip.zip&#65292;&#21017;&#21019;&#24314;&#19968;&#20010;&#24182;&#23558;&#24403;&#21069;&#30446;&#24405;&#19979;&#30340;.emacs&#25991;&#20214;&#21152;&#20837;&#21040;NewZip.zip&#20013;</span>
+zipfile.ZipFile(<span style="color: #8b2252;">'NewZip.zip'</span>, <span style="color: #8b2252;">'a'</span>).write(<span style="color: #8b2252;">'.emacs'</span>)
+</pre>
+
+  可以用read方法读取指定文件，例如：<br/>
+</p>
+<p><br/>
+<pre class="src src-python">zipfile.ZipFile(<span style="color: #8b2252;">'channel.zip'</span>, <span style="color: #8b2252;">'r'</span>).read(<span style="color: #8b2252;">'test.txt'</span>)
+</pre>
+
+  getinfo方法返回指定文件的ZipInfo对象，可以查看信息，例如：comment<br/>
+</p>
+<p><br/>
+<pre class="src src-python"><span style="color: #a020f0;">print</span> zipfile.ZipFile.getinfo(i+<span style="color: #8b2252;">'.txt'</span>).comment
+</pre>
+
+</p></div>
+
+</div>
+
+<div id="outline-container-23" class="outline-2">
+<h2 id="sec-23"><span class="section-number-2">23</span> operator</h2>
+<div class="outline-text-2" id="text-23">
+
+
+</div>
+
+<div id="outline-container-23-1" class="outline-3">
+<h3 id="sec-23-1"><span class="section-number-3">23.1</span> itemgetter</h3>
+<div class="outline-text-3" id="text-23-1">
+
+
+<p><br/>
+<pre class="example">返回一个可调用对象，比如: f=itemgetter(2)则当f(r)时结果是r[2],当g=itemgetter(2,3,4)则当g(r)时结果是(r[2],r[3],r[4])
+</pre>
+
+</p></div>
+
+</div>
+
+<div id="outline-container-23-2" class="outline-3">
+<h3 id="sec-23-2"><span class="section-number-3">23.2</span> attrgetter</h3>
+<div class="outline-text-3" id="text-23-2">
+
+
+<p><br/>
+<pre class="example">同样返回一个可调用对象，f=attrgetter('name')则f(r)结果是r.name，当g=attrgetter('a','b')则g(r)结果是(r.a, r.b)
+</pre>
+
+   sorted函数有个参数key是个函数，每个比较对象都要调用此函数：<br/>
+</p>
+<p><br/>
+<pre class="example">&gt;&gt;&gt; student_tuples = [
+        ('john', 'A', 15),
+        ('jane', 'B', 12),
+        ('dave', 'B', 10),
+]
+&gt;&gt;&gt; sorted(student_tuples, key=lambda student: student[2])   # sort by age
+[('dave', 'B', 10), ('jane', 'B', 12), ('john', 'A', 15)]
+</pre>
+
+   可以利用operator.itemgetter：<br/>
+</p>
+<p><br/>
+<pre class="example">&gt;&gt;&gt; sorted(student_tuples, key=itemgetter(2))
+</pre>
+
+   与上面结果一样。<br/>
+</p>
+<p><br/>
+</p><div id="footnotes">
+<h2 class="footnotes">Footnotes: </h2>
+<div id="text-footnotes">
+<p class="footnote"><sup><a class="footnum" name="fn.1" href="#fnr.1">1</a></sup> MIME类型就是设定某种扩展名的文件用一种应用程序来打开的方式类型，当该扩展名文件被访问的时候，浏览器会自动使用指定应用程序来打开。多用于指定一些客户端自定义的文件名，以及一些媒体文件打开方式。在HTTP中，MIME类型被定义在Content-Type header中。你要传送一个Microsoft Excel文件到客户端。那么这时的MIME类型就是“application/vnd.ms-excel”。在大多数实际情况中，这个文件然后将传送给Execl来处理（假设我们设定Execl为处理特殊MIME类型的应用程序）。在ASP中，设定MIME类型的方法是通过Response对象的ContentType属性。<br/>
+</p></div>
+</div>
+</div>
+
+</div>
+</div>
+</div>
+
+</body>
+</html>

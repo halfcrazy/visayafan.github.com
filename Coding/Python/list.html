@@ -1,0 +1,240 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+               "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<title>list</title>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
+<meta name="title" content="list"/>
+<meta name="generator" content="Org-mode"/>
+<meta name="generated" content="2012-10-10 17:12:48 CST"/>
+<meta name="author" content="visaya fan"/>
+<meta name="description" content=""/>
+<meta name="keywords" content=""/>
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  html { font-family: Times, serif; font-size: 12pt; }
+  .title  { text-align: center; }
+  .todo   { color: red; }
+  .done   { color: green; }
+  .tag    { background-color: #add8e6; font-weight:normal }
+  .target { }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .right  {margin-left:auto; margin-right:0px;  text-align:right;}
+  .left   {margin-left:0px;  margin-right:auto; text-align:left;}
+  .center {margin-left:auto; margin-right:auto; text-align:center;}
+  p.verse { margin-left: 3% }
+  pre {
+	border: 1pt solid #AEBDCC;
+	background-color: #F3F5F7;
+	padding: 5pt;
+	font-family: courier, monospace;
+        font-size: 90%;
+        overflow:auto;
+  }
+  table { border-collapse: collapse; }
+  td, th { vertical-align: top;  }
+  th.right  { text-align:center;  }
+  th.left   { text-align:center;   }
+  th.center { text-align:center; }
+  td.right  { text-align:right;  }
+  td.left   { text-align:left;   }
+  td.center { text-align:center; }
+  dt { font-weight: bold; }
+  div.figure { padding: 0.5em; }
+  div.figure p { text-align: center; }
+  div.inlinetask {
+    padding:10px;
+    border:2px solid gray;
+    margin:10px;
+    background: #ffffcc;
+  }
+  textarea { overflow-x: auto; }
+  .linenr { font-size:smaller }
+  .code-highlighted {background-color:#ffff00;}
+  .org-info-js_info-navigation { border-style:none; }
+  #org-info-js_console-label { font-size:10px; font-weight:bold;
+                               white-space:nowrap; }
+  .org-info-js_search-highlight {background-color:#ffff00; color:#000000;
+                                 font-weight:bold; }
+  /*]]>*/-->
+</style>
+<script type="text/javascript">
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+
+</head>
+<body>
+<div id="org-div-home-and-up">
+ <a accesskey="H" href="../../index.html#python"> HOME </a>
+</div>
+
+
+<div id="content">
+<h1 class="title">list</h1>
+
+
+<div id="table-of-contents">
+<h2>TOC</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#sec-1">1 list()</a></li>
+<li><a href="#sec-2">2 append(ojbect) extend(list)</a></li>
+<li><a href="#sec-3">3 reverse() reversed(list)</a></li>
+<li><a href="#sec-4">4 sort() sorted()x</a></li>
+<li><a href="#sec-5">5 insert()</a></li>
+<li><a href="#sec-6">6 pop([index])</a></li>
+<li><a href="#sec-7">7 remove(value)</a></li>
+<li><a href="#sec-8">8 del</a></li>
+<li><a href="#sec-9">9 count(value)</a></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-1" class="outline-2">
+<h2 id="sec-1"><span class="section-number-2">1</span> list()</h2>
+<div class="outline-text-2" id="text-1">
+
+</div>
+
+</div>
+
+<div id="outline-container-2" class="outline-2">
+<h2 id="sec-2"><span class="section-number-2">2</span> append(ojbect) extend(list)</h2>
+<div class="outline-text-2" id="text-2">
+
+
+
+
+<pre class="example">前者只能在list最后插入一个，而extend可以在最后插入多个。
+</pre>
+
+
+</div>
+
+</div>
+
+<div id="outline-container-3" class="outline-2">
+<h2 id="sec-3"><span class="section-number-2">3</span> reverse() reversed(list)</h2>
+<div class="outline-text-2" id="text-3">
+
+<p>前者是成员函数，后者是内置函数
+</p></div>
+
+</div>
+
+<div id="outline-container-4" class="outline-2">
+<h2 id="sec-4"><span class="section-number-2">4</span> sort() sorted()x</h2>
+<div class="outline-text-2" id="text-4">
+
+
+
+
+<pre class="example">sorted(iterable, cmp=None, key=None, reverse=False) --&gt; new sorted list
+L.sort(cmp=None, key=None, reverse=False) -- stable sort *IN PLACE*;
+
+区别在：sorted是built-in 函数， sort是list的成员函数。前者作用于列表但并不对列表造成影响，后才修改了列表。
+
+iterable 可迭代的类药
+cmp 比较函数
+key 用列表元素的某个属性和函数进行作为关键字
+reverse 排序规则
+一般cmp，key 可以用lambda表达式，效率key&gt;cmp
+
+&gt;&gt;&gt;L = [('b',2),('a',1),('c',3),('d',4)]
+&gt;&gt;&gt;print sorted(L, cmp=lambda x,y:cmp(x[1],y[1]))
+[('a', 1), ('b', 2), ('c', 3), ('d', 4)]
+
+&gt;&gt;&gt;L = [('b',2),('a',1),('c',3),('d',4)]
+&gt;&gt;&gt;print sorted(L, key=lambda x:x[1]))
+[('a', 1), ('b', 2), ('c', 3), ('d', 4)]
+
+&gt;&gt;&gt; print sorted([5, 2, 3, 1, 4], reverse=True)
+[5, 4, 3, 2, 1]
+&gt;&gt;&gt; print sorted([5, 2, 3, 1, 4], reverse=False)
+[1, 2, 3, 4, 5]
+</pre>
+
+
+</div>
+
+</div>
+
+<div id="outline-container-5" class="outline-2">
+<h2 id="sec-5"><span class="section-number-2">5</span> insert()</h2>
+<div class="outline-text-2" id="text-5">
+
+
+
+
+<pre class="example">L.insert(index, object)   # Insert object before index
+</pre>
+
+</div>
+
+</div>
+
+<div id="outline-container-6" class="outline-2">
+<h2 id="sec-6"><span class="section-number-2">6</span> pop([index])</h2>
+<div class="outline-text-2" id="text-6">
+
+<p>L.pop([index]) # Remove and return item at index (defaut last)
+</p></div>
+
+</div>
+
+<div id="outline-container-7" class="outline-2">
+<h2 id="sec-7"><span class="section-number-2">7</span> remove(value)</h2>
+<div class="outline-text-2" id="text-7">
+
+
+
+
+<pre class="example">L.remove(value)   # Remove fist occurence of value.
+</pre>
+
+
+</div>
+
+</div>
+
+<div id="outline-container-8" class="outline-2">
+<h2 id="sec-8"><span class="section-number-2">8</span> del</h2>
+<div class="outline-text-2" id="text-8">
+
+<p>del L[index]
+</p></div>
+
+</div>
+
+<div id="outline-container-9" class="outline-2">
+<h2 id="sec-9"><span class="section-number-2">9</span> count(value)</h2>
+<div class="outline-text-2" id="text-9">
+
+<p>L.count(value) # Return number of occurrences of value.
+</p></div>
+</div>
+</div>
+
+</body>
+</html>

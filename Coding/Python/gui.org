@@ -1,0 +1,13 @@
+#+OPTIONS: "\n:t
+#+OPTIONS: ^:{} _:{} num:t toc:t \n:t
+#+LaTeX_CLASS: cn-article
+#+STYLE: <link rel="stylesheet" type="text/css" href="../style/style.css" />
+##+INFOJS_OPT: view:content mouse:#cccccc toc:t ftoc:t  path:../style/org-info.js
+
+
+* tkinter
+
+  * 2.x中import Tkinter, 3.x中import tkinter
+
+  * Tk() 初始化一个widget（挂件／微件／组件）
+* wxPython

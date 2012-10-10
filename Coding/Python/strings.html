@@ -1,0 +1,667 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+               "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<title>strings</title>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
+<meta name="title" content="strings"/>
+<meta name="generator" content="Org-mode"/>
+<meta name="generated" content="2012-10-10 17:12:45 CST"/>
+<meta name="author" content="visaya fan"/>
+<meta name="description" content=""/>
+<meta name="keywords" content=""/>
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  html { font-family: Times, serif; font-size: 12pt; }
+  .title  { text-align: center; }
+  .todo   { color: red; }
+  .done   { color: green; }
+  .tag    { background-color: #add8e6; font-weight:normal }
+  .target { }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .right  {margin-left:auto; margin-right:0px;  text-align:right;}
+  .left   {margin-left:0px;  margin-right:auto; text-align:left;}
+  .center {margin-left:auto; margin-right:auto; text-align:center;}
+  p.verse { margin-left: 3% }
+  pre {
+	border: 1pt solid #AEBDCC;
+	background-color: #F3F5F7;
+	padding: 5pt;
+	font-family: courier, monospace;
+        font-size: 90%;
+        overflow:auto;
+  }
+  table { border-collapse: collapse; }
+  td, th { vertical-align: top;  }
+  th.right  { text-align:center;  }
+  th.left   { text-align:center;   }
+  th.center { text-align:center; }
+  td.right  { text-align:right;  }
+  td.left   { text-align:left;   }
+  td.center { text-align:center; }
+  dt { font-weight: bold; }
+  div.figure { padding: 0.5em; }
+  div.figure p { text-align: center; }
+  div.inlinetask {
+    padding:10px;
+    border:2px solid gray;
+    margin:10px;
+    background: #ffffcc;
+  }
+  textarea { overflow-x: auto; }
+  .linenr { font-size:smaller }
+  .code-highlighted {background-color:#ffff00;}
+  .org-info-js_info-navigation { border-style:none; }
+  #org-info-js_console-label { font-size:10px; font-weight:bold;
+                               white-space:nowrap; }
+  .org-info-js_search-highlight {background-color:#ffff00; color:#000000;
+                                 font-weight:bold; }
+  /*]]>*/-->
+</style>
+<script type="text/javascript">
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+
+</head>
+<body>
+<div id="org-div-home-and-up">
+ <a accesskey="H" href="../../index.html#python"> HOME </a>
+</div>
+
+
+<div id="content">
+<h1 class="title">strings</h1>
+
+
+<div id="table-of-contents">
+<h2>TOC</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#sec-1">1 %</a></li>
+<li><a href="#sec-2">2 不言而喻</a></li>
+<li><a href="#sec-3">3 find()</a></li>
+<li><a href="#sec-4">4 replace()</a></li>
+<li><a href="#sec-5">5 split() rsplit()</a></li>
+<li><a href="#sec-6">6 strip rstrip lstrip</a></li>
+<li><a href="#sec-7">7 center() ljust() rjust()</a></li>
+<li><a href="#sec-8">8 partition() rpartition()</a></li>
+<li><a href="#sec-9">9 isdigit() isnumeric()</a></li>
+<li><a href="#sec-10">10 swapcase()</a></li>
+<li><a href="#sec-11">11 zfill()</a></li>
+<li><a href="#sec-12">12 expandtabs()</a></li>
+<li><a href="#sec-13">13 isalpha isdigit isalnum islower isspace istitle isupper istitle title capitalize</a></li>
+<li><a href="#sec-14">14 maketrans translate</a></li>
+<li><a href="#sec-15">15 format()</a>
+<ul>
+<li><a href="#sec-15-1">15.1 基本格式</a></li>
+<li><a href="#sec-15-2">15.2 Accessing arguments by potition:</a></li>
+<li><a href="#sec-15-3">15.3 Accessing arguments by name:</a></li>
+<li><a href="#sec-15-4">15.4 Accessing arguments' attributes:</a></li>
+<li><a href="#sec-15-5">15.5 Accessing argument's items:</a></li>
+<li><a href="#sec-15-6">15.6 !s !r</a></li>
+<li><a href="#sec-15-7">15.7 Aligning the text and specifying a width</a></li>
+<li><a href="#sec-15-8">15.8 +f -f</a></li>
+<li><a href="#sec-15-9">15.9 b o x</a></li>
+<li><a href="#sec-15-10">15.10 Using , as a thousand seperator</a></li>
+<li><a href="#sec-15-11">15.11 More==&gt;Refer to doc-pdf(Python 参考手册)-library.pdf&ndash;&gt;String services.</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-1" class="outline-2">
+<h2 id="sec-1"><span class="section-number-2">1</span> %</h2>
+<div class="outline-text-2" id="text-1">
+
+
+
+
+<pre class="example">&gt;&gt;&gt; '%-*s' % (10, 'hello')
+'hello     '
+&gt;&gt;&gt; '%*s' % (10, 'hello')
+'     hello'
+- 代表左对齐
+*后面括号中有数字，代表长度  
+</pre>
+
+</div>
+
+</div>
+
+<div id="outline-container-2" class="outline-2">
+<h2 id="sec-2"><span class="section-number-2">2</span> 不言而喻</h2>
+<div class="outline-text-2" id="text-2">
+
+
+
+
+<pre class="example">append()
+len()
+</pre>
+
+</div>
+
+</div>
+
+<div id="outline-container-3" class="outline-2">
+<h2 id="sec-3"><span class="section-number-2">3</span> find()</h2>
+<div class="outline-text-2" id="text-3">
+
+
+
+
+<pre class="example">find(sub[, start[, end]]) 返回最先找到的sub的索引，若查找失败则返回-1
+</pre>
+
+</div>
+
+</div>
+
+<div id="outline-container-4" class="outline-2">
+<h2 id="sec-4"><span class="section-number-2">4</span> replace()</h2>
+<div class="outline-text-2" id="text-4">
+
+<p>S.replace(old, new [, count]) -&gt; string
+</p></div>
+
+</div>
+
+<div id="outline-container-5" class="outline-2">
+<h2 id="sec-5"><span class="section-number-2">5</span> split() rsplit()</h2>
+<div class="outline-text-2" id="text-5">
+
+
+
+
+<pre class="example">str.split([sep [,maxsplit]]) -&gt; list of strings
+
+&gt;&gt;&gt; line = '1,2,3,4,5,6'
+&gt;&gt;&gt; line.split(',')
+['1', '2', '3', '4', '5', '6']
+&gt;&gt;&gt; line.split(',', 4)
+['1', '2', '3', '4', '5,6']
+&gt;&gt;&gt; line.rsplit(',', 4)
+['1,2', '3', '4', '5', '6']
+</pre>
+
+</div>
+
+</div>
+
+<div id="outline-container-6" class="outline-2">
+<h2 id="sec-6"><span class="section-number-2">6</span> strip rstrip lstrip</h2>
+<div class="outline-text-2" id="text-6">
+
+
+
+
+<pre class="example">str.strip() #Return a copy of the string S with leading and trailing whitespace removed.
+rstrip() #Return a copy of the string S with trailing whitespace removed.
+lstrip() #Return a copy of the string S with leading whitespace removed.
+</pre>
+
+</div>
+
+</div>
+
+<div id="outline-container-7" class="outline-2">
+<h2 id="sec-7"><span class="section-number-2">7</span> center() ljust() rjust()</h2>
+<div class="outline-text-2" id="text-7">
+
+
+
+
+<pre class="example">center(...)
+    S.center(width[, fillchar]) -&gt; str
+
+&gt;&gt;&gt; s.ljust(10, 'x')
+'1.2xxxxxxx'
+&gt;&gt;&gt; s.rjust(10, 'x')
+'xxxxxxx1.2'
+&gt;&gt;&gt; s.center(10, 'x')
+'xxx1.2xxxx'
+</pre>
+
+</div>
+
+</div>
+
+<div id="outline-container-8" class="outline-2">
+<h2 id="sec-8"><span class="section-number-2">8</span> partition() rpartition()</h2>
+<div class="outline-text-2" id="text-8">
+
+
+
+
+<pre class="example">rpartition(...)
+    S.rpartition(sep) -&gt; (head, sep, tail)
+    
+    Search for the separator sep in S, starting at the end of S, and return
+    the part before it, the separator itself, and the part after it.  If the
+    separator is not found, return two empty strings and S.
+
+&gt;&gt;&gt; str = 'hello world'
+&gt;&gt;&gt; str.rpartition(' ') 
+('hello', ' ', 'world')
+&gt;&gt;&gt; str.partition(' ')
+('hello', ' ', 'world')
+&gt;&gt;&gt; str.rpartition('l')  #只分一次
+('hello wor', 'l', 'd')
+&gt;&gt;&gt; str.partition('l') #返回tuple，并且显示分隔的sep
+('he', 'l', 'lo world')
+&gt;&gt;&gt; str.split(' ') #返回 list
+['hello', 'world']
+</pre>
+
+
+</div>
+
+</div>
+
+<div id="outline-container-9" class="outline-2">
+<h2 id="sec-9"><span class="section-number-2">9</span> isdigit() isnumeric()</h2>
+<div class="outline-text-2" id="text-9">
+
+<p>好像没有什么区别？
+</p>
+
+
+<pre class="example">isdigit(...)
+    S.isdigit() -&gt; bool
+    
+    Return True if all characters in S are digits
+    and there is at least one character in S, False otherwise
+isnumeric(...)
+    S.isnumeric() -&gt; bool
+    
+    Return True if there are only numeric characters in S,
+    False otherwise.
+    
+</pre>
+
+
+</div>
+
+</div>
+
+<div id="outline-container-10" class="outline-2">
+<h2 id="sec-10"><span class="section-number-2">10</span> swapcase()</h2>
+<div class="outline-text-2" id="text-10">
+
+
+
+
+<pre class="example">#返回大小写相互转化的结果
+&gt;&gt;&gt; line = 'HellO WOrld'
+&gt;&gt;&gt; line.swapcase()
+'hELLo woRLD'
+</pre>
+
+</div>
+
+</div>
+
+<div id="outline-container-11" class="outline-2">
+<h2 id="sec-11"><span class="section-number-2">11</span> zfill()</h2>
+<div class="outline-text-2" id="text-11">
+
+
+
+
+<pre class="example">#字符串左边填充0
+&gt;&gt;&gt; line.zfill(15)
+'0000HellO WOrld'   
+</pre>
+
+
+</div>
+
+</div>
+
+<div id="outline-container-12" class="outline-2">
+<h2 id="sec-12"><span class="section-number-2">12</span> expandtabs()</h2>
+<div class="outline-text-2" id="text-12">
+
+
+
+
+<pre class="example">S.expandtabs([tabsize]) -&gt; str
+The default tabsize is 8.
+&gt;&gt;&gt; line
+'a\tb\tc'
+&gt;&gt;&gt; line.expandtabs()
+'a       b       c'
+</pre>
+
+
+</div>
+
+</div>
+
+<div id="outline-container-13" class="outline-2">
+<h2 id="sec-13"><span class="section-number-2">13</span> isalpha isdigit isalnum islower isspace istitle isupper istitle title capitalize</h2>
+<div class="outline-text-2" id="text-13">
+
+<p>并没有iscapitalize函数，不过可以自己实现：
+</p>
+
+
+<pre class="src src-python"><span style="color: #a020f0;">def</span> <span style="color: #0000ff;">iscapitalize</span>(s):
+   <span style="color: #a020f0;">return</span> s == s.capitalize()
+</pre>
+
+
+<pre class="src src-python">&gt;&gt;&gt; a = <span style="color: #8b2252;">'hello world'</span>
+&gt;&gt;&gt; a.capitalize()
+<span style="color: #8b2252;">'Hello world'</span>
+&gt;&gt;&gt; a.title()
+<span style="color: #8b2252;">'Hello World'</span>
+&gt;&gt;&gt; a  = <span style="color: #8b2252;">'Hello world'</span>
+&gt;&gt;&gt; a.istitle()
+<span style="color: #a020f0;">False</span>
+&gt;&gt;&gt; a  = <span style="color: #8b2252;">'Hello World'</span>
+&gt;&gt;&gt; a.istitle()
+<span style="color: #a020f0;">True</span>
+</pre>
+
+
+</div>
+
+</div>
+
+<div id="outline-container-14" class="outline-2">
+<h2 id="sec-14"><span class="section-number-2">14</span> maketrans translate</h2>
+<div class="outline-text-2" id="text-14">
+
+<p>3.X中实现：
+</p>
+
+
+<pre class="example">&gt;&gt;&gt; map = str.maketrans('he', 'sh')
+&gt;&gt;&gt; str.translate(map)
+'shllo world'
+&gt;&gt;&gt; str
+'hello world'
+</pre>
+
+<p>
+2.X中下面的方法可靠，但在3.X中不行
+</p>
+
+
+<pre class="example">string.maketrans(from, to) #from to must have the same length.
+string.translate(s, table[, deletechars])
+str.translate(table[, deletechars])
+unicode.translate(table)
+</pre>
+
+
+<pre class="example">&gt;&gt;&gt; import string
+&gt;&gt;&gt; map = string.maketrans('123', 'abc')
+&gt;&gt;&gt; s = '2341321234232123'
+&gt;&gt;&gt; s.translate(map)
+'bc4acbabc4bcbabc'
+</pre>
+
+
+<pre class="src src-Python">import string 
+def translator(frm='', to='', delete='', keep=None): 
+if len(to) == 1: 
+        to = to * len(frm) 
+    trans = string.maketrans(frm, to) 
+    if keep is not None: 
+        allchars = string.maketrans('', '') 
+        delete = allchars.translate(allchars, keep.translate(allchars,delete))
+    def translate(s): 
+        return s.translate(trans, delete) 
+    return translate
+</pre>
+
+
+</div>
+
+</div>
+
+<div id="outline-container-15" class="outline-2">
+<h2 id="sec-15"><span class="section-number-2">15</span> format()</h2>
+<div class="outline-text-2" id="text-15">
+
+
+</div>
+
+<div id="outline-container-15-1" class="outline-3">
+<h3 id="sec-15-1"><span class="section-number-3">15.1</span> 基本格式</h3>
+<div class="outline-text-3" id="text-15-1">
+
+
+
+
+<pre class="example">{fieldname ! conversionflag : formatspec}
+fieldname: number(a potitional argument) or keyword(named keyword argument)
+                   .name or [index]
+                   "Weight in tons {0.weight}"
+                   "Units destroyed: {players[1]}"
+conversionflag: s r a ==&gt;str repr ascii
+formatspec: [[fill]align[sign] [#] [0] [width] [.percision] [typecode]]
+                     fill ==&gt; 除{} 外的所有字符都可以
+                     align==&gt;    &gt; &lt; = ^
+                     sign ==&gt; '+' '-' ' '
+                                      '-' 为默认情况 正数不显示＋负数显示－
+                                      '+'表正负数都显示符号
+                                      'space' 表示数字前面显示一空格
+                     width precision ==&gt; integer
+                     type ==&gt;  b c d e E f F g G n o   
+</pre>
+
+</div>
+
+</div>
+
+<div id="outline-container-15-2" class="outline-3">
+<h3 id="sec-15-2"><span class="section-number-3">15.2</span> Accessing arguments by potition:</h3>
+<div class="outline-text-3" id="text-15-2">
+
+
+
+
+<pre class="example">&gt;&gt;&gt; print '{0} {1} {2}'.format('a', 'b', 'c')
+a b c
+&gt;&gt;&gt; '{2}, {1}, {0}'.format(*'abc')   ### *
+'c, b, a'
+
+&gt;&gt;&gt; 'My {1[spam]} runs {0.platform}'.format(sys, {'spam': 'laptop'})
+'My laptop runs linux2'
+</pre>
+
+</div>
+
+</div>
+
+<div id="outline-container-15-3" class="outline-3">
+<h3 id="sec-15-3"><span class="section-number-3">15.3</span> Accessing arguments by name:</h3>
+<div class="outline-text-3" id="text-15-3">
+
+
+
+
+<pre class="example">&gt;&gt;&gt; 'Coordinates: {latitude}, {longtitude}'.format(latitude = '23.2N', longtitude = '-112.32W')
+'Coordinates: 23.2N, -112.32W'
+
+&gt;&gt;&gt; coord = {'latitude': '23.12N', 'longtitude': '-23.23W'}
+&gt;&gt;&gt; 'Coordinates: {latitude}, {longtitude}'.format(**coord)
+'Coordinates: 23.12N, -23.23W'
+
+&gt;&gt;&gt; print '{name} {age}'.format(age=12, name='admin')
+admin 12
+
+&gt;&gt;&gt; 'My {config[spam]} runs {sys.platform}'.format(sys=sys, config={'spam': 'laptop'})
+'My laptop runs linux2'
+</pre>
+
+</div>
+
+</div>
+
+<div id="outline-container-15-4" class="outline-3">
+<h3 id="sec-15-4"><span class="section-number-3">15.4</span> Accessing arguments' attributes:</h3>
+<div class="outline-text-3" id="text-15-4">
+
+
+
+
+<pre class="example">&gt;&gt;&gt; c = 3 -5j
+&gt;&gt;&gt; 'The complex number {0} is formed from the real part {0.real} and the imaginary part {0.imag}'.format(c)
+'The complex number (3-5j) is formed from the real part 3.0 and the imaginary part -5.0'
+
+</pre>
+
+</div>
+
+</div>
+
+<div id="outline-container-15-5" class="outline-3">
+<h3 id="sec-15-5"><span class="section-number-3">15.5</span> Accessing argument's items:</h3>
+<div class="outline-text-3" id="text-15-5">
+
+
+
+
+<pre class="example">&gt;&gt;&gt; coord = (3, 5)
+&gt;&gt;&gt; 'X: {0[0]}; Y: 0[1]'.format(coord)
+'X: 3; Y: 0[1]'
+&gt;&gt;&gt; print '{array[2]}'.format(array=range(10))
+2
+</pre>
+
+</div>
+
+</div>
+
+<div id="outline-container-15-6" class="outline-3">
+<h3 id="sec-15-6"><span class="section-number-3">15.6</span> !s !r</h3>
+<div class="outline-text-3" id="text-15-6">
+
+
+
+
+<pre class="example">&gt;&gt;&gt; "repr() show quotes: {!r}; str() doesn't: {!s}".format('test1', 'test2')
+"repr() show quotes: 'test1'; str() doesn't: test2"
+</pre>
+
+</div>
+
+</div>
+
+<div id="outline-container-15-7" class="outline-3">
+<h3 id="sec-15-7"><span class="section-number-3">15.7</span> Aligning the text and specifying a width</h3>
+<div class="outline-text-3" id="text-15-7">
+
+
+
+
+<pre class="example">&gt;&gt;&gt; '{: &lt;30}'.format('left aligned')
+'left aligned                  '
+&gt;&gt;&gt; '{: &gt;30}'.format('right aligned')
+'                 right aligned'
+&gt;&gt;&gt; '{: ^30}'.format('centered')
+'           centered           '
+&gt;&gt;&gt; '{:*^30}'.format('centered')
+'***********centered***********'
+</pre>
+
+</div>
+
+</div>
+
+<div id="outline-container-15-8" class="outline-3">
+<h3 id="sec-15-8"><span class="section-number-3">15.8</span> +f -f</h3>
+<div class="outline-text-3" id="text-15-8">
+
+
+
+
+<pre class="example">&gt;&gt;&gt; '{:-f}; {:-f}'.format(3.14, -3.14)
+'3.140000; -3.140000'
+&gt;&gt;&gt; '{:+f}; {:+f}'.format(3.14, -3.14)
+'+3.140000; -3.140000'
+&gt;&gt;&gt; '{:f}; {:f}'.format(3.14, -3.14)
+'3.140000; -3.140000'
+</pre>
+
+</div>
+
+</div>
+
+<div id="outline-container-15-9" class="outline-3">
+<h3 id="sec-15-9"><span class="section-number-3">15.9</span> b o x</h3>
+<div class="outline-text-3" id="text-15-9">
+
+
+
+
+<pre class="example">&gt;&gt;&gt; 'int: {0: d}; hex: {0: x}; oct: {0: o}; bin{0: b}'.format(42)
+'int:  42; hex:  2a; oct:  52; bin 101010'
+# # with 0x, 0o, or 0b as prefix:
+&gt;&gt;&gt; 'int: {0: d}; hex: {0: #x}; oct: {0: #o}; bin{0: #b}'.format(42)
+'int:  42; hex:  0x2a; oct:  0o52; bin 0b101010'
+</pre>
+
+</div>
+
+</div>
+
+<div id="outline-container-15-10" class="outline-3">
+<h3 id="sec-15-10"><span class="section-number-3">15.10</span> Using , as a thousand seperator</h3>
+<div class="outline-text-3" id="text-15-10">
+
+
+
+
+<pre class="example">&gt;&gt;&gt; '{: ,}'.format(12345678)
+' 12,345,678'
+</pre>
+
+</div>
+
+</div>
+
+<div id="outline-container-15-11" class="outline-3">
+<h3 id="sec-15-11"><span class="section-number-3">15.11</span> More==&gt;Refer to doc-pdf(Python 参考手册)-library.pdf&ndash;&gt;String services.</h3>
+<div class="outline-text-3" id="text-15-11">
+
+
+
+
+<pre class="example">&gt;&gt;&gt; print '{attr.__class__}'.format(attr=0)
+&lt;type 'int'&gt;
+</pre>
+
+</div>
+</div>
+</div>
+</div>
+
+</body>
+</html>

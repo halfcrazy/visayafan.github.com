@@ -1,0 +1,894 @@
+#+include "../../template.org"
+#+OPTIONS: ^:{} _:{} num:t toc:t \n:t
+#+title: Linux内核－内存管理
+
+* Page
+  所有的页描述符都在一个名为 =mem_map= 的数组中。
+#+begin_src c -n -r
+struct page {
+	page_flags_t flags;
+	atomic_t _count;		    
+	atomic_t _mapcount;     /* 取值-1时表示没有指向该页框的引用，
+                               取值0时表示该页框不可共享
+                               取值大于0时表示该页框可共享表示有几个PTE引用
+                            */
+	unsigned long private;      (ref:private)
+	struct address_space *mapping;
+    /* mapping：address_space类型，为对齐需要，其值为4的位数，所以最低两位无用，为充分利用资源，所以此处利用此最低位。
+          最低位为1表示该页为匿名页，并且它指向anon_vma对象。
+          最低为0表映射页，此时mapping指向文件节点地址空间。*/
+	pgoff_t index;			/* Our offset within mapping. */
+	struct list_head lru;		
+#if defined(WANT_PAGE_VIRTUAL)
+	void *virtual;			/* Kernel virtual address (NULL if
+                               not kmapped, ie. highmem) */
+#endif /* WANT_PAGE_VIRTUAL */
+}
+#+end_src
+* Node
+  不同位置的内存访问速度不同，不同位置的内存对应不同的Node，每个Node都由一个描述符来描述。
+  pg_data_t通过其成员pgdat_next链接成链表，pgdat_list指向其第一个成员。
+#+begin_src c -n
+typedef struct pglist_data {
+	struct zone node_zones[MAX_NR_ZONES]; /* maximum number of zones, normally 3 */
+	struct zonelist node_zonelists[GFP_ZONETYPES];
+	int nr_zones;               /* zone个数 */
+	struct page *node_mem_map;  /* 此结点的页描述符数组 */
+	struct bootmem_data *bdata;
+	unsigned long node_start_pfn;     /* 结点开始页 */
+	unsigned long node_present_pages; /* 物理页个数（不包含空洞） */
+	unsigned long node_spanned_pages; /* 物理页个数（包含空洞）  */
+	int node_id;                      /* 结点的标识 */
+	struct pglist_data *pgdat_next;   /* 指向下一个结点描述符 */
+	wait_queue_head_t kswapd_wait;    /* kswap后台进程的等待队列 */
+	struct task_struct *kswapd;
+	int kswapd_max_order;
+} pg_data_t;
+
+
+struct zonelist {
+	struct zone *zones[MAX_NUMNODES * MAX_NR_ZONES + 1]; //最大zone个数x最大node个数（一个node包含若干个zone）由于以null结尾，故＋1
+};
+#define GFP_ZONETYPES	((GFP_ZONEMASK + 1) / 2 + 1)		/* Loner */
+#define GFP_ZONEMASK	0x03
+#+end_src
+  
+* Zone
+  第个node分为3个zone：ZONE_DMA, ZONE_HIGHMEM, ZONE_NORMAL.
+  ZONE_DMA是能够DMA的区域（某些体系结构可以以DMA方式访问所有内存则ZONE_DMA为空；在x86上只能在以DMA访问前16M内存故此时ZONE_DMA＝0-16M），zone_dma和zone_normal是可以被内核映射的区域，剩下的区域即不能被映射（如x86－64由于可以映射到所有内存，故没有highmem区）的为zone_highmem（高端内存）。x86上zone_normal为16-896M, zone_highmem为>896M.
+  所有的zone都保存在一个struct zone[] zone_table中
+#+begin_src c -n
+struct zone {
+	unsigned long		free_pages; /* 此zone中的空闲页 */
+	unsigned long		pages_min, pages_low, pages_high;
+	unsigned long		lowmem_reserve[MAX_NR_ZONES];
+
+	struct per_cpu_pageset	pageset[NR_CPUS];
+
+	/*
+	 * free areas of different sizes
+	 */
+	spinlock_t		lock;
+	struct free_area	free_area[MAX_ORDER];
+
+
+	ZONE_PADDING(_pad1_)
+
+	/* Fields commonly accessed by the page reclaim scanner */
+	spinlock_t		lru_lock;	/* 自旋锁用来锁活动和非活动链表 */
+	struct list_head	active_list;
+	struct list_head	inactive_list;
+	unsigned long		nr_scan_active;
+	unsigned long		nr_scan_inactive;
+	unsigned long		nr_active; /* active-list中页个数 */
+	unsigned long		nr_inactive;   /* inactive-list中页个数 */
+	unsigned long		pages_scanned;	   /* since last reclaim */
+	int			all_unreclaimable; /* All pages pinned */
+
+	int temp_priority;
+	int prev_priority;
+
+
+	ZONE_PADDING(_pad2_)
+	wait_queue_head_t	* wait_table;
+	unsigned long		wait_table_size;
+	unsigned long		wait_table_bits;
+
+	/*
+	 * Discontig memory support fields.
+	 */
+	struct pglist_data	*zone_pgdat;    /* 指向此zone所属的node */
+	struct page		*zone_mem_map; /* 此zone内第一个page地址 */
+	/* zone_start_pfn == zone_start_paddr >> PAGE_SHIFT */
+	unsigned long		zone_start_pfn; /* 此zone内第一个page索引 */
+
+	unsigned long		spanned_pages; /* 此zone中页个数 包含空洞 */
+	unsigned long		present_pages;	/* 不包含空洞 */
+
+	char			*name;              /* 名字 "dma" "highmem" "normal" */
+} ____cacheline_maxaligned_in_smp;
+#+end_src  
+
+  
+可以用page_zone函数来判断指定页所在的zone
+#+begin_src c -n
+#define NODEZONE_SHIFT (sizeof(page_flags_t)*8 - MAX_NODES_SHIFT - MAX_ZONES_SHIFT)
+static inline struct zone *page_zone(struct page *page)
+{
+    /* page->flags >> NODEZONE_SHIFT 其实就是page->flags的前MAX_NODES_SHIFT+MAX_ZONES_SHIFT位（32位机上是8位，64位机上是12位） */
+	return zone_table[page->flags >> NODEZONE_SHIFT];
+}
+
+/*如果是32位则定义max_nodes_shift为6，64位则定义为10  */
+#if BITS_PER_LONG == 32 || defined(ARCH_HAS_ATOMIC_UNSIGNED)
+/* page->flags中一共保留了8位来保存node和zone信息，其中2位被用来保存zone类型（3个dma/highmem/normal），故还剩下6位 */
+#define MAX_NODES_SHIFT		6
+#elif BITS_PER_LONG == 64
+/* 64则有充足的空间，此处设置为10 */
+#define MAX_NODES_SHIFT		10
+/* 2位用来保存3个zone足矣 */
+#define MAX_ZONES_SHIFT		2
+#+end_src
+* 保留页框池
+  内核分配内存的方式无非两种：如果有足够内存则分配即可，如果内存不够则回收内存以便使用。
+  有些操作是不可以中断的，此时可以把这些不可中断的操作放在atomic环境下。
+  如果在atomic环境下有分配内存操作，但此时恰好没有足够内存但atomic环境下的操作又不能中断，故会返回内存不足的错误信息。为解决此问题，可以为此种情况专门保留一段内存，大小由 =min_free_kbytes= 决定：
+$$min\_free\_kbytes=\sqrt(16 \times (total\ size\ of\ zone\_dma\ and\ zone\_normal))$$
+#+begin_src c -n
+min_free_kbytes = int_sqrt(lowmem_kbytes * 16);
+lowmem_kbytes = nr_free_buffer_pages() * (PAGE_SIZE >> 10);
+/* 返回 zone_dma和zone_normal和总空间 */
+unsigned int nr_free_buffer_pages(void)
+{
+	return nr_free_zone_pages(GFP_USER & GFP_ZONEMASK);
+}
+/* 返回zone_dma or zone_normal or zone_hightmem的空间*/
+static unsigned int nr_free_zone_pages(int offset)
+{
+	pg_data_t *pgdat;           /* node描述符指针类型 */
+	unsigned int sum = 0;
+
+	for_each_pgdat(pgdat) {     /* 依次循环所有node */
+		struct zonelist *zonelist = pgdat->node_zonelists + offset; /* 哪个zone：dma／normal／highmem */
+		struct zone **zonep = zonelist->zones;                      /* zonelist第一个元素 */
+		struct zone *zone;
+
+		for (zone = *zonep++; zone; zone = *zonep++) { /* 遍历此zonelist */
+			unsigned long size = zone->present_pages;
+			unsigned long high = zone->pages_high;
+			if (size > high)
+				sum += size - high;
+		}
+	}
+
+	return sum;
+}
+#+end_src
+
+  回忆zone结构中的成员： =unsigned long pages_min, pages_low, pages_high;=
+  其中 =pages_min=min_free_kbytes, pages_low=5/4pages_min, pages_high=3/2pages_min= ，此3个变量为页面回收服务的。
+  
+* 分配和释放页
+  | *函数*                                               | *返回值*      | *说明*                                                                                       |
+  | *获得页*                                             |               |                                                                                              |
+  | alloc_pages(gfp_t gfp_mask, unsigned int order)      | struct page*  | 在指定模式下分配2^order个页，返回第一个页指针                                                |
+  | alloc_page(gfp_t gfp_mask)                           | struct page*  | 相当于alloc_pages(gfp_mask, 0)                                                               |
+  | __get_free_pages(gfp_t gfp_mask, unsigned int order) | unsigned long | 相当于先调用struct page* =alloc_pages(gfp_mask, order)，再调用page_address(page)返回逻辑地址 |
+  | __get_free_page(gfp_t gfp_mask)                      | unsigned long | 相当于__get_free_pages(gfp_mask, 0)                                                          |
+  | get_zeroed_page(gfp_mask)                            | struct page*  | 相当于先调用__get_free_page(mask)再将所得页内容清0                                           |
+  | *释放页*                                             |               |                                                                                              |
+  | __free_pages(struct page*page, unsinged int order)   | void          | 释放指定页page开始的2^order页                                                                |
+  | free_pages(unsigned long addr, unsigned int order)   | void          | 释放指定逻辑地址开始的2^order页                                                              |
+  | free_page(unsinged long*addr)                        | void          | free_pages(addr, 0)                                                                          |
+
+  *gfp_mask标志*
+#+begin_src c -n
+原始标志
+#define __GFP_DMA	0x01        /* 指定从ZONE_DMA中取页 */
+#define __GFP_HIGHMEM	0x02    /*  指定从ZONE_HIGHMEM中取页 */
+
+#define __GFP_WAIT	0x10	/* 分配器可休眠 */
+#define __GFP_HIGH	0x20	/* Should access emergency pools? */        /* 分配器可以访问紧急缓冲区*/
+#define __GFP_IO	0x40	/* Can start physical IO? */        /*  分配器可以开启IO */
+#define __GFP_FS	0x80	/* Can call down to low-level FS? */        /* 分配器可以开启文件系统 */
+#define __GFP_COLD	0x100	/* Cache-cold page required */      /* 分配器应该使用高速缓存中快要淘汰的页*/
+#define __GFP_NOWARN	0x200	/* Suppress page allocation failure warning */  /* 不必打印警告信息*/
+#define __GFP_REPEAT	0x400	/* Retry the allocation.  Might fail */ /*  分配失败则重复分配**/
+#define __GFP_NOFAIL	0x800	/* Retry for ever.  Cannot fail */      /*  分配器无限地重复进行分配，不能失败**/
+#define __GFP_NORETRY	0x1000	/* Do not retry.  Might fail */ /*  分配失败后后不会再进行分配**/
+#define __GFP_NO_GROW	0x2000	/* Slab internal usage */       /*  slab中使用的**/
+#define __GFP_COMP	0x4000	/* Add compound page metadata */
+#define __GFP_ZERO	0x8000	/* Return zeroed page on success */
+
+组合标志
+#define GFP_ATOMIC	(__GFP_HIGH)
+#define GFP_NOIO	(__GFP_WAIT)
+#define GFP_NOFS	(__GFP_WAIT | __GFP_IO)
+#define GFP_KERNEL	(__GFP_WAIT | __GFP_IO | __GFP_FS)
+#define GFP_USER	(__GFP_WAIT | __GFP_IO | __GFP_FS)
+#define GFP_HIGHUSER	(__GFP_WAIT | __GFP_IO | __GFP_FS | __GFP_HIGHMEM)
+#+end_src
+  * 应该避免直接使用__GFP开头的原始标志，最好直接使用GFP_开头的组合标志。
+    最常用的GFP_KERNEL和GFP_ATOMIC，前者由于可以引发睡眠并且可以启动IO和文件系统，所在分配成功的机率较大。GFP_ATOMIC由于不能引发睡眠，所以分配成功机率较小，但在特殊情况下，例如必须保证当前代码不能发生睡眠（例如：中断处理程序，软中断）时，必须使用该组合标志。 
+  * 由于高端内存不一定存在有效的逻辑地址与之相对应，故在调用返回值是逻辑地址的函数时，不能使用__GFP_HIGHMEM标志位。（由于64位机上不存在高端内存，故无需考虑此种情况）
+* Buddy
+** 数据结构
+  free_area结构体定义如下：
+#+begin_src c -n
+struct free_area {
+	struct list_head	free_list;
+	unsigned long		nr_free;
+};
+#+end_src 
+  用于管理buddy块的结构是free_area[MAX_ORDER], MAX_ORDER为11.其中以free_area[order].free_list为链表头的链表中的每个元素为一个大小为2^order个页的块的第一个页。
+#+begin_html
+<center>
+<img src="image/buddy.jpg"></img>
+</center>
+#+end_html  
+  回忆：page结构体的[[(private)][private]]成员，当一个块的第一个页被链进一个链表时，其值被设置为order，当此块从该链表上删除时，此值被清空。作用是：合并两个块时用来检查该页开始的某个块是否可以被合并。
+
+** __rmqueue函数用于取块
+#+begin_src c -n
+/*
+ * 从free_area[11]中找一个合适的块
+ * zone指定取块所在的区：dma or highmeme or normal, 每个区都有自己的free_area[11]
+ */
+
+static struct page *__rmqueue(struct zone *zone, unsigned int order)
+{
+	struct free_area * area;
+	unsigned int current_order;
+	struct page *page;
+
+	for (current_order = order; current_order < MAX_ORDER; ++current_order) {
+		area = zone->free_area + current_order;
+		if (list_empty(&area->free_list))
+			continue;
+		page = list_entry(area->free_list.next, struct page, lru);
+		list_del(&page->lru);
+        /* 清除page->flags中的pg_private标志并清空private变量清空 */
+		rmv_page_order(page);
+        /* area中的nr_free记录可用块的个数 */
+		area->nr_free--;
+        /* area中的free_pages记录此链表上所有块的总页数＝nr_free*2^order */
+		zone->free_pages -= 1UL << order;
+        /* 如果分配的order比所需要的order大，则需要拆分并把剩下的挂到合适的free_area[x]中的链表上 */
+		return expand(zone, page, order, current_order, area);
+	}
+	return NULL;
+}
+static inline void rmv_page_order(struct page *page)
+{
+	__ClearPagePrivate(page);
+	page->private = 0;
+}
+#define __ClearPagePrivate(page) __clear_bit(PG_private, &(page)->flags)
+
+static inline struct page *
+expand(struct zone *zone, struct page *page,
+ 	int low, int high, struct free_area *area)
+{
+	unsigned long size = 1 << high;
+	while (high > low) {
+        /* 在free_area中的下标下降一级 */
+		area--;
+        /* 大块大小缩减一半 */
+		high--;
+		size >>= 1;
+		BUG_ON(bad_range(zone, &page[size]));
+        /* 从下面可以看到：大块分开后前面为所用，后面块持到链表上保存 */
+		list_add(&page[size].lru, &area->free_list);
+		area->nr_free++;
+		set_page_order(&page[size], high);
+	}
+	return page;
+}
+static inline void set_page_order(struct page *page, int order) {
+	page->private = order;
+	__SetPagePrivate(page);
+}
+#define __SetPagePrivate(page)  __set_bit(PG_private, &(page)->flags)
+#+end_src   
+
+  
+** free_pages_bulk用于释放块
+  free_pages_bulk先对zone->lock进行加锁，再调用__free_pages_bulk
+#+begin_src c -n
+static inline void __free_pages_bulk (struct page *page, struct page *base,
+                                      struct zone *zone, unsigned int order)
+{
+	unsigned long page_idx;
+	struct page *coalesced;
+	int order_size = 1 << order;
+
+	if (unlikely(order))        /* ???? */
+		destroy_compound_page(page, order);
+
+	page_idx = page - base;
+
+	BUG_ON(page_idx & (order_size - 1)); /* ???? */
+	BUG_ON(bad_range(zone, page));       /* 溢出时报错 */
+
+	zone->free_pages += order_size;
+	while (order < MAX_ORDER-1) {
+		struct free_area *area;
+		struct page *buddy;
+		int buddy_idx;
+
+		buddy_idx = (page_idx ^ (1 << order)); /* 若page_idx的order位如果为0则置1，如果为1则置0，即相当于+2^order或者-2^order */
+		buddy = base + buddy_idx;              /* 有可能是buddy */
+		if (bad_range(zone, buddy))            /* buddy溢出 */
+			break;
+		if (!page_is_buddy(buddy, order)) /* 见下 */
+			break;
+		list_del(&buddy->lru);  /* 将找到的buddy在其所在的链表中删除 */
+		area = zone->free_area + order; /* area为buddy所在链表在free_area数组位置地址 */
+		area->nr_free--;                /* 块减少1 */
+		rmv_page_order(buddy);          /* 清除private标志和成员 */
+		page_idx &= buddy_idx;          /* 如果page_idx原来是的order位为1，则由buddy_idx的由来可知其order位为0，与后为0；
+                                           同理page_idx原来是的order位为0，则由buddy_idx的由来可知其order位为1，与后为0；
+                                           即两个buddy块最小的地址 */
+		order++;
+	}
+	coalesced = base + page_idx; /* 新块的首页地址 */
+	set_page_order(coalesced, order); /* 设置其private标志和成员 */
+	list_add(&coalesced->lru, &zone->free_area[order].free_list);
+	zone->free_area[order].nr_free++;
+}
+
+/*
+ * 1.检查page->flags是否设置了PG_priate
+ * 2.检查page->private是否为order，只有大小相同时才能合并（才能称为buddy）
+ * 3.必须是动态内存，即不能设置保留位
+ * 4.引用计数必须为-1，即没有被任务引用
+ * 只能符合以上4条才能称为找到一个合法的buddy才可以合并
+ */
+static inline int page_is_buddy(struct page *page, int order)
+{
+       if (PagePrivate(page)           &&
+           (page_order(page) == order) &&
+           !PageReserved(page)         &&
+            page_count(page) == 0)
+               return 1;
+       return 0;
+}
+#define PagePrivate(page)	test_bit(PG_private, &(page)->flags)
+#+end_src
+  
+* Slab
+** 数据结构
+  * 系统初始化时会调用 =kmem_cache_init= 来初始化各个cache。
+  * 创建一个新的cache： =kmem_cache_create=
+  * 销毁一个cache： =kmem_cache_destroy=,销毁之前必须先销毁该cache上所有的slab， =kmem_cache_shrink= 调用 =slab_destroy= 来销毁slab
+  * 可以通过查看/proc/slabinfo文件来得知所有cache的name，及每个cache的空闲object和分配object情况。
+
+    第一个cache叫 =kmem_cache= ，它的object是其它cache描述符。变量cache_cache保存此特殊的cache：
+#+begin_src c -n
+static kmem_cache_t cache_cache = {
+	.lists		= LIST3_INIT(cache_cache.lists),
+	.batchcount	= 1,
+	.limit		= BOOT_CPUCACHE_ENTRIES,
+	.objsize	= sizeof(kmem_cache_t),
+	.flags		= SLAB_NO_REAP,
+	.spinlock	= SPIN_LOCK_UNLOCKED,
+	.name		= "kmem_cache",
+#if DEBUG
+	.reallen	= sizeof(kmem_cache_t),
+#endif
+};
+#+end_src    
+    cache_chain是cache链表的表头：
+#+begin_src c
+static struct list_head cache_chain;
+#+end_src
+    cache_sizes结构休如下：
+#+begin_src c -n
+struct cache_sizes {
+	size_t		 cs_size;
+	kmem_cache_t	*cs_cachep; /*指向普通的cache*/
+	kmem_cache_t	*cs_dmacachep; /*指向dma cache*/
+};
+#+end_src
+
+#+begin_html
+<center>
+<img src="image/cache_slab.jpg"></img>
+</center>
+#+end_html
+    cache描述符结构如下：
+#+begin_src c -n
+#typedef kmem_cache_t kmem_cache_s;
+struct kmem_cache_s {
+/* 1) per-cpu data, touched during every alloc/free */
+	struct array_cache	*array[NR_CPUS];/*见空闲slab局部缓存*/
+	unsigned int		batchcount;
+	unsigned int		limit;  /* 一个cache上最大的空闲object数目 */
+	struct kmem_list3	lists;  /* 三个链表头，分别表示used free partial */
+
+	unsigned int		objsize;    /* 该cache内包含object的大小  */
+	unsigned int	 	flags;      /* 该cache的标志 */
+	unsigned int		num;        /* 每个slab中object的大小 */
+	unsigned int		free_limit; /* 整个cache中空闲object的上限 */
+	spinlock_t		spinlock;       /* 自旋锁 */
+
+	unsigned int		gfporder; /* 每个slab有2^gfporder个页 */
+
+	unsigned int		gfpflags; /* GFP开关的标志 */
+
+	size_t			colour;     /* 见colour */
+	unsigned int		colour_off;  
+	unsigned int		colour_next; 
+	kmem_cache_t		*slabp_cache; /* 当off_slab时指向外部存储slab描述符和object描述符的结构，见on_slab和off_slab */
+	unsigned int		slab_size;    /* slab大小 */
+	unsigned int		dflags;		/* dynamic flags */
+
+	void (*ctor)(void *, kmem_cache_t *, unsigned long); /* 构造函数 */
+	void (*dtor)(void *, kmem_cache_t *, unsigned long); /* 析构函数 */
+
+	const char		*name;      /* 名字 */
+	struct list_head	next;   /* 用于连接下一个cache构成双链表，表头为cache_chain */
+
+#if STATS
+	unsigned long		num_active;
+	unsigned long		num_allocations;
+	unsigned long		high_mark;
+	unsigned long		grown;
+	unsigned long		reaped;
+	unsigned long 		errors;
+	unsigned long		max_freeable;
+	unsigned long		node_allocs;
+	atomic_t		allochit;
+	atomic_t		allocmiss;
+	atomic_t		freehit;
+	atomic_t		freemiss;
+#endif
+#if DEBUG
+	int			dbghead;
+	int			reallen;
+#endif
+};
+
+struct kmem_list3 {
+	struct list_head	slabs_partial;
+	struct list_head	slabs_full;
+	struct list_head	slabs_free;
+	unsigned long	free_objects; /* 此cache中空闲的object个数 */
+	int		free_touched;
+	unsigned long	next_reap;
+	struct array_cache	*shared;
+};    
+#+end_src
+    slab描述符结构如下：
+#+begin_src c -n
+struct slab {
+	struct list_head	list;      /* 用来链接slab链(used, free, partial中的一个链) */
+	unsigned long		colouroff; /* 参见colour */
+	void			*s_mem;		/* 第一个object的位置 */
+	unsigned int		inuse;		/* 此slab中正在使用的object个数*/
+	kmem_bufctl_t		free;       /* 此slab中空闲的object个数 */
+};    
+#+end_src
+** on_slab和off_slab
+  * on_slab
+    当object大小<(page_size<<3)时采用on slab方式：slab描述符和object描述符和object共存在slab中。
+    每个object对应一个object描述符： =kmem_bufctl_t= .
+#+begin_src c
+typedef unsigned short kmem_bufctl_t;
+#+end_src
+    当object被分配时（即被使用时）此值无意义，但当object空闲时，此值存放下一个空闲object的索引，即构成了一个free object的链表。
+    最后一个object描述符内容是BUFCTL_END(0xffff)表示结束。
+  * off_slab
+    当object大小>(page_size<<3)时采用off slab方式，此时slab描述符和object描述符不在slab中而在缓存cache的slabp_cache域指向的缓存结构中。
+#+begin_html
+<center>
+<img src="./image/on_slab_off_slab.png"></img>
+</center>
+#+end_html
+    
+** colour
+  如果相同大小的对象被存储在slab相同的偏移位置，这样的话不同slab中相同偏移位置的对象映射到同一个cache line的概率就会很高，这样硬件缓存就有可能浪费内存周期在转移同一cache line的数据上，为减少此种情况的发生，slab分配器采用了slab colouring方法：slab拥有不同的colour值。假设对齐大小为aln（object地址必须是aln的整数倍）（此值存放在cache->color_off中），slab中未用的字节数为free，object大小为osize，slab描述符和object描述符的总大小为dsize。则colour的取值为free/aln（表偏移的最大值），slab的偏移可以取0-colour，一个slab的偏移值由cache->colour_next值决定，每次分配slab都要用此值，之后将其自增，直到到达colour后归0重新开始。设一个slab的偏移是clo，则slab的偏移大小为：clo*aln+dsize，此值存放在slab->coloroff域中。free-clo*aln大小被放到了slab的最后。如图：
+#+begin_html
+<center>
+<img src="./image/slab_color.png"></img>
+</center>
+#+end_html
+** local cache
+  每个CPU对应一个array_cache。紧接着array_cache下面是一系列指针，指向free object.
+#+begin_html
+<center>
+<img src="image/local_cache.jpg"></img>
+</center>
+#+end_html
+#+begin_src c -n
+struct array_cache {
+	unsigned int avail;         /* 总共有多少个free object指针 */
+	unsigned int limit;         /* 此local cache中最大能有多少个object指针*/
+	unsigned int batchcount;    /* 如果此local cache没有free object，则为此local cache添加batchcount个free object
+                                （如果free object个数>batchcount的话），如果<batchcount的话，则有多少分配多少.
+                                同理释放obj时如果有batchcount个可供迁移则迁移batchcount，否则有多少迁多少
+                                简而言之：分配和释放都不能超过batchcount个 */
+	unsigned int touched;       /*如果此local cache最近被使用过则置1*/
+};    
+#+end_src
+  可以用 =ac_data= 函数来获得本CPU的array_cache结构：
+#+begin_src c -n
+static inline struct array_cache *ac_data(kmem_cache_t *cachep)
+{
+	return cachep->array[smp_processor_id()];
+}
+#+end_src
+  可以用 =ac_entry= 来获得array_cache下面的指向free object系列指针的第一个指针：
+#+begin_src c -n
+static inline void ** ac_entry(struct array_cache *ac)
+{
+	return (void**)(ac+1);
+}
+#+end_src
+  一共有ac->avail个空的object，则 ac_entry(ac)[--ac->avail]返回一个可用object同时将可用object个数减1.
+
+** kmem_cache_alloc用来获得指定cache的一个空的object
+  参数cachep指向要获得空object的cache。
+#+begin_src c -n
+void * kmem_cache_alloc (kmem_cache_t *cachep, int flags)
+{
+	return __cache_alloc(cachep, flags);
+}
+#+end_src
+  __cache_alloc函数：
+#+begin_src c -n
+static inline void * __cache_alloc (kmem_cache_t *cachep, int flags)
+{
+	unsigned long save_flags;
+	void* objp;
+	struct array_cache *ac;
+
+	cache_alloc_debugcheck_before(cachep, flags);
+
+	local_irq_save(save_flags);
+	ac = ac_data(cachep);
+	if (likely(ac->avail)) {  /*如果本地cache存在可用object则在本地取*/
+		STATS_INC_ALLOCHIT(cachep);
+		ac->touched = 1;
+		objp = ac_entry(ac)[--ac->avail];       /*见前面的：local cache分析*/
+	} else {                    /**/
+		STATS_INC_ALLOCMISS(cachep);
+		objp = cache_alloc_refill(cachep, flags);
+	}
+	local_irq_restore(save_flags);
+	objp = cache_alloc_debugcheck_after(cachep, flags, objp, __builtin_return_address(0));
+	return objp;
+}
+#+end_src
+  cache_alloc_refill函数：
+  1) 首先查看参数指定的cache的kmem_list3共享array cache，如果有free object(此array cache的avail不为0)则把它迁过来（如果个数>ac->batchcount的话，则迁ac->batchcount个，如果<ac->batchcount的话就有多少迁多少）。
+  2) 如果没有共享array cache，则去查看此cache的partial和free list中查看是否有free object，如果有则迁过来，如果没有则必须要新分配一个slab了
+  3) 如果迁移成功，则返回ac_entry(ac)[--ac->avail]即可，没有迁移则必须新分配slab
+  4) 如果分配slab失败则表明此时内存根本不够用，分配object失败，返回NULL；如果分配slab成功则重新开始执行发上步骤（此时肯定可以找到free object）。
+#+begin_src c -n
+static void* cache_alloc_refill(kmem_cache_t* cachep, int flags)
+{
+	int batchcount;
+	struct kmem_list3 *l3;
+	struct array_cache *ac;
+
+	check_irq_off();
+	ac = ac_data(cachep);
+retry:
+	batchcount = ac->batchcount;
+	if (!ac->touched && batchcount > BATCHREFILL_LIMIT) {
+		/* if there was little recent activity on this
+		 * cache, then perform only a partial refill.
+		 * Otherwise we could generate refill bouncing.
+		 */
+		batchcount = BATCHREFILL_LIMIT;
+	}
+	l3 = list3_data(cachep);
+
+	BUG_ON(ac->avail > 0);
+	spin_lock(&cachep->spinlock);
+    /* 1 */
+	if (l3->shared) {
+		struct array_cache *shared_array = l3->shared;
+		if (shared_array->avail) {
+			if (batchcount > shared_array->avail)
+				batchcount = shared_array->avail;
+			shared_array->avail -= batchcount;
+			ac->avail = batchcount;
+			memcpy(ac_entry(ac), &ac_entry(shared_array)[shared_array->avail],
+					sizeof(void*)*batchcount);
+			shared_array->touched = 1;
+			goto alloc_done;
+		}
+	}
+    /* 2 */
+	while (batchcount > 0) {
+		struct list_head *entry;
+		struct slab *slabp;
+		/* Get slab alloc is to come from. */
+		entry = l3->slabs_partial.next;
+		if (entry == &l3->slabs_partial) { /* 半满列表为空 */
+			l3->free_touched = 1;
+			entry = l3->slabs_free.next;
+			if (entry == &l3->slabs_free) /* 空列表为空 */
+				goto must_grow;           /* 此时必须要分配新slab */
+		}
+
+		slabp = list_entry(entry, struct slab, list); /* 半满列表不空 */
+		check_slabp(cachep, slabp);
+		check_spinlock_acquired(cachep);
+		while (slabp->inuse < cachep->num && batchcount--) {
+			kmem_bufctl_t next;
+			STATS_INC_ALLOCED(cachep);
+			STATS_INC_ACTIVE(cachep);
+			STATS_SET_HIGH(cachep);
+
+            /* 紧跟local cache的free object指针指向一个空的object */
+			ac_entry(ac)[ac->avail++] = slabp->s_mem + slabp->free*cachep->objsize;
+            /* 此slab正在使用的个数+1 */
+			slabp->inuse++;
+            /* slab描述符后的object描述会构成了空闲object的链表（回忆：on_slab和off_slab），故slab_buffctl(slab)[slabp->free]里存放的是下一个free object的索引，由于此free object已经被local cache抢去，故其不再free，故修改slabp->free为next */
+			next = slab_bufctl(slabp)[slabp->free];
+#if DEBUG
+			slab_bufctl(slabp)[slabp->free] = BUFCTL_FREE;
+#endif
+		       	slabp->free = next;
+		}
+		check_slabp(cachep, slabp);
+
+		/* move slabp to correct slabp list: */
+		list_del(&slabp->list);
+		if (slabp->free == BUFCTL_END) /* 表明此链表已经满了，故加在l3->slabs_full上，否则加上半满列表上 */
+			list_add(&slabp->list, &l3->slabs_full);
+		else
+			list_add(&slabp->list, &l3->slabs_partial);
+	}
+
+must_grow:
+	l3->free_objects -= ac->avail; /* ac->avail最初是0，后经过移动已经不再是0，其获得几个表明l3是失去几个 */
+alloc_done:
+	spin_unlock(&cachep->spinlock);
+    /* 4 */
+	if (unlikely(!ac->avail)) { /* 如果此时ac->avail仍旧是0 表明前面的都没有成功即没有空的object，必须要新分配一个slab了 */
+		int x;
+		x = cache_grow(cachep, flags, -1); /* 新分配一个slab */
+		
+		// cache_grow can reenable interrupts, then ac could change.
+		ac = ac_data(cachep);
+        /* cache_grow分配新slab失败，表明此时内存不够用，无法分配一个空的object，返回空 */
+		if (!x && ac->avail == 0)	// no objects in sight? abort
+			return NULL;
+        /* slab分配成功，再尝试 */
+		if (!ac->avail)		// objects refilled by interrupt?
+			goto retry;
+	}
+    /* 3 */
+	ac->touched = 1;                  /* 此local cache最近被使用过 */
+	return ac_entry(ac)[--ac->avail]; /* ac->avail不为0 返回一个free object */
+}
+#+end_src
+** kmem_cache_free用来释放指定cache的一个object
+   =void kmem_cache_free (kmem_cache_t *cachep, void *objp)=
+   cachep指向欲删除obj所在的cache，objp指向欲删除的obj
+   1. =kmem_cache_free= 调用了 =__cache_free=
+   2. 如果local cache中有剩余的指针可供挂载，则直接挂载到剩余的某个指针即可。
+   3. 否则调用 =cache_flusharray=
+      * 如果此cache的共享array cache中有剩余则通过把local cache中的部分obj指针迁移到共享ac中从而再通过2即可实现释放obj
+      * 否则通过调用 =free_block= 来释放 ac->batchcount个obj：
+        - 对每个释放的obj都执行以下操作：
+          + 将欲删除的obj标记为free，修改数组链表将其加入到free obj的数组链表中，修改slab中的统计成员
+          + 如果删除此obj后总free obj个数超过此cache上限（cache->free_limit），则销毁此slab
+          + 如果删除此obj后此链表所有obj全为free则将其添加到free list中，否则加入到partial list中
+  =__cache_free= 函数：
+#+begin_src c -n
+static inline void __cache_free (kmem_cache_t *cachep, void* objp)
+{
+	struct array_cache *ac = ac_data(cachep);
+
+	check_irq_off();
+	objp = cache_free_debugcheck(cachep, objp, __builtin_return_address(0));
+
+	if (likely(ac->avail < ac->limit)) {
+		STATS_INC_FREEHIT(cachep);
+		ac_entry(ac)[ac->avail++] = objp;       /*Attention*/
+		return;
+	} else {
+		STATS_INC_FREEMISS(cachep);
+		cache_flusharray(cachep, ac);           /*Attention*/
+		ac_entry(ac)[ac->avail++] = objp;
+	}
+}
+#+end_src
+  =cache_flusharray= 函数：
+#+begin_src c -n
+static void cache_flusharray (kmem_cache_t* cachep, struct array_cache *ac)
+{
+	int batchcount;
+
+	batchcount = ac->batchcount;
+#if DEBUG
+	BUG_ON(!batchcount || batchcount > ac->avail);
+#endif
+	check_irq_off();
+	spin_lock(&cachep->spinlock);
+    /* 如果此cache中有共享array cache且此array cache中没有达到最大值，则把ac中batchcount个
+       （如果剩余个数比ac->batchcount大的话就是ac->batchcount个 否则就是剩多个迁移多少）
+       迁到共享的array cache中，此时ac中便有剩余了 于是可把释放的obj挂到剩余指针上*/
+	if (cachep->lists.shared) {
+		struct array_cache *shared_array = cachep->lists.shared;
+		int max = shared_array->limit-shared_array->avail;
+		if (max) {
+			if (batchcount > max)
+				batchcount = max;
+            /* 把ac最开始的batchcount个拷贝到共享ac中，所以之后还要用memmove函数把后面的移上来 */
+			memcpy(&ac_entry(shared_array)[shared_array->avail],
+					&ac_entry(ac)[0],
+					sizeof(void*)*batchcount);
+			shared_array->avail += batchcount;
+			goto free_done;
+		}
+	}
+    /* 释放了batchcount个obj，调整slab结构 */
+	free_block(cachep, &ac_entry(ac)[0], batchcount);
+free_done:
+#if STATS
+	{
+		int i = 0;
+		struct list_head *p;
+
+		p = list3_data(cachep)->slabs_free.next;
+		while (p != &(list3_data(cachep)->slabs_free)) {
+			struct slab *slabp;
+
+			slabp = list_entry(p, struct slab, list);
+			BUG_ON(slabp->inuse);
+
+			i++;
+			p = p->next;
+		}
+		STATS_SET_FREEABLE(cachep, i);
+	}
+#endif
+	spin_unlock(&cachep->spinlock);
+	ac->avail -= batchcount;
+	memmove(&ac_entry(ac)[0], &ac_entry(ac)[batchcount],
+			sizeof(void*)*ac->avail);
+}
+#+end_src
+
+  =free_block= 函数：
+#+begin_src c -n
+static void free_block(kmem_cache_t *cachep, void **objpp, int nr_objects)
+{
+	int i;
+	check_spinlock_acquired(cachep);
+	cachep->lists.free_objects += nr_objects;
+
+    /* 对每个释放obj都执行以下操作 */
+	for (i = 0; i < nr_objects; i++) {
+		void *objp = objpp[i];
+		struct slab *slabp;
+		unsigned int objnr;
+
+		slabp = GET_PAGE_SLAB(virt_to_page(objp));
+        /* 先将此slab从slab链表中删除，最后再通过其是空还是半满重新挂载 */
+		list_del(&slabp->list);
+        /* 释放obj在obj数组中的下标（用来为数组链表服务） */
+		objnr = (objp - slabp->s_mem) / cachep->objsize;
+		check_slabp(cachep, slabp);
+#if DEBUG
+		if (slab_bufctl(slabp)[objnr] != BUFCTL_FREE) {
+			printk(KERN_ERR "slab: double free detected in cache '%s', objp %p.\n",
+						cachep->name, objp);
+			BUG();
+		}
+#endif
+        /* 把它加到数组链表的第一个 */
+		slab_bufctl(slabp)[objnr] = slabp->free;
+		slabp->free = objnr;
+        
+		STATS_DEC_ACTIVE(cachep);
+		slabp->inuse--;         /* 释放一个object 正在使用的个数－1 */
+		check_slabp(cachep, slabp);
+
+		/* fixup slab chains */
+		if (slabp->inuse == 0) {
+            /* 如果此slab的object全部为空闲，且总空闲object个数>此cache空闲object上限，则销毁此slab */
+			if (cachep->lists.free_objects > cachep->free_limit) {
+				cachep->lists.free_objects -= cachep->num;
+				slab_destroy(cachep, slabp);
+                /* 没有达到空闲obj上限则把它加到free list中 */
+			} else {
+				list_add(&slabp->list,
+				&list3_data_ptr(cachep, objp)->slabs_free);
+			}
+            /* 添加到装满列表中 */
+		} else {
+            /* 有正在使用的obj并且肯定不是全部都在使用（刚刚释放一个），所以移到partial list中 */
+			list_add_tail(&slabp->list,
+				&list3_data_ptr(cachep, objp)->slabs_partial);
+		}
+	}
+}
+#+end_src
+  
+** kmalloc
+   kmalloc调用了__kmalloc, __kmallloc调用了__cache_alloc，最终效果等价于：
+#+begin_src c -n
+void * kmalloc(size_t size, int flags)
+{
+    struct cache_sizes *csizep = malloc_sizes;
+    kmem_cache_t * cachep;
+    for (; csizep->cs_size; csizep++) {
+        if (size > csizep->cs_size)
+            continue;
+        if (flags & _ _GFP_DMA)
+            cachep = csizep->cs_dmacachep;
+        else
+            cachep = csizep->cs_cachep;
+        return kmem_cache_alloc(cachep, flags);
+    }
+    return NULL;
+}
+#+end_src
+** kfree
+   Don't free memory not originally allocated by kmalloc() or you will run into trouble.
+   objp是由kmalloc返回的指针。
+#+begin_src c -n
+void kfree (const void *objp)
+{
+	kmem_cache_t *c;
+	unsigned long flags;
+
+	if (!objp)
+		return;
+	local_irq_save(flags);
+	kfree_debugcheck(objp);
+	c = GET_PAGE_CACHE(virt_to_page(objp));
+	__cache_free(c, (void*)objp);
+	local_irq_restore(flags);
+}
+#+end_src
+
+** 内存池
+   注意与 =保留页框池= 的区别：保留页框池只能用在原子操作分配请求，而内存池只能被一些指定的设备使用，是保留的动态内存（一般情况下不会使用，只有当请求普通内存注定失败时才会使用内存池）。
+   称内存池中的单元为内存元素（memory element）
+#+begin_src c -n
+typedef struct mempool_s {
+	spinlock_t lock;
+	int min_nr;		            /* 内存池中内存元素的最大个数（初始时个数，最少可以得到的个数） */
+	int curr_nr;		        /* 当前内存池中内存元素的个数 */
+	void **elements;            /* 二级指针，指向 指向内存元素指针数组 的指针 */
+	void *pool_data;            /* 内存池拥有者的可用私有数据 */
+	mempool_alloc_t *alloc;     /* 分配函数 */
+	mempool_free_t *free;       /* 释放函数 */
+	wait_queue_head_t wait;     /* 等待队列 */
+} mempool_t;
+typedef void * (mempool_alloc_t)(int gfp_mask, void *pool_data);
+typedef void (mempool_free_t)(void *element, void *pool_data);
+#+end_src
+   * 如果内存元素是slab中的object，一般常用的alloc和free分别是 =mempool_alloc_slab= 和 =mempool_free_slab= ，分别调用的是前面分析过的 =kmem_cache_alloc= 和 =kmem_cache_free= 。此时成员pool_data保存的是cache的地址.
+#+begin_src c -n
+void *mempool_alloc_slab(int gfp_mask, void *pool_data)
+{
+	kmem_cache_t *mem = (kmem_cache_t *) pool_data;
+	return kmem_cache_alloc(mem, gfp_mask);
+}
+void mempool_free_slab(void *element, void *pool_data)
+{
+	kmem_cache_t *mem = (kmem_cache_t *) pool_data;
+	kmem_cache_free(mem, element);
+}
+#+end_src
+   * =mempool_create= 和 =mempool_destroy= 分别用来创建和销毁一个内存池。
+   * =mempool_alloc= 和 =mempool_free= 用来分配和释放内存池中的一个内存元素，其参数mempool_t和gfp_mask。
+     
+     
+* 图
+  最后上三张图，不是我画的，[[http://bbs.chinaunix.net/thread-2018659-1-1.html][ChinaUnix论坛上下的]]
+  #+html:<center>
+  #+html:<img src="image/wdy_mm_1.gif"></img><br/>
+  #+html:<img src="image/wdy_mm_2.gif"></img><br/>
+  #+html:<img src="image/wdy_mm_3.gif"></img><br/> 
+  #+html:</center>
+

@@ -1,0 +1,11 @@
+#OPTOINS: "\n:t"
+* 函数 keys(), values()
+#+BEGIN_EXAMPLE
+>>> d
+{'a': '1', 'b': '2'}
+>>> d.keys()
+['a', 'b']
+>>> d.values()
+['1', '2']
+#+END_EXAMPLE
+* 
