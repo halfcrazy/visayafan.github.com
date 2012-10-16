@@ -130,7 +130,8 @@ pre.snippet .error {
 
 .welcomenew{
     font-size: 19px;
-    margin-left:33%;
-    margin-top:20%;
+    text-align:center;
+    height:300px;
+    line-height:300px;
 }
 
