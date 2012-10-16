@@ -1,0 +1,18 @@
+#+OPTIONS: ^:{} _:{} num:t toc:t \n:t
+#+include "../../template.org"
+#+title: 3D地图仪-revolver map
+
+#+html:<center>
+http://www.revolvermaps.com/
+#+html:</center>
+#+begin_html
+<style type="text/css">
+.revolvermaps{
+    margin-left:40%;
+    margin-top:80px;
+}
+</style>
+<div class="revolvermaps">
+<script type="text/javascript" src="http://jd.revolvermaps.com/r.js"></script><script type="text/javascript">rm_f1st('0','284','true','false','000000','3f4vhkajfax','true','ff0000');</script><noscript><applet codebase="http://rd.revolvermaps.com/j" code="core.RE" width="284" height="284" archive="g.jar"><param name="cabbase" value="g.cab" /><param name="r" value="true" /><param name="n" value="false" /><param name="i" value="3f4vhkajfax" /><param name="m" value="0" /><param name="s" value="284" /><param name="c" value="ff0000" /><param name="v" value="true" /><param name="b" value="000000" /><param name="rfc" value="true" /></applet></noscript>
+</div>
+#+end_html
