@@ -461,3 +461,8 @@ struct rlimit {
 #define RLIMIT_MSGQUEUE		12	/* maximum bytes in POSIX mqueues */
 #+end_src
   rlim_max来表示资源界限最大值，getrlimit()和setrlimit()来取得和改变资源当前值 rlim_cur。
+#+BEGIN_HTML
+<script src="../../Layout/JS/disqus-comment.js"></script>
+<div id="disqus_thread">
+</div>
+#+END_HTML

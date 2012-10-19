@@ -102,3 +102,8 @@ PrintWriter可以接收OutputStream类型的初始化参数*/
    并且二者共用内存（即修改一个会影响另一个）。
 
    
+#+BEGIN_HTML
+<script src="../../Layout/JS/disqus-comment.js"></script>
+<div id="disqus_thread">
+</div>
+#+END_HTML

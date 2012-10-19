@@ -35,3 +35,8 @@
   3. 位置记忆：next/previous position和next/previous result和position history
   4. 设置书签以方便下次快速定位。
   5. file->export html很实用的功能
+#+BEGIN_HTML
+<script src="../../Layout/JS/disqus-comment.js"></script>
+<div id="disqus_thread">
+</div>
+#+END_HTML

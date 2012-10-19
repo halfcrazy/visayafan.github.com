@@ -108,3 +108,8 @@ static int effective_prio(task_t *p)
 #define SCHED_FIFO		1       //实时进程，先进先出
 #define SCHED_RR		2       //实时进程，基于优先级的轮回法（Round Robin）
 #+END_SRC    
+#+BEGIN_HTML
+<script src="../../Layout/JS/disqus-comment.js"></script>
+<div id="disqus_thread">
+</div>
+#+END_HTML

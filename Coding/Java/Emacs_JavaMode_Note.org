@@ -4,3 +4,8 @@
   1) C-c C-v C-z 自动import所需要包
   2) C-c C-v C-. JDE的AutoCompletion
 
+#+BEGIN_HTML
+<script src="../../Layout/JS/disqus-comment.js"></script>
+<div id="disqus_thread">
+</div>
+#+END_HTML

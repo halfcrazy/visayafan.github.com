@@ -22,3 +22,8 @@
   "r" 表示任何寄存器
   0 表示与上面位置相同的同一寄存器
 #+end_example
+#+BEGIN_HTML
+<script src="../../Layout/JS/disqus-comment.js"></script>
+<div id="disqus_thread">
+</div>
+#+END_HTML

@@ -76,3 +76,8 @@ pselect 1000 990 -10
 gettimeofday 1000 1000 0
 而使用gettimeofday循环不停检测时间，可精确微秒级，不过不适宜用来做定时器模块。
 因此后面的定时器模块将选择select为延迟函数。
+#+BEGIN_HTML
+<script src="../../Layout/JS/disqus-comment.js"></script>
+<div id="disqus_thread">
+</div>
+#+END_HTML

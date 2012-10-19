@@ -97,3 +97,8 @@ ValueError: too many values to unpack (expected 2)
 '4'
 #+END_SRC
 * 
+#+BEGIN_HTML
+<script src="../../Layout/JS/disqus-comment.js"></script>
+<div id="disqus_thread">
+</div>
+#+END_HTML

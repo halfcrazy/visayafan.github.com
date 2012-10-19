@@ -263,3 +263,8 @@ Today, at work, I was forced to nod and smile as a pregnant, fifteen-year-old, b
 #+begin_example
 Today, my mom called me screaming and cussing because she found pot in my room. I come home and my dad says, "I hid some pot in your room and I'm not letting you go to that concert if you rat me out." My dad is apparently a blackmailing 52-year-old stoner. FML
 #+end_example   
+#+BEGIN_HTML
+<script src="../../Layout/JS/disqus-comment.js"></script>
+<div id="disqus_thread">
+</div>
+#+END_HTML

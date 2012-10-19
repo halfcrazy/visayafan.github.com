@@ -104,3 +104,8 @@ apropos(1),whatis(1),less(1),groff(1)。
 
 臭虫
 选项-t只会在有类似troff工具存在时才有功用。在gnome-help-browser还看不到中文。在kdehelp中可看到中文,但固定字型建建议选取courier或lucidatyperiter。（BP1.0）
+#+BEGIN_HTML
+<script src="../../Layout/JS/disqus-comment.js"></script>
+<div id="disqus_thread">
+</div>
+#+END_HTML

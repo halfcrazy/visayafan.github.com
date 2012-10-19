@@ -105,3 +105,8 @@ when the results might not be obvious.
 ** -t
    test compressed archive data
    检查zip文件是否正常，有没有错误
+#+BEGIN_HTML
+<script src="../../Layout/JS/disqus-comment.js"></script>
+<div id="disqus_thread">
+</div>
+#+END_HTML

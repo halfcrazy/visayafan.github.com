@@ -9,3 +9,8 @@
 将数组转化为字符串（以便输出等……）
 
 * Array.sort(ArrayName)
+#+BEGIN_HTML
+<script src="../../Layout/JS/disqus-comment.js"></script>
+<div id="disqus_thread">
+</div>
+#+END_HTML

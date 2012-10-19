@@ -29,3 +29,8 @@
    =headSet(E toElement, boolean inclusive)= 如果inclusive=true则返回不大于toElement的元素的集合
    
 
+#+BEGIN_HTML
+<script src="../../Layout/JS/disqus-comment.js"></script>
+<div id="disqus_thread">
+</div>
+#+END_HTML

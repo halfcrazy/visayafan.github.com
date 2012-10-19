@@ -70,3 +70,8 @@ $$a_0=1$$
   最终得:
 $$a_n=2^{n+1}-2$$
   即迭代次数为2时打印2^{2+1}-2=6个，迭代次数为3时2^{3+1}-2=14个，迭代次数为4时打印2^{4+1}-2=30个……
+#+BEGIN_HTML
+<script src="../../Layout/JS/disqus-comment.js"></script>
+<div id="disqus_thread">
+</div>
+#+END_HTML

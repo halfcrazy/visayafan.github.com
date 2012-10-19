@@ -21,3 +21,8 @@ struct user_struct {
 	uid_t uid;
 };
 #+end_src
+#+BEGIN_HTML
+<script src="../../Layout/JS/disqus-comment.js"></script>
+<div id="disqus_thread">
+</div>
+#+END_HTML

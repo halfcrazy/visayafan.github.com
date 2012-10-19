@@ -46,3 +46,8 @@ class "GtkWidget" style "eclipse"
 #+end_src
   启动：GTK2_RC_FILES=/usr/share/themes/Clearlooks/gtk-2.0/gtkrc:/home/visayafan/.gtkrc-eclipse eclipse
   可以在.bashrc中添加别名以方便以后调用：alias ec="GTK2_RC_FILES=/usr/share/themes/Clearlooks/gtk-2.0/gtkrc:/home/visayafan/.gtkrc-eclipse eclipse &"
+#+BEGIN_HTML
+<script src="../../Layout/JS/disqus-comment.js"></script>
+<div id="disqus_thread">
+</div>
+#+END_HTML

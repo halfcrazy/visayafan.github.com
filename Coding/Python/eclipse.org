@@ -11,3 +11,8 @@ C-M-Up        复制当前行到上一行
 C-M-Down   复制当前行到下一行
 
 #+END_EXAMPLE
+#+BEGIN_HTML
+<script src="../../Layout/JS/disqus-comment.js"></script>
+<div id="disqus_thread">
+</div>
+#+END_HTML

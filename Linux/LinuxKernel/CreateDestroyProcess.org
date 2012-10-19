@@ -99,3 +99,8 @@ struct completion {
     * 否则如果CLONE_THREAD被设置了（表明新建进程与父进程是同一线程组），则设置tgid为父进程的tgid，设置group_leader为父进程的group_leader.
   * 增加nr_threads变量和total_forks变量
   * 返回新建进程描述符指针
+#+BEGIN_HTML
+<script src="../../Layout/JS/disqus-comment.js"></script>
+<div id="disqus_thread">
+</div>
+#+END_HTML

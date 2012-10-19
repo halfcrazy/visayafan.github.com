@@ -49,3 +49,8 @@ public class hello {
 }
 #+END_SRC    
 在src中右键run as-run configuration-arguments中输入想要传入的参数
+#+BEGIN_HTML
+<script src="../../Layout/JS/disqus-comment.js"></script>
+<div id="disqus_thread">
+</div>
+#+END_HTML

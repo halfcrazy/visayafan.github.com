@@ -57,3 +57,8 @@ sorted_x = sorted(x.items(), key=lambda x:x[1])
 #+begin_src python
 sorted_x = sorted(x, key=lambda i: x[i])
 #+end_src
+#+BEGIN_HTML
+<script src="../../Layout/JS/disqus-comment.js"></script>
+<div id="disqus_thread">
+</div>
+#+END_HTML

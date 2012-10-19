@@ -892,3 +892,8 @@ void mempool_free_slab(void *element, void *pool_data)
   #+html:<img src="image/wdy_mm_3.gif"></img><br/> 
   #+html:</center>
 
+#+BEGIN_HTML
+<script src="../../Layout/JS/disqus-comment.js"></script>
+<div id="disqus_thread">
+</div>
+#+END_HTML

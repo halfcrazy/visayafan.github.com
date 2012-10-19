@@ -112,3 +112,8 @@ del D[key]
 #+END_EXAMPLE
 ** clear()
 ** copy()
+#+BEGIN_HTML
+<script src="../../Layout/JS/disqus-comment.js"></script>
+<div id="disqus_thread">
+</div>
+#+END_HTML

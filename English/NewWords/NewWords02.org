@@ -132,3 +132,8 @@ Today, I ordered ramen to go. I looked at my order and discovered a cockroach. D
 #+begin_example
 Today, I was fired from my job. My boss turned to everyone and said, "Allow me to escort this trash out of the office." Everyone cheered. FML
 #+end_example
+#+BEGIN_HTML
+<script src="../../Layout/JS/disqus-comment.js"></script>
+<div id="disqus_thread">
+</div>
+#+END_HTML

@@ -40,3 +40,8 @@
 
 * lapse
   ¹ýÊ§
+#+BEGIN_HTML
+<script src="../../Layout/JS/disqus-comment.js"></script>
+<div id="disqus_thread">
+</div>
+#+END_HTML

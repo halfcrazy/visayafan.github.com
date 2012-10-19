@@ -37,3 +37,8 @@ print acts[1](2)
 print acts[2](2)
 ##结果都是一样的
 #+END_SRC    
+#+BEGIN_HTML
+<script src="../../Layout/JS/disqus-comment.js"></script>
+<div id="disqus_thread">
+</div>
+#+END_HTML

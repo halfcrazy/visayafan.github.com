@@ -105,3 +105,8 @@ new keyword, explicit, was introduced to the languageto enable the programmer to
 when it is undesirable. As a rule, a constructor that can be invoked with a single argument needs to be declared
 explicit. When the implicit type conversion is intentional and well behaved, the constructor can be used as an
 implicit conversion operator.
+#+BEGIN_HTML
+<script src="../../Layout/JS/disqus-comment.js"></script>
+<div id="disqus_thread">
+</div>
+#+END_HTML

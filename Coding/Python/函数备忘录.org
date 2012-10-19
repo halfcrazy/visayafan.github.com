@@ -98,3 +98,8 @@ L.count(value) # Return number of occurrences of value.
    更新、用取并结果更新原来集合……
 ** issubset issuperset isdisjoint
    子集、父集、不相交集
+#+BEGIN_HTML
+<script src="../../Layout/JS/disqus-comment.js"></script>
+<div id="disqus_thread">
+</div>
+#+END_HTML

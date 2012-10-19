@@ -122,3 +122,8 @@ print 'koe'.translate(trantab)
 * chr/ord
   chr(数字) 将数字转换为对应的ASCII码
   ord(char) 将char转换为对应的ASCII值
+#+BEGIN_HTML
+<script src="../../Layout/JS/disqus-comment.js"></script>
+<div id="disqus_thread">
+</div>
+#+END_HTML

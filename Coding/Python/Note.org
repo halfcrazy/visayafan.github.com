@@ -320,3 +320,8 @@ class MineSweep(tkinter.Frame):
 if __name__ == '__main__':
     MineSweep.main(10, 10, 10)
 #+end_src
+#+BEGIN_HTML
+<script src="../../Layout/JS/disqus-comment.js"></script>
+<div id="disqus_thread">
+</div>
+#+END_HTML

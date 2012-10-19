@@ -2,12 +2,19 @@
 #+include "../../template.org"
 #+title: 批量修改文件
 
+
+* 利用sed与grep实现批量替换
 利用grep和sed来实现：
 #+begin_example
 sed -i "s/old/new/g" `grep "old" -rl directory`
 #+end_example
 grep命令的-r选项表递归，-l选项表--files-with-matches匹配的文件，即将匹配的文件作为sed的参数。
 sed命令-i表示 --in-place即原地修改，s表替换，g表全局。
+
+#+begin_example
+sed -i 's/old/&new/g' filename
+#+end_example
+&表示前面欲替换的内容，即old，即把old替换成oldnew。
 
 如果没有子目录，只使用sed即可：
 #+begin_example
@@ -20,3 +27,41 @@ sed -i "s/old/new/g" *
 sed -i "s|../template2.org|../../template.org|g" `grep "../template2.org" -rl .`
 #+end_example
 利用得当可以极大提高效率。
+* 在文件末尾添加
+#+begin_example
+sed '$a \toadd' `find -name "*.org"`
+#+end_example
+  $a表文件尾，\表换行，即在后缀为org文件中的文件末尾添加toadd
+  其中a表添加，与i的区别在于：a在后面添加，i在前面添加，所以上面命令中如果把a换成i则在最后一行的前面一行添加toadd
+* 读文件／写文件
+#+begin_example
+sed '/abc/r filename1' `find -name "*.org"`
+#+end_example
+  用filename1中的内容替换掉目录下以后缀为org文件中的abc
+  同理用w即把内容写到指定文件中。
+#+begin_example
+sed '/div/w div.org' filename   #将filename中有div的行写到div.org文件中。
+#+end_example
+* 利用sed删除行
+#+begin_example
+sed '/abc/ d' filename          #删除filename中含abc的行
+sed '3d' filename               #删除filename第3行
+sed '$d' filename               #删除filename最后一行
+sed '3,$d' filename             #删除filename第3行到最后一行
+#+end_example
+  其中逗号表范围，例如：
+#+begin_example
+sed -n /abc/,/def/p filename
+#+end_example
+  打印第一个匹配abc的行到最后一个匹配def行之间的行，其中，表范围
+* 多次编辑
+#+begin_example
+sed -e 's/div/divvvv/g' -e 's/divvvv/div/g' a.org #先把所有div换成divvvv，再把所有divvvvv换成div
+#+end_example
+  -e表示多次编辑，相当于调用多次sed命令，每次内容为前一个-e到后一个-e之间的命令。
+  
+#+BEGIN_HTML
+<script src="../../Layout/JS/disqus-comment.js"></script>
+<div id="disqus_thread">
+</div>
+#+END_HTML

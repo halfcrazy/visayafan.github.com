@@ -14,3 +14,8 @@ static_cast < type-id > ( expression )
 * dynamic_cast
 * const_cast
 * reinterpret_cast
+#+BEGIN_HTML
+<script src="../../Layout/JS/disqus-comment.js"></script>
+<div id="disqus_thread">
+</div>
+#+END_HTML

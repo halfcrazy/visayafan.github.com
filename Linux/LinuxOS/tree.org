@@ -21,3 +21,8 @@ tree --dirsfirst -a -T "Sitemap for www.fanhan.tk" -P "*html" -I "\.git|index_sw
 #+BEGIN_CENTER
 [[./image/Screenshot.png]]
 #+END_CENTER
+#+BEGIN_HTML
+<script src="../../Layout/JS/disqus-comment.js"></script>
+<div id="disqus_thread">
+</div>
+#+END_HTML

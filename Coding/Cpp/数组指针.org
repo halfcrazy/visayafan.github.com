@@ -1,3 +1,8 @@
 #+OPTIONS: ^:{} _:{} num:t toc:t \n:t
 #+include "../template2.org"
 #+title: 数组指针
+#+BEGIN_HTML
+<script src="../../Layout/JS/disqus-comment.js"></script>
+<div id="disqus_thread">
+</div>
+#+END_HTML

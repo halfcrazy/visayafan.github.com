@@ -16,3 +16,8 @@ http://www.revolvermaps.com/
 <script type="text/javascript" src="http://jd.revolvermaps.com/r.js"></script><script type="text/javascript">rm_f1st('0','284','true','false','000000','3f4vhkajfax','true','ff0000');</script><noscript><applet codebase="http://rd.revolvermaps.com/j" code="core.RE" width="284" height="284" archive="g.jar"><param name="cabbase" value="g.cab" /><param name="r" value="true" /><param name="n" value="false" /><param name="i" value="3f4vhkajfax" /><param name="m" value="0" /><param name="s" value="284" /><param name="c" value="ff0000" /><param name="v" value="true" /><param name="b" value="000000" /><param name="rfc" value="true" /></applet></noscript>
 </div>
 #+end_html
+#+BEGIN_HTML
+<script src="../../Layout/JS/disqus-comment.js"></script>
+<div id="disqus_thread">
+</div>
+#+END_HTML

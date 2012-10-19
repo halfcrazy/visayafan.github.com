@@ -36,3 +36,8 @@ i can't be who u r
 i can't be who u r
 
 
+#+BEGIN_HTML
+<script src="../../Layout/JS/disqus-comment.js"></script>
+<div id="disqus_thread">
+</div>
+#+END_HTML

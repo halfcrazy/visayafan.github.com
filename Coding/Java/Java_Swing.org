@@ -273,3 +273,8 @@ SoftBevelBorder(int bevelType, Color highlightOuterColor, Color highlightInnerCo
   建立一个四周有凹痕的边界，也可以指定突边与阴影的颜色.
 * CompoundBorder
   建立一个复合边界，并可以指定它的内外边界
+#+BEGIN_HTML
+<script src="../../Layout/JS/disqus-comment.js"></script>
+<div id="disqus_thread">
+</div>
+#+END_HTML

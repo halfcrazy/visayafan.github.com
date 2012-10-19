@@ -21,3 +21,8 @@
   The moral of the story is that computer science is not the same as software development. 
 * fly-by-night
   不可信的
+#+BEGIN_HTML
+<script src="../../Layout/JS/disqus-comment.js"></script>
+<div id="disqus_thread">
+</div>
+#+END_HTML

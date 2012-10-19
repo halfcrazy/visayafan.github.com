@@ -269,3 +269,8 @@ admin 12
 >>> print '{attr.__class__}'.format(attr=0)
 <type 'int'>
 #+END_EXAMPLE
+#+BEGIN_HTML
+<script src="../../Layout/JS/disqus-comment.js"></script>
+<div id="disqus_thread">
+</div>
+#+END_HTML

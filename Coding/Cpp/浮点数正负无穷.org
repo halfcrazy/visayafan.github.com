@@ -29,3 +29,8 @@ int main(int argc, char *argv[])
 
 [fn:1] Intel的86系列机采用小端字节序，即低字节存储在低位上。如果是大端字节序则应该将程序中的索引2改为1，3改为0.
 
+#+BEGIN_HTML
+<script src="../../Layout/JS/disqus-comment.js"></script>
+<div id="disqus_thread">
+</div>
+#+END_HTML

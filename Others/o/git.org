@@ -236,3 +236,8 @@ $ git gc
 $ du -hs  
  84K    .  
 #+end_example
+#+BEGIN_HTML
+<script src="../../Layout/JS/disqus-comment.js"></script>
+<div id="disqus_thread">
+</div>
+#+END_HTML

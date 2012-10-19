@@ -46,3 +46,8 @@ bob = Person('bob', pay=100, job='dev') #关键字传参顺序不必与函数一
 #+end_src
 
   
+#+BEGIN_HTML
+<script src="../../Layout/JS/disqus-comment.js"></script>
+<div id="disqus_thread">
+</div>
+#+END_HTML

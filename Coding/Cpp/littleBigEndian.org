@@ -53,3 +53,8 @@ bool checkCPU(){
 static union { char c[4]; unsigned long mylong; } endian_test = {{ 'l', '?', '?', 'b' } };
 #define ENDIANNESS ((char)endian_test.mylong
 #+END_SRC    
+#+BEGIN_HTML
+<script src="../../Layout/JS/disqus-comment.js"></script>
+<div id="disqus_thread">
+</div>
+#+END_HTML

@@ -53,3 +53,8 @@ pi2 == pi3                      //pi2与pi3都是原来pi存储类的指针。
 Destructing 0x3e4af8 Value: 6
  */
 #+END_SRC  
+#+BEGIN_HTML
+<script src="../../Layout/JS/disqus-comment.js"></script>
+<div id="disqus_thread">
+</div>
+#+END_HTML

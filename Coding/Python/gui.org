@@ -11,3 +11,8 @@
 
   * Tk() 初始化一个widget（挂件／微件／组件）
 * wxPython
+#+BEGIN_HTML
+<script src="../../Layout/JS/disqus-comment.js"></script>
+<div id="disqus_thread">
+</div>
+#+END_HTML

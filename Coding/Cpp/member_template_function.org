@@ -54,3 +54,8 @@ int main()
     to_standard_out.print( my_string ); 
 } 
 #+END_SRC  
+#+BEGIN_HTML
+<script src="../../Layout/JS/disqus-comment.js"></script>
+<div id="disqus_thread">
+</div>
+#+END_HTML

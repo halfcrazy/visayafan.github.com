@@ -7,7 +7,7 @@
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
 <meta name="title" content="进程管理基础"/>
 <meta name="generator" content="Org-mode"/>
-<meta name="generated" content="2012-10-10 16:41:33 CST"/>
+<meta name="generated" content="2012-10-19 19:33:28 CST"/>
 <meta name="author" content="visaya fan"/>
 <meta name="description" content=""/>
 <meta name="keywords" content=""/>
@@ -97,7 +97,6 @@
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"> </script>
 <link rel="stylesheet" type="text/css" href="../../Layout/CSS/vf.css" />
 <script src="../../Layout/JS/bootstrap_old.js"></script>
-<script src="../../Layout/JS/disqus-comment.js"></script>
 
 <p>
    每个进程/线程对应一个进程描述符 <code>struct task_struct</code> ，其成员描述了与进程相关的各种属性，例如：进程的状态，进程ID，资源使用情况（内存，CPU，打开文件，进程地址空间etc）。<br/>
@@ -867,6 +866,9 @@
 </pre>
 
   rlim_max来表示资源界限最大值，getrlimit()和setrlimit()来取得和改变资源当前值 rlim_cur。<br/>
+<script src="../../Layout/JS/disqus-comment.js"></script>
+<div id="disqus_thread">
+</div>
 </p></div>
 </div>
 </div>

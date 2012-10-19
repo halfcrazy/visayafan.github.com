@@ -337,3 +337,8 @@ static int map_area_pte(pte_t *pte, unsigned long address,
 ** vfree
    和 =vmalloc= 相反，各级页目录和页表处理函数也相反。
 
+#+BEGIN_HTML
+<script src="../../Layout/JS/disqus-comment.js"></script>
+<div id="disqus_thread">
+</div>
+#+END_HTML

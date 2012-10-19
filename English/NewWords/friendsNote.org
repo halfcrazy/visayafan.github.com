@@ -64,3 +64,8 @@
 * blow off
   please don't blow her off. 不要和她分手
 
+#+BEGIN_HTML
+<script src="../../Layout/JS/disqus-comment.js"></script>
+<div id="disqus_thread">
+</div>
+#+END_HTML

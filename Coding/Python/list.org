@@ -49,3 +49,8 @@ L.remove(value)   # Remove fist occurence of value.
 del L[index]
 * count(value)
 L.count(value) # Return number of occurrences of value.
+#+BEGIN_HTML
+<script src="../../Layout/JS/disqus-comment.js"></script>
+<div id="disqus_thread">
+</div>
+#+END_HTML

@@ -37,3 +37,8 @@ class Widget<Window, MyController>            //MyControllerÊÇ¾ßÌåµÄÀà,ÊÇÌØ»¯¶¨Ò
 1. ËäÈ»Äã¿ÉÒÔÈ«ÌØ»¯ÀàÄ£°åÖÐµÄ³ÉÔ±º¯Êý,µ«ÊÇÄã²»ÄÜÆ«ÌØ»¯ËûÃÇ;
 2. Äã²»ÄÜÆ«ÌØ»¯ÃüÃû¿Õ¼ä¼¶±ð(namespace-level)µÄº¯Êý(non-member).×î½Ó½ü"ÃüÃû¿Õ¼ä¼¶±ðÄ£°åº¯Êý"µÄÆ«ÌØ»¯»úÖÆ¾ÍÊÇº¯ÊýÖØÔØ,ÄÇ¾ÍÒâÎ¶×ÅÄã¶Ô"º¯Êý²ÎÊý"(¶ø·Ç·µ»ØÖµÀàÐÍ»òÄÚ²¿ËùÓÃÀàÐÍ)ÓÐºÜ¾«ÖÂµÄÌØ»¯ÄÜÁ¦;
 3. ÌØ»¯»òÈ«ÌØ»¯Ê±,templateºóÃæµÄ¼âÀ¨ºÅÖÐ²»´øÈÎºÎÄÚÈÝ;
+#+BEGIN_HTML
+<script src="../../Layout/JS/disqus-comment.js"></script>
+<div id="disqus_thread">
+</div>
+#+END_HTML

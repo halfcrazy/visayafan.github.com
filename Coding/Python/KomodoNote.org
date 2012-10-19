@@ -11,3 +11,8 @@
   | Ctrl+R   | run command           |
   | Ctrl+3   | comment               |
   | Ctrl+2   | uncomment             |
+#+BEGIN_HTML
+<script src="../../Layout/JS/disqus-comment.js"></script>
+<div id="disqus_thread">
+</div>
+#+END_HTML

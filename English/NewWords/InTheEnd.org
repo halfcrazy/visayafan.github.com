@@ -72,3 +72,8 @@ it doesn't even matter
 #+END_EXAMPLE
 * in due time
 在合适的时候
+#+BEGIN_HTML
+<script src="../../Layout/JS/disqus-comment.js"></script>
+<div id="disqus_thread">
+</div>
+#+END_HTML

@@ -64,3 +64,8 @@ void g(){pch[0]='1';}
 #+end_src     
    上面的代码可以编译成功，虽然test1中的pch和test2中的pch名称相同但地址不同，彼此互不影响（编译器优化时可能将它们当成地址空间相同来处理，但这只是编译器优化的结果，并不是真正的结果），即pch在test1中声明定义了一次，在test2中声明定义了一次。但如果将static换成extern并将定义写在vf.cpp中，则test1和test2的pch共享同一个地址。
    - 头文件中 =static int a= 和 =int a= 的区别：后者如果有两个cpp文件t1,t2同时include该头文件，则编译出错，因为a被重复定义，因为a是全局的，对t1和t2都是可见的，所以会冲突。而前者则不会static表明a是一个内部连接，t1中的a只对t1有效，即t1和t2中的a互不关联，名字一样但地址空间不同，所以不会冲突。
+#+BEGIN_HTML
+<script src="../../Layout/JS/disqus-comment.js"></script>
+<div id="disqus_thread">
+</div>
+#+END_HTML

@@ -16,3 +16,8 @@
 
 * 剪切板内容输出到文件
   xclip -o > ~/test.txt
+#+BEGIN_HTML
+<script src="../../Layout/JS/disqus-comment.js"></script>
+<div id="disqus_thread">
+</div>
+#+END_HTML

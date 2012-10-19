@@ -26,3 +26,8 @@
 * I just did what I did because I love you so much, and the thought of losing you is more that I can handle.
   more than I can handle. 我承受不来。
 *
+#+BEGIN_HTML
+<script src="../../Layout/JS/disqus-comment.js"></script>
+<div id="disqus_thread">
+</div>
+#+END_HTML

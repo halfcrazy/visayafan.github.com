@@ -125,3 +125,8 @@ int main(int argc, char *argv[])
 }
 #+END_SRC
 
+#+BEGIN_HTML
+<script src="../../Layout/JS/disqus-comment.js"></script>
+<div id="disqus_thread">
+</div>
+#+END_HTML

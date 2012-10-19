@@ -75,3 +75,8 @@ urllib2.URLError: <urlopen error [Errno 32] Broken pipe>
 $certutil -d sql:$HOME/.pki/nssdb -A -t "C,," -n GoAgent -i ~/goagent/local/CA.crt
 #+end_example
     
+#+BEGIN_HTML
+<script src="../../Layout/JS/disqus-comment.js"></script>
+<div id="disqus_thread">
+</div>
+#+END_HTML

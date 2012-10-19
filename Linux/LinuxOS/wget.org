@@ -76,3 +76,8 @@
 ** 下载所有匹配文件
    wget -r -A “*.tar.gz" http://ftp.gnu.org/gnu/emacs
    下载http://ftp.gnu.org/gnu/emacs 目录下的所有以tar.gz结尾的文件
+#+BEGIN_HTML
+<script src="../../Layout/JS/disqus-comment.js"></script>
+<div id="disqus_thread">
+</div>
+#+END_HTML

@@ -1998,7 +1998,7 @@ div#postamble {
     border: none;
 }
 div#disqus_thread {
-	margin: 8% 12% 20px 12%;
+    margin-top:70px;
 	font-style: italic;
 	font-size: 12px;
 	font-family:"Courier New", Courier, monospace;

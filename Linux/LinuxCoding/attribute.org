@@ -16,3 +16,8 @@
   此属性告诉编译器此函数不能抛出异常。
 * aligned (alignment)
   对齐
+#+BEGIN_HTML
+<script src="../../Layout/JS/disqus-comment.js"></script>
+<div id="disqus_thread">
+</div>
+#+END_HTML

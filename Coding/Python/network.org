@@ -56,3 +56,8 @@
   * d.listen([backlog]) 监听
   * d.recv(size) 接收最多指定大小size的数据，空串表示客户端已经关闭了连接
   * d.send(data) 发送数据
+#+BEGIN_HTML
+<script src="../../Layout/JS/disqus-comment.js"></script>
+<div id="disqus_thread">
+</div>
+#+END_HTML

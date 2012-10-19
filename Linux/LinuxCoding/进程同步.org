@@ -146,3 +146,8 @@ B(){
 #+END_CENTER
 
   这样再看6个同步的题目2便简单多了。
+#+BEGIN_HTML
+<script src="../../Layout/JS/disqus-comment.js"></script>
+<div id="disqus_thread">
+</div>
+#+END_HTML

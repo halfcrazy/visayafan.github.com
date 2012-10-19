@@ -58,3 +58,8 @@ I was under the impression that Khan Academy is for people new to the subject?
   but the effort [required to move and evolve it] is colossal.
 
 
+#+BEGIN_HTML
+<script src="../../Layout/JS/disqus-comment.js"></script>
+<div id="disqus_thread">
+</div>
+#+END_HTML

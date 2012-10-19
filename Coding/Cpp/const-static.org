@@ -101,3 +101,8 @@ public:
 const int A::a = 0;
 #+END_SRC  
 static const变量与static变量初始化方式一样，只是前者在变量名前加上const。
+#+BEGIN_HTML
+<script src="../../Layout/JS/disqus-comment.js"></script>
+<div id="disqus_thread">
+</div>
+#+END_HTML
