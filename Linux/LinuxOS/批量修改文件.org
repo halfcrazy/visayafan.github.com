@@ -2,7 +2,6 @@
 #+include "../../template.org"
 #+title: 批量修改文件
 
-
 * 利用sed与grep实现批量替换
 利用grep和sed来实现：
 #+begin_example
@@ -59,7 +58,7 @@ sed -n /abc/,/def/p filename
 sed -e 's/div/divvvv/g' -e 's/divvvv/div/g' a.org #先把所有div换成divvvv，再把所有divvvvv换成div
 #+end_example
   -e表示多次编辑，相当于调用多次sed命令，每次内容为前一个-e到后一个-e之间的命令。
-  
+
 #+BEGIN_HTML
 <script src="../../Layout/JS/disqus-comment.js"></script>
 <div id="disqus_thread">

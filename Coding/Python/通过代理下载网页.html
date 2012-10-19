@@ -3,11 +3,11 @@
                "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<title>eclipse</title>
+<title>Python通过代理下载网页</title>
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
-<meta name="title" content="eclipse"/>
+<meta name="title" content="Python通过代理下载网页"/>
 <meta name="generator" content="Org-mode"/>
-<meta name="generated" content="2012-10-19 22:33:19 CST"/>
+<meta name="generated" content="2012-10-19 23:50:42 CST"/>
 <meta name="author" content="visaya fan"/>
 <meta name="description" content=""/>
 <meta name="keywords" content=""/>
@@ -88,42 +88,37 @@
 
 
 <div id="content">
-<h1 class="title">eclipse</h1>
+<h1 class="title">Python通过代理下载网页</h1>
 
 
-<div id="table-of-contents">
-<h2>TOC</h2>
-<div id="text-table-of-contents">
-<ul>
-<li><a href="#sec-1">1 快捷键</a></li>
-</ul>
-</div>
-</div>
-
-<div id="outline-container-1" class="outline-2">
-<h2 id="sec-1"><span class="section-number-2">1</span> 快捷键</h2>
-<div class="outline-text-2" id="text-1">
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"> </script>
+<link rel="stylesheet" type="text/css" href="../../Layout/CSS/vf.css" />
+<script src="../../Layout/JS/bootstrap_old.js"></script>
 
 
-
-
-<pre class="example">C-/                注释当前行／块
-C-Q              返回上次编辑的地方
-C-.                返回下个注释（Annotation）
-C-,                返回上个注释（Annotation）
-M-Left          Back
-M-Right        Forward
-C-M-Up        复制当前行到上一行
-C-M-Down   复制当前行到下一行
-
+<p>
+利用urblib2模块下载并保存到test.html中，再利用webbrowser模块用默认浏览器打开test.html.<br/>
+利用GAE代理，端口8087.<br/>
+</p>
+<p><br/>
+<pre class="example">#! /usr/bin/env python
+import urllib2
+import webbrowser
+proxy_support = urllib2.ProxyHandler({'http':'http://127.0.0.1:8087'})
+opener = urllib2.build_opener(proxy_support,urllib2.HTTPHandler)
+urllib2.install_opener(opener)
+content = urllib2.urlopen('http://www.twitter.com').read()
+f=open('test.html','w')
+f.write(content)
+f.close()
+webbrowser.open('./test.html')
 </pre>
+
 
 <script src="../../Layout/JS/disqus-comment.js"></script>
 <div id="disqus_thread">
 </div>
-</div>
-</div>
-</div>
+</p></div>
 
 </body>
 </html>

@@ -1,0 +1,25 @@
+#+OPTIONS: ^:{} _:{} num:t toc:t \n:t
+#+include "../../template.org"
+#+title:Python通过代理下载网页
+
+利用urblib2模块下载并保存到test.html中，再利用webbrowser模块用默认浏览器打开test.html.
+利用GAE代理，端口8087.
+#+begin_example
+#! /usr/bin/env python
+import urllib2
+import webbrowser
+proxy_support = urllib2.ProxyHandler({'http':'http://127.0.0.1:8087'})
+opener = urllib2.build_opener(proxy_support,urllib2.HTTPHandler)
+urllib2.install_opener(opener)
+content = urllib2.urlopen('http://www.twitter.com').read()
+f=open('test.html','w')
+f.write(content)
+f.close()
+webbrowser.open('./test.html')
+#+end_example
+
+#+BEGIN_HTML
+<script src="../../Layout/JS/disqus-comment.js"></script>
+<div id="disqus_thread">
+</div>
+#+END_HTML
