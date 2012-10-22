@@ -976,7 +976,7 @@
         /* background-image: url(http://orgmode.org/worg-unicorn.png); */
         background-position: 25px 5px;
         background-repeat: no-repeat;
-        background-color: #F9F9F9;
+        /* background-color: #F9F9F9; */
     }
     body #content {
         padding-top: 40px;
@@ -2003,7 +2003,7 @@ div#org-div-comments {
     white-space: nowrap;
     position: fixed;
     right: 0.5em;
-    top: 3.9em;
+    top: 4.3em;
 }
 blockquote {
     display: block;

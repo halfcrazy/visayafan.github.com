@@ -1,0 +1,44 @@
+#+OPTIONS: ^:{} _:{} num:t toc:t \n:t
+#+include "../../template.org"
+#+title:最近更新博文自动生成的Python脚本
+每完一篇博文我都要在index.html相应的分类里面加上类似:
+#+begin_quote
+<li><a href="Coding/Python/最近更新博文自动生成的Python脚本.html">最近更新博文自动生成的Python脚本</a></li>
+#+end_quote
+这样的一句话，此时通过 *git blame index.html* 命令可以看到:
+#+begin_quote
+00000000 (Not Committed Yet 2012-10-23 04:13:10 +0800  96)                 <li><a href="Coding/Python/最近更新博文自动生成的Python脚本.html">最近更新博文自动生成的Python脚本</a></li>
+#+end_quote
+第一列表示提交标识，由于还没有提交，所以为0；第二列表示作者，由于还没有提示，显示的是(Not Committed；第三列显示日期；第四列显示行号；之后是此行内容。
+可以写个Python脚本来自动生成最近更新的博文，用到的模块主要有：subprocess和re，前者用于执行shell命令，后者用于正则匹配。
+#+begin_src python
+#!/usr/bin/python
+from subprocess import call
+import re
+
+call('cd ~/visayafan.github.com', shell=True)
+call('git blame index.html > shan.html', shell=True)
+content = open('shan.html', 'r').read()
+call('rm -rf shan.html', shell=True)
+dateAndLink = re.compile('(\d{4}-\d{2}-\d{2}\s\d{2}:\d{2}:\d{2}).*\<li\>\<a(\shref="(?=Linux|Coding|Algorithm|Compiler|Others|English).*\>)(.+)(\</a\>\</li\>)')
+allCont = dateAndLink.findall(content)
+allCont.sort()
+# for vdate, vlinkpre, vname, vlinkafter in allCont:
+#     print vdate, vlinkpre, vname, vlinkafter
+htmlcont = open('updates.html').read()
+ul = re.compile(r'<ul>')
+for vdate, vlinkpre, vname, vlinkafter in allCont:
+    if not re.findall(vlinkpre, htmlcont):
+        htmlcont = ul.sub('<ul>\n      <li>'+vdate+'&nbsp<a target="_top" '+vlinkpre+vname+vlinkafter, htmlcont)
+open('updates.html', 'w').write(htmlcont)
+#+end_src
+
+1. (\d{4}-\d{2}-\d{2}\s\d{2}:\d{2}:\d{2}) 用于匹配日期
+2. 由于index.html是通过iframe来显示updates.html的，所以链接要加上target="_top"，不然点击链接的时候只能在iframe里打开而不是在整个页面打开。
+3. \<li\>\<a(\shref="(?=Linux|Coding|Algorithm|Compiler|Others|English).*\>)用来匹配<li>到文件名这段
+4. (.+)用来匹配文件名
+5. (\</a\>\</li\>)匹配</a></li>
+所有匹配结果保存在allCont中，通过list内置的sort函数排序（由于列表第一个是日期，所以默认是对日期排序，这也正是我们所需要的）。
+之后查找每个匹配在updates.html中是否出现过，如果没有就插入，此处为实现插入效果用的是正则表达式的替换函数sub，即替换<ul>为<ul>\n<li>日期<a href="链接">博文名</a></li>.(由于updates.html只有一个<ul>标签，所以这么做没有问题)
+
+效果正如主页中的Home标签下"最近更新"所示。
