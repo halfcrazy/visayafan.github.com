@@ -1,4 +1,6 @@
 #+BEGIN_HTML
+<a class="bshareDiv" href="http://www.bshare.cn/share">分享按钮</a><script type="text/javascript" charset="utf-8" src="http://static.bshare.cn/b/buttonLite.js#uuid=&amp;style=10&amp;bgcolor=Blue"></script>
+<br/>
 <script src="../../Layout/JS/disqus-comment.js"></script>
 <div id="disqus_thread">
 </div>

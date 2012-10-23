@@ -42,3 +42,5 @@ open('updates.html', 'w').write(htmlcont)
 之后查找每个匹配在updates.html中是否出现过，如果没有就插入，此处为实现插入效果用的是正则表达式的替换函数sub，即替换<ul>为<ul>\n<li>日期<a href="链接">博文名</a></li>.(由于updates.html只有一个<ul>标签，所以这么做没有问题)
 
 效果正如主页中的Home标签下"最近更新"所示。
+
+#+include "../../disqus.org"

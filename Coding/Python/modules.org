@@ -152,6 +152,34 @@ print zipfile.ZipFile.getinfo(i+'.txt').comment
 >>> sorted(student_tuples, key=itemgetter(2))
 #+end_example
    与上面结果一样。
+* time/calendar
+** 时间戳 timestamp 浮点数
+   1. time.time()                #返回自1970年1月1日时起的秒数
+   2. time.clock()               #返回第一次调用clock()时CPU时间
+   3. time.mktime(tuple)        #转化一个struct_time元组类型时间为时间戳
+   4. time.sleep(sec)           #休眠
+   5. time.asctime([t])         #将时间元组转化为Sun Jun 20 23:21:05 1993形式的字符串，默认转化当前时间元组即localtime()的返回值
+   6. time.ctime([sec])         #与asctime类似只是它的参数是时间戳而asctime的参数是时间元组
+** 元组 struct_time
+   1. time.localtime([sec])          #转化秒为struct_time类型的本地时间，如果无参数则转化当前时间
+   2. time.gmtime([sec])             #转化为GMT时间
+   3. time.strptime(str, format) #转化str为指定格式的struct_time类型时间
+   4. time.strftime(format[, tuple]) #将一个时间元组转化成指定格式的时间,和strptime是两个互逆操作
+| %Y | 年                   |
+| %m | 月                   |
+| %d | 日                   |
+| %H | 时(24h)              |
+| %I | 时(12h)              |
+| %M | 分                   |
+| %S | 秒                   |
+| %x | 日期=%d/%m/%Y        |
+| %X | 时间=%H:%M:%S        |
+| %a | 星期（缩写 Tue）     |
+| %A | 星期（全称 Tuesday） |
+| %b | 月份（缩写）         |
+| %B | 月份（全称）         |
+| %c | 日期和时间=%a %b %d %H:%M:%S %Y 例如：Tue Oct 23 16:56:12 2012 即ctime()返回的类型 |
+[[image/time.jpg]]
 * Footnotes
 
 [fn:1] MIME类型就是设定某种扩展名的文件用一种应用程序来打开的方式类型，当该扩展名文件被访问的时候，浏览器会自动使用指定应用程序来打开。多用于指定一些客户端自定义的文件名，以及一些媒体文件打开方式。在HTTP中，MIME类型被定义在Content-Type header中。你要传送一个Microsoft Excel文件到客户端。那么这时的MIME类型就是“application/vnd.ms-excel”。在大多数实际情况中，这个文件然后将传送给Execl来处理（假设我们设定Execl为处理特殊MIME类型的应用程序）。在ASP中，设定MIME类型的方法是通过Response对象的ContentType属性。

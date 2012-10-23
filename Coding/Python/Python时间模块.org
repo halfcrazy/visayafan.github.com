@@ -1,0 +1,36 @@
+#+OPTIONS: ^:{} _:{} num:t toc:t \n:t
+#+include "../../template.org"
+#+title:Python时间模块
+* 时间戳 timestamp 浮点数
+  1. time.time()                #返回自1970年1月1日时起的秒数
+  2. time.clock()               #返回第一次调用clock()时CPU时间
+  3. time.sleep(sec)           #休眠
+  4. time.mktime(tuple)        #转化一个struct_time元组类型时间为时间戳
+  5. time.asctime([t])         #将时间元组转化为Sun Jun 20 23:21:05 1993形式的字符串，默认转化当前时间元组即localtime()的返回值
+  6. time.ctime([sec])         #与asctime类似只是它的参数是时间戳而asctime的参数是时间元组
+* 元组 struct_time
+   1. time.localtime([sec])          #转化秒为struct_time类型的本地时间，如果无参数则转化当前时间
+   2. time.gmtime([sec])             #转化为GMT时间
+   3. time.strptime(str, format) #转化str为指定格式的struct_time类型时间
+   4. time.strftime(format[, tuple]) #将一个时间元组转化成指定格式的时间,和strptime是两个互逆操作
+| %Y | 年                   |
+| %m | 月                   |
+| %d | 日                   |
+| %H | 时(24h)              |
+| %I | 时(12h)              |
+| %M | 分                   |
+| %S | 秒                   |
+| %x | 日期=%d/%m/%Y        |
+| %X | 时间=%H:%M:%S        |
+| %a | 星期（缩写 Tue）     |
+| %A | 星期（全称 Tuesday） |
+| %b | 月份（缩写）         |
+| %B | 月份（全称）         |
+| %c | 日期和时间=%a %b %d %H:%M:%S %Y 例如：Tue Oct 23 16:56:12 2012 即ctime()返回的类型 |
+#+BEGIN_CENTER
+[[./image/time.jpg]]
+#+END_CENTER
+
+
+
+#+include "../../disqus.org"
