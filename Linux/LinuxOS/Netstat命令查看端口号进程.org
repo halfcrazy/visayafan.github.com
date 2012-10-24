@@ -1,0 +1,61 @@
+#+OPTIONS: ^:{} _:{} num:t toc:t \n:t
+#+include "../../template.org"
+#+title:Netstat命令查看端口号进程
+使用命令 =netstat -pan= 查看所有端口占用情况，其中：
+1. -p 表示显示对应程序的进程ID和名称
+2. -a 表示所有
+3. -n 表示以数字的方式显示地址而不是符号
+部分结果：
+#+begin_example
+Active Internet connections (servers and established)
+Proto Recv-Q Send-Q Local Address           Foreign Address         State       PID/Program name
+tcp        0      0 127.0.0.1:6600          0.0.0.0:*               LISTEN      -               
+tcp        0      0 127.0.0.1:3306          0.0.0.0:*               LISTEN      -               
+tcp        0      0 127.0.0.1:9292          0.0.0.0:*               LISTEN      6401/emacs      
+tcp        0      0 127.0.0.1:8087          0.0.0.0:*               LISTEN      2057/python     
+tcp        0      0 127.0.0.1:631           0.0.0.0:*               LISTEN      -               
+tcp        0      0 1.83.119.47:55212       74.125.128.125:5222     ESTABLISHED 7076/chromium-brows
+#+end_example
+如果没有-p则没有最后PI/Program name一列，没有-n则local address一列会显示形如：
+#+begin_quote
+tcp        0      0 localhost:9292          *:*                     LISTEN      6401/emacs      
+#+end_quote
+其它可选项：
+1. -p proto 指定协议，可以是tcp udp tcpv6 udpv6
+2. -t 只显示tcp协议的端口
+3. -l 只显示状态为LISTENING的端口
+4. -r 显示路由表
+5. -s 显示统计信息
+6. -e 显示ethernet统计信息
+* grep查找使用某个端口的程序
+#+begin_quote
+netstat -pan|grep 8087
+#+end_quote
+* 杀死指定端口的程序
+#+begin_quote
+kill -9 $(netstat -pan|grep 8087|awk '{print $7}'|awk -F '/' '{print $1}')
+#+end_quote
+  先用awk选出第7列，再选出PID，最后kill。
+* lsof
+  lsof: list open file
+  也可以用lsof的-i选项来查看
+#+begin_quote
+lsof -i:8087
+#+end_quote
+  lsof -i [4|6][protocol][@hostname|hostaddr][:service|port]
+  1. 4,6表示ipv4 or v6
+  2. protocol表示协议tcp/udp
+  3. @hostname表主机名
+  4. hostaddr 数字形式的地址
+  5. :server|port 服务名称或端口号
+  这里只使用了最后一个选项。
+#+begin_example
+tmp$ lsof -i:8087
+COMMAND    PID      USER   FD   TYPE DEVICE SIZE/OFF NODE NAME
+python    2057 visayafan    3u  IPv4  20013      0t0  TCP localhost:8087 (LISTEN)
+python    2057 visayafan    5u  IPv4 319578      0t0  TCP localhost:8087->localhost:36540 (ESTABLISHED)
+chromium- 7076 visayafan  141u  IPv4 318836      0t0  TCP localhost:36540->localhost:8087 (ESTABLISHED)
+#+end_example
+
+#+include "../../disqus.org"
+  

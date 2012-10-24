@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+               "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<title>Netstat命令查看端口号进程</title>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
+<meta name="title" content="Netstat命令查看端口号进程"/>
+<meta name="generator" content="Org-mode"/>
+<meta name="generated" content="2012-10-24 19:28:03 CST"/>
+<meta name="author" content="visaya fan"/>
+<meta name="description" content=""/>
+<meta name="keywords" content=""/>
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  html { font-family: Times, serif; font-size: 12pt; }
+  .title  { text-align: center; }
+  .todo   { color: red; }
+  .done   { color: green; }
+  .tag    { background-color: #add8e6; font-weight:normal }
+  .target { }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .right  {margin-left:auto; margin-right:0px;  text-align:right;}
+  .left   {margin-left:0px;  margin-right:auto; text-align:left;}
+  .center {margin-left:auto; margin-right:auto; text-align:center;}
+  p.verse { margin-left: 3% }
+  pre {
+	border: 1pt solid #AEBDCC;
+	background-color: #F3F5F7;
+	padding: 5pt;
+	font-family: courier, monospace;
+        font-size: 90%;
+        overflow:auto;
+  }
+  table { border-collapse: collapse; }
+  td, th { vertical-align: top;  }
+  th.right  { text-align:center;  }
+  th.left   { text-align:center;   }
+  th.center { text-align:center; }
+  td.right  { text-align:right;  }
+  td.left   { text-align:left;   }
+  td.center { text-align:center; }
+  dt { font-weight: bold; }
+  div.figure { padding: 0.5em; }
+  div.figure p { text-align: center; }
+  div.inlinetask {
+    padding:10px;
+    border:2px solid gray;
+    margin:10px;
+    background: #ffffcc;
+  }
+  textarea { overflow-x: auto; }
+  .linenr { font-size:smaller }
+  .code-highlighted {background-color:#ffff00;}
+  .org-info-js_info-navigation { border-style:none; }
+  #org-info-js_console-label { font-size:10px; font-weight:bold;
+                               white-space:nowrap; }
+  .org-info-js_search-highlight {background-color:#ffff00; color:#000000;
+                                 font-weight:bold; }
+  /*]]>*/-->
+</style>
+<script type="text/javascript">
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+
+</head>
+<body>
+
+
+<div id="content">
+<h1 class="title">Netstat命令查看端口号进程</h1>
+
+
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"> </script>
+<link rel="stylesheet" type="text/css" href="../../Layout/CSS/vf.css" />
+<script src="../../Layout/JS/bootstrap_old.js"></script>
+
+<p>
+使用命令 <code>netstat -pan</code> 查看所有端口占用情况，其中：<br/>
+</p><ol>
+<li>-p 表示显示对应程序的进程ID和名称<br/>
+</li>
+<li>-a 表示所有<br/>
+</li>
+<li>-n 表示以数字的方式显示地址而不是符号<br/>
+</li>
+</ol>
+
+<p>部分结果：<br/>
+</p>
+<p><br/>
+<pre class="example">Active Internet connections (servers and established)
+Proto Recv-Q Send-Q Local Address           Foreign Address         State       PID/Program name
+tcp        0      0 127.0.0.1:6600          0.0.0.0:*               LISTEN      -               
+tcp        0      0 127.0.0.1:3306          0.0.0.0:*               LISTEN      -               
+tcp        0      0 127.0.0.1:9292          0.0.0.0:*               LISTEN      6401/emacs      
+tcp        0      0 127.0.0.1:8087          0.0.0.0:*               LISTEN      2057/python     
+tcp        0      0 127.0.0.1:631           0.0.0.0:*               LISTEN      -               
+tcp        0      0 1.83.119.47:55212       74.125.128.125:5222     ESTABLISHED 7076/chromium-brows
+</pre>
+
+如果没有-p则没有最后PI/Program name一列，没有-n则local address一列会显示形如：<br/>
+</p><blockquote>
+
+<p>tcp        0      0 localhost:9292          <b>:</b>                     LISTEN      6401/emacs      <br/>
+</p>
+</blockquote>
+
+
+<p><br/>
+其它可选项：<br/>
+</p><ol>
+<li>-p proto 指定协议，可以是tcp udp tcpv6 udpv6<br/>
+</li>
+<li>-t 只显示tcp协议的端口<br/>
+</li>
+<li>-l 只显示状态为LISTENING的端口<br/>
+</li>
+<li>-r 显示路由表<br/>
+</li>
+<li>-s 显示统计信息<br/>
+</li>
+<li>-e 显示ethernet统计信息<br/>
+</li>
+</ol>
+
+
+<div id="table-of-contents">
+<h2>TOC</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#sec-1">1 grep查找使用某个端口的程序</a></li>
+<li><a href="#sec-2">2 杀死指定端口的程序</a></li>
+<li><a href="#sec-3">3 lsof</a></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-1" class="outline-2">
+<h2 id="sec-1"><span class="section-number-2">1</span> grep查找使用某个端口的程序</h2>
+<div class="outline-text-2" id="text-1">
+
+<blockquote>
+
+<p>netstat -pan|grep 8087<br/>
+</p>
+</blockquote>
+
+
+<p><br/>
+</p></div>
+
+</div>
+
+<div id="outline-container-2" class="outline-2">
+<h2 id="sec-2"><span class="section-number-2">2</span> 杀死指定端口的程序</h2>
+<div class="outline-text-2" id="text-2">
+
+<blockquote>
+
+<p>kill -9 $(netstat -pan|grep 8087|awk '{print $7}'|awk -F '/' '{print $1}')<br/>
+</p>
+</blockquote>
+
+
+<p><br/>
+  先用awk选出第7列，再选出PID，最后kill。<br/>
+</p></div>
+
+</div>
+
+<div id="outline-container-3" class="outline-2">
+<h2 id="sec-3"><span class="section-number-2">3</span> lsof</h2>
+<div class="outline-text-2" id="text-3">
+
+<p>  lsof: list open file<br/>
+  也可以用lsof的-i选项来查看<br/>
+</p><blockquote>
+
+<p>lsof -i:8087<br/>
+</p>
+</blockquote>
+
+
+<p><br/>
+  lsof -i [4|6][protocol][@hostname|hostaddr][:service|port]<br/>
+</p><ol>
+<li>4,6表示ipv4 or v6<br/>
+</li>
+<li>protocol表示协议tcp/udp<br/>
+</li>
+<li>@hostname表主机名<br/>
+</li>
+<li>hostaddr 数字形式的地址<br/>
+</li>
+<li>:server|port 服务名称或端口号<br/>
+</li>
+</ol>
+
+<p>  这里只使用了最后一个选项。<br/>
+</p>
+<p><br/>
+<pre class="example">tmp$ lsof -i:8087
+COMMAND    PID      USER   FD   TYPE DEVICE SIZE/OFF NODE NAME
+python    2057 visayafan    3u  IPv4  20013      0t0  TCP localhost:8087 (LISTEN)
+python    2057 visayafan    5u  IPv4 319578      0t0  TCP localhost:8087-&gt;localhost:36540 (ESTABLISHED)
+chromium- 7076 visayafan  141u  IPv4 318836      0t0  TCP localhost:36540-&gt;localhost:8087 (ESTABLISHED)
+</pre>
+
+
+<a class="bshareDiv" href="http://www.bshare.cn/share">分享按钮</a><script type="text/javascript" charset="utf-8" src="http://static.bshare.cn/b/buttonLite.js#uuid=&amp;style=10&amp;bgcolor=Blue"></script>
+<br/>
+<script src="../../Layout/JS/disqus-comment.js"></script>
+<div id="disqus_thread">
+</div>
+
+</p>
+<p>  <br/>
+</p></div>
+</div>
+</div>
+
+</body>
+</html>
