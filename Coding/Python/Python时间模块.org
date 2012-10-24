@@ -27,9 +27,12 @@
 | %b | 月份（缩写）         |
 | %B | 月份（全称）         |
 | %c | 日期和时间=%a %b %d %H:%M:%S %Y 例如：Tue Oct 23 16:56:12 2012 即ctime()返回的类型 |
-#+BEGIN_CENTER
-[[./image/time.jpg]]
-#+END_CENTER
+#+begin_html
+<link rel="stylesheet" href="../../Layout/CSS/jquery.lightbox-0.5.css" type="text/css" media="screen" />
+<script type="text/javascript" src="../../Layout/JS/jquery.lightbox-0.5.js"></script>
+<center> <a class="lightbox" href="./image/time.jpg"> <img class="lightbox " title="jQuery.lightbox" src="./image/time.jpg" width="300"> </a> </center>
+<script type="text/javascript"> $(function() {$('a.lightbox').lightBox();}); </script>
+#+end_html  
 
 
 

@@ -1,0 +1,33 @@
+#+OPTIONS: ^:{} _:{} num:t toc:t \n:t
+#+include "../../template.org"
+#+title:命令行trick
+
+* 2012年10月24日11:20PM
+  参考：http://blog.urfix.com/25-linux-commands/
+** ls -
+   返回上次所在目录
+** cp filename{,.bak}
+   快速进行文件备份
+** !part-history-cmd:p
+   !part-history-cmd将执行历史记录中第一次查找到的与其相符的命令，但为了以防万一，可以加上:p先打印出来看看而不执行。
+   也可以用C-r来搜索历史命令。
+** >filename
+   快速建立一个filename的文件，例如建立一个-rf的文件可以:
+   也可以用touch
+#+begin_quote
+>-rf
+#+end_quote
+** Ctrl-x Ctrl-e
+   当在敲较长的命令时可以C-x C-e进入一个临时编辑器来编写命令，之后C-o ENTER C-x 退出
+** !!
+   执行上次命令
+** !!:gs/old/new
+   上次执行命令中old替换成new，例如上个命令为ls，执行!!:gs/s/l后等于执行ll，此命令对于较长的组合命令有时比较有效。
+** pushd/popd
+   pushd dit和popd，相当于一个堆栈,pushd dit的时候把当前目录压栈并切换到dit目录下,popd 返回上一次压栈的目录下。
+
+#+include "../../disqus.org"
+   
+
+   
+   

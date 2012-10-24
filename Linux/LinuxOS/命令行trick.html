@@ -3,11 +3,11 @@
                "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<title>Python时间模块</title>
+<title>命令行trick</title>
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
-<meta name="title" content="Python时间模块"/>
+<meta name="title" content="命令行trick"/>
 <meta name="generator" content="Org-mode"/>
-<meta name="generated" content="2012-10-25 00:12:13 CST"/>
+<meta name="generated" content="2012-10-25 00:44:17 CST"/>
 <meta name="author" content="visaya fan"/>
 <meta name="description" content=""/>
 <meta name="keywords" content=""/>
@@ -88,7 +88,7 @@
 
 
 <div id="content">
-<h1 class="title">Python时间模块</h1>
+<h1 class="title">命令行trick</h1>
 
 
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"> </script>
@@ -96,89 +96,130 @@
 <script src="../../Layout/JS/bootstrap_old.js"></script>
 
 
+
 <div id="table-of-contents">
 <h2>TOC</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#sec-1">1 时间戳 timestamp 浮点数</a></li>
-<li><a href="#sec-2">2 元组 struct_time</a></li>
+<li><a href="#sec-1">1 2012年10月24日11:20PM</a>
+<ul>
+<li><a href="#sec-1-1">1.1 ls -</a></li>
+<li><a href="#sec-1-2">1.2 cp filename{,.bak}</a></li>
+<li><a href="#sec-1-3">1.3 !part-history-cmd:p</a></li>
+<li><a href="#sec-1-4">1.4 &gt;filename</a></li>
+<li><a href="#sec-1-5">1.5 Ctrl-x Ctrl-e</a></li>
+<li><a href="#sec-1-6">1.6 !!</a></li>
+<li><a href="#sec-1-7">1.7 !!:gs/old/new</a></li>
+<li><a href="#sec-1-8">1.8 pushd/popd</a></li>
+</ul>
+</li>
 </ul>
 </div>
 </div>
 
 <div id="outline-container-1" class="outline-2">
-<h2 id="sec-1"><span class="section-number-2">1</span> 时间戳 timestamp 浮点数</h2>
+<h2 id="sec-1"><span class="section-number-2">1</span> 2012年10月24日11:20PM</h2>
 <div class="outline-text-2" id="text-1">
 
-<ol>
-<li>time.time()                #返回自1970年1月1日时起的秒数<br/>
-</li>
-<li>time.clock()               #返回第一次调用clock()时CPU时间<br/>
-</li>
-<li>time.sleep(sec)           #休眠<br/>
-</li>
-<li>time.mktime(tuple)        #转化一个struct_time元组类型时间为时间戳<br/>
-</li>
-<li>time.asctime([t])         #将时间元组转化为Sun Jun 20 23:21:05 1993形式的字符串，默认转化当前时间元组即localtime()的返回值<br/>
-</li>
-<li>time.ctime([sec])         #与asctime类似只是它的参数是时间戳而asctime的参数是时间元组<br/>
-</li>
-</ol>
+<p>  参考：<a href="http://blog.urfix.com/25-linux-commands/">http://blog.urfix.com/25-linux-commands/</a><br/>
+</p>
+</div>
+
+<div id="outline-container-1-1" class="outline-3">
+<h3 id="sec-1-1"><span class="section-number-3">1.1</span> ls -</h3>
+<div class="outline-text-3" id="text-1-1">
+
+<p>   返回上次所在目录<br/>
+</p></div>
 
 </div>
 
+<div id="outline-container-1-2" class="outline-3">
+<h3 id="sec-1-2"><span class="section-number-3">1.2</span> cp filename{,.bak}</h3>
+<div class="outline-text-3" id="text-1-2">
+
+<p>   快速进行文件备份<br/>
+</p></div>
+
 </div>
 
-<div id="outline-container-2" class="outline-2">
-<h2 id="sec-2"><span class="section-number-2">2</span> 元组 struct_time</h2>
-<div class="outline-text-2" id="text-2">
+<div id="outline-container-1-3" class="outline-3">
+<h3 id="sec-1-3"><span class="section-number-3">1.3</span> !part-history-cmd:p</h3>
+<div class="outline-text-3" id="text-1-3">
 
-<ol>
-<li>time.localtime([sec])          #转化秒为struct_time类型的本地时间，如果无参数则转化当前时间<br/>
-</li>
-<li>time.gmtime([sec])             #转化为GMT时间<br/>
-</li>
-<li>time.strptime(str, format) #转化str为指定格式的struct_time类型时间<br/>
-</li>
-<li>time.strftime(format[, tuple]) #将一个时间元组转化成指定格式的时间,和strptime是两个互逆操作<br/>
-</li>
-</ol>
+<p>   !part-history-cmd将执行历史记录中第一次查找到的与其相符的命令，但为了以防万一，可以加上:p先打印出来看看而不执行。<br/>
+   也可以用C-r来搜索历史命令。<br/>
+</p></div>
 
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-<caption></caption>
-<colgroup><col class="left" /><col class="left" />
-</colgroup>
-<tbody>
-<tr><td class="left">%Y</td><td class="left">年</td></tr>
-<tr><td class="left">%m</td><td class="left">月</td></tr>
-<tr><td class="left">%d</td><td class="left">日</td></tr>
-<tr><td class="left">%H</td><td class="left">时(24h)</td></tr>
-<tr><td class="left">%I</td><td class="left">时(12h)</td></tr>
-<tr><td class="left">%M</td><td class="left">分</td></tr>
-<tr><td class="left">%S</td><td class="left">秒</td></tr>
-<tr><td class="left">%x</td><td class="left">日期=%d/%m/%Y</td></tr>
-<tr><td class="left">%X</td><td class="left">时间=%H:%M:%S</td></tr>
-<tr><td class="left">%a</td><td class="left">星期（缩写 Tue）</td></tr>
-<tr><td class="left">%A</td><td class="left">星期（全称 Tuesday）</td></tr>
-<tr><td class="left">%b</td><td class="left">月份（缩写）</td></tr>
-<tr><td class="left">%B</td><td class="left">月份（全称）</td></tr>
-<tr><td class="left">%c</td><td class="left">日期和时间=%a %b %d %H:%M:%S %Y 例如：Tue Oct 23 16:56:12 2012 即ctime()返回的类型</td></tr>
-</tbody>
-</table>
+</div>
 
-<link rel="stylesheet" href="../../Layout/CSS/jquery.lightbox-0.5.css" type="text/css" media="screen" />
-<script type="text/javascript" src="../../Layout/JS/jquery.lightbox-0.5.js"></script>
-<center> <a class="lightbox" href="./image/time.jpg"> <img class="lightbox " title="jQuery.lightbox" src="./image/time.jpg" width="300"> </a> </center>
-<script type="text/javascript"> $(function() {$('a.lightbox').lightBox();}); </script>
+<div id="outline-container-1-4" class="outline-3">
+<h3 id="sec-1-4"><span class="section-number-3">1.4</span> &gt;filename</h3>
+<div class="outline-text-3" id="text-1-4">
+
+<p>   快速建立一个filename的文件，例如建立一个-rf的文件可以:<br/>
+   也可以用touch<br/>
+</p><blockquote>
+
+<p>&gt;-rf<br/>
+</p>
+</blockquote>
 
 
+<p><br/>
+</p></div>
 
+</div>
+
+<div id="outline-container-1-5" class="outline-3">
+<h3 id="sec-1-5"><span class="section-number-3">1.5</span> Ctrl-x Ctrl-e</h3>
+<div class="outline-text-3" id="text-1-5">
+
+<p>   当在敲较长的命令时可以C-x C-e进入一个临时编辑器来编写命令，之后C-o ENTER C-x 退出<br/>
+</p></div>
+
+</div>
+
+<div id="outline-container-1-6" class="outline-3">
+<h3 id="sec-1-6"><span class="section-number-3">1.6</span> !!</h3>
+<div class="outline-text-3" id="text-1-6">
+
+<p>   执行上次命令<br/>
+</p></div>
+
+</div>
+
+<div id="outline-container-1-7" class="outline-3">
+<h3 id="sec-1-7"><span class="section-number-3">1.7</span> !!:gs/old/new</h3>
+<div class="outline-text-3" id="text-1-7">
+
+<p>   上次执行命令中old替换成new，例如上个命令为ls，执行!!:gs/s/l后等于执行ll，此命令对于较长的组合命令有时比较有效。<br/>
+</p></div>
+
+</div>
+
+<div id="outline-container-1-8" class="outline-3">
+<h3 id="sec-1-8"><span class="section-number-3">1.8</span> pushd/popd</h3>
+<div class="outline-text-3" id="text-1-8">
+
+<p>   pushd dit和popd，相当于一个堆栈,pushd dit的时候把当前目录压栈并切换到dit目录下,popd 返回上一次压栈的目录下。<br/>
+</p>
+<p><br/>
 <a class="bshareDiv" href="http://www.bshare.cn/share">分享按钮</a><script type="text/javascript" charset="utf-8" src="http://static.bshare.cn/b/buttonLite.js#uuid=&amp;style=10&amp;bgcolor=Blue"></script>
 <br/>
 <script src="../../Layout/JS/disqus-comment.js"></script>
 <div id="disqus_thread">
 </div>
 
+</p>
+<p>   <br/>
+</p>
+<p><br/>
+</p>
+<p>   <br/>
+</p>
+<p>   <br/>
+</p></div>
 </div>
 </div>
 </div>

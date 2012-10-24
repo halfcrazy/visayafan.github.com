@@ -191,7 +191,10 @@ wget -k -Y on http://www.youtube.com
 ** 下载所有匹配文件
    wget -r -A “*.tar.gz" http://ftp.gnu.org/gnu/emacs
    下载http://ftp.gnu.org/gnu/emacs 目录下的所有以tar.gz结尾的文件
+
+   
 #+BEGIN_HTML
+<a href="http://visayafan.wufoo.com/forms/m7x3q1/">Fill out my form!</a>
 <script src="../../Layout/JS/disqus-comment.js"></script>
 <div id="disqus_thread">
 </div>
