@@ -5,5 +5,6 @@ import sys
 
 call('git add .', shell=True)
 call('./recent_updates.py', shell=True)
+call('git add .', shell=True)
 call(['git', 'commit', '-m', sys.argv[1]])
 call('git push', shell=True)
