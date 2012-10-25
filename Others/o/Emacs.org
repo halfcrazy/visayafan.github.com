@@ -1,0 +1,51 @@
+#+OPTIONS: ^:{} _:{} num:t toc:t \n:t
+#+include "../../template.org"
+#+INFOJS_OPT: view:overview mouse:#cccccc toc:t ftoc:t  path:../../Layout/JS/org-info.js
+#+title:Emacs Trick
+
+* 用grep在文件中查找
+  可以直接在grep buffer中修改文件。
+** lgrep
+#+begin_quote
+(lgrep REGEXP &optional FILES DIR CONFIRM)
+#+end_quote
+   查找指定目录DIR下指定模式文件FILES内容中符合REGEXP的文件，GREP buffer中n/p上下选择。
+** grep
+   指定文件中查找
+#+begin_quote
+grep -nH -e "pattern" filename
+#+end_quote
+   其中H表输出中包含文件名，n表输出中包含行号，e表紧跟模式
+* 执行shell命令
+  M-! 执行shell命令
+  加前缀C-u执行命令的结果作用在buffer上。
+  类似C-u M-|结果作用在region上
+* multiple-cursors
+#+begin_quote
+(global-set-key (kbd "C-S-c C-S-c") 'mc/edit-lines)
+(global-set-key (kbd "C-S-c C-e") 'mc/edit-ends-of-lines)
+(global-set-key (kbd "C-S-c C-a") 'mc/edit-beginnings-of-lines)
+(global-set-key (kbd "C->") 'mc/mark-next-like-this)
+(global-set-key (kbd "C-<") 'mc/mark-previous-like-this)
+(global-set-key (kbd "C-S-c C-<") 'mc/mark-all-like-this)
+(global-set-key (kbd "C-S-c C->") 'mc/mark-all-in-region)
+#+end_quote
+  先选中一个region，mc/edit-lines则对该region每行都有一个光标。mc/mark-next-like-this在与region内容相同的下一处加一光标。其它函数同理。
+* align-regexp
+  满足指定正则表达式的对齐，有时对整理注释比较有用。
+  其它用法：[[http://emacswiki.org/emacs/AlignCommands][EmacsWiki]]
+* list-matching-lines
+  列出当前buffer中所有满足指定正则表达式的行
+* occur/re-builder/multi-occur/multi-occur-in-matching-buffers
+  在进行正则替换行为确保万无一失，先检查一下，occur后输入regexp则会显示所有匹配内容。
+  与occur另开一buffer显示匹配不同，re-builder实行动态匹配，即一边在RE-Builder中输入regexp一边匹配（此功能很不错）。
+  前面两个都是在当前buffer中匹配，而multi-occur/multi-occur-in-matching-buffers是在多个buffer中匹配
+* apropos
+  输入一个regexp，Emacs根据你所输入的regexp和当前buffer的内容构造出更多的regexp，也许Emacs构造的比你的更合适的。
+* follow-mode
+  启用该模式后，C-x 3分屏后，一个文件左右连接显示，适合阅读。
+* hexl-mode
+  编辑非文本文件。
+* 分享/评论
+#+include "../../disqus.org"
+  
