@@ -46,6 +46,13 @@ grep -nH -e "pattern" filename
   启用该模式后，C-x 3分屏后，一个文件左右连接显示，适合阅读。
 * hexl-mode
   编辑非文本文件。
+* backup-by-copying-when-linked
+  当文件存在硬链接时默认的备份会破坏这种链接（新建一个文件在新文件中修改，与原来链接文件的inode不同，故与原来链接文件存在链接关系的文件不会同步更新），可以修改当存在链接的时候,通过拷贝来备份，而不是写进一个新文件，故链接关系不会被破坏。
+#+begin_quote
+(setq backup-by-copying-when-linked t)
+#+end_quote
+  如果你在使用dropbox这种方法就非常有用，把想要保存在dropbox中的文件硬链接到dropbox目录下，既不占空间又能保持同步更新。
+
 * 分享/评论
 #+include "../../disqus.org"
   
