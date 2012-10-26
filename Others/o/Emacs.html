@@ -7,7 +7,7 @@
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
 <meta name="title" content="Emacs Trick"/>
 <meta name="generator" content="Org-mode"/>
-<meta name="generated" content="2012-10-25 10:35:51 CST"/>
+<meta name="generated" content="2012-10-26 03:06:46 CST"/>
 <meta name="author" content="visaya fan"/>
 <meta name="description" content=""/>
 <meta name="keywords" content=""/>
@@ -130,7 +130,10 @@ org_html_manager.setup();  // activate after the parameters are set
 <li><a href="#sec-7">7 apropos</a></li>
 <li><a href="#sec-8">8 follow-mode</a></li>
 <li><a href="#sec-9">9 hexl-mode</a></li>
-<li><a href="#sec-10">10 分享/评论</a></li>
+<li><a href="#sec-10">10 backup-by-copying-when-linked</a></li>
+<li><a href="#sec-11">11 zap-to-char</a></li>
+<li><a href="#sec-12">12 fill-paragraph</a></li>
+<li><a href="#sec-13">13 分享/评论</a></li>
 </ul>
 </div>
 </div>
@@ -271,8 +274,46 @@ org_html_manager.setup();  // activate after the parameters are set
 </div>
 
 <div id="outline-container-10" class="outline-2">
-<h2 id="sec-10"><span class="section-number-2">10</span> 分享/评论</h2>
+<h2 id="sec-10"><span class="section-number-2">10</span> backup-by-copying-when-linked</h2>
 <div class="outline-text-2" id="text-10">
+
+<p>  当文件存在硬链接时默认的备份会破坏这种链接（新建一个文件在新文件中修改，与原来链接文件的inode不同，故与原来链接文件存在链接关系的文件不会同步更新），可以修改当存在链接的时候,通过拷贝来备份，而不是写进一个新文件，故链接关系不会被破坏。<br/>
+</p><blockquote>
+
+<p>(setq backup-by-copying-when-linked t)<br/>
+</p>
+</blockquote>
+
+
+<p><br/>
+  如果你在使用dropbox这种方法就非常有用，把想要保存在dropbox中的文件硬链接到dropbox目录下，既不占空间又能保持同步更新。<br/>
+</p>
+<p><br/>
+</p></div>
+
+</div>
+
+<div id="outline-container-11" class="outline-2">
+<h2 id="sec-11"><span class="section-number-2">11</span> zap-to-char</h2>
+<div class="outline-text-2" id="text-11">
+
+<p>  默认绑定到M-z，删除当前位置到下一个输入字符之间的字符，有时候会很有用。<br/>
+</p></div>
+
+</div>
+
+<div id="outline-container-12" class="outline-2">
+<h2 id="sec-12"><span class="section-number-2">12</span> fill-paragraph</h2>
+<div class="outline-text-2" id="text-12">
+
+<p>  默认绑定到M-q，调整region,不满一行的由下一行补齐,默认宽度由fill-column变量决定。<br/>
+</p></div>
+
+</div>
+
+<div id="outline-container-13" class="outline-2">
+<h2 id="sec-13"><span class="section-number-2">13</span> 分享/评论</h2>
+<div class="outline-text-2" id="text-13">
 
 
 <a class="bshareDiv" href="http://www.bshare.cn/share">分享按钮</a><script type="text/javascript" charset="utf-8" src="http://static.bshare.cn/b/buttonLite.js#uuid=&amp;style=10&amp;bgcolor=Blue"></script>
@@ -283,6 +324,8 @@ org_html_manager.setup();  // activate after the parameters are set
 
 
 <p>  <br/>
+</p>
+<p><br/>
 </p></div>
 </div>
 </div>
