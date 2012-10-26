@@ -7,81 +7,12 @@
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
 <meta name="title" content="进程管理基础"/>
 <meta name="generator" content="Org-mode"/>
-<meta name="generated" content="2012-10-19 22:34:00 CST"/>
+<meta name="generated" content="2012-10-27 05:28:31 CST"/>
 <meta name="author" content="visaya fan"/>
 <meta name="description" content=""/>
 <meta name="keywords" content=""/>
-<style type="text/css">
- <!--/*--><![CDATA[/*><!--*/
-  html { font-family: Times, serif; font-size: 12pt; }
-  .title  { text-align: center; }
-  .todo   { color: red; }
-  .done   { color: green; }
-  .tag    { background-color: #add8e6; font-weight:normal }
-  .target { }
-  .timestamp { color: #bebebe; }
-  .timestamp-kwd { color: #5f9ea0; }
-  .right  {margin-left:auto; margin-right:0px;  text-align:right;}
-  .left   {margin-left:0px;  margin-right:auto; text-align:left;}
-  .center {margin-left:auto; margin-right:auto; text-align:center;}
-  p.verse { margin-left: 3% }
-  pre {
-	border: 1pt solid #AEBDCC;
-	background-color: #F3F5F7;
-	padding: 5pt;
-	font-family: courier, monospace;
-        font-size: 90%;
-        overflow:auto;
-  }
-  table { border-collapse: collapse; }
-  td, th { vertical-align: top;  }
-  th.right  { text-align:center;  }
-  th.left   { text-align:center;   }
-  th.center { text-align:center; }
-  td.right  { text-align:right;  }
-  td.left   { text-align:left;   }
-  td.center { text-align:center; }
-  dt { font-weight: bold; }
-  div.figure { padding: 0.5em; }
-  div.figure p { text-align: center; }
-  div.inlinetask {
-    padding:10px;
-    border:2px solid gray;
-    margin:10px;
-    background: #ffffcc;
-  }
-  textarea { overflow-x: auto; }
-  .linenr { font-size:smaller }
-  .code-highlighted {background-color:#ffff00;}
-  .org-info-js_info-navigation { border-style:none; }
-  #org-info-js_console-label { font-size:10px; font-weight:bold;
-                               white-space:nowrap; }
-  .org-info-js_search-highlight {background-color:#ffff00; color:#000000;
-                                 font-weight:bold; }
-  /*]]>*/-->
-</style><div id="org-div-comments"><a href="../../index.html#linuxkernel">主页</a><br/><a href="#disqus_thread">评论</a></div>
-<script type="text/javascript">
-<!--/*--><![CDATA[/*><!--*/
- function CodeHighlightOn(elem, id)
- {
-   var target = document.getElementById(id);
-   if(null != target) {
-     elem.cacheClassElem = elem.className;
-     elem.cacheClassTarget = target.className;
-     target.className = "code-highlighted";
-     elem.className   = "code-highlighted";
-   }
- }
- function CodeHighlightOff(elem, id)
- {
-   var target = document.getElementById(id);
-   if(elem.cacheClassElem)
-     elem.className = elem.cacheClassElem;
-   if(elem.cacheClassTarget)
-     target.className = elem.cacheClassTarget;
- }
-/*]]>*///-->
-</script>
+<div id="org-div-comments"><a href="../../index.html#linuxkernel">主页</a><br/><a href="#disqus_thread">评论</a></div>
+
 
 </head>
 <body>
@@ -141,7 +72,8 @@
 
 <p>  一个进程的状态可以有以下几种，由 <code>task_struct-&gt;state</code> 来描述。<br/>
 </p>
-<p><br/>
+
+
 <pre class="src src-c"><span class="linenr">1:  </span><span style="color: #7a378b;">#define</span> <span style="color: #a0522d;">TASK_RUNNING</span>        0
 <span class="linenr">2:  </span><span style="color: #7a378b;">#define</span> <span style="color: #a0522d;">TASK_INTERRUPTIBLE</span>  1
 <span class="linenr">3:  </span><span style="color: #7a378b;">#define</span> <span style="color: #a0522d;">TASK_UNINTERRUPTIBLE</span>    2
@@ -151,7 +83,7 @@
 <span class="linenr">7:  </span><span style="color: #7a378b;">#define</span> <span style="color: #a0522d;">EXIT_DEAD</span>       32
 </pre>
 
-</p><ol>
+<ol>
 <li><code>TASK_RUNNING</code> :当前进程正在执行 or 正在等待被执行<br/>
 </li>
 <li><code>TASK_STOPPED</code> ：当前进程停止执行<br/>
@@ -199,7 +131,8 @@
 <p>  由于进程是动态实体，故内核应该把进程描述符分配在动态内存区，又由于内核模式下的动态内存很小，故把进程描述符很小一部分（ <code>task_struct-&gt;thread_info</code> ）存储在内核动态内存中，通过指针（ <code>thread_info-&gt;task</code> ）链接到外部进程描述符.<br/>
   内核内的部分描述符大小为 <code>THREAD_SIZE</code> 1页或2页，且对齐方式为 <code>THRAD_SIZE2</code> (1页或2页)，存在于栈中，指针ESP指向当前正在执行进程的 <code>thread_union</code> 。<br/>
 </p>
-<p><br/>
+
+
 <pre class="src src-c"><span class="linenr">1:  </span><span style="color: #7a378b;">#ifdef</span> CONFIG_4KSTACKS
 <span class="linenr">2:  </span><span style="color: #7a378b;">#define</span> <span style="color: #a0522d;">THREAD_SIZE</span>            (4096)
 <span class="linenr">3:  </span><span style="color: #7a378b;">#else</span>
@@ -211,9 +144,11 @@
 <span class="linenr">9:  </span>};
 </pre>
 
+<p>
   进程通过 <code>current</code> 宏来获得当前正在执行程序以的进程描述符：<br/>
 </p>
-<p><br/>
+
+
 <pre class="src src-c"><span class="linenr">1:  </span><span style="color: #a020f0;">static</span> <span style="color: #a020f0;">inline</span> <span style="color: #a020f0;">struct</span> <span style="color: #228b22;">task_struct</span> * <span style="color: #0000ff;">get_current</span>(<span style="color: #228b22;">void</span>)
 <span class="linenr">2:  </span>{
 <span class="linenr">3:  </span>    <span style="color: #a020f0;">return</span> current_thread_info()-&gt;task;
@@ -231,6 +166,7 @@
 <span class="linenr">6:  </span>}
 </pre>
 
+<p>
   实际上是通过获得当前正在执行程序的 thread_info,再通过thread_info-&gt;task得到其描述符。<br/>
   由于thread_info是通过THREAD_SIZE方式来对齐的且 thread_info放在联合休前面且栈是向下扩展的，故ESP与 ~(THREAD_SIZE-1) 求与结果便是 <code>thread_info</code> 地址。<br/>
   <center>
@@ -255,16 +191,19 @@
 <p>  内核通过双链表将所有进程描述符串起来，为方便操作，linux内核定义了一组原语。<br/>
   <code>list_head</code> 此结构被用于内核中所有链表。<br/>
 </p>
-<p><br/>
+
+
 <pre class="src src-c"><span class="linenr">1:  </span><span style="color: #a020f0;">struct</span> <span style="color: #228b22;">list_head</span> {
 <span class="linenr">2:  </span>    <span style="color: #a020f0;">struct</span> <span style="color: #228b22;">list_head</span> *<span style="color: #a0522d;">next</span>, *<span style="color: #a0522d;">prev</span>;
 <span class="linenr">3:  </span>};
 </pre>
 
+
+
   <center>
   <img src="image/list_head.png"></img>
   </center>
-</p>
+
 </div>
 
 <div id="outline-container-4-1-1" class="outline-4">
@@ -272,12 +211,14 @@
 <div class="outline-text-4" id="text-4-1-1">
 
 
-<p><br/>
+
+
 <pre class="src src-c"><span class="linenr">1:  </span><span style="color: #7a378b;">#define</span> <span style="color: #0000ff;">LIST_HEAD_INIT</span>(<span style="color: #a0522d;">name</span>) { &amp;(name), &amp;(name) }
 <span class="linenr">2:  </span><span style="color: #7a378b;">#define</span> <span style="color: #0000ff;">LIST_HEAD</span>(<span style="color: #a0522d;">name</span>) \
 <span class="linenr">3:  </span>    <span style="color: #a020f0;">struct</span> <span style="color: #228b22;">list_head</span> <span style="color: #a0522d;">name</span> = LIST_HEAD_INIT(name)
 </pre>
 
+<p>
    初始化一个名为name的list_head变量，name的next和pre指向指向自身。<br/>
 </p></div>
 
@@ -289,7 +230,8 @@
 
 <p>   在p的前面插入n<br/>
 </p>
-<p><br/>
+
+
 <pre class="src src-c"><span class="linenr"> 1:  </span><span style="color: #a020f0;">static</span> <span style="color: #a020f0;">inline</span> <span style="color: #228b22;">void</span> <span style="color: #0000ff;">__list_add</span>(<span style="color: #a020f0;">struct</span> <span style="color: #228b22;">list_head</span> *<span style="color: #a0522d;">new</span>,
 <span class="linenr"> 2:  </span>                  <span style="color: #a020f0;">struct</span> <span style="color: #228b22;">list_head</span> *<span style="color: #a0522d;">prev</span>,
 <span class="linenr"> 3:  </span>                  <span style="color: #a020f0;">struct</span> <span style="color: #228b22;">list_head</span> *<span style="color: #a0522d;">next</span>)
@@ -305,7 +247,7 @@
 <span class="linenr">13:  </span>}
 </pre>
 
-</p></div>
+</div>
 
 </div>
 
@@ -323,7 +265,8 @@
 <div class="outline-text-4" id="text-4-1-4">
 
 
-<p><br/>
+
+
 <pre class="src src-c"><span class="linenr"> 1:  </span><span style="color: #b22222;">/*</span><span style="color: #b22222;">&#36825;&#27492;&#38750;&#31354;&#25351;&#38024;&#30340;&#20351;&#29992;&#20250;&#36896;&#25104;&#20013;&#26029;&#65292;&#20174;&#32780;&#30830;&#20445;list_head&#20351;&#29992;&#21069;&#24517;&#39035;&#34987;&#21021;&#22987;&#21270;</span><span style="color: #b22222;">*/</span>
 <span class="linenr"> 2:  </span><span style="color: #7a378b;">#define</span> <span style="color: #a0522d;">LIST_POISON1</span>  ((<span style="color: #228b22;">void</span> *) 0x00100100)
 <span class="linenr"> 3:  </span><span style="color: #7a378b;">#define</span> <span style="color: #a0522d;">LIST_POISON2</span>  ((<span style="color: #228b22;">void</span> *) 0x00200200)
@@ -341,7 +284,7 @@
 </pre>
 
 
-</p></div>
+</div>
 
 </div>
 
@@ -361,7 +304,8 @@
 <p>   list_head指针类型的p所在实体类型为type，成员名称为member，通过list_head的指针返回其所在type的指针。<br/>
    基本思想就是p减去member在type中的偏移量。<br/>
 </p>
-<p><br/>
+
+
 <pre class="src src-c"><span class="linenr">1:  </span><span style="color: #7a378b;">#define</span> <span style="color: #0000ff;">container_of</span>(<span style="color: #a0522d;">ptr</span>, <span style="color: #a0522d;">type</span>, <span style="color: #a0522d;">member</span>) ({          \
 <span class="linenr">2:  </span>        <span style="color: #a020f0;">const</span> typeof( ((<span style="color: #228b22;">type</span> *)0)-&gt;member ) *__mptr = (ptr);    \
 <span class="linenr">3:  </span>        (<span style="color: #228b22;">type</span> *)( (<span style="color: #228b22;">char</span> *)__mptr - offsetof(type,member) );})
@@ -369,7 +313,7 @@
 <span class="linenr">5:  </span>    container_of(ptr, type, member)
 </pre>
 
-</p></div>
+</div>
 
 </div>
 
@@ -379,13 +323,14 @@
 
 <p>   遍历以h开头的链表，相应的实体存放在p中。<br/>
 </p>
-<p><br/>
+
+
 <pre class="src src-c"><span class="linenr">1:  </span><span style="color: #7a378b;">#define</span> <span style="color: #0000ff;">list_for_each</span>(<span style="color: #a0522d;">pos</span>, <span style="color: #a0522d;">head</span>) \
 <span class="linenr">2:  </span>    <span style="color: #a020f0;">for</span> (pos = (head)-&gt;next; prefetch(pos-&gt;next), pos != (head); \
 <span class="linenr">3:  </span>            pos = pos-&gt;next)
 </pre>
 
-</p></div>
+</div>
 
 </div>
 
@@ -395,14 +340,15 @@
 
 <p>   与list_for_each区别在于：此宏返回每次迭代p指向list_head所在的实体,是list_for_each和list_entry的结合。<br/>
 </p>
-<p><br/>
+
+
 <pre class="src src-c"><span class="linenr">1:  </span><span style="color: #7a378b;">#define</span> <span style="color: #0000ff;">list_for_each_entry</span>(<span style="color: #a0522d;">pos</span>, <span style="color: #a0522d;">head</span>, <span style="color: #a0522d;">member</span>)              \
 <span class="linenr">2:  </span>    <span style="color: #a020f0;">for</span> (pos = list_entry((head)-&gt;next, typeof(*pos), member);  \
 <span class="linenr">3:  </span>         prefetch(pos-&gt;member.next), &amp;pos-&gt;member != (head);    \
 <span class="linenr">4:  </span>         pos = list_entry(pos-&gt;member.next, typeof(*pos), member))
 </pre>
 
-</p></div>
+</div>
 </div>
 
 </div>
@@ -420,14 +366,15 @@
 <div class="outline-text-4" id="text-4-2-1">
 
 
-<p><br/>
+
+
 <pre class="src src-c"><span class="linenr">1:  </span><span style="color: #7a378b;">#define</span> <span style="color: #0000ff;">next_task</span>(<span style="color: #a0522d;">p</span>)    list_entry((p)-&gt;tasks.next, <span style="color: #a020f0;">struct</span> <span style="color: #228b22;">task_struct</span>, tasks)
 <span class="linenr">2:  </span><span style="color: #7a378b;">#define</span> <span style="color: #0000ff;">prev_task</span>(<span style="color: #a0522d;">p</span>)    list_entry((p)-&gt;tasks.prev, <span style="color: #a020f0;">struct</span> <span style="color: #228b22;">task_struct</span>, tasks)
 <span class="linenr">3:  </span><span style="color: #7a378b;">#define</span> <span style="color: #0000ff;">for_each_process</span>(<span style="color: #a0522d;">p</span>) \
 <span class="linenr">4:  </span>    <span style="color: #a020f0;">for</span> (p = &amp;init_task ; (p = next_task(p)) != &amp;init_task ; )
 </pre>
 
-</p></div>
+</div>
 
 </div>
 
@@ -436,7 +383,8 @@
 <div class="outline-text-4" id="text-4-2-2">
 
 
-<p><br/>
+
+
 <pre class="src src-c"><span class="linenr"> 1:  </span><span style="color: #7a378b;">#define</span> <span style="color: #0000ff;">remove_parent</span>(<span style="color: #a0522d;">p</span>)    list_del_init(&amp;(p)-&gt;sibling)
 <span class="linenr"> 2:  </span><span style="color: #b22222;">//</span><span style="color: #b22222;">&#28155;&#21152;&#21040;&#29238;&#36827;&#31243;&#25551;&#36848;&#31526;&#30340;&#23376;&#36827;&#31243;&#25551;&#36848;&#31526;&#38142;&#34920;&#30340;&#23614;&#37096;&#65288;parent&#20026;p&#30340;&#29238;&#36827;&#31243;&#65292;&#21017;&#20063;&#26159;p&#30340;&#20804;&#24351;&#36827;&#31243;&#30340;&#29238;&#36827;&#31243;&#65292;&#30456;&#24403;&#20110;&#21512;&#24182;&#38142;&#34920;&#65289;</span>
 <span class="linenr"> 3:  </span><span style="color: #7a378b;">#define</span> <span style="color: #0000ff;">add_parent</span>(<span style="color: #a0522d;">p</span>, <span style="color: #a0522d;">parent</span>)   list_add_tail(&amp;(p)-&gt;sibling,&amp;(parent)-&gt;children)
@@ -461,7 +409,7 @@
 <span class="linenr">22:  </span>    } <span style="color: #a020f0;">while</span> (0)
 </pre>
 
-</p></div>
+</div>
 </div>
 </div>
 
@@ -474,18 +422,22 @@
 <p>  一个进程的所有子进程形成一个链表，表头在父进程的 <code>task_struct-&gt;children</code> 。<br/>
   进程的 <code>sibling</code> next,pre用来链接其兄弟进程。<br/>
 </p>
-<p><br/>
+
+
 <pre class="src src-c"><span style="color: #a020f0;">struct</span> <span style="color: #228b22;">list_head</span> <span style="color: #a0522d;">children</span>;  <span style="color: #b22222;">/* </span><span style="color: #b22222;">list of my children </span><span style="color: #b22222;">*/</span>
 <span style="color: #a020f0;">struct</span> <span style="color: #228b22;">list_head</span> <span style="color: #a0522d;">sibling</span>;   <span style="color: #b22222;">/* </span><span style="color: #b22222;">linkage in my parent's children list </span><span style="color: #b22222;">*/</span>
 </pre>
 
+<p>
   进程的 <code>parent</code> 指向其父进程。如果其父进程被销毁，则指向 init 进程（pid为1）。<br/>
 </p>
-<p><br/>
+
+
 <pre class="src src-c"><span style="color: #a020f0;">struct</span> <span style="color: #228b22;">task_struct</span> *<span style="color: #a0522d;">real_parent</span>; <span style="color: #b22222;">/* </span><span style="color: #b22222;">real parent process (when being debugged) </span><span style="color: #b22222;">*/</span>
 <span style="color: #a020f0;">struct</span> <span style="color: #228b22;">task_struct</span> *<span style="color: #a0522d;">parent</span>; <span style="color: #b22222;">/* </span><span style="color: #b22222;">parent process </span><span style="color: #b22222;">*/</span>
 </pre>
 
+<p>
   <code>ptrace_children</code> 和 <code>ptrace_list</code> 调试时，前者表示此进程所有子进程的构成的链表的表头。<br/>
 </p></div>
 
@@ -498,7 +450,8 @@
 <p>  为提高效率，2.6内核并没有把所有状态为TASK_RUNNING的进程描述符链在一起（因为当CPU要选择一个最高优先级进程时，必须遍历链表），而是根据优化级数量（140）构造一个140大小的数组，数组中第i个元素是优先级为i的进程链表表头。<br/>
   以数据结构的复杂来换取时间。<br/>
 </p>
-<p><br/>
+
+
 <pre class="src src-c"><span class="linenr">1:  </span><span style="color: #a020f0;">typedef</span> <span style="color: #a020f0;">struct</span> <span style="color: #228b22;">prio_array</span> <span style="color: #228b22;">prio_array_t</span>;
 <span class="linenr">2:  </span><span style="color: #b22222;">//</span><span style="color: #b22222;">(MAX_PRIO+1+7)/8&#34920;&#27604;max_prio/8&#19978;&#21462;&#25972;&#65292;&#25925;&#33509;max_prio=140&#65292;&#21017;bitmap_size&#65309;20</span>
 <span class="linenr">3:  </span><span style="color: #7a378b;">#define</span> <span style="color: #a0522d;">BITMAP_SIZE</span> ((((MAX_PRIO+1+7)/8)+<span style="color: #a020f0;">sizeof</span>(<span style="color: #228b22;">long</span>)-1)/<span style="color: #a020f0;">sizeof</span>(<span style="color: #228b22;">long</span>))
@@ -509,7 +462,7 @@
 <span class="linenr">8:  </span>};
 </pre>
 
-</p></div>
+</div>
 
 </div>
 
@@ -519,7 +472,8 @@
 
 <p>  为了由进程的ID快速定位到进程描述符，2.6引入了4个hash表。由 <code>task_struct-&gt;pids[PIDTYPE_MAX]</code> 来描述。<br/>
 </p>
-<p><br/>
+
+
 <pre class="src src-c"><span style="color: #b22222;">//</span><span style="color: #b22222;">&#25216;&#24039;&#65292;&#21033;&#29992;enum&#26469;&#26367;&#20195;#define PIDTYPE_PID 0&#20043;&#31867;&#30340;&#35821;&#21477;&#65292;&#24182;&#19988;&#33258;&#21160;PIDTYPE_MAX&#23450;&#20041;&#20026;PIDTYPE&#26368;&#22823;&#25968;&#30446;</span>
 <span style="color: #a020f0;">enum</span> <span style="color: #228b22;">pid_type</span>
 {
@@ -540,9 +494,12 @@
 };
 </pre>
 
+
+
   <center>
   <img src="image/pidhash.png"></img>
   </center>
+<p>
   宏操作：<br/>
 </p><ul>
 <li>do_each_task_pid(nr, type, task)和while_each_task_pid(nr, type, task)构成一个do while循环宏<br/>
@@ -576,7 +533,8 @@
 <p>  处于状态为 task_interruptible和task_uninterruptible的进程需要放在等待队列中。<br/>
   等待队列表头 <code>wait_queue_head_t</code> ,一个锁和一个用于链接的list_head结构：<br/>
 </p>
-<p><br/>
+
+
 <pre class="src src-c"><span class="linenr">1:  </span><span style="color: #a020f0;">struct</span> <span style="color: #228b22;">__wait_queue_head</span> {
 <span class="linenr">2:  </span>    <span style="color: #228b22;">spinlock_t</span> <span style="color: #a0522d;">lock</span>;
 <span class="linenr">3:  </span>    <span style="color: #a020f0;">struct</span> <span style="color: #228b22;">list_head</span> <span style="color: #a0522d;">task_list</span>;
@@ -584,9 +542,11 @@
 <span class="linenr">5:  </span><span style="color: #a020f0;">typedef</span> <span style="color: #a020f0;">struct</span> <span style="color: #228b22;">__wait_queue_head</span> <span style="color: #228b22;">wait_queue_head_t</span>;
 </pre>
 
+<p>
   等待队列链表成员 <code>wait_queue_t</code> :<br/>
 </p>
-<p><br/>
+
+
 <pre class="src src-c"><span class="linenr"> 1:  </span><span style="color: #a020f0;">typedef</span> <span style="color: #a020f0;">struct</span> <span style="color: #228b22;">__wait_queue</span> <span style="color: #228b22;">wait_queue_t</span>;
 <span class="linenr"> 2:  </span><span style="color: #a020f0;">typedef</span> <span style="color: #228b22;">int</span> (*<span style="color: #228b22;">wait_queue_func_t</span>)(<span style="color: #228b22;">wait_queue_t</span> *<span style="color: #a0522d;">wait</span>, <span style="color: #228b22;">unsigned</span> <span style="color: #a0522d;">mode</span>, <span style="color: #228b22;">int</span> <span style="color: #a0522d;">sync</span>, <span style="color: #228b22;">void</span> *<span style="color: #a0522d;">key</span>);
 <span class="linenr"> 3:  </span><span style="color: #228b22;">int</span> <span style="color: #0000ff;">default_wake_function</span>(<span style="color: #228b22;">wait_queue_t</span> *<span style="color: #a0522d;">wait</span>, <span style="color: #228b22;">unsigned</span> <span style="color: #a0522d;">mode</span>, <span style="color: #228b22;">int</span> <span style="color: #a0522d;">sync</span>, <span style="color: #228b22;">void</span> *<span style="color: #a0522d;">key</span>);
@@ -600,13 +560,14 @@
 <span class="linenr">11:  </span>};
 </pre>
 
-</p><ul>
+<ul>
 <li>宏操作用来构造表头和链表成员： <code>DECLARE_WAITQUEUE_HEAD</code> 和 <code>DECLARE_WAITQUEUE</code><br/>
 </li>
 </ul>
 
 
-<p><br/>
+
+
 <pre class="src src-c"><span class="linenr"> 1:  </span><span style="color: #7a378b;">#define</span> <span style="color: #0000ff;">__WAITQUEUE_INITIALIZER</span>(<span style="color: #a0522d;">name</span>, <span style="color: #a0522d;">tsk</span>) {                \
 <span class="linenr"> 2:  </span>    .task       = tsk,                      \
 <span class="linenr"> 3:  </span>    .func       = default_wake_function,            \
@@ -623,13 +584,14 @@
 <span class="linenr">14:  </span>    <span style="color: #228b22;">wait_queue_head_t</span> <span style="color: #a0522d;">name</span> = __WAIT_QUEUE_HEAD_INITIALIZER(name)
 </pre>
 
-</p><ul>
+<ul>
 <li>初始化表头和链表成员： <code>init_waitqueue_head</code> 和 <code>init_waitqueue_entry</code><br/>
 </li>
 </ul>
 
 
-<p><br/>
+
+
 <pre class="src src-c"><span class="linenr"> 1:  </span><span style="color: #a020f0;">static</span> <span style="color: #a020f0;">inline</span> <span style="color: #228b22;">void</span> <span style="color: #0000ff;">init_waitqueue_head</span>(<span style="color: #228b22;">wait_queue_head_t</span> *<span style="color: #a0522d;">q</span>)
 <span class="linenr"> 2:  </span>{
 <span class="linenr"> 3:  </span>    q-&gt;lock = SPIN_LOCK_UNLOCKED;
@@ -644,7 +606,7 @@
 <span class="linenr">12:  </span>}
 </pre>
 
-</p><ul>
+<ul>
 <li>非互斥的进程唤醒函数为 <code>default_wake_function</code><br/>
 </li>
 <li><code>DEFINE_WAIT</code> 利用当前正在运行的进程初始化一个链表结点（表明此进程将要进入等待队列中）<br/>
@@ -656,7 +618,8 @@
 </ul>
 
 
-<p><br/>
+
+
 <pre class="src src-c"><span class="linenr"> 1:  </span><span style="color: #7a378b;"> #define</span> <span style="color: #0000ff;">wake_up</span>(<span style="color: #a0522d;">x</span>)         __wake_up(x, TASK_UNINTERRUPTIBLE | TASK_INTERRUPTIBLE, 1, <span style="color: #008b8b;">NULL</span>)
 <span class="linenr"> 2:  </span><span style="color: #b22222;">//</span><span style="color: #b22222;">q&#34920;&#31034;&#34920;&#22836;&#65292;mode&#34920;&#27169;&#24335;&#26159;&#20114;&#26021;&#36824;&#26159;&#38750;&#20114;&#26021;&#65292;nr_exclusive&#34920;&#21796;&#37266;&#20960;&#20010;&#20114;&#26021;&#36827;&#31243;</span>
 <span class="linenr"> 3:  </span><span style="color: #228b22;">void</span> <span style="color: #0000ff;">fastcall</span> __wake_up(<span style="color: #228b22;">wait_queue_head_t</span> *<span style="color: #a0522d;">q</span>, <span style="color: #228b22;">unsigned</span> <span style="color: #228b22;">int</span> <span style="color: #a0522d;">mode</span>, <span style="color: #228b22;">int</span> <span style="color: #a0522d;">nr_exclusive</span>, <span style="color: #228b22;">void</span> *<span style="color: #a0522d;">key</span>)
@@ -686,13 +649,14 @@
 <span class="linenr">27:  </span>}
 </pre>
 
-</p><ul>
+<ul>
 <li><code>sleep_on</code> 将当前进程加入到等待队列中,之后开始 schedule 调度其它进程，之后再 __remove_wait_queue(q, &amp;wait)将其从队列中删除。<br/>
 </li>
 </ul>
 
 
-<p><br/>
+
+
 <pre class="src src-c"><span class="linenr"> 1:  </span><span style="color: #7a378b;">#define</span> <span style="color: #a0522d;">SLEEP_ON_VAR</span>                    \
 <span class="linenr"> 2:  </span>    <span style="color: #228b22;">unsigned</span> <span style="color: #228b22;">long</span> flags;                \
 <span class="linenr"> 3:  </span>    <span style="color: #228b22;">wait_queue_t</span> <span style="color: #a0522d;">wait</span>;              \
@@ -719,7 +683,7 @@
 <span class="linenr">24:  </span>}
 </pre>
 
-</p><ul>
+<ul>
 <li>其它版本的sleep_on<br/>
 <ol>
 <li><code>interruptible_sleep_on</code> 与sleep_on不同之处在于，此函数将进程的状态设置为 TASK_INTERRUPTIBLE 而非TASK_UNINTERRUPTIBLE<br/>
@@ -734,7 +698,8 @@
 </ul>
 
 
-<p><br/>
+
+
 <pre class="src src-c"><span class="linenr"> 1:  </span><span style="color: #228b22;">void</span> <span style="color: #0000ff;">fastcall</span> prepare_to_wait(<span style="color: #228b22;">wait_queue_head_t</span> *<span style="color: #a0522d;">q</span>, <span style="color: #228b22;">wait_queue_t</span> *<span style="color: #a0522d;">wait</span>, <span style="color: #228b22;">int</span> <span style="color: #a0522d;">state</span>)
 <span class="linenr"> 2:  </span>{
 <span class="linenr"> 3:  </span>    <span style="color: #228b22;">unsigned</span> <span style="color: #228b22;">long</span> <span style="color: #a0522d;">flags</span>;
@@ -769,9 +734,11 @@
 <span class="linenr">32:  </span>}
 </pre>
 
+<p>
     典型用法：<br/>
 </p>
-<p><br/>
+
+
 <pre class="src src-c"><span class="linenr">1:  </span>DEFINE_WAIT(wait);
 <span class="linenr">2:  </span>prepare_to_wait_exclusive(&amp;wq, &amp;wait, TASK_INTERRUPTIBLE); <span style="color: #b22222;">/* </span><span style="color: #b22222;">wq is the head of the wait queue </span><span style="color: #b22222;">*/</span>
 <span class="linenr">3:  </span>....
@@ -780,13 +747,14 @@
 <span class="linenr">6:  </span>finish_wait(&amp;wq, &amp;wait);
 </pre>
 
-</p><ul>
+<ul>
 <li><code>wait_event</code>, <code>wait_event_interruptible</code> 封装了上面讲的 <code>prepare_to_wait</code> 和 <code>finish_wait</code> 更加简化了将当前进程加入到等待队列操作，wait_event有两个参数，一个等待队列表头，一个条件，等到条件满足的时候把它唤醒，wait_event(wq, condition)<br/>
 </li>
 </ul>
 
 
-<p><br/>
+
+
 <pre class="src src-c"><span class="linenr"> 1:  </span><span style="color: #7a378b;">#define</span> <span style="color: #0000ff;">__wait_event</span>(<span style="color: #a0522d;">wq</span>, <span style="color: #a0522d;">condition</span>)                     \
 <span class="linenr"> 2:  </span><span style="color: #a020f0;">do</span> {                                    \
 <span class="linenr"> 3:  </span>    DEFINE_WAIT(__wait); <span style="color: #b22222;">//</span><span style="color: #b22222;">&#29992;&#24403;&#21069;&#36827;&#31243;&#21021;&#22987;&#21270;&#19968;&#20010;&#38142;&#34920;&#32467;&#28857;                     \</span>
@@ -808,6 +776,7 @@
 <span class="linenr">19:  </span>} <span style="color: #a020f0;">while</span> (0)
 </pre>
 
+<p>
     其它版本包括 <code>wait_event_timeout</code> <code>wait_event_interruptible</code> <code>wait_event_interruptible_timeout</code>  <code>wait_event_interruptible_exclusive</code> <br/>
 </p><ul>
 <li>wake_up其它版本：<br/>
@@ -827,8 +796,7 @@
 </ul>
 
 
-<p><br/>
-</p></div>
+</div>
 
 </div>
 
@@ -837,16 +805,19 @@
 <div class="outline-text-2" id="text-9">
 
 
-<p><br/>
+
+
 <pre class="src src-c"><span style="color: #a020f0;">struct</span> <span style="color: #228b22;">rlimit</span> {
     <span style="color: #228b22;">unsigned</span> <span style="color: #228b22;">long</span>   <span style="color: #a0522d;">rlim_cur</span>;   <span style="color: #b22222;">//</span><span style="color: #b22222;">&#34920;&#24403;&#21069;&#27491;&#22312;&#20351;&#29992;&#30340;&#36164;&#28304;&#20010;&#25968;</span>
     <span style="color: #228b22;">unsigned</span> <span style="color: #228b22;">long</span>   <span style="color: #a0522d;">rlim_max</span>;   <span style="color: #b22222;">//</span><span style="color: #b22222;">&#34920;&#21487;&#29992;&#36164;&#28304;&#30340;&#26368;&#22823;&#20010;&#25968;</span>
 };
 </pre>
 
+<p>
   资源各类：<br/>
 </p>
-<p><br/>
+
+
 <pre class="src src-c"><span class="linenr"> 1:  </span><span style="color: #7a378b;">#define</span> <span style="color: #a0522d;">RLIMIT_CPU</span>      0   <span style="color: #b22222;">/* </span><span style="color: #b22222;">CPU time in ms </span><span style="color: #b22222;">*/</span>
 <span class="linenr"> 2:  </span><span style="color: #7a378b;">#define</span> <span style="color: #a0522d;">RLIMIT_FSIZE</span>        1   <span style="color: #b22222;">/* </span><span style="color: #b22222;">Maximum filesize </span><span style="color: #b22222;">*/</span>
 <span class="linenr"> 3:  </span><span style="color: #7a378b;">#define</span> <span style="color: #a0522d;">RLIMIT_DATA</span>     2   <span style="color: #b22222;">/* </span><span style="color: #b22222;">max data size </span><span style="color: #b22222;">*/</span>
@@ -862,6 +833,7 @@
 <span class="linenr">13:  </span><span style="color: #7a378b;">#define</span> <span style="color: #a0522d;">RLIMIT_MSGQUEUE</span>     12  <span style="color: #b22222;">/* </span><span style="color: #b22222;">maximum bytes in POSIX mqueues </span><span style="color: #b22222;">*/</span>
 </pre>
 
+<p>
   rlim_max来表示资源界限最大值，getrlimit()和setrlimit()来取得和改变资源当前值 rlim_cur。<br/>
 <script src="../../Layout/JS/disqus-comment.js"></script>
 <div id="disqus_thread">

@@ -7,59 +7,11 @@
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
 <meta name="title" content="Emacs Trick"/>
 <meta name="generator" content="Org-mode"/>
-<meta name="generated" content="2012-10-26 03:06:46 CST"/>
+<meta name="generated" content="2012-10-27 05:12:21 CST"/>
 <meta name="author" content="visaya fan"/>
 <meta name="description" content=""/>
 <meta name="keywords" content=""/>
-<style type="text/css">
- <!--/*--><![CDATA[/*><!--*/
-  html { font-family: Times, serif; font-size: 12pt; }
-  .title  { text-align: center; }
-  .todo   { color: red; }
-  .done   { color: green; }
-  .tag    { background-color: #add8e6; font-weight:normal }
-  .target { }
-  .timestamp { color: #bebebe; }
-  .timestamp-kwd { color: #5f9ea0; }
-  .right  {margin-left:auto; margin-right:0px;  text-align:right;}
-  .left   {margin-left:0px;  margin-right:auto; text-align:left;}
-  .center {margin-left:auto; margin-right:auto; text-align:center;}
-  p.verse { margin-left: 3% }
-  pre {
-	border: 1pt solid #AEBDCC;
-	background-color: #F3F5F7;
-	padding: 5pt;
-	font-family: courier, monospace;
-        font-size: 90%;
-        overflow:auto;
-  }
-  table { border-collapse: collapse; }
-  td, th { vertical-align: top;  }
-  th.right  { text-align:center;  }
-  th.left   { text-align:center;   }
-  th.center { text-align:center; }
-  td.right  { text-align:right;  }
-  td.left   { text-align:left;   }
-  td.center { text-align:center; }
-  dt { font-weight: bold; }
-  div.figure { padding: 0.5em; }
-  div.figure p { text-align: center; }
-  div.inlinetask {
-    padding:10px;
-    border:2px solid gray;
-    margin:10px;
-    background: #ffffcc;
-  }
-  textarea { overflow-x: auto; }
-  .linenr { font-size:smaller }
-  .code-highlighted {background-color:#ffff00;}
-  .org-info-js_info-navigation { border-style:none; }
-  #org-info-js_console-label { font-size:10px; font-weight:bold;
-                               white-space:nowrap; }
-  .org-info-js_search-highlight {background-color:#ffff00; color:#000000;
-                                 font-weight:bold; }
-  /*]]>*/-->
-</style>
+
 <script type="text/javascript" src="../../Layout/JS/org-info.js"></script>
 <script type="text/javascript" >
 <!--/*--><![CDATA[/*><!--*/
@@ -75,29 +27,48 @@ org_html_manager.set("VIEW", "overview");
 org_html_manager.setup();  // activate after the parameters are set
 /*]]>*///-->
 </script>
-<script type="text/javascript">
+
+<script type="text/javascript" src="http://orgmode.org/mathjax/MathJax.js">
 <!--/*--><![CDATA[/*><!--*/
- function CodeHighlightOn(elem, id)
- {
-   var target = document.getElementById(id);
-   if(null != target) {
-     elem.cacheClassElem = elem.className;
-     elem.cacheClassTarget = target.className;
-     target.className = "code-highlighted";
-     elem.className   = "code-highlighted";
-   }
- }
- function CodeHighlightOff(elem, id)
- {
-   var target = document.getElementById(id);
-   if(elem.cacheClassElem)
-     elem.className = elem.cacheClassElem;
-   if(elem.cacheClassTarget)
-     target.className = elem.cacheClassTarget;
- }
+    MathJax.Hub.Config({
+        // Only one of the two following lines, depending on user settings
+        // First allows browser-native MathML display, second forces HTML/CSS
+        //  config: ["MMLorHTML.js"], jax: ["input/TeX"],
+            jax: ["input/TeX", "output/HTML-CSS"],
+        extensions: ["tex2jax.js","TeX/AMSmath.js","TeX/AMSsymbols.js",
+                     "TeX/noUndefined.js"],
+        tex2jax: {
+            inlineMath: [ ["\\(","\\)"] ],
+            displayMath: [ ['$$','$$'], ["\\[","\\]"], ["\\begin{displaymath}","\\end{displaymath}"] ],
+            skipTags: ["script","noscript","style","textarea","pre","code"],
+            ignoreClass: "tex2jax_ignore",
+            processEscapes: false,
+            processEnvironments: true,
+            preview: "TeX"
+        },
+        showProcessingMessages: true,
+        displayAlign: "center",
+        displayIndent: "2em",
+
+        "HTML-CSS": {
+             scale: 100,
+             availableFonts: ["STIX","TeX"],
+             preferredFont: "TeX",
+             webFont: "TeX",
+             imageFont: "TeX",
+             showMathMenu: true,
+        },
+        MMLorHTML: {
+             prefer: {
+                 MSIE:    "MML",
+                 Firefox: "MML",
+                 Opera:   "HTML",
+                 other:   "HTML"
+             }
+        }
+    });
 /*]]>*///-->
 </script>
-
 </head>
 <body>
 
@@ -133,7 +104,11 @@ org_html_manager.setup();  // activate after the parameters are set
 <li><a href="#sec-10">10 backup-by-copying-when-linked</a></li>
 <li><a href="#sec-11">11 zap-to-char</a></li>
 <li><a href="#sec-12">12 fill-paragraph</a></li>
-<li><a href="#sec-13">13 分享/评论</a></li>
+<li><a href="#sec-13">13 <i>sudo::</i></a></li>
+<li><a href="#sec-14">14 正则表达式</a></li>
+<li><a href="#sec-15">15 eshell 别名/使用.bashrc中定义的别名</a></li>
+<li><a href="#sec-16">16 解决org-mode example/src/quote上面多一行问题</a></li>
+<li><a href="#sec-17">17 分享/评论</a></li>
 </ul>
 </div>
 </div>
@@ -157,7 +132,7 @@ org_html_manager.setup();  // activate after the parameters are set
 </blockquote>
 
 
-<p><br/>
+<p>
    查找指定目录DIR下指定模式文件FILES内容中符合REGEXP的文件，GREP buffer中n/p上下选择。<br/>
 </p></div>
 
@@ -175,7 +150,7 @@ org_html_manager.setup();  // activate after the parameters are set
 </blockquote>
 
 
-<p><br/>
+<p>
    其中H表输出中包含文件名，n表输出中包含行号，e表紧跟模式<br/>
 </p></div>
 </div>
@@ -210,7 +185,7 @@ org_html_manager.setup();  // activate after the parameters are set
 </blockquote>
 
 
-<p><br/>
+<p>
   先选中一个region，mc/edit-lines则对该region每行都有一个光标。mc/mark-next-like-this在与region内容相同的下一处加一光标。其它函数同理。<br/>
 </p></div>
 
@@ -285,11 +260,10 @@ org_html_manager.setup();  // activate after the parameters are set
 </blockquote>
 
 
-<p><br/>
+<p>
   如果你在使用dropbox这种方法就非常有用，把想要保存在dropbox中的文件硬链接到dropbox目录下，既不占空间又能保持同步更新。<br/>
 </p>
-<p><br/>
-</p></div>
+</div>
 
 </div>
 
@@ -312,8 +286,170 @@ org_html_manager.setup();  // activate after the parameters are set
 </div>
 
 <div id="outline-container-13" class="outline-2">
-<h2 id="sec-13"><span class="section-number-2">13</span> 分享/评论</h2>
+<h2 id="sec-13"><span class="section-number-2">13</span> <i>sudo::</i></h2>
 <div class="outline-text-2" id="text-13">
+
+<p>  如果你用普通用户权限打开emacs，则此时打开超级用户权限的文件是无法修改的，以超级用户重新打开一个emacs可行但考虑到emacs的启动速度，这绝对不是个好主意。<br/>
+  解决办法：C-x C-f <i>sudo::</i> Enter 之后输入密码即可以超级用户权限打开一个文件。<br/>
+</p></div>
+
+</div>
+
+<div id="outline-container-14" class="outline-2">
+<h2 id="sec-14"><span class="section-number-2">14</span> 正则表达式</h2>
+<div class="outline-text-2" id="text-14">
+
+<p>  Emacs中正则表达式要注意group和重复所用的括号需要转义， <code>\(\)</code> , <code>\{3,6\}</code><br/>
+  语法类包括：<br/>
+</p>
+
+
+<pre class="example">[:digit:]  a digit, same as [0-9]
+[:upper:]  a letter in uppercase
+[:space:]  a whitespace character, as defined by the syntax table
+[:xdigit:] an hexadecimal digit
+[:cntrl:]  a control character
+[:ascii:]  an ascii character
+\s-   whitespace character        \s/   character quote character
+\sw   word constituent            \s$   paired delimiter         
+\s_   symbol constituent          \s'   expression prefix        
+\s.   punctuation character       \s&lt;   comment starter          
+\s(   open delimiter character    \s&gt;   comment ender            
+\s)   close delimiter character   \s!   generic comment delimiter
+\s"   string quote character      \s|   generic string delimiter 
+\s\   escape character            
+</pre>
+
+<p>
+  用re-builder查询时要又重转义即转义字符要转义，即上面的要写成\\(\\), \\{3,6\\}，即要匹配一个字面上的\需要4个\，即\\<br/>
+  re-builder中[:digit:]在写成[和]要写2次.<br/>
+</p>
+
+
+<pre class="example">"\\(\\+\\|-\\)?[0-9]+\\(\\.[0-9]+\\)?"        表示一个数
+"[[:digit:]]\\{3\\}"                          表示连续3个数字
+</pre>
+
+
+</div>
+
+</div>
+
+<div id="outline-container-15" class="outline-2">
+<h2 id="sec-15"><span class="section-number-2">15</span> eshell 别名/使用.bashrc中定义的别名</h2>
+<div class="outline-text-2" id="text-15">
+
+<p>  Eshell中 find-file filename即可打开文件，等价于C-x C-f filename<br/>
+  可以定义别名 alias emacs 'find-file $1'，这样在eshell中emacs filename即可打开文件<br/>
+</p>
+<p>
+  我在.bashrc中定义了许多别名，eshell的别名默认保存在 <code>~/.eshell/alias</code> 中，由变量 <code>eshell-aliases-file</code> 确定，为在方便备份我把它必为 <code>~/.emacs.d/eshell/alias</code> ，为了使eshell可以使用这些别名，可以使用下面的命令把所有在shell中可用的别名加到eshell中。<br/>
+</p>
+
+
+<pre class="example">cd ~/.emacs.d/eshell &amp;&amp; cat alias &gt; tmp &amp;&amp; echo -e "\n" &gt;&gt; tmp &amp;&amp; alias | sed -E "s/^alias ([^=]+)='(.*)'$/alias \1 \2/g; s/'\\\''/'/g;" &gt;&gt; tmp &amp;&amp; sort -u tmp &gt; alias &amp;&amp; rm -f tmp &amp;&amp; sed -i -e '/clc/d' -e '/^$/d'  alias &amp;&amp; cd - &gt;/dev/null
+</pre>
+
+<p>
+  一个很简单的正则替换，其中最后删掉clc行是因为我在shell下用clc充当clear的别名，而此命令在eshell下无效且影响我定义的另一个名为clc的eshell下的孙：<br/>
+</p>
+
+
+<pre class="src src-lisp"><span style="color: #b22222;">;; </span><span style="color: #b22222;">clc &#28165;&#23631;,&#22312;eshell&#20013;&#36755;&#20837;&#21629;&#20196;&#32780;&#38750;M-x clc</span>
+(<span style="color: #a020f0;">defun</span> <span style="color: #0000ff;">eshell/clc</span>()
+  <span style="color: #8b2252;">"to clear the eshell buffer."</span>
+  (interactive)
+  (<span style="color: #a020f0;">let</span> ((inhibit-read-only t))
+    (erase-buffer)))
+</pre>
+
+
+<p>  <br/>
+</p></div>
+
+</div>
+
+<div id="outline-container-16" class="outline-2">
+<h2 id="sec-16"><span class="section-number-2">16</span> 解决org-mode example/src/quote上面多一行问题</h2>
+<div class="outline-text-2" id="text-16">
+
+<p>  不知道是不是org-mode的bug？如下所示的代码<br/>
+</p>
+
+
+<pre class="example">|  abc
+|  cef
+|  #+begin_example
+|  hello
+|  #+end_example  
+</pre>
+
+<p>
+  经编译后生成：<br/>
+</p>
+
+
+<pre class="example">&lt;p&gt;  abc&lt;br/&gt;
+  cef&lt;br/&gt;
+&lt;/p&gt;
+&lt;p&gt;&lt;br&gt;
+&lt;pre class="example"&gt;hello
+&lt;/pre&gt;
+&lt;/p&gt;
+</pre>
+
+<p>
+  但浏览器解析是这样解析的：<br/>
+</p>
+
+
+<pre class="example">&lt;p&gt;  abc&lt;br/&gt;
+  cef&lt;br/&gt;
+&lt;/p&gt;
+&lt;p&gt;&lt;br&gt;&lt;/p&gt;
+&lt;pre class="example"&gt;hello
+&lt;/pre&gt;
+</pre>
+
+<p>
+  这样就会在cef和hello之间多出一行。<br/>
+  分析lisp/org-html.el代码发现原因在:<br/>
+</p>
+
+
+<pre class="src src-lisp"><span style="color: #b22222;">;; </span><span style="color: #b22222;">Check if the line break needs to be conserved</span>
+(<span style="color: #a020f0;">cond</span>
+ ((string-match <span style="color: #8b2252;">"\\\\\\\\[ \t]*$"</span> line)
+  (setq line (replace-match <span style="color: #8b2252;">"&lt;br/&gt;"</span> t t line)))
+ (org-export-preserve-breaks
+  (setq line (concat line <span style="color: #8b2252;">"&lt;br/&gt;"</span>))
+  ))
+</pre>
+
+<p>
+  不管line是否为空都会给line后面加上&lt;br/&gt;，而实际上当Line为空时没有必要加上&lt;br/&gt;，于是可以修改:<br/>
+</p>
+
+
+<pre class="src src-lisp"><span style="color: #b22222;">;; </span><span style="color: #b22222;">Check if the line break needs to be conserved</span>
+(<span style="color: #a020f0;">cond</span>
+ ((string-match <span style="color: #8b2252;">"\\\\\\\\[ \t]*$"</span> line)
+  (setq line (replace-match <span style="color: #8b2252;">"&lt;br/&gt;"</span> t t line)))
+ (org-export-preserve-breaks
+  (<span style="color: #a020f0;">if</span> (not (string= line <span style="color: #8b2252;">""</span>))
+      (setq line (concat line <span style="color: #8b2252;">"&lt;br/&gt;"</span>)))
+  ))
+</pre>
+
+<p>
+  这样便解决了多一行的问题。<br/>
+</p></div>
+
+</div>
+
+<div id="outline-container-17" class="outline-2">
+<h2 id="sec-17"><span class="section-number-2">17</span> 分享/评论</h2>
+<div class="outline-text-2" id="text-17">
 
 
 <a class="bshareDiv" href="http://www.bshare.cn/share">分享按钮</a><script type="text/javascript" charset="utf-8" src="http://static.bshare.cn/b/buttonLite.js#uuid=&amp;style=10&amp;bgcolor=Blue"></script>
@@ -322,11 +458,7 @@ org_html_manager.setup();  // activate after the parameters are set
 <div id="disqus_thread">
 </div>
 
-
-<p>  <br/>
-</p>
-<p><br/>
-</p></div>
+</div>
 </div>
 </div>
 

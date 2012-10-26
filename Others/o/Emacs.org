@@ -60,7 +60,100 @@ grep -nH -e "pattern" filename
 * /sudo::/
   如果你用普通用户权限打开emacs，则此时打开超级用户权限的文件是无法修改的，以超级用户重新打开一个emacs可行但考虑到emacs的启动速度，这绝对不是个好主意。
   解决办法：C-x C-f /sudo::/ Enter 之后输入密码即可以超级用户权限打开一个文件。
+* 正则表达式
+  Emacs中正则表达式要注意group和重复所用的括号需要转义， =\(\)= , =\{3,6\}=
+  语法类包括：
+#+begin_example
+[:digit:]  a digit, same as [0-9]
+[:upper:]  a letter in uppercase
+[:space:]  a whitespace character, as defined by the syntax table
+[:xdigit:] an hexadecimal digit
+[:cntrl:]  a control character
+[:ascii:]  an ascii character
+\s-   whitespace character        \s/   character quote character
+\sw   word constituent            \s$   paired delimiter         
+\s_   symbol constituent          \s'   expression prefix        
+\s.   punctuation character       \s<   comment starter          
+\s(   open delimiter character    \s>   comment ender            
+\s)   close delimiter character   \s!   generic comment delimiter
+\s"   string quote character      \s|   generic string delimiter 
+\s\   escape character            
+#+end_example
+  用re-builder查询时要又重转义即转义字符要转义，即上面的要写成\\(\\), \\{3,6\\}，即要匹配一个字面上的\需要4个\，即\\\\
+  re-builder中[:digit:]在写成[和]要写2次.
+#+begin_example
+"\\(\\+\\|-\\)?[0-9]+\\(\\.[0-9]+\\)?"        表示一个数
+"[[:digit:]]\\{3\\}"                          表示连续3个数字
+#+end_example
+
+* eshell 别名/使用.bashrc中定义的别名
+  Eshell中 find-file filename即可打开文件，等价于C-x C-f filename
+  可以定义别名 alias emacs 'find-file $1'，这样在eshell中emacs filename即可打开文件
+
+  我在.bashrc中定义了许多别名，eshell的别名默认保存在 =~/.eshell/alias= 中，由变量 =eshell-aliases-file= 确定，为在方便备份我把它必为 =~/.emacs.d/eshell/alias= ，为了使eshell可以使用这些别名，可以使用下面的命令把所有在shell中可用的别名加到eshell中。
+#+begin_example
+cd ~/.emacs.d/eshell && cat alias > tmp && echo -e "\n" >> tmp && alias | sed -E "s/^alias ([^=]+)='(.*)'$/alias \1 \2/g; s/'\\\''/'/g;" >> tmp && sort -u tmp > alias && rm -f tmp && sed -i -e '/clc/d' -e '/^$/d'  alias && cd - >/dev/null
+#+end_example
+  一个很简单的正则替换，其中最后删掉clc行是因为我在shell下用clc充当clear的别名，而此命令在eshell下无效且影响我定义的另一个名为clc的eshell下的孙：
+#+begin_src lisp
+;; clc 清屏,在eshell中输入命令而非M-x clc
+(defun eshell/clc()
+  "to clear the eshell buffer."
+  (interactive)
+  (let ((inhibit-read-only t))
+    (erase-buffer)))
+#+end_src
+  
+* 解决org-mode example/src/quote上面多一行问题
+  不知道是不是org-mode的bug？如下所示的代码
+#+begin_example
+|  abc
+|  cef
+|  #+begin_example
+|  hello
+|  #+end_example  
+#+end_example
+  经编译后生成：
+#+begin_example
+<p>  abc<br/>
+  cef<br/>
+</p>
+<p><br>
+<pre class="example">hello
+</pre>
+</p>
+#+end_example
+  但浏览器解析是这样解析的：
+#+begin_example
+<p>  abc<br/>
+  cef<br/>
+</p>
+<p><br></p>
+<pre class="example">hello
+</pre>
+#+end_example
+  这样就会在cef和hello之间多出一行。
+  分析lisp/org-html.el代码发现原因在:
+#+begin_src lisp
+;; Check if the line break needs to be conserved
+(cond
+ ((string-match "\\\\\\\\[ \t]*$" line)
+  (setq line (replace-match "<br/>" t t line)))
+ (org-export-preserve-breaks
+  (setq line (concat line "<br/>"))
+  ))
+#+end_src
+  不管line是否为空都会给line后面加上<br/>，而实际上当Line为空时没有必要加上<br/>，于是可以修改:
+#+begin_src lisp
+;; Check if the line break needs to be conserved
+(cond
+ ((string-match "\\\\\\\\[ \t]*$" line)
+  (setq line (replace-match "<br/>" t t line)))
+ (org-export-preserve-breaks
+  (if (not (string= line ""))
+      (setq line (concat line "<br/>")))
+  ))
+#+end_src
+  这样便解决了多一行的问题。
 * 分享/评论
 #+include "../../disqus.org"
-  
-

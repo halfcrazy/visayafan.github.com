@@ -7,81 +7,12 @@
 <meta http-equiv="Content-Type" content="text/html;charset=gb18030"/>
 <meta name="title" content="模板特化与偏特化"/>
 <meta name="generator" content="Org-mode"/>
-<meta name="generated" content="2012-10-19 22:31:45 CST"/>
+<meta name="generated" content="2012-10-27 05:27:12 CST"/>
 <meta name="author" content="visaya fan"/>
 <meta name="description" content=""/>
 <meta name="keywords" content=""/>
-<style type="text/css">
- <!--/*--><![CDATA[/*><!--*/
-  html { font-family: Times, serif; font-size: 12pt; }
-  .title  { text-align: center; }
-  .todo   { color: red; }
-  .done   { color: green; }
-  .tag    { background-color: #add8e6; font-weight:normal }
-  .target { }
-  .timestamp { color: #bebebe; }
-  .timestamp-kwd { color: #5f9ea0; }
-  .right  {margin-left:auto; margin-right:0px;  text-align:right;}
-  .left   {margin-left:0px;  margin-right:auto; text-align:left;}
-  .center {margin-left:auto; margin-right:auto; text-align:center;}
-  p.verse { margin-left: 3% }
-  pre {
-	border: 1pt solid #AEBDCC;
-	background-color: #F3F5F7;
-	padding: 5pt;
-	font-family: courier, monospace;
-        font-size: 90%;
-        overflow:auto;
-  }
-  table { border-collapse: collapse; }
-  td, th { vertical-align: top;  }
-  th.right  { text-align:center;  }
-  th.left   { text-align:center;   }
-  th.center { text-align:center; }
-  td.right  { text-align:right;  }
-  td.left   { text-align:left;   }
-  td.center { text-align:center; }
-  dt { font-weight: bold; }
-  div.figure { padding: 0.5em; }
-  div.figure p { text-align: center; }
-  div.inlinetask {
-    padding:10px;
-    border:2px solid gray;
-    margin:10px;
-    background: #ffffcc;
-  }
-  textarea { overflow-x: auto; }
-  .linenr { font-size:smaller }
-  .code-highlighted {background-color:#ffff00;}
-  .org-info-js_info-navigation { border-style:none; }
-  #org-info-js_console-label { font-size:10px; font-weight:bold;
-                               white-space:nowrap; }
-  .org-info-js_search-highlight {background-color:#ffff00; color:#000000;
-                                 font-weight:bold; }
-  /*]]>*/-->
-</style><div id="org-div-comments"><a href="../../index.html#cpp">主页</a><br/><a href="#disqus_thread">评论</a></div>
-<script type="text/javascript">
-<!--/*--><![CDATA[/*><!--*/
- function CodeHighlightOn(elem, id)
- {
-   var target = document.getElementById(id);
-   if(null != target) {
-     elem.cacheClassElem = elem.className;
-     elem.cacheClassTarget = target.className;
-     target.className = "code-highlighted";
-     elem.className   = "code-highlighted";
-   }
- }
- function CodeHighlightOff(elem, id)
- {
-   var target = document.getElementById(id);
-   if(elem.cacheClassElem)
-     elem.className = elem.cacheClassElem;
-   if(elem.cacheClassTarget)
-     target.className = elem.cacheClassTarget;
- }
-/*]]>*///-->
-</script>
+<div id="org-div-comments"><a href="../../index.html#cpp">主页</a><br/><a href="#disqus_thread">评论</a></div>
+
 
 </head>
 <body>
@@ -113,7 +44,8 @@
 
 <p>  一般情况下类模板定义如下：<br/>
 </p>
-<p><br/>
+
+
 <pre class="src src-c++"><span style="color: #a020f0;">template</span>&lt;<span style="color: #a020f0;">class</span> <span style="color: #228b22;">Window</span>, <span style="color: #a020f0;">class</span> <span style="color: #228b22;">Controller</span>&gt;
 <span style="color: #a020f0;">class</span> <span style="color: #228b22;">Widget</span>
 {
@@ -121,15 +53,18 @@
 };
 </pre>
 
+<p>
   特化是指把类模板中指定的class T变成具体的类型：<br/>
 </p>
-<p><br/>
+
+
 <pre class="src src-c++"><span style="color: #a020f0;">class</span> <span style="color: #228b22;">Widget</span>&lt;ModalDialog, MyController&gt;
 {
     ... &#29305;&#21270;&#23454;&#29616;&#20195;&#30721; ...
 };
 </pre>
 
+<p>
    其中ModalDialog和MyController是你自己另外定义的类.<br/>
    有了这个Widget的特化定义之后,如果你以后定义了Widget&lt;ModalDialog, MyController&gt;对象时,编译器就会使用上述的特化定义.<br/>
    如果定义了其它泛型对象,那么编译器就是用原本的泛化定义.<br/>
@@ -144,7 +79,8 @@
 
 <p>  模板特化是通过"给模板中的所有模板参数一个具体的类"的方式来实现的.而模板偏特化则是通过"给模板中的部分模板参数以具体的类,而留下剩余的模板参数仍然使用原来的泛化定义"的方式来实现的.<br/>
 </p>
-<p><br/>
+
+
 <pre class="src src-c++"><span style="color: #a020f0;">template</span>&lt;<span style="color: #a020f0;">class</span> <span style="color: #228b22;">Window</span>&gt;                        <span style="color: #b22222;">//</span><span style="color: #b22222;">&#20173;&#28982;&#20351;&#29992;&#21407;&#26469;&#30340;&#27867;&#21270;&#23450;&#20041;;</span>
 <span style="color: #a020f0;">class</span> <span style="color: #228b22;">Widget</span>&lt;<span style="color: #228b22;">Window</span>, MyController&gt;            <span style="color: #b22222;">//</span><span style="color: #b22222;">MyController&#26159;&#20855;&#20307;&#30340;&#31867;,&#26159;&#29305;&#21270;&#23450;&#20041;;</span>
 {
@@ -152,6 +88,7 @@
 };
 </pre>
 
+<p>
   模板的偏特化能力很强大.当你实例化一个模板时,编译器会把目前存在的偏特化模板和全特化模板做比较,并找出其中最合适、最匹配的实现.<br/>
   这样,灵活性就很大.<br/>
   模板的偏特化机制不能用在函数身上,不论成员函数还是非成员函数.<br/>

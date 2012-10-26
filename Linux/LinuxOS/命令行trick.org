@@ -25,9 +25,13 @@
    上次执行命令中old替换成new，例如上个命令为ls，执行!!:gs/s/l后等于执行ll，此命令对于较长的组合命令有时比较有效。
 ** pushd/popd
    pushd dit和popd，相当于一个堆栈,pushd dit的时候把当前目录压栈并切换到dit目录下,popd 返回上一次压栈的目录下。
-
+* 2012年10月26日11:39PM
+** echo 换行
+   直接 echo "a\nb" >file 此时file中只有一行而非两行。
+   使用-e选项表示解析转义，即 echo -e "a\nb" >file 此时 file中有两行
+** 递归更新目录下所有文件时间戳
+#+begin_example
+find . -name "*.org" -exec touch {} \;
+#+end_example   
+* 分享/评论
 #+include "../../disqus.org"
-   
-
-   
-   

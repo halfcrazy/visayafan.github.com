@@ -7,81 +7,12 @@
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
 <meta name="title" content="little-big endian"/>
 <meta name="generator" content="Org-mode"/>
-<meta name="generated" content="2012-10-19 22:31:57 CST"/>
+<meta name="generated" content="2012-10-27 05:27:28 CST"/>
 <meta name="author" content="visaya fan"/>
 <meta name="description" content=""/>
 <meta name="keywords" content=""/>
-<style type="text/css">
- <!--/*--><![CDATA[/*><!--*/
-  html { font-family: Times, serif; font-size: 12pt; }
-  .title  { text-align: center; }
-  .todo   { color: red; }
-  .done   { color: green; }
-  .tag    { background-color: #add8e6; font-weight:normal }
-  .target { }
-  .timestamp { color: #bebebe; }
-  .timestamp-kwd { color: #5f9ea0; }
-  .right  {margin-left:auto; margin-right:0px;  text-align:right;}
-  .left   {margin-left:0px;  margin-right:auto; text-align:left;}
-  .center {margin-left:auto; margin-right:auto; text-align:center;}
-  p.verse { margin-left: 3% }
-  pre {
-	border: 1pt solid #AEBDCC;
-	background-color: #F3F5F7;
-	padding: 5pt;
-	font-family: courier, monospace;
-        font-size: 90%;
-        overflow:auto;
-  }
-  table { border-collapse: collapse; }
-  td, th { vertical-align: top;  }
-  th.right  { text-align:center;  }
-  th.left   { text-align:center;   }
-  th.center { text-align:center; }
-  td.right  { text-align:right;  }
-  td.left   { text-align:left;   }
-  td.center { text-align:center; }
-  dt { font-weight: bold; }
-  div.figure { padding: 0.5em; }
-  div.figure p { text-align: center; }
-  div.inlinetask {
-    padding:10px;
-    border:2px solid gray;
-    margin:10px;
-    background: #ffffcc;
-  }
-  textarea { overflow-x: auto; }
-  .linenr { font-size:smaller }
-  .code-highlighted {background-color:#ffff00;}
-  .org-info-js_info-navigation { border-style:none; }
-  #org-info-js_console-label { font-size:10px; font-weight:bold;
-                               white-space:nowrap; }
-  .org-info-js_search-highlight {background-color:#ffff00; color:#000000;
-                                 font-weight:bold; }
-  /*]]>*/-->
-</style><div id="org-div-comments"><a href="../../index.html#cpp">主页</a><br/><a href="#disqus_thread">评论</a></div>
-<script type="text/javascript">
-<!--/*--><![CDATA[/*><!--*/
- function CodeHighlightOn(elem, id)
- {
-   var target = document.getElementById(id);
-   if(null != target) {
-     elem.cacheClassElem = elem.className;
-     elem.cacheClassTarget = target.className;
-     target.className = "code-highlighted";
-     elem.className   = "code-highlighted";
-   }
- }
- function CodeHighlightOff(elem, id)
- {
-   var target = document.getElementById(id);
-   if(elem.cacheClassElem)
-     elem.className = elem.cacheClassElem;
-   if(elem.cacheClassTarget)
-     target.className = elem.cacheClassTarget;
- }
-/*]]>*///-->
-</script>
+<div id="org-div-comments"><a href="../../index.html#cpp">主页</a><br/><a href="#disqus_thread">评论</a></div>
+
 
 </head>
 <body>
@@ -112,7 +43,7 @@
 内存地址 低-&gt;高<br/>
 存储内容 34 12<br/>
 </p>
-<p><br/>
+<p>
 <b>程序验证当前使用CPU的字节序：</b><br/>
 </p><ul>
 <li>使用普通方法：强制类型转化<br/>
@@ -120,7 +51,8 @@
 </ul>
 
 
-<p><br/>
+
+
 <pre class="src src-c"><span style="color: #7a378b;">#include</span> <span style="color: #8b2252;">&lt;stdio.h&gt;</span>
 
 <span style="color: #228b22;">int</span> <span style="color: #0000ff;">main</span>(<span style="color: #228b22;">int</span> <span style="color: #a0522d;">argc</span>, <span style="color: #228b22;">char</span> *<span style="color: #a0522d;">argv</span>[])
@@ -136,13 +68,14 @@
 }
 </pre>
 
-</p><ul>
+<ul>
 <li>使用UNION方法<br/>
 </li>
 </ul>
 
 
-<p><br/>
+
+
 <pre class="src src-c"><span style="color: #228b22;">bool</span> <span style="color: #0000ff;">checkCPU</span>(){
     <span style="color: #a020f0;">union</span> <span style="color: #228b22;">A</span>{
         <span style="color: #228b22;">int</span> <span style="color: #a0522d;">i</span>;
@@ -154,7 +87,7 @@
 }
 </pre>
 
-</p><ul>
+<ul>
 <li>LINUX中实现：<br/>
 </li>
 </ul>
@@ -162,7 +95,8 @@
 <p>若为little endian则l与long的低位占同内存，若big endian则b与long的低位占同内存。<br/>
 所以若为little endian则ENDIANESS则为l否则为b。<br/>
 </p>
-<p><br/>
+
+
 <pre class="src src-c"><span style="color: #a020f0;">static</span> <span style="color: #a020f0;">union</span> { <span style="color: #228b22;">char</span> <span style="color: #a0522d;">c</span>[4]; <span style="color: #228b22;">unsigned</span> <span style="color: #228b22;">long</span> <span style="color: #a0522d;">mylong</span>; } <span style="color: #a0522d;">endian_test</span> = {{ <span style="color: #8b2252;">'l'</span>, <span style="color: #8b2252;">'?'</span>, <span style="color: #8b2252;">'?'</span>, <span style="color: #8b2252;">'b'</span> } };
 <span style="color: #7a378b;">#define</span> <span style="color: #a0522d;">ENDIANNESS</span> ((<span style="color: #228b22;">char</span>)endian_test.mylong
 </pre>
@@ -170,7 +104,7 @@
 <script src="../../Layout/JS/disqus-comment.js"></script>
 <div id="disqus_thread">
 </div>
-</p></div>
+</div>
 
 </body>
 </html>

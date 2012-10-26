@@ -7,81 +7,12 @@
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
 <meta name="title" content="Lex使用"/>
 <meta name="generator" content="Org-mode"/>
-<meta name="generated" content="2012-10-19 22:34:09 CST"/>
+<meta name="generated" content="2012-10-27 05:28:41 CST"/>
 <meta name="author" content="visaya fan"/>
 <meta name="description" content=""/>
 <meta name="keywords" content=""/>
-<style type="text/css">
- <!--/*--><![CDATA[/*><!--*/
-  html { font-family: Times, serif; font-size: 12pt; }
-  .title  { text-align: center; }
-  .todo   { color: red; }
-  .done   { color: green; }
-  .tag    { background-color: #add8e6; font-weight:normal }
-  .target { }
-  .timestamp { color: #bebebe; }
-  .timestamp-kwd { color: #5f9ea0; }
-  .right  {margin-left:auto; margin-right:0px;  text-align:right;}
-  .left   {margin-left:0px;  margin-right:auto; text-align:left;}
-  .center {margin-left:auto; margin-right:auto; text-align:center;}
-  p.verse { margin-left: 3% }
-  pre {
-	border: 1pt solid #AEBDCC;
-	background-color: #F3F5F7;
-	padding: 5pt;
-	font-family: courier, monospace;
-        font-size: 90%;
-        overflow:auto;
-  }
-  table { border-collapse: collapse; }
-  td, th { vertical-align: top;  }
-  th.right  { text-align:center;  }
-  th.left   { text-align:center;   }
-  th.center { text-align:center; }
-  td.right  { text-align:right;  }
-  td.left   { text-align:left;   }
-  td.center { text-align:center; }
-  dt { font-weight: bold; }
-  div.figure { padding: 0.5em; }
-  div.figure p { text-align: center; }
-  div.inlinetask {
-    padding:10px;
-    border:2px solid gray;
-    margin:10px;
-    background: #ffffcc;
-  }
-  textarea { overflow-x: auto; }
-  .linenr { font-size:smaller }
-  .code-highlighted {background-color:#ffff00;}
-  .org-info-js_info-navigation { border-style:none; }
-  #org-info-js_console-label { font-size:10px; font-weight:bold;
-                               white-space:nowrap; }
-  .org-info-js_search-highlight {background-color:#ffff00; color:#000000;
-                                 font-weight:bold; }
-  /*]]>*/-->
-</style><div id="org-div-comments"><a href="../../index.html#compiler">主页</a><br/><a href="#disqus_thread">评论</a></div>
-<script type="text/javascript">
-<!--/*--><![CDATA[/*><!--*/
- function CodeHighlightOn(elem, id)
- {
-   var target = document.getElementById(id);
-   if(null != target) {
-     elem.cacheClassElem = elem.className;
-     elem.cacheClassTarget = target.className;
-     target.className = "code-highlighted";
-     elem.className   = "code-highlighted";
-   }
- }
- function CodeHighlightOff(elem, id)
- {
-   var target = document.getElementById(id);
-   if(elem.cacheClassElem)
-     elem.className = elem.cacheClassElem;
-   if(elem.cacheClassTarget)
-     target.className = elem.cacheClassTarget;
- }
-/*]]>*///-->
-</script>
+<div id="org-div-comments"><a href="../../index.html#compiler">主页</a><br/><a href="#disqus_thread">评论</a></div>
+
 
 </head>
 <body>
@@ -131,7 +62,8 @@ Manual: <a href="http://flex.sourceforge.net/manual">http://flex.sourceforge.net
 <div class="outline-text-2" id="text-1">
 
 
-<p><br/>
+
+
 <pre class="example">%{
 这里的代码会原封不动地移到lex编译后的lex.yy.c中
 %}
@@ -142,7 +74,7 @@ Manual: <a href="http://flex.sourceforge.net/manual">http://flex.sourceforge.net
 辅助函数
 </pre>
 
-</p>
+
 </div>
 
 <div id="outline-container-1-1" class="outline-3">
@@ -160,11 +92,12 @@ Manual: <a href="http://flex.sourceforge.net/manual">http://flex.sourceforge.net
 
 <p>   转换规则形如：pattern {action}，例如：<br/>
 </p>
-<p><br/>
+
+
 <pre class="example">{fuword}      {printf ("%s%s",yytext, "ay");}
 </pre>
 
-</p></div>
+</div>
 </div>
 
 </div>
@@ -181,7 +114,8 @@ Manual: <a href="http://flex.sourceforge.net/manual">http://flex.sourceforge.net
 <div class="outline-text-3" id="text-2-1">
 
 
-<p><br/>
+
+
 <pre class="example">yytext   char *  当前匹配的字符串
 yyleng   int     当前匹配的字符串长度
 yyin     FILE *  lex当前的解析文件，默认为标准输入
@@ -208,7 +142,7 @@ int main(int argc, char *argv[])
          默认动作
 </pre>
 
-</p></div>
+</div>
 
 </div>
 
@@ -234,7 +168,8 @@ int main(int argc, char *argv[])
 <div class="outline-text-3" id="text-2-4">
 
 
-<p><br/>
+
+
 <pre class="example">int yywrap(void)   在文件(或输入)的末尾调用。如果函数的返回值是1，就停止解
                    析。 因此它可以用来解析多个文件。代码可以写在第三段，这
                    样可以解析多个文件。 方法是使用 yyin 文件指针指向不同的
@@ -242,7 +177,7 @@ int main(int argc, char *argv[])
                    来表示解析的结束。
 </pre>
 
-</p></div>
+</div>
 
 </div>
 
@@ -252,7 +187,8 @@ int main(int argc, char *argv[])
 
 <p>   yymore()           告诉扫描器下次扫描结果连接在当前yytext后而非覆盖当前yytext<br/>
 </p>
-<p><br/>
+
+
 <pre class="example"> \"[^"]*        {
                 if (yytext[yyleng-1] == '\\')
                         yymore();
@@ -262,7 +198,7 @@ int main(int argc, char *argv[])
 对于"abc\"def"情况，第一次扫描得yytex为abc\，判断最后一个字符为\后调用yymore()，则继续扫描得"def并将结果连接到上次结果中得：abc\"def
 </pre>
 
-</p></div>
+</div>
 
 </div>
 
@@ -281,7 +217,8 @@ int main(int argc, char *argv[])
 
 <p>   REJECT使用后会进行次好匹配，<br/>
 </p>
-<p><br/>
+
+
 <pre class="example">%{
 #include &lt;stdio.h&gt;
 %}
@@ -292,9 +229,11 @@ a[cd]+  {printf ("%s:%s\n","second rule", yytext); REJECT;}
 %%
 </pre>
 
+<p>
    对于accb,输出：<br/>
 </p>
-<p><br/>
+
+
 <pre class="example">first rule:accb
 first rule:acc
 second rule:acc
@@ -303,18 +242,21 @@ second rule:ac
 accb
 </pre>
 
+<p>
    第1次由a[bc]+匹配到accb，最长，故匹配成功；之后进行次好匹配，a[bc]+匹配到acc，a[cd]+匹配到acc，长度一样，故按照顺序输出，之后a[cb]+又匹配到ac，最后a[cd]+匹配ac，由于它是REJECT的故还想再重新开始匹配，由于没有再匹配的了，所以accb采用默认动作：ECHO－输出。<br/>
 </p>
-<p><br/>
+<p>
    将第2个printf中的REJECT删除后：<br/>
 </p>
-<p><br/>
+
+
 <pre class="example">first rule:accb
 first rule:acc
 second rule:acc
 b
 </pre>
 
+<p>
    与上面一样，最后a[cd]+匹配到acc之后由于没有REJECT，forward指针指向b，b没有匹配，默认输出，<br/>
 </p></div>
 </div>
@@ -340,7 +282,8 @@ b
 </ul>
 
 
-<p><br/>
+
+
 <pre class="example">compiler$ cat test.l
 %{
     #include &lt;stdio.h&gt;
@@ -364,13 +307,14 @@ compiler$ ./test &lt; test.c
 ntiay mainay mainay bcaay 
 </pre>
 
-</p><ul>
+<ul>
 <li>将C源程序中所有float关键字变成double<br/>
 </li>
 </ul>
 
 
-<p><br/>
+
+
 <pre class="example">compiler$ cat test.l
 /* 注意不能将 "a float b"中的float变成double */
 /* 所有float声明变量特点是声明或定义，即以;或=紧跟在标识符之后 */
@@ -411,7 +355,7 @@ int main(int argc, char *argv[])
 <script src="../../Layout/JS/disqus-comment.js"></script>
 <div id="disqus_thread">
 </div>
-</p></div>
+</div>
 </div>
 </div>
 

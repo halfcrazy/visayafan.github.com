@@ -7,81 +7,12 @@
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
 <meta name="title" content="Java_Swing"/>
 <meta name="generator" content="Org-mode"/>
-<meta name="generated" content="2012-10-19 22:33:06 CST"/>
+<meta name="generated" content="2012-10-27 05:27:42 CST"/>
 <meta name="author" content="visaya fan"/>
 <meta name="description" content=""/>
 <meta name="keywords" content=""/>
-<style type="text/css">
- <!--/*--><![CDATA[/*><!--*/
-  html { font-family: Times, serif; font-size: 12pt; }
-  .title  { text-align: center; }
-  .todo   { color: red; }
-  .done   { color: green; }
-  .tag    { background-color: #add8e6; font-weight:normal }
-  .target { }
-  .timestamp { color: #bebebe; }
-  .timestamp-kwd { color: #5f9ea0; }
-  .right  {margin-left:auto; margin-right:0px;  text-align:right;}
-  .left   {margin-left:0px;  margin-right:auto; text-align:left;}
-  .center {margin-left:auto; margin-right:auto; text-align:center;}
-  p.verse { margin-left: 3% }
-  pre {
-	border: 1pt solid #AEBDCC;
-	background-color: #F3F5F7;
-	padding: 5pt;
-	font-family: courier, monospace;
-        font-size: 90%;
-        overflow:auto;
-  }
-  table { border-collapse: collapse; }
-  td, th { vertical-align: top;  }
-  th.right  { text-align:center;  }
-  th.left   { text-align:center;   }
-  th.center { text-align:center; }
-  td.right  { text-align:right;  }
-  td.left   { text-align:left;   }
-  td.center { text-align:center; }
-  dt { font-weight: bold; }
-  div.figure { padding: 0.5em; }
-  div.figure p { text-align: center; }
-  div.inlinetask {
-    padding:10px;
-    border:2px solid gray;
-    margin:10px;
-    background: #ffffcc;
-  }
-  textarea { overflow-x: auto; }
-  .linenr { font-size:smaller }
-  .code-highlighted {background-color:#ffff00;}
-  .org-info-js_info-navigation { border-style:none; }
-  #org-info-js_console-label { font-size:10px; font-weight:bold;
-                               white-space:nowrap; }
-  .org-info-js_search-highlight {background-color:#ffff00; color:#000000;
-                                 font-weight:bold; }
-  /*]]>*/-->
-</style><div id="org-div-comments"><a href="../../index.html#java">主页</a><br/><a href="#disqus_thread">评论</a></div>
-<script type="text/javascript">
-<!--/*--><![CDATA[/*><!--*/
- function CodeHighlightOn(elem, id)
- {
-   var target = document.getElementById(id);
-   if(null != target) {
-     elem.cacheClassElem = elem.className;
-     elem.cacheClassTarget = target.className;
-     target.className = "code-highlighted";
-     elem.className   = "code-highlighted";
-   }
- }
- function CodeHighlightOff(elem, id)
- {
-   var target = document.getElementById(id);
-   if(elem.cacheClassElem)
-     elem.className = elem.cacheClassElem;
-   if(elem.cacheClassTarget)
-     target.className = elem.cacheClassTarget;
- }
-/*]]>*///-->
-</script>
+<div id="org-div-comments"><a href="../../index.html#java">主页</a><br/><a href="#disqus_thread">评论</a></div>
+
 
 </head>
 <body>
@@ -228,8 +159,7 @@
 
 <p>   当按钮按下时显示的图片<br/>
 </p>
-<p><br/>
-</p></div>
+</div>
 
 </div>
 
@@ -239,8 +169,7 @@
 
 <p>   当JButton不可用时显示的图片<br/>
 </p>
-<p><br/>
-</p></div>
+</div>
 
 </div>
 
@@ -278,8 +207,7 @@
 
 <p>   关联当前文本区一document<br/>
 </p>
-<p><br/>
-</p></div>
+</div>
 </div>
 
 </div>
@@ -300,8 +228,7 @@
 
 <p>   添加事件监听器<br/>
 </p>
-<p><br/>
-</p>
+
 </div>
 
 <div id="outline-container-4-1-1" class="outline-4">
@@ -328,8 +255,7 @@
 
 <p>    Gives notification that a portion of the document has been removed.<br/>
 </p>
-<p><br/>
-</p></div>
+</div>
 </div>
 
 </div>
@@ -340,8 +266,7 @@
 
 <p>   插入字符串，当DocumentEvent的insertUpdate(ActionEvent e)事件发生的时候会调用此函数。<br/>
 </p>
-<p><br/>
-</p></div>
+</div>
 </div>
 
 </div>
@@ -361,7 +286,8 @@
 <div class="outline-text-2" id="text-6">
 
 
-<p><br/>
+
+
 <pre class="src src-java">JList()
 Constructs a JList with an empty, read-only, <span style="color: #008b8b;">model</span>.
 JList(<span style="color: #228b22;">E</span>[] <span style="color: #a0522d;">listData</span>)
@@ -372,7 +298,7 @@ JList(Vector&lt;? <span style="color: #a020f0;">extends</span> <span style="colo
 Constructs a JList that displays the elements in the specified Vector.
 </pre>
 
-</p></div>
+</div>
 
 </div>
 
@@ -467,7 +393,8 @@ Constructs a JList that displays the elements in the specified Vector.
 <div class="outline-text-2" id="text-10">
 
 
-<p><br/>
+
+
 <pre class="src src-java"><span style="color: #a020f0;">package</span> xjtu.vf.<span style="color: #008b8b;">swing</span>;
 <span style="color: #a020f0;">import</span> <span style="color: #008b8b;">java</span>.<span style="color: #008b8b;">awt</span>.<span style="color: #228b22;">Color</span>;
 <span style="color: #a020f0;">import</span> <span style="color: #008b8b;">java</span>.<span style="color: #008b8b;">awt</span>.<span style="color: #228b22;">FlowLayout</span>;
@@ -527,7 +454,7 @@ Constructs a JList that displays the elements in the specified Vector.
 }
 </pre>
 
-</p>
+
 <p>   <br/>
 </p></div>
 
@@ -538,7 +465,8 @@ Constructs a JList that displays the elements in the specified Vector.
 <div class="outline-text-2" id="text-11">
 
 
-<p><br/>
+
+
 <pre class="src src-java"><span style="color: #a020f0;">package</span> xjtu.vf.<span style="color: #008b8b;">swing</span>;
 
 <span style="color: #a020f0;">import</span> <span style="color: #008b8b;">java</span>.<span style="color: #008b8b;">awt</span>.<span style="color: #228b22;">BorderLayout</span>;
@@ -577,7 +505,7 @@ Constructs a JList that displays the elements in the specified Vector.
 }
 </pre>
 
-</p></div>
+</div>
 
 </div>
 
@@ -587,8 +515,7 @@ Constructs a JList that displays the elements in the specified Vector.
 
 <p>  AbstractBorder所有边框类的父类<br/>
 </p>
-<p><br/>
-</p></div>
+</div>
 
 </div>
 
@@ -608,7 +535,8 @@ Constructs a JList that displays the elements in the specified Vector.
 <p>  LineBorder是围绕组件周围用户义定宽度的单色行边框。他可以具有方角或是圆角。<br/>
   <b>LineBorder有三个构造函数，两个工厂方法以及两个BorderFactory工厂方法</b><br/>
 </p>
-<p><br/>
+
+
 <pre class="src src-java"><span style="color: #a020f0;">public</span> LineBorder(<span style="color: #228b22;">Color</span> <span style="color: #a0522d;">color</span>)
 Border lineBorder = <span style="color: #a020f0;">new</span> <span style="color: #228b22;">LineBorder</span> (<span style="color: #008b8b;">Color</span>.RED);
 
@@ -631,7 +559,7 @@ Border lineBorder = BorderFactory.createLineBorder(<span style="color: #008b8b;"
 Border lineBorder = BorderFactory.createLineBorder(<span style="color: #008b8b;">Color</span>.RED, 5);
 </pre>
 
-</p></div>
+</div>
 
 </div>
 
@@ -641,7 +569,8 @@ Border lineBorder = BorderFactory.createLineBorder(<span style="color: #008b8b;"
 
 <p>  如果我们希望修改不同边的粗细，我们需要使用MatteBorder，<br/>
 </p>
-<p><br/>
+
+
 <pre class="src src-java">MatteBorder(<span style="color: #228b22;">Icon</span> <span style="color: #a0522d;">tileIcon</span>)      
 Creates a matte border with the specified tile <span style="color: #008b8b;">icon</span>.
 MatteBorder(<span style="color: #228b22;">Insets</span> <span style="color: #a0522d;">borderInsets</span>, <span style="color: #228b22;">Color</span> <span style="color: #a0522d;">matteColor</span>)
@@ -654,7 +583,7 @@ MatteBorder(<span style="color: #228b22;">int</span> <span style="color: #a0522d
 Creates a matte border with the specified insets and tile icon.
 </pre>
 
-</p></div>
+</div>
 
 </div>
 
@@ -663,8 +592,7 @@ Creates a matte border with the specified insets and tile icon.
 <div class="outline-text-2" id="text-16">
 
 
-<p><br/>
-</p></div>
+</div>
 
 </div>
 
@@ -675,7 +603,8 @@ Creates a matte border with the specified insets and tile icon.
 <p>  BevelBorder以三维外观绘制边框，其可以表现为升起或是降低。当边框升起时，在边框的底部与右边会出现阴影效果。当降低时，阴影的位置会相反。<br/>
   <b>BevelBorder有三个构造函数以及一个工厂方法，同时还有BorderFactory创建BevelBorder对象的五个工厂方法：</b><br/>
 </p>
-<p><br/>
+
+
 <pre class="src src-java"><span style="color: #a020f0;">public</span> BevelBorder(<span style="color: #228b22;">int</span> <span style="color: #a0522d;">bevelType</span>)
 Border bevelBorder = <span style="color: #a020f0;">new</span> <span style="color: #228b22;">BevelBorder</span>(<span style="color: #008b8b;">BevelBorder</span>.RAISED);
 
@@ -707,7 +636,7 @@ Border bevelBorder = BorderFactory.createBevelBorder(<span style="color: #008b8b
 </pre>
 
 
-</p></div>
+</div>
 
 </div>
 
@@ -719,7 +648,8 @@ Border bevelBorder = BorderFactory.createBevelBorder(<span style="color: #008b8b
   而他使用下边与右边的相应外边颜色只绘制一条线。<br/>
   <b>SoftBevelBorder有三个构造函数：</b><br/>
 </p>
-<p><br/>
+
+
 <pre class="src src-java"><span style="color: #a020f0;">public</span> SoftBevelBorder(<span style="color: #228b22;">int</span> <span style="color: #a0522d;">bevelType</span>)
 Border softBevelBorder = <span style="color: #a020f0;">new</span> <span style="color: #228b22;">SoftBevelBorder</span>(<span style="color: #008b8b;">SoftBevelBorder</span>.RAISED);
 
@@ -730,7 +660,7 @@ Border softBevelBorder = <span style="color: #a020f0;">new</span> <span style="c
 SoftBevelBorder(<span style="color: #228b22;">int</span> <span style="color: #a0522d;">bevelType</span>, <span style="color: #228b22;">Color</span> <span style="color: #a0522d;">highlightOuterColor</span>, <span style="color: #228b22;">Color</span> <span style="color: #a0522d;">highlightInnerColor</span>, <span style="color: #228b22;">Color</span> <span style="color: #a0522d;">shadowOuterColor</span>, <span style="color: #228b22;">Color</span> <span style="color: #a0522d;">shadowInnerColor</span>)
 </pre>
 
-</p></div>
+</div>
 
 </div>
 

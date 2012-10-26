@@ -7,81 +7,12 @@
 <meta http-equiv="Content-Type" content="text/html;charset=gb18030"/>
 <meta name="title" content="const¡¢static¡¢const staicÀí½â"/>
 <meta name="generator" content="Org-mode"/>
-<meta name="generated" content="2012-10-19 22:32:02 CST"/>
+<meta name="generated" content="2012-10-27 05:27:35 CST"/>
 <meta name="author" content="visaya fan"/>
 <meta name="description" content=""/>
 <meta name="keywords" content=""/>
-<style type="text/css">
- <!--/*--><![CDATA[/*><!--*/
-  html { font-family: Times, serif; font-size: 12pt; }
-  .title  { text-align: center; }
-  .todo   { color: red; }
-  .done   { color: green; }
-  .tag    { background-color: #add8e6; font-weight:normal }
-  .target { }
-  .timestamp { color: #bebebe; }
-  .timestamp-kwd { color: #5f9ea0; }
-  .right  {margin-left:auto; margin-right:0px;  text-align:right;}
-  .left   {margin-left:0px;  margin-right:auto; text-align:left;}
-  .center {margin-left:auto; margin-right:auto; text-align:center;}
-  p.verse { margin-left: 3% }
-  pre {
-	border: 1pt solid #AEBDCC;
-	background-color: #F3F5F7;
-	padding: 5pt;
-	font-family: courier, monospace;
-        font-size: 90%;
-        overflow:auto;
-  }
-  table { border-collapse: collapse; }
-  td, th { vertical-align: top;  }
-  th.right  { text-align:center;  }
-  th.left   { text-align:center;   }
-  th.center { text-align:center; }
-  td.right  { text-align:right;  }
-  td.left   { text-align:left;   }
-  td.center { text-align:center; }
-  dt { font-weight: bold; }
-  div.figure { padding: 0.5em; }
-  div.figure p { text-align: center; }
-  div.inlinetask {
-    padding:10px;
-    border:2px solid gray;
-    margin:10px;
-    background: #ffffcc;
-  }
-  textarea { overflow-x: auto; }
-  .linenr { font-size:smaller }
-  .code-highlighted {background-color:#ffff00;}
-  .org-info-js_info-navigation { border-style:none; }
-  #org-info-js_console-label { font-size:10px; font-weight:bold;
-                               white-space:nowrap; }
-  .org-info-js_search-highlight {background-color:#ffff00; color:#000000;
-                                 font-weight:bold; }
-  /*]]>*/-->
-</style><div id="org-div-comments"><a href="../../index.html#cpp">Ö÷Ò³</a><br/><a href="#disqus_thread">ÆÀÂÛ</a></div>
-<script type="text/javascript">
-<!--/*--><![CDATA[/*><!--*/
- function CodeHighlightOn(elem, id)
- {
-   var target = document.getElementById(id);
-   if(null != target) {
-     elem.cacheClassElem = elem.className;
-     elem.cacheClassTarget = target.className;
-     target.className = "code-highlighted";
-     elem.className   = "code-highlighted";
-   }
- }
- function CodeHighlightOff(elem, id)
- {
-   var target = document.getElementById(id);
-   if(elem.cacheClassElem)
-     elem.className = elem.cacheClassElem;
-   if(elem.cacheClassTarget)
-     target.className = elem.cacheClassTarget;
- }
-/*]]>*///-->
-</script>
+<div id="org-div-comments"><a href="../../index.html#cpp">Ö÷Ò³</a><br/><a href="#disqus_thread">ÆÀÂÛ</a></div>
+
 
 </head>
 <body>
@@ -116,8 +47,7 @@
 
 <dl>
 <dt>Àí½â</dt><dd>
-<p><br/>
-</p><ol>
+<ol>
 <li>±äÁ¿±»´æ´¢ÔÚÈ«¾Ö´æ´¢ÇøÀï£¬¿ÉÒÔÏÂ´Îµ÷ÓÃµÄÊ±ºòÈÔ¾É±£³ÖÔ­À´µÄÖµ£¬ÕâÊÇÓë¶ÑÕ»±äÁ¿µÄÇø±ğ¡£<br/>
 </li>
 <li>±äÁ¿Ç°static¸æÖª±àÒëÆ÷£¬´Ë±äÁ¿½öÔÚ±äÁ¿µÄ×÷ÓÃ·¶Î§ÄÚÓĞĞ§£¬ÕâÊÇÓëÈ«¾Ö±äÁ¿µÄÇø±ğ¡£<br/>
@@ -126,8 +56,7 @@
 
 </dd>
 <dt>Ò»¸öÑ¡ÔñÌâ</dt><dd>
-<p><br/>
-</p></dd>
+</dd>
 </dl>
 
 <p>¹ØÓÚstatic±äÁ¿£¬ÇëÑ¡ÔñÏÂÃæËùÓĞËµ·¨ÕıÈ·µÄÄÚÈİ£º <br/>
@@ -141,8 +70,7 @@
 <li>¾²Ì¬È«¾Ö±äÁ¿¹ı´ó£¬¿ÉÄÇ»áµ¼ÖÂ¶ÑÕ»Òç³ö¡£ <br/>
 </li>
 <li>
-<p><br/>
-</p></li>
+</li>
 </ol>
 
 <p>¶ÔÓÚA£¬B£º¸ù¾İ±¾Æª¸ÅÊö²¿·ÖµÄËµÃ÷b)£¬ÎÒÃÇÖªµÀ£¬A,B¶¼ÊÇÕıÈ·µÄ¡£ <br/>
@@ -158,7 +86,8 @@
 <div class="outline-text-2" id="text-2">
 
 
-<p><br/>
+
+
 <pre class="src src-c++"><span style="color: #7a378b;">#include</span> <span style="color: #8b2252;">&lt;iostream&gt;</span>
 <span style="color: #a020f0;">using</span> <span style="color: #a020f0;">namespace</span> <span style="color: #008b8b;">std</span>;
 <span style="color: #a020f0;">typedef</span> <span style="color: #228b22;">char</span>* <span style="color: #228b22;">pchar</span>;
@@ -173,10 +102,9 @@
 }
 </pre>
 
-</p><dl>
+<dl>
 <dt>ÉÏÃæ³ÌĞò³ö´íµÄÔ­Òò</dt><dd>
-<p><br/>
-</p></dd>
+</dd>
 </dl>
 
 <p>const char* p1 = str; ÆäÖĞp1ÊÇ¿É±äÖ¸ÕëÖ¸Ïò²»¿É±äµÄ×Ö·û´®¡£ËùÒÔp1++ÕıÈ·¡£<br/>
@@ -192,7 +120,8 @@ typedef char* pchar; ¶¨ÒåÁËÒ»ÖÖĞÂÀàĞÍ£¬ËùÒÔ const pchar p2; p2ÊÇconstÀàĞÍµÄ£¬ËùÒ
 <p>ËùÎ½¿ÉÖØÈëº¯Êı¾ÍÊÇ½á¹û¿ÉÔ¤²â£¨¼´Ö»ÒªÊäÈëÊı¾İÏàÍ¬£¬Êä³ö½á¹û¾ÍÏàÍ¬£©¡£<br/>
 ÏÂÃæµÄº¯Êı¾Í²»ÊÇ¿ÉÖØÈëº¯Êı£¬ÒòÎªstaticµÄÔµ¹Ê¡£<br/>
 </p>
-<p><br/>
+
+
 <pre class="src src-c++"><span style="color: #228b22;">unsigned</span> <span style="color: #228b22;">int</span> <span style="color: #0000ff;">sum_int</span>( <span style="color: #228b22;">unsigned</span> <span style="color: #228b22;">int</span> <span style="color: #a0522d;">base</span>)
 { 
         &#12288;<span style="color: #228b22;">unsigned</span> <span style="color: #228b22;">int</span> index; 
@@ -204,7 +133,7 @@ typedef char* pchar; ¶¨ÒåÁËÒ»ÖÖĞÂÀàĞÍ£¬ËùÒÔ const pchar p2; p2ÊÇconstÀàĞÍµÄ£¬ËùÒ
 </pre>
 
 
-</p></div>
+</div>
 
 </div>
 
@@ -213,7 +142,8 @@ typedef char* pchar; ¶¨ÒåÁËÒ»ÖÖĞÂÀàĞÍ£¬ËùÒÔ const pchar p2; p2ÊÇconstÀàĞÍµÄ£¬ËùÒ
 <div class="outline-text-2" id="text-4">
 
 
-<p><br/>
+
+
 <pre class="src src-c++"><span style="color: #a020f0;">class</span> <span style="color: #228b22;">A</span>
 {
 <span style="color: #a020f0;">public</span>:
@@ -234,7 +164,7 @@ typedef char* pchar; ¶¨ÒåÁËÒ»ÖÖĞÂÀàĞÍ£¬ËùÒÔ const pchar p2; p2ÊÇconstÀàĞÍµÄ£¬ËùÒ
 </pre>
 
 
-</p></div>
+</div>
 
 </div>
 
@@ -244,12 +174,12 @@ typedef char* pchar; ¶¨ÒåÁËÒ»ÖÖĞÂÀàĞÍ£¬ËùÒÔ const pchar p2; p2ÊÇconstÀàĞÍµÄ£¬ËùÒ
 
 <dl>
 <dt>ÀàµÄconst³ÉÔ±±äÁ¿Ö»ÄÜÒÔ³õÊ¼»¯ÁĞ±íµÄĞÎÊ½³õÊ¼»¯</dt><dd>
-<p><br/>
-</p></dd>
+</dd>
 </dl>
 
 
-<p><br/>
+
+
 <pre class="src src-c++"><span style="color: #a020f0;">class</span> <span style="color: #228b22;">A</span>
 {
 <span style="color: #a020f0;">public</span>:
@@ -269,6 +199,7 @@ typedef char* pchar; ¶¨ÒåÁËÒ»ÖÖĞÂÀàĞÍ£¬ËùÒÔ const pchar p2; p2ÊÇconstÀàĞÍµÄ£¬ËùÒ
 </pre>
 
 
+<p>
 ÉÏÃæ³ÌĞòµÚÒ»¸ö±¨´í£¬ÒòÎªÀàµÄconst³ÉÔ±±äÁ¿Ö»ÄÜÒÔ³õÊ¼»¯ÁĞ±íµÄĞÎÊ½³õÊ¼»¯¡£<br/>
 </p></div>
 
@@ -280,12 +211,12 @@ typedef char* pchar; ¶¨ÒåÁËÒ»ÖÖĞÂÀàĞÍ£¬ËùÒÔ const pchar p2; p2ÊÇconstÀàĞÍµÄ£¬ËùÒ
 
 <dl>
 <dt>static const±äÁ¿Óëstatic±äÁ¿³õÊ¼»¯·½Ê½Ò»Ñù</dt><dd>
-<p><br/>
-</p></dd>
+</dd>
 </dl>
 
 
-<p><br/>
+
+
 <pre class="src src-c++"><span style="color: #a020f0;">class</span> <span style="color: #228b22;">A</span>
 {
 <span style="color: #a020f0;">public</span>:
@@ -294,6 +225,7 @@ typedef char* pchar; ¶¨ÒåÁËÒ»ÖÖĞÂÀàĞÍ£¬ËùÒÔ const pchar p2; p2ÊÇconstÀàĞÍµÄ£¬ËùÒ
 <span style="color: #a020f0;">const</span> <span style="color: #228b22;">int</span> <span style="color: #008b8b;">A</span>::<span style="color: #a0522d;">a</span> = 0;
 </pre>
 
+<p>
 static const±äÁ¿Óëstatic±äÁ¿³õÊ¼»¯·½Ê½Ò»Ñù£¬Ö»ÊÇÇ°ÕßÔÚ±äÁ¿ÃûÇ°¼ÓÉÏconst¡£<br/>
 <script src="../../Layout/JS/disqus-comment.js"></script>
 <div id="disqus_thread">

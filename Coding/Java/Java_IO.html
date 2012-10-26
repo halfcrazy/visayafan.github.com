@@ -7,81 +7,12 @@
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
 <meta name="title" content="Java输入输出笔记"/>
 <meta name="generator" content="Org-mode"/>
-<meta name="generated" content="2012-10-19 22:33:08 CST"/>
+<meta name="generated" content="2012-10-27 05:27:44 CST"/>
 <meta name="author" content="visaya fan"/>
 <meta name="description" content=""/>
 <meta name="keywords" content=""/>
-<style type="text/css">
- <!--/*--><![CDATA[/*><!--*/
-  html { font-family: Times, serif; font-size: 12pt; }
-  .title  { text-align: center; }
-  .todo   { color: red; }
-  .done   { color: green; }
-  .tag    { background-color: #add8e6; font-weight:normal }
-  .target { }
-  .timestamp { color: #bebebe; }
-  .timestamp-kwd { color: #5f9ea0; }
-  .right  {margin-left:auto; margin-right:0px;  text-align:right;}
-  .left   {margin-left:0px;  margin-right:auto; text-align:left;}
-  .center {margin-left:auto; margin-right:auto; text-align:center;}
-  p.verse { margin-left: 3% }
-  pre {
-	border: 1pt solid #AEBDCC;
-	background-color: #F3F5F7;
-	padding: 5pt;
-	font-family: courier, monospace;
-        font-size: 90%;
-        overflow:auto;
-  }
-  table { border-collapse: collapse; }
-  td, th { vertical-align: top;  }
-  th.right  { text-align:center;  }
-  th.left   { text-align:center;   }
-  th.center { text-align:center; }
-  td.right  { text-align:right;  }
-  td.left   { text-align:left;   }
-  td.center { text-align:center; }
-  dt { font-weight: bold; }
-  div.figure { padding: 0.5em; }
-  div.figure p { text-align: center; }
-  div.inlinetask {
-    padding:10px;
-    border:2px solid gray;
-    margin:10px;
-    background: #ffffcc;
-  }
-  textarea { overflow-x: auto; }
-  .linenr { font-size:smaller }
-  .code-highlighted {background-color:#ffff00;}
-  .org-info-js_info-navigation { border-style:none; }
-  #org-info-js_console-label { font-size:10px; font-weight:bold;
-                               white-space:nowrap; }
-  .org-info-js_search-highlight {background-color:#ffff00; color:#000000;
-                                 font-weight:bold; }
-  /*]]>*/-->
-</style><div id="org-div-comments"><a href="../../index.html#java">主页</a><br/><a href="#disqus_thread">评论</a></div>
-<script type="text/javascript">
-<!--/*--><![CDATA[/*><!--*/
- function CodeHighlightOn(elem, id)
- {
-   var target = document.getElementById(id);
-   if(null != target) {
-     elem.cacheClassElem = elem.className;
-     elem.cacheClassTarget = target.className;
-     target.className = "code-highlighted";
-     elem.className   = "code-highlighted";
-   }
- }
- function CodeHighlightOff(elem, id)
- {
-   var target = document.getElementById(id);
-   if(elem.cacheClassElem)
-     elem.className = elem.cacheClassElem;
-   if(elem.cacheClassTarget)
-     target.className = elem.cacheClassTarget;
- }
-/*]]>*///-->
-</script>
+<div id="org-div-comments"><a href="../../index.html#java">主页</a><br/><a href="#disqus_thread">评论</a></div>
+
 
 </head>
 <body>
@@ -159,7 +90,8 @@
 <p>   File对象调用该方法，返回一个与File对象。<br/>
    如果调用File对象本身就是绝对路径，则返回File对象与调用File对象没有区别；如果调用File对象是相对路径，则返回File对象与调用File对象区别仅在前者是绝对路径，后者相对路径。<br/>
 </p>
-<p><br/>
+
+
 <pre class="src src-java"><span style="color: #228b22;">File</span> <span style="color: #a0522d;">file</span> = <span style="color: #a020f0;">new</span> <span style="color: #228b22;">File</span>(<span style="color: #8b2252;">"/home/visayafan/study/program/java/JavaIO/src/xjtu/test.txt"</span>);
 System.out.println(file);
 System.out.println(file.getAbsoluteFile());
@@ -169,7 +101,7 @@ System.out.println(file);
 System.out.println(file.getAbsoluteFile());
 </pre>
 
-</p></div>
+</div>
 </div>
 
 </div>
@@ -189,19 +121,23 @@ System.out.println(file.getAbsoluteFile());
    任何继承自InputStream或Reader的类都有read方法，可以从流中读取单个字节或字节数组数据，任何继承自OutputStream/Writer的类都有write方法，可以向流中写单个字节或字节数组数据。<br/>
    字节处理数据的方法效率是相当低的，于是出现了各种过滤流（处理流／包装流）。创建流对象时很少使用单一的类来创建，通常是用多种类的组合来达到期望的目的，如现有一字符串，想把它作为数据源，可以用 <code>StringReader</code> ，它的构造函数参数为String类型，于是:<br/>
 </p>
-<p><br/>
+
+
 <pre class="src src-java"><span style="color: #228b22;">StringReader</span> <span style="color: #a0522d;">sr</span> = <span style="color: #a020f0;">new</span> <span style="color: #228b22;">StrignReader</span>(<span style="color: #8b2252;">"theStringYouHave"</span>)
 </pre>
 
+<p>
    也可以用 <code>BufferedReader</code> ，其构造函数参数类型为Reader类型，由于StringReader继承自Reader，于是可以做为其参数：<br/>
 </p>
-<p><br/>
+
+
 <pre class="src src-java"><span style="color: #228b22;">BufferedReader</span> <span style="color: #a0522d;">br</span> = <span style="color: #a020f0;">new</span> <span style="color: #228b22;">BufferedReader</span>(<span style="color: #a020f0;">new</span> <span style="color: #228b22;">StringReader</span>(<span style="color: #8b2252;">"theStringYouHave"</span>)).
 </pre>
 
+<p>
    不同包装类有其自己不同其它类的优势，例如： <code>DataOutputStream</code> 可以和 <code>DataInputStream</code> 处理基本类型数据； <code>BufferedInputStream</code> 和 <code>BufferedOutputStream</code> 由于使用了缓冲技术对大批数据的处理速度比较快；<br/>
 </p>
-<p><br/>
+<p>
    Reader和Writer类与InputStream/OutputStream类不同在于前者是面向字符而后才面向字节，通常1字符=2个字节，可以通过 <code>InputStreamReader</code> 和 <code>OutputStreamWriter</code> 实现字节处理到字符处理的转化。<br/>
 </p></div>
 
@@ -248,8 +184,7 @@ System.out.println(file.getAbsoluteFile());
 </ol>
 
 
-<p><br/>
-</p></li>
+</li>
 </ul>
 </div>
 
@@ -337,7 +272,8 @@ System.out.println(file.getAbsoluteFile());
     <img src="./image/Screenshot.png"  alt="./image/Screenshot.png" /><br/>
     可以看到out和err是PrintStream类型，而in是未加包装的原始InputStream，所以如果要使用out或err的话，可以直接用System.out或System.err来初始化包装类，而System.in必须加以手工包装。<br/>
 
-<p><br/>
+
+
 <pre class="src src-java">        <span style="color: #b22222;">/*</span><span style="color: #b22222;">&#29992; InputStreamReader &#23558; InputStream&#31867;&#22411;&#30340; System.in &#36716;&#21270;&#25104; Reader&#31867;&#22411;&#65292;</span>
 <span style="color: #b22222;">&#24182;&#29992;&#26469;&#21021;&#22987;&#21270;&#19968;&#20010;BufferedREader*/</span>
         <span style="color: #228b22;">BufferedReader</span> <span style="color: #a0522d;">bfr</span> = <span style="color: #a020f0;">new</span> <span style="color: #228b22;">BufferedReader</span>(<span style="color: #a020f0;">new</span> <span style="color: #228b22;">InputStreamReader</span>(System.in));
@@ -351,7 +287,7 @@ System.out.println(file.getAbsoluteFile());
         pw.println(<span style="color: #8b2252;">"helloworld"</span>);
 </pre>
 
-</p></li>
+</li>
 </ul>
 <ul>
 <li id="sec-1-2-5-2">重定向<br/>
@@ -379,8 +315,7 @@ System.out.println(file.getAbsoluteFile());
    <code>ByteBuffer slice()</code> 返回一个ByteBuffer对象，内容为当前ByteBuffer从position开始的内容，<br/>
    并且二者共用内存（即修改一个会影响另一个）。<br/>
 </p>
-<p><br/>
-</p>
+
 <p>   <br/>
 <script src="../../Layout/JS/disqus-comment.js"></script>
 <div id="disqus_thread">

@@ -7,82 +7,13 @@
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
 <meta name="title" content="Note"/>
 <meta name="generator" content="Org-mode"/>
-<meta name="generated" content="2012-10-19 22:33:23 CST"/>
+<meta name="generated" content="2012-10-27 05:28:10 CST"/>
 <meta name="author" content="visaya fan"/>
 <meta name="description" content=""/>
 <meta name="keywords" content=""/>
-<style type="text/css">
- <!--/*--><![CDATA[/*><!--*/
-  html { font-family: Times, serif; font-size: 12pt; }
-  .title  { text-align: center; }
-  .todo   { color: red; }
-  .done   { color: green; }
-  .tag    { background-color: #add8e6; font-weight:normal }
-  .target { }
-  .timestamp { color: #bebebe; }
-  .timestamp-kwd { color: #5f9ea0; }
-  .right  {margin-left:auto; margin-right:0px;  text-align:right;}
-  .left   {margin-left:0px;  margin-right:auto; text-align:left;}
-  .center {margin-left:auto; margin-right:auto; text-align:center;}
-  p.verse { margin-left: 3% }
-  pre {
-	border: 1pt solid #AEBDCC;
-	background-color: #F3F5F7;
-	padding: 5pt;
-	font-family: courier, monospace;
-        font-size: 90%;
-        overflow:auto;
-  }
-  table { border-collapse: collapse; }
-  td, th { vertical-align: top;  }
-  th.right  { text-align:center;  }
-  th.left   { text-align:center;   }
-  th.center { text-align:center; }
-  td.right  { text-align:right;  }
-  td.left   { text-align:left;   }
-  td.center { text-align:center; }
-  dt { font-weight: bold; }
-  div.figure { padding: 0.5em; }
-  div.figure p { text-align: center; }
-  div.inlinetask {
-    padding:10px;
-    border:2px solid gray;
-    margin:10px;
-    background: #ffffcc;
-  }
-  textarea { overflow-x: auto; }
-  .linenr { font-size:smaller }
-  .code-highlighted {background-color:#ffff00;}
-  .org-info-js_info-navigation { border-style:none; }
-  #org-info-js_console-label { font-size:10px; font-weight:bold;
-                               white-space:nowrap; }
-  .org-info-js_search-highlight {background-color:#ffff00; color:#000000;
-                                 font-weight:bold; }
-  /*]]>*/-->
-</style><div id="org-div-comments"><a href="../../index.html#python">主页</a><br/><a href="#disqus_thread">评论</a></div>
+<div id="org-div-comments"><a href="../../index.html#python">主页</a><br/><a href="#disqus_thread">评论</a></div>
 <link rel="stylesheet" type="text/css" href="../style/style.css" />
-<script type="text/javascript">
-<!--/*--><![CDATA[/*><!--*/
- function CodeHighlightOn(elem, id)
- {
-   var target = document.getElementById(id);
-   if(null != target) {
-     elem.cacheClassElem = elem.className;
-     elem.cacheClassTarget = target.className;
-     target.className = "code-highlighted";
-     elem.className   = "code-highlighted";
-   }
- }
- function CodeHighlightOff(elem, id)
- {
-   var target = document.getElementById(id);
-   if(elem.cacheClassElem)
-     elem.className = elem.cacheClassElem;
-   if(elem.cacheClassTarget)
-     target.className = elem.cacheClassTarget;
- }
-/*]]>*///-->
-</script>
+
 
 </head>
 <body>
@@ -150,7 +81,8 @@
 <div class="outline-text-2" id="text-1">
 
 
-<p><br/>
+
+
 <pre class="example">前者指定具体路径，必须确保python在/usr/bin下。
 后者通过env在PATH路径中寻找python,
 ~$ echo $PATH
@@ -158,7 +90,7 @@
 就会在 /usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games目录下寻找python  
 </pre>
 
-</p></div>
+</div>
 
 </div>
 
@@ -167,7 +99,8 @@
 <div class="outline-text-2" id="text-2">
 
 
-<p><br/>
+
+
 <pre class="example">此时ab是同一个变量的别名
 &gt;&gt;&gt; a = [1,2,3]
 &gt;&gt;&gt; b=a
@@ -185,7 +118,7 @@
 1
 </pre>
 
-</p></div>
+</div>
 
 </div>
 
@@ -194,7 +127,8 @@
 <div class="outline-text-2" id="text-3">
 
 
-<p><br/>
+
+
 <pre class="example">1 $python script.py
 2 $python -i script.py   //可以保持交互
 3 $python
@@ -204,7 +138,7 @@
 </pre>
 
 
-</p></div>
+</div>
 
 </div>
 
@@ -213,7 +147,8 @@
 <div class="outline-text-2" id="text-4">
 
 
-<p><br/>
+
+
 <pre class="example">import re
 from re import match
 
@@ -221,7 +156,7 @@ import re as regex
 from re import matchas m
 </pre>
 
-</p></div>
+</div>
 
 </div>
 
@@ -230,7 +165,8 @@ from re import matchas m
 <div class="outline-text-2" id="text-5">
 
 
-<p><br/>
+
+
 <pre class="example">useful packages:
 Numeric: good fro numberical algebra, trigonometry.
 NumPy: Similar to Numeric, but handles arrays slightly differently and ahs a few other built-in commands and functions.
@@ -245,7 +181,7 @@ import P.Q.M; print P.Q.M.foo()
 import P.Q.M as M; print M.foo()
 </pre>
 
-</p></div>
+</div>
 
 </div>
 
@@ -272,12 +208,13 @@ Strong typing<br/>
 <div class="outline-text-3" id="text-6-2">
 
 
-<p><br/>
+
+
 <pre class="example">访问s[i:j:k]下标从0开始，包括i不包括j,间隔为k
 s[-n]倒数第n个字符
 </pre>
 
-</p></div>
+</div>
 
 </div>
 
@@ -286,7 +223,8 @@ s[-n]倒数第n个字符
 <div class="outline-text-3" id="text-6-3">
 
 
-<p><br/>
+
+
 <pre class="example">a= [0,[0,1,2],1,2,'hello']; a=[]; 可变 a=[0,1] a[2]=3=&gt;a=[0,1,2]
 Indexing: L[i], L[i][j]
 Slicing: L[i:j]
@@ -300,7 +238,7 @@ Index and slice assignment: L[1]=1 L[1:4]=[4,5,6]
 Making a list of integers: range(4)=&gt;[1,2,3,4]  range(1,5)=&gt;[1,2,3,4]
 </pre>
 
-</p></div>
+</div>
 
 </div>
 
@@ -318,7 +256,8 @@ Making a list of integers: range(4)=&gt;[1,2,3,4]  range(1,5)=&gt;[1,2,3,4]
 <div class="outline-text-3" id="text-6-5">
 
 
-<p><br/>
+
+
 <pre class="example">   Not a basic built-in python type.
 必须导入: from numpy import *
 
@@ -333,7 +272,7 @@ ar=(pi/4)*arange(3)
 sin(ar)
 </pre>
 
-</p></div>
+</div>
 
 </div>
 
@@ -342,7 +281,8 @@ sin(ar)
 <div class="outline-text-3" id="text-6-6">
 
 
-<p><br/>
+
+
 <pre class="example">Hash Tables:
     d={"duck":"eend", "water": "water"}   
 Lookup
@@ -352,10 +292,10 @@ Presence check
 </pre>
 
 
+<p>
 BinaryData RegExp<br/>
 </p>
-<p><br/>
-</p></div>
+</div>
 </div>
 
 </div>
@@ -389,8 +329,7 @@ BinaryData RegExp<br/>
 <div class="outline-text-2" id="text-10">
 
 
-<p><br/>
-</p></div>
+</div>
 
 </div>
 
@@ -399,7 +338,8 @@ BinaryData RegExp<br/>
 <div class="outline-text-2" id="text-11">
 
 
-<p><br/>
+
+
 <pre class="example">[]
 ()
 {}
@@ -407,7 +347,7 @@ BinaryData RegExp<br/>
 </pre>
 
 
-</p></div>
+</div>
 
 </div>
 
@@ -424,8 +364,7 @@ BinaryData RegExp<br/>
 <div class="outline-text-2" id="text-13">
 
 
-<p><br/>
-</p></div>
+</div>
 
 </div>
 
@@ -434,8 +373,7 @@ BinaryData RegExp<br/>
 <div class="outline-text-2" id="text-14">
 
 
-<p><br/>
-</p></div>
+</div>
 
 </div>
 
@@ -451,8 +389,7 @@ BinaryData RegExp<br/>
 <div class="outline-text-3" id="text-15-1">
 
 
-<p><br/>
-</p></div>
+</div>
 
 </div>
 
@@ -461,7 +398,8 @@ BinaryData RegExp<br/>
 <div class="outline-text-3" id="text-15-2">
 
 
-<p><br/>
+
+
 <pre class="example">&gt;&gt;&gt; a = 1
 &gt;&gt;&gt; while a&lt;10:
 ...     print a,
@@ -479,7 +417,7 @@ BinaryData RegExp<br/>
 </pre>
 
 
-</p></div>
+</div>
 
 </div>
 
@@ -488,7 +426,8 @@ BinaryData RegExp<br/>
 <div class="outline-text-3" id="text-15-3">
 
 
-<p><br/>
+
+
 <pre class="example">&gt;&gt;&gt; a = 'adaffad'
 &gt;&gt;&gt; for x in a:
 ...     print x,
@@ -527,7 +466,7 @@ a d a f f a d
 </pre>
 
 
-</p></div>
+</div>
 </div>
 
 </div>
@@ -541,8 +480,7 @@ raise<br/>
 except<br/>
 finally<br/>
 </p>
-<p><br/>
-</p></div>
+</div>
 
 </div>
 
@@ -558,7 +496,8 @@ finally<br/>
 <div class="outline-text-3" id="text-17-1">
 
 
-<p><br/>
+
+
 <pre class="example">dir()
 help()
 len()
@@ -574,7 +513,7 @@ lstrip() rstrip() strip() 去掉左/右/左右的空格
 0b 0 0x 二进制、八进制、十六进制
 </pre>
 
-</p></div>
+</div>
 </div>
 
 </div>
@@ -584,7 +523,8 @@ lstrip() rstrip() strip() 去掉左/右/左右的空格
 <div class="outline-text-2" id="text-18">
 
 
-<p><br/>
+
+
 <pre class="example">&gt;&gt;&gt; class A:
 ...     pass
 ... 
@@ -598,7 +538,7 @@ lstrip() rstrip() strip() 去掉左/右/左右的空格
 &lt;type 'type'&gt;
 </pre>
 
-</p>
+
 <p>  <br/>
 </p></div>
 
@@ -626,7 +566,8 @@ lstrip() rstrip() strip() 去掉左/右/左右的空格
 
 <p>  repr无歧义的标识对象，当执行后与原来的对象相同；str是为方便阅读。<br/>
 </p>
-<p><br/>
+
+
 <pre class="src src-python">&gt;&gt;&gt; s=<span style="color: #8b2252;">"""w'o"w"""</span>
 &gt;&gt;&gt; <span style="color: #7a378b;">repr</span>(s)
 <span style="color: #8b2252;">'\'w\\\'o"w\''</span>
@@ -643,9 +584,11 @@ Traceback (most recent call last):
 <span style="color: #8b2252;">True</span>
 </pre>
 
+<p>
   如果没有适合阅读的方法可供调用则str将调用repr<br/>
 </p>
-<p><br/>
+
+
 <pre class="src src-python">&gt;&gt;&gt; <span style="color: #a020f0;">class</span> <span style="color: #228b22;">Sic</span>(<span style="color: #7a378b;">object</span>): 
 ...   <span style="color: #a020f0;">def</span> <span style="color: #0000ff;">__repr__</span>(<span style="color: #7a378b;">object</span>): <span style="color: #a020f0;">return</span> <span style="color: #8b2252;">'foo'</span>
 ... 
@@ -662,9 +605,11 @@ foo
 &lt;__main__.Sic <span style="color: #7a378b;">object</span> at 0x2617f0&gt;
 </pre>
 
+<p>
   默认的是一样且无用的：<br/>
 </p>
-<p><br/>
+
+
 <pre class="src src-python">&gt;&gt;&gt; <span style="color: #a020f0;">class</span> <span style="color: #228b22;">Sic</span>(<span style="color: #7a378b;">object</span>): <span style="color: #a020f0;">pass</span>
 ... 
 &gt;&gt;&gt; <span style="color: #a020f0;">print</span> <span style="color: #7a378b;">str</span>(Sic())
@@ -673,6 +618,7 @@ foo
 &lt;__main__.Sic <span style="color: #7a378b;">object</span> at 0x8b7d0&gt;
 </pre>
 
+<p>
    Many values, such as numbers or structures like lists and dictionaries, have the same representation using either function. Strings and floating point numbers, in particular, have two distinct representations. <br/>
 </p></div>
 
@@ -685,11 +631,12 @@ foo
 <p>  前者在源码最开始导入，后者是函数加参数形式导入（无后缀）<br/>
   __import__返回module，故可直接调用方法：<br/>
 </p>
-<p><br/>
+
+
 <pre class="src src-python"><span style="color: #7a378b;">__import__</span>(os).getcwd()
 </pre>
 
-</p></div>
+</div>
 
 </div>
 
@@ -698,7 +645,8 @@ foo
 <div class="outline-text-2" id="text-23">
 
 
-<p><br/>
+
+
 <pre class="src src-python"><span style="color: #7a378b;">locals</span>() -&gt; dictionary
 update <span style="color: #a020f0;">and</span> rturn a dictionary contatining the current scope<span style="color: #8b2252;">'s lcoal variables.</span>
 </pre>
@@ -709,7 +657,7 @@ update <span style="color: #a020f0;">and</span> rturn a dictionary contatining t
 &#26377;&#21442;&#26102;&#31561;&#20215;&#20110;object.__dict__
 </pre>
 
-</p></div>
+</div>
 
 </div>
 
@@ -744,7 +692,8 @@ update <span style="color: #a020f0;">and</span> rturn a dictionary contatining t
   在main里面构造了一个实例window。此时cls相当于MineSweep。<br/>
   更进一步封装(Encapsulation)<br/>
 </p>
-<p><br/>
+
+
 <pre class="src src-python"><span style="color: #a020f0;">class</span> <span style="color: #228b22;">MineSweep</span>(tkinter.Frame):
 
     <span style="color: #228b22;">@classmethod</span>
@@ -765,7 +714,7 @@ update <span style="color: #a020f0;">and</span> rturn a dictionary contatining t
 <script src="../../Layout/JS/disqus-comment.js"></script>
 <div id="disqus_thread">
 </div>
-</p></div>
+</div>
 </div>
 </div>
 

@@ -7,81 +7,12 @@
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
 <meta name="title" content="最近更新博文自动生成的Python脚本"/>
 <meta name="generator" content="Org-mode"/>
-<meta name="generated" content="2012-10-23 16:08:04 CST"/>
+<meta name="generated" content="2012-10-27 05:27:48 CST"/>
 <meta name="author" content="visaya fan"/>
 <meta name="description" content=""/>
 <meta name="keywords" content=""/>
-<style type="text/css">
- <!--/*--><![CDATA[/*><!--*/
-  html { font-family: Times, serif; font-size: 12pt; }
-  .title  { text-align: center; }
-  .todo   { color: red; }
-  .done   { color: green; }
-  .tag    { background-color: #add8e6; font-weight:normal }
-  .target { }
-  .timestamp { color: #bebebe; }
-  .timestamp-kwd { color: #5f9ea0; }
-  .right  {margin-left:auto; margin-right:0px;  text-align:right;}
-  .left   {margin-left:0px;  margin-right:auto; text-align:left;}
-  .center {margin-left:auto; margin-right:auto; text-align:center;}
-  p.verse { margin-left: 3% }
-  pre {
-	border: 1pt solid #AEBDCC;
-	background-color: #F3F5F7;
-	padding: 5pt;
-	font-family: courier, monospace;
-        font-size: 90%;
-        overflow:auto;
-  }
-  table { border-collapse: collapse; }
-  td, th { vertical-align: top;  }
-  th.right  { text-align:center;  }
-  th.left   { text-align:center;   }
-  th.center { text-align:center; }
-  td.right  { text-align:right;  }
-  td.left   { text-align:left;   }
-  td.center { text-align:center; }
-  dt { font-weight: bold; }
-  div.figure { padding: 0.5em; }
-  div.figure p { text-align: center; }
-  div.inlinetask {
-    padding:10px;
-    border:2px solid gray;
-    margin:10px;
-    background: #ffffcc;
-  }
-  textarea { overflow-x: auto; }
-  .linenr { font-size:smaller }
-  .code-highlighted {background-color:#ffff00;}
-  .org-info-js_info-navigation { border-style:none; }
-  #org-info-js_console-label { font-size:10px; font-weight:bold;
-                               white-space:nowrap; }
-  .org-info-js_search-highlight {background-color:#ffff00; color:#000000;
-                                 font-weight:bold; }
-  /*]]>*/-->
-</style>
-<script type="text/javascript">
-<!--/*--><![CDATA[/*><!--*/
- function CodeHighlightOn(elem, id)
- {
-   var target = document.getElementById(id);
-   if(null != target) {
-     elem.cacheClassElem = elem.className;
-     elem.cacheClassTarget = target.className;
-     target.className = "code-highlighted";
-     elem.className   = "code-highlighted";
-   }
- }
- function CodeHighlightOff(elem, id)
- {
-   var target = document.getElementById(id);
-   if(elem.cacheClassElem)
-     elem.className = elem.cacheClassElem;
-   if(elem.cacheClassTarget)
-     target.className = elem.cacheClassTarget;
- }
-/*]]>*///-->
-</script>
+<div id="org-div-comments"><a href="../../index.html#python">主页</a><br/><a href="#disqus_thread">评论</a></div>
+
 
 </head>
 <body>
@@ -104,7 +35,7 @@
 </blockquote>
 
 
-<p><br/>
+<p>
 这样的一句话，此时通过 <b>git blame index.html</b> 命令可以看到:<br/>
 </p><blockquote>
 
@@ -113,11 +44,12 @@
 </blockquote>
 
 
-<p><br/>
+<p>
 第一列表示提交标识，由于还没有提交，所以为0；第二列表示作者，由于还没有提示，显示的是(Not Committed；第三列显示日期；第四列显示行号；之后是此行内容。<br/>
 可以写个Python脚本来自动生成最近更新的博文，用到的模块主要有：subprocess和re，前者用于执行shell命令，后者用于正则匹配。<br/>
 </p>
-<p><br/>
+
+
 <pre class="src src-python"><span style="color: #b22222;">#!/usr/bin/python</span>
 <span style="color: #a020f0;">from</span> subprocess <span style="color: #a020f0;">import</span> call
 <span style="color: #a020f0;">import</span> re
@@ -140,7 +72,7 @@ allCont.sort()
 </pre>
 
 
-</p><ol>
+<ol>
 <li>(\d{4}-\d{2}-\d{2}\s\d{2}:\d{2}:\d{2}) 用于匹配日期<br/>
 </li>
 <li>由于index.html是通过iframe来显示updates.html的，所以链接要加上target="_top"，不然点击链接的时候只能在iframe里打开而不是在整个页面打开。<br/>
@@ -156,17 +88,18 @@ allCont.sort()
 <p>所有匹配结果保存在allCont中，通过list内置的sort函数排序（由于列表第一个是日期，所以默认是对日期排序，这也正是我们所需要的）。<br/>
 之后查找每个匹配在updates.html中是否出现过，如果没有就插入，此处为实现插入效果用的是正则表达式的替换函数sub，即替换&lt;ul&gt;为&lt;ul&gt;\n&lt;li&gt;日期&lt;a href="链接"&gt;博文名&lt;/a&gt;&lt;/li&gt;.(由于updates.html只有一个&lt;ul&gt;标签，所以这么做没有问题)<br/>
 </p>
-<p><br/>
+<p>
 效果正如主页中的Home标签下"最近更新"所示。<br/>
 </p>
-<p><br/>
+
+
 <a class="bshareDiv" href="http://www.bshare.cn/share">分享按钮</a><script type="text/javascript" charset="utf-8" src="http://static.bshare.cn/b/buttonLite.js#uuid=&amp;style=10&amp;bgcolor=Blue"></script>
 <br/>
 <script src="../../Layout/JS/disqus-comment.js"></script>
 <div id="disqus_thread">
 </div>
 
-</p></div>
+</div>
 
 </body>
 </html>

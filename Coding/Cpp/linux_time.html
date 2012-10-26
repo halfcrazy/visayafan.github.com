@@ -7,81 +7,12 @@
 <meta http-equiv="Content-Type" content="text/html;charset=gb18030"/>
 <meta name="title" content="Linux下时间函数"/>
 <meta name="generator" content="Org-mode"/>
-<meta name="generated" content="2012-10-19 22:31:57 CST"/>
+<meta name="generated" content="2012-10-27 05:27:29 CST"/>
 <meta name="author" content="visaya fan"/>
 <meta name="description" content=""/>
 <meta name="keywords" content=""/>
-<style type="text/css">
- <!--/*--><![CDATA[/*><!--*/
-  html { font-family: Times, serif; font-size: 12pt; }
-  .title  { text-align: center; }
-  .todo   { color: red; }
-  .done   { color: green; }
-  .tag    { background-color: #add8e6; font-weight:normal }
-  .target { }
-  .timestamp { color: #bebebe; }
-  .timestamp-kwd { color: #5f9ea0; }
-  .right  {margin-left:auto; margin-right:0px;  text-align:right;}
-  .left   {margin-left:0px;  margin-right:auto; text-align:left;}
-  .center {margin-left:auto; margin-right:auto; text-align:center;}
-  p.verse { margin-left: 3% }
-  pre {
-	border: 1pt solid #AEBDCC;
-	background-color: #F3F5F7;
-	padding: 5pt;
-	font-family: courier, monospace;
-        font-size: 90%;
-        overflow:auto;
-  }
-  table { border-collapse: collapse; }
-  td, th { vertical-align: top;  }
-  th.right  { text-align:center;  }
-  th.left   { text-align:center;   }
-  th.center { text-align:center; }
-  td.right  { text-align:right;  }
-  td.left   { text-align:left;   }
-  td.center { text-align:center; }
-  dt { font-weight: bold; }
-  div.figure { padding: 0.5em; }
-  div.figure p { text-align: center; }
-  div.inlinetask {
-    padding:10px;
-    border:2px solid gray;
-    margin:10px;
-    background: #ffffcc;
-  }
-  textarea { overflow-x: auto; }
-  .linenr { font-size:smaller }
-  .code-highlighted {background-color:#ffff00;}
-  .org-info-js_info-navigation { border-style:none; }
-  #org-info-js_console-label { font-size:10px; font-weight:bold;
-                               white-space:nowrap; }
-  .org-info-js_search-highlight {background-color:#ffff00; color:#000000;
-                                 font-weight:bold; }
-  /*]]>*/-->
-</style><div id="org-div-comments"><a href="../../index.html#cpp">主页</a><br/><a href="#disqus_thread">评论</a></div>
-<script type="text/javascript">
-<!--/*--><![CDATA[/*><!--*/
- function CodeHighlightOn(elem, id)
- {
-   var target = document.getElementById(id);
-   if(null != target) {
-     elem.cacheClassElem = elem.className;
-     elem.cacheClassTarget = target.className;
-     target.className = "code-highlighted";
-     elem.className   = "code-highlighted";
-   }
- }
- function CodeHighlightOff(elem, id)
- {
-   var target = document.getElementById(id);
-   if(elem.cacheClassElem)
-     elem.className = elem.cacheClassElem;
-   if(elem.cacheClassTarget)
-     target.className = elem.cacheClassTarget;
- }
-/*]]>*///-->
-</script>
+<div id="org-div-comments"><a href="../../index.html#cpp">主页</a><br/><a href="#disqus_thread">评论</a></div>
+
 
 </head>
 <body>
@@ -116,7 +47,8 @@
 </ul>
 
 
-<p><br/>
+
+
 <pre class="src src-java"><span style="color: #228b22;">struct</span> <span style="color: #a0522d;">timeval</span>
 {
     <span style="color: #228b22;">long</span> <span style="color: #a0522d;">tv_sec</span>;
@@ -124,13 +56,14 @@
 };
 </pre>
 
-</p><ul>
+<ul>
 <li>struct timespec有两个成员，一个是秒，一个是纳秒。<br/>
 </li>
 </ul>
 
 
-<p><br/>
+
+
 <pre class="src src-java"><span style="color: #228b22;">struct</span> <span style="color: #a0522d;">timespec</span>
 {
     <span style="color: #228b22;">time_t</span> <span style="color: #a0522d;">tv_sec</span>;
@@ -138,13 +71,14 @@
 };
 </pre>
 
-</p><ul>
+<ul>
 <li>truct tm是直观意义上的时间表示方法：<br/>
 </li>
 </ul>
 
 
-<p><br/>
+
+
 <pre class="src src-java"><span style="color: #228b22;">struct</span> <span style="color: #a0522d;">tm</span>
 {
     <span style="color: #228b22;">int</span> <span style="color: #a0522d;">tm_sec</span>;
@@ -159,7 +93,7 @@
 };
 </pre>
 
-</p></div>
+</div>
 
 </div>
 
@@ -170,7 +104,8 @@
 <p>（1） 时间格式间的转换函数<br/>
 主要是 time_t、struct tm、时间的字符串格式之间的转换。看下面的函数参数类型以及返回值类型：<br/>
 </p>
-<p><br/>
+
+
 <pre class="src src-java"><span style="color: #228b22;">char</span> *asctime(<span style="color: #a020f0;">const</span> <span style="color: #228b22;">struct</span> <span style="color: #a0522d;">tm</span> *tm);
 <span style="color: #228b22;">char</span> *ctime(<span style="color: #a020f0;">const</span> <span style="color: #228b22;">time_t</span> *timep);
 <span style="color: #228b22;">struct</span> <span style="color: #0000ff;">tm</span> *gmtime(<span style="color: #a020f0;">const</span> <span style="color: #228b22;">time_t</span> *timep);
@@ -178,15 +113,18 @@
 <span style="color: #228b22;">time_t</span> <span style="color: #0000ff;">mktime</span>(<span style="color: #228b22;">struct</span> <span style="color: #a0522d;">tm</span> *tm);
 </pre>
 
+<p>
 gmtime和localtime的参数以及返回值类型相同，区别是前者返回的格林威治标准时间，后者是当地时间。<br/>
 （2） 获取时间函数<br/>
 两个函数，获取的时间类型看原型就知道了：<br/>
 </p>
-<p><br/>
+
+
 <pre class="src src-java"><span style="color: #228b22;">time_t</span> <span style="color: #0000ff;">time</span>(time_t *t);
 <span style="color: #228b22;">int</span> <span style="color: #0000ff;">gettimeofday</span>(<span style="color: #228b22;">struct</span> <span style="color: #a0522d;">timeval</span> *tv, <span style="color: #228b22;">struct</span> <span style="color: #a0522d;">timezone</span> *tz);
 </pre>
 
+<p>
 前者获取time_t类型，后者获取struct timeval类型，因为类型的缘故，前者只能精确到秒，后者可以精确到微秒。<br/>
 </p></div>
 
@@ -198,7 +136,8 @@ gmtime和localtime的参数以及返回值类型相同，区别是前者返回的格林威治标准时间，后�
 
 <p>主要的延迟函数有：sleep(),usleep(),nanosleep(),select(),pselect().<br/>
 </p>
-<p><br/>
+
+
 <pre class="src src-java">unsigned <span style="color: #228b22;">int</span> <span style="color: #0000ff;">sleep</span>(unsigned <span style="color: #228b22;">int</span> <span style="color: #a0522d;">seconds</span>);
 <span style="color: #228b22;">void</span> <span style="color: #0000ff;">usleep</span>(unsigned <span style="color: #228b22;">long</span> <span style="color: #a0522d;">usec</span>);
 <span style="color: #228b22;">int</span> <span style="color: #0000ff;">nanosleep</span>(<span style="color: #a020f0;">const</span> <span style="color: #228b22;">struct</span> <span style="color: #a0522d;">timespec</span> *req, <span style="color: #228b22;">struct</span> <span style="color: #a0522d;">timespec</span> *rem);
@@ -206,13 +145,14 @@ gmtime和localtime的参数以及返回值类型相同，区别是前者返回的格林威治标准时间，后�
 <span style="color: #228b22;">int</span> <span style="color: #0000ff;">pselect</span>(<span style="color: #228b22;">int</span> <span style="color: #a0522d;">n</span>, fd_set *readfds, fd_set *writefds, fd_set *exceptfds, <span style="color: #a020f0;">const</span> <span style="color: #228b22;">struct</span> <span style="color: #a0522d;">timespec</span> *timeout, <span style="color: #a020f0;">const</span> <span style="color: #228b22;">sigset_t</span> *sigmask);
 </pre>
 
+<p>
 alarm函数是信号方式的延迟，这种方式不直观，这里不说了。<br/>
 仅通过函数原型中时间参数类型，可以猜测sleep可以精确到秒级，usleep/select可以精确到微妙级，nanosleep和pselect可以精确到纳秒级。<br/>
 而实际实现中，linux上的nanosleep和alarm相同，都是基于内核时钟机制实现，受linux内核时钟实现的影响，并不能达到纳秒级的精度，man nanosleep也可以看到这个说明，man里给出的精度是：Linux/i386上是10 ms ，Linux/Alpha上是1ms。<br/>
 这里有一篇文章<a href="http://blog.csdn.net/zhoujunyi/archive/2007/03/30/1546330.aspx">http://blog.csdn.net/zhoujunyi/archive/2007/03/30/1546330.aspx</a>，<br/>
 测试了不同延迟函数之间的精确度。文章给出的结论是linux上精度最高的是select，10ms级别。我在本机器测试select和pselect相当，都达到了1ms级的精度，精度高于文章中给出的10ms，sleep在秒级以上和usleep/nanosleep相当。下面贴下我机器上1ms时候的测试结果，其他不贴了：<br/>
 </p>
-<p><br/>
+<p>
 sleep 1000 0 -1000<br/>
 usleep 1000 2974 1974<br/>
 nanosleep 1000 2990 1990<br/>

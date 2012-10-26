@@ -7,81 +7,12 @@
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
 <meta name="title" content="关键字 extern"/>
 <meta name="generator" content="Org-mode"/>
-<meta name="generated" content="2012-10-19 22:31:59 CST"/>
+<meta name="generated" content="2012-10-27 05:27:31 CST"/>
 <meta name="author" content="visaya fan"/>
 <meta name="description" content=""/>
 <meta name="keywords" content=""/>
-<style type="text/css">
- <!--/*--><![CDATA[/*><!--*/
-  html { font-family: Times, serif; font-size: 12pt; }
-  .title  { text-align: center; }
-  .todo   { color: red; }
-  .done   { color: green; }
-  .tag    { background-color: #add8e6; font-weight:normal }
-  .target { }
-  .timestamp { color: #bebebe; }
-  .timestamp-kwd { color: #5f9ea0; }
-  .right  {margin-left:auto; margin-right:0px;  text-align:right;}
-  .left   {margin-left:0px;  margin-right:auto; text-align:left;}
-  .center {margin-left:auto; margin-right:auto; text-align:center;}
-  p.verse { margin-left: 3% }
-  pre {
-	border: 1pt solid #AEBDCC;
-	background-color: #F3F5F7;
-	padding: 5pt;
-	font-family: courier, monospace;
-        font-size: 90%;
-        overflow:auto;
-  }
-  table { border-collapse: collapse; }
-  td, th { vertical-align: top;  }
-  th.right  { text-align:center;  }
-  th.left   { text-align:center;   }
-  th.center { text-align:center; }
-  td.right  { text-align:right;  }
-  td.left   { text-align:left;   }
-  td.center { text-align:center; }
-  dt { font-weight: bold; }
-  div.figure { padding: 0.5em; }
-  div.figure p { text-align: center; }
-  div.inlinetask {
-    padding:10px;
-    border:2px solid gray;
-    margin:10px;
-    background: #ffffcc;
-  }
-  textarea { overflow-x: auto; }
-  .linenr { font-size:smaller }
-  .code-highlighted {background-color:#ffff00;}
-  .org-info-js_info-navigation { border-style:none; }
-  #org-info-js_console-label { font-size:10px; font-weight:bold;
-                               white-space:nowrap; }
-  .org-info-js_search-highlight {background-color:#ffff00; color:#000000;
-                                 font-weight:bold; }
-  /*]]>*/-->
-</style><div id="org-div-comments"><a href="../../index.html#cpp">主页</a><br/><a href="#disqus_thread">评论</a></div>
-<script type="text/javascript">
-<!--/*--><![CDATA[/*><!--*/
- function CodeHighlightOn(elem, id)
- {
-   var target = document.getElementById(id);
-   if(null != target) {
-     elem.cacheClassElem = elem.className;
-     elem.cacheClassTarget = target.className;
-     target.className = "code-highlighted";
-     elem.className   = "code-highlighted";
-   }
- }
- function CodeHighlightOff(elem, id)
- {
-   var target = document.getElementById(id);
-   if(elem.cacheClassElem)
-     elem.className = elem.cacheClassElem;
-   if(elem.cacheClassTarget)
-     target.className = elem.cacheClassTarget;
- }
-/*]]>*///-->
-</script>
+<div id="org-div-comments"><a href="../../index.html#cpp">主页</a><br/><a href="#disqus_thread">评论</a></div>
+
 
 </head>
 <body>
@@ -135,7 +66,8 @@
 </ul>
 
 
-<p><br/>
+
+
 <pre class="src src-c++"><span style="color: #b22222;">//</span><span style="color: #b22222;">vf.h</span>
 <span style="color: #a020f0;">extern</span> <span style="color: #228b22;">char</span> *<span style="color: #a0522d;">pch</span>;       (ref:<span style="color: #a020f0;">extern</span>)
 <span style="color: #b22222;">//</span><span style="color: #b22222;">vf.cpp</span>
@@ -152,13 +84,14 @@
 }
 </pre>
 
-</p><ul>
+<ul>
 <li>有的人喜欢声明的时候就定义，例如 extern char* pch="abc"，此时有没有extern没有区别。下面例子编译出错，因为test1.cpp中include了vf.h，test2.cpp中也include了vf.h，展开后两个cpp文件中都有pch声明和定义，所以编译出错： <code>multiple definition of pch</code><br/>
 </li>
 </ul>
 
 
-<p><br/>
+
+
 <pre class="src src-c++"><span style="color: #b22222;">//</span><span style="color: #b22222;">vf.h</span>
 <span style="color: #a020f0;">extern</span> <span style="color: #228b22;">char</span> *<span style="color: #a0522d;">pch</span>=<span style="color: #8b2252;">"abd"</span>;
 <span style="color: #b22222;">//</span><span style="color: #b22222;">test1.cpp</span>
@@ -184,13 +117,14 @@
 }
 </pre>
 
-</p><ul>
+<ul>
 <li>extern与static的区别： <code>static</code> 声明同时定义，而 <code>extern</code> 可以声明同时定义也可以只声明不定义。<br/>
 </li>
 </ul>
 
 
-<p><br/>
+
+
 <pre class="src src-c++"><span style="color: #b22222;">//</span><span style="color: #b22222;">vf.h</span>
 <span style="color: #a020f0;">static</span> <span style="color: #228b22;">char</span> <span style="color: #a0522d;">pch</span>[]={<span style="color: #8b2252;">'a'</span>,<span style="color: #8b2252;">'b'</span>,<span style="color: #8b2252;">'c'</span>};
 <span style="color: #228b22;">void</span> <span style="color: #0000ff;">f</span>();
@@ -202,6 +136,7 @@
 <span style="color: #228b22;">void</span> <span style="color: #0000ff;">g</span>(){pch[0]=<span style="color: #8b2252;">'1'</span>;}
 </pre>
 
+<p>
    上面的代码可以编译成功，虽然test1中的pch和test2中的pch名称相同但地址不同，彼此互不影响（编译器优化时可能将它们当成地址空间相同来处理，但这只是编译器优化的结果，并不是真正的结果），即pch在test1中声明定义了一次，在test2中声明定义了一次。但如果将static换成extern并将定义写在vf.cpp中，则test1和test2的pch共享同一个地址。<br/>
 </p><ul>
 <li>头文件中 <code>static int a</code> 和 <code>int a</code> 的区别：后者如果有两个cpp文件t1,t2同时include该头文件，则编译出错，因为a被重复定义，因为a是全局的，对t1和t2都是可见的，所以会冲突。而前者则不会static表明a是一个内部连接，t1中的a只对t1有效，即t1和t2中的a互不关联，名字一样但地址空间不同，所以不会冲突。<br/>

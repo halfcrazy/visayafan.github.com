@@ -7,81 +7,12 @@
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
 <meta name="title" content="Linux内核－内存管理"/>
 <meta name="generator" content="Org-mode"/>
-<meta name="generated" content="2012-10-19 22:34:06 CST"/>
+<meta name="generated" content="2012-10-27 05:28:37 CST"/>
 <meta name="author" content="visaya fan"/>
 <meta name="description" content=""/>
 <meta name="keywords" content=""/>
-<style type="text/css">
- <!--/*--><![CDATA[/*><!--*/
-  html { font-family: Times, serif; font-size: 12pt; }
-  .title  { text-align: center; }
-  .todo   { color: red; }
-  .done   { color: green; }
-  .tag    { background-color: #add8e6; font-weight:normal }
-  .target { }
-  .timestamp { color: #bebebe; }
-  .timestamp-kwd { color: #5f9ea0; }
-  .right  {margin-left:auto; margin-right:0px;  text-align:right;}
-  .left   {margin-left:0px;  margin-right:auto; text-align:left;}
-  .center {margin-left:auto; margin-right:auto; text-align:center;}
-  p.verse { margin-left: 3% }
-  pre {
-	border: 1pt solid #AEBDCC;
-	background-color: #F3F5F7;
-	padding: 5pt;
-	font-family: courier, monospace;
-        font-size: 90%;
-        overflow:auto;
-  }
-  table { border-collapse: collapse; }
-  td, th { vertical-align: top;  }
-  th.right  { text-align:center;  }
-  th.left   { text-align:center;   }
-  th.center { text-align:center; }
-  td.right  { text-align:right;  }
-  td.left   { text-align:left;   }
-  td.center { text-align:center; }
-  dt { font-weight: bold; }
-  div.figure { padding: 0.5em; }
-  div.figure p { text-align: center; }
-  div.inlinetask {
-    padding:10px;
-    border:2px solid gray;
-    margin:10px;
-    background: #ffffcc;
-  }
-  textarea { overflow-x: auto; }
-  .linenr { font-size:smaller }
-  .code-highlighted {background-color:#ffff00;}
-  .org-info-js_info-navigation { border-style:none; }
-  #org-info-js_console-label { font-size:10px; font-weight:bold;
-                               white-space:nowrap; }
-  .org-info-js_search-highlight {background-color:#ffff00; color:#000000;
-                                 font-weight:bold; }
-  /*]]>*/-->
-</style><div id="org-div-comments"><a href="../../index.html#linuxkernel">主页</a><br/><a href="#disqus_thread">评论</a></div>
-<script type="text/javascript">
-<!--/*--><![CDATA[/*><!--*/
- function CodeHighlightOn(elem, id)
- {
-   var target = document.getElementById(id);
-   if(null != target) {
-     elem.cacheClassElem = elem.className;
-     elem.cacheClassTarget = target.className;
-     target.className = "code-highlighted";
-     elem.className   = "code-highlighted";
-   }
- }
- function CodeHighlightOff(elem, id)
- {
-   var target = document.getElementById(id);
-   if(elem.cacheClassElem)
-     elem.className = elem.cacheClassElem;
-   if(elem.cacheClassTarget)
-     target.className = elem.cacheClassTarget;
- }
-/*]]>*///-->
-</script>
+<div id="org-div-comments"><a href="../../index.html#linuxkernel">主页</a><br/><a href="#disqus_thread">评论</a></div>
+
 <script type="text/javascript" src="http://orgmode.org/mathjax/MathJax.js">
 <!--/*--><![CDATA[/*><!--*/
     MathJax.Hub.Config({
@@ -177,7 +108,8 @@
 
 <p>  所有的页描述符都在一个名为 <code>mem_map</code> 的数组中。<br/>
 </p>
-<p><br/>
+
+
 <pre class="src src-c"><span class="linenr"> 1:  </span><span style="color: #a020f0;">struct</span> <span style="color: #228b22;">page</span> {
 <span class="linenr"> 2:  </span>    <span style="color: #228b22;">page_flags_t</span> <span style="color: #a0522d;">flags</span>;
 <span class="linenr"> 3:  </span>    <span style="color: #228b22;">atomic_t</span> <span style="color: #a0522d;">_count</span>;            
@@ -199,7 +131,7 @@
 <span class="linenr">19:  </span>}
 </pre>
 
-</p></div>
+</div>
 
 </div>
 
@@ -210,7 +142,8 @@
 <p>  不同位置的内存访问速度不同，不同位置的内存对应不同的Node，每个Node都由一个描述符来描述。<br/>
   pg_data_t通过其成员pgdat_next链接成链表，pgdat_list指向其第一个成员。<br/>
 </p>
-<p><br/>
+
+
 <pre class="src src-c"><span class="linenr"> 1:  </span><span style="color: #a020f0;">typedef</span> <span style="color: #a020f0;">struct</span> <span style="color: #228b22;">pglist_data</span> {
 <span class="linenr"> 2:  </span>    <span style="color: #a020f0;">struct</span> <span style="color: #228b22;">zone</span> <span style="color: #a0522d;">node_zones</span>[MAX_NR_ZONES]; <span style="color: #b22222;">/* </span><span style="color: #b22222;">maximum number of zones, normally 3 </span><span style="color: #b22222;">*/</span>
 <span class="linenr"> 3:  </span>    <span style="color: #a020f0;">struct</span> <span style="color: #228b22;">zonelist</span> <span style="color: #a0522d;">node_zonelists</span>[GFP_ZONETYPES];
@@ -235,7 +168,7 @@
 <span class="linenr">22:  </span><span style="color: #7a378b;">#define</span> <span style="color: #a0522d;">GFP_ZONEMASK</span>    0x03
 </pre>
 
-</p>
+
 <p>  <br/>
 </p></div>
 
@@ -249,7 +182,8 @@
   ZONE_DMA是能够DMA的区域（某些体系结构可以以DMA方式访问所有内存则ZONE_DMA为空；在x86上只能在以DMA访问前16M内存故此时ZONE_DMA＝0-16M），zone_dma和zone_normal是可以被内核映射的区域，剩下的区域即不能被映射（如x86－64由于可以映射到所有内存，故没有highmem区）的为zone_highmem（高端内存）。x86上zone_normal为16-896M, zone_highmem为&gt;896M.<br/>
   所有的zone都保存在一个struct zone[] zone_table中<br/>
 </p>
-<p><br/>
+
+
 <pre class="src src-c"><span class="linenr"> 1:  </span><span style="color: #a020f0;">struct</span> <span style="color: #228b22;">zone</span> {
 <span class="linenr"> 2:  </span>    <span style="color: #228b22;">unsigned</span> <span style="color: #228b22;">long</span>       <span style="color: #a0522d;">free_pages</span>; <span style="color: #b22222;">/* </span><span style="color: #b22222;">&#27492;zone&#20013;&#30340;&#31354;&#38386;&#39029; </span><span style="color: #b22222;">*/</span>
 <span class="linenr"> 3:  </span>    <span style="color: #228b22;">unsigned</span> <span style="color: #228b22;">long</span>       <span style="color: #a0522d;">pages_min</span>, <span style="color: #a0522d;">pages_low</span>, <span style="color: #a0522d;">pages_high</span>;
@@ -302,11 +236,12 @@
 </pre>
 
 
-</p>
+
 <p>  <br/>
 可以用page_zone函数来判断指定页所在的zone<br/>
 </p>
-<p><br/>
+
+
 <pre class="src src-c"><span class="linenr"> 1:  </span><span style="color: #7a378b;">#define</span> <span style="color: #a0522d;">NODEZONE_SHIFT</span> (<span style="color: #a020f0;">sizeof</span>(page_flags_t)*8 - MAX_NODES_SHIFT - MAX_ZONES_SHIFT)
 <span class="linenr"> 2:  </span><span style="color: #a020f0;">static</span> <span style="color: #a020f0;">inline</span> <span style="color: #a020f0;">struct</span> <span style="color: #228b22;">zone</span> *<span style="color: #0000ff;">page_zone</span>(<span style="color: #a020f0;">struct</span> <span style="color: #228b22;">page</span> *<span style="color: #a0522d;">page</span>)
 <span class="linenr"> 3:  </span>{
@@ -325,7 +260,7 @@
 <span class="linenr">16:  </span><span style="color: #7a378b;">#define</span> <span style="color: #a0522d;">MAX_ZONES_SHIFT</span>     2
 </pre>
 
-</p></div>
+</div>
 
 </div>
 
@@ -401,10 +336,11 @@ $$min\_free\_kbytes=\sqrt(16 \times (total\ size\ of\ zone\_dma\ and\ zone\_norm
 </table>
 
 
-<p><br/>
+<p>
   <b>gfp_mask标志</b><br/>
 </p>
-<p><br/>
+
+
 <pre class="src src-c"><span class="linenr"> 1:  </span><span style="color: #228b22;">&#21407;&#22987;&#26631;&#24535;</span>
 <span class="linenr"> 2:  </span><span style="color: #7a378b;">#define</span> <span style="color: #a0522d;">__GFP_DMA</span>   0x01        <span style="color: #b22222;">/* </span><span style="color: #b22222;">&#25351;&#23450;&#20174;ZONE_DMA&#20013;&#21462;&#39029; </span><span style="color: #b22222;">*/</span>
 <span class="linenr"> 3:  </span><span style="color: #7a378b;">#define</span> <span style="color: #a0522d;">__GFP_HIGHMEM</span>   0x02    <span style="color: #b22222;">/*  </span><span style="color: #b22222;">&#25351;&#23450;&#20174;ZONE_HIGHMEM&#20013;&#21462;&#39029; </span><span style="color: #b22222;">*/</span>
@@ -431,7 +367,7 @@ $$min\_free\_kbytes=\sqrt(16 \times (total\ size\ of\ zone\_dma\ and\ zone\_norm
 <span class="linenr">24:  </span><span style="color: #7a378b;">#define</span> <span style="color: #a0522d;">GFP_HIGHUSER</span>    (__GFP_WAIT | __GFP_IO | __GFP_FS | __GFP_HIGHMEM)
 </pre>
 
-</p><ul>
+<ul>
 <li>应该避免直接使用__GFP开头的原始标志，最好直接使用GFP_开头的组合标志。<br/>
     最常用的GFP_KERNEL和GFP_ATOMIC，前者由于可以引发睡眠并且可以启动IO和文件系统，所在分配成功的机率较大。GFP_ATOMIC由于不能引发睡眠，所以分配成功机率较小，但在特殊情况下，例如必须保证当前代码不能发生睡眠（例如：中断处理程序，软中断）时，必须使用该组合标志。 <br/>
 </li>
@@ -456,21 +392,22 @@ $$min\_free\_kbytes=\sqrt(16 \times (total\ size\ of\ zone\_dma\ and\ zone\_norm
 
 <p>  free_area结构体定义如下：<br/>
 </p>
-<p><br/>
+
+
 <pre class="src src-c"><span class="linenr">1:  </span><span style="color: #a020f0;">struct</span> <span style="color: #228b22;">free_area</span> {
 <span class="linenr">2:  </span>    <span style="color: #a020f0;">struct</span> <span style="color: #228b22;">list_head</span>    <span style="color: #a0522d;">free_list</span>;
 <span class="linenr">3:  </span>    <span style="color: #228b22;">unsigned</span> <span style="color: #228b22;">long</span>       <span style="color: #a0522d;">nr_free</span>;
 <span class="linenr">4:  </span>};
 </pre>
 
+<p>
   用于管理buddy块的结构是free_area[MAX_ORDER], MAX_ORDER为11.其中以free_area[order].free_list为链表头的链表中的每个元素为一个大小为2^order个页的块的第一个页。<br/>
 <center>
 <img src="image/buddy.jpg"></img>
 </center>
   回忆：page结构体的<a href="#coderef-private" class="coderef" onmouseover="CodeHighlightOn(this, 'coderef-private');" onmouseout="CodeHighlightOff(this, 'coderef-private');">private</a>成员，当一个块的第一个页被链进一个链表时，其值被设置为order，当此块从该链表上删除时，此值被清空。作用是：合并两个块时用来检查该页开始的某个块是否可以被合并。<br/>
 </p>
-<p><br/>
-</p></div>
+</div>
 
 </div>
 
@@ -479,7 +416,8 @@ $$min\_free\_kbytes=\sqrt(16 \times (total\ size\ of\ zone\_dma\ and\ zone\_norm
 <div class="outline-text-3" id="text-6-2">
 
 
-<p><br/>
+
+
 <pre class="src src-c"><span class="linenr"> 1:  </span><span style="color: #b22222;">/*</span>
 <span class="linenr"> 2:  </span><span style="color: #b22222;"> * &#20174;free_area[11]&#20013;&#25214;&#19968;&#20010;&#21512;&#36866;&#30340;&#22359;</span>
 <span class="linenr"> 3:  </span><span style="color: #b22222;"> * zone&#25351;&#23450;&#21462;&#22359;&#25152;&#22312;&#30340;&#21306;&#65306;dma or highmeme or normal, &#27599;&#20010;&#21306;&#37117;&#26377;&#33258;&#24049;&#30340;free_area[11]</span>
@@ -542,7 +480,7 @@ $$min\_free\_kbytes=\sqrt(16 \times (total\ size\ of\ zone\_dma\ and\ zone\_norm
 </pre>
 
 
-</p>
+
 <p>  <br/>
 </p></div>
 
@@ -554,7 +492,8 @@ $$min\_free\_kbytes=\sqrt(16 \times (total\ size\ of\ zone\_dma\ and\ zone\_norm
 
 <p>  free_pages_bulk先对zone-&gt;lock进行加锁，再调用__free_pages_bulk<br/>
 </p>
-<p><br/>
+
+
 <pre class="src src-c"><span class="linenr"> 1:  </span><span style="color: #a020f0;">static</span> <span style="color: #a020f0;">inline</span> <span style="color: #228b22;">void</span> <span style="color: #0000ff;">__free_pages_bulk</span> (<span style="color: #a020f0;">struct</span> <span style="color: #228b22;">page</span> *<span style="color: #a0522d;">page</span>, <span style="color: #a020f0;">struct</span> <span style="color: #228b22;">page</span> *<span style="color: #a0522d;">base</span>,
 <span class="linenr"> 2:  </span>                                      <span style="color: #a020f0;">struct</span> <span style="color: #228b22;">zone</span> *<span style="color: #a0522d;">zone</span>, <span style="color: #228b22;">unsigned</span> <span style="color: #228b22;">int</span> <span style="color: #a0522d;">order</span>)
 <span class="linenr"> 3:  </span>{
@@ -616,7 +555,7 @@ $$min\_free\_kbytes=\sqrt(16 \times (total\ size\ of\ zone\_dma\ and\ zone\_norm
 <span class="linenr">59:  </span><span style="color: #7a378b;">#define</span> <span style="color: #0000ff;">PagePrivate</span>(<span style="color: #a0522d;">page</span>)   test_bit(PG_private, &amp;(page)-&gt;flags)
 </pre>
 
-</p>
+
 <p>  <br/>
 </p></div>
 </div>
@@ -643,13 +582,14 @@ $$min\_free\_kbytes=\sqrt(16 \times (total\ size\ of\ zone\_dma\ and\ zone\_norm
 </li>
 <li>可以通过查看/proc/slabinfo文件来得知所有cache的name，及每个cache的空闲object和分配object情况。<br/>
 
-<p><br/>
+<p>
     第一个cache叫 <code>kmem_cache</code> ，它的object是其它cache描述符。变量cache_cache保存此特殊的cache：<br/>
 </p></li>
 </ul>
 
 
-<p><br/>
+
+
 <pre class="src src-c"><span class="linenr"> 1:  </span><span style="color: #a020f0;">static</span> <span style="color: #228b22;">kmem_cache_t</span> <span style="color: #a0522d;">cache_cache</span> = {
 <span class="linenr"> 2:  </span>    .lists      = LIST3_INIT(cache_cache.lists),
 <span class="linenr"> 3:  </span>    .batchcount = 1,
@@ -664,15 +604,19 @@ $$min\_free\_kbytes=\sqrt(16 \times (total\ size\ of\ zone\_dma\ and\ zone\_norm
 <span class="linenr">12:  </span>};
 </pre>
 
+<p>
     cache_chain是cache链表的表头：<br/>
 </p>
-<p><br/>
+
+
 <pre class="src src-c"><span style="color: #a020f0;">static</span> <span style="color: #a020f0;">struct</span> <span style="color: #228b22;">list_head</span> <span style="color: #a0522d;">cache_chain</span>;
 </pre>
 
+<p>
     cache_sizes结构休如下：<br/>
 </p>
-<p><br/>
+
+
 <pre class="src src-c"><span class="linenr">1:  </span><span style="color: #a020f0;">struct</span> <span style="color: #228b22;">cache_sizes</span> {
 <span class="linenr">2:  </span>    <span style="color: #228b22;">size_t</span>       <span style="color: #a0522d;">cs_size</span>;
 <span class="linenr">3:  </span>    <span style="color: #228b22;">kmem_cache_t</span>    *<span style="color: #a0522d;">cs_cachep</span>; <span style="color: #b22222;">/*</span><span style="color: #b22222;">&#25351;&#21521;&#26222;&#36890;&#30340;cache</span><span style="color: #b22222;">*/</span>
@@ -684,9 +628,11 @@ $$min\_free\_kbytes=\sqrt(16 \times (total\ size\ of\ zone\_dma\ and\ zone\_norm
 <center>
 <img src="image/cache_slab.jpg"></img>
 </center>
+<p>
     cache描述符结构如下：<br/>
 </p>
-<p><br/>
+
+
 <pre class="src src-c"><span class="linenr"> 1:  </span><span style="color: #7a378b;">#typedef</span> kmem_cache_t kmem_cache_s;
 <span class="linenr"> 2:  </span><span style="color: #a020f0;">struct</span> <span style="color: #228b22;">kmem_cache_s</span> {
 <span class="linenr"> 3:  </span><span style="color: #b22222;">/* </span><span style="color: #b22222;">1) per-cpu data, touched during every alloc/free </span><span style="color: #b22222;">*/</span>
@@ -749,9 +695,11 @@ $$min\_free\_kbytes=\sqrt(16 \times (total\ size\ of\ zone\_dma\ and\ zone\_norm
 <span class="linenr">60:  </span>};    
 </pre>
 
+<p>
     slab描述符结构如下：<br/>
 </p>
-<p><br/>
+
+
 <pre class="src src-c"><span class="linenr">1:  </span><span style="color: #a020f0;">struct</span> <span style="color: #228b22;">slab</span> {
 <span class="linenr">2:  </span>    <span style="color: #a020f0;">struct</span> <span style="color: #228b22;">list_head</span>    <span style="color: #a0522d;">list</span>;      <span style="color: #b22222;">/* </span><span style="color: #b22222;">&#29992;&#26469;&#38142;&#25509;slab&#38142;(used, free, partial&#20013;&#30340;&#19968;&#20010;&#38142;) </span><span style="color: #b22222;">*/</span>
 <span class="linenr">3:  </span>    <span style="color: #228b22;">unsigned</span> <span style="color: #228b22;">long</span>       <span style="color: #a0522d;">colouroff</span>; <span style="color: #b22222;">/* </span><span style="color: #b22222;">&#21442;&#35265;colour </span><span style="color: #b22222;">*/</span>
@@ -761,7 +709,7 @@ $$min\_free\_kbytes=\sqrt(16 \times (total\ size\ of\ zone\_dma\ and\ zone\_norm
 <span class="linenr">7:  </span>};    
 </pre>
 
-</p></div>
+</div>
 
 </div>
 
@@ -777,10 +725,12 @@ $$min\_free\_kbytes=\sqrt(16 \times (total\ size\ of\ zone\_dma\ and\ zone\_norm
 </ul>
 
 
-<p><br/>
+
+
 <pre class="src src-c"><span style="color: #a020f0;">typedef</span> <span style="color: #228b22;">unsigned</span> <span style="color: #228b22;">short</span> <span style="color: #228b22;">kmem_bufctl_t</span>;
 </pre>
 
+<p>
     当object被分配时（即被使用时）此值无意义，但当object空闲时，此值存放下一个空闲object的索引，即构成了一个free object的链表。<br/>
     最后一个object描述符内容是BUFCTL_END(0xffff)表示结束。<br/>
 </p><ul>
@@ -833,26 +783,29 @@ $$min\_free\_kbytes=\sqrt(16 \times (total\ size\ of\ zone\_dma\ and\ zone\_norm
 
   可以用 <code>ac_data</code> 函数来获得本CPU的array_cache结构：<br/>
 </p>
-<p><br/>
+
+
 <pre class="src src-c"><span class="linenr">1:  </span><span style="color: #a020f0;">static</span> <span style="color: #a020f0;">inline</span> <span style="color: #a020f0;">struct</span> <span style="color: #228b22;">array_cache</span> *<span style="color: #0000ff;">ac_data</span>(<span style="color: #228b22;">kmem_cache_t</span> *<span style="color: #a0522d;">cachep</span>)
 <span class="linenr">2:  </span>{
 <span class="linenr">3:  </span>    <span style="color: #a020f0;">return</span> cachep-&gt;array[smp_processor_id()];
 <span class="linenr">4:  </span>}
 </pre>
 
+<p>
   可以用 <code>ac_entry</code> 来获得array_cache下面的指向free object系列指针的第一个指针：<br/>
 </p>
-<p><br/>
+
+
 <pre class="src src-c"><span class="linenr">1:  </span><span style="color: #a020f0;">static</span> <span style="color: #a020f0;">inline</span> <span style="color: #228b22;">void</span> ** <span style="color: #0000ff;">ac_entry</span>(<span style="color: #a020f0;">struct</span> <span style="color: #228b22;">array_cache</span> *<span style="color: #a0522d;">ac</span>)
 <span class="linenr">2:  </span>{
 <span class="linenr">3:  </span>    <span style="color: #a020f0;">return</span> (<span style="color: #228b22;">void</span>**)(ac+1);
 <span class="linenr">4:  </span>}
 </pre>
 
+<p>
   一共有ac-&gt;avail个空的object，则 ac_entry(ac)[&ndash;ac-&gt;avail]返回一个可用object同时将可用object个数减1.<br/>
 </p>
-<p><br/>
-</p></div>
+</div>
 
 </div>
 
@@ -862,16 +815,19 @@ $$min\_free\_kbytes=\sqrt(16 \times (total\ size\ of\ zone\_dma\ and\ zone\_norm
 
 <p>  参数cachep指向要获得空object的cache。<br/>
 </p>
-<p><br/>
+
+
 <pre class="src src-c"><span class="linenr">1:  </span><span style="color: #228b22;">void</span> * <span style="color: #0000ff;">kmem_cache_alloc</span> (<span style="color: #228b22;">kmem_cache_t</span> *<span style="color: #a0522d;">cachep</span>, <span style="color: #228b22;">int</span> <span style="color: #a0522d;">flags</span>)
 <span class="linenr">2:  </span>{
 <span class="linenr">3:  </span>    <span style="color: #a020f0;">return</span> __cache_alloc(cachep, flags);
 <span class="linenr">4:  </span>}
 </pre>
 
+<p>
   __cache_alloc函数：<br/>
 </p>
-<p><br/>
+
+
 <pre class="src src-c"><span class="linenr"> 1:  </span><span style="color: #a020f0;">static</span> <span style="color: #a020f0;">inline</span> <span style="color: #228b22;">void</span> * <span style="color: #0000ff;">__cache_alloc</span> (<span style="color: #228b22;">kmem_cache_t</span> *<span style="color: #a0522d;">cachep</span>, <span style="color: #228b22;">int</span> <span style="color: #a0522d;">flags</span>)
 <span class="linenr"> 2:  </span>{
 <span class="linenr"> 3:  </span>    <span style="color: #228b22;">unsigned</span> <span style="color: #228b22;">long</span> <span style="color: #a0522d;">save_flags</span>;
@@ -896,6 +852,7 @@ $$min\_free\_kbytes=\sqrt(16 \times (total\ size\ of\ zone\_dma\ and\ zone\_norm
 <span class="linenr">22:  </span>}
 </pre>
 
+<p>
   cache_alloc_refill函数：<br/>
 </p><ol>
 <li>首先查看参数指定的cache的kmem_list3共享array cache，如果有free object(此array cache的avail不为0)则把它迁过来（如果个数&gt;ac-&gt;batchcount的话，则迁ac-&gt;batchcount个，如果&lt;ac-&gt;batchcount的话就有多少迁多少）。<br/>
@@ -909,7 +866,8 @@ $$min\_free\_kbytes=\sqrt(16 \times (total\ size\ of\ zone\_dma\ and\ zone\_norm
 </ol>
 
 
-<p><br/>
+
+
 <pre class="src src-c"><span class="linenr">  1:  </span><span style="color: #a020f0;">static</span> <span style="color: #228b22;">void</span>* <span style="color: #0000ff;">cache_alloc_refill</span>(<span style="color: #228b22;">kmem_cache_t</span>* <span style="color: #a0522d;">cachep</span>, <span style="color: #228b22;">int</span> <span style="color: #a0522d;">flags</span>)
 <span class="linenr">  2:  </span>{
 <span class="linenr">  3:  </span>    <span style="color: #228b22;">int</span> <span style="color: #a0522d;">batchcount</span>;
@@ -1012,7 +970,7 @@ $$min\_free\_kbytes=\sqrt(16 \times (total\ size\ of\ zone\_dma\ and\ zone\_norm
 <span class="linenr">100:  </span>}
 </pre>
 
-</p></div>
+</div>
 
 </div>
 
@@ -1054,7 +1012,8 @@ $$min\_free\_kbytes=\sqrt(16 \times (total\ size\ of\ zone\_dma\ and\ zone\_norm
 
 <p>  <code>__cache_free</code> 函数：<br/>
 </p>
-<p><br/>
+
+
 <pre class="src src-c"><span class="linenr"> 1:  </span><span style="color: #a020f0;">static</span> <span style="color: #a020f0;">inline</span> <span style="color: #228b22;">void</span> <span style="color: #0000ff;">__cache_free</span> (<span style="color: #228b22;">kmem_cache_t</span> *<span style="color: #a0522d;">cachep</span>, <span style="color: #228b22;">void</span>* <span style="color: #a0522d;">objp</span>)
 <span class="linenr"> 2:  </span>{
 <span class="linenr"> 3:  </span>    <span style="color: #a020f0;">struct</span> <span style="color: #228b22;">array_cache</span> *<span style="color: #a0522d;">ac</span> = ac_data(cachep);
@@ -1074,9 +1033,11 @@ $$min\_free\_kbytes=\sqrt(16 \times (total\ size\ of\ zone\_dma\ and\ zone\_norm
 <span class="linenr">17:  </span>}
 </pre>
 
+<p>
   <code>cache_flusharray</code> 函数：<br/>
 </p>
-<p><br/>
+
+
 <pre class="src src-c"><span class="linenr"> 1:  </span><span style="color: #a020f0;">static</span> <span style="color: #228b22;">void</span> <span style="color: #0000ff;">cache_flusharray</span> (<span style="color: #228b22;">kmem_cache_t</span>* <span style="color: #a0522d;">cachep</span>, <span style="color: #a020f0;">struct</span> <span style="color: #228b22;">array_cache</span> *<span style="color: #a0522d;">ac</span>)
 <span class="linenr"> 2:  </span>{
 <span class="linenr"> 3:  </span>    <span style="color: #228b22;">int</span> <span style="color: #a0522d;">batchcount</span>;
@@ -1133,9 +1094,11 @@ $$min\_free\_kbytes=\sqrt(16 \times (total\ size\ of\ zone\_dma\ and\ zone\_norm
 </pre>
 
 
+<p>
   <code>free_block</code> 函数：<br/>
 </p>
-<p><br/>
+
+
 <pre class="src src-c"><span class="linenr"> 1:  </span><span style="color: #a020f0;">static</span> <span style="color: #228b22;">void</span> <span style="color: #0000ff;">free_block</span>(<span style="color: #228b22;">kmem_cache_t</span> *<span style="color: #a0522d;">cachep</span>, <span style="color: #228b22;">void</span> **<span style="color: #a0522d;">objpp</span>, <span style="color: #228b22;">int</span> <span style="color: #a0522d;">nr_objects</span>)
 <span class="linenr"> 2:  </span>{
 <span class="linenr"> 3:  </span>    <span style="color: #228b22;">int</span> <span style="color: #a0522d;">i</span>;
@@ -1190,7 +1153,7 @@ $$min\_free\_kbytes=\sqrt(16 \times (total\ size\ of\ zone\_dma\ and\ zone\_norm
 <span class="linenr">52:  </span>}
 </pre>
 
-</p>
+
 <p>  <br/>
 </p></div>
 
@@ -1202,7 +1165,8 @@ $$min\_free\_kbytes=\sqrt(16 \times (total\ size\ of\ zone\_dma\ and\ zone\_norm
 
 <p>   kmalloc调用了__kmalloc, __kmallloc调用了__cache_alloc，最终效果等价于：<br/>
 </p>
-<p><br/>
+
+
 <pre class="src src-c"><span class="linenr"> 1:  </span><span style="color: #228b22;">void</span> * <span style="color: #0000ff;">kmalloc</span>(<span style="color: #228b22;">size_t</span> <span style="color: #a0522d;">size</span>, <span style="color: #228b22;">int</span> <span style="color: #a0522d;">flags</span>)
 <span class="linenr"> 2:  </span>{
 <span class="linenr"> 3:  </span>    <span style="color: #a020f0;">struct</span> <span style="color: #228b22;">cache_sizes</span> *<span style="color: #a0522d;">csizep</span> = malloc_sizes;
@@ -1220,7 +1184,7 @@ $$min\_free\_kbytes=\sqrt(16 \times (total\ size\ of\ zone\_dma\ and\ zone\_norm
 <span class="linenr">15:  </span>}
 </pre>
 
-</p></div>
+</div>
 
 </div>
 
@@ -1231,7 +1195,8 @@ $$min\_free\_kbytes=\sqrt(16 \times (total\ size\ of\ zone\_dma\ and\ zone\_norm
 <p>   Don't free memory not originally allocated by kmalloc() or you will run into trouble.<br/>
    objp是由kmalloc返回的指针。<br/>
 </p>
-<p><br/>
+
+
 <pre class="src src-c"><span class="linenr"> 1:  </span><span style="color: #228b22;">void</span> <span style="color: #0000ff;">kfree</span> (<span style="color: #a020f0;">const</span> <span style="color: #228b22;">void</span> *<span style="color: #a0522d;">objp</span>)
 <span class="linenr"> 2:  </span>{
 <span class="linenr"> 3:  </span>    <span style="color: #228b22;">kmem_cache_t</span> *<span style="color: #a0522d;">c</span>;
@@ -1248,7 +1213,7 @@ $$min\_free\_kbytes=\sqrt(16 \times (total\ size\ of\ zone\_dma\ and\ zone\_norm
 </pre>
 
 
-</p></div>
+</div>
 
 </div>
 
@@ -1259,7 +1224,8 @@ $$min\_free\_kbytes=\sqrt(16 \times (total\ size\ of\ zone\_dma\ and\ zone\_norm
 <p>   注意与 <code>保留页框池</code> 的区别：保留页框池只能用在原子操作分配请求，而内存池只能被一些指定的设备使用，是保留的动态内存（一般情况下不会使用，只有当请求普通内存注定失败时才会使用内存池）。<br/>
    称内存池中的单元为内存元素（memory element）<br/>
 </p>
-<p><br/>
+
+
 <pre class="src src-c"><span class="linenr"> 1:  </span><span style="color: #a020f0;">typedef</span> <span style="color: #a020f0;">struct</span> <span style="color: #228b22;">mempool_s</span> {
 <span class="linenr"> 2:  </span>    <span style="color: #228b22;">spinlock_t</span> <span style="color: #a0522d;">lock</span>;
 <span class="linenr"> 3:  </span>    <span style="color: #228b22;">int</span> <span style="color: #a0522d;">min_nr</span>;                 <span style="color: #b22222;">/* </span><span style="color: #b22222;">&#20869;&#23384;&#27744;&#20013;&#20869;&#23384;&#20803;&#32032;&#30340;&#26368;&#22823;&#20010;&#25968;&#65288;&#21021;&#22987;&#26102;&#20010;&#25968;&#65292;&#26368;&#23569;&#21487;&#20197;&#24471;&#21040;&#30340;&#20010;&#25968;&#65289; </span><span style="color: #b22222;">*/</span>
@@ -1274,13 +1240,14 @@ $$min\_free\_kbytes=\sqrt(16 \times (total\ size\ of\ zone\_dma\ and\ zone\_norm
 <span class="linenr">12:  </span><span style="color: #a020f0;">typedef</span> <span style="color: #228b22;">void</span> (<span style="color: #228b22;">mempool_free_t</span>)(<span style="color: #228b22;">void</span> *<span style="color: #a0522d;">element</span>, <span style="color: #228b22;">void</span> *<span style="color: #a0522d;">pool_data</span>);
 </pre>
 
-</p><ul>
+<ul>
 <li>如果内存元素是slab中的object，一般常用的alloc和free分别是 <code>mempool_alloc_slab</code> 和 <code>mempool_free_slab</code> ，分别调用的是前面分析过的 <code>kmem_cache_alloc</code> 和 <code>kmem_cache_free</code> 。此时成员pool_data保存的是cache的地址.<br/>
 </li>
 </ul>
 
 
-<p><br/>
+
+
 <pre class="src src-c"><span class="linenr"> 1:  </span><span style="color: #228b22;">void</span> *<span style="color: #0000ff;">mempool_alloc_slab</span>(<span style="color: #228b22;">int</span> <span style="color: #a0522d;">gfp_mask</span>, <span style="color: #228b22;">void</span> *<span style="color: #a0522d;">pool_data</span>)
 <span class="linenr"> 2:  </span>{
 <span class="linenr"> 3:  </span>    <span style="color: #228b22;">kmem_cache_t</span> *<span style="color: #a0522d;">mem</span> = (<span style="color: #228b22;">kmem_cache_t</span> *) pool_data;
@@ -1293,7 +1260,7 @@ $$min\_free\_kbytes=\sqrt(16 \times (total\ size\ of\ zone\_dma\ and\ zone\_norm
 <span class="linenr">10:  </span>}
 </pre>
 
-</p><ul>
+<ul>
 <li><code>mempool_create</code> 和 <code>mempool_destroy</code> 分别用来创建和销毁一个内存池。<br/>
 </li>
 <li><code>mempool_alloc</code> 和 <code>mempool_free</code> 用来分配和释放内存池中的一个内存元素，其参数mempool_t和gfp_mask。<br/>

@@ -7,81 +7,12 @@
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
 <meta name="title" content="Unix环境高级编程－进程基础与控制"/>
 <meta name="generator" content="Org-mode"/>
-<meta name="generated" content="2012-10-19 22:33:49 CST"/>
+<meta name="generated" content="2012-10-27 05:28:18 CST"/>
 <meta name="author" content="visaya fan"/>
 <meta name="description" content=""/>
 <meta name="keywords" content=""/>
-<style type="text/css">
- <!--/*--><![CDATA[/*><!--*/
-  html { font-family: Times, serif; font-size: 12pt; }
-  .title  { text-align: center; }
-  .todo   { color: red; }
-  .done   { color: green; }
-  .tag    { background-color: #add8e6; font-weight:normal }
-  .target { }
-  .timestamp { color: #bebebe; }
-  .timestamp-kwd { color: #5f9ea0; }
-  .right  {margin-left:auto; margin-right:0px;  text-align:right;}
-  .left   {margin-left:0px;  margin-right:auto; text-align:left;}
-  .center {margin-left:auto; margin-right:auto; text-align:center;}
-  p.verse { margin-left: 3% }
-  pre {
-	border: 1pt solid #AEBDCC;
-	background-color: #F3F5F7;
-	padding: 5pt;
-	font-family: courier, monospace;
-        font-size: 90%;
-        overflow:auto;
-  }
-  table { border-collapse: collapse; }
-  td, th { vertical-align: top;  }
-  th.right  { text-align:center;  }
-  th.left   { text-align:center;   }
-  th.center { text-align:center; }
-  td.right  { text-align:right;  }
-  td.left   { text-align:left;   }
-  td.center { text-align:center; }
-  dt { font-weight: bold; }
-  div.figure { padding: 0.5em; }
-  div.figure p { text-align: center; }
-  div.inlinetask {
-    padding:10px;
-    border:2px solid gray;
-    margin:10px;
-    background: #ffffcc;
-  }
-  textarea { overflow-x: auto; }
-  .linenr { font-size:smaller }
-  .code-highlighted {background-color:#ffff00;}
-  .org-info-js_info-navigation { border-style:none; }
-  #org-info-js_console-label { font-size:10px; font-weight:bold;
-                               white-space:nowrap; }
-  .org-info-js_search-highlight {background-color:#ffff00; color:#000000;
-                                 font-weight:bold; }
-  /*]]>*/-->
-</style><div id="org-div-comments"><a href="../../index.html#linuxcoding">主页</a><br/><a href="#disqus_thread">评论</a></div>
-<script type="text/javascript">
-<!--/*--><![CDATA[/*><!--*/
- function CodeHighlightOn(elem, id)
- {
-   var target = document.getElementById(id);
-   if(null != target) {
-     elem.cacheClassElem = elem.className;
-     elem.cacheClassTarget = target.className;
-     target.className = "code-highlighted";
-     elem.className   = "code-highlighted";
-   }
- }
- function CodeHighlightOff(elem, id)
- {
-   var target = document.getElementById(id);
-   if(elem.cacheClassElem)
-     elem.className = elem.cacheClassElem;
-   if(elem.cacheClassTarget)
-     target.className = elem.cacheClassTarget;
- }
-/*]]>*///-->
-</script>
+<div id="org-div-comments"><a href="../../index.html#linuxcoding">主页</a><br/><a href="#disqus_thread">评论</a></div>
+
 
 </head>
 <body>
@@ -154,14 +85,15 @@
 
 <p>  int unsetenv(const char <b>name);   *获得当前程序所有环境变量</b><br/>
 </p>
-<p><br/>
+
+
 <pre class="src src-c"><span style="color: #a020f0;">extern</span> <span style="color: #228b22;">char</span>** <span style="color: #a0522d;">environ</span>;
 <span style="color: #228b22;">char</span> **<span style="color: #a0522d;">ppc</span> = environ;
 <span style="color: #a020f0;">while</span>(*ppc)
     printf (<span style="color: #8b2252;">"%s\n"</span>,*ppc++);
 </pre>
 
-</p></div>
+</div>
 
 </div>
 
@@ -181,7 +113,7 @@
   使用gets函数编译时会提示警告gets函数很危险应当小心使用。因为它没有指定大小，容易越界。<br/>
   get成功则返回s，出错或没有字符读入则返回NULL。<br/>
 </p>
-<p><br/>
+<p>
   int ungetc(int c, FILE *stream);<br/>
   退回c到stream中<br/>
 </p></div>
@@ -213,7 +145,8 @@
 
 <p>  首先定义一个jmp_buf结构体类型的变量，set_jmp如果不是从longjmp函数返回调用会初始化jmp_buf变量且返回值是0，如果从longjmp函数返回调用则返回值非0.<br/>
 </p>
-<p><br/>
+
+
 <pre class="src src-c"><span style="color: #7a378b;">#include</span> <span style="color: #8b2252;">&lt;stdio.h&gt;</span>
 <span style="color: #7a378b;">#include</span> <span style="color: #8b2252;">&lt;stdlib.h&gt;</span>
 <span style="color: #7a378b;">#include</span> <span style="color: #8b2252;">&lt;setjmp.h&gt;</span>
@@ -243,7 +176,7 @@
 }
 </pre>
 
-</p></div>
+</div>
 
 </div>
 
@@ -318,7 +251,8 @@
 
 <p>  链接：<a href="#fork.html">一道fork面试题</a><br/>
 </p>
-<p><br/>
+
+
 <pre class="src src-c"><span style="color: #7a378b;">#include</span> <span style="color: #8b2252;">&lt;stdio.h&gt;</span>
 <span style="color: #7a378b;">#include</span> <span style="color: #8b2252;">&lt;unistd.h&gt;</span>
 
@@ -337,24 +271,29 @@
 }
 </pre>
 
+<p>
   结果：<br/>
 </p>
-<p><br/>
+
+
 <pre class="example">pid=8208, glb=1
 pid=8209, glb=2
 pid=8208, glb=1
 </pre>
 
+<p>
   先是父进程执行fork前的printf，fork后由于了进程拷贝了父进程的进程空间（包括程序计数器，即fork之前的代码子进程不会执行，只会执行fork后面的代码），之后由于父进程sleep2秒，假设系统不忙的话，2s之内子进程会执行（如果系统忙的话，2s之内可能子进程仍没有执行，之后父子哪个先是不确定的）。<br/>
   但如果命令行下 a.out &gt; text.txt，则text.txt中的结果是：<br/>
 </p>
-<p><br/>
+
+
 <pre class="example">pid=8212, glb=1
 pid=8213, glb=2
 pid=8212, glb=1
 pid=8212, glb=1
 </pre>
 
+<p>
   pid=8212, glb=1出现两次，原因是重定向的时候先把欲定向的内容存放在缓冲中，子进程被fork的时候拷贝了父进程的缓冲区内容，最后冲刷的时候出现两个。<br/>
 </p></div>
 
@@ -419,7 +358,8 @@ pid=8212, glb=1
 
   运行结果：<br/>
 </p>
-<p><br/>
+
+
 <pre class="example">normal termination, exit code 7
 abnormal termination, exit code 6
 abnormal termination, exit code 8
@@ -430,7 +370,7 @@ abnormal termination, exit code 8
 <a href="#" class="btn" data-dismiss="modal">Close</a>
 </div>
 </div>
-</p></div>
+</div>
 
 </div>
 
@@ -454,11 +394,11 @@ abnormal termination, exit code 8
 <p>  pid_t wait3(int *status, int options, struct rusage *rusage);<br/>
   pid_t wait4(pid_t pid, int *status, int options, struct rusage *rusage);<br/>
 </p>
-<p><br/>
+<p>
   wait3 &lt;=&gt; waitpid(-1, status, options) + 资源使用情况<br/>
   wait4 &lt;=&gt; waitpid(pid, status, options) + 资源使用情况<br/>
 </p>
-<p><br/>
+<p>
   struct rusage定义在 /usr/include/bits/resource.h<br/>
 <a href="#rusage" class="btn" data-toggle="modal">结构体rusage源码</a>
 <div id="rusage" class="modal hide">

@@ -7,81 +7,12 @@
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
 <meta name="title" content="Java_Thread"/>
 <meta name="generator" content="Org-mode"/>
-<meta name="generated" content="2012-10-19 22:33:04 CST"/>
+<meta name="generated" content="2012-10-27 05:27:39 CST"/>
 <meta name="author" content="visaya fan"/>
 <meta name="description" content=""/>
 <meta name="keywords" content=""/>
-<style type="text/css">
- <!--/*--><![CDATA[/*><!--*/
-  html { font-family: Times, serif; font-size: 12pt; }
-  .title  { text-align: center; }
-  .todo   { color: red; }
-  .done   { color: green; }
-  .tag    { background-color: #add8e6; font-weight:normal }
-  .target { }
-  .timestamp { color: #bebebe; }
-  .timestamp-kwd { color: #5f9ea0; }
-  .right  {margin-left:auto; margin-right:0px;  text-align:right;}
-  .left   {margin-left:0px;  margin-right:auto; text-align:left;}
-  .center {margin-left:auto; margin-right:auto; text-align:center;}
-  p.verse { margin-left: 3% }
-  pre {
-	border: 1pt solid #AEBDCC;
-	background-color: #F3F5F7;
-	padding: 5pt;
-	font-family: courier, monospace;
-        font-size: 90%;
-        overflow:auto;
-  }
-  table { border-collapse: collapse; }
-  td, th { vertical-align: top;  }
-  th.right  { text-align:center;  }
-  th.left   { text-align:center;   }
-  th.center { text-align:center; }
-  td.right  { text-align:right;  }
-  td.left   { text-align:left;   }
-  td.center { text-align:center; }
-  dt { font-weight: bold; }
-  div.figure { padding: 0.5em; }
-  div.figure p { text-align: center; }
-  div.inlinetask {
-    padding:10px;
-    border:2px solid gray;
-    margin:10px;
-    background: #ffffcc;
-  }
-  textarea { overflow-x: auto; }
-  .linenr { font-size:smaller }
-  .code-highlighted {background-color:#ffff00;}
-  .org-info-js_info-navigation { border-style:none; }
-  #org-info-js_console-label { font-size:10px; font-weight:bold;
-                               white-space:nowrap; }
-  .org-info-js_search-highlight {background-color:#ffff00; color:#000000;
-                                 font-weight:bold; }
-  /*]]>*/-->
-</style><div id="org-div-comments"><a href="../../index.html#java">主页</a><br/><a href="#disqus_thread">评论</a></div>
-<script type="text/javascript">
-<!--/*--><![CDATA[/*><!--*/
- function CodeHighlightOn(elem, id)
- {
-   var target = document.getElementById(id);
-   if(null != target) {
-     elem.cacheClassElem = elem.className;
-     elem.cacheClassTarget = target.className;
-     target.className = "code-highlighted";
-     elem.className   = "code-highlighted";
-   }
- }
- function CodeHighlightOff(elem, id)
- {
-   var target = document.getElementById(id);
-   if(elem.cacheClassElem)
-     elem.className = elem.cacheClassElem;
-   if(elem.cacheClassTarget)
-     target.className = elem.cacheClassTarget;
- }
-/*]]>*///-->
-</script>
+<div id="org-div-comments"><a href="../../index.html#java">主页</a><br/><a href="#disqus_thread">评论</a></div>
+
 
 </head>
 <body>
@@ -186,7 +117,8 @@
 
 <p>   必须重新重载run方法<br/>
 </p>
-<p><br/>
+
+
 <pre class="src src-java"><span style="color: #a020f0;">class</span> <span style="color: #228b22;">A</span> <span style="color: #a020f0;">extends</span> <span style="color: #228b22;">Thread</span>{
     ../...
     <span style="color: #a020f0;">public</span> <span style="color: #228b22;">void</span> run(){
@@ -199,7 +131,7 @@
 a.start();
 </pre>
 
-</p></div>
+</div>
 
 </div>
 
@@ -208,7 +140,8 @@ a.start();
 <div class="outline-text-3" id="text-2-2">
 
 
-<p><br/>
+
+
 <pre class="src src-java"><span style="color: #a020f0;">class</span> <span style="color: #228b22;">A</span> <span style="color: #a020f0;">implements</span> <span style="color: #228b22;">Runnable</span>{
     ../...
     <span style="color: #a020f0;">public</span> <span style="color: #228b22;">void</span> run(){
@@ -220,7 +153,7 @@ a.start();
 t.start();
 </pre>
 
-</p>
+
 <p>   <br/>
 </p></div>
 </div>
@@ -264,7 +197,8 @@ t.start();
 </ul>
 
 
-<p><br/>
+
+
 <pre class="src src-java"><span style="color: #a020f0;">class</span> <span style="color: #228b22;">SimpleThreadFactory</span> <span style="color: #a020f0;">implements</span> <span style="color: #228b22;">ThreadFactory</span>{
     <span style="color: #a020f0;">public</span> <span style="color: #228b22;">Thread</span> <span style="color: #0000ff;">newThread</span>(<span style="color: #228b22;">Runnable</span> <span style="color: #a0522d;">r</span>){
         <span style="color: #a020f0;">return</span> <span style="color: #a020f0;">new</span> <span style="color: #228b22;">Thread</span>(r);
@@ -272,13 +206,14 @@ t.start();
 }
 </pre>
 
-</p><ul>
+<ul>
 <li>下面的例子设置进程为后台进程的线程工厂<br/>
 </li>
 </ul>
 
 
-<p><br/>
+
+
 <pre class="src src-java"><span style="color: #a020f0;">public</span> <span style="color: #a020f0;">class</span> <span style="color: #228b22;">DaemonThreadFactory</span> <span style="color: #a020f0;">implements</span> <span style="color: #228b22;">ThreadFactory</span>{
     <span style="color: #a020f0;">public</span> <span style="color: #228b22;">Thread</span> <span style="color: #0000ff;">newThread</span>(<span style="color: #228b22;">Runnable</span> <span style="color: #a0522d;">r</span>){
         <span style="color: #228b22;">Thread</span> <span style="color: #a0522d;">t</span> = <span style="color: #a020f0;">new</span> <span style="color: #228b22;">Thread</span>(r);
@@ -289,7 +224,7 @@ t.start();
 </pre>
 
 
-</p></div>
+</div>
 
 </div>
 
@@ -343,7 +278,8 @@ t.start();
 
 <p>  <code>Thread.UncaughtExceptionHandler</code> 是处理未捕获异常处理器接口(需要实现的方法是 <code>public void uncaughtException(Thread t, Throwable e)</code> )，通过 <code>Thread.setUncaughExceptionHandler(UncaughtExceptionHandler)</code> 来设置线程的异常处理器。<br/>
 </p>
-<p><br/>
+
+
 <pre class="src src-java"><span style="color: #b22222;">//</span><span style="color: #b22222;">&#19968;&#20010;&#24322;&#24120;&#31867;&#23454;&#29616;Runnable&#25509;&#21475;</span>
 <span style="color: #a020f0;">class</span> <span style="color: #228b22;">ExceptionThread</span> <span style="color: #a020f0;">implements</span> <span style="color: #228b22;">Runnable</span>{
     <span style="color: #a020f0;">public</span> <span style="color: #228b22;">void</span> <span style="color: #0000ff;">run</span>(){
@@ -367,7 +303,7 @@ t.start();
 }
 </pre>
 
-</p></div>
+</div>
 
 </div>
 
@@ -394,7 +330,8 @@ t.start();
 <p>   <code>java.util.concurrent.locks</code> 中 <code>Lock接口</code> 显式锁住资源：<br/>
    基本使用方法：<br/>
 </p>
-<p><br/>
+
+
 <pre class="src src-java"><span style="color: #228b22;">Lock</span> <span style="color: #a0522d;">lock</span> = <span style="color: #a020f0;">new</span> <span style="color: #228b22;">LockReentrant</span>();
 lock.lock();
 <span style="color: #a020f0;">try</span>{
@@ -404,6 +341,7 @@ lock.lock();
 }
 </pre>
 
+<p>
    其方法有：<br/>
 </p><ol>
 <li><code>lock()</code> 得到锁<br/>
@@ -432,7 +370,8 @@ lock.lock();
 
 <p>    <code>java.util.concurrent.atomic</code> 提供了例如 <code>AtomicInteger</code> <code>AtomicLong</code> <code>AtomicReference</code> 之类的原子性变量类。<br/>
 </p>
-<p><br/>
+
+
 <pre class="src src-java"><span style="color: #a020f0;">class</span> <span style="color: #228b22;">Sequencer</span>{
     <span style="color: #a020f0;">private</span> <span style="color: #a020f0;">final</span> <span style="color: #228b22;">AtomaicLong</span> <span style="color: #a0522d;">sequenceNumber</span> = <span style="color: #a020f0;">new</span> <span style="color: #228b22;">AtomicLong</span>(0);
     <span style="color: #b22222;">// </span><span style="color: #b22222;">next&#26041;&#27861;&#20316;&#29992;&#26159;&#21407;&#23376;&#29615;&#22659;&#19979;&#33258;&#22686;&#65288;i++&#25805;&#20316;&#19981;&#26159;&#21407;&#23376;&#25805;&#20316;&#65289;</span>
@@ -442,7 +381,7 @@ lock.lock();
 }
 </pre>
 
-</p><ul>
+<ul>
 <li id="sec-5-2-2-1">AtomicInteger<br/>
 <ol>
 <li><code>addAndGet(int)</code>  增加给定值 同理 <code>decrementAndGet()</code> 减少给定值<br/>
@@ -454,8 +393,7 @@ lock.lock();
 <li><code>getAndAdd(int)</code> 得到并加上给定值 <code>getAndDecrement(int)</code> 得到并减少给定值 <code>getAndIncrement()</code> <code>getAndDecrement()</code> 自增自减<br/>
 </li>
 <li>
-<p><br/>
-</p></li>
+</li>
 </ol>
 
 </li>
@@ -470,13 +408,14 @@ lock.lock();
 <div class="outline-text-3" id="text-5-3">
 
 
-<p><br/>
+
+
 <pre class="src src-java"><span style="color: #a020f0;">synchronized</span>(<span style="color: #228b22;">syncObject</span>){
     <span style="color: #b22222;">//</span><span style="color: #b22222;">&#27492;&#20026;&#20020;&#30028;&#21306;&#65292;&#19968;&#27425;&#21482;&#33021;&#34987;&#19968;&#20010;&#32447;&#31243;&#35775;&#38382;</span>
 }
 </pre>
 
-</p>
+
 <p>   <br/>
 <script src="../../Layout/JS/disqus-comment.js"></script>
 <div id="disqus_thread">

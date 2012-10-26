@@ -7,81 +7,12 @@
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
 <meta name="title" content="进程的创建与销毁"/>
 <meta name="generator" content="Org-mode"/>
-<meta name="generated" content="2012-10-19 22:34:07 CST"/>
+<meta name="generated" content="2012-10-27 05:28:39 CST"/>
 <meta name="author" content="visaya fan"/>
 <meta name="description" content=""/>
 <meta name="keywords" content=""/>
-<style type="text/css">
- <!--/*--><![CDATA[/*><!--*/
-  html { font-family: Times, serif; font-size: 12pt; }
-  .title  { text-align: center; }
-  .todo   { color: red; }
-  .done   { color: green; }
-  .tag    { background-color: #add8e6; font-weight:normal }
-  .target { }
-  .timestamp { color: #bebebe; }
-  .timestamp-kwd { color: #5f9ea0; }
-  .right  {margin-left:auto; margin-right:0px;  text-align:right;}
-  .left   {margin-left:0px;  margin-right:auto; text-align:left;}
-  .center {margin-left:auto; margin-right:auto; text-align:center;}
-  p.verse { margin-left: 3% }
-  pre {
-	border: 1pt solid #AEBDCC;
-	background-color: #F3F5F7;
-	padding: 5pt;
-	font-family: courier, monospace;
-        font-size: 90%;
-        overflow:auto;
-  }
-  table { border-collapse: collapse; }
-  td, th { vertical-align: top;  }
-  th.right  { text-align:center;  }
-  th.left   { text-align:center;   }
-  th.center { text-align:center; }
-  td.right  { text-align:right;  }
-  td.left   { text-align:left;   }
-  td.center { text-align:center; }
-  dt { font-weight: bold; }
-  div.figure { padding: 0.5em; }
-  div.figure p { text-align: center; }
-  div.inlinetask {
-    padding:10px;
-    border:2px solid gray;
-    margin:10px;
-    background: #ffffcc;
-  }
-  textarea { overflow-x: auto; }
-  .linenr { font-size:smaller }
-  .code-highlighted {background-color:#ffff00;}
-  .org-info-js_info-navigation { border-style:none; }
-  #org-info-js_console-label { font-size:10px; font-weight:bold;
-                               white-space:nowrap; }
-  .org-info-js_search-highlight {background-color:#ffff00; color:#000000;
-                                 font-weight:bold; }
-  /*]]>*/-->
-</style><div id="org-div-comments"><a href="../../index.html#linuxkernel">主页</a><br/><a href="#disqus_thread">评论</a></div>
-<script type="text/javascript">
-<!--/*--><![CDATA[/*><!--*/
- function CodeHighlightOn(elem, id)
- {
-   var target = document.getElementById(id);
-   if(null != target) {
-     elem.cacheClassElem = elem.className;
-     elem.cacheClassTarget = target.className;
-     target.className = "code-highlighted";
-     elem.className   = "code-highlighted";
-   }
- }
- function CodeHighlightOff(elem, id)
- {
-   var target = document.getElementById(id);
-   if(elem.cacheClassElem)
-     elem.className = elem.cacheClassElem;
-   if(elem.cacheClassTarget)
-     target.className = elem.cacheClassTarget;
- }
-/*]]>*///-->
-</script>
+<div id="org-div-comments"><a href="../../index.html#linuxkernel">主页</a><br/><a href="#disqus_thread">评论</a></div>
+
 
 </head>
 <body>
@@ -123,7 +54,8 @@
 </ul>
 
 
-<p><br/>
+
+
 <pre class="src src-c"><span class="linenr"> 1:  </span><span style="color: #228b22;">int</span> <span style="color: #0000ff;">clone</span>(<span style="color: #228b22;">int</span> (*<span style="color: #a0522d;">fn</span>)(<span style="color: #228b22;">void</span> *), <span style="color: #228b22;">void</span> *<span style="color: #a0522d;">child_stack</span>,
 <span class="linenr"> 2:  </span>                 <span style="color: #228b22;">int</span> <span style="color: #a0522d;">flags</span>, <span style="color: #228b22;">void</span> *<span style="color: #a0522d;">arg</span>, 
 <span class="linenr"> 3:  </span>                 <span style="color: #b22222;">/* </span><span style="color: #b22222;">pid_t *ptid, struct user_desc *tls, pid_t *ctid </span><span style="color: #b22222;">*/</span> );
@@ -154,7 +86,7 @@
 <span class="linenr">28:  </span><span style="color: #7a378b;">#define</span> <span style="color: #a0522d;">CLONE_STOPPED</span>       0x02000000 <span style="color: #b22222;">/* </span><span style="color: #b22222;">&#23376;&#36827;&#31243;&#21021;&#22987;&#29366;&#24577;&#20026;TASK_STOPPED, Start in stopped state </span><span style="color: #b22222;">*/</span>
 </pre>
 
-</p></div>
+</div>
 
 </div>
 
@@ -182,7 +114,8 @@
 </ul>
 
 
-<p><br/>
+
+
 <pre class="src src-c"><span class="linenr">1:  </span><span style="color: #a020f0;">if</span> (unlikely(current-&gt;ptrace)) {
 <span class="linenr">2:  </span>        trace = fork_traceflag (clone_flags);
 <span class="linenr">3:  </span>        <span style="color: #a020f0;">if</span> (trace)
@@ -190,7 +123,7 @@
 <span class="linenr">5:  </span>}
 </pre>
 
-</p><ul>
+<ul>
 <li>用copy_process函数复制父进程的进程描述符，创建新的进程描述符。<br/>
 <ol>
 <li>分配失败则释放分配的进程ID并返回pid，此时pid为随机数<br/>
@@ -208,7 +141,8 @@
 </ul>
 
 
-<p><br/>
+
+
 <pre class="src src-c"><span class="linenr">1:  </span><span style="color: #a020f0;">struct</span> <span style="color: #228b22;">completion</span> <span style="color: #a0522d;">vfork</span>;
 <span class="linenr">2:  </span><span style="color: #a020f0;">if</span> (clone_flags &amp; CLONE_VFORK) {
 <span class="linenr">3:  </span>    p-&gt;vfork_done = &amp;vfork;
@@ -216,15 +150,18 @@
 <span class="linenr">5:  </span>}
 </pre>
 
+<p>
          completion结构体如下：<br/>
 </p>
-<p><br/>
+
+
 <pre class="src src-c"><span class="linenr">1:  </span><span style="color: #a020f0;">struct</span> <span style="color: #228b22;">completion</span> {
 <span class="linenr">2:  </span>    <span style="color: #228b22;">unsigned</span> <span style="color: #228b22;">int</span> <span style="color: #a0522d;">done</span>;
 <span class="linenr">3:  </span>    <span style="color: #228b22;">wait_queue_head_t</span> <span style="color: #a0522d;">wait</span>;
 <span class="linenr">4:  </span>};
 </pre>
 
+<p>
          task_struct-&gt;vfork_done是为vfork服务。<br/>
 </p><ul>
 <li>如果标志中的CLONE_STOPPED或父进程的ptrace被设置PT_TRACED，则给新建进程发送SIGSTOP信号<br/>

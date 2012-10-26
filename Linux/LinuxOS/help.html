@@ -7,81 +7,12 @@
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
 <meta name="title" content="显示所有man文档的编号"/>
 <meta name="generator" content="Org-mode"/>
-<meta name="generated" content="2012-10-19 22:33:40 CST"/>
+<meta name="generated" content="2012-10-27 05:26:30 CST"/>
 <meta name="author" content="visaya fan"/>
 <meta name="description" content=""/>
 <meta name="keywords" content=""/>
-<style type="text/css">
- <!--/*--><![CDATA[/*><!--*/
-  html { font-family: Times, serif; font-size: 12pt; }
-  .title  { text-align: center; }
-  .todo   { color: red; }
-  .done   { color: green; }
-  .tag    { background-color: #add8e6; font-weight:normal }
-  .target { }
-  .timestamp { color: #bebebe; }
-  .timestamp-kwd { color: #5f9ea0; }
-  .right  {margin-left:auto; margin-right:0px;  text-align:right;}
-  .left   {margin-left:0px;  margin-right:auto; text-align:left;}
-  .center {margin-left:auto; margin-right:auto; text-align:center;}
-  p.verse { margin-left: 3% }
-  pre {
-	border: 1pt solid #AEBDCC;
-	background-color: #F3F5F7;
-	padding: 5pt;
-	font-family: courier, monospace;
-        font-size: 90%;
-        overflow:auto;
-  }
-  table { border-collapse: collapse; }
-  td, th { vertical-align: top;  }
-  th.right  { text-align:center;  }
-  th.left   { text-align:center;   }
-  th.center { text-align:center; }
-  td.right  { text-align:right;  }
-  td.left   { text-align:left;   }
-  td.center { text-align:center; }
-  dt { font-weight: bold; }
-  div.figure { padding: 0.5em; }
-  div.figure p { text-align: center; }
-  div.inlinetask {
-    padding:10px;
-    border:2px solid gray;
-    margin:10px;
-    background: #ffffcc;
-  }
-  textarea { overflow-x: auto; }
-  .linenr { font-size:smaller }
-  .code-highlighted {background-color:#ffff00;}
-  .org-info-js_info-navigation { border-style:none; }
-  #org-info-js_console-label { font-size:10px; font-weight:bold;
-                               white-space:nowrap; }
-  .org-info-js_search-highlight {background-color:#ffff00; color:#000000;
-                                 font-weight:bold; }
-  /*]]>*/-->
-</style><div id="org-div-comments"><a href="../../index.html#linuxos">主页</a><br/><a href="#disqus_thread">评论</a></div>
-<script type="text/javascript">
-<!--/*--><![CDATA[/*><!--*/
- function CodeHighlightOn(elem, id)
- {
-   var target = document.getElementById(id);
-   if(null != target) {
-     elem.cacheClassElem = elem.className;
-     elem.cacheClassTarget = target.className;
-     target.className = "code-highlighted";
-     elem.className   = "code-highlighted";
-   }
- }
- function CodeHighlightOff(elem, id)
- {
-   var target = document.getElementById(id);
-   if(elem.cacheClassElem)
-     elem.className = elem.cacheClassElem;
-   if(elem.cacheClassTarget)
-     target.className = elem.cacheClassTarget;
- }
-/*]]>*///-->
-</script>
+<div id="org-div-comments"><a href="../../index.html#linuxos">主页</a><br/><a href="#disqus_thread">评论</a></div>
+
 
 </head>
 <body>
@@ -99,50 +30,50 @@
 <p>
 man -f man 显示man程序的所有文档<br/>
 </p>
-<p><br/>
+<p>
 在man中查询<br/>
 apropos keywords<br/>
 man -k keywords<br/>
 </p>
-<p><br/>
+<p>
 重建man库<br/>
 makewhatis<br/>
 </p>
-<p><br/>
+<p>
 查询man文档位置<br/>
 whereis man 查询man的文档位置<br/>
 </p>
-<p><br/>
+<p>
 查看当前man的文档目录<br/>
 manpath<br/>
 </p>
-<p><br/>
+<p>
 打印man文档<br/>
 man -t finger | lpr 打印<br/>
 lpstat -p -d 查看打印机状态<br/>
 </p>
-<p><br/>
+<p>
 用浏览器打开<br/>
 man -Hfirefox bash<br/>
 </p>
-<p><br/>
+<p>
 将man的结果保存在文件内<br/>
 man bash | col -b &gt; bash.txt<br/>
 col是用来对文本进行转换的命令，这里是去掉所有的退格符号<br/>
 </p>
-<p><br/>
+<p>
 名称<br/>
 man-显示线上求助手册(manualpage)manpath-决定线上手册的搜寻路径<br/>
 </p>
-<p><br/>
+<p>
 摘要<br/>
 man[-acdfhkKtwW][-msystem][-pstring][-Cconfig_file][-Mpath][-Ppager][-Ssection_list][section]name&hellip;<br/>
 </p>
-<p><br/>
+<p>
 描述<br/>
 man是用来排版并显示线上求助手册,此版本了解MANPATH与(MAN)PAGER这两个环境变数,所以你可以拥有个人的线上手册,并选择任何程式来显示已排版的手册。如果指定了section,则man只会显示该手册的特定章节。您也可以利用选项或是环境变数来指定搜寻的次序或是排版之前的处理工具。如果name包含了`/'则man会先搜寻所指定的档案,所以您可以man./foo.5或者是man/cd/foo/bar.1.gz。<br/>
 </p>
-<p><br/>
+<p>
 选项<br/>
 -Cconfig_file指定设定档man.conf;内定值是/etc/man.conf。(Seeman.conf(5).)<br/>
 -M<br/>
@@ -178,18 +109,17 @@ string指定在nroff或troff之前所执行的处理程式不是所有的安装�
 -W<br/>
 功能类-w,但每行只印出一个档名,不印出额外的讯息.这在下面的状况特别有用:man-aWman|xargsls-l。<br/>
 </p>
-<p><br/>
-</p>
-<p><br/>
+
+<p>
 man会试着存下已排版的线上手册,以节省下回排版所需要的时间。传统上,位于DIR/X的手册在排版完成后会存于DIR/catX,但在这里是存于/var/ctaman/catX。如果系统没有所需要的目录,则不会有任何catpage存档。<br/>
 </p>
-<p><br/>
+<p>
 Itispossibletomakemansuidtoauserman.Then,ifacatdirectoryhasownermanandmode0755(onlywritablebyman),andthecatfileshaveownermanandmode0644or0444(onlywritablebyman,ornotwritableatall),noordinaryusercanchangethecatpagesorputotherfilesinthecatdirectory.Ifmanisnotmadesuid,thenacatdirectoryshouldhavemode0777ifallusersshouldbeabletoleavecatpagesthere.<br/>
 </p>
-<p><br/>
+<p>
 选项-c强迫对线上手册重新作排版。<br/>
 </p>
-<p><br/>
+<p>
 环境变数<br/>
 MANPATHMANPATH用来设定man的搜寻路径。<br/>
 MANROFFSEQ<br/>
@@ -201,24 +131,24 @@ MANWIDTH用来设定显示的宽度。若无设定,则手册会填满您萤幕�
 MANPAGER<br/>
 MANPAGER决定了显示线上手册的工具。如果无MANPAGER则使用PAGER,如果两者皆未设定则使用/usr/bin/less-is。<br/>
 </p>
-<p><br/>
+<p>
 LANGLANG决定了man先搜寻的的子目录的名称所以`LANG=dkman1foo'会使man先搜寻[path]/dk/man1/foo.1,如果找不到该档,man才去寻找[path]/man1/foo.1,[path]是指预设的搜寻路径。<br/>
 </p>
-<p><br/>
+<p>
 NLSPATH,LC_MESSAGES,LANG<br/>
 环境变数NLSPATH与LC_MESSAGES(如果LC_MESSAGE不存在则使用LANG)用来指定讯息的语言种类.(英文讯息是编译时即内定,故不需另外设定.)请注意,man所呼叫的程式,如col(1)也会使用这些环境变数。<br/>
 </p>
-<p><br/>
+<p>
 PATHPATH是用来设定man的搜寻线上手册的路径。<br/>
 </p>
-<p><br/>
+<p>
 SYSTEMSYSTEM用来设定替代的系统名(此为选项-m所使用)。<br/>
 </p>
-<p><br/>
+<p>
 相关说明<br/>
 apropos(1),whatis(1),less(1),groff(1)。<br/>
 </p>
-<p><br/>
+<p>
 臭虫<br/>
 选项-t只会在有类似troff工具存在时才有功用。在gnome-help-browser还看不到中文。在kdehelp中可看到中文,但固定字型建建议选取courier或lucidatyperiter。（BP1.0）<br/>
 <script src="../../Layout/JS/disqus-comment.js"></script>

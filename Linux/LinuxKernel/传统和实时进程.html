@@ -7,81 +7,12 @@
 <meta http-equiv="Content-Type" content="text/html;charset=gb18030"/>
 <meta name="title" content="传统和实时进程"/>
 <meta name="generator" content="Org-mode"/>
-<meta name="generated" content="2012-10-19 22:33:55 CST"/>
+<meta name="generated" content="2012-10-27 05:28:25 CST"/>
 <meta name="author" content="visaya fan"/>
 <meta name="description" content=""/>
 <meta name="keywords" content=""/>
-<style type="text/css">
- <!--/*--><![CDATA[/*><!--*/
-  html { font-family: Times, serif; font-size: 12pt; }
-  .title  { text-align: center; }
-  .todo   { color: red; }
-  .done   { color: green; }
-  .tag    { background-color: #add8e6; font-weight:normal }
-  .target { }
-  .timestamp { color: #bebebe; }
-  .timestamp-kwd { color: #5f9ea0; }
-  .right  {margin-left:auto; margin-right:0px;  text-align:right;}
-  .left   {margin-left:0px;  margin-right:auto; text-align:left;}
-  .center {margin-left:auto; margin-right:auto; text-align:center;}
-  p.verse { margin-left: 3% }
-  pre {
-	border: 1pt solid #AEBDCC;
-	background-color: #F3F5F7;
-	padding: 5pt;
-	font-family: courier, monospace;
-        font-size: 90%;
-        overflow:auto;
-  }
-  table { border-collapse: collapse; }
-  td, th { vertical-align: top;  }
-  th.right  { text-align:center;  }
-  th.left   { text-align:center;   }
-  th.center { text-align:center; }
-  td.right  { text-align:right;  }
-  td.left   { text-align:left;   }
-  td.center { text-align:center; }
-  dt { font-weight: bold; }
-  div.figure { padding: 0.5em; }
-  div.figure p { text-align: center; }
-  div.inlinetask {
-    padding:10px;
-    border:2px solid gray;
-    margin:10px;
-    background: #ffffcc;
-  }
-  textarea { overflow-x: auto; }
-  .linenr { font-size:smaller }
-  .code-highlighted {background-color:#ffff00;}
-  .org-info-js_info-navigation { border-style:none; }
-  #org-info-js_console-label { font-size:10px; font-weight:bold;
-                               white-space:nowrap; }
-  .org-info-js_search-highlight {background-color:#ffff00; color:#000000;
-                                 font-weight:bold; }
-  /*]]>*/-->
-</style><div id="org-div-comments"><a href="../../index.html#linuxkernel">主页</a><br/><a href="#disqus_thread">评论</a></div>
-<script type="text/javascript">
-<!--/*--><![CDATA[/*><!--*/
- function CodeHighlightOn(elem, id)
- {
-   var target = document.getElementById(id);
-   if(null != target) {
-     elem.cacheClassElem = elem.className;
-     elem.cacheClassTarget = target.className;
-     target.className = "code-highlighted";
-     elem.className   = "code-highlighted";
-   }
- }
- function CodeHighlightOff(elem, id)
- {
-   var target = document.getElementById(id);
-   if(elem.cacheClassElem)
-     elem.className = elem.cacheClassElem;
-   if(elem.cacheClassTarget)
-     target.className = elem.cacheClassTarget;
- }
-/*]]>*///-->
-</script>
+<div id="org-div-comments"><a href="../../index.html#linuxkernel">主页</a><br/><a href="#disqus_thread">评论</a></div>
+
 
 </head>
 <body>
@@ -135,11 +66,13 @@
    static priority = nice + 20 + MAX_RT_PRIO<br/>
    内核定义两个宏来实现此转化：nice_to_prio() and prio_to_nice()<br/>
 </p>
-<p><br/>
+
+
 <pre class="src src-c++"><span style="color: #7a378b;">#define</span> <span style="color: #0000ff;">NICE_TO_PRIO</span>(<span style="color: #a0522d;">nice</span>)  (MAX_RT_PRIO + (nice) + 20)
 <span style="color: #7a378b;">#define</span> <span style="color: #0000ff;">PRIO_TO_NICE</span>(<span style="color: #a0522d;">prio</span>)  ((prio) - MAX_RT_PRIO - 20)
 </pre>
 
+<p>
    在进程task_struct中用int static_prio表示。<br/>
    一个进程继承其父进程的静态优先级。也可以通过nice() or setpriority()指定。决定了Base Time Quantum大小。<br/>
 </p><table  border="2" cellspacing="0" cellpadding="6" rules="all" frame="all">
@@ -156,9 +89,9 @@
 </table>
 
 
-<p><br/>
-</p>
-<p><br/>
+
+
+
 <pre class="src src-c++"><span style="color: #7a378b;">#define</span> <span style="color: #a0522d;">DEF_TIMESLICE</span>       (100 * HZ / 1000)
 
 <span style="color: #7a378b;">#define</span> <span style="color: #0000ff;">SCALE_PRIO</span>(<span style="color: #a0522d;">x</span>, <span style="color: #a0522d;">prio</span>) \
@@ -173,9 +106,10 @@
 }
 </pre>
 
+<p>
 DEF_TIMESLICE = 100, MAX_PRIO = 140, MAX_USER_PRIO = 40, 故得到上表中的公式.<br/>
 </p>
-<p><br/>
+<p>
    静态优先级数值越大，进程的优先级越小，分配的基时间量就越少。<br/>
 </p></div>
 
@@ -196,7 +130,8 @@ DEF_TIMESLICE = 100, MAX_PRIO = 140, MAX_USER_PRIO = 40, 故得到上表中的公式.<br/
    进程创建时，在wake_up_forked_process()中子进程继承了父进程的动态优先级，并添加到父进程的就绪队列中，如果父进程不在任何就绪队列中，则通过effective_prio()来计算出子进程的动态优先级并根据计算结果将子进程放置到相应的就绪队列中。<br/>
    动态优先级的计算只要由effective_prio()函数来完成：<br/>
 </p>
-<p><br/>
+
+
 <pre class="src src-c++"><span style="color: #a020f0;">static</span> <span style="color: #228b22;">int</span> <span style="color: #0000ff;">effective_prio</span>(<span style="color: #228b22;">task_t</span> *<span style="color: #a0522d;">p</span>)
 {
     <span style="color: #228b22;">int</span> <span style="color: #a0522d;">bonus</span>, <span style="color: #a0522d;">prio</span>;
@@ -222,23 +157,27 @@ DEF_TIMESLICE = 100, MAX_PRIO = 140, MAX_USER_PRIO = 40, 故得到上表中的公式.<br/
         MAX_SLEEP_AVG)
 </pre>
 
+<p>
   最大bonus值的计算如下：<br/>
 </p>
-<p><br/>
+
+
 <pre class="src src-c++"><span style="color: #7a378b;">#define</span> <span style="color: #0000ff;">USER_PRIO</span>(<span style="color: #a0522d;">p</span>)        ((p)-MAX_RT_PRIO)
 <span style="color: #7a378b;">#define</span> <span style="color: #a0522d;">MAX_USER_PRIO</span>       (USER_PRIO(MAX_PRIO))       ;;40
 <span style="color: #7a378b;">#define</span> <span style="color: #a0522d;">PRIO_BONUS_RATIO</span>     25
 <span style="color: #7a378b;">#define</span> <span style="color: #a0522d;">MAX_BONUS</span>       (MAX_USER_PRIO * PRIO_BONUS_RATIO / 100) ;;&#32467;&#26524;&#20026;10
 </pre>
 
+<p>
   最大平均睡眠时间计算如下：<br/>
 </p>
-<p><br/>
+
+
 <pre class="src src-c++"><span style="color: #7a378b;">#define</span> <span style="color: #a0522d;">DEF_TIMESLICE</span>       (100 * HZ / 1000)
 <span style="color: #7a378b;">#define</span> <span style="color: #a0522d;">MAX_SLEEP_AVG</span>       (DEF_TIMESLICE * MAX_BONUS)
 </pre>
 
-</p></div>
+</div>
 </div>
 
 </div>
@@ -301,7 +240,8 @@ DEF_TIMESLICE = 100, MAX_PRIO = 140, MAX_USER_PRIO = 40, 故得到上表中的公式.<br/
 
 <p>  task_struct中unsigned long policy;指定调度策略，其值可以取:<br/>
 </p>
-<p><br/>
+
+
 <pre class="src src-c++"><span style="color: #7a378b;">#define</span> <span style="color: #a0522d;">SCHED_NORMAL</span>    0       <span style="color: #b22222;">//</span><span style="color: #b22222;">&#38750;&#23454;&#26102;&#36827;&#31243;&#65292;&#22522;&#20110;&#20248;&#20808;&#32423;&#30340;&#36718;&#22238;&#27861;&#65288;Round Robin&#65289;</span>
 <span style="color: #7a378b;">#define</span> <span style="color: #a0522d;">SCHED_FIFO</span>      1       <span style="color: #b22222;">//</span><span style="color: #b22222;">&#23454;&#26102;&#36827;&#31243;&#65292;&#20808;&#36827;&#20808;&#20986;</span>
 <span style="color: #7a378b;">#define</span> <span style="color: #a0522d;">SCHED_RR</span>        2       <span style="color: #b22222;">//</span><span style="color: #b22222;">&#23454;&#26102;&#36827;&#31243;&#65292;&#22522;&#20110;&#20248;&#20808;&#32423;&#30340;&#36718;&#22238;&#27861;&#65288;Round Robin&#65289;</span>
@@ -310,7 +250,7 @@ DEF_TIMESLICE = 100, MAX_PRIO = 140, MAX_USER_PRIO = 40, 故得到上表中的公式.<br/
 <script src="../../Layout/JS/disqus-comment.js"></script>
 <div id="disqus_thread">
 </div>
-</p></div>
+</div>
 </div>
 </div>
 

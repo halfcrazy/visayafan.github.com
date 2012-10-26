@@ -7,81 +7,12 @@
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
 <meta name="title" content="名字控制"/>
 <meta name="generator" content="Org-mode"/>
-<meta name="generated" content="2012-10-19 22:31:47 CST"/>
+<meta name="generated" content="2012-10-27 05:27:15 CST"/>
 <meta name="author" content="visaya fan"/>
 <meta name="description" content=""/>
 <meta name="keywords" content=""/>
-<style type="text/css">
- <!--/*--><![CDATA[/*><!--*/
-  html { font-family: Times, serif; font-size: 12pt; }
-  .title  { text-align: center; }
-  .todo   { color: red; }
-  .done   { color: green; }
-  .tag    { background-color: #add8e6; font-weight:normal }
-  .target { }
-  .timestamp { color: #bebebe; }
-  .timestamp-kwd { color: #5f9ea0; }
-  .right  {margin-left:auto; margin-right:0px;  text-align:right;}
-  .left   {margin-left:0px;  margin-right:auto; text-align:left;}
-  .center {margin-left:auto; margin-right:auto; text-align:center;}
-  p.verse { margin-left: 3% }
-  pre {
-	border: 1pt solid #AEBDCC;
-	background-color: #F3F5F7;
-	padding: 5pt;
-	font-family: courier, monospace;
-        font-size: 90%;
-        overflow:auto;
-  }
-  table { border-collapse: collapse; }
-  td, th { vertical-align: top;  }
-  th.right  { text-align:center;  }
-  th.left   { text-align:center;   }
-  th.center { text-align:center; }
-  td.right  { text-align:right;  }
-  td.left   { text-align:left;   }
-  td.center { text-align:center; }
-  dt { font-weight: bold; }
-  div.figure { padding: 0.5em; }
-  div.figure p { text-align: center; }
-  div.inlinetask {
-    padding:10px;
-    border:2px solid gray;
-    margin:10px;
-    background: #ffffcc;
-  }
-  textarea { overflow-x: auto; }
-  .linenr { font-size:smaller }
-  .code-highlighted {background-color:#ffff00;}
-  .org-info-js_info-navigation { border-style:none; }
-  #org-info-js_console-label { font-size:10px; font-weight:bold;
-                               white-space:nowrap; }
-  .org-info-js_search-highlight {background-color:#ffff00; color:#000000;
-                                 font-weight:bold; }
-  /*]]>*/-->
-</style><div id="org-div-comments"><a href="../../index.html#cpp">主页</a><br/><a href="#disqus_thread">评论</a></div>
-<script type="text/javascript">
-<!--/*--><![CDATA[/*><!--*/
- function CodeHighlightOn(elem, id)
- {
-   var target = document.getElementById(id);
-   if(null != target) {
-     elem.cacheClassElem = elem.className;
-     elem.cacheClassTarget = target.className;
-     target.className = "code-highlighted";
-     elem.className   = "code-highlighted";
-   }
- }
- function CodeHighlightOff(elem, id)
- {
-   var target = document.getElementById(id);
-   if(elem.cacheClassElem)
-     elem.className = elem.cacheClassElem;
-   if(elem.cacheClassTarget)
-     target.className = elem.cacheClassTarget;
- }
-/*]]>*///-->
-</script>
+<div id="org-div-comments"><a href="../../index.html#cpp">主页</a><br/><a href="#disqus_thread">评论</a></div>
+
 
 </head>
 <body>
@@ -142,7 +73,8 @@
 </ol>
 
 
-<p><br/>
+
+
 <pre class="src src-c++"><span style="color: #a020f0;">namespace</span> <span style="color: #008b8b;">X</span>{
 }
 <span style="color: #a020f0;">namespace</span> <span style="color: #008b8b;">Y</span>=X;
@@ -168,6 +100,7 @@
 <span style="color: #228b22;">void</span> <span style="color: #008b8b;">X</span>::<span style="color: #0000ff;">fun</span>(){}
 </pre>
 
+<p>
   使用的2种方式：<br/>
 </p><ol>
 <li><code>using directive</code>  例如 using namespace Name;<br/>
@@ -185,7 +118,8 @@
 <div class="outline-text-2" id="text-3">
 
 
-<p><br/>
+
+
 <pre class="src src-c++"><span style="color: #a020f0;">class</span> <span style="color: #228b22;">Values</span>{
     <span style="color: #a020f0;">static</span> <span style="color: #a020f0;">const</span> <span style="color: #228b22;">int</span> <span style="color: #a0522d;">ary</span>[2];
     <span style="color: #a020f0;">static</span> <span style="color: #a020f0;">const</span> <span style="color: #228b22;">int</span> <span style="color: #a0522d;">ary2</span>[];
@@ -194,7 +128,7 @@
 <span style="color: #a020f0;">const</span> <span style="color: #228b22;">int</span> <span style="color: #008b8b;">Values</span>::<span style="color: #a0522d;">ary2</span>[]={1,2,3,4};
 </pre>
 
-</p></div>
+</div>
 
 </div>
 
@@ -210,7 +144,8 @@
 <div class="outline-text-3" id="text-4-1">
 
 
-<p><br/>
+
+
 <pre class="src src-c++"><span style="color: #b22222;">//</span><span style="color: #b22222;">Initializer.h</span>
 <span style="color: #7a378b;">#if</span><span style="color: #7a378b;">n</span><span style="color: #7a378b;">def</span> INITIALIZER_H
 <span style="color: #7a378b;">#define</span> <span style="color: #a0522d;">INITIALIZER_H</span>
@@ -259,6 +194,7 @@
 }
 </pre>
 
+<p>
    每次包含 <code>Initializer.h</code> 时都会创建一个 <code>Initializer</code> 对象（因为是 <code>static</code> 类型的，所以不会出现重定义的现象），只有第一次才会执行x=100,y=100（因为第一次 initCount=0，而后自增），且只有最后一次析构才会执行if下的语句（每调用一次析构initCount自减，直到最后一次为0时执行if下语句）。<br/>
    这种方法所有做的有：<br/>
 </p><ol>

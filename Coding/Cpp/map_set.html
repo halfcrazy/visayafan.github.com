@@ -7,81 +7,12 @@
 <meta http-equiv="Content-Type" content="text/html;charset=gb18030"/>
 <meta name="title" content="STL：映射 集合"/>
 <meta name="generator" content="Org-mode"/>
-<meta name="generated" content="2012-10-19 22:31:56 CST"/>
+<meta name="generated" content="2012-10-27 05:27:27 CST"/>
 <meta name="author" content="visaya fan"/>
 <meta name="description" content=""/>
 <meta name="keywords" content=""/>
-<style type="text/css">
- <!--/*--><![CDATA[/*><!--*/
-  html { font-family: Times, serif; font-size: 12pt; }
-  .title  { text-align: center; }
-  .todo   { color: red; }
-  .done   { color: green; }
-  .tag    { background-color: #add8e6; font-weight:normal }
-  .target { }
-  .timestamp { color: #bebebe; }
-  .timestamp-kwd { color: #5f9ea0; }
-  .right  {margin-left:auto; margin-right:0px;  text-align:right;}
-  .left   {margin-left:0px;  margin-right:auto; text-align:left;}
-  .center {margin-left:auto; margin-right:auto; text-align:center;}
-  p.verse { margin-left: 3% }
-  pre {
-	border: 1pt solid #AEBDCC;
-	background-color: #F3F5F7;
-	padding: 5pt;
-	font-family: courier, monospace;
-        font-size: 90%;
-        overflow:auto;
-  }
-  table { border-collapse: collapse; }
-  td, th { vertical-align: top;  }
-  th.right  { text-align:center;  }
-  th.left   { text-align:center;   }
-  th.center { text-align:center; }
-  td.right  { text-align:right;  }
-  td.left   { text-align:left;   }
-  td.center { text-align:center; }
-  dt { font-weight: bold; }
-  div.figure { padding: 0.5em; }
-  div.figure p { text-align: center; }
-  div.inlinetask {
-    padding:10px;
-    border:2px solid gray;
-    margin:10px;
-    background: #ffffcc;
-  }
-  textarea { overflow-x: auto; }
-  .linenr { font-size:smaller }
-  .code-highlighted {background-color:#ffff00;}
-  .org-info-js_info-navigation { border-style:none; }
-  #org-info-js_console-label { font-size:10px; font-weight:bold;
-                               white-space:nowrap; }
-  .org-info-js_search-highlight {background-color:#ffff00; color:#000000;
-                                 font-weight:bold; }
-  /*]]>*/-->
-</style><div id="org-div-comments"><a href="../../index.html#cpp">主页</a><br/><a href="#disqus_thread">评论</a></div>
-<script type="text/javascript">
-<!--/*--><![CDATA[/*><!--*/
- function CodeHighlightOn(elem, id)
- {
-   var target = document.getElementById(id);
-   if(null != target) {
-     elem.cacheClassElem = elem.className;
-     elem.cacheClassTarget = target.className;
-     target.className = "code-highlighted";
-     elem.className   = "code-highlighted";
-   }
- }
- function CodeHighlightOff(elem, id)
- {
-   var target = document.getElementById(id);
-   if(elem.cacheClassElem)
-     elem.className = elem.cacheClassElem;
-   if(elem.cacheClassTarget)
-     target.className = elem.cacheClassTarget;
- }
-/*]]>*///-->
-</script>
+<div id="org-div-comments"><a href="../../index.html#cpp">主页</a><br/><a href="#disqus_thread">评论</a></div>
+
 
 </head>
 <body>
@@ -141,13 +72,14 @@
 <div class="outline-text-3" id="text-1-2">
 
 
-<p><br/>
+
+
 <pre class="src src-c++"><span style="color: #228b22;">pair</span>&lt;<span style="color: #228b22;">iterator</span>,<span style="color: #228b22;">bool</span>&gt; <span style="color: #0000ff;">insert</span>( <span style="color: #a020f0;">const</span> <span style="color: #228b22;">TYPE</span>&amp; <span style="color: #a0522d;">pair</span> )
 <span style="color: #228b22;">void</span> <span style="color: #0000ff;">insert</span>( <span style="color: #228b22;">input_iterator</span> <span style="color: #a0522d;">start</span>, <span style="color: #228b22;">input_iterator</span> <span style="color: #a0522d;">end</span> );
 <span style="color: #228b22;">iterator</span> <span style="color: #0000ff;">insert</span>( <span style="color: #228b22;">iterator</span> <span style="color: #a0522d;">pos</span>, <span style="color: #a020f0;">const</span> <span style="color: #228b22;">TYPE</span>&amp; <span style="color: #a0522d;">pair</span> );
 </pre>
 
-</p></div>
+</div>
 
 </div>
 
@@ -158,7 +90,8 @@
 <p>  key_compare key_comp() const;<br/>
   The function key_comp() returns the function that compares keys. <br/>
 </p>
-<p><br/>
+
+
 <pre class="src src-c++">m2[0]=1;
 m2[1]=2;
 m2[2]=1;
@@ -169,16 +102,15 @@ m2[3]=2;
 }
 </pre>
 
-</p><dl>
+<dl>
 <dt>解析</dt><dd>
-<p><br/>
+<p>
   m2.key_comp() 返回比较函数。i, m2[i]作为返回函数的参数，若i&lt;m2[i]为真，否则为假，又有!所以若i&gt;m[i]为真，所以i=0,1时均为假，i=2,3时为真，输出1，2.<br/>
 </p></dd>
 </dl>
 
 
-<p><br/>
-</p></div>
+</div>
 
 </div>
 
@@ -188,11 +120,11 @@ m2[3]=2;
 
 <dl>
 <dt>形式</dt><dd>
-<p><br/>
+<p>
    pair&lt;iterator, iterator&gt; equal_range( const key_type&amp; key );<br/>
 </p></dd>
 <dt>返回值</dt><dd>
-<p><br/>
+<p>
    The function equal_range() returns two iterators - one to the first element that contains key, another to a point just after the last element that contains key. <br/>
    返回第一个find的iterator与最后一个find的下一个iterator。<br/>
 </p></dd>
@@ -219,8 +151,7 @@ m2[3]=2;
 
 <p>   前者返回map大小，后者返回map最大的存储个数。<br/>
 </p>
-<p><br/>
-</p></div>
+</div>
 </div>
 
 </div>
@@ -238,7 +169,8 @@ m2[3]=2;
 
 <p>   使用方法与map完全相同。当参数为iterator时返回值为void，当参数为value_type时返回一个iterator和bool。<br/>
 </p>
-<p><br/>
+
+
 <pre class="src src-c++"><span style="color: #228b22;">set</span>&lt;<span style="color: #228b22;">int</span>&gt; <span style="color: #a0522d;">iset</span>;
 iset.insert(1);
 <span style="color: #228b22;">pair</span>&lt;<span style="color: #008b8b;">set</span>&lt;<span style="color: #228b22;">int</span>&gt;::iterator, <span style="color: #228b22;">bool</span>&gt; <span style="color: #a0522d;">bset</span> = iset.insert(1);
@@ -249,7 +181,7 @@ iset.insert(1);
 <script src="../../Layout/JS/disqus-comment.js"></script>
 <div id="disqus_thread">
 </div>
-</p></div>
+</div>
 </div>
 </div>
 </div>

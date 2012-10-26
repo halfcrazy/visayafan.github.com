@@ -7,81 +7,12 @@
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
 <meta name="title" content="函数总结2"/>
 <meta name="generator" content="Org-mode"/>
-<meta name="generated" content="2012-10-19 22:33:12 CST"/>
+<meta name="generated" content="2012-10-27 05:27:51 CST"/>
 <meta name="author" content="visaya fan"/>
 <meta name="description" content=""/>
 <meta name="keywords" content=""/>
-<style type="text/css">
- <!--/*--><![CDATA[/*><!--*/
-  html { font-family: Times, serif; font-size: 12pt; }
-  .title  { text-align: center; }
-  .todo   { color: red; }
-  .done   { color: green; }
-  .tag    { background-color: #add8e6; font-weight:normal }
-  .target { }
-  .timestamp { color: #bebebe; }
-  .timestamp-kwd { color: #5f9ea0; }
-  .right  {margin-left:auto; margin-right:0px;  text-align:right;}
-  .left   {margin-left:0px;  margin-right:auto; text-align:left;}
-  .center {margin-left:auto; margin-right:auto; text-align:center;}
-  p.verse { margin-left: 3% }
-  pre {
-	border: 1pt solid #AEBDCC;
-	background-color: #F3F5F7;
-	padding: 5pt;
-	font-family: courier, monospace;
-        font-size: 90%;
-        overflow:auto;
-  }
-  table { border-collapse: collapse; }
-  td, th { vertical-align: top;  }
-  th.right  { text-align:center;  }
-  th.left   { text-align:center;   }
-  th.center { text-align:center; }
-  td.right  { text-align:right;  }
-  td.left   { text-align:left;   }
-  td.center { text-align:center; }
-  dt { font-weight: bold; }
-  div.figure { padding: 0.5em; }
-  div.figure p { text-align: center; }
-  div.inlinetask {
-    padding:10px;
-    border:2px solid gray;
-    margin:10px;
-    background: #ffffcc;
-  }
-  textarea { overflow-x: auto; }
-  .linenr { font-size:smaller }
-  .code-highlighted {background-color:#ffff00;}
-  .org-info-js_info-navigation { border-style:none; }
-  #org-info-js_console-label { font-size:10px; font-weight:bold;
-                               white-space:nowrap; }
-  .org-info-js_search-highlight {background-color:#ffff00; color:#000000;
-                                 font-weight:bold; }
-  /*]]>*/-->
-</style><div id="org-div-comments"><a href="../../index.html#python">主页</a><br/><a href="#disqus_thread">评论</a></div>
-<script type="text/javascript">
-<!--/*--><![CDATA[/*><!--*/
- function CodeHighlightOn(elem, id)
- {
-   var target = document.getElementById(id);
-   if(null != target) {
-     elem.cacheClassElem = elem.className;
-     elem.cacheClassTarget = target.className;
-     target.className = "code-highlighted";
-     elem.className   = "code-highlighted";
-   }
- }
- function CodeHighlightOff(elem, id)
- {
-   var target = document.getElementById(id);
-   if(elem.cacheClassElem)
-     elem.className = elem.cacheClassElem;
-   if(elem.cacheClassTarget)
-     target.className = elem.cacheClassTarget;
- }
-/*]]>*///-->
-</script>
+<div id="org-div-comments"><a href="../../index.html#python">主页</a><br/><a href="#disqus_thread">评论</a></div>
+
 
 </head>
 <body>
@@ -182,8 +113,7 @@
 <div class="outline-text-2" id="text-6">
 
 
-<p><br/>
-</p></div>
+</div>
 
 </div>
 
@@ -192,12 +122,13 @@
 <div class="outline-text-2" id="text-7">
 
 
-<p><br/>
+
+
 <pre class="example">去除浮点后面的
 因为版本问题：在2.6中 3/2=&gt;1，而在3.0中 3/2 =&gt;1.5。为避免版本引起的问题，可以用math.trunc().math.trunc(3/2)=&gt;1
 </pre>
 
-</p></div>
+</div>
 
 </div>
 
@@ -206,7 +137,8 @@
 <div class="outline-text-2" id="text-8">
 
 
-<p><br/>
+
+
 <pre class="example">&gt;&gt;&gt; math.floor(2.5)
 2.0
 &gt;&gt;&gt; math.floor(-2.5)
@@ -214,7 +146,7 @@
 </pre>
 
 
-</p></div>
+</div>
 
 </div>
 
@@ -223,14 +155,15 @@
 <div class="outline-text-2" id="text-9">
 
 
-<p><br/>
+
+
 <pre class="example">把10进制整数转化成8 16 2进制字符串
 2.6版本中8进制前面加0，3.0版本中前面加0o
 &gt;&gt;&gt; oct(64), hex(64), bin(64)
 ('0100', '0x40', '0b1000000')
 </pre>
 
-</p></div>
+</div>
 
 </div>
 
@@ -239,7 +172,8 @@
 <div class="outline-text-2" id="text-10">
 
 
-<p><br/>
+
+
 <pre class="example">int(x[, base]) -&gt; integer
 把一个数字的字符串变换为整数，其中base指定指定x的进制。
 &gt;&gt;&gt; int('64'), int('100', 8), int('40', 16), int('1000000', 2)
@@ -248,7 +182,7 @@
 (64, 64)
 </pre>
 
-</p></div>
+</div>
 
 </div>
 
@@ -265,7 +199,8 @@
 <div class="outline-text-2" id="text-12">
 
 
-<p><br/>
+
+
 <pre class="example">#以二进制查询表示一个数字的什所需的位数
 &gt;&gt;&gt; (256).bit_length()
 9
@@ -274,7 +209,7 @@
 </pre>
 
 
-</p></div>
+</div>
 
 </div>
 
@@ -283,7 +218,8 @@
 <div class="outline-text-2" id="text-13">
 
 
-<p><br/>
+
+
 <pre class="example">python中有三种方法可以计算平方根：
 import math
 math.sqrt(144)
@@ -292,15 +228,15 @@ pow(144, .5)
 </pre>
 
 
-</p>
 <hr/>
 
-<p><br/>
+
+
 <pre class="example">pow(x, y[, z]) -&gt; number
 通常是两个参数，若三个则表示 (x ** y) % z
 </pre>
 
-</p></div>
+</div>
 
 </div>
 
@@ -348,11 +284,12 @@ pow(144, .5)
 <div class="outline-text-2" id="text-15">
 
 
-<p><br/>
+
+
 <pre class="example">zip(seq1, seq2, seq3...)=&gt; [(seq1[0], seq2[0]...), (seq1[1], seq2[1]...), ...]
 </pre>
 
-</p>
+
 </div>
 
 <div id="outline-container-15-1" class="outline-3">
@@ -360,7 +297,8 @@ pow(144, .5)
 <div class="outline-text-3" id="text-15-1">
 
 
-<p><br/>
+
+
 <pre class="src src-python">&gt;&gt;&gt; d1=(<span style="color: #8b2252;">'a'</span>, <span style="color: #8b2252;">'b'</span>, <span style="color: #8b2252;">'c'</span>)
 &gt;&gt;&gt; d2=(1,2,3)
 &gt;&gt;&gt; <span style="color: #7a378b;">dict</span>(<span style="color: #7a378b;">zip</span>(d1,d2))
@@ -370,7 +308,7 @@ pow(144, .5)
 1
 </pre>
 
-</p></div>
+</div>
 </div>
 
 </div>
@@ -380,7 +318,8 @@ pow(144, .5)
 <div class="outline-text-2" id="text-16">
 
 
-<p><br/>
+
+
 <pre class="example">enumerate(iterable[, start]) -&gt; iterator for index, value of iterable
 </pre>
 
@@ -395,7 +334,7 @@ pow(144, .5)
 (3, <span style="color: #8b2252;">'m'</span>)
 </pre>
 
-</p></div>
+</div>
 
 </div>
 
@@ -404,17 +343,20 @@ pow(144, .5)
 <div class="outline-text-2" id="text-17">
 
 
-<p><br/>
+
+
 <pre class="example">reduce(function, sequence[, initial]) -&gt; value
 </pre>
 
+<p>
   initial可选，当sequence为空结果为该值。<br/>
 </p>
-<p><br/>
+
+
 <pre class="src src-python"><span style="color: #7a378b;">reduce</span>(<span style="color: #a020f0;">lambda</span> x,y:x*y, [1,2,3,4,5,6,7]) =&gt;(((((1*2)*3)*4)*5)*6)*7
 </pre>
 
-</p></div>
+</div>
 
 </div>
 
@@ -424,14 +366,15 @@ pow(144, .5)
 
 <p>  用来从一个字符串翻译到另一个字符串<br/>
 </p>
-<p><br/>
+
+
 <pre class="src src-python"><span style="color: #a0522d;">before</span> = <span style="color: #8b2252;">'koe'</span>
 <span style="color: #a0522d;">after</span> = <span style="color: #8b2252;">'mqg'</span>
 <span style="color: #a0522d;">trantab</span> = maketrans(before, after)
 <span style="color: #a020f0;">print</span> <span style="color: #8b2252;">'koe'</span>.translate(trantab)
 </pre>
 
-</p></div>
+</div>
 
 </div>
 

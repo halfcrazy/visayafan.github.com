@@ -7,81 +7,12 @@
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
 <meta name="title" content="命令行trick"/>
 <meta name="generator" content="Org-mode"/>
-<meta name="generated" content="2012-10-25 00:44:17 CST"/>
+<meta name="generated" content="2012-10-27 05:26:26 CST"/>
 <meta name="author" content="visaya fan"/>
 <meta name="description" content=""/>
 <meta name="keywords" content=""/>
-<style type="text/css">
- <!--/*--><![CDATA[/*><!--*/
-  html { font-family: Times, serif; font-size: 12pt; }
-  .title  { text-align: center; }
-  .todo   { color: red; }
-  .done   { color: green; }
-  .tag    { background-color: #add8e6; font-weight:normal }
-  .target { }
-  .timestamp { color: #bebebe; }
-  .timestamp-kwd { color: #5f9ea0; }
-  .right  {margin-left:auto; margin-right:0px;  text-align:right;}
-  .left   {margin-left:0px;  margin-right:auto; text-align:left;}
-  .center {margin-left:auto; margin-right:auto; text-align:center;}
-  p.verse { margin-left: 3% }
-  pre {
-	border: 1pt solid #AEBDCC;
-	background-color: #F3F5F7;
-	padding: 5pt;
-	font-family: courier, monospace;
-        font-size: 90%;
-        overflow:auto;
-  }
-  table { border-collapse: collapse; }
-  td, th { vertical-align: top;  }
-  th.right  { text-align:center;  }
-  th.left   { text-align:center;   }
-  th.center { text-align:center; }
-  td.right  { text-align:right;  }
-  td.left   { text-align:left;   }
-  td.center { text-align:center; }
-  dt { font-weight: bold; }
-  div.figure { padding: 0.5em; }
-  div.figure p { text-align: center; }
-  div.inlinetask {
-    padding:10px;
-    border:2px solid gray;
-    margin:10px;
-    background: #ffffcc;
-  }
-  textarea { overflow-x: auto; }
-  .linenr { font-size:smaller }
-  .code-highlighted {background-color:#ffff00;}
-  .org-info-js_info-navigation { border-style:none; }
-  #org-info-js_console-label { font-size:10px; font-weight:bold;
-                               white-space:nowrap; }
-  .org-info-js_search-highlight {background-color:#ffff00; color:#000000;
-                                 font-weight:bold; }
-  /*]]>*/-->
-</style>
-<script type="text/javascript">
-<!--/*--><![CDATA[/*><!--*/
- function CodeHighlightOn(elem, id)
- {
-   var target = document.getElementById(id);
-   if(null != target) {
-     elem.cacheClassElem = elem.className;
-     elem.cacheClassTarget = target.className;
-     target.className = "code-highlighted";
-     elem.className   = "code-highlighted";
-   }
- }
- function CodeHighlightOff(elem, id)
- {
-   var target = document.getElementById(id);
-   if(elem.cacheClassElem)
-     elem.className = elem.cacheClassElem;
-   if(elem.cacheClassTarget)
-     target.className = elem.cacheClassTarget;
- }
-/*]]>*///-->
-</script>
+<div id="org-div-comments"><a href="../../index.html#linuxos">主页</a><br/><a href="#disqus_thread">评论</a></div>
+
 
 </head>
 <body>
@@ -113,6 +44,13 @@
 <li><a href="#sec-1-8">1.8 pushd/popd</a></li>
 </ul>
 </li>
+<li><a href="#sec-2">2 2012年10月26日11:39PM</a>
+<ul>
+<li><a href="#sec-2-1">2.1 echo 换行</a></li>
+<li><a href="#sec-2-2">2.2 递归更新目录下所有文件时间戳</a></li>
+</ul>
+</li>
+<li><a href="#sec-3">3 分享/评论</a></li>
 </ul>
 </div>
 </div>
@@ -166,8 +104,7 @@
 </blockquote>
 
 
-<p><br/>
-</p></div>
+</div>
 
 </div>
 
@@ -203,23 +140,54 @@
 <div class="outline-text-3" id="text-1-8">
 
 <p>   pushd dit和popd，相当于一个堆栈,pushd dit的时候把当前目录压栈并切换到dit目录下,popd 返回上一次压栈的目录下。<br/>
-</p>
-<p><br/>
+</p></div>
+</div>
+
+</div>
+
+<div id="outline-container-2" class="outline-2">
+<h2 id="sec-2"><span class="section-number-2">2</span> 2012年10月26日11:39PM</h2>
+<div class="outline-text-2" id="text-2">
+
+
+</div>
+
+<div id="outline-container-2-1" class="outline-3">
+<h3 id="sec-2-1"><span class="section-number-3">2.1</span> echo 换行</h3>
+<div class="outline-text-3" id="text-2-1">
+
+<p>   直接 echo "a\nb" &gt;file 此时file中只有一行而非两行。<br/>
+   使用-e选项表示解析转义，即 echo -e "a\nb" &gt;file 此时 file中有两行<br/>
+</p></div>
+
+</div>
+
+<div id="outline-container-2-2" class="outline-3">
+<h3 id="sec-2-2"><span class="section-number-3">2.2</span> 递归更新目录下所有文件时间戳</h3>
+<div class="outline-text-3" id="text-2-2">
+
+
+
+
+<pre class="example">find . -name "*.org" -exec touch {} \;
+</pre>
+
+</div>
+</div>
+
+</div>
+
+<div id="outline-container-3" class="outline-2">
+<h2 id="sec-3"><span class="section-number-2">3</span> 分享/评论</h2>
+<div class="outline-text-2" id="text-3">
+
+
 <a class="bshareDiv" href="http://www.bshare.cn/share">分享按钮</a><script type="text/javascript" charset="utf-8" src="http://static.bshare.cn/b/buttonLite.js#uuid=&amp;style=10&amp;bgcolor=Blue"></script>
 <br/>
 <script src="../../Layout/JS/disqus-comment.js"></script>
 <div id="disqus_thread">
 </div>
 
-</p>
-<p>   <br/>
-</p>
-<p><br/>
-</p>
-<p>   <br/>
-</p>
-<p>   <br/>
-</p></div>
 </div>
 </div>
 </div>

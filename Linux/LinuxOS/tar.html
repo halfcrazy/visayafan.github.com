@@ -7,81 +7,12 @@
 <meta http-equiv="Content-Type" content="text/html;charset=gb18030"/>
 <meta name="title" content="tar, gzip, bzip2, zip, unzip 压缩解压"/>
 <meta name="generator" content="Org-mode"/>
-<meta name="generated" content="2012-10-19 22:33:39 CST"/>
+<meta name="generated" content="2012-10-27 05:26:29 CST"/>
 <meta name="author" content="visaya fan"/>
 <meta name="description" content=""/>
 <meta name="keywords" content=""/>
-<style type="text/css">
- <!--/*--><![CDATA[/*><!--*/
-  html { font-family: Times, serif; font-size: 12pt; }
-  .title  { text-align: center; }
-  .todo   { color: red; }
-  .done   { color: green; }
-  .tag    { background-color: #add8e6; font-weight:normal }
-  .target { }
-  .timestamp { color: #bebebe; }
-  .timestamp-kwd { color: #5f9ea0; }
-  .right  {margin-left:auto; margin-right:0px;  text-align:right;}
-  .left   {margin-left:0px;  margin-right:auto; text-align:left;}
-  .center {margin-left:auto; margin-right:auto; text-align:center;}
-  p.verse { margin-left: 3% }
-  pre {
-	border: 1pt solid #AEBDCC;
-	background-color: #F3F5F7;
-	padding: 5pt;
-	font-family: courier, monospace;
-        font-size: 90%;
-        overflow:auto;
-  }
-  table { border-collapse: collapse; }
-  td, th { vertical-align: top;  }
-  th.right  { text-align:center;  }
-  th.left   { text-align:center;   }
-  th.center { text-align:center; }
-  td.right  { text-align:right;  }
-  td.left   { text-align:left;   }
-  td.center { text-align:center; }
-  dt { font-weight: bold; }
-  div.figure { padding: 0.5em; }
-  div.figure p { text-align: center; }
-  div.inlinetask {
-    padding:10px;
-    border:2px solid gray;
-    margin:10px;
-    background: #ffffcc;
-  }
-  textarea { overflow-x: auto; }
-  .linenr { font-size:smaller }
-  .code-highlighted {background-color:#ffff00;}
-  .org-info-js_info-navigation { border-style:none; }
-  #org-info-js_console-label { font-size:10px; font-weight:bold;
-                               white-space:nowrap; }
-  .org-info-js_search-highlight {background-color:#ffff00; color:#000000;
-                                 font-weight:bold; }
-  /*]]>*/-->
-</style><div id="org-div-comments"><a href="../../index.html#linuxos">主页</a><br/><a href="#disqus_thread">评论</a></div>
-<script type="text/javascript">
-<!--/*--><![CDATA[/*><!--*/
- function CodeHighlightOn(elem, id)
- {
-   var target = document.getElementById(id);
-   if(null != target) {
-     elem.cacheClassElem = elem.className;
-     elem.cacheClassTarget = target.className;
-     target.className = "code-highlighted";
-     elem.className   = "code-highlighted";
-   }
- }
- function CodeHighlightOff(elem, id)
- {
-   var target = document.getElementById(id);
-   if(elem.cacheClassElem)
-     elem.className = elem.cacheClassElem;
-   if(elem.cacheClassTarget)
-     target.className = elem.cacheClassTarget;
- }
-/*]]>*///-->
-</script>
+<div id="org-div-comments"><a href="../../index.html#linuxos">主页</a><br/><a href="#disqus_thread">评论</a></div>
+
 
 </head>
 <body>
@@ -160,14 +91,15 @@
 <div class="outline-text-4" id="text-1-1-1">
 
 
-<p><br/>
+
+
 <pre class="example">--file = archive-name
 -f archive-name
 this option determines the name of the archive file that tar will work on.
 指定要操作的tar文件
 </pre>
 
-</p></div>
+</div>
 
 </div>
 
@@ -176,7 +108,8 @@ this option determines the name of the archive file that tar will work on.
 <div class="outline-text-4" id="text-1-1-2">
 
 
-<p><br/>
+
+
 <pre class="example">   -verbose
    -v
    shows details about the results of running tar. This can be especially useful
@@ -184,7 +117,7 @@ when the results might not be obvious.
    显示tar运行的过程。为用户展现工作过程避免用户错误终止该程序。
 </pre>
 
-</p></div>
+</div>
 
 </div>
 
@@ -193,13 +126,14 @@ when the results might not be obvious.
 <div class="outline-text-4" id="text-1-1-3">
 
 
-<p><br/>
+
+
 <pre class="example">-create
 -c
 create a new archive
 </pre>
 
-</p></div>
+</div>
 
 </div>
 
@@ -208,7 +142,8 @@ create a new archive
 <div class="outline-text-4" id="text-1-1-4">
 
 
-<p><br/>
+
+
 <pre class="example">--list
 -t
 显示archive file中的文件
@@ -217,7 +152,7 @@ tar -tvf vf.tar 显示详细信息（ls -l)
 
 </pre>
 
-</p></div>
+</div>
 
 </div>
 
@@ -226,7 +161,8 @@ tar -tvf vf.tar 显示详细信息（ls -l)
 <div class="outline-text-4" id="text-1-1-5">
 
 
-<p><br/>
+
+
 <pre class="example">--extract
 -x
 uncompress 解压缩。
@@ -234,7 +170,7 @@ tar -xvf vf.tar
 
 </pre>
 
-</p></div>
+</div>
 
 </div>
 
@@ -243,14 +179,15 @@ tar -xvf vf.tar
 <div class="outline-text-4" id="text-1-1-6">
 
 
-<p><br/>
+
+
 <pre class="example">--append
 -r
 向archive file中添加文件
 tar -rf vf.tar exp.cpp       %将exp.cpp添加到vf.tar中
 </pre>
 
-</p></div>
+</div>
 
 </div>
 
@@ -259,7 +196,8 @@ tar -rf vf.tar exp.cpp       %将exp.cpp添加到vf.tar中
 <div class="outline-text-4" id="text-1-1-7">
 
 
-<p><br/>
+
+
 <pre class="example">--concatenate
 -A
 将一个tar文件内容复制到另一个压缩文件中去。
@@ -267,7 +205,7 @@ tar -Af vf.tar a.tar         %将a.tar中内容拷贝到vf.tar中
 
 </pre>
 
-</p></div>
+</div>
 </div>
 
 </div>
@@ -277,14 +215,15 @@ tar -Af vf.tar a.tar         %将a.tar中内容拷贝到vf.tar中
 <div class="outline-text-3" id="text-1-2">
 
 
-<p><br/>
+
+
 <pre class="example">tar -xvf vf.tar               %将vf.tar解压到当前目录
 tar -xvf vf.tar vf            %其中vf是vf.tar中的一个文件夹
 tar -xvf vf.tar vf.cpp        %其中vf.cpp是vf.tar中的一个文件
 tar -xvf vf.tar vf/vf/Debug   %只解压vf/vf/Debug
 </pre>
 
-</p></div>
+</div>
 </div>
 
 </div>
@@ -303,12 +242,13 @@ tar -xvf vf.tar vf/vf/Debug   %只解压vf/vf/Debug
 <div class="outline-text-3" id="text-2-1">
 
 
-<p><br/>
+
+
 <pre class="example">gzip vf.tar          %此时压缩vf.tar会变成vf.tar.gz
 gunzip vf.tar.gz     %此时解压vf.tar.gz为vf.tar 等价于gzip -d vf.tar.gz
 </pre>
 
-</p></div>
+</div>
 
 </div>
 
@@ -317,12 +257,13 @@ gunzip vf.tar.gz     %此时解压vf.tar.gz为vf.tar 等价于gzip -d vf.tar.gz
 <div class="outline-text-3" id="text-2-2">
 
 
-<p><br/>
+
+
 <pre class="example">bzip2 vf.tar         %此时压缩vf.tar生成vf.tar.bz2
 bunzip2 vf.tar.bz2   %此时解压生成vf.tar 等价于bzip2 -d vf.tar.bz2
 </pre>
 
-</p></div>
+</div>
 
 </div>
 
@@ -331,7 +272,8 @@ bunzip2 vf.tar.bz2   %此时解压生成vf.tar 等价于bzip2 -d vf.tar.bz2
 <div class="outline-text-3" id="text-2-3">
 
 
-<p><br/>
+
+
 <pre class="example">tar -zxvf vf.tar.gz  %解压vf.tar.gz并拆包vf.tar
 tar -jxvf vf.tar.bz2 解压vf.tar.bz2并拆包vf.tar
 同理将上面的x变成c就可用来直接将打包并压缩生成相应的gz和bz2文件：
@@ -339,7 +281,7 @@ tar -zcvf vf.tar.gz vf1 vf2    %将vf1 vf2两个文件打包生成vf.tar并压缩生成vf.tar.
 tar -jcvf vf.tar.bz2 vf1 vf2   %将vf1 vf2两个文件打包生成vf.tar并压缩生成vf.tar.bz2
 </pre>
 
-</p>
+
 <p>   <br/>
 </p></div>
 </div>

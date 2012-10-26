@@ -7,81 +7,12 @@
 <meta http-equiv="Content-Type" content="text/html;charset=gb18030"/>
 <meta name="title" content="模板参数推导"/>
 <meta name="generator" content="Org-mode"/>
-<meta name="generated" content="2012-10-19 22:31:53 CST"/>
+<meta name="generated" content="2012-10-27 05:27:23 CST"/>
 <meta name="author" content="visaya fan"/>
 <meta name="description" content=""/>
 <meta name="keywords" content=""/>
-<style type="text/css">
- <!--/*--><![CDATA[/*><!--*/
-  html { font-family: Times, serif; font-size: 12pt; }
-  .title  { text-align: center; }
-  .todo   { color: red; }
-  .done   { color: green; }
-  .tag    { background-color: #add8e6; font-weight:normal }
-  .target { }
-  .timestamp { color: #bebebe; }
-  .timestamp-kwd { color: #5f9ea0; }
-  .right  {margin-left:auto; margin-right:0px;  text-align:right;}
-  .left   {margin-left:0px;  margin-right:auto; text-align:left;}
-  .center {margin-left:auto; margin-right:auto; text-align:center;}
-  p.verse { margin-left: 3% }
-  pre {
-	border: 1pt solid #AEBDCC;
-	background-color: #F3F5F7;
-	padding: 5pt;
-	font-family: courier, monospace;
-        font-size: 90%;
-        overflow:auto;
-  }
-  table { border-collapse: collapse; }
-  td, th { vertical-align: top;  }
-  th.right  { text-align:center;  }
-  th.left   { text-align:center;   }
-  th.center { text-align:center; }
-  td.right  { text-align:right;  }
-  td.left   { text-align:left;   }
-  td.center { text-align:center; }
-  dt { font-weight: bold; }
-  div.figure { padding: 0.5em; }
-  div.figure p { text-align: center; }
-  div.inlinetask {
-    padding:10px;
-    border:2px solid gray;
-    margin:10px;
-    background: #ffffcc;
-  }
-  textarea { overflow-x: auto; }
-  .linenr { font-size:smaller }
-  .code-highlighted {background-color:#ffff00;}
-  .org-info-js_info-navigation { border-style:none; }
-  #org-info-js_console-label { font-size:10px; font-weight:bold;
-                               white-space:nowrap; }
-  .org-info-js_search-highlight {background-color:#ffff00; color:#000000;
-                                 font-weight:bold; }
-  /*]]>*/-->
-</style><div id="org-div-comments"><a href="../../index.html#cpp">主页</a><br/><a href="#disqus_thread">评论</a></div>
-<script type="text/javascript">
-<!--/*--><![CDATA[/*><!--*/
- function CodeHighlightOn(elem, id)
- {
-   var target = document.getElementById(id);
-   if(null != target) {
-     elem.cacheClassElem = elem.className;
-     elem.cacheClassTarget = target.className;
-     target.className = "code-highlighted";
-     elem.className   = "code-highlighted";
-   }
- }
- function CodeHighlightOff(elem, id)
- {
-   var target = document.getElementById(id);
-   if(elem.cacheClassElem)
-     elem.className = elem.cacheClassElem;
-   if(elem.cacheClassTarget)
-     target.className = elem.cacheClassTarget;
- }
-/*]]>*///-->
-</script>
+<div id="org-div-comments"><a href="../../index.html#cpp">主页</a><br/><a href="#disqus_thread">评论</a></div>
+
 
 </head>
 <body>
@@ -113,7 +44,8 @@
 <p>在算法中运用迭代器时，可能会用到其相应类型（associative type），即迭代器所指向对象的类别。但C++只支持sizeof()，并不存在typeof()之说（即使运用RTTI性质中的typeid()获得的也只是类型名称不能用来做变量声明之用）。<br/>
 为解决此问题，可以利用函数模板（function template）的参数推导（argument deduction）机制：<br/>
 </p>
-<p><br/>
+
+
 <pre class="src src-c++"><span style="color: #a020f0;">template</span> &lt;<span style="color: #a020f0;">class</span> <span style="color: #228b22;">I</span>, <span style="color: #a020f0;">class</span> <span style="color: #228b22;">T</span>&gt;
 <span style="color: #228b22;">void</span> <span style="color: #0000ff;">fun_impl</span>(<span style="color: #228b22;">I</span> <span style="color: #a0522d;">iter</span>, <span style="color: #228b22;">T</span> <span style="color: #a0522d;">t</span>){     <span style="color: #b22222;">// </span><span style="color: #b22222;">&#27492;&#22788;&#35813;&#20989;&#25968;&#21033;&#29992;&#27169;&#26495;&#21442;&#25968;&#25512;&#23548;&#24471;&#30693;T&#20026;*iter&#31867;&#22411;</span>
     <span style="color: #228b22;">T</span> <span style="color: #a0522d;">tmp</span>;                      <span style="color: #b22222;">// </span><span style="color: #b22222;">&#21487;&#20197;&#22768;&#26126;&#21464;&#37327;</span>
@@ -133,9 +65,11 @@
 </pre>
 
 
+<p>
 再例如：<br/>
 </p>
-<p><br/>
+
+
 <pre class="src src-c++"><span style="color: #a020f0;">template</span>&lt;<span style="color: #a020f0;">class</span> <span style="color: #228b22;">I</span>, <span style="color: #a020f0;">class</span> <span style="color: #228b22;">Cmp</span>&gt;  
 <span style="color: #228b22;">void</span> <span style="color: #0000ff;">insertSort</span>(<span style="color: #a020f0;">const</span> <span style="color: #228b22;">I</span>&amp; <span style="color: #a0522d;">begin</span>, <span style="color: #a020f0;">const</span> <span style="color: #228b22;">I</span>&amp; <span style="color: #a0522d;">end</span>, <span style="color: #228b22;">Cmp</span> <span style="color: #a0522d;">lessThan</span>);  
 
@@ -177,6 +111,7 @@
 </pre>
 
 
+<p>
 参数为两个迭代器的函数insertSort把其中一个迭代器解引用后传递给参数为两个迭代器和一个迭代器指向对象类型的三个参数的__insertSort函数，用户并不关心底层如何实现，只需要传递两个参数即可，并未告知函数迭代器指向对象的类型但可以通过模板参数推导机制来推测，从而方便用户。<br/>
 </p></div>
 
@@ -189,7 +124,8 @@
 <p>  当模板参数是非引用时会导致模板参数推断衰减(decaying)(把数组和函数类型变成指针类型、去掉const, volatile等修饰符)。<br/>
   例如：<br/>
 </p>
-<p><br/>
+
+
 <pre class="src src-c++"><span style="color: #a020f0;">template</span>&lt;<span style="color: #a020f0;">typename</span> <span style="color: #228b22;">T</span>&gt; <span style="color: #228b22;">void</span> <span style="color: #0000ff;">f</span>(<span style="color: #228b22;">T</span>);    <span style="color: #b22222;">//</span><span style="color: #b22222;">PisT </span>
 
 <span style="color: #a020f0;">template</span>&lt;<span style="color: #a020f0;">typename</span> <span style="color: #228b22;">T</span>&gt; <span style="color: #228b22;">void</span> <span style="color: #0000ff;">g</span>(<span style="color: #228b22;">T</span>&amp;);  <span style="color: #b22222;">// </span><span style="color: #b22222;">P is also T </span>
@@ -206,12 +142,14 @@ f(7);      <span style="color: #b22222;">// </span><span style="color: #b22222;"
 g(7);      <span style="color: #b22222;">// </span><span style="color: #b22222;">reference parameter:    T is int =&gt; ERROR: can't pass 7 to int&amp; </span>
 </pre>
 
+<p>
   f是非引用模板参数，所以会decaying 把double[]变成double*，同理int const =&gt; int，最后一个传递是非法的，因为不能把常数作为int&amp;。<br/>
 </p>
 <p>  <br/>
   再例如：<br/>
 </p>
-<p><br/>
+
+
 <pre class="src src-c++"><span style="color: #7a378b;">#include</span> <span style="color: #8b2252;">&lt;iostream&gt;</span>
 <span style="color: #7a378b;">#include</span> <span style="color: #8b2252;">&lt;typeinfo&gt;</span>
 <span style="color: #a020f0;">using</span> <span style="color: #a020f0;">namespace</span> <span style="color: #008b8b;">std</span>;
@@ -252,7 +190,7 @@ g(7);      <span style="color: #b22222;">// </span><span style="color: #b22222;"
 <script src="../../Layout/JS/disqus-comment.js"></script>
 <div id="disqus_thread">
 </div>
-</p></div>
+</div>
 </div>
 </div>
 

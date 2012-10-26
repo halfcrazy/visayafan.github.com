@@ -7,81 +7,12 @@
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
 <meta name="title" content="Linux内核－非连续内存管理"/>
 <meta name="generator" content="Org-mode"/>
-<meta name="generated" content="2012-10-19 22:33:53 CST"/>
+<meta name="generated" content="2012-10-27 05:28:24 CST"/>
 <meta name="author" content="visaya fan"/>
 <meta name="description" content=""/>
 <meta name="keywords" content=""/>
-<style type="text/css">
- <!--/*--><![CDATA[/*><!--*/
-  html { font-family: Times, serif; font-size: 12pt; }
-  .title  { text-align: center; }
-  .todo   { color: red; }
-  .done   { color: green; }
-  .tag    { background-color: #add8e6; font-weight:normal }
-  .target { }
-  .timestamp { color: #bebebe; }
-  .timestamp-kwd { color: #5f9ea0; }
-  .right  {margin-left:auto; margin-right:0px;  text-align:right;}
-  .left   {margin-left:0px;  margin-right:auto; text-align:left;}
-  .center {margin-left:auto; margin-right:auto; text-align:center;}
-  p.verse { margin-left: 3% }
-  pre {
-	border: 1pt solid #AEBDCC;
-	background-color: #F3F5F7;
-	padding: 5pt;
-	font-family: courier, monospace;
-        font-size: 90%;
-        overflow:auto;
-  }
-  table { border-collapse: collapse; }
-  td, th { vertical-align: top;  }
-  th.right  { text-align:center;  }
-  th.left   { text-align:center;   }
-  th.center { text-align:center; }
-  td.right  { text-align:right;  }
-  td.left   { text-align:left;   }
-  td.center { text-align:center; }
-  dt { font-weight: bold; }
-  div.figure { padding: 0.5em; }
-  div.figure p { text-align: center; }
-  div.inlinetask {
-    padding:10px;
-    border:2px solid gray;
-    margin:10px;
-    background: #ffffcc;
-  }
-  textarea { overflow-x: auto; }
-  .linenr { font-size:smaller }
-  .code-highlighted {background-color:#ffff00;}
-  .org-info-js_info-navigation { border-style:none; }
-  #org-info-js_console-label { font-size:10px; font-weight:bold;
-                               white-space:nowrap; }
-  .org-info-js_search-highlight {background-color:#ffff00; color:#000000;
-                                 font-weight:bold; }
-  /*]]>*/-->
-</style><div id="org-div-comments"><a href="../../index.html#linuxkernel">主页</a><br/><a href="#disqus_thread">评论</a></div>
-<script type="text/javascript">
-<!--/*--><![CDATA[/*><!--*/
- function CodeHighlightOn(elem, id)
- {
-   var target = document.getElementById(id);
-   if(null != target) {
-     elem.cacheClassElem = elem.className;
-     elem.cacheClassTarget = target.className;
-     target.className = "code-highlighted";
-     elem.className   = "code-highlighted";
-   }
- }
- function CodeHighlightOff(elem, id)
- {
-   var target = document.getElementById(id);
-   if(elem.cacheClassElem)
-     elem.className = elem.cacheClassElem;
-   if(elem.cacheClassTarget)
-     target.className = elem.cacheClassTarget;
- }
-/*]]>*///-->
-</script>
+<div id="org-div-comments"><a href="../../index.html#linuxkernel">主页</a><br/><a href="#disqus_thread">评论</a></div>
+
 
 </head>
 <body>
@@ -147,7 +78,8 @@
 
 <p>  每块非连续内存区域都对应一个描述符：<br/>
 </p>
-<p><br/>
+
+
 <pre class="src src-c"><span class="linenr">1:  </span><span style="color: #a020f0;">struct</span> <span style="color: #228b22;">vm_struct</span> {
 <span class="linenr">2:  </span>    <span style="color: #228b22;">void</span>            *<span style="color: #a0522d;">addr</span>;      <span style="color: #b22222;">/* </span><span style="color: #b22222;">&#23545;&#24212;&#38750;&#36830;&#32493;&#20869;&#23384;&#21306;&#22495;&#30340;&#24320;&#22987;&#22320;&#22336; </span><span style="color: #b22222;">*/</span>
 <span class="linenr">3:  </span>    <span style="color: #228b22;">unsigned</span> <span style="color: #228b22;">long</span>       <span style="color: #a0522d;">size</span>;   <span style="color: #b22222;">/* </span><span style="color: #b22222;">&#22823;&#23567; </span><span style="color: #b22222;">*/</span>
@@ -159,6 +91,7 @@
 <span class="linenr">9:  </span>};
 </pre>
 
+<p>
   描述符通过next成员连接成链表，表头为 <code>vmlist</code> ，<br/>
 <center>
 <img src="image/non_cont_area.jpeg"></img>
@@ -182,7 +115,8 @@
     参数size表示欲得到虚拟区域大小，flags表标志。<br/>
     实际上调用了 <code>__get_vm_area</code> 。<br/>
 </p>
-<p><br/>
+
+
 <pre class="src src-c"><span class="linenr">1:  </span><span style="color: #a020f0;">return</span> __get_vm_area(size, flags, VMALLOC_START, VMALLOC_END);
 </pre>
 
@@ -257,9 +191,11 @@
 <span class="linenr">68:  </span>}
 </pre>
 
+<p>
   <code>fls</code> 实际上调用了 <code>generic_fls</code> ：<br/>
 </p>
-<p><br/>
+
+
 <pre class="src src-c"><span class="linenr"> 1:  </span><span style="color: #b22222;">/*</span><span style="color: #b22222;">&#20989;&#25968;&#20316;&#29992;&#65306;&#21462;&#24471;x&#25152;&#26377;bit&#20013;&#38750;0&#30340;&#26368;&#23567;&#20301;</span><span style="color: #b22222;">*/</span>
 <span class="linenr"> 2:  </span><span style="color: #a020f0;">static</span> __inline__ <span style="color: #228b22;">int</span> <span style="color: #0000ff;">generic_fls</span>(<span style="color: #228b22;">int</span> <span style="color: #a0522d;">x</span>)
 <span class="linenr"> 3:  </span>{
@@ -291,7 +227,7 @@
 <span class="linenr">29:  </span>}
 </pre>
 
-</p></div>
+</div>
 
 </div>
 
@@ -300,7 +236,8 @@
 <div class="outline-text-3" id="text-4-2">
 
 
-<p><br/>
+
+
 <pre class="src src-c"><span class="linenr"> 1:  </span><span style="color: #a020f0;">struct</span> <span style="color: #228b22;">vm_struct</span> *<span style="color: #0000ff;">remove_vm_area</span>(<span style="color: #228b22;">void</span> *<span style="color: #a0522d;">addr</span>)
 <span class="linenr"> 2:  </span>{
 <span class="linenr"> 3:  </span>    <span style="color: #a020f0;">struct</span> <span style="color: #228b22;">vm_struct</span> **<span style="color: #a0522d;">p</span>, *<span style="color: #a0522d;">tmp</span>;
@@ -321,7 +258,7 @@
 <span class="linenr">18:  </span>}
 </pre>
 
-</p></div>
+</div>
 </div>
 
 </div>
@@ -338,7 +275,8 @@
 <div class="outline-text-3" id="text-5-1">
 
 
-<p><br/>
+
+
 <pre class="src src-c"><span class="linenr">1:  </span><span style="color: #228b22;">void</span> *<span style="color: #0000ff;">vmalloc</span>(<span style="color: #228b22;">unsigned</span> <span style="color: #228b22;">long</span> <span style="color: #a0522d;">size</span>)       <span style="color: #b22222;">/* </span><span style="color: #b22222;">size&#34920;&#27442;&#24471;&#21040;&#38750;&#36830;&#32493;&#20869;&#23384;&#21306;&#22495;&#30340;&#22823;&#23567;</span><span style="color: #b22222;">*/</span>
 <span class="linenr">2:  </span>{
 <span class="linenr">3:  </span>       <span style="color: #a020f0;">return</span> __vmalloc(size, GFP_KERNEL | __GFP_HIGHMEM, PAGE_KERNEL);
@@ -396,13 +334,15 @@
 <span class="linenr">48:  </span>}
 </pre>
 
+<p>
    要理解 <code>map_vm_area</code> 必须先理解linux内核的分页机制：<br/>
 <center>
 <img src="image/pgd_pud_pmd_pte.png"></img>
 </center>
    <code>map_vm_area</code> 函数分析如下：<br/>
 </p>
-<p><br/>
+
+
 <pre class="src src-c"><span class="linenr"> 1:  </span><span style="color: #228b22;">int</span> <span style="color: #0000ff;">map_vm_area</span>(<span style="color: #a020f0;">struct</span> <span style="color: #228b22;">vm_struct</span> *<span style="color: #a0522d;">area</span>, <span style="color: #228b22;">pgprot_t</span> <span style="color: #a0522d;">prot</span>, <span style="color: #a020f0;">struct</span> <span style="color: #228b22;">page</span> ***<span style="color: #a0522d;">pages</span>)
 <span class="linenr"> 2:  </span>{
 <span class="linenr"> 3:  </span>    <span style="color: #228b22;">unsigned</span> <span style="color: #228b22;">long</span> <span style="color: #a0522d;">address</span> = (<span style="color: #228b22;">unsigned</span> <span style="color: #228b22;">long</span>) area-&gt;addr;
@@ -439,9 +379,11 @@
 <span class="linenr">34:  </span>}
 </pre>
 
+<p>
    各级页目录和页表处理函数：<br/>
 </p>
-<p><br/>
+
+
 <pre class="src src-c"><span class="linenr"> 1:  </span><span style="color: #a020f0;">static</span> <span style="color: #228b22;">int</span> <span style="color: #0000ff;">map_area_pud</span>(<span style="color: #228b22;">pud_t</span> *<span style="color: #a0522d;">pud</span>, <span style="color: #228b22;">unsigned</span> <span style="color: #228b22;">long</span> <span style="color: #a0522d;">address</span>,
 <span class="linenr"> 2:  </span>                   <span style="color: #228b22;">unsigned</span> <span style="color: #228b22;">long</span> <span style="color: #a0522d;">end</span>, <span style="color: #228b22;">pgprot_t</span> <span style="color: #a0522d;">prot</span>,
 <span class="linenr"> 3:  </span>                   <span style="color: #a020f0;">struct</span> <span style="color: #228b22;">page</span> ***<span style="color: #a0522d;">pages</span>)
@@ -513,7 +455,7 @@
 <span class="linenr">69:  </span>}
 </pre>
 
-</p></div>
+</div>
 
 </div>
 
@@ -523,11 +465,12 @@
 
 <p>   和 <code>vmalloc</code> 相反，各级页目录和页表处理函数也相反。<br/>
 </p>
-<p><br/>
+
+
 <script src="../../Layout/JS/disqus-comment.js"></script>
 <div id="disqus_thread">
 </div>
-</p></div>
+</div>
 </div>
 </div>
 </div>

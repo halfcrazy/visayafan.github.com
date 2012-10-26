@@ -7,81 +7,12 @@
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
 <meta name="title" content="Netstat命令查看端口号进程"/>
 <meta name="generator" content="Org-mode"/>
-<meta name="generated" content="2012-10-24 19:28:03 CST"/>
+<meta name="generated" content="2012-10-27 05:26:35 CST"/>
 <meta name="author" content="visaya fan"/>
 <meta name="description" content=""/>
 <meta name="keywords" content=""/>
-<style type="text/css">
- <!--/*--><![CDATA[/*><!--*/
-  html { font-family: Times, serif; font-size: 12pt; }
-  .title  { text-align: center; }
-  .todo   { color: red; }
-  .done   { color: green; }
-  .tag    { background-color: #add8e6; font-weight:normal }
-  .target { }
-  .timestamp { color: #bebebe; }
-  .timestamp-kwd { color: #5f9ea0; }
-  .right  {margin-left:auto; margin-right:0px;  text-align:right;}
-  .left   {margin-left:0px;  margin-right:auto; text-align:left;}
-  .center {margin-left:auto; margin-right:auto; text-align:center;}
-  p.verse { margin-left: 3% }
-  pre {
-	border: 1pt solid #AEBDCC;
-	background-color: #F3F5F7;
-	padding: 5pt;
-	font-family: courier, monospace;
-        font-size: 90%;
-        overflow:auto;
-  }
-  table { border-collapse: collapse; }
-  td, th { vertical-align: top;  }
-  th.right  { text-align:center;  }
-  th.left   { text-align:center;   }
-  th.center { text-align:center; }
-  td.right  { text-align:right;  }
-  td.left   { text-align:left;   }
-  td.center { text-align:center; }
-  dt { font-weight: bold; }
-  div.figure { padding: 0.5em; }
-  div.figure p { text-align: center; }
-  div.inlinetask {
-    padding:10px;
-    border:2px solid gray;
-    margin:10px;
-    background: #ffffcc;
-  }
-  textarea { overflow-x: auto; }
-  .linenr { font-size:smaller }
-  .code-highlighted {background-color:#ffff00;}
-  .org-info-js_info-navigation { border-style:none; }
-  #org-info-js_console-label { font-size:10px; font-weight:bold;
-                               white-space:nowrap; }
-  .org-info-js_search-highlight {background-color:#ffff00; color:#000000;
-                                 font-weight:bold; }
-  /*]]>*/-->
-</style>
-<script type="text/javascript">
-<!--/*--><![CDATA[/*><!--*/
- function CodeHighlightOn(elem, id)
- {
-   var target = document.getElementById(id);
-   if(null != target) {
-     elem.cacheClassElem = elem.className;
-     elem.cacheClassTarget = target.className;
-     target.className = "code-highlighted";
-     elem.className   = "code-highlighted";
-   }
- }
- function CodeHighlightOff(elem, id)
- {
-   var target = document.getElementById(id);
-   if(elem.cacheClassElem)
-     elem.className = elem.cacheClassElem;
-   if(elem.cacheClassTarget)
-     target.className = elem.cacheClassTarget;
- }
-/*]]>*///-->
-</script>
+<div id="org-div-comments"><a href="../../index.html#linuxos">主页</a><br/><a href="#disqus_thread">评论</a></div>
+
 
 </head>
 <body>
@@ -108,7 +39,8 @@
 
 <p>部分结果：<br/>
 </p>
-<p><br/>
+
+
 <pre class="example">Active Internet connections (servers and established)
 Proto Recv-Q Send-Q Local Address           Foreign Address         State       PID/Program name
 tcp        0      0 127.0.0.1:6600          0.0.0.0:*               LISTEN      -               
@@ -119,6 +51,7 @@ tcp        0      0 127.0.0.1:631           0.0.0.0:*               LISTEN      
 tcp        0      0 1.83.119.47:55212       74.125.128.125:5222     ESTABLISHED 7076/chromium-brows
 </pre>
 
+<p>
 如果没有-p则没有最后PI/Program name一列，没有-n则local address一列会显示形如：<br/>
 </p><blockquote>
 
@@ -127,7 +60,7 @@ tcp        0      0 1.83.119.47:55212       74.125.128.125:5222     ESTABLISHED 
 </blockquote>
 
 
-<p><br/>
+<p>
 其它可选项：<br/>
 </p><ol>
 <li>-p proto 指定协议，可以是tcp udp tcpv6 udpv6<br/>
@@ -167,8 +100,7 @@ tcp        0      0 1.83.119.47:55212       74.125.128.125:5222     ESTABLISHED 
 </blockquote>
 
 
-<p><br/>
-</p></div>
+</div>
 
 </div>
 
@@ -183,7 +115,7 @@ tcp        0      0 1.83.119.47:55212       74.125.128.125:5222     ESTABLISHED 
 </blockquote>
 
 
-<p><br/>
+<p>
   先用awk选出第7列，再选出PID，最后kill。<br/>
 </p></div>
 
@@ -202,7 +134,7 @@ tcp        0      0 1.83.119.47:55212       74.125.128.125:5222     ESTABLISHED 
 </blockquote>
 
 
-<p><br/>
+<p>
   lsof -i [4|6][protocol][@hostname|hostaddr][:service|port]<br/>
 </p><ol>
 <li>4,6表示ipv4 or v6<br/>
@@ -219,7 +151,8 @@ tcp        0      0 1.83.119.47:55212       74.125.128.125:5222     ESTABLISHED 
 
 <p>  这里只使用了最后一个选项。<br/>
 </p>
-<p><br/>
+
+
 <pre class="example">tmp$ lsof -i:8087
 COMMAND    PID      USER   FD   TYPE DEVICE SIZE/OFF NODE NAME
 python    2057 visayafan    3u  IPv4  20013      0t0  TCP localhost:8087 (LISTEN)
@@ -234,7 +167,7 @@ chromium- 7076 visayafan  141u  IPv4 318836      0t0  TCP localhost:36540-&gt;lo
 <div id="disqus_thread">
 </div>
 
-</p>
+
 <p>  <br/>
 </p></div>
 </div>

@@ -7,81 +7,12 @@
 <meta http-equiv="Content-Type" content="text/html;charset=gb18030"/>
 <meta name="title" content="模块总结"/>
 <meta name="generator" content="Org-mode"/>
-<meta name="generated" content="2012-10-19 22:33:17 CST"/>
+<meta name="generated" content="2012-10-27 05:27:58 CST"/>
 <meta name="author" content="visaya fan"/>
 <meta name="description" content=""/>
 <meta name="keywords" content=""/>
-<style type="text/css">
- <!--/*--><![CDATA[/*><!--*/
-  html { font-family: Times, serif; font-size: 12pt; }
-  .title  { text-align: center; }
-  .todo   { color: red; }
-  .done   { color: green; }
-  .tag    { background-color: #add8e6; font-weight:normal }
-  .target { }
-  .timestamp { color: #bebebe; }
-  .timestamp-kwd { color: #5f9ea0; }
-  .right  {margin-left:auto; margin-right:0px;  text-align:right;}
-  .left   {margin-left:0px;  margin-right:auto; text-align:left;}
-  .center {margin-left:auto; margin-right:auto; text-align:center;}
-  p.verse { margin-left: 3% }
-  pre {
-	border: 1pt solid #AEBDCC;
-	background-color: #F3F5F7;
-	padding: 5pt;
-	font-family: courier, monospace;
-        font-size: 90%;
-        overflow:auto;
-  }
-  table { border-collapse: collapse; }
-  td, th { vertical-align: top;  }
-  th.right  { text-align:center;  }
-  th.left   { text-align:center;   }
-  th.center { text-align:center; }
-  td.right  { text-align:right;  }
-  td.left   { text-align:left;   }
-  td.center { text-align:center; }
-  dt { font-weight: bold; }
-  div.figure { padding: 0.5em; }
-  div.figure p { text-align: center; }
-  div.inlinetask {
-    padding:10px;
-    border:2px solid gray;
-    margin:10px;
-    background: #ffffcc;
-  }
-  textarea { overflow-x: auto; }
-  .linenr { font-size:smaller }
-  .code-highlighted {background-color:#ffff00;}
-  .org-info-js_info-navigation { border-style:none; }
-  #org-info-js_console-label { font-size:10px; font-weight:bold;
-                               white-space:nowrap; }
-  .org-info-js_search-highlight {background-color:#ffff00; color:#000000;
-                                 font-weight:bold; }
-  /*]]>*/-->
-</style><div id="org-div-comments"><a href="../../index.html#python">主页</a><br/><a href="#disqus_thread">评论</a></div>
-<script type="text/javascript">
-<!--/*--><![CDATA[/*><!--*/
- function CodeHighlightOn(elem, id)
- {
-   var target = document.getElementById(id);
-   if(null != target) {
-     elem.cacheClassElem = elem.className;
-     elem.cacheClassTarget = target.className;
-     target.className = "code-highlighted";
-     elem.className   = "code-highlighted";
-   }
- }
- function CodeHighlightOff(elem, id)
- {
-   var target = document.getElementById(id);
-   if(elem.cacheClassElem)
-     elem.className = elem.cacheClassElem;
-   if(elem.cacheClassTarget)
-     target.className = elem.cacheClassTarget;
- }
-/*]]>*///-->
-</script>
+<div id="org-div-comments"><a href="../../index.html#python">主页</a><br/><a href="#disqus_thread">评论</a></div>
+
 
 </head>
 <body>
@@ -164,6 +95,13 @@
 <li><a href="#sec-23-2">23.2 attrgetter</a></li>
 </ul>
 </li>
+<li><a href="#sec-24">24 time/calendar</a>
+<ul>
+<li><a href="#sec-24-1">24.1 时间戳 timestamp 浮点数</a></li>
+<li><a href="#sec-24-2">24.2 元组 struct_time</a></li>
+</ul>
+</li>
+<li><a href="#sec-25">25 unicode/utf8/gbk</a></li>
 </ul>
 </div>
 </div>
@@ -378,7 +316,8 @@
 
 <p>  查找匹配指定模式的路径名<br/>
 </p>
-<p><br/>
+
+
 <pre class="src src-python">&gt;&gt;&gt; <span style="color: #a020f0;">import</span> glob
 &gt;&gt;&gt; glob.glob(<span style="color: #8b2252;">'./[0-9].*'</span>)
 [<span style="color: #8b2252;">'./1.gif'</span>, <span style="color: #8b2252;">'./2.txt'</span>]
@@ -388,7 +327,7 @@
 [<span style="color: #8b2252;">'1.gif'</span>]
 </pre>
 
-</p></div>
+</div>
 
 </div>
 
@@ -437,8 +376,7 @@
 </ul>
 
 
-<p><br/>
-</p></div>
+</div>
 
 </div>
 
@@ -507,7 +445,8 @@
 <div class="outline-text-2" id="text-18">
 
 
-<p><br/>
+
+
 <pre class="src src-python"><span style="color: #a020f0;">def</span> <span style="color: #0000ff;">load</span>(<span style="color: #a020f0;">self</span>, filename):
      <span style="color: #a020f0;">self</span>.__data = pickle.load(<span style="color: #7a378b;">open</span>(filename, <span style="color: #8b2252;">'rb'</span>))
 
@@ -516,7 +455,7 @@
 </pre>
 
 
-</p></div>
+</div>
 
 </div>
 
@@ -561,7 +500,8 @@
 <div class="outline-text-3" id="text-21-1">
 
 
-<p><br/>
+
+
 <pre class="src src-python"><span style="color: #a020f0;">import</span> urllib
 <span style="color: #a0522d;">url</span> = <span style="color: #8b2252;">'http://www.pythonchallenge.com/pc/def/ocr.html'</span>
 <span style="color: #a0522d;">wp</span> = urllib.urlopen(url)
@@ -569,7 +509,7 @@
 <span style="color: #a020f0;">print</span> content
 </pre>
 
-</p></div>
+</div>
 
 </div>
 
@@ -590,24 +530,29 @@
 <p>  此模块用来创建，读写，添加，列出zip压缩文件。<br/>
   首先用ZipFile函数打开文件，可以添加选项，r表只读，w表写，a表添加（此时如果zip文件不存在则创建一个）<br/>
 </p>
-<p><br/>
+
+
 <pre class="src src-python"><span style="color: #b22222;">#&#24403;&#21069;&#30446;&#24405;&#19979;&#26080;NewZip.zip&#65292;&#21017;&#21019;&#24314;&#19968;&#20010;&#24182;&#23558;&#24403;&#21069;&#30446;&#24405;&#19979;&#30340;.emacs&#25991;&#20214;&#21152;&#20837;&#21040;NewZip.zip&#20013;</span>
 zipfile.ZipFile(<span style="color: #8b2252;">'NewZip.zip'</span>, <span style="color: #8b2252;">'a'</span>).write(<span style="color: #8b2252;">'.emacs'</span>)
 </pre>
 
+<p>
   可以用read方法读取指定文件，例如：<br/>
 </p>
-<p><br/>
+
+
 <pre class="src src-python">zipfile.ZipFile(<span style="color: #8b2252;">'channel.zip'</span>, <span style="color: #8b2252;">'r'</span>).read(<span style="color: #8b2252;">'test.txt'</span>)
 </pre>
 
+<p>
   getinfo方法返回指定文件的ZipInfo对象，可以查看信息，例如：comment<br/>
 </p>
-<p><br/>
+
+
 <pre class="src src-python"><span style="color: #a020f0;">print</span> zipfile.ZipFile.getinfo(i+<span style="color: #8b2252;">'.txt'</span>).comment
 </pre>
 
-</p></div>
+</div>
 
 </div>
 
@@ -623,11 +568,12 @@ zipfile.ZipFile(<span style="color: #8b2252;">'NewZip.zip'</span>, <span style="
 <div class="outline-text-3" id="text-23-1">
 
 
-<p><br/>
+
+
 <pre class="example">返回一个可调用对象，比如: f=itemgetter(2)则当f(r)时结果是r[2],当g=itemgetter(2,3,4)则当g(r)时结果是(r[2],r[3],r[4])
 </pre>
 
-</p></div>
+</div>
 
 </div>
 
@@ -636,13 +582,16 @@ zipfile.ZipFile(<span style="color: #8b2252;">'NewZip.zip'</span>, <span style="
 <div class="outline-text-3" id="text-23-2">
 
 
-<p><br/>
+
+
 <pre class="example">同样返回一个可调用对象，f=attrgetter('name')则f(r)结果是r.name，当g=attrgetter('a','b')则g(r)结果是(r.a, r.b)
 </pre>
 
+<p>
    sorted函数有个参数key是个函数，每个比较对象都要调用此函数：<br/>
 </p>
-<p><br/>
+
+
 <pre class="example">&gt;&gt;&gt; student_tuples = [
         ('john', 'A', 15),
         ('jane', 'B', 12),
@@ -652,24 +601,129 @@ zipfile.ZipFile(<span style="color: #8b2252;">'NewZip.zip'</span>, <span style="
 [('dave', 'B', 10), ('jane', 'B', 12), ('john', 'A', 15)]
 </pre>
 
+<p>
    可以利用operator.itemgetter：<br/>
 </p>
-<p><br/>
+
+
 <pre class="example">&gt;&gt;&gt; sorted(student_tuples, key=itemgetter(2))
 </pre>
 
+<p>
    与上面结果一样。<br/>
+</p></div>
+</div>
+
+</div>
+
+<div id="outline-container-24" class="outline-2">
+<h2 id="sec-24"><span class="section-number-2">24</span> time/calendar</h2>
+<div class="outline-text-2" id="text-24">
+
+
+</div>
+
+<div id="outline-container-24-1" class="outline-3">
+<h3 id="sec-24-1"><span class="section-number-3">24.1</span> 时间戳 timestamp 浮点数</h3>
+<div class="outline-text-3" id="text-24-1">
+
+<ol>
+<li>time.time()                #返回自1970年1月1日时起的秒数<br/>
+</li>
+<li>time.clock()               #返回第一次调用clock()时CPU时间<br/>
+</li>
+<li>time.mktime(tuple)        #转化一个struct_time元组类型时间为时间戳<br/>
+</li>
+<li>time.sleep(sec)           #休眠<br/>
+</li>
+<li>time.asctime([t])         #将时间元组转化为Sun Jun 20 23:21:05 1993形式的字符串，默认转化当前时间元组即localtime()的返回值<br/>
+</li>
+<li>time.ctime([sec])         #与asctime类似只是它的参数是时间戳而asctime的参数是时间元组<br/>
+</li>
+</ol>
+
+</div>
+
+</div>
+
+<div id="outline-container-24-2" class="outline-3">
+<h3 id="sec-24-2"><span class="section-number-3">24.2</span> 元组 struct_time</h3>
+<div class="outline-text-3" id="text-24-2">
+
+<ol>
+<li>time.localtime([sec])          #转化秒为struct_time类型的本地时间，如果无参数则转化当前时间<br/>
+</li>
+<li>time.gmtime([sec])             #转化为GMT时间<br/>
+</li>
+<li>time.strptime(str, format) #转化str为指定格式的struct_time类型时间<br/>
+</li>
+<li>time.strftime(format[, tuple]) #将一个时间元组转化成指定格式的时间,和strptime是两个互逆操作<br/>
+</li>
+</ol>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+<caption></caption>
+<colgroup><col class="left" /><col class="left" />
+</colgroup>
+<tbody>
+<tr><td class="left">%Y</td><td class="left">年</td></tr>
+<tr><td class="left">%m</td><td class="left">月</td></tr>
+<tr><td class="left">%d</td><td class="left">日</td></tr>
+<tr><td class="left">%H</td><td class="left">时(24h)</td></tr>
+<tr><td class="left">%I</td><td class="left">时(12h)</td></tr>
+<tr><td class="left">%M</td><td class="left">分</td></tr>
+<tr><td class="left">%S</td><td class="left">秒</td></tr>
+<tr><td class="left">%x</td><td class="left">日期=%d/%m/%Y</td></tr>
+<tr><td class="left">%X</td><td class="left">时间=%H:%M:%S</td></tr>
+<tr><td class="left">%a</td><td class="left">星期（缩写 Tue）</td></tr>
+<tr><td class="left">%A</td><td class="left">星期（全称 Tuesday）</td></tr>
+<tr><td class="left">%b</td><td class="left">月份（缩写）</td></tr>
+<tr><td class="left">%B</td><td class="left">月份（全称）</td></tr>
+<tr><td class="left">%c</td><td class="left">日期和时间=%a %b %d %H:%M:%S %Y 例如：Tue Oct 23 16:56:12 2012 即ctime()返回的类型</td></tr>
+</tbody>
+</table>
+
+<a href="#image-time.jpg">image/time.jpg</a><br/>
+</div>
+</div>
+
+</div>
+
+<div id="outline-container-25" class="outline-2">
+<h2 id="sec-25"><span class="section-number-2">25</span> unicode/utf8/gbk</h2>
+<div class="outline-text-2" id="text-25">
+
+<p>  三者编码的长度分别是1,3,2<br/>
 </p>
-<p><br/>
-</p><div id="footnotes">
+
+
+<pre class="example">&gt;&gt;&gt; s=u'中'
+&gt;&gt;&gt; s=s.encode('utf8')
+&gt;&gt;&gt; len(s)
+3
+&gt;&gt;&gt; s=s.decode('utf8')
+&gt;&gt;&gt; len(s)
+1
+&gt;&gt;&gt; s=s.encode('gbk')
+&gt;&gt;&gt; len(s)
+2
+&gt;&gt;&gt; s=s.decode('gbk')
+&gt;&gt;&gt; len(s)
+1
+</pre>
+
+
+<div id="footnotes">
 <h2 class="footnotes">Footnotes: </h2>
 <div id="text-footnotes">
 <p class="footnote"><sup><a class="footnum" name="fn.1" href="#fnr.1">1</a></sup> MIME类型就是设定某种扩展名的文件用一种应用程序来打开的方式类型，当该扩展名文件被访问的时候，浏览器会自动使用指定应用程序来打开。多用于指定一些客户端自定义的文件名，以及一些媒体文件打开方式。在HTTP中，MIME类型被定义在Content-Type header中。你要传送一个Microsoft Excel文件到客户端。那么这时的MIME类型就是“application/vnd.ms-excel”。在大多数实际情况中，这个文件然后将传送给Execl来处理（假设我们设定Execl为处理特殊MIME类型的应用程序）。在ASP中，设定MIME类型的方法是通过Response对象的ContentType属性。<br/>
 <script src="../../Layout/JS/disqus-comment.js"></script>
 <div id="disqus_thread">
 </div>
+
+
+
 </p></div>
-</div>
 </div>
 
 </div>
