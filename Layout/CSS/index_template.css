@@ -132,3 +132,7 @@ pre.snippet .error {
     font-size: 19px;
     text-align:center;
 }
+
+img{
+    height:0;
+}
