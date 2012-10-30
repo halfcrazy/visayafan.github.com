@@ -106,13 +106,13 @@ cd ~/.emacs.d/eshell && cat alias > tmp && echo -e "\n" >> tmp && alias | sed -E
   
 * 解决org-mode example/src/quote上面多一行问题
   不知道是不是org-mode的bug？如下所示的代码
+#+begin_src org
+abc
+cef
 #+begin_example
-|  abc
-|  cef
-|  #+begin_example
-|  hello
-|  #+end_example  
-#+end_example
+hello
+#+end_example  
+#+end_src
   经编译后生成：
 #+begin_example
 <p>  abc<br/>
@@ -155,5 +155,50 @@ cd ~/.emacs.d/eshell && cat alias > tmp && echo -e "\n" >> tmp && alias | sed -E
   ))
 #+end_src
   这样便解决了多一行的问题。
+* org-mode example/src过大
+  当在#+begin_example #+end_example或者#+begin_src #+end_src环境中内容过多时会占用大量空间，一个解决办法是加上 =-t= 选项并配合 =-h height -w width= 选项来指定高宽，使它成为有滚动条的区域。但好像无法使用语法高亮。
+* org-mode中使用宏
+  在文章的开始定义宏，格式为 #+macro: macro_name macro_content_with_$1_arg1_$2_arg2_...
+  在文章中使用宏 {{{macro_name(args)}}}
+  其中org-mode内置的宏包括
+#+begin_example
+{{{title}}}
+{{{author}}}
+{{{date(format)}}} 其中format格式必须可以被函数 =format-time-string= 识别，常用的包括 %Y-%m-%d-%H-%M-%S 年月日时分秒
+%x 格式为： 10/29/2012 
+%X 格式为： 11:46:33 AM 
+%c 格式为： Mon 29 Oct 2012 11:46:33 AM CST 
+%D 格式为： 10/29/12 
+%R 格式为： 11:46 
+%T 格式为： 11:46:33 
+%r 格式为： 11:46:33 AM
+还有其它的org中的关键字
+#+end_example  
+* org-mode 中嵌入latex公式
+#+begin_example
+$$ \(\)表行内，$$ $$ \[ \] 表行间
+#+end_example
+#+begin_example
+If $a^2=b$ and \( b=2 \), then the solution must be
+either $$ a=+\sqrt{2} $$ or \[ a=-\sqrt{2} \].
+#+end_example  
+* org-mode 中block中嵌入#+begin_example
+: #+begin_example
+: #+begin_example
+: 这种情况导出的不会包含#+begin_example,因为把想要字面导出的#+begin_example当成了example环境
+: #+end_example
+: #+end_example
+  应该这样写
+: #+begin_src org
+: #+begin_example
+: 这样就对了,在这种情况下可以快捷键C-c ' 来进入源码编辑模式
+: #+end_example
+: #+end_src
+  也可以在第行前面加上:空格 来表示字面解析：
+#+begin_src org
+  ,: #+begin_example
+  ,: 这样就对了
+  ,: #+end_example
+#+end_src
 * 分享/评论
 #+include "../../disqus.org"
