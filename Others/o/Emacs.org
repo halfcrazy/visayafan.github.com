@@ -200,5 +200,49 @@ either $$ a=+\sqrt{2} $$ or \[ a=-\sqrt{2} \].
   ,: 这样就对了
   ,: #+end_example
 #+end_src
+* Ubuntu安装Emacs24.2及配置CEDET,ECB
+** ./configure前需要安装的信赖包
+#+begin_example
+sudo apt-get install libgtk2.0-dev
+sudo apt-get install libxpm-dev  
+sudo apt-get install libjpeg62-dev  
+sudo apt-get install libgif-dev  
+sudo apt-get install libtiff4-dev  
+sudo apt-get install libncurses5-dev
+#+end_example
+** 配置cedet, ecb
+   要想使用cedet1.1和ecb2.4必须修改ecb2.4/ecb-upgrade.el中：
+   1. 注释 ecb-check-requirements函数中：
+#+begin_src lisp
+      ;; check if vedet-version is correct
+      ;; (when (or (not (boundp 'cedet-version))
+      ;;           (ecb-package-version-list<
+      ;;            (ecb-package-version-str2list cedet-version)
+      ;;            ecb-required-cedet-version-min)
+      ;;           (ecb-package-version-list<
+      ;;            ecb-required-cedet-version-max
+      ;;            (ecb-package-version-str2list cedet-version)))
+      ;;   (setq version-error (concat "cedet ["
+      ;;                               cedet-required-version-str-min
+      ;;                               ", "
+      ;;                               cedet-required-version-str-max
+      ;;                               "]")))
+#+end_src
+   2. 修改：
+#+begin_src lisp
+(defconst ecb-required-cedet-version-max '(1 0 4 9))
+为
+(defconst ecb-required-cedet-version-max '(1 1 4 9))
+#+end_src
+   之后在ecb-2.4目录下 make CEDET=../cedet-1.1
+* dired-mode下批量修改文件名
+  C-x d打开一个目录后， =M-x wdired-change-to-wdired-mode= 进入可编辑模式，这样可以批量给文件改名。
+#+begin_html
+<link rel="stylesheet" href="../../Layout/CSS/jquery.lightbox-0.5.css" type="text/css" media="screen" />
+<script type="text/javascript" src="../../Layout/JS/jquery.lightbox-0.5.js"></script>
+<center> <a class="lightbox" href="./image/emacs-dired.png"> <img class="lightbox " title="jQuery.lightbox" src="./image/emacs-dired.png" width="400"> </a> </center>
+d<script type="text/javascript"> $(function() {$('a.lightbox').lightBox();}); </script>
+#+end_html
 * 分享/评论
 #+include "../../disqus.org"
+  

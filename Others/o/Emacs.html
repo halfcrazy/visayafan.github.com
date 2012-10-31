@@ -7,7 +7,7 @@
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
 <meta name="title" content="Emacs Trick"/>
 <meta name="generator" content="Org-mode"/>
-<meta name="generated" content="2012-10-29 12:23:59 CST"/>
+<meta name="generated" content="2012-10-31 07:50:50 CST"/>
 <meta name="author" content="visayafan"/>
 <meta name="description" content=""/>
 <meta name="keywords" content=""/>
@@ -112,7 +112,14 @@ org_html_manager.setup();  // activate after the parameters are set
 <li><a href="#sec-18">18 org-mode中使用宏</a></li>
 <li><a href="#sec-19">19 org-mode 中嵌入latex公式</a></li>
 <li><a href="#sec-20">20 org-mode 中block中嵌入#+begin_example</a></li>
-<li><a href="#sec-21">21 分享/评论</a></li>
+<li><a href="#sec-21">21 Ubuntu安装Emacs24.2及配置CEDET,ECB</a>
+<ul>
+<li><a href="#sec-21-1">21.1 ./configure前需要安装的信赖包</a></li>
+<li><a href="#sec-21-2">21.2 配置cedet, ecb</a></li>
+</ul>
+</li>
+<li><a href="#sec-22">22 dired-mode下批量修改文件名</a></li>
+<li><a href="#sec-23">23 分享/评论</a></li>
 </ul>
 </div>
 </div>
@@ -541,8 +548,96 @@ either $$ a=+\sqrt{2} $$ or \[ a=-\sqrt{2} \].
 </div>
 
 <div id="outline-container-21" class="outline-2">
-<h2 id="sec-21"><span class="section-number-2">21</span> 分享/评论</h2>
+<h2 id="sec-21"><span class="section-number-2">21</span> Ubuntu安装Emacs24.2及配置CEDET,ECB</h2>
 <div class="outline-text-2" id="text-21">
+
+
+</div>
+
+<div id="outline-container-21-1" class="outline-3">
+<h3 id="sec-21-1"><span class="section-number-3">21.1</span> ./configure前需要安装的信赖包</h3>
+<div class="outline-text-3" id="text-21-1">
+
+
+
+
+<pre class="example">sudo apt-get install libgtk2.0-dev
+sudo apt-get install libxpm-dev  
+sudo apt-get install libjpeg62-dev  
+sudo apt-get install libgif-dev  
+sudo apt-get install libtiff4-dev  
+sudo apt-get install libncurses5-dev
+</pre>
+
+</div>
+
+</div>
+
+<div id="outline-container-21-2" class="outline-3">
+<h3 id="sec-21-2"><span class="section-number-3">21.2</span> 配置cedet, ecb</h3>
+<div class="outline-text-3" id="text-21-2">
+
+<p>   要想使用cedet1.1和ecb2.4必须修改ecb2.4/ecb-upgrade.el中：<br/>
+</p><ol>
+<li>注释 ecb-check-requirements函数中：<br/>
+</li>
+</ol>
+
+
+
+
+<pre class="src src-lisp"><span style="color: #b22222;">;; </span><span style="color: #b22222;">check if vedet-version is correct</span>
+<span style="color: #b22222;">;; </span><span style="color: #b22222;">(when (or (not (boundp 'cedet-version))</span>
+<span style="color: #b22222;">;;           </span><span style="color: #b22222;">(ecb-package-version-list&lt;</span>
+<span style="color: #b22222;">;;            </span><span style="color: #b22222;">(ecb-package-version-str2list cedet-version)</span>
+<span style="color: #b22222;">;;            </span><span style="color: #b22222;">ecb-required-cedet-version-min)</span>
+<span style="color: #b22222;">;;           </span><span style="color: #b22222;">(ecb-package-version-list&lt;</span>
+<span style="color: #b22222;">;;            </span><span style="color: #b22222;">ecb-required-cedet-version-max</span>
+<span style="color: #b22222;">;;            </span><span style="color: #b22222;">(ecb-package-version-str2list cedet-version)))</span>
+<span style="color: #b22222;">;;   </span><span style="color: #b22222;">(setq version-error (concat "cedet ["</span>
+<span style="color: #b22222;">;;                               </span><span style="color: #b22222;">cedet-required-version-str-min</span>
+<span style="color: #b22222;">;;                               </span><span style="color: #b22222;">", "</span>
+<span style="color: #b22222;">;;                               </span><span style="color: #b22222;">cedet-required-version-str-max</span>
+<span style="color: #b22222;">;;                               </span><span style="color: #b22222;">"]")))</span>
+</pre>
+
+<ol>
+<li>修改：<br/>
+</li>
+</ol>
+
+
+
+
+<pre class="src src-lisp">(<span style="color: #a020f0;">defconst</span> <span style="color: #a0522d;">ecb-required-cedet-version-max</span> '(1 0 4 9))
+&#20026;
+(<span style="color: #a020f0;">defconst</span> <span style="color: #a0522d;">ecb-required-cedet-version-max</span> '(1 1 4 9))
+</pre>
+
+<p>
+   之后在ecb-2.4目录下 make CEDET=../cedet-1.1<br/>
+</p></div>
+</div>
+
+</div>
+
+<div id="outline-container-22" class="outline-2">
+<h2 id="sec-22"><span class="section-number-2">22</span> dired-mode下批量修改文件名</h2>
+<div class="outline-text-2" id="text-22">
+
+<p>  C-x d打开一个目录后， <code>M-x wdired-change-to-wdired-mode</code> 进入可编辑模式，这样可以批量给文件改名。<br/>
+<link rel="stylesheet" href="../../Layout/CSS/jquery.lightbox-0.5.css" type="text/css" media="screen" />
+<script type="text/javascript" src="../../Layout/JS/jquery.lightbox-0.5.js"></script>
+<center> <a class="lightbox" href="./image/emacs-dired.png"> <img class="lightbox " title="jQuery.lightbox" src="./image/emacs-dired.png" width="400"> </a> </center>
+d<script type="text/javascript"> $(function() {$('a.lightbox').lightBox();}); </script>
+
+</p></div>
+
+</div>
+
+<div id="outline-container-23" class="outline-2">
+<h2 id="sec-23"><span class="section-number-2">23</span> 分享/评论</h2>
+<div class="outline-text-2" id="text-23">
 
 
 <a class="bshareDiv" href="http://www.bshare.cn/share">分享按钮</a><script type="text/javascript" charset="utf-8" src="http://static.bshare.cn/b/buttonLite.js#uuid=&amp;style=10&amp;bgcolor=Blue"></script>
@@ -551,7 +646,9 @@ either $$ a=+\sqrt{2} $$ or \[ a=-\sqrt{2} \].
 <div id="disqus_thread">
 </div>
 
-</div>
+
+<p>  <br/>
+</p></div>
 </div>
 </div>
 
