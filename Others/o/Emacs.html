@@ -1,32 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
                "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-CN" xml:lang="zh-CN">
 <head>
 <title>Emacs Trick</title>
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
 <meta name="title" content="Emacs Trick"/>
 <meta name="generator" content="Org-mode"/>
-<meta name="generated" content="2012-10-31 07:50:50 CST"/>
+<meta name="generated" content="2012-11-06 05:14:59 CST"/>
 <meta name="author" content="visayafan"/>
 <meta name="description" content=""/>
 <meta name="keywords" content=""/>
 
-<script type="text/javascript" src="../../Layout/JS/org-info.js"></script>
-<script type="text/javascript" >
-<!--/*--><![CDATA[/*><!--*/
-org_html_manager.set("TOC_DEPTH", "3");
-org_html_manager.set("LINK_HOME", "");
-org_html_manager.set("LINK_UP", "");
-org_html_manager.set("LOCAL_TOC", "1");
-org_html_manager.set("VIEW_BUTTONS", "0");
-org_html_manager.set("MOUSE_HINT", "#cccccc");
-org_html_manager.set("FIXED_TOC", "1");
-org_html_manager.set("TOC", "1");
-org_html_manager.set("VIEW", "overview");
-org_html_manager.setup();  // activate after the parameters are set
-/*]]>*///-->
-</script>
 
 <script type="text/javascript" src="http://orgmode.org/mathjax/MathJax.js">
 <!--/*--><![CDATA[/*><!--*/
@@ -78,13 +63,13 @@ org_html_manager.setup();  // activate after the parameters are set
 
 
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"> </script>
-<link rel="stylesheet" type="text/css" href="../../Layout/CSS/vf.css" />
+<link rel="stylesheet" type="text/css" href="../../Layout/CSS/too_many_toc.css" />
 <script src="../../Layout/JS/bootstrap_old.js"></script>
 
 
 
 <div id="table-of-contents">
-<h2>TOC</h2>
+<h2>目录</h2>
 <div id="text-table-of-contents">
 <ul>
 <li><a href="#sec-1">1 用grep在文件中查找</a>
@@ -97,7 +82,7 @@ org_html_manager.setup();  // activate after the parameters are set
 <li><a href="#sec-3">3 multiple-cursors</a></li>
 <li><a href="#sec-4">4 align-regexp</a></li>
 <li><a href="#sec-5">5 list-matching-lines</a></li>
-<li><a href="#sec-6">6 occur/re-builder/multi-occur/multi-occur-in-matching-buffers</a></li>
+<li><a href="#sec-6">6 occur, re-builder, multi-occur, multi-occur-in-matching-buffers</a></li>
 <li><a href="#sec-7">7 apropos</a></li>
 <li><a href="#sec-8">8 follow-mode</a></li>
 <li><a href="#sec-9">9 hexl-mode</a></li>
@@ -119,7 +104,9 @@ org_html_manager.setup();  // activate after the parameters are set
 </ul>
 </li>
 <li><a href="#sec-22">22 dired-mode下批量修改文件名</a></li>
-<li><a href="#sec-23">23 分享/评论</a></li>
+<li><a href="#sec-23">23 org-mode导出HTML目录显示“目录”而非默认的Table Of Content</a></li>
+<li><a href="#sec-24">24 org-mode的表格中输入|</a></li>
+<li><a href="#sec-25">25 分享/评论</a></li>
 </ul>
 </div>
 </div>
@@ -222,7 +209,7 @@ org_html_manager.setup();  // activate after the parameters are set
 </div>
 
 <div id="outline-container-6" class="outline-2">
-<h2 id="sec-6"><span class="section-number-2">6</span> occur/re-builder/multi-occur/multi-occur-in-matching-buffers</h2>
+<h2 id="sec-6"><span class="section-number-2">6</span> occur, re-builder, multi-occur, multi-occur-in-matching-buffers</h2>
 <div class="outline-text-2" id="text-6">
 
 <p>  在进行正则替换行为确保万无一失，先检查一下，occur后输入regexp则会显示所有匹配内容。<br/>
@@ -630,14 +617,41 @@ sudo apt-get install libncurses5-dev
 <script type="text/javascript" src="../../Layout/JS/jquery.lightbox-0.5.js"></script>
 <center> <a class="lightbox" href="./image/emacs-dired.png"> <img class="lightbox " title="jQuery.lightbox" src="./image/emacs-dired.png" width="400"> </a> </center>
 d<script type="text/javascript"> $(function() {$('a.lightbox').lightBox();}); </script>
-
 </p></div>
 
 </div>
 
 <div id="outline-container-23" class="outline-2">
-<h2 id="sec-23"><span class="section-number-2">23</span> 分享/评论</h2>
+<h2 id="sec-23"><span class="section-number-2">23</span> org-mode导出HTML目录显示“目录”而非默认的Table Of Content</h2>
 <div class="outline-text-2" id="text-23">
+
+<p>  <code>M-x customize-variable ENTER org-export-language-setup</code> 在最后ins插入新的List:<br/>
+<center>
+<img src="./image/中文目录.png"  alt="./image/中文目录.png" />  <br/>
+</center>
+</p></div>
+
+</div>
+
+<div id="outline-container-24" class="outline-2">
+<h2 id="sec-24"><span class="section-number-2">24</span> org-mode的表格中输入|</h2>
+<div class="outline-text-2" id="text-24">
+
+<p>  两种办法：<br/>
+</p><ol>
+<li><code>\vert{}</code> 使用 \(\LaTeX\)<br/>
+</li>
+<li>快捷键 <code>C-c C-x \</code><br/>
+</li>
+</ol>
+
+</div>
+
+</div>
+
+<div id="outline-container-25" class="outline-2">
+<h2 id="sec-25"><span class="section-number-2">25</span> 分享/评论</h2>
+<div class="outline-text-2" id="text-25">
 
 
 <a class="bshareDiv" href="http://www.bshare.cn/share">分享按钮</a><script type="text/javascript" charset="utf-8" src="http://static.bshare.cn/b/buttonLite.js#uuid=&amp;style=10&amp;bgcolor=Blue"></script>

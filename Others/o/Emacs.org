@@ -1,6 +1,5 @@
 #+OPTIONS: ^:{} _:{} num:t toc:t \n:t
-#+include "../../template.org"
-#+INFOJS_OPT: view:overview mouse:#cccccc toc:t ftoc:t  path:../../Layout/JS/org-info.js
+#+include: ../../template-toc.org
 #+title:Emacs Trick
 
 * 用grep在文件中查找
@@ -36,7 +35,7 @@ grep -nH -e "pattern" filename
   其它用法：[[http://emacswiki.org/emacs/AlignCommands][EmacsWiki]]
 * list-matching-lines
   列出当前buffer中所有满足指定正则表达式的行
-* occur/re-builder/multi-occur/multi-occur-in-matching-buffers
+* occur, re-builder, multi-occur, multi-occur-in-matching-buffers
   在进行正则替换行为确保万无一失，先检查一下，occur后输入regexp则会显示所有匹配内容。
   与occur另开一buffer显示匹配不同，re-builder实行动态匹配，即一边在RE-Builder中输入regexp一边匹配（此功能很不错）。
   前面两个都是在当前buffer中匹配，而multi-occur/multi-occur-in-matching-buffers是在多个buffer中匹配
@@ -243,6 +242,15 @@ sudo apt-get install libncurses5-dev
 <center> <a class="lightbox" href="./image/emacs-dired.png"> <img class="lightbox " title="jQuery.lightbox" src="./image/emacs-dired.png" width="400"> </a> </center>
 d<script type="text/javascript"> $(function() {$('a.lightbox').lightBox();}); </script>
 #+end_html
+* org-mode导出HTML目录显示“目录”而非默认的Table Of Content
+  =M-x customize-variable ENTER org-export-language-setup= 在最后ins插入新的List:
+#+html:<center>
+[[./image/中文目录.png]]  
+#+html:</center>
+* org-mode的表格中输入|
+  两种办法：
+  1. =\vert{}= 使用 $\LaTeX$
+  2. 快捷键 =C-c C-x \=
 * 分享/评论
 #+include "../../disqus.org"
   

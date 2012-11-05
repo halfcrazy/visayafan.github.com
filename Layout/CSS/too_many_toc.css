@@ -1,5 +1,4 @@
-#lightbox52
-{	position: absolute;	left: 0; width: 100%; z-index: 10000; text-align: center; line-height: 0;}
+#lightbox{	position: absolute;	left: 0; width: 100%; z-index: 10000; text-align: center; line-height: 0;}
 #lightbox img{ width: auto; height: auto;}
 #lightbox a img{ border: none; }
 
@@ -39,32 +38,7 @@
         line-height: 1.2em;
     }
 
-    #table-of-contents {
-        color: black;
-        background: #FFF;
-        font-size: 80%;
-        padding: .25em;
-        margin: 0em 0em 1em 1em;
-        display: block;
-    }
 
-    #table-of-contents a  {
-        color: #003333;
-    }
-
-    #table-of-contents a:hover {
-        color: #003333;
-        text-decoration: underline;
-    }
-
-    #table-of-contents li  {
-        margin: .2em;
-    }
-
-    #table-of-contents h2 {
-        margin-top: .2em;
-        border: none;
-    }
 
     #license {
         padding: .3em;
@@ -82,7 +56,7 @@
         color: black;
         padding-bottom: 7px;
         margin-bottom: 20px;
-        /* border-bottom: 1px solid #222; */
+    /* border-bottom: 1px solid #222; */
     }
 
     h2 {
@@ -786,8 +760,8 @@
         color: #bc8f8f;
     }
     .outline-text-1, .outline-text-2, .outline-text-3, .outline-text-4, .outline-text-5, .outline-text-6 {
-        /* Add more spacing between section. Padding, so that folding with org-info.js works as expected. */
-        /* padding-bottom:1.4em; */
+    /* Add more spacing between section. Padding, so that folding with org-info.js works as expected. */
+    /* padding-bottom:1.4em; */
     }
     .org-preprocessor {
         /* font-lock-preprocessor-face */
@@ -913,37 +887,7 @@
         margin-left: 120px;
     }
 
-    /* TOC inspired by http://jashkenas.github.com/coffee-script */
-    #table-of-contents {
-        font-size: 10pt;
-        position: fixed;
-        right: 0em;
-        top: 0em;
-        background: #2b2b2b;
-        color: #dcdccc;
-        -webkit-box-shadow: 0 0 1em #777777;
-        -moz-box-shadow: 0 0 1em #777777;
-        -webkit-border-bottom-left-radius: 5px;
-        -moz-border-radius-bottomleft: 5px;
-        text-align: right;
-        /* ensure doesn't flow off the screen when expanded */
-        max-height: 80%;
-        overflow: auto; }
-    #table-of-contents h2 {
-        font-size: 10pt;
-        max-width: 8em;
-        font-weight: normal;
-        padding-left: 0.5em;
-        padding-left: 0.5em;
-        padding-top: 0.05em;
-        padding-bottom: 0.05em; }
-    #table-of-contents #text-table-of-contents {
-        display: none;
-        text-align: left; }
-    #table-of-contents:hover #text-table-of-contents {
-        display: block;
-        padding: 0.5em;
-        margin-top: -1.5em; }
+
     
     .rss_box {}
     .rss_title, rss_title a {}
@@ -972,12 +916,14 @@
         line-height: 21px;
         color: #333;
 
-        max-width: 60%;
+        /* max-width: 60%; */
         margin: auto;
         /* background-image: url(http://orgmode.org/worg-unicorn.png); */
+        margin-left:25%;
+        margin-right:5%;
         background-position: 25px 5px;
         background-repeat: no-repeat;
-        /* background-color: WHITE; */
+    /* background-color: WHITE; */
     }
     body #content {
         padding-top: 40px;
@@ -996,40 +942,7 @@
     }
 
     /* TOC inspired by http://jashkenas.github.com/coffee-script */
-    #table-of-contents {
-        color:black;
-        z-index:999;
-        font-size: 10pt;
-        position: fixed;
-        /* min-width: 115px; */
-        right: 0em;
-        top: 0em;
-        background: white;
-        -webkit-box-shadow: 0 0 1em #777777;
-        -moz-box-shadow: 0 0 1em #777777;
-        -webkit-border-bottom-left-radius: 5px;
-        -moz-border-radius-bottomleft: 5px;
-        text-align: left;
-        /* ensure doesn't flow off the screen when expanded */
-        max-height: 80%;
-        overflow: auto;
-    }
-    #table-of-contents h2 {
-        font-size: 10pt;
-        max-width: 9em;
-        font-weight: normal;
-        padding-left: 0.5em;
-        padding-top: 0.5em;
-        padding-bottom: 0.05em;
-        background:white;
-    }
-    #table-of-contents #text-table-of-contents {
-        display: none;
-        text-align: left; }
-    #table-of-contents:hover #text-table-of-contents {
-        display: block;
-        padding: 0.5em;
-        margin-top: -1.5em; }
+
 
     /* #license { */
     /*   padding: .3em; */
@@ -2020,20 +1933,43 @@ blockquote {
 }
 
 
-pre{
-    display: block;
-    padding: 8.5px;
-    margin: 0 0 9px;
-    font-size: 12px;
-    line-height: 18px;
-    background-color: white;
-    border: 1px solid #CCC;
-    border: 1px solid rgba(0, 0, 0, 0.15);
-    -webkit-border-radius: 4px;
-    -moz-border-radius: 4px;
-    border-radius: 4px;
-    white-space: pre;
-    white-space: pre-wrap;
-    word-break: break-all;
-    word-wrap: break-word;
+
+#table-of-contents a  {
+    color: #003333;
+}
+
+#table-of-contents a:hover {
+    color: #003333;
+    text-decoration: underline;
+}
+
+#table-of-contents li  {
+    margin: .2em;
+}
+
+#table-of-contents {
+    float: left;
+    /* border: 1px solid #CCC; */
+    max-width: 20%;
+    overflow: auto;
+    position: fixed;
+    left: 0;
+    z-index: 999;
+    /* background: white; */
+    top: 0em;
+    font-size: 13px;
+    border-bottom:0px;
+    max-height: 100%;
+}
+#table-of-contents h2 {
+    margin-top: .2em;
+    border: none;
+    font-weight: normal;
+    font-size: 11pt;
+    max-width: 9em;
+    font-weight: normal;
+    padding-left: 45%;
+    padding-top: 0.5em;
+    padding-bottom: 0.05em;
+    background:white;
 }
