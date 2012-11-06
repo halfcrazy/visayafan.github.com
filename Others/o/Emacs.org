@@ -247,6 +247,7 @@ d<script type="text/javascript"> $(function() {$('a.lightbox').lightBox();}); </
 #+html:<center>
 [[./image/中文目录.png]]  
 #+html:</center>
+  再 =M-x customize-variable ENTER org-export-default-language= 改成 zh-CN
 * org-mode的表格中输入|
   两种办法：
   1. =\vert{}= 使用 $\LaTeX$
