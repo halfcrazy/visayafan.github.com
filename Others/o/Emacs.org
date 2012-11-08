@@ -1,5 +1,6 @@
 #+OPTIONS: ^:{} _:{} num:t toc:t \n:t
 #+include: ../../template-toc.org
+#+LaTeX_CLASS: cn-article
 #+title:Emacs Trick
 
 * 用grep在文件中查找
@@ -248,6 +249,8 @@ d<script type="text/javascript"> $(function() {$('a.lightbox').lightBox();}); </
 [[./image/中文目录.png]]  
 #+html:</center>
   再 =M-x customize-variable ENTER org-export-default-language= 改成 zh-CN
+* org-mode导出PDF目录显示“目录”而非默认的Contents
+  在 =org-export-latex-classes= 中加上 =\\renewcommand\\contentsname{目录}=
 * org-mode的表格中输入|
   两种办法：
   1. =\vert{}= 使用 $\LaTeX$

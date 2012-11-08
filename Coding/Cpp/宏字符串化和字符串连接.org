@@ -1,0 +1,81 @@
+#+OPTIONS: ^:{} _:{} num:t toc:t \n:t
+#+include "../../template.org"
+#+title:宏字符串化和字符串连接
+
+手册：
+http://gcc.gnu.org/onlinedocs/cpp/Concatenation.html#index-g_t_0040samp_007b_0023_0023_007d-operator-55
+http://gcc.gnu.org/onlinedocs/cpp/Stringification.html#index-g_t_0040samp_007b_0023_007d-operator-51
+
+宏中#表字符串化（stringfication)，##表字符串连接（concatenation）.
+--------
+左边的代码可以通过宏字符串连接来简化：
+#+html:<div class="row-fluid">
+#+html: <div class="span5">
+#+begin_src c
+struct command
+{
+    char *name;
+    void (*function) (void);
+};
+     
+struct command commands[] =
+{
+    { "quit", quit_command },
+    { "help", help_command },
+    ...
+};
+#+end_src
+#+html: </div>
+#+html: <div class="span5 offset1">
+#+begin_src c
+#define COMMAND(NAME)  { #NAME, NAME ## _command }
+     
+struct command commands[] =
+{
+    COMMAND (quit),
+    COMMAND (help),
+};
+#+end_src
+#+html: </div>
+#+html: </div>
+--------
+下面的代码利用宏字符串化来输出信息：
+#+begin_src c
+#define WARN_IF(expr)   do{ if(expr) {fprintf(stderr, "warning" #expr "\n");}}while(0)
+#+end_src
+使用do while的原因是为了让WARN_IF(expr)后面加分号使之看起来更像函数。
+--------
+- 宏扩展 ::
+#+begin_src c
+#include <stdio.h>
+#define str(s) #s
+#define xstr(s) str(s)
+#define foo 4
+int main(int argc, char *argv[])
+{
+    printf ("%s\n",str(foo));
+    printf ("%s\n",xstr(foo));
+    return 0;
+}
+# 结果为foo 4
+#+end_src  
+宏展开时先展开里层的宏，但包含#和##的宏不展开，由于str(foo)宏str包含#故foo不展开，而xstr宏中不包含#故foo展开为4，即str(4)再开展str得4
+--------
+同理可知下面结果为: _G(A,B) AB
+#+begin_src c
+#define G(a,b) a##b
+#define _G(a,b) G(a,b)
+#define S(X) #X
+#define _S(X) S(X)
+#define A 1
+#define B 2
+#include<stdio.h>
+int main()
+{
+    printf("%s\n",S(_G(A,B)));
+    printf("%s\n",_S(G(A,B)));
+    return 0;
+}
+#+end_src
+
+#+include "../../disqus.org"

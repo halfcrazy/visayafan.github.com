@@ -2,6 +2,7 @@
 #+LaTeX_CLASS: cn-article
 #+BEGIN_HTML
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"> </script>
+<link rel="stylesheet" type="text/css" href="../../Layout/CSS/bootstrap.min.css" />
 <link rel="stylesheet" type="text/css" href="../../Layout/CSS/too_many_toc.css" />
 <script src="../../Layout/JS/bootstrap_old.js"></script>
 #+END_HTML

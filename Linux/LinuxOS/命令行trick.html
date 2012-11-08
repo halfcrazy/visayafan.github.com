@@ -7,7 +7,7 @@
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
 <meta name="title" content="命令行trick"/>
 <meta name="generator" content="Org-mode"/>
-<meta name="generated" content="2012-11-06 05:36:32 CST"/>
+<meta name="generated" content="2012-11-09 02:25:54 CST"/>
 <meta name="author" content="visayafan"/>
 <meta name="description" content=""/>
 <meta name="keywords" content=""/>
@@ -23,6 +23,7 @@
 
 
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"> </script>
+<link rel="stylesheet" type="text/css" href="../../Layout/CSS/bootstrap.min.css" />
 <link rel="stylesheet" type="text/css" href="../../Layout/CSS/too_many_toc.css" />
 <script src="../../Layout/JS/bootstrap_old.js"></script>
 
@@ -45,7 +46,11 @@
 <li><a href="#sec-9">9 echo 换行</a></li>
 <li><a href="#sec-10">10 递归更新目录下所有文件时间戳</a></li>
 <li><a href="#sec-11">11 setsid, nohup, &amp; 后台执行命令</a></li>
-<li><a href="#sec-12">12 分享/评论</a></li>
+<li><a href="#sec-12">12 seq 打印一系列数字</a></li>
+<li><a href="#sec-13">13 终端下TAB补全忽略大小写</a></li>
+<li><a href="#sec-14">14 为防止bash对变量内容进行解析，需要双引号</a></li>
+<li><a href="#sec-15">15 为什么需要4个转义符</a></li>
+<li><a href="#sec-16">16 分享/评论</a></li>
 </ul>
 </div>
 </div>
@@ -176,8 +181,207 @@
 </div>
 
 <div id="outline-container-12" class="outline-2">
-<h2 id="sec-12"><span class="section-number-2">12</span> 分享/评论</h2>
+<h2 id="sec-12"><span class="section-number-2">12</span> seq 打印一系列数字</h2>
 <div class="outline-text-2" id="text-12">
+
+<p>  seq fist,increment,last 默认的first, increment都是1<br/>
+</p></div>
+
+</div>
+
+<div id="outline-container-13" class="outline-2">
+<h2 id="sec-13"><span class="section-number-2">13</span> 终端下TAB补全忽略大小写</h2>
+<div class="outline-text-2" id="text-13">
+
+
+
+
+<pre class="example">bind 'set completion-ignore-case on'
+</pre>
+
+</div>
+
+</div>
+
+<div id="outline-container-14" class="outline-2">
+<h2 id="sec-14"><span class="section-number-2">14</span> 为防止bash对变量内容进行解析，需要双引号</h2>
+<div class="outline-text-2" id="text-14">
+
+
+
+
+<pre class="example">test$ VALUE="abc * def"
+test$ echo $VALUE
+abc README.md test def
+</pre>
+
+<p>
+  bash解析 <code>echo $VALUE</code> 的时候是这样的： <code>echo abc * def</code> ，于是*被当成了通配符，于是当前目录下所有文件便被列了出来。<br/>
+  解决办法是：echo "$VALUE"<br/>
+  而 echo '$VALUE' 结果是 $value，把单引号内的内容原封不动地打印出来。<br/>
+</p></div>
+
+</div>
+
+<div id="outline-container-15" class="outline-2">
+<h2 id="sec-15"><span class="section-number-2">15</span> 为什么需要4个转义符</h2>
+<div class="outline-text-2" id="text-15">
+
+
+
+<p>
+  同样的问题：<a href="http://www.wlug.org.nz/BashNotes">http://www.wlug.org.nz/BashNotes</a><br/>
+</p>
+
+
+<pre class="example">How do I feed quote characters to the other end of an SSH session?
+I have a bunch of remote machines with a config file that has some OPTIONS=something, and I want to set them all across-the-board to OPTIONS="foo". Locally, I would do it this way:
+sed -i -e 's/OPTIONS=.*/OPTIONS="foo"/' file
+This is hard to send over SSH however, as bash(1) locally likes to eat all your quotes, so they never reach the other end.
+PerryLorier's most bodacious answer:
+ssh site sed -i -e \''s/OPTIONS=.*/OPTIONS="foo"/'\' file
+</pre>
+
+<p>
+  由于本地bash会吃掉单引号，所以要故意留一个给bash吃，剩下一个被sed用。<br/>
+</p>
+<p>
+  由于shell对单引号内的任何字符都看成普通字符对待，而双引号中遇到\则需要转义，故如果使用双引号的话则需要8个\:<br/>
+</p>
+
+
+<pre class="example">test$ echo "a\nb\nc" | awk -F'\\\\n' '{print $1,$2,$3}'
+a b c
+test$ echo "a\nb\nc" | awk -F"\\\\\\\\n" '{print $1,$2,$3}'
+a b c
+</pre>
+
+<p>
+  但如果不是用-F选项来指定而是用FS来指定则需要4个：<br/>
+</p>
+
+
+<pre class="example">test$ echo "a\nb\nc" | awk 'BEGIN {FS="\\\\n"};{print $1,$2,$3}'
+a b c
+</pre>
+
+
+<p>
+  这里有篇文章，详细说明了烦人的单引号，双引号和转义符：<a href="http://tomecat.com/jeffy/tttt/quoting.html">http://tomecat.com/jeffy/tttt/quoting.html</a><br/>
+</p>
+
+
+
+<pre class="example">test$ awk -F: {print\ \"\\\\\"\ \$1} /etc/passwd
+test$ awk -F: '{print "\\" $1}' /etc/passwd
+</pre>
+
+<p>
+  上面两个语句效果是一样的，不同的是下面一个{}被包含在单引号中，所以所有字符都是普通字符，包括转义字符，所以最终awk执行的时候是有两个转义字符，再进行转义成为一个字符；上面一个由于转义字符在双引号下，转义字符起转义作用，所以会先进行转义即4个\变成2个\，最终awk执行时有2个\，最终结果1个\。<br/>
+
+</p>
+<hr/>
+
+
+<div class="row-fluid"> <div class="span5">
+<p>
+test中内容：a\nb\nc<br/>
+</p>
+
+
+<pre class="example">~$ awk -F'\n' '{for(i=1;i&lt;=NF;i++) print $i;}' test
+a\\nb\\nc
+~$ awk -F'\\n' '{for(i=1;i&lt;=NF;i++) print $i;}' test
+a\\nb\\nc
+~$ awk -F'\\\n' '{for(i=1;i&lt;=NF;i++) print $i;}' test
+a\\nb\\nc
+~$ awk -F'\\\\n' '{for(i=1;i&lt;=NF;i++) print $i;}' test
+a
+b
+c
+</pre>
+
+<p>
+当\个数是1-3时均原样输出，=4输出为a b c(可见此时域分隔符为\n)<br/>
+&gt;4时均原样输出。<br/>
+</div> <div class="span5 offset1">
+test中内容：a\\nb\\nc<br/>
+</p>
+
+
+<pre class="example">~$ awk -F'\\\\n' '{for(i=1;i&lt;=NF;i++) print $i;}' test 
+a\
+b\
+c
+~$ awk -F'\\\\\n' '{for(i=1;i&lt;=NF;i++) print $i;}' test 
+a\\nb\\nc
+~$ awk -F'\\\\\\n' '{for(i=1;i&lt;=NF;i++) print $i;}' test 
+a\\nb\\nc
+~$ awk -F'\\\\\\\n' '{for(i=1;i&lt;=NF;i++) print $i;}' test 
+a\\nb\\nc
+~$ awk -F'\\\\\\\\n' '{for(i=1;i&lt;=NF;i++) print $i;}' test 
+a
+b
+c
+</pre>
+
+<p>
+当\个数1-3时均原样输出，＝4时输出为a\ b\ c（可见此时域分隔符为\n）<br/>
+5-7时原样输出，＝8时输出为a b c(可见此时域分隔符为\\n)<br/>
+&gt;8时原样输出。<br/>
+</div></div>
+
+</p>
+<hr/>
+
+
+<div class="row-fluid"> <div class="span5">
+<p>
+test中内容：a\b\c<br/>
+</p>
+
+
+<pre class="example">wk -F'\' '{ORS=" ";for(i=1;i&lt;=NF;i++) print $i;}' test
+wk -F'\\' '{ORS=" ";for(i=1;i&lt;=NF;i++) print $i;}' test
+wk -F'\\\' '{ORS=" ";for(i=1;i&lt;=NF;i++) print $i;}' test
+wk -F'\\\\' '{ORS=" ";for(i=1;i&lt;=NF;i++) print $i;}' test
+</pre>
+
+<p>
+当\个数为1-4时输出都是:a b c,当\大于4时输出为a\b\c<br/>
+</div> <div class="span5 offset1">
+test中内容：a\\b\\c<br/>
+</p>
+
+
+<pre class="example">awk -F'\\\\\' '{ORS=" ";for(i=1;i&lt;=NF;i++) print $i;}' test
+awk -F'\\\\\\' '{ORS=" ";for(i=1;i&lt;=NF;i++) print $i;}' test
+awk -F'\\\\\\\' '{ORS=" ";for(i=1;i&lt;=NF;i++) print $i;}' test
+awk -F'\\\\\\\\' '{ORS=" ";for(i=1;i&lt;=NF;i++) print $i;}' test
+</pre>
+
+<p>
+当\个数是1-8时输出均为a b c，而当&gt;8时输出均为a\\b\\c<br/>
+</div></div>
+
+</p>
+<hr/>
+<dl>
+<dt>总结</dt><dd>
+</dd>
+<dt>???</dt><dd>对于纯粹匹配\，当欲匹配\个数为n时需要\个数可以为1-4xn。<br/>
+</dd>
+<dt>???</dt><dd>对于匹配\但后面还跟字符时，当欲匹配\个数为n时需要\个数必须严格为4xn.<br/>
+</dd>
+</dl>
+
+</div>
+
+</div>
+
+<div id="outline-container-16" class="outline-2">
+<h2 id="sec-16"><span class="section-number-2">16</span> 分享/评论</h2>
+<div class="outline-text-2" id="text-16">
 
 
 <a class="bshareDiv" href="http://www.bshare.cn/share">分享按钮</a><script type="text/javascript" charset="utf-8" src="http://static.bshare.cn/b/buttonLite.js#uuid=&amp;style=10&amp;bgcolor=Blue"></script>

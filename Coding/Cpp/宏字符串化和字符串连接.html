@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+               "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-CN" xml:lang="zh-CN">
+<head>
+<title>宏字符串化和字符串连接</title>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
+<meta name="title" content="宏字符串化和字符串连接"/>
+<meta name="generator" content="Org-mode"/>
+<meta name="generated" content="2012-11-09 00:34:17 CST"/>
+<meta name="author" content="visayafan"/>
+<meta name="description" content=""/>
+<meta name="keywords" content=""/>
+
+
+
+</head>
+<body>
+
+
+<div id="content">
+<h1 class="title">宏字符串化和字符串连接</h1>
+
+
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"> </script>
+<link rel="stylesheet" type="text/css" href="../../Layout/CSS/bootstrap_old.css" />
+<link rel="stylesheet" type="text/css" href="../../Layout/CSS/vf.css" />
+<script src="../../Layout/JS/bootstrap_old.js"></script>
+
+
+<p>
+<a href="http://gcc.gnu.org/onlinedocs/cpp/Concatenation.html#index-g_t_0040samp_007b_0023_0023_007d-operator-55">http://gcc.gnu.org/onlinedocs/cpp/Concatenation.html#index-g_t_0040samp_007b_0023_0023_007d-operator-55</a><br/>
+<a href="http://gcc.gnu.org/onlinedocs/cpp/Stringification.html#index-g_t_0040samp_007b_0023_007d-operator-51">http://gcc.gnu.org/onlinedocs/cpp/Stringification.html#index-g_t_0040samp_007b_0023_007d-operator-51</a><br/>
+</p>
+<p>
+宏中#表字符串化（stringfication)，##表字符串连接（concatenation）.<br/>
+
+</p>
+<hr/>
+<p>
+左边的代码可以通过宏字符串连接来简化：<br/>
+<div class="row-fluid">
+<div class="span5">
+
+<pre class="src src-c"><span style="color: #a020f0;">struct</span> <span style="color: #228b22;">command</span>
+{
+    <span style="color: #228b22;">char</span> *<span style="color: #a0522d;">name</span>;
+    <span style="color: #228b22;">void</span> (*<span style="color: #0000ff;">function</span>) (<span style="color: #228b22;">void</span>);
+};
+
+<span style="color: #a020f0;">struct</span> <span style="color: #228b22;">command</span> <span style="color: #a0522d;">commands</span>[] =
+{
+    { <span style="color: #8b2252;">"quit"</span>, quit_command },
+    { <span style="color: #8b2252;">"help"</span>, help_command },
+    ...
+};
+</pre>
+
+</div>
+<div class="span5 offset1">
+
+<pre class="src src-c"><span style="color: #483d8b;">#define</span> <span style="color: #0000ff;">COMMAND</span>(<span style="color: #a0522d;">NAME</span>)  { #NAME, NAME ## _command }
+
+<span style="color: #a020f0;">struct</span> <span style="color: #228b22;">command</span> <span style="color: #a0522d;">commands</span>[] =
+{
+    COMMAND (quit),
+    COMMAND (help),
+};
+</pre>
+
+</div>
+</div>
+
+</p>
+<hr/>
+<p>
+下面的代码利用宏字符串化来输出信息：<br/>
+</p>
+
+
+<pre class="src src-c"><span style="color: #483d8b;">#define</span> <span style="color: #0000ff;">WARN_IF</span>(<span style="color: #a0522d;">expr</span>)   <span style="color: #a020f0;">do</span>{ <span style="color: #a020f0;">if</span>(expr) {fprintf(stderr, <span style="color: #8b2252;">"warning"</span> #expr <span style="color: #8b2252;">"\n"</span>);}}<span style="color: #a020f0;">while</span>(0)
+</pre>
+
+<p>
+使用do while的原因是为了让WARN_IF(expr)后面加分号使之看起来更像函数。<br/>
+
+</p>
+<hr/>
+<dl>
+<dt>宏扩展</dt><dd>
+</dd>
+</dl>
+
+
+
+
+<pre class="src src-c"><span style="color: #483d8b;">#include</span> <span style="color: #8b2252;">&lt;stdio.h&gt;</span>
+<span style="color: #483d8b;">#define</span> <span style="color: #0000ff;">str</span>(<span style="color: #a0522d;">s</span>) #s
+<span style="color: #483d8b;">#define</span> <span style="color: #0000ff;">xstr</span>(<span style="color: #a0522d;">s</span>) str(s)
+<span style="color: #483d8b;">#define</span> <span style="color: #a0522d;">foo</span> 4
+<span style="color: #228b22;">int</span> <span style="color: #0000ff;">main</span>(<span style="color: #228b22;">int</span> <span style="color: #a0522d;">argc</span>, <span style="color: #228b22;">char</span> *<span style="color: #a0522d;">argv</span>[])
+{
+    printf (<span style="color: #8b2252;">"%s\n"</span>,str(foo));
+    printf (<span style="color: #8b2252;">"%s\n"</span>,xstr(foo));
+    <span style="color: #a020f0;">return</span> 0;
+}
+<span style="color: #483d8b;"># &#32467;&#26524;&#20026;foo</span> 4
+</pre>
+
+<p>
+宏展开时先展开里层的宏，但包含#和##的宏不展开，由于str(foo)宏str包含#故foo不展开，而xstr宏中不包含#故foo展开为4，即str(4)再开展str得4<br/>
+
+</p>
+<hr/>
+<p>
+同理可知下面结果为: _G(A,B) AB<br/>
+</p>
+
+
+<pre class="src src-c"><span style="color: #483d8b;">#define</span> <span style="color: #0000ff;">G</span>(<span style="color: #a0522d;">a</span>,<span style="color: #a0522d;">b</span>) a##b
+<span style="color: #483d8b;">#define</span> <span style="color: #0000ff;">_G</span>(<span style="color: #a0522d;">a</span>,<span style="color: #a0522d;">b</span>) G(a,b)
+<span style="color: #483d8b;">#define</span> <span style="color: #0000ff;">S</span>(<span style="color: #a0522d;">X</span>) #X
+<span style="color: #483d8b;">#define</span> <span style="color: #0000ff;">_S</span>(<span style="color: #a0522d;">X</span>) S(X)
+<span style="color: #483d8b;">#define</span> <span style="color: #a0522d;">A</span> 1
+<span style="color: #483d8b;">#define</span> <span style="color: #a0522d;">B</span> 2
+<span style="color: #483d8b;">#include</span><span style="color: #8b2252;">&lt;stdio.h&gt;</span>
+<span style="color: #228b22;">int</span> <span style="color: #0000ff;">main</span>()
+{
+    printf(<span style="color: #8b2252;">"%s\n"</span>,S(_G(A,B)));
+    printf(<span style="color: #8b2252;">"%s\n"</span>,_S(G(A,B)));
+    <span style="color: #a020f0;">return</span> 0;
+}
+</pre>
+
+</div>
+
+</body>
+</html>

@@ -39,5 +39,122 @@ find . -name "*.org" -exec touch {} \;
 alias e="setsid emacs &"
 #+end_quote
   这样在终端下e即可打开emacs，且当shell退出的时候emacs也不会跟着退出。
+* seq 打印一系列数字
+  seq fist,increment,last 默认的first, increment都是1
+* 终端下TAB补全忽略大小写
+#+begin_example
+bind 'set completion-ignore-case on'
+#+end_example
+* 为防止bash对变量内容进行解析，需要双引号
+#+begin_example
+  test$ VALUE="abc * def"
+  test$ echo $VALUE
+  abc README.md test def
+#+end_example  
+  bash解析 =echo $VALUE= 的时候是这样的： =echo abc * def= ，于是*被当成了通配符，于是当前目录下所有文件便被列了出来。
+  解决办法是：echo "$VALUE"
+  而 echo '$VALUE' 结果是 $value，把单引号内的内容原封不动地打印出来。
+* 为什么需要4个转义符
+#+BEGIN_COMMENT
+  问题：http://bbs.csdn.net/topics/390258485
+#+begin_example
+echo "11\nbbb\bcccc\n" | awk -F '\\\\n' '{print $1}'
+#+end_example
+#+END_COMMENT
+
+  同样的问题：http://www.wlug.org.nz/BashNotes
+#+begin_example
+How do I feed quote characters to the other end of an SSH session?
+I have a bunch of remote machines with a config file that has some OPTIONS=something, and I want to set them all across-the-board to OPTIONS="foo". Locally, I would do it this way:
+sed -i -e 's/OPTIONS=.*/OPTIONS="foo"/' file
+This is hard to send over SSH however, as bash(1) locally likes to eat all your quotes, so they never reach the other end.
+PerryLorier's most bodacious answer:
+ssh site sed -i -e \''s/OPTIONS=.*/OPTIONS="foo"/'\' file
+#+end_example
+  由于本地bash会吃掉单引号，所以要故意留一个给bash吃，剩下一个被sed用。
+
+  由于shell对单引号内的任何字符都看成普通字符对待，而双引号中遇到\则需要转义，故如果使用双引号的话则需要8个\:
+#+begin_example
+test$ echo "a\nb\nc" | awk -F'\\\\n' '{print $1,$2,$3}'
+a b c
+test$ echo "a\nb\nc" | awk -F"\\\\\\\\n" '{print $1,$2,$3}'
+a b c
+#+end_example
+  但如果不是用-F选项来指定而是用FS来指定则需要4个：
+#+begin_example
+test$ echo "a\nb\nc" | awk 'BEGIN {FS="\\\\n"};{print $1,$2,$3}'
+a b c
+#+end_example
+
+  这里有篇文章，详细说明了烦人的单引号，双引号和转义符：http://tomecat.com/jeffy/tttt/quoting.html
+
+#+begin_example
+test$ awk -F: {print\ \"\\\\\"\ \$1} /etc/passwd
+test$ awk -F: '{print "\\" $1}' /etc/passwd
+#+end_example
+  上面两个语句效果是一样的，不同的是下面一个{}被包含在单引号中，所以所有字符都是普通字符，包括转义字符，所以最终awk执行的时候是有两个转义字符，再进行转义成为一个字符；上面一个由于转义字符在双引号下，转义字符起转义作用，所以会先进行转义即4个\变成2个\，最终awk执行时有2个\，最终结果1个\。
+--------
+#+html:<div class="row-fluid"> <div class="span5">
+test中内容：a\nb\nc
+#+begin_example
+~$ awk -F'\n' '{for(i=1;i<=NF;i++) print $i;}' test
+a\\nb\\nc
+~$ awk -F'\\n' '{for(i=1;i<=NF;i++) print $i;}' test
+a\\nb\\nc
+~$ awk -F'\\\n' '{for(i=1;i<=NF;i++) print $i;}' test
+a\\nb\\nc
+~$ awk -F'\\\\n' '{for(i=1;i<=NF;i++) print $i;}' test
+a
+b
+c
+#+end_example
+当\个数是1-3时均原样输出，=4输出为a b c(可见此时域分隔符为\n)
+>4时均原样输出。
+#+html: </div> <div class="span5 offset1">
+test中内容：a\\nb\\nc
+#+begin_example
+~$ awk -F'\\\\n' '{for(i=1;i<=NF;i++) print $i;}' test 
+a\
+b\
+c
+~$ awk -F'\\\\\n' '{for(i=1;i<=NF;i++) print $i;}' test 
+a\\nb\\nc
+~$ awk -F'\\\\\\n' '{for(i=1;i<=NF;i++) print $i;}' test 
+a\\nb\\nc
+~$ awk -F'\\\\\\\n' '{for(i=1;i<=NF;i++) print $i;}' test 
+a\\nb\\nc
+~$ awk -F'\\\\\\\\n' '{for(i=1;i<=NF;i++) print $i;}' test 
+a
+b
+c
+#+end_example
+当\个数1-3时均原样输出，＝4时输出为a\ b\ c（可见此时域分隔符为\n）
+5-7时原样输出，＝8时输出为a b c(可见此时域分隔符为\\n)
+>8时原样输出。
+#+html:</div></div>
+--------
+#+html:<div class="row-fluid"> <div class="span5">
+test中内容：a\b\c
+#+begin_example
+wk -F'\' '{ORS=" ";for(i=1;i<=NF;i++) print $i;}' test
+wk -F'\\' '{ORS=" ";for(i=1;i<=NF;i++) print $i;}' test
+wk -F'\\\' '{ORS=" ";for(i=1;i<=NF;i++) print $i;}' test
+wk -F'\\\\' '{ORS=" ";for(i=1;i<=NF;i++) print $i;}' test
+#+end_example
+当\个数为1-4时输出都是:a b c,当\大于4时输出为a\b\c
+#+html: </div> <div class="span5 offset1">
+test中内容：a\\b\\c
+#+begin_example
+awk -F'\\\\\' '{ORS=" ";for(i=1;i<=NF;i++) print $i;}' test
+awk -F'\\\\\\' '{ORS=" ";for(i=1;i<=NF;i++) print $i;}' test
+awk -F'\\\\\\\' '{ORS=" ";for(i=1;i<=NF;i++) print $i;}' test
+awk -F'\\\\\\\\' '{ORS=" ";for(i=1;i<=NF;i++) print $i;}' test
+#+end_example
+当\个数是1-8时输出均为a b c，而当>8时输出均为a\\b\\c
+#+html:</div></div>
+--------
+- 总结 ::
+对于纯粹匹配\，当欲匹配\个数为n时需要\个数可以为1-4xn。
+对于匹配\但后面还跟字符时，当欲匹配\个数为n时需要\个数必须严格为4xn.
 * 分享/评论
 #+include "../../disqus.org"
