@@ -255,6 +255,47 @@ d<script type="text/javascript"> $(function() {$('a.lightbox').lightBox();}); </
   两种办法：
   1. =\vert{}= 使用 $\LaTeX$
   2. 快捷键 =C-c C-x \=
+* Emacs中使用输入法
+  可以 =M-x customize-variable RET default-input-method= 来指定默认的输入法，例如 =chinese-pinyin= 。
+  默认是 =C-\= 来调用。
+  下面是五笔的配置，参考http://daiyuwen.freeshell.org/gb/wubi/wubi.html
+  这里设置的 =M-Space= 来调用。
+#+begin_src lisp
+(add-to-list 'load-path "~/.emacs.d/wubi")
+(require 'wubi)
+(wubi-load-local-phrases) ; add user's Wubi phrases
+(register-input-method
+ "chinese-wubi" "Chinese-GB" 'quail-use-package
+ "WuBi" "WuBi"
+ "wubi")
+(setq default-input-method "chinese-wubi")
+(global-set-key [?\M- ] 'toggle-input-method)
+#+end_src
+  这样不管机器上有没有中文输入法，只要有Emacs就可以工作。
+* 乱码
+  可以 =C-x RET r TAB= 来选择编码。
+  中文乱码可以在.emacs中加入以下代码：
+#+begin_src lisp
+(prefer-coding-system 'utf-8)
+(prefer-coding-system 'gb18030)
+#+end_src
+  或：
+#+begin_src lisp
+(prefer-coding-system 'utf-8)
+(prefer-coding-system 'chinese-gbk)
+#+end_src
+* Org Mode HTML导出时内部链接
+  在一篇文章中建立内部链接很简单，添加anchor，
+#+begin_example
+#<<anchor>>
+#+end_example
+  在想要链接到上面的地主添加链接即可:
+#+begin_example
+[[anchor]]
+#+end_example  
+* Yasnippet共享
+  在c mode和c++ mode下都可以使用cc mode里面的yasnippet，其方法是在 snippet/c-mode和snippet/c++-mode目录下均存在.yas-parents其内容均为cc-mode。
+  这样便省去了重复定制yasnippet。
 * 分享/评论
 #+include "../../disqus.org"
   

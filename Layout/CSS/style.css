@@ -910,7 +910,7 @@
     body #content {
         padding-top: 100px; }
     body .title {
-        margin-left: 120px;
+        /* margin-left: 120px; */
     }
 
     /* TOC inspired by http://jashkenas.github.com/coffee-script */
@@ -986,7 +986,7 @@
     /* width: 75%; */
     }
     body .title {
-        margin-left: 120px;
+        /* margin-left: 120px; */
     }
 
     #org-div-home-and-up{
@@ -1045,7 +1045,7 @@
         padding:0 0 30px 0;
         margin-top: 10px;
         margin-bottom: 10px;
-        margin-right: 7%;
+        /* margin-right: 7%; */
         color: #6C5D4F;
         text-align:center;
     }

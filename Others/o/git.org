@@ -1,5 +1,5 @@
 #+OPTIONS: ^:{} _:{} num:t toc:t \n:t
-#+include "../../template.org"
+#+include "../../template-toc.org"
 #+title: Git笔记
 
 git中文件分为4类：未追踪文件，修改文件，暂存文件，仓库文件。
@@ -7,6 +7,17 @@ git中文件分为4类：未追踪文件，修改文件，暂存文件，仓库�
 * help
   帮助，例如 git show --help(或者 git help show 或者 man git-show)可以查看所有show的option
   其中show可以替换成其它动作
+* ignore
+  一般某个项目dev过程中都会产生一些中间文件，这些文件是我们不想要追踪的。但git默认会将当前目录下所有文件追踪。于是我们可以使用.gitignore文件来忽略这些文件。
+  在需要的目录下面 添加 .gitignore文件，文件中每一行表示需要忽略的文件／目录的正则表达式（也可以把自己添加进去，即.gitignore,这样.gitignore也被忽略了）
+#+begin_example
+# 此为注释 – 将被 Git 忽略
+*.a # 忽略所有 .a 结尾的文件
+!lib.a # 但 lib.a 除外
+/TODO # 仅仅忽略项目根目录下的 TODO 文件,不包括 subdir/TODO
+build/ # 忽略 build/ 目录下的所有文件
+doc/*.txt # 会忽略 doc/notes.txt 但不包括 doc/server/arch.txt
+#+end_example
 * 颜色
   git config color.ui true 打开颜色显示
   红：表修改但add之前的状态(修改文件或者未跟踪文件)
@@ -46,18 +57,6 @@ git config --list
   -u 只查看跟踪文件，不会暂存文件，如果跟踪文件在工作目录下被删除，则这些跟踪文件被删除
 
   add一个文件后又后悔了（commit之前），可以用 git reset HEAD filename来取消对filename的add
-* ignore
-  一般某个项目dev过程中都会产生一些中间文件，这些文件是我们不想要追踪的。但git默认会将当前目录下所有文件追踪。于是我们可以使用.gitignore文件来忽略这些文件。
-  在需要的目录下面 添加 .gitignore文件，文件中每一行表示需要忽略的文件／目录的正则表达式（也可以把自己添加进去，即.gitignore,这样.gitignore也被忽略了）
-#+begin_example
-# 此为注释 – 将被 Git 忽略
-*.a # 忽略所有 .a 结尾的文件
-!lib.a # 但 lib.a 除外
-/TODO # 仅仅忽略项目根目录下的 TODO 文件,不包括 subdir/TODO
-build/ # 忽略 build/ 目录下的所有文件
-doc/*.txt # 会忽略 doc/notes.txt 但不包括 doc/server/arch.txt
-
-#+end_example
 * git rm
   git rm filename 把filename从仓库中删除
   
@@ -135,19 +134,6 @@ $ git add forgotten_file
 $ git commit --amend
 #+end_example
    forgotten_file的commit信息为initial commit
-* git checkout
-  将当前正在工作的项目roll back到最近一次保存状态，此命令慎后（毁灭刚才所做的工作）
-* git remote
-  如果项目只有一个人在用，别人不会修改，则不必理会。
-  但有多人共同开发项目时，此命令告诉git当别人在github上修改项目后可以反映到本机。
-#+begin_example
-git remote add pb git://github.com/paulboone/ticgit.git
-git remote -v
-#+end_example
-  git remote show origin
-  git remote rename from to
-  git remote rm remove_remote_name
-  
 * git show
   显示上一次commit，显示序列号作者时间和diff
 * gitk
@@ -156,34 +142,62 @@ git remote -v
   * 返回到之前某个commit状态，例如git reset --hard 8198c8f 此时git push会出错，要加--force(-f)强制选项，git push --force
   * 如果刚刚用git add filename将filename暂存后又不想把它加入暂存了，可以用git reset HEAD filename来撤消暂存。
 * git mergetool
+  参照：[[git branch]], [[git fetch]]
   多个人共同维护一个项目时，一个人push一个filename文件，另一个人也要push filename文件时会发生冲突。
   此时可以用 git mergetool来调用外部应用程序比较两个文件，由两人协商最终push哪个。
   经过比较修改后的文件再push不会冲突（github默认此结果是我们协商的结果）
 * git branch
-  git branch -a 绿色的代表本机，红色的代表github
-  git branch -b newfewature 新建一个newfeature分支，此时再用git branch -a查看可以看到新加一个newfeature，此时用ls查看当前目录，发现并没有什么变化。
-  此时可以修改代码添加新特性，再 git push origin newfeature，再用git branch -a查看可以看到github上新添加了一个remote/origin/newfeature
-  git merge newfeature 将新特性添加到master中
-  git branch -d newfeature 删除本地newfeature分支并没有删除remote上的，可以用git push origin :newfeature来删除remote上的newfeature
+  1. git branch -a 绿色的代表本机，红色的代表github
+  2. git branch newfeature等价于 git checkout -b newfeature 新建一个newfeature分支，此时再用git branch -a查看可以看到新加一个newfeature，此时用ls查看当前目录，发现并没有什么变化。
+     默认新分支的主分支是master，即git branch newfeature master，当然也可以自己指定，例如从远程仓库下载下来的仓库除了origin/master外还包包含一个origin/suffix分支（此分支的指针是不受自己控制的），你想要在此分支的进行开发，可以 git branch newfeature origin/suffix.
+  3. 此时可以修改代码添加新特性，再 git push origin newfeature，再用git branch -a查看可以看到github上新添加了一个remote/origin/newfeature
+  4. git merge newfeature 将新特性添加到master中
+  5. git branch -d newfeature 删除本地newfeature分支并没有删除remote上的，可以用git push origin :newfeature来删除remote上的newfeature，如果此分支上有没有merge的内容此时git会提示删除不成功，若要强制删除，则需要 =-d= 选项。
+  6. git branch --merge 可以用来查看已经被merge的分支，一般显示出的分支可以被删除了（已经完成其任务）。
+  7. git push origin :suffix [[git push]]有个[[push][语法]]：git push [远程仓库名] [本地分支]:[远程分支]  本地分支为空则表明在此处提取空白变成远程分支，即清空远程分支
 * git remote
+  从远程仓库上用git clone下载下来的可以理解为有两个分支origin/master和master，其中origin为远程仓库名，前者分支是不受你支配的，你所在的是master分支，当你push的时候，git会比较你的origion/master和远程仓库的是否一样，如果一样并且你有权限则可以push，如果不一样则需要用 =git fetch= 下载下来进行合并，此时的远程仓库和你的仓库里的origin/master更改为和master指向同一结点。
   * 查看当前repo有哪些远程repo，可以用git remote（至少有一个origin，表示这个repo的发起人），可以加-v来查看详细信息（将显示出其远程仓库地址，例如cho45 git://github.com/cho45/grit.git）这样可以方便地把它的repo提交到本地上来查看。
   * 添加一个远程repo：git remote add shortname address 其中shortname表示简单名字，之后再用git remote -v可以看到多了一个 shortname address的远程仓库
   * git remote show [remote-name] 查看远程repo信息
   * git remote rename name1 namw2 将远程repo的name1命名为name2
   * git remote rm remote-name 删除
 * git fetch
+  如果多个人同时向远程仓库提交则有可能后提交者与先前提交者存在冲突，因为本地origin/master指向结点和远程仓库上origin/master不一样([[git remote]])，此时后提交者要先用 =git fetch= 将前者已经提交的版本下载下来进行合并操作然后才能进行push。origin/master只有这种情况才会改变其指向。
   * 如果要抓取所有shortname有但本地没有的，可以git fetch shortname
   * 如果你本地repo是从别人那里clone来的，此命令会自动将远程仓库归于origin名下，于是可以用git fetch origin来更新本地repo的发起人的repo一致（并没有自动合并到当前本机repo中，只有等你准备好了手工合并）
 * git pull
   git fetch只是从远程repo中拉来本地repo但并不合并，git pull则与本地repo自动合并。
 * git push
+  git push [远程仓库名] [分支名]
   git push等价于git push origin master
+  建立仓库时默认仓库名是origin，默认分支名是master
+#<<push>>  
+  git push origin A:B 意思是发送本地仓库的分支A到远程仓库的分支B，git push origin A默认的操作是展开A为A:A即默认本地仓库的远程仓库分支名一致。
 * git tag
   查看所有标签，或git tag v1.4查看v1.4标签的详细信息。
   * 添加轻量级标签（lightweight）：指向一个特定提交对象的引用 使用-l选项
   * 添加含附注的标签（annotated）：包含更加详细的信息 使用-a选项，后面可以用-m来指定说明
 * git diff
   查看没有暂存的改动，如果暂存后立即用git diff则看不到差异。
+  1. =git diff master^= 查看上次提交与本次的差异
+  2. =git diff= 查看当前目录与暂存库的差异 ，即git add前与后的差异
+  3. =git diff --cached= 查看暂存库与仓库文件的差异，即git commit前与后的差异。
+* git rebase
+  =git rebase branch2= 将当前分支HEAD指针指向branch2后一个结点。
+  和进行merge操作结果是完全一样，只是提交历史不同。衍合是按照每行的修改次序重演一遍修改,而合并是把最终结果合在一起。
+  会产生新的历史记录，使提交历史显得更整洁。
+  但 *一旦分支中的提交对象发布到公共仓库,就千万不要对该分支进行衍合操作。*
+  把衍合当成一种在推送之前清理提交历史的手段,而且仅仅衍合那些尚未公开的提交对象,就没问题。如果衍合那些已经公开的提交对象,并且已经有人基于这些提交对象开展 了后续开发工作的话,就会出现叫人沮丧的麻烦。 
+#+begin_html
+<link rel="stylesheet" href="../../Layout/CSS/jquery.lightbox-0.5.css" type="text/css" media="screen" />
+<script type="text/javascript" src="../../Layout/JS/jquery.lightbox-0.5.js"></script>
+<center> <a class="lightbox" href="./image/rebase.png"> <img class="lightbox " title="jQuery.lightbox" src="./image/rebase.png" width="300"> </a> </center>
+<script type="text/javascript"> $(function() {$('a.lightbox').lightBox();}); </script>
+#+end_html  
+* fast forward
+  如果顺着一个分支走下去可以到达另一个分支的话,那么 Git 在合并两者时,只会简单地把指针右移,因为这种单线的历史分支不存在任何需要解决的分歧,所以这种合并过程可以 称为快进(Fast forward)。
+
 * tricks
 ** git中永久删除一个文件
   git rm filename可以从repo中删除一个文件，但仍旧可以其库存历史将其恢复
@@ -236,8 +250,5 @@ $ git gc
 $ du -hs  
  84K    .  
 #+end_example
-#+BEGIN_HTML
-<script src="../../Layout/JS/disqus-comment.js"></script>
-<div id="disqus_thread">
-</div>
-#+END_HTML
+* 分享评论
+#+include "../../disqus.org"

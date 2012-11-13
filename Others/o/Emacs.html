@@ -7,7 +7,7 @@
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
 <meta name="title" content="Emacs Trick"/>
 <meta name="generator" content="Org-mode"/>
-<meta name="generated" content="2012-11-07 19:34:36 CST"/>
+<meta name="generated" content="2012-11-12 05:10:54 CST"/>
 <meta name="author" content="visayafan"/>
 <meta name="description" content=""/>
 <meta name="keywords" content=""/>
@@ -63,6 +63,7 @@
 
 
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"> </script>
+<link rel="stylesheet" type="text/css" href="../../Layout/CSS/bootstrap.min.css" />
 <link rel="stylesheet" type="text/css" href="../../Layout/CSS/too_many_toc.css" />
 <script src="../../Layout/JS/bootstrap_old.js"></script>
 
@@ -107,7 +108,11 @@
 <li><a href="#sec-23">23 org-mode导出HTML目录显示“目录”而非默认的Table Of Content</a></li>
 <li><a href="#sec-24">24 org-mode导出PDF目录显示“目录”而非默认的Contents</a></li>
 <li><a href="#sec-25">25 org-mode的表格中输入|</a></li>
-<li><a href="#sec-26">26 分享/评论</a></li>
+<li><a href="#sec-26">26 Emacs中使用输入法</a></li>
+<li><a href="#sec-27">27 乱码</a></li>
+<li><a href="#sec-28">28 Org Mode HTML导出时内部链接</a></li>
+<li><a href="#sec-29">29 Yasnippet共享</a></li>
+<li><a href="#sec-30">30 分享/评论</a></li>
 </ul>
 </div>
 </div>
@@ -661,10 +666,98 @@ d<script type="text/javascript"> $(function() {$('a.lightbox').lightBox();}); </
 </div>
 
 <div id="outline-container-26" class="outline-2">
-<h2 id="sec-26"><span class="section-number-2">26</span> 分享/评论</h2>
+<h2 id="sec-26"><span class="section-number-2">26</span> Emacs中使用输入法</h2>
 <div class="outline-text-2" id="text-26">
 
+<p>  可以 <code>M-x customize-variable RET default-input-method</code> 来指定默认的输入法，例如 <code>chinese-pinyin</code> 。<br/>
+  默认是 <code>C-\</code> 来调用。<br/>
+  下面是五笔的配置，参考<a href="http://daiyuwen.freeshell.org/gb/wubi/wubi.html">http://daiyuwen.freeshell.org/gb/wubi/wubi.html</a><br/>
+  这里设置的 <code>M-Space</code> 来调用。<br/>
+</p>
 
+
+<pre class="src src-lisp">(add-to-list 'load-path <span style="color: #8b2252;">"~/.emacs.d/wubi"</span>)
+(<span style="color: #a020f0;">require</span> '<span style="color: #008b8b;">wubi</span>)
+(wubi-load-local-phrases) <span style="color: #b22222;">; </span><span style="color: #b22222;">add user's Wubi phrases</span>
+(register-input-method
+ <span style="color: #8b2252;">"chinese-wubi"</span> <span style="color: #8b2252;">"Chinese-GB"</span> 'quail-use-package
+ <span style="color: #8b2252;">"WuBi"</span> <span style="color: #8b2252;">"WuBi"</span>
+ <span style="color: #8b2252;">"wubi"</span>)
+(setq default-input-method <span style="color: #8b2252;">"chinese-wubi"</span>)
+(global-set-key [?\M- ] 'toggle-input-method)
+</pre>
+
+<p>
+  这样不管机器上有没有中文输入法，只要有Emacs就可以工作。<br/>
+</p></div>
+
+</div>
+
+<div id="outline-container-27" class="outline-2">
+<h2 id="sec-27"><span class="section-number-2">27</span> 乱码</h2>
+<div class="outline-text-2" id="text-27">
+
+<p>  可以 <code>C-x RET r TAB</code> 来选择编码。<br/>
+  中文乱码可以在.emacs中加入以下代码：<br/>
+</p>
+
+
+<pre class="src src-lisp">(prefer-coding-system 'utf-8)
+(prefer-coding-system 'gb18030)
+</pre>
+
+<p>
+  或：<br/>
+</p>
+
+
+<pre class="src src-lisp">(prefer-coding-system 'utf-8)
+(prefer-coding-system 'chinese-gbk)
+</pre>
+
+</div>
+
+</div>
+
+<div id="outline-container-28" class="outline-2">
+<h2 id="sec-28"><span class="section-number-2">28</span> Org Mode HTML导出时内部链接</h2>
+<div class="outline-text-2" id="text-28">
+
+<p>  在一篇文章中建立内部链接很简单，添加anchor，<br/>
+</p>
+
+
+<pre class="example">#&lt;&lt;anchor&gt;&gt;
+</pre>
+
+<p>
+  在想要链接到上面的地主添加链接即可:<br/>
+</p>
+
+
+<pre class="example">[[anchor]]
+</pre>
+
+</div>
+
+</div>
+
+<div id="outline-container-29" class="outline-2">
+<h2 id="sec-29"><span class="section-number-2">29</span> Yasnippet共享</h2>
+<div class="outline-text-2" id="text-29">
+
+<p>  在c mode和c++ mode下都可以使用cc mode里面的yasnippet，其方法是在 snippet/c-mode和snippet/c++-mode目录下均存在.yas-parents其内容均为cc-mode。<br/>
+  这样便省去了重复定制yasnippet。<br/>
+</p></div>
+
+</div>
+
+<div id="outline-container-30" class="outline-2">
+<h2 id="sec-30"><span class="section-number-2">30</span> 分享/评论</h2>
+<div class="outline-text-2" id="text-30">
+
+
+<a class="btn" href="Emacs.org">查看Org源文件</a>
 <a class="bshareDiv" href="http://www.bshare.cn/share">分享按钮</a><script type="text/javascript" charset="utf-8" src="http://static.bshare.cn/b/buttonLite.js#uuid=&amp;style=10&amp;bgcolor=Blue"></script>
 <br/>
 <script src="../../Layout/JS/disqus-comment.js"></script>

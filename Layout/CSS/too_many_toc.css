@@ -884,7 +884,7 @@
     body #content {
         padding-top: 100px; }
     body .title {
-        margin-left: 120px;
+        /* margin-left: 120px; */
     }
 
 
@@ -932,7 +932,7 @@
     /* width: 75%; */
     }
     body .title {
-        margin-left: 120px;
+        /* margin-left: 120px; */
     }
 
     #org-div-home-and-up{
