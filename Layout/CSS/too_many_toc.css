@@ -902,7 +902,7 @@
 {
     #table-of-contents {
         float: right;
-        border: 1px solid #CCC;
+        /* border: 1px solid #CCC; */
         max-width: 50%;
         overflow: auto;
     }

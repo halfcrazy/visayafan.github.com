@@ -1,0 +1,305 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+               "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-CN" xml:lang="zh-CN">
+<head>
+<title>Elisp笔记</title>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
+<meta name="title" content="Elisp笔记"/>
+<meta name="generator" content="Org-mode"/>
+<meta name="generated" content="2012-11-17 00:44:21 CST"/>
+<meta name="author" content="visayafan"/>
+<meta name="description" content=""/>
+<meta name="keywords" content=""/>
+
+
+
+</head>
+<body>
+
+
+<div id="content">
+<h1 class="title">Elisp笔记</h1>
+
+
+<!-- <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"> </script> -->
+<link rel="stylesheet" type="text/css" href="../../Layout/CSS/bootstrap.min.css" />
+<link rel="stylesheet" type="text/css" href="../../Layout/CSS/too_many_toc.css" />
+<script src="../../Layout/JS/jquery_1.7.1.js"></script>
+<script src="../../Layout/JS/bootstrap_old.js"></script>
+
+
+
+<div id="table-of-contents">
+<h2>目录</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#sec-1">1 函数</a>
+<ul>
+<li><a href="#sec-1-1">1.1 cond</a></li>
+<li><a href="#sec-1-2">1.2 eql</a></li>
+<li><a href="#sec-1-3">1.3 eval-when-compile</a></li>
+<li><a href="#sec-1-4">1.4 eval-last-sexp</a></li>
+</ul>
+</li>
+<li><a href="#sec-2">2 字符串函数</a></li>
+<li><a href="#sec-3">3 cons cell, list</a></li>
+<li><a href="#sec-4">4 分享/评论</a></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-1" class="outline-2">
+<h2 id="sec-1"><span class="section-number-2">1</span> 函数</h2>
+<div class="outline-text-2" id="text-1">
+
+
+</div>
+
+<div id="outline-container-1-1" class="outline-3">
+<h3 id="sec-1-1"><span class="section-number-3">1.1</span> cond</h3>
+<div class="outline-text-3" id="text-1-1">
+
+<p>   (cond CLAUSES) 尝试每个语句直到成功<br/>
+   CLAUSES是一组类似 (CONDITION body) 的语句，CONDITION判断真假，如果为真则body被执行<br/>
+</p></div>
+
+</div>
+
+<div id="outline-container-1-2" class="outline-3">
+<h3 id="sec-1-2"><span class="section-number-3">1.2</span> eql</h3>
+<div class="outline-text-3" id="text-1-2">
+
+<p>   不仅测试值是否相同还测试类型是否一致，=只测试值是否相同<br/>
+</p></div>
+
+</div>
+
+<div id="outline-container-1-3" class="outline-3">
+<h3 id="sec-1-3"><span class="section-number-3">1.3</span> eval-when-compile</h3>
+<div class="outline-text-3" id="text-1-3">
+
+
+
+
+<pre class="src src-lisp"><span style="color: #b22222;">; </span><span style="color: #b22222;">&#24403;&#32534;&#35793;&#30340;&#26102;&#20505;&#21152;&#36733;common lisp&#24211;</span>
+(<span style="color: #a020f0;">eval-when-compile</span>
+        (<span style="color: #a020f0;">require</span> '<span style="color: #008b8b;">cl</span>))
+</pre>
+
+</div>
+
+</div>
+
+<div id="outline-container-1-4" class="outline-3">
+<h3 id="sec-1-4"><span class="section-number-3">1.4</span> eval-last-sexp</h3>
+<div class="outline-text-3" id="text-1-4">
+
+<p>   执行当前点前的语句在minubuffer中输出结果，绑定C-x C-e<br/>
+</p></div>
+</div>
+
+</div>
+
+<div id="outline-container-2" class="outline-2">
+<h2 id="sec-2"><span class="section-number-2">2</span> 字符串函数</h2>
+<div class="outline-text-2" id="text-2">
+
+
+
+
+<pre class="src src-lisp">(stringp OBJECT)                               &#27979;&#35797;&#26159;&#21542;&#26159;&#23383;&#31526;&#20018;
+(string-or-null-p OBJECT)                      &#19968;&#20010;&#23383;&#31526;&#25110;nil
+(char-or-string-p OBJECT)                      &#23383;&#31526;&#20018;&#25110;&#19968;&#20010;&#23383;&#31526;
+(make-string LENGTH INIT)                      LENGTH&#20010;ASCII&#20026;INIT&#30340;&#23383;&#31526;
+(string <span style="color: #228b22;">&amp;rest</span> CHARACTERS)                      &#36830;&#25509;&#21442;&#25968;&#20013;&#25152;&#26377;&#23383;&#31526;
+(substring STRING FROM <span style="color: #228b22;">&amp;optional</span> TO)           STRING&#20013;&#19979;&#26631;&#20174;FROM&#21040;TO&#20043;&#38388;&#30340;&#23383;&#31526;&#20018;&#65292;&#19979;&#26631;&#20174;0&#24320;&#22987;&#65292;&#24038;&#38381;&#21491;&#24320;
+(char-equal C1 C2)                             &#23383;&#31526;&#27604;&#36739;&#65292;&#22914;&#26524;case-fold-search&#20026;t&#21017;&#24573;&#30053;&#22823;&#23567;&#20889;
+(string= S1 S2) (string-equal S1 S2)           &#23383;&#31526;&#20018;&#21028;&#26029;&#26159;&#21542;&#30456;&#21516;
+(string&lt; S1 S2) (string-less S1 S2)            &#23383;&#31526;&#20018;&#21028;&#26029;S1&#26159;&#21542;&#23567;&#20110;S2
+(string-to-char STRING) (char-to-string CHAR)  &#23383;&#31526;&#20018;&#19982;&#23383;&#31526;&#36827;&#34892;&#36716;&#25442;
+(number-to-string NUMBER)
+(string-to-number STRING <span style="color: #228b22;">&amp;optional</span> BASE)       &#25968;&#23383;&#19982;&#23383;&#31526;&#20018;&#30340;&#36716;&#25442;
+(format STRING <span style="color: #228b22;">&amp;rest</span> OBJECTS)                  &#23558;OBJECTS&#23545;&#35937;&#36716;&#25442;&#25104;STRING&#26684;&#24335;&#30340;&#23383;&#31526;&#20018;
+(concat <span style="color: #228b22;">&amp;rest</span> SEQUENCES)                       &#23558;&#19968;&#20010;&#30001;&#23383;&#31526;&#26500;&#25104;&#30340;&#21015;&#34920;&#25110;&#21521;&#37327;&#36716;&#25442;&#25104;&#23383;&#31526;&#20018;
+(vconcat <span style="color: #228b22;">&amp;rest</span> SEQUENCES)                      &#36830;&#25509;&#25152;&#26377;&#21442;&#25968;&#32452;&#25104;&#21521;&#37327;
+(append <span style="color: #228b22;">&amp;rest</span> SEQUENCES)                       &#36830;&#25509;&#25152;&#26377;&#21442;&#25968;&#32452;&#25104;&#21015;&#34920;
+(downcase OBJ) (upcase OBJ)                    &#22823;&#23567;&#20889;&#36716;&#25442;
+(capitalize OBJ)                               &#23383;&#31526;&#20018;&#20013;&#27599;&#20010;&#21333;&#35789;&#31532;&#19968;&#20010;&#23383;&#31526;&#22823;&#20889;&#65292;&#20854;&#20313;&#23567;&#20889;
+(upcase-initials OBJ)                          &#23383;&#31526;&#20018;&#20013;&#27599;&#20010;&#21333;&#35789;&#31532;&#19968;&#20010;&#23383;&#31526;&#22823;&#20889;&#65292;&#20854;&#20313;&#19981;&#21464;
+(string-match REGEXP STRING <span style="color: #228b22;">&amp;optional</span> START)   &#23383;&#31526;&#20018;&#21305;&#37197;
+(match-data <span style="color: #228b22;">&amp;optional</span> INTEGERS REUSE RESEAT)
+(match-beginning SUBEXP)
+(match-end SUBEXP)                             match-data&#36820;&#22238;&#20540;&#20013;&#31532;1&#65292;2&#20010;&#34920;&#21305;&#37197;&#21040;&#30340;&#20301;&#32622;&#65292;&#20043;&#21518;&#34920;&#31034;&#25429;&#25417;&#21040;&#30340;&#23383;&#31526;&#20018;&#30340;&#20301;&#32622;&#65292;&#20998;&#21035;&#23545;&#24212;&#19968;&#20010;match-beginning&#21644;match-end&#20013;&#30340;
+</pre>
+
+
+<pre class="src src-lisp">(<span style="color: #a020f0;">progn</span>
+  (string-match <span style="color: #8b2252;">"12</span><span style="color: #8b2252; font-weight: bold;">\\</span><span style="color: #8b2252; font-weight: bold;">(</span><span style="color: #8b2252;">34</span><span style="color: #8b2252; font-weight: bold;">\\</span><span style="color: #8b2252; font-weight: bold;">)</span><span style="color: #8b2252;">"</span> <span style="color: #8b2252;">"01234567"</span>)
+  (match-data)                          <span style="color: #b22222;">;</span><span style="color: #b22222;">(1 5 3 5)</span>
+  (match-beginning 0)                   <span style="color: #b22222;">;</span><span style="color: #b22222;">1</span>
+  (match-beginning 1)                   <span style="color: #b22222;">;</span><span style="color: #b22222;">3</span>
+  (match-end 0)                         <span style="color: #b22222;">;</span><span style="color: #b22222;">5</span>
+  (match-end 1)                         <span style="color: #b22222;">;</span><span style="color: #b22222;">5</span>
+)
+</pre>
+
+
+<pre class="src src-lisp">(replace-match NEWTEXT <span style="color: #228b22;">&amp;optional</span> FIXEDCASE LITERAL STRING SUBEXP) &#21482;&#26367;&#25442;&#19968;&#20010;
+(replace-regexp-in-string REGEXP REP STRING <span style="color: #228b22;">&amp;optional</span> FIXEDCASE LITERAL SUBEXP START) &#26367;&#25442;&#25152;&#26377;&#21305;&#37197;
+(subst-char-in-string FROMCHAR TOCHAR STRING <span style="color: #228b22;">&amp;optional</span> INPLACE) &#23383;&#31526;&#26367;&#25442;
+(princ OBJECT <span style="color: #228b22;">&amp;optional</span> PRINTCHARFUN) &#25171;&#21360;
+(regexp-quote STRING) &#36820;&#22238;&#19968;&#20010;REGXP&#23383;&#31526;&#20018;&#20854;&#20869;&#23481;&#19982;STRING&#20869;&#23481;&#23436;&#20840;&#30456;&#21516;
+</pre>
+
+
+<pre class="src src-lisp">(concat [?a ?b])
+(concat '(?a ?b))
+</pre>
+
+<p>
+   可以自定义判断字符串是否为空的函数：<br/>
+</p>
+
+
+<pre class="src src-lisp">(<span style="color: #a020f0;">defun</span> <span style="color: #0000ff;">string-empty-p</span> (str)
+  (not (string&lt; <span style="color: #8b2252;">""</span> str)))
+</pre>
+
+</div>
+
+</div>
+
+<div id="outline-container-3" class="outline-2">
+<h2 id="sec-3"><span class="section-number-2">3</span> cons cell, list</h2>
+<div class="outline-text-2" id="text-3">
+
+<p>  两个有序元素，第1个为CAR，第2个为CDR<br/>
+  要用eval-last-sexp执行conscell则类似(1 . 2)必须写成'(1 . 2)或(quote(1 . 2))，eval-last-sexp其实包含了两个步骤,一是读一个S-表达式,是对读的S-表达式值。这样果读的S-表达式是一个conscell的话,值时会把这个conscell的第一个元素为一个函数来调用。事实,这例的第一个元素都不是一个函数,这样就会产生一个错误invalid-function。之所以有遇到这个问题,那是因为数和串是一类特殊的S-表达式,它值后和值是不变,称为值表达式(self-evaluatingform)’号其实是一个特殊的函数quote,它的用是将它的参数回不。值。’(1 . 2)等价于(quote(1 . 2))。<br/>
+  (1 2 3) 是 (1 . (2 . (3 . nil))) 的缩写<br/>
+  (1 2 . 3) 是 (1. (2 . 3)) 的缩写<br/>
+</p>
+
+
+<pre class="src src-lisp">(consp OBJECT)            &#27979;&#35797;&#26159;&#21542;&#26159;cons cell&#31867;&#22411;
+(listp OBJECT)            &#27979;&#35797;&#26159;&#21542;&#26159;&#21015;&#34920;&#65292;nil&#20063;&#26159;&#21015;&#34920;&#65292;&#38750;&#30495;&#21015;&#34920;
+(null OBJECT)             &#24403;OBJECT&#26159;nil&#26102;&#36820;&#22238;&#30495;
+(cons CAR CDR)            &#26500;&#36896;&#19968;&#20010;cons cell
+(list <span style="color: #228b22;">&amp;rest</span> OBJECTS)      &#29983;&#25104;&#19968;&#20010;&#21015;&#34920;
+(pop PLACE)
+(push X PLACE)            &#22312;&#21015;&#34920;&#22836;&#37096;&#25554;&#20837;X&#65292;&#21407;&#22320;&#20462;&#25913;
+(append <span style="color: #228b22;">&amp;rest</span> SEQUENCES)  &#25226;&#31532;&#19968;&#20010;&#21442;&#25968;&#26368;&#21518;&#19968;&#20010;&#21015;&#34920;&#30340;nil&#25442;&#25104;&#31532;&#20108;&#20010;&#21442;&#25968;&#65306;
+</pre>
+
+
+<pre class="src src-lisp">(append '(a b) '(c))
+</pre>
+
+<p>
+  '(a b)即(a . (b . nil))把nil换成 '(c) 即 (c . nil) 即结果为 (a . (b . (c . nil)))即(a b c)<br/>
+</p>
+
+
+<pre class="src src-lisp">(append '(a b) 'c)
+</pre>
+
+<p>
+  同理把nil替换成第二个参数结果为(a . (b . c))缩写为(a b . c)<br/>
+  不可以对(a b . c)进行append操作，因为最后一个列表中没有nil<br/>
+  同理：<br/>
+</p>
+
+
+<pre class="src src-lisp">(append [a b] <span style="color: #8b2252;">"cd"</span>)                     <span style="color: #b22222;">;</span><span style="color: #b22222;">(a b . "cd")</span>
+(append [a b] <span style="color: #8b2252;">"cd"</span> nil)                 <span style="color: #b22222;">;</span><span style="color: #b22222;">(a b c d)</span>
+</pre>
+
+
+<pre class="src src-lisp">(nth N LIST)            &#21015;&#34920;&#31532;N&#20010;&#20803;&#32032;
+(nthcdr N LIST)         CDR&#20989;&#25968;&#25191;&#34892;N&#27425;&#65288;&#21363;&#19968;&#20010;&#21015;&#34920;&#20174;N&#20010;&#20803;&#32032;&#24320;&#22987;&#20043;&#21518;&#30340;&#20803;&#32032;&#65292;&#21253;&#25324;&#31532;N&#20010;&#20803;&#32032;&#65289;
+(last LIST <span style="color: #228b22;">&amp;optional</span> N) &#36820;&#22238;&#21015;&#34920;&#26368;&#21518;N&#20010;&#20803;&#32032;&#65292;&#40664;&#35748;&#20026;&#26368;&#21518;&#19968;&#20010;&#20803;&#32032;
+(butlast LIST <span style="color: #228b22;">&amp;optional</span> N) &#21015;&#34920;LIST&#21435;&#25481;&#26368;&#21518;N&#20010;&#20803;&#32032;&#21518;&#30340;&#21015;&#34920;
+(length SEQUENCE)       &#36820;&#22238;&#19968;&#20010;&#24207;&#21015;&#30340;&#38271;&#24230;
+(setcar CELL NEWCAR)
+(setcdr CELL NEWCDR)    &#35774;&#32622;&#26032;&#30340;CAR&#65292;CDR
+(reverse LIST)          &#36870;&#36716;LIST&#65292;&#38750;&#21407;&#22320;
+(nreverse LIST)         &#36870;&#36716;LIST&#65292;&#21407;&#22320;&#65288;&#23558;&#38142;&#34920;&#37324;&#25351;&#38024;&#36870;&#21516;&#65292;&#25152;&#20197;&#21407;&#26469;&#20195;&#34920;&#25972;&#20010;&#38142;&#34920;&#30340;&#25351;&#21521;&#22836;&#32467;&#28857;&#30340;&#25351;&#38024;&#25351;&#21521;&#26368;&#21518;&#19968;&#20010;&#32467;&#28857;&#65289;
+(sort LIST PREDICATE)   &#25490;&#24207;&#65292;&#21407;&#22320;
+(copy-sequence ARG)     &#36820;&#22238;ARG&#30340;&#19968;&#20010;&#25335;&#36125;
+(delete-dups LIST)      &#21024;&#38500;&#37325;&#22797;&#20803;&#32032;&#65292;&#21482;&#20445;&#30041;&#31532;&#19968;&#20010;&#36935;&#21040;&#30340;
+</pre>
+
+<p>
+  eq与equal的区别：前者为真的情况有两个：1 数字或数字变量且值相同 2 对于字符串，列表，向量必须有相同的内容，即一个修改会反映到另一个上（有例外：(eq "" "")为真是因为elisp为了节省空间把所有的空串保存在同一空间）。后者则为普通的比较相同，不考虑其文本属性。<br/>
+</p>
+
+
+<pre class="src src-lisp">(delq ELT LIST)
+(delete ELT SEQ)        &#21024;&#38500;&#19968;&#20010;&#20803;&#32032;&#65292;&#36820;&#22238;&#21024;&#38500;&#21518;&#30340;&#21015;&#34920;&#22797;&#26412;&#65292;&#26377;&#21487;&#33021;&#21407;&#22320;&#21024;&#38500;&#20063;&#26377;&#21487;&#33021;&#38750;&#21407;&#22320;&#65292;&#21069;&#32773;&#23545;&#23601;eq,&#21518;&#32773;&#23545;&#24212;equal
+(remq ELT LIST)
+(remove ELT SEQ)        &#38750;&#21407;&#22320;&#21024;&#38500;&#19968;&#20010;&#20803;&#32032;&#65292;&#36820;&#22238;&#21024;&#38500;&#21518;&#21015;&#34920;&#22797;&#26412;&#65292;&#21069;&#32773;&#23545;&#23601;eq,&#21518;&#32773;&#23545;&#24212;equal
+(memq ELT LIST)
+(member ELT LIST)       &#27979;&#35797;&#19968;&#20010;&#20803;&#32032;&#26159;&#21542;&#22312;&#21015;&#34920;&#20013;&#65292;&#21069;&#32773;&#23545;&#23601;eq,&#21518;&#32773;&#23545;&#24212;equal
+</pre>
+
+<p>
+  用cons实现关联列表（association list），car对应key, cdr对应value,通过car取cdr:比较函数assp,assoc前者对应eq后者对应equal<br/>
+</p>
+
+
+<pre class="src src-lisp">(cdr (assoc <span style="color: #8b2252;">"a"</span> '((<span style="color: #8b2252;">"a"</span> 97) (<span style="color: #8b2252;">"b"</span> 98))))
+&#20108;&#32773;&#31561;&#20215;
+(assoc-default <span style="color: #8b2252;">"a"</span> '((<span style="color: #8b2252;">"a"</span> 97) (<span style="color: #8b2252;">"b"</span> 98)))
+</pre>
+
+<p>
+  通过cdr取car: rassp,rassoc<br/>
+</p>
+
+
+<pre class="src src-lisp">(mapc FUNCTION SEQUENCE)
+(mapcar FUNCTION SEQUENCE)      &#23558;FUNCTION&#24212;&#29992;&#22312;SEQUENCE&#27599;&#20010;&#20803;&#32032;&#19978;&#65292;&#21306;&#21035;&#22312;&#20110;&#65306;&#21069;&#32773;&#36820;&#22238;&#20462;&#25913;&#21069;&#21518;&#24207;&#21015;&#32780;&#21518;&#32773;&#36820;&#22238;&#20462;&#25913;&#21518;&#30340;&#24207;&#21015;&#65292;&#37117;&#26159;&#21407;&#22320;&#20462;&#25913;&#12290;
+(<span style="color: #a020f0;">dolist</span> (VAR LIST [RESULT]) BODY...) &#36941;&#21382;&#21015;&#34920;&#65292;&#20854;&#20013;VAR&#20805;&#24403;&#20020;&#26102;&#21464;&#37327;&#35760;&#24405;&#27599;&#27425;&#36941;&#21382;&#26102;LIST&#23545;&#24212;&#30340;&#20803;&#32032;&#65292;&#22914;&#26524;RESULT&#20026;&#31354;&#21017;&#36820;&#22238;&#20540;&#20026;nil&#65292;&#21542;&#21017;&#36820;&#22238;&#20540;&#20026;RESULT
+
+(<span style="color: #a020f0;">dolist</span> (var '(1 2 3))
+  (1+ var)
+  )                             <span style="color: #b22222;">;</span><span style="color: #b22222;">nil</span>
+(setq result nil)
+(<span style="color: #a020f0;">dolist</span> (var '(1 2 3) result)
+  (push (1+ var) result)
+  )                             <span style="color: #b22222;">;</span><span style="color: #b22222;">(4 3 2)</span>
+
+(number-sequence FROM <span style="color: #228b22;">&amp;optional</span> TO INC) &#29992;&#26469;&#20135;&#29983;&#19968;&#20010;&#25968;&#21015;
+(split-string STRING <span style="color: #228b22;">&amp;optional</span> SEPARATORS OMIT-NULLS) &#29992;SEPARATORS&#26469;&#20998;&#38548;STRING&#65292;&#40664;&#35748;&#20998;&#38548;&#31526;&#20026;split-string-default-separators&#65292;&#22914;&#26524;OMIT-NULL&#20026;t&#21017;&#32467;&#26524;&#20013;&#24573;&#30053;&#25481;&#31354;&#20018;,&#22914;&#26524;&#20998;&#38548;&#31526;&#20026;&#31354;&#20018;&#21017;&#20998;&#38548;STRISNG&#20013;&#27599;&#20010;&#23383;&#31526;&#65288;&#27492;&#26102;OMIT-NULLS&#19968;&#33324;&#20026;t&#65289;
+
+(split-string <span style="color: #8b2252;">"Soup is good food"</span> <span style="color: #8b2252;">"o"</span>)
+&#8658; (<span style="color: #8b2252;">"S"</span> <span style="color: #8b2252;">"up is g"</span> <span style="color: #8b2252;">""</span> <span style="color: #8b2252;">"d f"</span> <span style="color: #8b2252;">""</span> <span style="color: #8b2252;">"d"</span>)
+(split-string <span style="color: #8b2252;">"Soup is good food"</span> <span style="color: #8b2252;">"o"</span> t)
+&#8658; (<span style="color: #8b2252;">"S"</span> <span style="color: #8b2252;">"up is g"</span> <span style="color: #8b2252;">"d f"</span> <span style="color: #8b2252;">"d"</span>)
+
+(mapconcat FUNCTION SEQUENCE SEPARATOR) &#23545;SEQUENCE&#20013;&#27599;&#20010;&#20803;&#32032;&#25191;&#34892;&#20989;&#25968;FUNCTION&#24182;&#20803;&#32032;&#20043;&#38388;&#29992;SEPERATOR&#36830;&#25509;&#36215;&#26469;&#65292;&#22914;&#26524;&#19981;&#38656;&#35201;&#23545;&#24207;&#21015;&#20013;&#30340;&#20803;&#32032;&#36827;&#34892;&#22788;&#29702;&#21487;&#20197;&#29992;&#20989;&#25968; identity
+(identity ARG) &#25509;&#21463;&#21442;&#25968;ARG&#24182;&#19981;&#21464;&#22320;&#36820;&#22238;
+</pre>
+
+</div>
+
+</div>
+
+<div id="outline-container-4" class="outline-2">
+<h2 id="sec-4"><span class="section-number-2">4</span> 分享/评论</h2>
+<div class="outline-text-2" id="text-4">
+
+
+<a class="btn btn-primary" href="https://raw.github.com/visayafan/visayafan.github.com/master/Others/o/Elisp.org">查看Org源码</a>
+<a class="bshareDiv" href="http://www.bshare.cn/share">分享按钮</a><script type="text/javascript" charset="utf-8" src="http://static.bshare.cn/b/buttonLite.js#uuid=&amp;style=10&amp;bgcolor=Blue"></script>
+<br/>
+<script src="../../Layout/JS/disqus-comment.js"></script>
+<div id="disqus_thread">
+</div>
+
+</div>
+</div>
+</div>
+
+</body>
+</html>

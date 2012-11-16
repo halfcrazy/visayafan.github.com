@@ -7,7 +7,7 @@
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
 <meta name="title" content="Emacs Trick"/>
 <meta name="generator" content="Org-mode"/>
-<meta name="generated" content="2012-11-12 05:10:54 CST"/>
+<meta name="generated" content="2012-11-16 02:22:21 中国标准时间"/>
 <meta name="author" content="visayafan"/>
 <meta name="description" content=""/>
 <meta name="keywords" content=""/>
@@ -62,9 +62,10 @@
 <h1 class="title">Emacs Trick</h1>
 
 
-<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"> </script>
+<!-- <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"> </script> -->
 <link rel="stylesheet" type="text/css" href="../../Layout/CSS/bootstrap.min.css" />
 <link rel="stylesheet" type="text/css" href="../../Layout/CSS/too_many_toc.css" />
+<script src="../../Layout/JS/jquery_1.7.1.js"></script>
 <script src="../../Layout/JS/bootstrap_old.js"></script>
 
 
@@ -112,7 +113,8 @@
 <li><a href="#sec-27">27 乱码</a></li>
 <li><a href="#sec-28">28 Org Mode HTML导出时内部链接</a></li>
 <li><a href="#sec-29">29 Yasnippet共享</a></li>
-<li><a href="#sec-30">30 分享/评论</a></li>
+<li><a href="#sec-30">30 Yasnippet中使用elisp制定模板</a></li>
+<li><a href="#sec-31">31 分享/评论</a></li>
 </ul>
 </div>
 </div>
@@ -747,26 +749,55 @@ d<script type="text/javascript"> $(function() {$('a.lightbox').lightBox();}); </
 <div class="outline-text-2" id="text-29">
 
 <p>  在c mode和c++ mode下都可以使用cc mode里面的yasnippet，其方法是在 snippet/c-mode和snippet/c++-mode目录下均存在.yas-parents其内容均为cc-mode。<br/>
-  这样便省去了重复定制yasnippet。<br/>
+这样便省去了重复定制yasnippet。<br/>
 </p></div>
 
 </div>
 
 <div id="outline-container-30" class="outline-2">
-<h2 id="sec-30"><span class="section-number-2">30</span> 分享/评论</h2>
+<h2 id="sec-30"><span class="section-number-2">30</span> Yasnippet中使用elisp制定模板</h2>
 <div class="outline-text-2" id="text-30">
 
+<p>  yasnippet模板中``之间的elisp语句会被编译后替代原来代码，我每次写文章时打开一个org mode的新buffer时，首先要在文件头部包含一些相同的内容，例如：#+include "../../template.org" 其中../../template.org包含一些CSS控制文件，这些内容是固定不变的，所以直接写在yasnippet模板里就可以，但有些东西，例如标题，是与当前文件有关的，此时可以用elisp来实现动态插入标题：<br/>
+</p><pre class="example">
+# -*- mode: snippet -*-
+# name: template
+# --
+#+OPTIONS: ^:{} _:{} num:t toc:t \n:t
+#+include "../../template.org"
+#+title:`(replace-regexp-in-string "\.org" "" (file-name-nondirectory (buffer-file-name (window-buffer (minibuffer-selected-window)))))`$0
+</pre>
 
-<a class="btn" href="Emacs.org">查看Org源文件</a>
+<p>  还可以写得更复杂一些，例如：我在文章最下面的查看Org源码button：<br/>
+</p><pre class="example">
+#+html:&lt;a class="btn btn-primary" href="`(funcall (lambda (filepath)
+           (if (eq system-type 'gnu/linux)
+               (if (string-match "Dropbox" filepath)
+                   (replace-regexp-in-string "/home/visayafan/Dropbox/visayafan\.github\.com" "https://raw.github.com/visayafan/visayafan.github.com/master" filepath)
+                 (replace-regexp-in-string "/home/visayafan/visayafan\.github\.com" "https://raw.github.com/visayafan/visayafan.github.com/master" filepath))
+             (replace-regexp-in-string "D:/Dropbox/visayafan\.github\.com" "https://raw.github.com/visayafan/visayafan.github.com/master" filepath)
+             ))
+         (buffer-file-name (window-buffer (minibuffer-selected-window))))`"&gt;查看Org源码&lt;/a&gt;
+</pre>
+
+<p>  由于我在linux和windows下博客路径不同，所以其中有个判断语句；然后替换掉路径中的部分内容使其成为github上的链接。<br/>
+</p></div>
+
+</div>
+
+<div id="outline-container-31" class="outline-2">
+<h2 id="sec-31"><span class="section-number-2">31</span> 分享/评论</h2>
+<div class="outline-text-2" id="text-31">
+
+
+<a class="btn btn-primary" href="https://raw.github.com/visayafan/visayafan.github.com/master/Others/o/Emacs.org">View Org Source</a>
 <a class="bshareDiv" href="http://www.bshare.cn/share">分享按钮</a><script type="text/javascript" charset="utf-8" src="http://static.bshare.cn/b/buttonLite.js#uuid=&amp;style=10&amp;bgcolor=Blue"></script>
 <br/>
 <script src="../../Layout/JS/disqus-comment.js"></script>
 <div id="disqus_thread">
 </div>
 
-
-<p>  <br/>
-</p></div>
+</div>
 </div>
 </div>
 

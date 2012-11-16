@@ -1,0 +1,156 @@
+#+OPTIONS: ^:{} _:{} num:t toc:t \n:t
+#+include "../../template-toc.org"
+#+title:Elisp笔记
+
+* 函数
+** cond
+   (cond CLAUSES) 尝试每个语句直到成功
+   CLAUSES是一组类似 (CONDITION body) 的语句，CONDITION判断真假，如果为真则body被执行
+** eql
+   不仅测试值是否相同还测试类型是否一致，=只测试值是否相同
+** eval-when-compile
+#+begin_src lisp
+; 当编译的时候加载common lisp库
+(eval-when-compile
+        (require 'cl))
+#+end_src
+** eval-last-sexp
+   执行当前点前的语句在minubuffer中输出结果，绑定C-x C-e
+* 字符串函数
+#+begin_src lisp
+(stringp OBJECT)                               测试是否是字符串
+(string-or-null-p OBJECT)                      一个字符或nil
+(char-or-string-p OBJECT)                      字符串或一个字符
+(make-string LENGTH INIT)                      LENGTH个ASCII为INIT的字符
+(string &rest CHARACTERS)                      连接参数中所有字符
+(substring STRING FROM &optional TO)           STRING中下标从FROM到TO之间的字符串，下标从0开始，左闭右开
+(char-equal C1 C2)                             字符比较，如果case-fold-search为t则忽略大小写
+(string= S1 S2) (string-equal S1 S2)           字符串判断是否相同
+(string< S1 S2) (string-less S1 S2)            字符串判断S1是否小于S2
+(string-to-char STRING) (char-to-string CHAR)  字符串与字符进行转换
+(number-to-string NUMBER)
+(string-to-number STRING &optional BASE)       数字与字符串的转换
+(format STRING &rest OBJECTS)                  将OBJECTS对象转换成STRING格式的字符串
+(concat &rest SEQUENCES)                       将一个由字符构成的列表或向量转换成字符串
+(vconcat &rest SEQUENCES)                      连接所有参数组成向量
+(append &rest SEQUENCES)                       连接所有参数组成列表
+(downcase OBJ) (upcase OBJ)                    大小写转换
+(capitalize OBJ)                               字符串中每个单词第一个字符大写，其余小写
+(upcase-initials OBJ)                          字符串中每个单词第一个字符大写，其余不变
+(string-match REGEXP STRING &optional START)   字符串匹配
+(match-data &optional INTEGERS REUSE RESEAT)
+(match-beginning SUBEXP)
+(match-end SUBEXP)                             match-data返回值中第1，2个表匹配到的位置，之后表示捕捉到的字符串的位置，分别对应一个match-beginning和match-end中的
+#+end_src
+#+begin_src lisp
+(progn
+  (string-match "12\\(34\\)" "01234567")
+  (match-data)                          ;(1 5 3 5)
+  (match-beginning 0)                   ;1
+  (match-beginning 1)                   ;3
+  (match-end 0)                         ;5
+  (match-end 1)                         ;5
+)
+#+end_src
+#+begin_src lisp
+(replace-match NEWTEXT &optional FIXEDCASE LITERAL STRING SUBEXP) 只替换一个
+(replace-regexp-in-string REGEXP REP STRING &optional FIXEDCASE LITERAL SUBEXP START) 替换所有匹配
+(subst-char-in-string FROMCHAR TOCHAR STRING &optional INPLACE) 字符替换
+(princ OBJECT &optional PRINTCHARFUN) 打印
+(regexp-quote STRING) 返回一个REGXP字符串其内容与STRING内容完全相同
+#+end_src
+#+begin_src lisp
+(concat [?a ?b])
+(concat '(?a ?b))
+#+end_src
+   可以自定义判断字符串是否为空的函数：
+#+begin_src lisp
+(defun string-empty-p (str)
+  (not (string< "" str)))
+#+end_src
+* cons cell, list
+  两个有序元素，第1个为CAR，第2个为CDR
+  要用eval-last-sexp执行conscell则类似(1 . 2)必须写成'(1 . 2)或(quote(1 . 2))，eval-last-sexp其实包含了两个步骤,一是读一个S-表达式,是对读的S-表达式值。这样果读的S-表达式是一个conscell的话,值时会把这个conscell的第一个元素为一个函数来调用。事实,这例的第一个元素都不是一个函数,这样就会产生一个错误invalid-function。之所以有遇到这个问题,那是因为数和串是一类特殊的S-表达式,它值后和值是不变,称为值表达式(self-evaluatingform)’号其实是一个特殊的函数quote,它的用是将它的参数回不。值。’(1 . 2)等价于(quote(1 . 2))。
+  (1 2 3) 是 (1 . (2 . (3 . nil))) 的缩写
+  (1 2 . 3) 是 (1. (2 . 3)) 的缩写
+#+begin_src lisp
+(consp OBJECT)            测试是否是cons cell类型
+(listp OBJECT)            测试是否是列表，nil也是列表，非真列表
+(null OBJECT)             当OBJECT是nil时返回真
+(cons CAR CDR)            构造一个cons cell
+(list &rest OBJECTS)      生成一个列表
+(pop PLACE)
+(push X PLACE)            在列表头部插入X，原地修改
+(append &rest SEQUENCES)  把第一个参数最后一个列表的nil换成第二个参数：
+#+end_src
+#+begin_src lisp
+(append '(a b) '(c))
+#+end_src
+  '(a b)即(a . (b . nil))把nil换成 '(c) 即 (c . nil) 即结果为 (a . (b . (c . nil)))即(a b c)
+#+begin_src lisp
+(append '(a b) 'c)
+#+end_src
+  同理把nil替换成第二个参数结果为(a . (b . c))缩写为(a b . c)
+  不可以对(a b . c)进行append操作，因为最后一个列表中没有nil
+  同理：
+#+begin_src lisp
+(append [a b] "cd")                     ;(a b . "cd")
+(append [a b] "cd" nil)                 ;(a b c d)
+#+end_src
+#+begin_src lisp
+(nth N LIST)            列表第N个元素
+(nthcdr N LIST)         CDR函数执行N次（即一个列表从N个元素开始之后的元素，包括第N个元素）
+(last LIST &optional N) 返回列表最后N个元素，默认为最后一个元素
+(butlast LIST &optional N) 列表LIST去掉最后N个元素后的列表
+(length SEQUENCE)       返回一个序列的长度
+(setcar CELL NEWCAR)
+(setcdr CELL NEWCDR)    设置新的CAR，CDR
+(reverse LIST)          逆转LIST，非原地
+(nreverse LIST)         逆转LIST，原地（将链表里指针逆同，所以原来代表整个链表的指向头结点的指针指向最后一个结点）
+(sort LIST PREDICATE)   排序，原地
+(copy-sequence ARG)     返回ARG的一个拷贝
+(delete-dups LIST)      删除重复元素，只保留第一个遇到的
+#+end_src
+  eq与equal的区别：前者为真的情况有两个：1 数字或数字变量且值相同 2 对于字符串，列表，向量必须有相同的内容，即一个修改会反映到另一个上（有例外：(eq "" "")为真是因为elisp为了节省空间把所有的空串保存在同一空间）。后者则为普通的比较相同，不考虑其文本属性。
+#+begin_src lisp
+(delq ELT LIST)
+(delete ELT SEQ)        删除一个元素，返回删除后的列表复本，有可能原地删除也有可能非原地，前者对就eq,后者对应equal
+(remq ELT LIST)
+(remove ELT SEQ)        非原地删除一个元素，返回删除后列表复本，前者对就eq,后者对应equal
+(memq ELT LIST)
+(member ELT LIST)       测试一个元素是否在列表中，前者对就eq,后者对应equal
+#+end_src
+  用cons实现关联列表（association list），car对应key, cdr对应value,通过car取cdr:比较函数assp,assoc前者对应eq后者对应equal
+#+begin_src lisp
+(cdr (assoc "a" '(("a" 97) ("b" 98))))
+二者等价
+(assoc-default "a" '(("a" 97) ("b" 98)))
+#+end_src
+  通过cdr取car: rassp,rassoc
+#+begin_src lisp
+(mapc FUNCTION SEQUENCE)
+(mapcar FUNCTION SEQUENCE)      将FUNCTION应用在SEQUENCE每个元素上，区别在于：前者返回修改前后序列而后者返回修改后的序列，都是原地修改。
+(dolist (VAR LIST [RESULT]) BODY...) 遍历列表，其中VAR充当临时变量记录每次遍历时LIST对应的元素，如果RESULT为空则返回值为nil，否则返回值为RESULT
+
+(dolist (var '(1 2 3))
+  (1+ var)
+  )                             ;nil
+(setq result nil)
+(dolist (var '(1 2 3) result)
+  (push (1+ var) result)
+  )                             ;(4 3 2)
+
+(number-sequence FROM &optional TO INC) 用来产生一个数列
+(split-string STRING &optional SEPARATORS OMIT-NULLS) 用SEPARATORS来分隔STRING，默认分隔符为split-string-default-separators，如果OMIT-NULL为t则结果中忽略掉空串,如果分隔符为空串则分隔STRISNG中每个字符（此时OMIT-NULLS一般为t）
+
+(split-string "Soup is good food" "o")
+⇒ ("S" "up is g" "" "d f" "" "d")
+(split-string "Soup is good food" "o" t)
+⇒ ("S" "up is g" "d f" "d")
+
+(mapconcat FUNCTION SEQUENCE SEPARATOR) 对SEQUENCE中每个元素执行函数FUNCTION并元素之间用SEPERATOR连接起来，如果不需要对序列中的元素进行处理可以用函数 identity
+(identity ARG) 接受参数ARG并不变地返回
+#+end_src  
+* 分享/评论
+#+html:<a class="btn btn-primary" href="https://raw.github.com/visayafan/visayafan.github.com/master/Others/o/Elisp.org">查看Org源码</a>
+#+include "../../disqus.org"
