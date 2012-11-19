@@ -31,12 +31,18 @@ grep -nH -e "pattern" filename
 (global-set-key (kbd "C-S-c C->") 'mc/mark-all-in-region)
 #+end_quote
   先选中一个region，mc/edit-lines则对该region每行都有一个光标。mc/mark-next-like-this在与region内容相同的下一处加一光标。其它函数同理。
+* ace-jump-mode
+#+begin_src lisp
+(require 'ace-jump-mode)
+(define-key global-map (kbd "C-c SPC") 'ace-jump-mode)
+#+end_src
+  ace-jump-mode共有3个子模式，char, word和line,默认是word，加上前缀C-u是char,两个前缀C-u C-u是line.
+  word模式只匹配以输入字符开头的单词，line模式在非空行行首显示字符以便跳转到想要到的行。
 * align-regexp
   满足指定正则表达式的对齐，有时对整理注释比较有用。
   其它用法：[[http://emacswiki.org/emacs/AlignCommands][EmacsWiki]]
-* list-matching-lines
-  列出当前buffer中所有满足指定正则表达式的行
 * occur, re-builder, multi-occur, multi-occur-in-matching-buffers
+  list-matching-lines是occur的别名，列出当前buffer中所有满足指定正则表达式的行。
   在进行正则替换行为确保万无一失，先检查一下，occur后输入regexp则会显示所有匹配内容。
   与occur另开一buffer显示匹配不同，re-builder实行动态匹配，即一边在RE-Builder中输入regexp一边匹配（此功能很不错）。
   在re-builder中C-c C-e可以进入子模式匹配 0―9分别代表子匹配模式，用q退出；还可以C-c TAB来选择正则表达式的语法，默认是read，此模式下需要的转义字符很多可以试下string模式。
@@ -315,6 +321,16 @@ d<script type="text/javascript"> $(function() {$('a.lightbox').lightBox();}); </
 :              ))
 :          (buffer-file-name (window-buffer (minibuffer-selected-window))))`">查看Org源码</a>
   由于我在linux和windows下博客路径不同，所以其中有个判断语句；然后替换掉路径中的部分内容使其成为github上的链接。
+* eshell命令大小写不敏感
+  需要修改变量eshell-glob-case-insensitive为nil，可以用customize-variable来修改，也可以在配置文件中加上：
+#+begin_src lisp
+(custom-set-variables
+ '(eshell-glob-case-insensitive nil)
+)
+  另外Win下在Eshell中输入目录回车自动cd。
+#+end_src
+* win7下find问题
+  尽管安装了GNUWin32但使用rgrep时仍然出问题，其实问题在于Win7自带的find命令，把system32下的find.exe改个名即可
 * 分享/评论
 #+html:<a class="btn btn-primary" href="https://raw.github.com/visayafan/visayafan.github.com/master/Others/o/Emacs.org">View Org Source</a>
 #+include "../../disqus.org"

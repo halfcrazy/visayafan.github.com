@@ -7,7 +7,7 @@
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
 <meta name="title" content="Emacs Trick"/>
 <meta name="generator" content="Org-mode"/>
-<meta name="generated" content="2012-11-16 02:22:21 中国标准时间"/>
+<meta name="generated" content="2012-11-20 00:23:52 CST"/>
 <meta name="author" content="visayafan"/>
 <meta name="description" content=""/>
 <meta name="keywords" content=""/>
@@ -82,8 +82,8 @@
 </li>
 <li><a href="#sec-2">2 执行shell命令</a></li>
 <li><a href="#sec-3">3 multiple-cursors</a></li>
-<li><a href="#sec-4">4 align-regexp</a></li>
-<li><a href="#sec-5">5 list-matching-lines</a></li>
+<li><a href="#sec-4">4 ace-jump-mode</a></li>
+<li><a href="#sec-5">5 align-regexp</a></li>
 <li><a href="#sec-6">6 occur, re-builder, multi-occur, multi-occur-in-matching-buffers</a></li>
 <li><a href="#sec-7">7 apropos</a></li>
 <li><a href="#sec-8">8 follow-mode</a></li>
@@ -114,7 +114,9 @@
 <li><a href="#sec-28">28 Org Mode HTML导出时内部链接</a></li>
 <li><a href="#sec-29">29 Yasnippet共享</a></li>
 <li><a href="#sec-30">30 Yasnippet中使用elisp制定模板</a></li>
-<li><a href="#sec-31">31 分享/评论</a></li>
+<li><a href="#sec-31">31 eshell命令大小写不敏感</a></li>
+<li><a href="#sec-32">32 win7下find问题</a></li>
+<li><a href="#sec-33">33 分享/评论</a></li>
 </ul>
 </div>
 </div>
@@ -198,20 +200,29 @@
 </div>
 
 <div id="outline-container-4" class="outline-2">
-<h2 id="sec-4"><span class="section-number-2">4</span> align-regexp</h2>
+<h2 id="sec-4"><span class="section-number-2">4</span> ace-jump-mode</h2>
 <div class="outline-text-2" id="text-4">
 
-<p>  满足指定正则表达式的对齐，有时对整理注释比较有用。<br/>
-  其它用法：<a href="http://emacswiki.org/emacs/AlignCommands">EmacsWiki</a><br/>
+
+
+
+<pre class="src src-lisp">(<span style="color: #a020f0;">require</span> '<span style="color: #008b8b;">ace-jump-mode</span>)
+(define-key global-map (kbd <span style="color: #8b2252;">"C-c SPC"</span>) 'ace-jump-mode)
+</pre>
+
+<p>
+  ace-jump-mode共有3个子模式，char, word和line,默认是word，加上前缀C-u是char,两个前缀C-u C-u是line.<br/>
+  word模式只匹配以输入字符开头的单词，line模式在非空行行首显示字符以便跳转到想要到的行。<br/>
 </p></div>
 
 </div>
 
 <div id="outline-container-5" class="outline-2">
-<h2 id="sec-5"><span class="section-number-2">5</span> list-matching-lines</h2>
+<h2 id="sec-5"><span class="section-number-2">5</span> align-regexp</h2>
 <div class="outline-text-2" id="text-5">
 
-<p>  列出当前buffer中所有满足指定正则表达式的行<br/>
+<p>  满足指定正则表达式的对齐，有时对整理注释比较有用。<br/>
+  其它用法：<a href="http://emacswiki.org/emacs/AlignCommands">EmacsWiki</a><br/>
 </p></div>
 
 </div>
@@ -220,8 +231,10 @@
 <h2 id="sec-6"><span class="section-number-2">6</span> occur, re-builder, multi-occur, multi-occur-in-matching-buffers</h2>
 <div class="outline-text-2" id="text-6">
 
-<p>  在进行正则替换行为确保万无一失，先检查一下，occur后输入regexp则会显示所有匹配内容。<br/>
+<p>  list-matching-lines是occur的别名，列出当前buffer中所有满足指定正则表达式的行。<br/>
+  在进行正则替换行为确保万无一失，先检查一下，occur后输入regexp则会显示所有匹配内容。<br/>
   与occur另开一buffer显示匹配不同，re-builder实行动态匹配，即一边在RE-Builder中输入regexp一边匹配（此功能很不错）。<br/>
+  在re-builder中C-c C-e可以进入子模式匹配 0―9分别代表子匹配模式，用q退出；还可以C-c TAB来选择正则表达式的语法，默认是read，此模式下需要的转义字符很多可以试下string模式。<br/>
   前面两个都是在当前buffer中匹配，而multi-occur/multi-occur-in-matching-buffers是在多个buffer中匹配<br/>
 </p></div>
 
@@ -786,8 +799,35 @@ d<script type="text/javascript"> $(function() {$('a.lightbox').lightBox();}); </
 </div>
 
 <div id="outline-container-31" class="outline-2">
-<h2 id="sec-31"><span class="section-number-2">31</span> 分享/评论</h2>
+<h2 id="sec-31"><span class="section-number-2">31</span> eshell命令大小写不敏感</h2>
 <div class="outline-text-2" id="text-31">
+
+<p>  需要修改变量eshell-glob-case-insensitive为nil，可以用customize-variable来修改，也可以在配置文件中加上：<br/>
+</p>
+
+
+<pre class="src src-lisp">(custom-set-variables
+ '(eshell-glob-case-insensitive nil)
+)
+  &#21478;&#22806;Win&#19979;&#22312;Eshell&#20013;&#36755;&#20837;&#30446;&#24405;&#22238;&#36710;&#33258;&#21160;cd&#12290;
+</pre>
+
+</div>
+
+</div>
+
+<div id="outline-container-32" class="outline-2">
+<h2 id="sec-32"><span class="section-number-2">32</span> win7下find问题</h2>
+<div class="outline-text-2" id="text-32">
+
+<p>  尽管安装了GNUWin32但使用rgrep时仍然出问题，其实问题在于Win7自带的find命令，把system32下的find.exe改个名即可<br/>
+</p></div>
+
+</div>
+
+<div id="outline-container-33" class="outline-2">
+<h2 id="sec-33"><span class="section-number-2">33</span> 分享/评论</h2>
+<div class="outline-text-2" id="text-33">
 
 
 <a class="btn btn-primary" href="https://raw.github.com/visayafan/visayafan.github.com/master/Others/o/Emacs.org">View Org Source</a>

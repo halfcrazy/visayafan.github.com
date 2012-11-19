@@ -1,22 +1,13 @@
 #+OPTIONS: ^:{} _:{} num:t toc:t \n:t
 #+include "../../template-toc.org"
 #+title:Elisp笔记
-
-* 函数
-** cond
-   (cond CLAUSES) 尝试每个语句直到成功
-   CLAUSES是一组类似 (CONDITION body) 的语句，CONDITION判断真假，如果为真则body被执行
-** eql
-   不仅测试值是否相同还测试类型是否一致，=只测试值是否相同
-** eval-when-compile
-#+begin_src lisp
-; 当编译的时候加载common lisp库
-(eval-when-compile
-        (require 'cl))
-#+end_src
-** eval-last-sexp
-   执行当前点前的语句在minubuffer中输出结果，绑定C-x C-e
-* 字符串函数
+Elisp Manual中查找函数快捷键为 =i= .
+#+begin_example
+sequence = list + array
+array=vector+string+bool vector+char-table
+#+end_example
+vector string number 是自我求值类型，即对其自身求值后仍为自身，用eq函数测试结果为真。
+* 字符串
 #+begin_src lisp
 (stringp OBJECT)                               测试是否是字符串
 (string-or-null-p OBJECT)                      一个字符或nil
@@ -37,29 +28,7 @@
 (downcase OBJ) (upcase OBJ)                    大小写转换
 (capitalize OBJ)                               字符串中每个单词第一个字符大写，其余小写
 (upcase-initials OBJ)                          字符串中每个单词第一个字符大写，其余不变
-(string-match REGEXP STRING &optional START)   字符串匹配
-(match-data &optional INTEGERS REUSE RESEAT)
-(match-beginning SUBEXP)
-(match-end SUBEXP)                             match-data返回值中第1，2个表匹配到的位置，之后表示捕捉到的字符串的位置，分别对应一个match-beginning和match-end中的
-#+end_src
-#+begin_src lisp
-(progn
-  (string-match "12\\(34\\)" "01234567")
-  (match-data)                          ;(1 5 3 5)
-  (match-beginning 0)                   ;1
-  (match-beginning 1)                   ;3
-  (match-end 0)                         ;5
-  (match-end 1)                         ;5
-)
-#+end_src
-#+begin_src lisp
-(replace-match NEWTEXT &optional FIXEDCASE LITERAL STRING SUBEXP) 只替换一个
-(replace-regexp-in-string REGEXP REP STRING &optional FIXEDCASE LITERAL SUBEXP START) 替换所有匹配
-(subst-char-in-string FROMCHAR TOCHAR STRING &optional INPLACE) 字符替换
-(princ OBJECT &optional PRINTCHARFUN) 打印
-(regexp-quote STRING) 返回一个REGXP字符串其内容与STRING内容完全相同
-#+end_src
-#+begin_src lisp
+
 (concat [?a ?b])
 (concat '(?a ?b))
 #+end_src
@@ -68,12 +37,15 @@
 (defun string-empty-p (str)
   (not (string< "" str)))
 #+end_src
-* cons cell, list
+* 列表
   两个有序元素，第1个为CAR，第2个为CDR
   要用eval-last-sexp执行conscell则类似(1 . 2)必须写成'(1 . 2)或(quote(1 . 2))，eval-last-sexp其实包含了两个步骤,一是读一个S-表达式,是对读的S-表达式值。这样果读的S-表达式是一个conscell的话,值时会把这个conscell的第一个元素为一个函数来调用。事实,这例的第一个元素都不是一个函数,这样就会产生一个错误invalid-function。之所以有遇到这个问题,那是因为数和串是一类特殊的S-表达式,它值后和值是不变,称为值表达式(self-evaluatingform)’号其实是一个特殊的函数quote,它的用是将它的参数回不。值。’(1 . 2)等价于(quote(1 . 2))。
   (1 2 3) 是 (1 . (2 . (3 . nil))) 的缩写
   (1 2 . 3) 是 (1. (2 . 3)) 的缩写
 #+begin_src lisp
+(cadr X)                  == (car (cdr x))
+(caar X)
+(cddr X)
 (consp OBJECT)            测试是否是cons cell类型
 (listp OBJECT)            测试是否是列表，nil也是列表，非真列表
 (null OBJECT)             当OBJECT是nil时返回真
@@ -82,8 +54,7 @@
 (pop PLACE)
 (push X PLACE)            在列表头部插入X，原地修改
 (append &rest SEQUENCES)  把第一个参数最后一个列表的nil换成第二个参数：
-#+end_src
-#+begin_src lisp
+
 (append '(a b) '(c))
 #+end_src
   '(a b)即(a . (b . nil))把nil换成 '(c) 即 (c . nil) 即结果为 (a . (b . (c . nil)))即(a b c)
@@ -105,10 +76,13 @@
 (length SEQUENCE)       返回一个序列的长度
 (setcar CELL NEWCAR)
 (setcdr CELL NEWCDR)    设置新的CAR，CDR
+(setf PLACE VAL PLACE VAL ...) 设置PLACE为VAL
+
+(setf (car x) y) == (setcar x y)
+
 (reverse LIST)          逆转LIST，非原地
 (nreverse LIST)         逆转LIST，原地（将链表里指针逆同，所以原来代表整个链表的指向头结点的指针指向最后一个结点）
 (sort LIST PREDICATE)   排序，原地
-(copy-sequence ARG)     返回ARG的一个拷贝
 (delete-dups LIST)      删除重复元素，只保留第一个遇到的
 #+end_src
   eq与equal的区别：前者为真的情况有两个：1 数字或数字变量且值相同 2 对于字符串，列表，向量必须有相同的内容，即一个修改会反映到另一个上（有例外：(eq "" "")为真是因为elisp为了节省空间把所有的空串保存在同一空间）。后者则为普通的比较相同，不考虑其文本属性。
@@ -118,7 +92,7 @@
 (remq ELT LIST)
 (remove ELT SEQ)        非原地删除一个元素，返回删除后列表复本，前者对就eq,后者对应equal
 (memq ELT LIST)
-(member ELT LIST)       测试一个元素是否在列表中，前者对就eq,后者对应equal
+(member ELT LIST)       测试一个元素是否在列表中，前者对就eq,后者对应equal,如果存在返回值是以ELT为car的列表
 #+end_src
   用cons实现关联列表（association list），car对应key, cdr对应value,通过car取cdr:比较函数assp,assoc前者对应eq后者对应equal
 #+begin_src lisp
@@ -150,7 +124,504 @@
 
 (mapconcat FUNCTION SEQUENCE SEPARATOR) 对SEQUENCE中每个元素执行函数FUNCTION并元素之间用SEPERATOR连接起来，如果不需要对序列中的元素进行处理可以用函数 identity
 (identity ARG) 接受参数ARG并不变地返回
+
+(add-to-list LIST-VAR ELEMENT &optional APPEND COMPARE-FN)      如果列表LIST-VAR中不存在ELEMENT则向列表中添加元素ELEMENT，如果APPEND为空则添加到链首，否则添加到链尾；如果COMPARE-FN为空则使用函数equal否则使用比较函数COMPARE-FN
+
+#+end_src
+* 数组
+  数组创建时必须指定长度（char-table除外）
+#+begin_src lisp
+(elt SEQUENCE N)                应该是谐音at，返回一个序列指定位置的元素
+(aset ARRAY IDX NEWELT)         将数组下标索引为IDX的元素赋新值
+(aref ARRAY IDX)                访问数组
+(fillarray ARRAY ITEM)          用ITEM填充数组
+(vectorp OBJECT)                测试是否是向量
+(vector &rest objects)          创建向量
+(make-vector length object)     创建长度为length的向量，每个元素均为object
+(vconcat &rest sequences)       将序列转化为向量
+                                append可以把向量转化为列表，(append [1 2] nil) 因为数组的大小是固定不变的要想在向量后面加上元素必须是列表，所以结果为列表类型的
+#+end_src
+* Ring
+  列表方便插入和删除，但索引非常耗时；数组索引非常快速但插入删除非常耗时（事实上elisp中不能对其进行插入删除操作）。
+  而Ring则提供一种折中的方案，事先分配固定大小的空间，类似数组，但保持一个指针指向最新插入元素（我估计），所以可以插入删除，ring-insert如果空间不够用了则删除旧的以插入新的,ring-insert-at-beginning则插入到最前面将其做为最旧的元素，如果满的话则删除最新的元素。
+#+begin_src lisp
+make-ring size
+ring-p obj
+ring-size ring          返回其真实大小
+ring-length ring        返回其存储元素个数
+ring-element ring       将ring中元素组合形成列表并返回
+ring-copy ring          返回ring的拷贝，与原ring内容完全相同（eq)
+ring-empty-p
+ring-ref ring index
+ring-insert ring obj
+ring-remove ring &optional index 如果索引为空则删除最旧的元素
+ring-insert-at-beginning ring obj
+#+end_src
+* 符号
+  默认保存符号的数组是个全局变量，名为obarray，但obarray也可以用来表示一种数据类型，其实是个向量。
+  向obarray中添加符号用intern，如果不存在则添加，而intern-soft当符号不存在时则返回nil.
+  符号=符号名+符号值+符号函数+属性列表
+  属性列表对应的形式为(propname1 value1 propname2 value2 ...)
+#+begin_src lisp
+(intern STRING &optional OBARRAY)       返回名为STRING的canonical符号如果没有则创建一个并返回，默认的OBARRAY是全局的obarray
+(intern-soft NAME &optional OBARRAY)    如果没有则返回nil
+
+(setq foo (make-vector 10 0))
+(intern-soft "abc" foo)         ;nil
+(intern "abc" foo)              ;abc
+(intern-soft "abc" foo)         ;abc
+(unintern "abc" foo)            ;从foo这个obarray中删除"abc"这个符号
+
+(mapatoms FUNCTION &optional OBARRAY)   对OBARRAY上每个元素执行函数FUNCTION，其中OBARRAY默认是obarray
+(set SYMBOL NEWVAL)                     设置符号值
+(setq [SYM VAL]...)                     (setq sym val) => (set (quote sym) val)
+
+;; 下面三个语句是等价的
+(setq foo 1)
+(set 'foo 1)
+(set (quote foo) 1)
+
+(symbol-value SYMBOL)                   返回符号对应的值，出错则返回nil
+
+(setq foo (make-vector 10 0))
+(set (intern "abc" foo) "cba")
+(symbol-value (intern "abc" foo))
+
+(boundp SYMBOL)                         测试符号值是否有设置
+(fboundp SYMBOL)                        测试符号的符号函数是否有设置
+(fset SYMBOL DEFINITION)                设置符号对应的符号函数为DEFINITION
+(symbol-function SYMBOL)                返回符号的符号函数
+
+;; 设置obarray类型的foo中的符号"abc"对应的符号函数为全局obarray中符号car对应的符号函数
+(fset (intern "abc" foo) (symbol-function 'car))
+;; 调用foo中符号abc对应的符号函数，参数为一个cons cell
+(funcall (intern "abc" foo) '(a . b))
+
+(put SYMBOL PROPNAME VALUE)             在符号SYMBOL的属性列表中添加属性名及其属性值
+(get SYMBOL PROPNAME)                   得到符号SYMBOL属性名对应的属性值
+(symbol-plist SYMBOL)                   返回符号SYMBOL对应的属性列表
+
+(plist-get PLIST PROP)                  取得属性列表中属性名为PROP的值
+(plist-put PLIST PROP VAL)              如果PROP已经存在于PLIST中则修改其值为VAL，如果不存在则添加，返回值为新的属性列表
+
+#+end_src
+* 文本属性
+  buffer中的每个字符或字符串都有一个文本属性列表，列表中每个元素都有一个名字和值。
+** display用于文本替换
+   下面函数用于把当前buffer前10个字符替换成一个A，因为前10个字符的display属性是相同的字符串对象。
+#+begin_src lisp
+(defun foo ()
+  (dotimes (i 5)
+    (let ((string "A")
+          (start (+ i i (point-min))))
+      (put-text-property start (1+ start) 'display string)
+      (put-text-property start (+ 2 start) 'display string))))
+#+end_src
+   下面的函数由于concat创建新的字符串对象，所以每两个文本属性相同，所以前10个字符被替换成5个A：
+#+begin_src lisp
+(defun foo ()
+  (dotimes (i 5)
+    (let ((string (concat "A"))
+          (start (+ i i (point-min))))
+      (put-text-property start (1+ start) 'display string)
+      (put-text-property start (+ 2 start) 'display string))))
+#+end_src
+* 变量
+  1. 每个变量代表一个符号，变量名即符号名，变量值即符号值，但变量不等同于符号，符号比变量多符号函数和属性列表。
+  2. 局部变量可以嵌套，为避免出现无限循环定义了最大嵌套深度：  max-specpdl-size.
+  3. 全局变量是所有buffer都可以访问到的，buffer局部变量是只有某个buffer可以访问到的，可以使用buffer局部变量来实现不同buffer之间的变量隔离。
+  4. void与nil的区别：未定义的变量为void，一个变量为nil可以对此变量求值，而nil是个值，对void变量求值则会返回错误。
+
+  定义变量：
+#+begin_src lisp
+(defvar SYMBOL &optional INITVALUE DOCSTRING)   定义SYMBOL为INITVALUE并返回SYMBOL，如果SYMBOL为void则设置SYMBOL值为INTIVALUE；如果是buffer-lcoal变量则设置全局变量为INTIVALUE而buffer-local变量不变；如果符号有局部绑定则设置局部绑定值
+(defconst SYMBOL INITVALUE [DOCSTRING])         只处const只是建议，如果修改不会报错。
+
+
+#+end_src
+#+begin_src lisp
+(make-local-variable VARIABLE)          产生一个当前buffer的局部变量，如果有个同名的全局变量则其初始值是全局变量，其余各个buffer依旧使用全局变量
+(kill-local-variable VARIABLE)
+(kill-all-local-variables)              消除缓冲区内所有局部变量，但有属性permanent-local的不会被消除
+(boundp SYMBOL)                         符号是否被绑定
+(default-boundp SYMBOL)                 符号是否有默认值
+(makunbound SYMBOL)                     使SYMBOL为void(而非nil).如果是动态局部绑定则只void当前的局部绑定，作用范围只是当前的局部绑定范围。
+                                        11.4 When a Variable is "Void"
+(make-variable-buffer-local VARIABLE)   为所有buffer产生一个名为VARIABLE的局部变量
+(default-value SYMBOL)                  返回SYMBOL的全局变量
+(buffer-local-value VARIABLE BUFFER)    返回BUFFER中名为VARIABLE的局部变量
+(local-variable-p VARIABLE &optional BUFFER) 如果在BUFFER中有个名为VARIABLE的局部变量则返回真
+(get-buffer BUFFER-OR-NAME)             返回BUFFER-OR-NAME对应的BUFFER，如果没有则返回NIL
+(with-temp-buffer &rest BODY)           创建一个临时buffer并且在此临时buffer中执行BODY
+(with-current-buffer BUFFER-OR-NAME &rest BODY) 把BUFFER-OR-NAME作为一个临时BUFFER执行BODY
+#+end_src
+  下面的程序运行将出错，因为let局部绑定以出现顺序求值且使用的是绑定之前的值，此处x在let绑定前没有定义，而y需要的是绑定之前的值，所以出错。
+#+begin_src lisp
+(let ((x 2)
+      (y x))
+  (list x y))
+#+end_src
+  而使用let*则不会出错，这是let与let*的区别。
+#+begin_src lisp
+(let* ((x 2)
+      (y x))
+  (list x y))
+#+end_src
+* 正则表达式
+#+begin_src lisp
+(string-match REGEXP STRING &optional START)   字符串匹配
+(match-data &optional INTEGERS REUSE RESEAT)
+(match-beginning SUBEXP)
+(match-end SUBEXP)                             match-data返回值中第1，2个表匹配到的位置，之后表示捕捉到的字符串的位置，分别对应一个match-beginning和match-end中的
+
+(progn
+  (string-match "12\\(34\\)" "01234567")
+  (match-data)                          ;(1 5 3 5)
+  (match-beginning 0)                   ;1
+  (match-beginning 1)                   ;3
+  (match-end 0)                         ;5
+  (match-end 1)                         ;5
+)
+(replace-match NEWTEXT &optional FIXEDCASE LITERAL STRING SUBEXP) 只替换一个
+(replace-regexp-in-string REGEXP REP STRING &optional FIXEDCASE LITERAL SUBEXP START) 替换所有匹配
+(subst-char-in-string FROMCHAR TOCHAR STRING &optional INPLACE) 字符替换
+(princ OBJECT &optional PRINTCHARFUN) 打印
+(regexp-quote STRING) 返回一个REGXP字符串其内容与STRING内容完全相同
+(regexp-opt STRINGS &optional PAREN)    返回一个经过优化的正则表达式匹配一个字符串列表里的所有字符串
+
+(regexp-opt ’("foobar" "foobaz" "foo")) ; => "foo\\(?:ba[rz]\\)?"
+
+describe-syntax
+describe-categories
+#+end_src
+* 缓冲区
+  BUFFER名与文件名不一定一致。
+#+begin_src lisp
+(buffer-name &optional BUFFER)                  返回buffer的名字，默认是当前BUFFER
+(rename-buffer NEWNAME &optional UNIQUE)        为buffer重命名。若UNIQUE为空，若NEWNAME已经存在则报错；若UNIQUTE不为空则用函数generate-new-buffer-name来生成BUFFER，名为：NEWNAME<n>其中n是个数字，表示第几个名为NEWNAME的BUFFER。
+(current-buffer)                                返回当前缓冲区，当前缓冲区不一定是正在使用的缓冲区，可以用set-buffer来指定当前缓冲区
+(set-buffer BUFFER-OR-NAME)                     设置当前缓冲区，可以用buffer或buffer的name作为参数
+#+end_src
+  注意 set-buffer 执行完后如果之后没有执行语句则当前使用的buffer会自动变成当前缓冲区，所以要想改变缓冲区必须要set-buffer之后紧接着执行语句：
+#+begin_src lisp
+(progn
+  (set-buffer "*Messages*")
+  (message (buffer-name)))              ;*Message*
+
+(set-buffer "*Messages*")
+(message (buffer-name))                 ;tmp.el
+#+end_src
+  先把之前的缓冲区保存起来，最后再恢复。
+#+begin_src lisp
+(let ((old-buffer (current-buffer)))
+  (set-buffer buffername)
+  ...
+  (set-buffer old-buffer))
+#+end_src
+  或使用函数 =save-current-buffer=
+#+begin_src lisp
+(save-current-buffer &rest BODY)        执行完BODY后恢复缓冲区。如果原来的缓冲区关闭了，则使用BODY中使用的最后一个缓冲区作为当前缓冲区。
+#+end_src
+  或 =with-current-buffer=
+  lisp 中很多以 with 开头的宏,这 宏通常是在不改变当态下,临时用另一个变量代替现有变量执语句.
+#+begin_src lisp
+(with-current-buffer BUFFER-OR-NAME &rest BODY)         以BUFFER-OR-NAME作为当前缓冲区执行BODY中的语句
+#+end_src
+  或 =save-excursion=
+#+begin_src lisp
+(save-excursion &rest BODY)     不仅保存当前缓冲区，还保存位置和mark
+#+end_src
+
+#+begin_src lisp
+(get-buffer BUFFER-OR-NAME)             返回指定的BUFFER，如果不存在则返回nil
+(get-buffer-create BUFFER-OR-NAME)      如果不存在就创建一个
+(generate-new-buffer NAME)              产生一个新BUFFER，如果NAME已经存在则使用 generate-new-buffer-name
+(kill-buffer &optional BUFFER-OR-NAME)  缺省当前BUFFER
+(buffer-live-p OBJECT)                  如果OBJECT是个BUFFER且未被KILL则返回真
+(buffer-list &optional FRAME)           缺省返回所有存在的BUFFER，若指定frame则返回指定frame上的BUFFER列表
+(with-temp-buffer &rest BODY)           创建一个临时缓冲区并在此缓冲区中执行BODY
+(make-marker)                           创建一个新的标记，不指向任何地方
+(set-marker MARKER POSITION &optional BUFFER) 设置一个标记的位置，默认是当前缓冲区
+(point-marker)                          返回当前点的marker
+(copy-marker &optional MARKER TYPE)     复制标记或者如果参数是数字的话返回该位置的一个marker
+(marker-position MARKER)                返回一个标记的位置
+(marker-buffer MARKER)                  返回一个标记所在的缓冲区
+(point)                                 返回当前位置
+(point-min)
+(point-max)
+(buffer-size &optional BUFFER)          默认返回当前缓冲区的字符个数，一般 (point-max)=(buffer-size)+1
+(push-mark &optional LOCATION NOMSG ACTIVATE)
+(pop-mark)                              向mark-ring中压入或弹出一个mark
+(region-beginning)                      返回point和mark中较小值
+(region-end)                            较大值，用C-x C-x生成的区域
+(goto-char POSITION)
+(forward-char &optional N)
+(backward-char &optional N)
+(forward-word &optional ARG)
+(backward-word &optional ARG)
+(forward-line &optional N)              向前N行，位置在行首(forward-line 0)移动到行首
+(backward-line &optional N)
+(line-beginning-position &optional N)   默认当前行行首位置，N为正则前N行行首位置，N为负则后
+(line-end-position &optional N)         行尾位置
+(line-number-at-pos &optional POS)      默认当前位置行号，或指定位置行号
+(bobp)                                  测试位置是否在beginning of buffer
+(eobp)
+(bolp)                                  beginning of line predicate
+(eolp)
+(buffer-string)                         以strng形式返回当前缓冲区的内容
+(buffer-substring START END)
+(char-after)
+(char-before)
+(current-word)
+(thing-at-point THING)                  THING是个语法单元
+(insert &rest ARGS)                     当前位置后插入ARGS，字符串或字符
+(insert-char CHARACTER COUNT &optional INHERIT) 插入CHARACTER COUNT次
+(insert-buffer-substring BUFFER &optional START END)
+(insert-buffer BUFFER)
+(delete-char N &optional KILLFLAG)      删除后N个，前N个字符（N为负），如果KILLFALG则保存在kill ring中
+(delete-backward-char N &optional KILLFLAG)  与上相反
+(delete-region START END)
+(delete-and-extract-region START END)   与上区别在于返回删除的区域内容
+(re-search-forward REGEXP &optional BOUND NOERROR COUNT)        向前查找，可行参数BOUND表示不超过这个位置，NOERROR如果查找失败的话，返回nil，不是错误；COUNT查找到的第COUNT个。
+(re-search-backward REGEXP &optional BOUND NOERROR COUNT)
+(replace-match NEWTEXT &optional FIXEDCASE LITERAL STRING SUBEXP)       将上次查找到的内容替换成NEWTEXT
+(save-restriction &rest BODY)           C-x n n =>narrow to region C-x n w => widen 在narrow-to-region后的结果上执行BODY，之后再widen，即作用BODY在指定region上
+(subst-char-in-region START END FROMCHAR TOCHAR &optional NOUNDO) 在START到END之间将FROMECHAR转换成TOCHAR
+(buffer-substring START END)            返回当前buffer中指定位置的内容
+#+end_src
+* 窗口
+  C-x 2 or C-x 3分割的是窗口，C-x 5 2创建的是Frame.
+#+begin_src lisp
+(split-window &optional WINDOW SIZE SIDE)       分割指定窗口，默认是当前窗口，SIZE指定大小，默认是平分，SIDE指定水平还是垂直分割，默认是水平。返回值是新创建的窗口，光标仍旧停留在原来窗口上。
+(selected-window)                               返回光标所在的窗口
+(delete-window &optional WINDOW)                C-x 0
+(windowp OBJECT)
+(window-live-p OBJECT)
+(current-window-configuration &optional FRAME)  保存指定Frame的窗口配置，默认是当前Frame
+(set-window-configuration CONFIGURATION)
+(other-window COUNT &optional ALL-FRAMES)       跳转到其它窗口，COUNT跳转次数
+(save-selected-window &rest BODY)               执行语句结束后选择执行之前的窗口，如果那个窗口不存在了，则选择BODY里最后选择的那个窗口
+(with-selected-window WINDOW &rest BODY)        在指定的窗口执行BODY，之后恢复到执行前的窗口
+(next-window &optional WINDOW MINIBUF ALL-FRAMES)       指定WINDOW的下一个窗口，默认当前窗口下一个；MINIBUF为t表示考虑minibuffer；ALL-FRAMES为t表示所有frame
+(previous-window &optional WINDOW MINIBUF ALL-FRAMES)
+(window-list &optional FRAME MINIBUF WINDOW)    指定FRAME上从指定WINDOW开始的windows列表，MINIBUF为t表示包含minibuffer，默认当前FRAME
+当前窗口开始
+(get-window-with-predicate PREDICATE &optional MINIBUF ALL-FRAMES DEFAULT)      返回满足某个PREDICATE条件的WINDOW，MINIBUF为t表包含minbuffer，为nil表示只有minibuffer活动时才包含它； ALL-FRAME为t表所有FRAME，visible表所有可视frame的所有窗口，一个指定frame表在指定上所有窗口； DEFAULT为表查找失败后默认窗口。
+(window-height)                                 
+(window-body-height)                            不包括header-line和mode-line，以行为单位
+(window-width)
+(window-edges)                                  左上角右下角坐标
+(window-inside-edges)                           文本区域坐标
+(window-pixel-edges)                            以像素为单位
+(window-inside-pixel-edges)
+
+(window-buffer &optional WINDOW)                指定窗口上的buffer，默认当前窗口
+(get-buffer-window &optional BUFFER-OR-NAME ALL-FRAMES) 指定BUFFER对应的窗口，默认当前buffer
+(get-buffer-window-list &optional BUFFER-OR-NAME MINIBUF ALL-FRAMES)
+(set-window-buffer WINDOW BUFFER-OR-NAME &optional KEEP-MARGINS)        设置指定窗口WINDOW显示的名为FRAME-OR-NAME的buffer，WINDOW为nil表当前窗口。
+(switch-to-buffer BUFFER-OR-NAME &optional NORECORD FORCE-SAME-WINDOW)  默认C-x b
+(window-start &optional WINDOW)                 指定窗口显示开始的位置（左上角位置）
+(set-window-start WINDOW POS &optional NOFORCE) 设置指定窗口的开始位置
+(pos-visible-in-window-p &optional POS WINDOW PARTIALLY)        指定窗口的指定位置是否可见，默认是当前窗口的当前位置。如果POS可见且PARTIALLY为nil则返回t，如果PARTIALLY为non-nil是返回一个列表：(X Y [RTOP RBOT ROWH VPOS])，X，Y表示像素坐标
 #+end_src  
+* 文件
+#+begin_src lisp
+(find-file FILENAME &optional WILDCARDS)        打开文件并转到其对应的缓冲区，如果WILDCARDS非空则展开WILDCARDS以访问多个文件，返回对应的buffer
+(find-file-noselect FILENAME &optional NOWARN RAWFILE WILDCARDS)        与上个函数不同：并不转到相应的buffer
+(buffer-file-name &optional BUFFER)             返回指定buffer对应的文件名
+(set-visited-file-name FILENAME &optional NO-QUERY ALONG-WITH-FILE)     设置与当前buffer关联的文件，并重命名当前buffer为文件名，若FILENAME为空则取消当前buffer的关联文件，NO-QUERY为nil表不需要询问
+(get-file-buffer FILENAME)                      返回与指定文件相关联的buffer
+(find-buffer-visiting FILENAME &optional PREDICATE)
+(save-buffer &optional ARGS)                    C-x C-s
+(write-file FILENAME &optional CONFIRM)         C-x C-w
+(insert-file-contents FILENAME &optional VISIT BEG END REPLACE) C-x i 返回值是文件名的绝对路径和插入字符个数组成的列表。REPLACE为非空表替换当前缓冲区内容
+(write-region START END FILENAME &optional APPEND VISIT LOCKNAME MUSTBENEW)     把当前缓冲区部分插入到FILENAME中，如果START为nil则表示整个缓冲区内容，如果START是字符串则表示将此字符串写到文件中，此时END被忽略。APPEND非空表追加到文件尾，如果是整数表示插入到指定的偏移位置，会覆盖之后的内容。
+(file-readable-p FILENAME)
+(file-writable-p FILENAME)
+(file-executable-p FILENAME)
+(file-exists-p FILENAME)
+(file-modes FILENAME)
+(file-regular-p FILENAME)
+(file-directory-p FILENAME)
+(file-symlink-p FILENAME)               如果是符号链接的话返回值是此符号链接所链接的文件名
+(file-truename FILENAME)                文件的真实名，如果相对文件则展开成绝对路径，如果是链接文件则跟踪链接直到没有链接为止。
+(file-attributes FILENAME &optional ID-FORMAT)  文件属性
+
+(rename-file FILE NEWNAME &optional OK-IF-ALREADY-EXISTS)
+(delete-file FILENAME &optional TRASH)
+(copy-file FILE NEWNAME &optional OK-IF-ALREADY-EXISTS KEEP-TIME PRESERVE-UID-GID PRESERVE-SELINUX-CONTEXT)
+(delete-directory DIRECTORY &optional RECURSIVE TRASH)
+(set-file-times FILENAME &optional TIMESTAMP)
+(set-file-modes FILENAME MODE)
+
+(file-name-directory FILENAME)
+(file-name-nondirectory FILENAME)
+(file-name-extension FILENAME)
+(file-name-sans-extension FILENAME)     文件名去掉扩展名
+
+(file-name-absolute-p FILENAME)
+(expand-file-name NAME &optional DEFAULT-DIRECTORY)     扩展成绝对路径，如果DEFAULT-DIRECTORY非空表扩展成 DEFAULT-DIRECTORY/NAME
+(file-relative-name FILENAME &optional DIRECTORY)       转换成相对路径，DIRECTORY非空表示FILENAME相对DIRECTORY的相对路径
+(file-name-as-directory FILE)                           返回结果FILE目录形式（使用 (concat dir "/")会有移植问题）
+(directory-file-name DIRECTORY)                         与上个函数相反
+
+(file-name-as-directory "~rms/lewis") ; => "~rms/lewis/"
+(directory-file-name "~lewis/") ; => "~lewis"
+
+(convert-standard-filename FILENAME)                    转化为与OS相匹配的文件名格式
+(make-temp-file PREFIX &optional DIR-FLAG SUFFIX)
+(directory-files DIRECTORY &optional FULL MATCH NOSORT) 返回目录下所有文件名构成的列表，若FULL为非nil则绝对名，否则相对名，默认是相对名。MATCH非nil表只列出匹配文件名；NOSORT非nil表没有排序，序列不可知。
+(directory-files-and-attributes DIRECTORY &optional FULL MATCH NOSORT ID-FORMAT) 列表中包含文件属性
+#+end_src  
+* 函数
+  宏与函数的区别在于：宏把参数原封不动地传递给之后的BODY，而函数是将参数求值后的结果传递给BODY。
+** cond
+   (cond CLAUSES) 尝试每个语句直到成功
+   CLAUSES是一组类似 (CONDITION body) 的语句，CONDITION判断真假，如果为真则body被执行
+** eql
+   不仅测试值是否相同还测试类型是否一致，=只测试值是否相同
+** eval-when-compile
+#+begin_src lisp
+; 当编译的时候加载common lisp库
+(eval-when-compile
+        (require 'cl))
+#+end_src
+** eval-last-sexp
+   执行当前点前的语句在minubuffer中输出结果，绑定C-x C-e
+** copy-sequence
+   (copy-sequence ARG)     返回ARG的一个拷贝
+   新序列与原序列共享元素，一个修改对另一个修改是可见的。
+   如果元素是有文本属性的字符串，则属性列表并不共享而是新的列表，但属性的值是共享的。
+   此函数对循环列表不适用否则会引起无限循环
+** dotimes
+   (dotimes (VAR COUNT [RESULT]) BODY...)       循环COUNT次，其中VAR存放计数器，COUNT为循环次数，如果RESULT为空则返回为NIL，否则返回RESULT。其中VAR从0开始一直到COUNT-1。
+** lsh
+   (lsh VALUE COUNT)    如果COUNT为正整数则将VALUE左移COUNT位，如果COUNT为负则右移同时高位补充0
+** funcall
+   (funcall FUNCTION &rest ARGUMENTS) 函数调用，其中 FUNCTION为函数，其余为函数参数，返回执行结果
+** apply
+   (apply FUNCTION &rest ARGUMENTS) 应用函数其参数为剩下的参数返回值是函数的返回值
+   appy与funcall的区别在于：apply最后一个参数是列表，把列表展开后结果作为参数传递给函数，而funcall则是把参数原封不动地传递给函数。
+** defmacro
+   (defmacro NAME ARGLIST [DOCSTRING] [DECL] BODY...) 定义一个宏，调用时先展开宏。
+** defsubst
+   (defsubst NAME ARGLIST &rest BODY) 定义一个内联函数
+** loop
+   loop是CL中的函数使用前需要(require 'cl).
+#+begin_src lisp
+
+(loop for buf in (buffer-list) collect (buffer-file-name buf))
+
+`for VAR from EXPR1 to EXPR2 by EXPR3'
+
+(loop for x to 10 by 2 collect x)       默认是0开始，默认间隔是1
+此处并不是嵌套的for，与其它编程语言的区别
+(loop for x from 1 to 100
+      for y = (* x x)
+      until (>= y 729)
+      finally return (list x (= y 729)))
+
+`for VAR in LIST by FUNCTION'
+(loop for x in '(1 2 3) collect x)                      默认函数是cdr
+(loop for x in '(1 2 3 4 5 6) by 'cddr collect x)
+
+`for VAR on LIST by FUNCTION'
+(loop for x on '(1 2 3) collect x)              在LIST上迭代所有的cons cell
+
+`for VAR in-ref LIST by FUNCTION'
+与in的区别在于此处可以修改LIST
+
+`for VAR across ARRAY'
+迭代VAR于ARRAY中所有元素，其中ARRAY可以是字符串或向量
+
+`for VAR across-ref ARRAY'
+可以修改
+
+`repeat INTEGER'
+(loop repeat 20 do (insert "\ndo"))
+
+`while CONDITION'
+(let ((i 0))
+  (loop while (< i 10) do (incf i) (message "%d" i)))
+
+`until CONDITION'
+`always CONDITION'              如果CONDITION为nil则停止循环
+
+`collect FORM'
+收集指定元素构成列表
+
+`append FORM'
+利用append函数将构成列表
+
+`nconc FORM'
+原地修改式地收集
+
+`concat FORM'           构成列表
+`vconcat FORM'          构成向量
+
+(loop for name in '(fred sue alice joe june)
+      for kids in '((bob ken) () () (kris sunshine) ())
+      collect name
+      append kids)
+        => (fred bob ken sue alice joe kris sunshine june)
+#+end_src   
+* 调试
+  使用Edebug调试。在欲调试的函数上 C-u C-M-x （带前缀的 eval-defun，称为instrumenting）,之后调用函数执行即可进入调试模式，此时会在执行行前显示黑色箭头。
+  每个快捷键对应一个模式
+  1. SPC会在下一次停止点上停止执行。edebug-step-mode
+  2. n next表达式之后下一个停止点。edebug-next-mode
+  3. g go运行直到断点. edebug-go-mode
+  4. t trace跟踪，自动执行，在每个停止点都暂停1秒,时间由 edebug-sit-for-seconds来确定。edebug-trace-mode
+  5. T Rapid trace，与上面区别在于暂停时间几乎为0。edebug-trace-fast-mode
+  6. c continue. 在每个断点暂停1秒后继续。edebug-continue-mode
+  7. C Rapid continue. 与上区别在于暂停时间几乎为0。edebug-continue-fast-mode
+  8. G Go non-stop.忽略断点，可以用S来停止程序。edebug-go-nonstop-mode
+  9. S stop. edebug-stop
+  跳转：
+  1. h 停止在光标所在附近。edebug-goto-here
+  2. f forward执行一个表达式,可以加前缀N来前进N个表达式。注意是相对光标所在位置前进一个表达式，如果要想相对当前停止点要先用w将光标移到当前停止点。edebug-forward-sexp
+  3. o 跳出所在的表达式。edebug-step-out
+  4. i 进入后面的函数或宏。edebug-step-in
+  5. w 将光标移动到当前的停止点
+  断点：
+  1. b 在停止点上设置断点,加前缀表示临时断点（只能用一次）。edebug-set-breakpoint
+  2. u 取消断点。edebug-unset-breakpoint
+  3. x Condition 条件断点，加前缀表临时断点。edebug-set-conditional-breakpoint
+  4. B 移到下一个断点，只是移到光标到下一个断点并不执行。edebug-next-breakpoint.
+  5. X 设置全局断点条件。在每个停止点都测试全局断点条件，如果为真则停止或暂停（依据所有模式而定）。
+  6. 源码断点，即断点写在源码里。
+     #+begin_src lisp
+     (defun fac (n)
+      (if (= n 0) (edebug))
+      (if (< 0 n)
+          (* n (fac (1- n)))
+        1))
+     #+end_src
+  执行表达式：
+  1. e Exp RET edebug-eval-expression
+  2. M-: EXP RET 与上面区别在于：前者在edebug环境外，而后者在edebug环境下执行。 eval-expression
+  3. C-x C-e 求值当前点之前的表达式，在edebug环境外。edebug-eval-last-sexp
+  其它：
+  1. q 退出Edebug。top-level
+  2. d 显示backstrace. edebug-backstrace
+  3. r 在回显区显示最近表达式结果。edebug-previous-result
+  4. ? 查看帮助. edebug-help
+  5. v 切换回进入edebug之前的状态。edebug-view-outside
+  6. p 时间切换回进入edebug之前的状态，时间为1秒,前缀为N则时间为N秒。edebug-bounce-point
+  *Edebug*buffer
+  E可进入*Edebug*buffer，在此buffer里可以进入表达式求值。
+  C-j和C-x C-e都可以对当前点之前的表达式求值，区别在于前者结果显示在buffer中，后者结果显示在minbuffer中。
+* Tricks
+** 用or来替代if not
+   逻辑运算符and or 都是短路运算符，即遇到一个符合条件的就不再执行下面的语句，可以利用此特性来实现if not。
+   (or A B) <=> (if (not A) B) 如果A为假则执行B
+   例如一个函数的默认参数可以用此来实现，
+#+begin_example
+(defun fun(A &optional B)
+        (or B (setq B C))       ;如果没有B则设置B为C，否则 B不变
+        ....
+)
+#+end_example
 * 分享/评论
 #+html:<a class="btn btn-primary" href="https://raw.github.com/visayafan/visayafan.github.com/master/Others/o/Elisp.org">查看Org源码</a>
 #+include "../../disqus.org"

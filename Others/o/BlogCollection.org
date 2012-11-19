@@ -9,5 +9,8 @@
 ** Emacs
    1. [[http://batsov.com/articles/2012/02/19/color-theming-in-emacs-reloaded/][Color Theming in Emacs: Reloaded]]
 
+* Ubuntu
+  1. [[http://xlambda.com/blog/2012/03/04/manage-gnome-shell-extensions/][Gnome-shell扩展管理]]
+  2. [[http://xlambda.com/blog/2011/11/13/tinker-with-gnome-shell/][折腾gnome-shell]]
 * 其它
   1. [[http://mo.dbxdb.com/][下载Youtube字幕]]
