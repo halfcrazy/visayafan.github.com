@@ -44,6 +44,7 @@ grep -nH -e "pattern" filename
 * occur, re-builder, multi-occur, multi-occur-in-matching-buffers
   list-matching-lines是occur的别名，列出当前buffer中所有满足指定正则表达式的行。
   在进行正则替换行为确保万无一失，先检查一下，occur后输入regexp则会显示所有匹配内容。
+  加前缀可以显示包含之后/之前N行的额外行。
   与occur另开一buffer显示匹配不同，re-builder实行动态匹配，即一边在RE-Builder中输入regexp一边匹配（此功能很不错）。
   在re-builder中C-c C-e可以进入子模式匹配 0―9分别代表子匹配模式，用q退出；还可以C-c TAB来选择正则表达式的语法，默认是read，此模式下需要的转义字符很多可以试下string模式。
   前面两个都是在当前buffer中匹配，而multi-occur/multi-occur-in-matching-buffers是在多个buffer中匹配
@@ -331,6 +332,49 @@ d<script type="text/javascript"> $(function() {$('a.lightbox').lightBox();}); </
 #+end_src
 * win7下find问题
   尽管安装了GNUWin32但使用rgrep时仍然出问题，其实问题在于Win7自带的find命令，把system32下的find.exe改个名即可
+* CC-Mode
+  [[./CC-Mode.html][CC-Mode]]
+* Emacs Client启动后字体不正常和tabber不能使用解决办法
+#+begin_src lisp
+;; 解决emacs client字体问题
+(setq window-system-default-frame-alist
+      '((x
+         (font . "-unknown-文泉驿等宽微米黑-normal-normal-normal-*-12-*-*-*-*-0-iso10646-1"))
+        (nil
+         (font . "-unknown-文泉驿等宽微米黑-normal-normal-normal-*-12-*-*-*-*-0-iso10646-1")
+         (menu-bar-lines . 0) (tool-bar-lines . 0))))
+
+;; http://emacswiki.org/emacs/TabBarMode 上抄来的代码，解决emacsclient下tabber不能使用问题
+
+;; Allow tab-bar-mode to be frame-local.  This is deprecated and exploits
+;; the fact that `default-header-line-format' is an alias of the global
+;; value of `header-line-format'. Tested with Emacs 24.1.
+(make-variable-frame-local 'default-header-line-format)
+;; These two are needed as the aliased frame-local value isn't recognized
+;; unless the variable is explicitly accessed once. Do so on those two
+;; occasions where this matters. Notably, `handle-switch-frame' need not
+;; be advised.
+(defadvice select-frame (after adapt-select-frame-parameters activate)
+  "Fix frame-local value of `default-header-line-format'."
+  (interactive)
+  default-header-line-format)
+;; This absolutely must be after delete-frame, so
+;; `delete-frame-functions' won't work.
+(defadvice delete-frame (after adapt-delete-frame-parameters activate)
+  "Fix frame-local value of `default-header-line-format'."
+  (interactive)
+  default-header-line-format)
+;; Example usage: Set per-terminal (frame-local) options.
+(defun customize-terminal-frame (frame)
+  (cond
+   ((frame-parameter frame 'window-system)
+    (set-frame-parameter frame 'default-header-line-format '(:eval (tabbar-line)))
+    (tabbar-init-tabsets-store))
+   (t
+    (set-frame-parameter frame 'default-header-line-format nil)
+    (set-frame-parameter frame 'menu-bar-lines 0))))
+(add-hook 'after-make-frame-functions 'customize-terminal-frame)
+#+end_src
 * 分享/评论
 #+html:<a class="btn btn-primary" href="https://raw.github.com/visayafan/visayafan.github.com/master/Others/o/Emacs.org">View Org Source</a>
 #+include "../../disqus.org"

@@ -1019,7 +1019,7 @@
         max-width: 9em;
         font-weight: normal;
         padding-left: 0.5em;
-        padding-top: 0.5em;
+        /* padding-top: 0.5em; */
         padding-bottom: 0.05em;
         background:white;
     }

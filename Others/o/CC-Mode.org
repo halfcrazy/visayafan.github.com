@@ -1,0 +1,28 @@
+#+OPTIONS: ^:{} _:{} num:t toc:t \n:t
+#+include "../../template.org"
+#+title:CC-Mode
+
+* Commands
+** indent
+   1. C-j newline-and-indent
+   2. C-M-q c-indent-exp 此时光标必须在左括号上
+   3. C-c C-q c-indent-defun 缩进函数/类/宏=> C-M-h C-M-\
+   4. C-M-\ indent-region
+   5. C-M-h c-mark-function 标记函数
+** comment
+   1. C-c C-c comment-region
+   2. M-; comment-dwin 在行尾插入注释
+      C-u M-; 删除当前行注释
+   3. M-j 新注释行
+** movement
+   1. C-M-a c-beginning-of-defun
+   2. C-M-e c-end-of-defun
+   3. M-a c-beginning-of-statement
+   4. M-e C-end-of-statement
+   5. C-c C-u c-up-conditional 预处理向前一个条件语句#elif，忽略#else
+   6. M-x c-down-conditional
+   7. M-x c-up-conditional-with-else 不忽略#else
+   8. M-x c-down-conditional-with-else
+** Others
+   1. C-c . c-set-style设置编程风格
+   2. C-c C-\ c-blackslash-region 选中区域每行末尾插入/对齐/删除blackslash，对多行宏有用
