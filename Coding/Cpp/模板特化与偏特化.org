@@ -33,12 +33,47 @@ class Widget<Window, MyController>            //MyControllerÊÇ¾ßÌåµÄÀà,ÊÇÌØ»¯¶¨Ò
   Ä£°åµÄÆ«ÌØ»¯ÄÜÁ¦ºÜÇ¿´ó.µ±ÄãÊµÀı»¯Ò»¸öÄ£°åÊ±,±àÒëÆ÷»á°ÑÄ¿Ç°´æÔÚµÄÆ«ÌØ»¯Ä£°åºÍÈ«ÌØ»¯Ä£°å×ö±È½Ï,²¢ÕÒ³öÆäÖĞ×îºÏÊÊ¡¢×îÆ¥ÅäµÄÊµÏÖ.
   ÕâÑù,Áé»îĞÔ¾ÍºÜ´ó.
   Ä£°åµÄÆ«ÌØ»¯»úÖÆ²»ÄÜÓÃÔÚº¯ÊıÉíÉÏ,²»ÂÛ³ÉÔ±º¯Êı»¹ÊÇ·Ç³ÉÔ±º¯Êı.
+* Àı×Ó
+#+begin_src c++
+#include <iostream>
+#include <typeinfo>
+using namespace std;
+
+template <typename T>
+class A
+{
+public:
+     A(){
+          cout<<"first:"<<typeid(T).name()<<endl;
+     }
+};
+
+template <typename T>
+class A<T*>{
+public:
+     A(){
+          cout<<"second:"<<typeid(T).name()<<endl;
+     }
+     void test(){
+          T t=3;
+          t=4;
+     }
+};
+
+int main(int argc, char *argv[])
+{
+     A<int> a;                  // first
+     A<int*> aa;                // second
+     aa.test();
+     A<const int*> aaa;         // second
+     // aaa.test();             //error ÒòÎª const int³õÊ¼»¯ºó±ã²»ÔÊĞíĞŞ¸Ä¡£
+     return 0;
+}
+#+end_src
 * ×¢Òâ
 1. ËäÈ»Äã¿ÉÒÔÈ«ÌØ»¯ÀàÄ£°åÖĞµÄ³ÉÔ±º¯Êı,µ«ÊÇÄã²»ÄÜÆ«ÌØ»¯ËûÃÇ;
 2. Äã²»ÄÜÆ«ÌØ»¯ÃüÃû¿Õ¼ä¼¶±ğ(namespace-level)µÄº¯Êı(non-member).×î½Ó½ü"ÃüÃû¿Õ¼ä¼¶±ğÄ£°åº¯Êı"µÄÆ«ÌØ»¯»úÖÆ¾ÍÊÇº¯ÊıÖØÔØ,ÄÇ¾ÍÒâÎ¶×ÅÄã¶Ô"º¯Êı²ÎÊı"(¶ø·Ç·µ»ØÖµÀàĞÍ»òÄÚ²¿ËùÓÃÀàĞÍ)ÓĞºÜ¾«ÖÂµÄÌØ»¯ÄÜÁ¦;
 3. ÌØ»¯»òÈ«ÌØ»¯Ê±,templateºóÃæµÄ¼âÀ¨ºÅÖĞ²»´øÈÎºÎÄÚÈİ;
-#+BEGIN_HTML
-<script src="../../Layout/JS/disqus-comment.js"></script>
-<div id="disqus_thread">
-</div>
-#+END_HTML
+
+#+html:<a class="btn btn-primary" href="https://raw.github.com/visayafan/visayafan.github.com/master/Coding/Cpp/Ä£°åÌØ»¯ÓëÆ«ÌØ»¯.org">View Org Source</a>
+#+include "../../disqus.org"

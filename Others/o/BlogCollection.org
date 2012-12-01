@@ -12,5 +12,6 @@
 * Ubuntu
   1. [[http://xlambda.com/blog/2012/03/04/manage-gnome-shell-extensions/][Gnome-shell扩展管理]]
   2. [[http://xlambda.com/blog/2011/11/13/tinker-with-gnome-shell/][折腾gnome-shell]]
+  3. [[http://blog.csdn.net/sun_168/article/details/8046164][ 重装win系统后修复ubuntu的grub引导程序]]
 * 其它
   1. [[http://mo.dbxdb.com/][下载Youtube字幕]]

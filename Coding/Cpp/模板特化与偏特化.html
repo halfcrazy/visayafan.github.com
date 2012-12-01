@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="gb18030"?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
                "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-CN" xml:lang="zh-CN">
 <head>
 <title>模板特化与偏特化</title>
 <meta http-equiv="Content-Type" content="text/html;charset=gb18030"/>
 <meta name="title" content="模板特化与偏特化"/>
 <meta name="generator" content="Org-mode"/>
-<meta name="generated" content="2012-10-27 05:27:12 CST"/>
-<meta name="author" content="visaya fan"/>
+<meta name="generated" content="2012-11-27 22:27:58 CST"/>
+<meta name="author" content="visayafan"/>
 <meta name="description" content=""/>
 <meta name="keywords" content=""/>
-<div id="org-div-comments"><a href="../../index.html#cpp">主页</a><br/><a href="#disqus_thread">评论</a></div>
+
 
 
 </head>
@@ -22,18 +22,21 @@
 <h1 class="title">模板特化与偏特化</h1>
 
 
-<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"> </script>
+<!-- <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"> </script> -->
+<link rel="stylesheet" type="text/css" href="../../Layout/CSS/bootstrap_old.css" />
 <link rel="stylesheet" type="text/css" href="../../Layout/CSS/vf.css" />
+<script src="../../Layout/JS/jquery_1.7.1.js"></script>
 <script src="../../Layout/JS/bootstrap_old.js"></script>
 
 
 <div id="table-of-contents">
-<h2>TOC</h2>
+<h2>目录</h2>
 <div id="text-table-of-contents">
 <ul>
 <li><a href="#sec-1">1 template specialization 模板特化</a></li>
 <li><a href="#sec-2">2 template partial specialization 模板偏特化</a></li>
-<li><a href="#sec-3">3 注意</a></li>
+<li><a href="#sec-3">3 例子</a></li>
+<li><a href="#sec-4">4 注意</a></li>
 </ul>
 </div>
 </div>
@@ -97,8 +100,55 @@
 </div>
 
 <div id="outline-container-3" class="outline-2">
-<h2 id="sec-3"><span class="section-number-2">3</span> 注意</h2>
+<h2 id="sec-3"><span class="section-number-2">3</span> 例子</h2>
 <div class="outline-text-2" id="text-3">
+
+
+
+
+<pre class="src src-c++"><span style="color: #483d8b;">#include</span> <span style="color: #8b2252;">&lt;iostream&gt;</span>
+<span style="color: #483d8b;">#include</span> <span style="color: #8b2252;">&lt;typeinfo&gt;</span>
+<span style="color: #a020f0;">using</span> <span style="color: #a020f0;">namespace</span> <span style="color: #008b8b;">std</span>;
+
+<span style="color: #a020f0;">template</span> &lt;<span style="color: #a020f0;">typename</span> <span style="color: #228b22;">T</span>&gt;
+<span style="color: #a020f0;">class</span> <span style="color: #228b22;">A</span>
+{
+<span style="color: #a020f0;">public</span>:
+     <span style="color: #0000ff;">A</span>(){
+          cout&lt;&lt;<span style="color: #8b2252;">"first:"</span>&lt;&lt;<span style="color: #a020f0;">typeid</span>(<span style="color: #228b22;">T</span>).name()&lt;&lt;endl;
+     }
+};
+
+<span style="color: #a020f0;">template</span> &lt;<span style="color: #a020f0;">typename</span> <span style="color: #228b22;">T</span>&gt;
+<span style="color: #a020f0;">class</span> <span style="color: #228b22;">A</span>&lt;<span style="color: #228b22;">T</span>*&gt;{
+<span style="color: #a020f0;">public</span>:
+     <span style="color: #0000ff;">A</span>(){
+          cout&lt;&lt;<span style="color: #8b2252;">"second:"</span>&lt;&lt;<span style="color: #a020f0;">typeid</span>(<span style="color: #228b22;">T</span>).name()&lt;&lt;endl;
+     }
+     <span style="color: #228b22;">void</span> <span style="color: #0000ff;">test</span>(){
+          <span style="color: #228b22;">T</span> <span style="color: #a0522d;">t</span>=3;
+          t=4;
+     }
+};
+
+<span style="color: #228b22;">int</span> <span style="color: #0000ff;">main</span>(<span style="color: #228b22;">int</span> <span style="color: #a0522d;">argc</span>, <span style="color: #228b22;">char</span> *<span style="color: #a0522d;">argv</span>[])
+{
+     <span style="color: #228b22;">A</span>&lt;<span style="color: #228b22;">int</span>&gt; <span style="color: #a0522d;">a</span>;                  <span style="color: #b22222;">// </span><span style="color: #b22222;">first</span>
+     <span style="color: #228b22;">A</span>&lt;<span style="color: #228b22;">int</span>*&gt; <span style="color: #a0522d;">aa</span>;                <span style="color: #b22222;">// </span><span style="color: #b22222;">second</span>
+     aa.test();
+     <span style="color: #228b22;">A</span>&lt;<span style="color: #a020f0;">const</span> <span style="color: #228b22;">int</span>*&gt; <span style="color: #a0522d;">aaa</span>;         <span style="color: #b22222;">// </span><span style="color: #b22222;">second</span>
+     <span style="color: #b22222;">// </span><span style="color: #b22222;">aaa.test();             //error &#22240;&#20026; const int&#21021;&#22987;&#21270;&#21518;&#20415;&#19981;&#20801;&#35768;&#20462;&#25913;&#12290;</span>
+     <span style="color: #a020f0;">return</span> 0;
+}
+</pre>
+
+</div>
+
+</div>
+
+<div id="outline-container-4" class="outline-2">
+<h2 id="sec-4"><span class="section-number-2">4</span> 注意</h2>
+<div class="outline-text-2" id="text-4">
 
 <ol>
 <li>虽然你可以全特化类模板中的成员函数,但是你不能偏特化他们;<br/>
@@ -110,9 +160,15 @@
 </ol>
 
 
+
+
+<a class="btn btn-primary" href="https://raw.github.com/visayafan/visayafan.github.com/master/Coding/Cpp/模板特化与偏特化.org">View Org Source</a>
+<a class="bshareDiv" href="http://www.bshare.cn/share">分享按钮</a><script type="text/javascript" charset="utf-8" src="http://static.bshare.cn/b/buttonLite.js#uuid=&amp;style=10&amp;bgcolor=Blue"></script>
+<br/>
 <script src="../../Layout/JS/disqus-comment.js"></script>
 <div id="disqus_thread">
 </div>
+
 </div>
 </div>
 </div>

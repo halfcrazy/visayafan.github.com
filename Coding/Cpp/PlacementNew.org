@@ -1,0 +1,33 @@
+#+OPTIONS: ^:{} _:{} num:t toc:t \n:t
+#+include "../../template.org"
+#+title:Placement New
+
+placement new与new不同之处在于：placement new是在已经分配好的空间上初始化对象并返回一个对象指针，而new需要先分配空间再初始化再返回指针。
+由于new需要查找合适空间来分配，而这个过程有时候很费时，所以对时间要求很高的程序中可以考虑placement new。
+
+#+begin_src c++
+#include <new>
+
+class Test
+{
+public:
+     Test(){}
+     Test(int){}
+};
+
+int main(int argc, char *argv[])
+{
+     char cBuffer[sizeof(Test)*10+100];
+     Test *pTestBuffer = (Test*)cBuffer;
+
+     Test *pFirst = new(pTestBuffer) Test;
+     Test *pSecond = new(pTestBuffer+1) Test(10);
+     new(pTestBuffer+2) Test;
+     Test *pForth = new(pTestBuffer+3) Test();
+     Test *pArray = new(pTestBuffer+4) Test[6];
+     return 0;
+}
+#+end_src
+
+析构用placement new 分配的对象时需要手动调用其析构函数： pFirst->~Test();
+此时空间并没有被释放，只是对象被析构了。可以继续使用此空间，因此对于需要频繁分配释放内存的程序来说用placement new比new速度要快。

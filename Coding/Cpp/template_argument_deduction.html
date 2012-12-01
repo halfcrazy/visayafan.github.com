@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="gb18030"?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
                "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-CN" xml:lang="zh-CN">
 <head>
 <title>模板参数推导</title>
 <meta http-equiv="Content-Type" content="text/html;charset=gb18030"/>
 <meta name="title" content="模板参数推导"/>
 <meta name="generator" content="Org-mode"/>
-<meta name="generated" content="2012-10-27 05:27:23 CST"/>
-<meta name="author" content="visaya fan"/>
+<meta name="generated" content="2012-11-27 21:54:39 CST"/>
+<meta name="author" content="visayafan"/>
 <meta name="description" content=""/>
 <meta name="keywords" content=""/>
-<div id="org-div-comments"><a href="../../index.html#cpp">主页</a><br/><a href="#disqus_thread">评论</a></div>
+
 
 
 </head>
@@ -22,13 +22,15 @@
 <h1 class="title">模板参数推导</h1>
 
 
-<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"> </script>
+<!-- <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"> </script> -->
+<link rel="stylesheet" type="text/css" href="../../Layout/CSS/bootstrap_old.css" />
 <link rel="stylesheet" type="text/css" href="../../Layout/CSS/vf.css" />
+<script src="../../Layout/JS/jquery_1.7.1.js"></script>
 <script src="../../Layout/JS/bootstrap_old.js"></script>
 
 
 <div id="table-of-contents">
-<h2>TOC</h2>
+<h2>目录</h2>
 <div id="text-table-of-contents">
 <ul>
 <li><a href="#sec-1">1 模板参数推导在迭代器中的使用</a></li>
@@ -150,8 +152,8 @@ g(7);      <span style="color: #b22222;">// </span><span style="color: #b22222;"
 </p>
 
 
-<pre class="src src-c++"><span style="color: #7a378b;">#include</span> <span style="color: #8b2252;">&lt;iostream&gt;</span>
-<span style="color: #7a378b;">#include</span> <span style="color: #8b2252;">&lt;typeinfo&gt;</span>
+<pre class="src src-c++"><span style="color: #483d8b;">#include</span> <span style="color: #8b2252;">&lt;iostream&gt;</span>
+<span style="color: #483d8b;">#include</span> <span style="color: #8b2252;">&lt;typeinfo&gt;</span>
 <span style="color: #a020f0;">using</span> <span style="color: #a020f0;">namespace</span> <span style="color: #008b8b;">std</span>;
 
 <span style="color: #a020f0;">template</span> &lt;<span style="color: #a020f0;">typename</span> <span style="color: #228b22;">T</span>&gt;
@@ -187,9 +189,15 @@ g(7);      <span style="color: #b22222;">// </span><span style="color: #b22222;"
 </pre>
 
 
+
+
+<a class="btn btn-primary" href="https://raw.github.com/visayafan/visayafan.github.com/master/Coding/Cpp/template_argument_deduction.org">View Org Source</a>
+<a class="bshareDiv" href="http://www.bshare.cn/share">分享按钮</a><script type="text/javascript" charset="utf-8" src="http://static.bshare.cn/b/buttonLite.js#uuid=&amp;style=10&amp;bgcolor=Blue"></script>
+<br/>
 <script src="../../Layout/JS/disqus-comment.js"></script>
 <div id="disqus_thread">
 </div>
+
 </div>
 </div>
 </div>

@@ -125,8 +125,5 @@ int main(int argc, char *argv[])
 }
 #+END_SRC
 
-#+BEGIN_HTML
-<script src="../../Layout/JS/disqus-comment.js"></script>
-<div id="disqus_thread">
-</div>
-#+END_HTML
+#+html:<a class="btn btn-primary" href="https://raw.github.com/visayafan/visayafan.github.com/master/Coding/Cpp/template_argument_deduction.org">View Org Source</a>
+#+include "../../disqus.org"

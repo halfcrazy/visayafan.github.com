@@ -1,0 +1,422 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+               "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-CN" xml:lang="zh-CN">
+<head>
+<title>STL:序列式容器</title>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
+<meta name="title" content="STL:序列式容器"/>
+<meta name="generator" content="Org-mode"/>
+<meta name="generated" content="2012-12-02 00:24:50 CST"/>
+<meta name="author" content="visayafan"/>
+<meta name="description" content=""/>
+<meta name="keywords" content=""/>
+
+
+
+</head>
+<body>
+
+
+<div id="content">
+<h1 class="title">STL:序列式容器</h1>
+
+
+<!-- <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"> </script> -->
+<link rel="stylesheet" type="text/css" href="../../Layout/CSS/bootstrap_old.css" />
+<link rel="stylesheet" type="text/css" href="../../Layout/CSS/too_many_toc.css" />
+<script src="../../Layout/JS/jquery_1.7.1.js"></script>
+<script src="../../Layout/JS/bootstrap_old.js"></script>
+
+
+
+<div id="table-of-contents">
+<h2>目录</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#sec-1">1 vector</a></li>
+<li><a href="#sec-2">2 List</a>
+<ul>
+<li><a href="#sec-2-1">2.1 push_front, push_back, pop_front, pop_back</a></li>
+<li><a href="#sec-2-2">2.2 sort</a></li>
+<li><a href="#sec-2-3">2.3 splice</a></li>
+<li><a href="#sec-2-4">2.4 merge</a></li>
+<li><a href="#sec-2-5">2.5 unique</a></li>
+<li><a href="#sec-2-6">2.6 swap</a></li>
+<li><a href="#sec-2-7">2.7 erase</a></li>
+<li><a href="#sec-2-8">2.8 clear</a></li>
+<li><a href="#sec-2-9">2.9 reverse</a></li>
+</ul>
+</li>
+<li><a href="#sec-3">3 deque</a></li>
+<li><a href="#sec-4">4 queue, stack</a></li>
+<li><a href="#sec-5">5 priority_queue</a>
+<ul>
+<li><a href="#sec-5-1">5.1 make_heap</a></li>
+<li><a href="#sec-5-2">5.2 push_heap</a></li>
+<li><a href="#sec-5-3">5.3 pop_heap</a></li>
+<li><a href="#sec-5-4">5.4 sort_heap</a></li>
+<li><a href="#sec-5-5">5.5 empty</a></li>
+<li><a href="#sec-5-6">5.6 size</a></li>
+<li><a href="#sec-5-7">5.7 top</a></li>
+<li><a href="#sec-5-8">5.8 push</a></li>
+<li><a href="#sec-5-9">5.9 pop</a></li>
+</ul>
+</li>
+<li><a href="#sec-6">6 分享/评论</a></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-1" class="outline-2">
+<h2 id="sec-1"><span class="section-number-2">1</span> vector</h2>
+<div class="outline-text-2" id="text-1">
+
+</div>
+
+</div>
+
+<div id="outline-container-2" class="outline-2">
+<h2 id="sec-2"><span class="section-number-2">2</span> List</h2>
+<div class="outline-text-2" id="text-2">
+
+
+</div>
+
+<div id="outline-container-2-1" class="outline-3">
+<h3 id="sec-2-1"><span class="section-number-3">2.1</span> push_front, push_back, pop_front, pop_back</h3>
+<div class="outline-text-3" id="text-2-1">
+
+
+
+
+<pre class="src src-c++"><span style="color: #228b22;">void</span> <span style="color: #0000ff;">push_back</span>( <span style="color: #a020f0;">const</span> <span style="color: #228b22;">T</span>&amp; <span style="color: #a0522d;">value</span> );
+<span style="color: #228b22;">void</span> <span style="color: #0000ff;">push_front</span>( <span style="color: #a020f0;">const</span> <span style="color: #228b22;">T</span>&amp; <span style="color: #a0522d;">value</span> );
+<span style="color: #228b22;">void</span> <span style="color: #0000ff;">pop_front</span>();
+<span style="color: #228b22;">void</span> <span style="color: #0000ff;">pop_back</span>();
+</pre>
+
+</div>
+
+</div>
+
+<div id="outline-container-2-2" class="outline-3">
+<h3 id="sec-2-2"><span class="section-number-3">2.2</span> sort</h3>
+<div class="outline-text-3" id="text-2-2">
+
+
+
+
+<pre class="src src-c++"><span style="color: #228b22;">void</span> <span style="color: #0000ff;">sort</span>();
+<span style="color: #a020f0;">template</span>&lt; <span style="color: #a020f0;">class</span> <span style="color: #228b22;">Compare</span> &gt; 
+<span style="color: #228b22;">void</span> <span style="color: #0000ff;">sort</span>( <span style="color: #228b22;">Compare</span> <span style="color: #a0522d;">comp</span> );
+</pre>
+
+<p>
+  对链表进行排序。<br/>
+</p></div>
+
+</div>
+
+<div id="outline-container-2-3" class="outline-3">
+<h3 id="sec-2-3"><span class="section-number-3">2.3</span> splice</h3>
+<div class="outline-text-3" id="text-2-3">
+
+
+
+
+<pre class="src src-c++"><span style="color: #b22222;">// </span><span style="color: #b22222;">&#23558;&#21015;&#34920;other&#25509;&#21040;pos&#21069;&#38754;</span>
+<span style="color: #228b22;">void</span> <span style="color: #0000ff;">splice</span>(<span style="color: #228b22;">const_iterator</span> <span style="color: #a0522d;">pos</span>, <span style="color: #228b22;">list</span>&amp; <span style="color: #a0522d;">other</span>);
+<span style="color: #b22222;">// </span><span style="color: #b22222;">&#23558;&#21015;&#34920;other&#20013;it&#25351;&#21521;&#30340;&#32467;&#28857;&#25509;&#21040;pos&#21069;&#38754;</span>
+<span style="color: #228b22;">void</span> <span style="color: #0000ff;">splice</span>(<span style="color: #228b22;">const_iterator</span> <span style="color: #a0522d;">pos</span>, <span style="color: #228b22;">list</span>&amp; <span style="color: #a0522d;">other</span>, <span style="color: #228b22;">const_iterator</span> <span style="color: #a0522d;">it</span>);
+<span style="color: #b22222;">// </span><span style="color: #b22222;">&#23558;&#21015;&#34920;other&#21306;&#38388;[first,last)&#30340;&#20803;&#32032;&#25509;&#21040;pos&#21069;&#38754;</span>
+<span style="color: #228b22;">void</span> <span style="color: #0000ff;">splice</span>(<span style="color: #228b22;">const_iterator</span> <span style="color: #a0522d;">pos</span>, <span style="color: #228b22;">list</span>&amp; <span style="color: #a0522d;">other</span>, 
+            <span style="color: #228b22;">const_iterator</span> <span style="color: #a0522d;">first</span>, <span style="color: #228b22;">const_iterator</span> <span style="color: #a0522d;">last</span>);
+</pre>
+
+</div>
+
+</div>
+
+<div id="outline-container-2-4" class="outline-3">
+<h3 id="sec-2-4"><span class="section-number-3">2.4</span> merge</h3>
+<div class="outline-text-3" id="text-2-4">
+
+
+
+
+
+<pre class="src src-c++"><span style="color: #228b22;">void</span> <span style="color: #0000ff;">merge</span>( <span style="color: #228b22;">list</span>&amp; <span style="color: #a0522d;">other</span> );
+<span style="color: #a020f0;">template</span> &lt;<span style="color: #a020f0;">class</span> <span style="color: #228b22;">Compare</span>&gt; 
+<span style="color: #228b22;">void</span> <span style="color: #0000ff;">merge</span>( <span style="color: #228b22;">list</span>&amp; <span style="color: #a0522d;">other</span>, <span style="color: #228b22;">Compare</span> <span style="color: #a0522d;">comp</span> );
+</pre>
+
+<p>
+  使用该函数的前提是两个列表已经排好序。将列表other整合到调用者列表上。<br/>
+</p></div>
+
+</div>
+
+<div id="outline-container-2-5" class="outline-3">
+<h3 id="sec-2-5"><span class="section-number-3">2.5</span> unique</h3>
+<div class="outline-text-3" id="text-2-5">
+
+
+
+
+<pre class="src src-c++"><span style="color: #228b22;">void</span> <span style="color: #0000ff;">unique</span>();  
+</pre>
+
+<p>
+  去除 <b>连续的</b> 重复元素。<br/>
+</p></div>
+
+</div>
+
+<div id="outline-container-2-6" class="outline-3">
+<h3 id="sec-2-6"><span class="section-number-3">2.6</span> swap</h3>
+<div class="outline-text-3" id="text-2-6">
+
+
+
+
+<pre class="src src-c++"><span style="color: #228b22;">void</span> <span style="color: #0000ff;">swap</span>( <span style="color: #228b22;">list</span>&amp; <span style="color: #a0522d;">other</span> );
+</pre>
+
+<p>
+  和other交换元素。只需要改变指针即可，常数时间完成。<br/>
+</p></div>
+
+</div>
+
+<div id="outline-container-2-7" class="outline-3">
+<h3 id="sec-2-7"><span class="section-number-3">2.7</span> erase</h3>
+<div class="outline-text-3" id="text-2-7">
+
+
+
+
+<pre class="src src-c++"><span style="color: #228b22;">iterator</span> <span style="color: #0000ff;">erase</span>( <span style="color: #228b22;">iterator</span> <span style="color: #a0522d;">loc</span> );
+<span style="color: #228b22;">iterator</span> <span style="color: #0000ff;">erase</span>( <span style="color: #228b22;">iterator</span> <span style="color: #a0522d;">start</span>, <span style="color: #228b22;">iterator</span> <span style="color: #a0522d;">end</span> );
+</pre>
+
+<p>
+  删除指定位置或者区间的元素。<br/>
+</p></div>
+
+</div>
+
+<div id="outline-container-2-8" class="outline-3">
+<h3 id="sec-2-8"><span class="section-number-3">2.8</span> clear</h3>
+<div class="outline-text-3" id="text-2-8">
+
+<p>   等价于erase(List.begin(), List.end());<br/>
+</p></div>
+
+</div>
+
+<div id="outline-container-2-9" class="outline-3">
+<h3 id="sec-2-9"><span class="section-number-3">2.9</span> reverse</h3>
+<div class="outline-text-3" id="text-2-9">
+
+<p>   将列表调转方向。迭代器仍是原来结点的迭代器。<br/>
+</p></div>
+</div>
+
+</div>
+
+<div id="outline-container-3" class="outline-2">
+<h2 id="sec-3"><span class="section-number-2">3</span> deque</h2>
+<div class="outline-text-2" id="text-3">
+
+<p>  deque与vector类似，不同之处在于不仅可以push_back，pop_back还可以push_front, pop_front。其内部实际上是由逻辑连续但实际分散的块构成（缓冲区）。为了区分边界，迭代器中不仅要包含当前元素的指针(cur)，还要包括所在块（缓冲区）的起始和结尾指针(first, last)。<br/>
+  用于连接各个缓冲区的是中央控制器（map)，其实是个缓冲区指针的一维数组。迭代器中还包含一个指向相应元素所在缓冲区map中元素的指针，以便迭代器进行 ++, &ndash;, +n操作时方便从一个缓冲区跳到另一个缓冲区中。<br/>
+  所有缓冲区只有start和finish对应的缓冲区可以有空闲，二者之间的缓冲区（如果有的话）都是满的。<br/>
+  如果中央控制器要更新时尽量使用中间空间，尽量使前插入和后插入有空间可用。<br/>
+</p></div>
+
+</div>
+
+<div id="outline-container-4" class="outline-2">
+<h2 id="sec-4"><span class="section-number-2">4</span> queue, stack</h2>
+<div class="outline-text-2" id="text-4">
+
+<p>  queue FIFO，对deque进行改装，push调用了deque的push_back，而pop调用了pop_front.<br/>
+  stack FILO, 也是对deque改装，push调用了push_back, pop调用了pop_back.<br/>
+  这一类由其它组件改造而成的组件称之为 adapter 适配器/配接器。<br/>
+</p></div>
+
+</div>
+
+<div id="outline-container-5" class="outline-2">
+<h2 id="sec-5"><span class="section-number-2">5</span> priority_queue</h2>
+<div class="outline-text-2" id="text-5">
+
+<p>  其内部实际原理是用 max heap。<br/>
+  algorithm.h中包含了几个用于构造最大堆的函数。<br/>
+</p>
+
+
+<pre class="src src-c++"><span style="color: #228b22;">int</span> <span style="color: #a0522d;">ary</span>[6] = {3, 4, 2, 5, 6, 8};
+<span style="color: #228b22;">vector</span>&lt;<span style="color: #228b22;">int</span>&gt; <span style="color: #0000ff;">ivec</span>(ary, ary+6);
+make_heap(ivec.begin(), ivec.end());
+<span style="color: #a020f0;">for</span>(<span style="color: #008b8b;">vector</span>&lt;<span style="color: #228b22;">int</span>&gt;::<span style="color: #228b22;">iterator</span> <span style="color: #a0522d;">iter</span>=ivec.begin(); iter!=ivec.end(); ++iter)
+     cout&lt;&lt;*iter&lt;&lt;<span style="color: #8b2252;">' '</span>;     <span style="color: #b22222;">// </span><span style="color: #b22222;">8 6 3 5 4 2 </span>
+cout&lt;&lt;endl;
+pop_heap(ivec.begin(), ivec.end());
+<span style="color: #a020f0;">for</span>(<span style="color: #008b8b;">vector</span>&lt;<span style="color: #228b22;">int</span>&gt;::<span style="color: #228b22;">iterator</span> <span style="color: #a0522d;">iter</span>=ivec.begin(); iter!=ivec.end(); ++iter)
+     cout&lt;&lt;*iter&lt;&lt;<span style="color: #8b2252;">' '</span>;     <span style="color: #b22222;">// </span><span style="color: #b22222;">6 5 3 2 4 8</span>
+sort_heap(ivec.begin(), ivec.end()-1); <span style="color: #b22222;">// </span><span style="color: #b22222;">ivec&#26368;&#21518;&#19968;&#20010;&#20803;&#32032;&#19981;&#20877;&#26159;&#22534;&#20013;&#30340;&#20803;&#32032;</span>
+<span style="color: #a020f0;">for</span>(<span style="color: #008b8b;">vector</span>&lt;<span style="color: #228b22;">int</span>&gt;::<span style="color: #228b22;">iterator</span> <span style="color: #a0522d;">iter</span>=ivec.begin(); iter!=ivec.end()-1; ++iter)
+     cout&lt;&lt;*iter&lt;&lt;<span style="color: #8b2252;">' '</span>;     <span style="color: #b22222;">// </span><span style="color: #b22222;">2 3 4 5 6</span>
+</pre>
+
+
+</div>
+
+<div id="outline-container-5-1" class="outline-3">
+<h3 id="sec-5-1"><span class="section-number-3">5.1</span> make_heap</h3>
+<div class="outline-text-3" id="text-5-1">
+
+<p>   将一个数组或容器进行重新排序生成相应的最大堆。<br/>
+</p></div>
+
+</div>
+
+<div id="outline-container-5-2" class="outline-3">
+<h3 id="sec-5-2"><span class="section-number-3">5.2</span> push_heap</h3>
+<div class="outline-text-3" id="text-5-2">
+
+
+
+
+<pre class="src src-c++"><span style="color: #a020f0;">template</span>&lt; <span style="color: #a020f0;">class</span> <span style="color: #228b22;">RandomAccessIterator</span> &gt;
+<span style="color: #228b22;">void</span> <span style="color: #0000ff;">push_heap</span>( <span style="color: #228b22;">RandomAccessIterator</span> <span style="color: #a0522d;">first</span>, <span style="color: #228b22;">RandomAccessIterator</span> <span style="color: #a0522d;">last</span> );
+<span style="color: #a020f0;">template</span>&lt; <span style="color: #a020f0;">class</span> <span style="color: #228b22;">RandomAccessIterator</span>, <span style="color: #a020f0;">class</span> <span style="color: #228b22;">Compare</span> &gt;
+<span style="color: #228b22;">void</span> <span style="color: #0000ff;">push_heap</span>( <span style="color: #228b22;">RandomAccessIterator</span> <span style="color: #a0522d;">first</span>, <span style="color: #228b22;">RandomAccessIterator</span> <span style="color: #a0522d;">last</span>,
+                <span style="color: #228b22;">Compare</span> <span style="color: #a0522d;">comp</span> );
+</pre>
+
+<p>
+   向最大堆中添加一个元素（前提是参与最大堆的容器是可扩展的，vector可以，但array就不可以）。<br/>
+   其中[first,last)区间内容必须是堆，否则结果不定。<br/>
+</p></div>
+
+</div>
+
+<div id="outline-container-5-3" class="outline-3">
+<h3 id="sec-5-3"><span class="section-number-3">5.3</span> pop_heap</h3>
+<div class="outline-text-3" id="text-5-3">
+
+
+
+
+<pre class="src src-c++"><span style="color: #a020f0;">template</span>&lt; <span style="color: #a020f0;">class</span> <span style="color: #228b22;">RandomAccessIterator</span> &gt;
+<span style="color: #228b22;">void</span> <span style="color: #0000ff;">pop_heap</span>( <span style="color: #228b22;">RandomAccessIterator</span> <span style="color: #a0522d;">first</span>, <span style="color: #228b22;">RandomAccessIterator</span> <span style="color: #a0522d;">last</span> );
+<span style="color: #a020f0;">template</span>&lt; <span style="color: #a020f0;">class</span> <span style="color: #228b22;">RandomAccessIterator</span>, <span style="color: #a020f0;">class</span> <span style="color: #228b22;">Compare</span> &gt;
+<span style="color: #228b22;">void</span> <span style="color: #0000ff;">pop_heap</span>( <span style="color: #228b22;">RandomAccessIterator</span> <span style="color: #a0522d;">first</span>, <span style="color: #228b22;">RandomAccessIterator</span> <span style="color: #a0522d;">last</span>,
+               <span style="color: #228b22;">Compare</span> <span style="color: #a0522d;">comp</span> );
+</pre>
+
+<p>
+   取中最大元素，但并没有删除而是放到参与最大堆容器的最尾部。例如上面第二次输出中8放到最后面。<br/>
+   priority_queue中pop函数正是调用了此函数之后调用 pop_back 将最大元素删除。<br/>
+</p></div>
+
+</div>
+
+<div id="outline-container-5-4" class="outline-3">
+<h3 id="sec-5-4"><span class="section-number-3">5.4</span> sort_heap</h3>
+<div class="outline-text-3" id="text-5-4">
+
+<p>   将排序结果保存在原容器中，由于pop_heap每次将最大值保存在最后一个元素中，故此函数实现只需要不断地调用 pop_heap即可。<br/>
+</p>
+
+
+<pre class="src src-c++"><span style="color: #228b22;">int</span> <span style="color: #a0522d;">ary</span>[6] = {3, 4, 2, 5, 6, 8};
+<span style="color: #228b22;">vector</span>&lt;<span style="color: #228b22;">int</span>&gt; <span style="color: #0000ff;">ivec</span>(ary, ary+6);
+<span style="color: #a020f0;">while</span>(!ipq.empty()){
+     cout&lt;&lt;ipq.top()&lt;&lt;<span style="color: #8b2252;">' '</span>; <span style="color: #b22222;">// </span><span style="color: #b22222;">8 6 5 4 3 2</span>
+     ipq.pop();
+}
+</pre>
+
+
+
+<pre class="src src-c++"><span style="color: #a020f0;">template</span>&lt;
+    <span style="color: #a020f0;">class</span> <span style="color: #228b22;">T</span>,
+    <span style="color: #a020f0;">class</span> <span style="color: #228b22;">Container</span> = <span style="color: #008b8b;">std</span>::<span style="color: #228b22;">vector</span>&lt;<span style="color: #228b22;">T</span>&gt;,
+    <span style="color: #a020f0;">class</span> <span style="color: #228b22;">Compare</span> = <span style="color: #008b8b;">std</span>::<span style="color: #228b22;">less</span>&lt;<span style="color: #a020f0;">typename</span> <span style="color: #008b8b;">Container</span>::<span style="color: #228b22;">value_type</span>&gt;
+&gt; <span style="color: #a020f0;">class</span> <span style="color: #228b22;">priority_queue</span>;
+</pre>
+
+<p>
+   默认容器用的是vector,比较函数是less.<br/>
+</p></div>
+
+</div>
+
+<div id="outline-container-5-5" class="outline-3">
+<h3 id="sec-5-5"><span class="section-number-3">5.5</span> empty</h3>
+<div class="outline-text-3" id="text-5-5">
+
+<p>   其内部实现是调用的是Container.empty()<br/>
+</p></div>
+
+</div>
+
+<div id="outline-container-5-6" class="outline-3">
+<h3 id="sec-5-6"><span class="section-number-3">5.6</span> size</h3>
+<div class="outline-text-3" id="text-5-6">
+
+<p>   同理调用的是Container.size()<br/>
+</p></div>
+
+</div>
+
+<div id="outline-container-5-7" class="outline-3">
+<h3 id="sec-5-7"><span class="section-number-3">5.7</span> top</h3>
+<div class="outline-text-3" id="text-5-7">
+
+<p>   Container.front()<br/>
+</p></div>
+
+</div>
+
+<div id="outline-container-5-8" class="outline-3">
+<h3 id="sec-5-8"><span class="section-number-3">5.8</span> push</h3>
+<div class="outline-text-3" id="text-5-8">
+
+<p>   内部调用的是泛型算法 push_heap<br/>
+</p></div>
+
+</div>
+
+<div id="outline-container-5-9" class="outline-3">
+<h3 id="sec-5-9"><span class="section-number-3">5.9</span> pop</h3>
+<div class="outline-text-3" id="text-5-9">
+
+<p>   内部调用的 pop_heap并将最后一个元素 pop_back<br/>
+</p></div>
+</div>
+
+</div>
+
+<div id="outline-container-6" class="outline-2">
+<h2 id="sec-6"><span class="section-number-2">6</span> 分享/评论</h2>
+<div class="outline-text-2" id="text-6">
+
+
+<a class="btn btn-primary" href="https://raw.github.com/visayafan/visayafan.github.com/master/Coding/Cpp/STL:SequenceContainer.org">View Org Source</a>
+<a class="bshareDiv" href="http://www.bshare.cn/share">分享按钮</a><script type="text/javascript" charset="utf-8" src="http://static.bshare.cn/b/buttonLite.js#uuid=&amp;style=10&amp;bgcolor=Blue"></script>
+<br/>
+<script src="../../Layout/JS/disqus-comment.js"></script>
+<div id="disqus_thread">
+</div>
+
+</div>
+</div>
+</div>
+
+</body>
+</html>

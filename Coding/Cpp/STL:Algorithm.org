@@ -1,0 +1,26 @@
+#+OPTIONS: ^:{} _:{} num:t toc:t \n:t
+#+include "../../template-toc.org"
+#+title: STL: Algorithm
+
+* copy
+#+begin_src c++
+template< class InputIterator, class OutputIterator >
+OutputIterator copy( InputIterator first, InputIterator last, OutputIterator d_first );
+#+end_src
+  所做的操作为 *d_first = *first, *(d_first+1)=*(first+1) ...
+* copy_backward
+#+begin_src c++
+template< class BidirectionalIterator1, class BidirectionalIterator2 >
+BidirectionalIterator2 copy_backward( BidirectionalIterator1 first,
+                                      BidirectionalIterator1 last,
+                                      BidirectionalIterator2 d_last );
+#+end_src
+  所做的操作为 *d_last=*last, *(d_last-1)=*(last-1),...
+  与copy的区别在于指定目的区域的末地址，而copy指定的是首地址。且拷贝顺序不同。
+  此函数适用于拷贝区间与目的区间存在交叉，且从前拷贝到后的情况，例如：1-10区间拷贝到5-15，如果用copy函数则会毁坏数据，只能用copy_backward.
+  同理如果从5-15拷贝到1-10则必须用copy函数而不能用copy_backward函数。
+* copy_n (C++11)
+#+begin_src c++
+template< class InputIterator, class Size, class OutputIterator>
+OutputIterator copy_n(InputIterator first, Size count, OutputIterator result);
+#+end_src
