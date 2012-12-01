@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+               "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-CN" xml:lang="zh-CN">
+<head>
+<title>Placement New</title>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
+<meta name="title" content="Placement New"/>
+<meta name="generator" content="Org-mode"/>
+<meta name="generated" content="2012-12-02 00:32:50 CST"/>
+<meta name="author" content="visayafan"/>
+<meta name="description" content=""/>
+<meta name="keywords" content=""/>
+<div id="org-div-comments"><a href="../../index.html#cpp">主页</a><br/><a href="#disqus_thread">评论</a></div>
+
+
+</head>
+<body>
+
+
+<div id="content">
+<h1 class="title">Placement New</h1>
+
+
+<!-- <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"> </script> -->
+<link rel="stylesheet" type="text/css" href="../../Layout/CSS/bootstrap_old.css" />
+<link rel="stylesheet" type="text/css" href="../../Layout/CSS/vf.css" />
+<script src="../../Layout/JS/jquery_1.7.1.js"></script>
+<script src="../../Layout/JS/bootstrap_old.js"></script>
+
+
+<p>
+placement new与new不同之处在于：placement new是在已经分配好的空间上初始化对象并返回一个对象指针，而new需要先分配空间再初始化再返回指针。<br/>
+由于new需要查找合适空间来分配，而这个过程有时候很费时，所以对时间要求很高的程序中可以考虑placement new。<br/>
+</p>
+
+
+
+<pre class="src src-c++"><span style="color: #483d8b;">#include</span> <span style="color: #8b2252;">&lt;new&gt;</span>
+
+<span style="color: #a020f0;">class</span> <span style="color: #228b22;">Test</span>
+{
+<span style="color: #a020f0;">public</span>:
+     <span style="color: #0000ff;">Test</span>(){}
+     <span style="color: #0000ff;">Test</span>(<span style="color: #228b22;">int</span>){}
+};
+
+<span style="color: #228b22;">int</span> <span style="color: #0000ff;">main</span>(<span style="color: #228b22;">int</span> <span style="color: #a0522d;">argc</span>, <span style="color: #228b22;">char</span> *<span style="color: #a0522d;">argv</span>[])
+{
+     <span style="color: #228b22;">char</span> <span style="color: #a0522d;">cBuffer</span>[<span style="color: #a020f0;">sizeof</span>(<span style="color: #228b22;">Test</span>)*10+100];
+     <span style="color: #228b22;">Test</span> *<span style="color: #a0522d;">pTestBuffer</span> = (<span style="color: #228b22;">Test</span>*)cBuffer;
+
+     <span style="color: #228b22;">Test</span> *<span style="color: #a0522d;">pFirst</span> = <span style="color: #a020f0;">new</span>(pTestBuffer) <span style="color: #228b22;">Test</span>;
+     <span style="color: #228b22;">Test</span> *<span style="color: #a0522d;">pSecond</span> = <span style="color: #a020f0;">new</span>(pTestBuffer+1) <span style="color: #228b22;">Test</span>(10);
+     <span style="color: #a020f0;">new</span>(pTestBuffer+2) <span style="color: #228b22;">Test</span>;
+     <span style="color: #228b22;">Test</span> *<span style="color: #a0522d;">pForth</span> = <span style="color: #a020f0;">new</span>(pTestBuffer+3) <span style="color: #228b22;">Test</span>();
+     <span style="color: #228b22;">Test</span> *<span style="color: #a0522d;">pArray</span> = <span style="color: #a020f0;">new</span>(pTestBuffer+4) <span style="color: #228b22;">Test</span>[6];
+     <span style="color: #a020f0;">return</span> 0;
+}
+</pre>
+
+
+<p>
+析构用placement new 分配的对象时需要手动调用其析构函数： pFirst-&gt;~Test();<br/>
+此时空间并没有被释放，只是对象被析构了。可以继续使用此空间，因此对于需要频繁分配释放内存的程序来说用placement new比new速度要快。<br/>
+</p></div>
+
+</body>
+</html>

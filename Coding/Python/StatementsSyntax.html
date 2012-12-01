@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
                "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-CN" xml:lang="zh-CN">
 <head>
 <title>StatementsSyntax</title>
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
 <meta name="title" content="StatementsSyntax"/>
 <meta name="generator" content="Org-mode"/>
-<meta name="generated" content="2012-10-27 05:28:08 CST"/>
-<meta name="author" content="visaya fan"/>
+<meta name="generated" content="2012-12-02 00:33:11 CST"/>
+<meta name="author" content="visayafan"/>
 <meta name="description" content=""/>
 <meta name="keywords" content=""/>
 <div id="org-div-comments"><a href="../../index.html#python">主页</a><br/><a href="#disqus_thread">评论</a></div>
@@ -23,7 +23,7 @@
 
 
 <div id="table-of-contents">
-<h2>TOC</h2>
+<h2>目录</h2>
 <div id="text-table-of-contents">
 <ul>
 <li><a href="#sec-1">1 对齐即为同一级</a></li>
@@ -44,14 +44,14 @@
 
 
 <pre class="src src-python"><span style="color: #a020f0;">while</span> <span style="color: #a020f0;">True</span>:
-    reply = <span style="color: #7a378b;">input</span>(<span style="color: #8b2252;">'Enter text: '</span>)
+    reply = <span style="color: #483d8b;">input</span>(<span style="color: #8b2252;">'Enter text: '</span>)
     <span style="color: #a020f0;">if</span> reply == <span style="color: #8b2252;">'stop'</span>:   <span style="color: #a020f0;">break</span>
     <span style="color: #a020f0;">try</span>:
-        <span style="color: #7a378b;">int</span>(reply)
+        <span style="color: #483d8b;">int</span>(reply)
     <span style="color: #a020f0;">except</span>:
         <span style="color: #a020f0;">print</span>(<span style="color: #8b2252;">'Bad '</span> * 8)
     <span style="color: #a020f0;">else</span>:
-        <span style="color: #a020f0;">print</span>(<span style="color: #7a378b;">int</span>(reply) ** 2)
+        <span style="color: #a020f0;">print</span>(<span style="color: #483d8b;">int</span>(reply) ** 2)
 <span style="color: #a020f0;">print</span>(<span style="color: #8b2252;">'Bye!'</span>)
 </pre>
 
@@ -171,11 +171,11 @@ Traceback (most recent call last):
 
 <pre class="src src-python">&gt;&gt;&gt; x = <span style="color: #8b2252;">'01234'</span>
 &gt;&gt;&gt; x[0], x[1:4], x[4]
-(<span style="color: #8b2252;">'0'</span>, <span style="color: #8b2252;">'123'</span>, <span style="color: #8b2252;">'4'</span>)         <span style="color: #b22222;">#x[1:4]&#31867;&#22411;&#19982;'01234'&#30456;&#21516;</span>
+(<span style="color: #8b2252;">'0'</span>, <span style="color: #8b2252;">'123'</span>, <span style="color: #8b2252;">'4'</span>)         <span style="color: #b22222;">#</span><span style="color: #b22222;">x[1:4]&#31867;&#22411;&#19982;'01234'&#30456;&#21516;</span>
 &gt;&gt;&gt; a, *b, c = x
 &gt;&gt;&gt; a
 <span style="color: #8b2252;">'0'</span>
-&gt;&gt;&gt; b                     <span style="color: #b22222;"># b&#20026;list&#31867;&#22411;</span>
+&gt;&gt;&gt; b                     <span style="color: #b22222;"># </span><span style="color: #b22222;">b&#20026;list&#31867;&#22411;</span>
 [<span style="color: #8b2252;">'1'</span>, <span style="color: #8b2252;">'2'</span>, <span style="color: #8b2252;">'3'</span>]
 &gt;&gt;&gt; c
 <span style="color: #8b2252;">'4'</span>

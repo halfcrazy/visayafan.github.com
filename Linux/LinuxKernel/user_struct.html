@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
                "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-CN" xml:lang="zh-CN">
 <head>
 <title>Linux内核－user_struct</title>
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
 <meta name="title" content="Linux内核－user_struct"/>
 <meta name="generator" content="Org-mode"/>
-<meta name="generated" content="2012-10-27 05:28:26 CST"/>
-<meta name="author" content="visaya fan"/>
+<meta name="generated" content="2012-12-02 00:33:29 CST"/>
+<meta name="author" content="visayafan"/>
 <meta name="description" content=""/>
 <meta name="keywords" content=""/>
 <div id="org-div-comments"><a href="../../index.html#linuxkernel">主页</a><br/><a href="#disqus_thread">评论</a></div>
@@ -22,14 +22,16 @@
 <h1 class="title">Linux内核－user_struct</h1>
 
 
-<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"> </script>
+<!-- <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"> </script> -->
+<link rel="stylesheet" type="text/css" href="../../Layout/CSS/bootstrap_old.css" />
 <link rel="stylesheet" type="text/css" href="../../Layout/CSS/vf.css" />
+<script src="../../Layout/JS/jquery_1.7.1.js"></script>
 <script src="../../Layout/JS/bootstrap_old.js"></script>
 
 
 
 <div id="table-of-contents">
-<h2>TOC</h2>
+<h2>目录</h2>
 <div id="text-table-of-contents">
 <ul>
 <li><a href="#sec-1">1 user_struct</a></li>
@@ -52,10 +54,10 @@
 <span class="linenr"> 6:  </span>    <span style="color: #b22222;">/* </span><span style="color: #b22222;">protected by mq_lock </span><span style="color: #b22222;">*/</span>
 <span class="linenr"> 7:  </span>    <span style="color: #228b22;">unsigned</span> <span style="color: #228b22;">long</span> <span style="color: #a0522d;">mq_bytes</span>; <span style="color: #b22222;">/* </span><span style="color: #b22222;">How many bytes can be allocated to mqueue? </span><span style="color: #b22222;">*/</span>
 <span class="linenr"> 8:  </span>    <span style="color: #228b22;">unsigned</span> <span style="color: #228b22;">long</span> <span style="color: #a0522d;">locked_shm</span>; <span style="color: #b22222;">/* </span><span style="color: #b22222;">How many pages of mlocked shm ? </span><span style="color: #b22222;">*/</span>
-<span class="linenr"> 9:  </span><span style="color: #7a378b;">#ifdef</span> CONFIG_KEYS
+<span class="linenr"> 9:  </span><span style="color: #483d8b;">#ifdef</span> CONFIG_KEYS
 <span class="linenr">10:  </span>    <span style="color: #a020f0;">struct</span> <span style="color: #228b22;">key</span> *<span style="color: #a0522d;">uid_keyring</span>;    <span style="color: #b22222;">/* </span><span style="color: #b22222;">UID specific keyring </span><span style="color: #b22222;">*/</span>
 <span class="linenr">11:  </span>    <span style="color: #a020f0;">struct</span> <span style="color: #228b22;">key</span> *<span style="color: #a0522d;">session_keyring</span>;    <span style="color: #b22222;">/* </span><span style="color: #b22222;">UID's default session keyring </span><span style="color: #b22222;">*/</span>
-<span class="linenr">12:  </span><span style="color: #7a378b;">#endif</span>
+<span class="linenr">12:  </span><span style="color: #483d8b;">#endif</span>
 <span class="linenr">13:  </span>    <span style="color: #b22222;">/* </span><span style="color: #b22222;">Hash table maintenance information </span><span style="color: #b22222;">*/</span>
 <span class="linenr">14:  </span>    <span style="color: #a020f0;">struct</span> <span style="color: #228b22;">list_head</span> <span style="color: #a0522d;">uidhash_list</span>;
 <span class="linenr">15:  </span>    <span style="color: #228b22;">uid_t</span> <span style="color: #a0522d;">uid</span>;

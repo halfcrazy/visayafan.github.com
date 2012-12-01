@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="gb18030"?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
                "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-CN" xml:lang="zh-CN">
 <head>
 <title>传统和实时进程</title>
 <meta http-equiv="Content-Type" content="text/html;charset=gb18030"/>
 <meta name="title" content="传统和实时进程"/>
 <meta name="generator" content="Org-mode"/>
-<meta name="generated" content="2012-10-27 05:28:25 CST"/>
-<meta name="author" content="visaya fan"/>
+<meta name="generated" content="2012-12-02 00:33:28 CST"/>
+<meta name="author" content="visayafan"/>
 <meta name="description" content=""/>
 <meta name="keywords" content=""/>
 <div id="org-div-comments"><a href="../../index.html#linuxkernel">主页</a><br/><a href="#disqus_thread">评论</a></div>
@@ -22,14 +22,16 @@
 <h1 class="title">传统和实时进程</h1>
 
 
-<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"> </script>
+<!-- <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"> </script> -->
+<link rel="stylesheet" type="text/css" href="../../Layout/CSS/bootstrap_old.css" />
 <link rel="stylesheet" type="text/css" href="../../Layout/CSS/vf.css" />
+<script src="../../Layout/JS/jquery_1.7.1.js"></script>
 <script src="../../Layout/JS/bootstrap_old.js"></script>
 
 
 
 <div id="table-of-contents">
-<h2>TOC</h2>
+<h2>目录</h2>
 <div id="text-table-of-contents">
 <ul>
 <li><a href="#sec-1">1 convential process</a>
@@ -68,8 +70,8 @@
 </p>
 
 
-<pre class="src src-c++"><span style="color: #7a378b;">#define</span> <span style="color: #0000ff;">NICE_TO_PRIO</span>(<span style="color: #a0522d;">nice</span>)  (MAX_RT_PRIO + (nice) + 20)
-<span style="color: #7a378b;">#define</span> <span style="color: #0000ff;">PRIO_TO_NICE</span>(<span style="color: #a0522d;">prio</span>)  ((prio) - MAX_RT_PRIO - 20)
+<pre class="src src-c++"><span style="color: #483d8b;">#define</span> <span style="color: #0000ff;">NICE_TO_PRIO</span>(<span style="color: #a0522d;">nice</span>)  (MAX_RT_PRIO + (nice) + 20)
+<span style="color: #483d8b;">#define</span> <span style="color: #0000ff;">PRIO_TO_NICE</span>(<span style="color: #a0522d;">prio</span>)  ((prio) - MAX_RT_PRIO - 20)
 </pre>
 
 <p>
@@ -92,9 +94,9 @@
 
 
 
-<pre class="src src-c++"><span style="color: #7a378b;">#define</span> <span style="color: #a0522d;">DEF_TIMESLICE</span>       (100 * HZ / 1000)
+<pre class="src src-c++"><span style="color: #483d8b;">#define</span> <span style="color: #a0522d;">DEF_TIMESLICE</span>       (100 * HZ / 1000)
 
-<span style="color: #7a378b;">#define</span> <span style="color: #0000ff;">SCALE_PRIO</span>(<span style="color: #a0522d;">x</span>, <span style="color: #a0522d;">prio</span>) \
+<span style="color: #483d8b;">#define</span> <span style="color: #0000ff;">SCALE_PRIO</span>(<span style="color: #a0522d;">x</span>, <span style="color: #a0522d;">prio</span>) \
     max(x * (MAX_PRIO - prio) / (MAX_USER_PRIO/2), MIN_TIMESLICE)
 
 <span style="color: #a020f0;">static</span> <span style="color: #228b22;">unsigned</span> <span style="color: #228b22;">int</span> <span style="color: #0000ff;">task_timeslice</span>(<span style="color: #228b22;">task_t</span> *<span style="color: #a0522d;">p</span>)
@@ -152,7 +154,7 @@ DEF_TIMESLICE = 100, MAX_PRIO = 140, MAX_USER_PRIO = 40, 故得到上表中的公式.<br/
 
 
 
-<pre class="src src-c++"><span style="color: #7a378b;">#define</span> <span style="color: #0000ff;">CURRENT_BONUS</span>(<span style="color: #a0522d;">p</span>) \
+<pre class="src src-c++"><span style="color: #483d8b;">#define</span> <span style="color: #0000ff;">CURRENT_BONUS</span>(<span style="color: #a0522d;">p</span>) \
     (NS_TO_JIFFIES((p)-&gt;sleep_avg) * MAX_BONUS / \ ;;&#25226;&#30561;&#30496;&#26102;&#38388;&#36716;&#21270;&#20026;bonus&#20540;
         MAX_SLEEP_AVG)
 </pre>
@@ -162,10 +164,10 @@ DEF_TIMESLICE = 100, MAX_PRIO = 140, MAX_USER_PRIO = 40, 故得到上表中的公式.<br/
 </p>
 
 
-<pre class="src src-c++"><span style="color: #7a378b;">#define</span> <span style="color: #0000ff;">USER_PRIO</span>(<span style="color: #a0522d;">p</span>)        ((p)-MAX_RT_PRIO)
-<span style="color: #7a378b;">#define</span> <span style="color: #a0522d;">MAX_USER_PRIO</span>       (USER_PRIO(MAX_PRIO))       ;;40
-<span style="color: #7a378b;">#define</span> <span style="color: #a0522d;">PRIO_BONUS_RATIO</span>     25
-<span style="color: #7a378b;">#define</span> <span style="color: #a0522d;">MAX_BONUS</span>       (MAX_USER_PRIO * PRIO_BONUS_RATIO / 100) ;;&#32467;&#26524;&#20026;10
+<pre class="src src-c++"><span style="color: #483d8b;">#define</span> <span style="color: #0000ff;">USER_PRIO</span>(<span style="color: #a0522d;">p</span>)        ((p)-MAX_RT_PRIO)
+<span style="color: #483d8b;">#define</span> <span style="color: #a0522d;">MAX_USER_PRIO</span>       (USER_PRIO(MAX_PRIO))       ;;40
+<span style="color: #483d8b;">#define</span> <span style="color: #a0522d;">PRIO_BONUS_RATIO</span>     25
+<span style="color: #483d8b;">#define</span> <span style="color: #a0522d;">MAX_BONUS</span>       (MAX_USER_PRIO * PRIO_BONUS_RATIO / 100) ;;&#32467;&#26524;&#20026;10
 </pre>
 
 <p>
@@ -173,8 +175,8 @@ DEF_TIMESLICE = 100, MAX_PRIO = 140, MAX_USER_PRIO = 40, 故得到上表中的公式.<br/
 </p>
 
 
-<pre class="src src-c++"><span style="color: #7a378b;">#define</span> <span style="color: #a0522d;">DEF_TIMESLICE</span>       (100 * HZ / 1000)
-<span style="color: #7a378b;">#define</span> <span style="color: #a0522d;">MAX_SLEEP_AVG</span>       (DEF_TIMESLICE * MAX_BONUS)
+<pre class="src src-c++"><span style="color: #483d8b;">#define</span> <span style="color: #a0522d;">DEF_TIMESLICE</span>       (100 * HZ / 1000)
+<span style="color: #483d8b;">#define</span> <span style="color: #a0522d;">MAX_SLEEP_AVG</span>       (DEF_TIMESLICE * MAX_BONUS)
 </pre>
 
 </div>
@@ -242,9 +244,9 @@ DEF_TIMESLICE = 100, MAX_PRIO = 140, MAX_USER_PRIO = 40, 故得到上表中的公式.<br/
 </p>
 
 
-<pre class="src src-c++"><span style="color: #7a378b;">#define</span> <span style="color: #a0522d;">SCHED_NORMAL</span>    0       <span style="color: #b22222;">//</span><span style="color: #b22222;">&#38750;&#23454;&#26102;&#36827;&#31243;&#65292;&#22522;&#20110;&#20248;&#20808;&#32423;&#30340;&#36718;&#22238;&#27861;&#65288;Round Robin&#65289;</span>
-<span style="color: #7a378b;">#define</span> <span style="color: #a0522d;">SCHED_FIFO</span>      1       <span style="color: #b22222;">//</span><span style="color: #b22222;">&#23454;&#26102;&#36827;&#31243;&#65292;&#20808;&#36827;&#20808;&#20986;</span>
-<span style="color: #7a378b;">#define</span> <span style="color: #a0522d;">SCHED_RR</span>        2       <span style="color: #b22222;">//</span><span style="color: #b22222;">&#23454;&#26102;&#36827;&#31243;&#65292;&#22522;&#20110;&#20248;&#20808;&#32423;&#30340;&#36718;&#22238;&#27861;&#65288;Round Robin&#65289;</span>
+<pre class="src src-c++"><span style="color: #483d8b;">#define</span> <span style="color: #a0522d;">SCHED_NORMAL</span>    0       <span style="color: #b22222;">//</span><span style="color: #b22222;">&#38750;&#23454;&#26102;&#36827;&#31243;&#65292;&#22522;&#20110;&#20248;&#20808;&#32423;&#30340;&#36718;&#22238;&#27861;&#65288;Round Robin&#65289;</span>
+<span style="color: #483d8b;">#define</span> <span style="color: #a0522d;">SCHED_FIFO</span>      1       <span style="color: #b22222;">//</span><span style="color: #b22222;">&#23454;&#26102;&#36827;&#31243;&#65292;&#20808;&#36827;&#20808;&#20986;</span>
+<span style="color: #483d8b;">#define</span> <span style="color: #a0522d;">SCHED_RR</span>        2       <span style="color: #b22222;">//</span><span style="color: #b22222;">&#23454;&#26102;&#36827;&#31243;&#65292;&#22522;&#20110;&#20248;&#20808;&#32423;&#30340;&#36718;&#22238;&#27861;&#65288;Round Robin&#65289;</span>
 </pre>
 
 <script src="../../Layout/JS/disqus-comment.js"></script>

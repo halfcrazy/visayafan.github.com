@@ -7,11 +7,11 @@
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
 <meta name="title" content="命令行trick"/>
 <meta name="generator" content="Org-mode"/>
-<meta name="generated" content="2012-11-09 02:25:54 CST"/>
+<meta name="generated" content="2012-12-02 00:33:14 CST"/>
 <meta name="author" content="visayafan"/>
 <meta name="description" content=""/>
 <meta name="keywords" content=""/>
-
+<div id="org-div-comments"><a href="../../index.html#linuxos">主页</a><br/><a href="#disqus_thread">评论</a></div>
 
 
 </head>
@@ -22,9 +22,10 @@
 <h1 class="title">命令行trick</h1>
 
 
-<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"> </script>
-<link rel="stylesheet" type="text/css" href="../../Layout/CSS/bootstrap.min.css" />
+<!-- <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"> </script> -->
+<link rel="stylesheet" type="text/css" href="../../Layout/CSS/bootstrap_old.css" />
 <link rel="stylesheet" type="text/css" href="../../Layout/CSS/too_many_toc.css" />
+<script src="../../Layout/JS/jquery_1.7.1.js"></script>
 <script src="../../Layout/JS/bootstrap_old.js"></script>
 
 
@@ -369,13 +370,11 @@ awk -F'\\\\\\\\' '{ORS=" ";for(i=1;i&lt;=NF;i++) print $i;}' test
 <dl>
 <dt>总结</dt><dd>
 </dd>
-<dt>???</dt><dd>对于纯粹匹配\，当欲匹配\个数为n时需要\个数可以为1-4xn。<br/>
-</dd>
-<dt>???</dt><dd>对于匹配\但后面还跟字符时，当欲匹配\个数为n时需要\个数必须严格为4xn.<br/>
-</dd>
 </dl>
 
-</div>
+<p>对于纯粹匹配\，当欲匹配\个数为n时需要\个数可以为1-4xn。<br/>
+对于匹配\但后面还跟字符时，当欲匹配\个数为n时需要\个数必须严格为4xn.<br/>
+</p></div>
 
 </div>
 

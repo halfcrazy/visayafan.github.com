@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="gb18030"?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
                "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-CN" xml:lang="zh-CN">
 <head>
 <title></title>
 <meta http-equiv="Content-Type" content="text/html;charset=gb18030"/>
 <meta name="title" content=""/>
 <meta name="generator" content="Org-mode"/>
-<meta name="generated" content="2012-10-27 05:27:54 CST"/>
-<meta name="author" content="visaya fan"/>
+<meta name="generated" content="2012-12-02 00:33:03 CST"/>
+<meta name="author" content="visayafan"/>
 <meta name="description" content=""/>
 <meta name="keywords" content=""/>
 <div id="org-div-comments"><a href="../../index.html#python">主页</a><br/><a href="#disqus_thread">评论</a></div>
@@ -23,7 +23,7 @@
 
 
 <div id="table-of-contents">
-<h2>TOC</h2>
+<h2>目录</h2>
 <div id="text-table-of-contents">
 <ul>
 <li><a href="#sec-1">1 “多维数组”陷阱</a></li>
@@ -47,9 +47,9 @@
 &gt;&gt;&gt; a[0][0]=1
 &gt;&gt;&gt; <span style="color: #a020f0;">print</span> a
 [[1, 0, 0, 0], [1, 0, 0, 0], [1, 0, 0, 0]]
-<span style="color: #b22222;">###&#25913;&#21464;&#21015;&#20013;&#19968;&#20010;&#20803;&#32032;&#20250;&#25913;&#21464;&#25972;&#20010;&#21015;</span>
+<span style="color: #b22222;">###</span><span style="color: #b22222;">&#25913;&#21464;&#21015;&#20013;&#19968;&#20010;&#20803;&#32032;&#20250;&#25913;&#21464;&#25972;&#20010;&#21015;</span>
 
-&gt;&gt;&gt; a=[[0 <span style="color: #a020f0;">for</span> column <span style="color: #a020f0;">in</span> <span style="color: #7a378b;">range</span>(4)] <span style="color: #a020f0;">for</span> row <span style="color: #a020f0;">in</span> <span style="color: #7a378b;">range</span>(3)]
+&gt;&gt;&gt; a=[[0 <span style="color: #a020f0;">for</span> column <span style="color: #a020f0;">in</span> <span style="color: #483d8b;">range</span>(4)] <span style="color: #a020f0;">for</span> row <span style="color: #a020f0;">in</span> <span style="color: #483d8b;">range</span>(3)]
 &gt;&gt;&gt; <span style="color: #a020f0;">print</span> a
 [[0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]]
 &gt;&gt;&gt; a[0][0]=1
@@ -73,14 +73,14 @@
 
 <pre class="src src-python"><span style="color: #a020f0;">def</span> <span style="color: #0000ff;">makeActions</span>():
     acts=[]
-    <span style="color: #a020f0;">for</span> i <span style="color: #a020f0;">in</span> <span style="color: #7a378b;">range</span>(5):
+    <span style="color: #a020f0;">for</span> i <span style="color: #a020f0;">in</span> <span style="color: #483d8b;">range</span>(5):
         acts.append(<span style="color: #a020f0;">lambda</span> x: i**x)
     <span style="color: #a020f0;">return</span> acts
 <span style="color: #a0522d;">acts</span>=makeActions()
 <span style="color: #a020f0;">print</span> acts[0](2)
 <span style="color: #a020f0;">print</span> acts[1](2)
 <span style="color: #a020f0;">print</span> acts[2](2)
-<span style="color: #b22222;">##&#32467;&#26524;&#37117;&#26159;&#19968;&#26679;&#30340;</span>
+<span style="color: #b22222;">##</span><span style="color: #b22222;">&#32467;&#26524;&#37117;&#26159;&#19968;&#26679;&#30340;</span>
 </pre>
 
 <script src="../../Layout/JS/disqus-comment.js"></script>
@@ -88,7 +88,7 @@
 </div>
 
 <div id="footnotes">
-<h2 class="footnotes">Footnotes: </h2>
+<h2 class="footnotes">脚注: </h2>
 <div id="text-footnotes">
 <p class="footnote"><sup><a class="footnum" name="fn.1" href="#fnr.1">1</a></sup> DEFINITION NOT FOUND: 0
 </p></div>

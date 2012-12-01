@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="gb18030"?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
                "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-CN" xml:lang="zh-CN">
 <head>
 <title>模块总结</title>
 <meta http-equiv="Content-Type" content="text/html;charset=gb18030"/>
 <meta name="title" content="模块总结"/>
 <meta name="generator" content="Org-mode"/>
-<meta name="generated" content="2012-10-27 05:27:58 CST"/>
-<meta name="author" content="visaya fan"/>
+<meta name="generated" content="2012-12-02 00:33:05 CST"/>
+<meta name="author" content="visayafan"/>
 <meta name="description" content=""/>
 <meta name="keywords" content=""/>
 <div id="org-div-comments"><a href="../../index.html#python">主页</a><br/><a href="#disqus_thread">评论</a></div>
@@ -22,13 +22,15 @@
 <h1 class="title">模块总结</h1>
 
 
-<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"> </script>
+<!-- <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"> </script> -->
+<link rel="stylesheet" type="text/css" href="../../Layout/CSS/bootstrap_old.css" />
 <link rel="stylesheet" type="text/css" href="../../Layout/CSS/vf.css" />
+<script src="../../Layout/JS/jquery_1.7.1.js"></script>
 <script src="../../Layout/JS/bootstrap_old.js"></script>
 
 
 <div id="table-of-contents">
-<h2>TOC</h2>
+<h2>目录</h2>
 <div id="text-table-of-contents">
 <ul>
 <li><a href="#sec-1">1 math</a>
@@ -448,10 +450,10 @@
 
 
 <pre class="src src-python"><span style="color: #a020f0;">def</span> <span style="color: #0000ff;">load</span>(<span style="color: #a020f0;">self</span>, filename):
-     <span style="color: #a020f0;">self</span>.__data = pickle.load(<span style="color: #7a378b;">open</span>(filename, <span style="color: #8b2252;">'rb'</span>))
+     <span style="color: #a020f0;">self</span>.__data = pickle.load(<span style="color: #483d8b;">open</span>(filename, <span style="color: #8b2252;">'rb'</span>))
 
 <span style="color: #a020f0;">def</span> <span style="color: #0000ff;">save</span>(<span style="color: #a020f0;">self</span>, filename):
-     pickle.dump(<span style="color: #a020f0;">self</span>.__data, <span style="color: #7a378b;">open</span>(filename, <span style="color: #8b2252;">'wb'</span>))
+     pickle.dump(<span style="color: #a020f0;">self</span>.__data, <span style="color: #483d8b;">open</span>(filename, <span style="color: #8b2252;">'wb'</span>))
 </pre>
 
 
@@ -532,7 +534,7 @@
 </p>
 
 
-<pre class="src src-python"><span style="color: #b22222;">#&#24403;&#21069;&#30446;&#24405;&#19979;&#26080;NewZip.zip&#65292;&#21017;&#21019;&#24314;&#19968;&#20010;&#24182;&#23558;&#24403;&#21069;&#30446;&#24405;&#19979;&#30340;.emacs&#25991;&#20214;&#21152;&#20837;&#21040;NewZip.zip&#20013;</span>
+<pre class="src src-python"><span style="color: #b22222;">#</span><span style="color: #b22222;">&#24403;&#21069;&#30446;&#24405;&#19979;&#26080;NewZip.zip&#65292;&#21017;&#21019;&#24314;&#19968;&#20010;&#24182;&#23558;&#24403;&#21069;&#30446;&#24405;&#19979;&#30340;.emacs&#25991;&#20214;&#21152;&#20837;&#21040;NewZip.zip&#20013;</span>
 zipfile.ZipFile(<span style="color: #8b2252;">'NewZip.zip'</span>, <span style="color: #8b2252;">'a'</span>).write(<span style="color: #8b2252;">'.emacs'</span>)
 </pre>
 
@@ -714,7 +716,7 @@ zipfile.ZipFile(<span style="color: #8b2252;">'NewZip.zip'</span>, <span style="
 
 
 <div id="footnotes">
-<h2 class="footnotes">Footnotes: </h2>
+<h2 class="footnotes">脚注: </h2>
 <div id="text-footnotes">
 <p class="footnote"><sup><a class="footnum" name="fn.1" href="#fnr.1">1</a></sup> MIME类型就是设定某种扩展名的文件用一种应用程序来打开的方式类型，当该扩展名文件被访问的时候，浏览器会自动使用指定应用程序来打开。多用于指定一些客户端自定义的文件名，以及一些媒体文件打开方式。在HTTP中，MIME类型被定义在Content-Type header中。你要传送一个Microsoft Excel文件到客户端。那么这时的MIME类型就是“application/vnd.ms-excel”。在大多数实际情况中，这个文件然后将传送给Execl来处理（假设我们设定Execl为处理特殊MIME类型的应用程序）。在ASP中，设定MIME类型的方法是通过Response对象的ContentType属性。<br/>
 <script src="../../Layout/JS/disqus-comment.js"></script>

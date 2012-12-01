@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
                "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-CN" xml:lang="zh-CN">
 <head>
 <title>最近更新博文自动生成的Python脚本</title>
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
 <meta name="title" content="最近更新博文自动生成的Python脚本"/>
 <meta name="generator" content="Org-mode"/>
-<meta name="generated" content="2012-10-27 05:27:48 CST"/>
-<meta name="author" content="visaya fan"/>
+<meta name="generated" content="2012-12-02 00:33:00 CST"/>
+<meta name="author" content="visayafan"/>
 <meta name="description" content=""/>
 <meta name="keywords" content=""/>
 <div id="org-div-comments"><a href="../../index.html#python">主页</a><br/><a href="#disqus_thread">评论</a></div>
@@ -22,8 +22,10 @@
 <h1 class="title">最近更新博文自动生成的Python脚本</h1>
 
 
-<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"> </script>
+<!-- <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"> </script> -->
+<link rel="stylesheet" type="text/css" href="../../Layout/CSS/bootstrap_old.css" />
 <link rel="stylesheet" type="text/css" href="../../Layout/CSS/vf.css" />
+<script src="../../Layout/JS/jquery_1.7.1.js"></script>
 <script src="../../Layout/JS/bootstrap_old.js"></script>
 
 <p>
@@ -50,25 +52,25 @@
 </p>
 
 
-<pre class="src src-python"><span style="color: #b22222;">#!/usr/bin/python</span>
+<pre class="src src-python"><span style="color: #b22222;">#</span><span style="color: #b22222;">!/usr/bin/python</span>
 <span style="color: #a020f0;">from</span> subprocess <span style="color: #a020f0;">import</span> call
 <span style="color: #a020f0;">import</span> re
 
 call(<span style="color: #8b2252;">'cd ~/visayafan.github.com'</span>, shell=<span style="color: #a020f0;">True</span>)
 call(<span style="color: #8b2252;">'git blame index.html &gt; shan.html'</span>, shell=<span style="color: #a020f0;">True</span>)
-<span style="color: #a0522d;">content</span> = <span style="color: #7a378b;">open</span>(<span style="color: #8b2252;">'shan.html'</span>, <span style="color: #8b2252;">'r'</span>).read()
+<span style="color: #a0522d;">content</span> = <span style="color: #483d8b;">open</span>(<span style="color: #8b2252;">'shan.html'</span>, <span style="color: #8b2252;">'r'</span>).read()
 call(<span style="color: #8b2252;">'rm -rf shan.html'</span>, shell=<span style="color: #a020f0;">True</span>)
 <span style="color: #a0522d;">dateAndLink</span> = re.compile(<span style="color: #8b2252;">'(\d{4}-\d{2}-\d{2}\s\d{2}:\d{2}:\d{2}).*\&lt;li\&gt;\&lt;a(\shref="(?=Linux|Coding|Algorithm|Compiler|Others|English).*\&gt;)(.+)(\&lt;/a\&gt;\&lt;/li\&gt;)'</span>)
 <span style="color: #a0522d;">allCont</span> = dateAndLink.findall(content)
 allCont.sort()
-<span style="color: #b22222;"># for vdate, vlinkpre, vname, vlinkafter in allCont:</span>
-<span style="color: #b22222;">#     print vdate, vlinkpre, vname, vlinkafter</span>
-<span style="color: #a0522d;">htmlcont</span> = <span style="color: #7a378b;">open</span>(<span style="color: #8b2252;">'updates.html'</span>).read()
+<span style="color: #b22222;"># </span><span style="color: #b22222;">for vdate, vlinkpre, vname, vlinkafter in allCont:</span>
+<span style="color: #b22222;">#     </span><span style="color: #b22222;">print vdate, vlinkpre, vname, vlinkafter</span>
+<span style="color: #a0522d;">htmlcont</span> = <span style="color: #483d8b;">open</span>(<span style="color: #8b2252;">'updates.html'</span>).read()
 <span style="color: #a0522d;">ul</span> = re.compile(r<span style="color: #8b2252;">'&lt;ul&gt;'</span>)
 <span style="color: #a020f0;">for</span> vdate, vlinkpre, vname, vlinkafter <span style="color: #a020f0;">in</span> allCont:
     <span style="color: #a020f0;">if</span> <span style="color: #a020f0;">not</span> re.findall(vlinkpre, htmlcont):
         htmlcont = ul.sub(<span style="color: #8b2252;">'&lt;ul&gt;\n      &lt;li&gt;'</span>+vdate+<span style="color: #8b2252;">'&amp;nbsp&lt;a target="_top" '</span>+vlinkpre+vname+vlinkafter, htmlcont)
-<span style="color: #7a378b;">open</span>(<span style="color: #8b2252;">'updates.html'</span>, <span style="color: #8b2252;">'w'</span>).write(htmlcont)
+<span style="color: #483d8b;">open</span>(<span style="color: #8b2252;">'updates.html'</span>, <span style="color: #8b2252;">'w'</span>).write(htmlcont)
 </pre>
 
 

@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="gb18030"?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
                "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-CN" xml:lang="zh-CN">
 <head>
 <title>template typename</title>
 <meta http-equiv="Content-Type" content="text/html;charset=gb18030"/>
 <meta name="title" content="template typename"/>
 <meta name="generator" content="Org-mode"/>
-<meta name="generated" content="2012-10-27 05:27:18 CST"/>
-<meta name="author" content="visaya fan"/>
+<meta name="generated" content="2012-12-02 00:29:11 CST"/>
+<meta name="author" content="visayafan"/>
 <meta name="description" content=""/>
 <meta name="keywords" content=""/>
 <div id="org-div-comments"><a href="../../index.html#cpp">主页</a><br/><a href="#disqus_thread">评论</a></div>
@@ -22,13 +22,15 @@
 <h1 class="title">template typename</h1>
 
 
-<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"> </script>
+<!-- <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"> </script> -->
+<link rel="stylesheet" type="text/css" href="../../Layout/CSS/bootstrap_old.css" />
 <link rel="stylesheet" type="text/css" href="../../Layout/CSS/vf.css" />
+<script src="../../Layout/JS/jquery_1.7.1.js"></script>
 <script src="../../Layout/JS/bootstrap_old.js"></script>
 
 
 <div id="table-of-contents">
-<h2>TOC</h2>
+<h2>目录</h2>
 <div id="text-table-of-contents">
 <ul>
 <li><a href="#sec-1">1 模板参数列表中与class关键字可相互替换</a></li>
@@ -128,7 +130,7 @@
 <pre class="src src-c++"><span style="color: #a020f0;">template</span> &lt;<span style="color: #a020f0;">typename</span> <span style="color: #228b22;">T</span>&gt;
 <span style="color: #a020f0;">class</span> <span style="color: #228b22;">Derived</span>: <span style="color: #a020f0;">public</span> <span style="color: #008b8b;">Base</span>&lt;<span style="color: #228b22;">T</span>&gt;::<span style="color: #228b22;">Nested</span> {                 <span style="color: #b22222;">//</span><span style="color: #b22222;">&#22522;&#31867;&#21015;&#34920;&#20013;&#19981;&#20801;&#35768;&#20351;&#29992;typename</span>
 <span style="color: #a020f0;">public</span>:
-    <span style="color: #a020f0;">explicit</span> <span style="color: #0000ff;">Derived</span>(<span style="color: #228b22;">int</span> <span style="color: #a0522d;">x</span>): <span style="color: #008b8b;">Base</span>&lt;<span style="color: #228b22;">T</span>&gt;::Nested(<span style="color: #228b22;">int</span> <span style="color: #a0522d;">x</span>){    <span style="color: #b22222;">//</span><span style="color: #b22222;">&#21021;&#22987;&#21270;&#21015;&#34920;&#20013;&#19981;&#20801;&#35768;&#20351;&#29992;typename</span>
+    <span style="color: #a020f0;">explicit</span> <span style="color: #0000ff;">Derived</span>(<span style="color: #228b22;">int</span> <span style="color: #a0522d;">x</span>): <span style="color: #008b8b;">Base</span>&lt;T&gt;::Nested(<span style="color: #228b22;">int</span> <span style="color: #a0522d;">x</span>){    <span style="color: #b22222;">//</span><span style="color: #b22222;">&#21021;&#22987;&#21270;&#21015;&#34920;&#20013;&#19981;&#20801;&#35768;&#20351;&#29992;typename</span>
         <span style="color: #a020f0;">typename</span> <span style="color: #008b8b;">Base</span>&lt;<span style="color: #228b22;">T</span>&gt;::<span style="color: #228b22;">Nested</span> <span style="color: #a0522d;">temp</span>;                  <span style="color: #b22222;">//</span><span style="color: #b22222;">&#23884;&#22871;&#20174;&#23646;&#21517;&#31216;(&#26082;&#19981;&#22312;&#22522;&#31867;&#21015;&#34920;&#20013;&#21448;&#19981;&#22312;&#21021;&#22987;&#21270;&#21015;&#34920;&#20013;)&#21069;&#38754;&#24517;&#39035;&#35201;&#21152;typename</span>
     }
 }

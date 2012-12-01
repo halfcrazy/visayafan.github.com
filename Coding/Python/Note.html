@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
                "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-CN" xml:lang="zh-CN">
 <head>
 <title>Note</title>
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
 <meta name="title" content="Note"/>
 <meta name="generator" content="Org-mode"/>
-<meta name="generated" content="2012-10-27 05:28:10 CST"/>
-<meta name="author" content="visaya fan"/>
+<meta name="generated" content="2012-12-02 00:33:12 CST"/>
+<meta name="author" content="visayafan"/>
 <meta name="description" content=""/>
 <meta name="keywords" content=""/>
 <div id="org-div-comments"><a href="../../index.html#python">主页</a><br/><a href="#disqus_thread">评论</a></div>
@@ -24,7 +24,7 @@
 
 
 <div id="table-of-contents">
-<h2>TOC</h2>
+<h2>目录</h2>
 <div id="text-table-of-contents">
 <ul>
 <li><a href="#sec-1">1 /usr/bin/python与/usr/bin/env python的区别</a></li>
@@ -569,11 +569,11 @@ lstrip() rstrip() strip() 去掉左/右/左右的空格
 
 
 <pre class="src src-python">&gt;&gt;&gt; s=<span style="color: #8b2252;">"""w'o"w"""</span>
-&gt;&gt;&gt; <span style="color: #7a378b;">repr</span>(s)
+&gt;&gt;&gt; <span style="color: #483d8b;">repr</span>(s)
 <span style="color: #8b2252;">'\'w\\\'o"w\''</span>
-&gt;&gt;&gt; <span style="color: #7a378b;">str</span>(s)
+&gt;&gt;&gt; <span style="color: #483d8b;">str</span>(s)
 <span style="color: #8b2252;">'w\'o"w'</span>
-&gt;&gt;&gt; <span style="color: #7a378b;">eval</span>(<span style="color: #7a378b;">str</span>(s))==s
+&gt;&gt;&gt; <span style="color: #483d8b;">eval</span>(<span style="color: #483d8b;">str</span>(s))==s
 Traceback (most recent call last):
   File <span style="color: #8b2252;">"&lt;stdin&gt;"</span>, line 1, <span style="color: #a020f0;">in</span> &lt;module&gt;
   File <span style="color: #8b2252;">"&lt;string&gt;"</span>, line 1
@@ -589,20 +589,20 @@ Traceback (most recent call last):
 </p>
 
 
-<pre class="src src-python">&gt;&gt;&gt; <span style="color: #a020f0;">class</span> <span style="color: #228b22;">Sic</span>(<span style="color: #7a378b;">object</span>): 
-...   <span style="color: #a020f0;">def</span> <span style="color: #0000ff;">__repr__</span>(<span style="color: #7a378b;">object</span>): <span style="color: #a020f0;">return</span> <span style="color: #8b2252;">'foo'</span>
+<pre class="src src-python">&gt;&gt;&gt; <span style="color: #a020f0;">class</span> <span style="color: #228b22;">Sic</span>(<span style="color: #483d8b;">object</span>): 
+...   <span style="color: #a020f0;">def</span> <span style="color: #0000ff;">__repr__</span>(<span style="color: #483d8b;">object</span>): <span style="color: #a020f0;">return</span> <span style="color: #8b2252;">'foo'</span>
 ... 
-&gt;&gt;&gt; <span style="color: #a020f0;">print</span> <span style="color: #7a378b;">str</span>(Sic())
+&gt;&gt;&gt; <span style="color: #a020f0;">print</span> str(Sic())
 foo
-&gt;&gt;&gt; <span style="color: #a020f0;">print</span> <span style="color: #7a378b;">repr</span>(Sic())
+&gt;&gt;&gt; <span style="color: #a020f0;">print</span> repr(Sic())
 foo
-&gt;&gt;&gt; <span style="color: #a020f0;">class</span> <span style="color: #228b22;">Sic</span>(<span style="color: #7a378b;">object</span>):
-...   <span style="color: #a020f0;">def</span> <span style="color: #0000ff;">__str__</span>(<span style="color: #7a378b;">object</span>): <span style="color: #a020f0;">return</span> <span style="color: #8b2252;">'foo'</span>
+&gt;&gt;&gt; <span style="color: #a020f0;">class</span> <span style="color: #228b22;">Sic</span>(<span style="color: #483d8b;">object</span>):
+...   <span style="color: #a020f0;">def</span> <span style="color: #0000ff;">__str__</span>(<span style="color: #483d8b;">object</span>): <span style="color: #a020f0;">return</span> <span style="color: #8b2252;">'foo'</span>
 ... 
-&gt;&gt;&gt; <span style="color: #a020f0;">print</span> <span style="color: #7a378b;">str</span>(Sic())
+&gt;&gt;&gt; <span style="color: #a020f0;">print</span> str(Sic())
 foo
-&gt;&gt;&gt; <span style="color: #a020f0;">print</span> <span style="color: #7a378b;">repr</span>(Sic())
-&lt;__main__.Sic <span style="color: #7a378b;">object</span> at 0x2617f0&gt;
+&gt;&gt;&gt; <span style="color: #a020f0;">print</span> repr(Sic())
+&lt;__main__.Sic <span style="color: #483d8b;">object</span> at 0x2617f0&gt;
 </pre>
 
 <p>
@@ -610,12 +610,12 @@ foo
 </p>
 
 
-<pre class="src src-python">&gt;&gt;&gt; <span style="color: #a020f0;">class</span> <span style="color: #228b22;">Sic</span>(<span style="color: #7a378b;">object</span>): <span style="color: #a020f0;">pass</span>
+<pre class="src src-python">&gt;&gt;&gt; <span style="color: #a020f0;">class</span> <span style="color: #228b22;">Sic</span>(<span style="color: #483d8b;">object</span>): <span style="color: #a020f0;">pass</span>
 ... 
-&gt;&gt;&gt; <span style="color: #a020f0;">print</span> <span style="color: #7a378b;">str</span>(Sic())
-&lt;__main__.Sic <span style="color: #7a378b;">object</span> at 0x8b7d0&gt;
-&gt;&gt;&gt; <span style="color: #a020f0;">print</span> <span style="color: #7a378b;">repr</span>(Sic())
-&lt;__main__.Sic <span style="color: #7a378b;">object</span> at 0x8b7d0&gt;
+&gt;&gt;&gt; <span style="color: #a020f0;">print</span> str(Sic())
+&lt;__main__.Sic <span style="color: #483d8b;">object</span> at 0x8b7d0&gt;
+&gt;&gt;&gt; <span style="color: #a020f0;">print</span> repr(Sic())
+&lt;__main__.Sic <span style="color: #483d8b;">object</span> at 0x8b7d0&gt;
 </pre>
 
 <p>
@@ -633,7 +633,7 @@ foo
 </p>
 
 
-<pre class="src src-python"><span style="color: #7a378b;">__import__</span>(os).getcwd()
+<pre class="src src-python"><span style="color: #483d8b;">__import__</span>(os).getcwd()
 </pre>
 
 </div>
@@ -647,12 +647,12 @@ foo
 
 
 
-<pre class="src src-python"><span style="color: #7a378b;">locals</span>() -&gt; dictionary
+<pre class="src src-python"><span style="color: #483d8b;">locals</span>() -&gt; dictionary
 update <span style="color: #a020f0;">and</span> rturn a dictionary contatining the current scope<span style="color: #8b2252;">'s lcoal variables.</span>
 </pre>
 
 
-<pre class="src src-python"><span style="color: #7a378b;">vars</span>([<span style="color: #7a378b;">object</span>]) -&gt;dictionary
+<pre class="src src-python"><span style="color: #483d8b;">vars</span>([<span style="color: #483d8b;">object</span>]) -&gt;dictionary
 &#26080;&#21442;&#26102;&#31561;&#20215;&#20110;locals()
 &#26377;&#21442;&#26102;&#31561;&#20215;&#20110;object.__dict__
 </pre>
@@ -703,11 +703,11 @@ update <span style="color: #a020f0;">and</span> rturn a dictionary contatining t
         root.mainloop()
 
     <span style="color: #a020f0;">def</span> <span style="color: #0000ff;">__init__</span>(<span style="color: #a020f0;">self</span>, root, width, height, mines):
-        <span style="color: #7a378b;">super</span>().__init__(root)
+        <span style="color: #483d8b;">super</span>().__init__(root)
         <span style="color: #a020f0;">self</span>.__width = width
         <span style="color: #a020f0;">self</span>.__height = height
         <span style="color: #a020f0;">self</span>.__mines = mines
-<span style="color: #a020f0;">if</span> <span style="color: #7a378b;">__name__</span> == <span style="color: #8b2252;">'__main__'</span>:
+<span style="color: #a020f0;">if</span> <span style="color: #483d8b;">__name__</span> == <span style="color: #8b2252;">'__main__'</span>:
     MineSweep.main(10, 10, 10)
 </pre>
 

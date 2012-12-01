@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
                "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-CN" xml:lang="zh-CN">
 <head>
 <title>进程管理基础</title>
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
 <meta name="title" content="进程管理基础"/>
 <meta name="generator" content="Org-mode"/>
-<meta name="generated" content="2012-10-27 05:28:31 CST"/>
-<meta name="author" content="visaya fan"/>
+<meta name="generated" content="2012-12-02 00:33:32 CST"/>
+<meta name="author" content="visayafan"/>
 <meta name="description" content=""/>
 <meta name="keywords" content=""/>
 <div id="org-div-comments"><a href="../../index.html#linuxkernel">主页</a><br/><a href="#disqus_thread">评论</a></div>
@@ -22,15 +22,17 @@
 <h1 class="title">进程管理基础</h1>
 
 
-<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"> </script>
+<!-- <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"> </script> -->
+<link rel="stylesheet" type="text/css" href="../../Layout/CSS/bootstrap_old.css" />
 <link rel="stylesheet" type="text/css" href="../../Layout/CSS/vf.css" />
+<script src="../../Layout/JS/jquery_1.7.1.js"></script>
 <script src="../../Layout/JS/bootstrap_old.js"></script>
 
 <p>
    每个进程/线程对应一个进程描述符 <code>struct task_struct</code> ，其成员描述了与进程相关的各种属性，例如：进程的状态，进程ID，资源使用情况（内存，CPU，打开文件，进程地址空间etc）。<br/>
 </p>
 <div id="table-of-contents">
-<h2>TOC</h2>
+<h2>目录</h2>
 <div id="text-table-of-contents">
 <ul>
 <li><a href="#sec-1">1 进程状态</a></li>
@@ -74,13 +76,13 @@
 </p>
 
 
-<pre class="src src-c"><span class="linenr">1:  </span><span style="color: #7a378b;">#define</span> <span style="color: #a0522d;">TASK_RUNNING</span>        0
-<span class="linenr">2:  </span><span style="color: #7a378b;">#define</span> <span style="color: #a0522d;">TASK_INTERRUPTIBLE</span>  1
-<span class="linenr">3:  </span><span style="color: #7a378b;">#define</span> <span style="color: #a0522d;">TASK_UNINTERRUPTIBLE</span>    2
-<span class="linenr">4:  </span><span style="color: #7a378b;">#define</span> <span style="color: #a0522d;">TASK_STOPPED</span>        4
-<span class="linenr">5:  </span><span style="color: #7a378b;">#define</span> <span style="color: #a0522d;">TASK_TRACED</span>     8
-<span class="linenr">6:  </span><span style="color: #7a378b;">#define</span> <span style="color: #a0522d;">EXIT_ZOMBIE</span>     16
-<span class="linenr">7:  </span><span style="color: #7a378b;">#define</span> <span style="color: #a0522d;">EXIT_DEAD</span>       32
+<pre class="src src-c"><span class="linenr">1:  </span><span style="color: #483d8b;">#define</span> <span style="color: #a0522d;">TASK_RUNNING</span>        0
+<span class="linenr">2:  </span><span style="color: #483d8b;">#define</span> <span style="color: #a0522d;">TASK_INTERRUPTIBLE</span>  1
+<span class="linenr">3:  </span><span style="color: #483d8b;">#define</span> <span style="color: #a0522d;">TASK_UNINTERRUPTIBLE</span>    2
+<span class="linenr">4:  </span><span style="color: #483d8b;">#define</span> <span style="color: #a0522d;">TASK_STOPPED</span>        4
+<span class="linenr">5:  </span><span style="color: #483d8b;">#define</span> <span style="color: #a0522d;">TASK_TRACED</span>     8
+<span class="linenr">6:  </span><span style="color: #483d8b;">#define</span> <span style="color: #a0522d;">EXIT_ZOMBIE</span>     16
+<span class="linenr">7:  </span><span style="color: #483d8b;">#define</span> <span style="color: #a0522d;">EXIT_DEAD</span>       32
 </pre>
 
 <ol>
@@ -133,11 +135,11 @@
 </p>
 
 
-<pre class="src src-c"><span class="linenr">1:  </span><span style="color: #7a378b;">#ifdef</span> CONFIG_4KSTACKS
-<span class="linenr">2:  </span><span style="color: #7a378b;">#define</span> <span style="color: #a0522d;">THREAD_SIZE</span>            (4096)
-<span class="linenr">3:  </span><span style="color: #7a378b;">#else</span>
-<span class="linenr">4:  </span><span style="color: #7a378b;">#define</span> <span style="color: #a0522d;">THREAD_SIZE</span>     (8192)
-<span class="linenr">5:  </span><span style="color: #7a378b;">#endif</span>
+<pre class="src src-c"><span class="linenr">1:  </span><span style="color: #483d8b;">#ifdef</span> CONFIG_4KSTACKS
+<span class="linenr">2:  </span><span style="color: #483d8b;">#define</span> <span style="color: #a0522d;">THREAD_SIZE</span>            (4096)
+<span class="linenr">3:  </span><span style="color: #483d8b;">#else</span>
+<span class="linenr">4:  </span><span style="color: #483d8b;">#define</span> <span style="color: #a0522d;">THREAD_SIZE</span>     (8192)
+<span class="linenr">5:  </span><span style="color: #483d8b;">#endif</span>
 <span class="linenr">6:  </span><span style="color: #a020f0;">union</span> <span style="color: #228b22;">thread_union</span> {
 <span class="linenr">7:  </span>    <span style="color: #a020f0;">struct</span> <span style="color: #228b22;">thread_info</span> <span style="color: #a0522d;">thread_info</span>;
 <span class="linenr">8:  </span>    <span style="color: #228b22;">unsigned</span> <span style="color: #228b22;">long</span> <span style="color: #a0522d;">stack</span>[THREAD_SIZE/<span style="color: #a020f0;">sizeof</span>(<span style="color: #228b22;">long</span>)];
@@ -154,7 +156,7 @@
 <span class="linenr">3:  </span>    <span style="color: #a020f0;">return</span> current_thread_info()-&gt;task;
 <span class="linenr">4:  </span>}
 <span class="linenr">5:  </span>
-<span class="linenr">6:  </span><span style="color: #7a378b;">#define</span> <span style="color: #a0522d;">current</span> get_current()
+<span class="linenr">6:  </span><span style="color: #483d8b;">#define</span> <span style="color: #a0522d;">current</span> get_current()
 </pre>
 
 
@@ -213,8 +215,8 @@
 
 
 
-<pre class="src src-c"><span class="linenr">1:  </span><span style="color: #7a378b;">#define</span> <span style="color: #0000ff;">LIST_HEAD_INIT</span>(<span style="color: #a0522d;">name</span>) { &amp;(name), &amp;(name) }
-<span class="linenr">2:  </span><span style="color: #7a378b;">#define</span> <span style="color: #0000ff;">LIST_HEAD</span>(<span style="color: #a0522d;">name</span>) \
+<pre class="src src-c"><span class="linenr">1:  </span><span style="color: #483d8b;">#define</span> <span style="color: #0000ff;">LIST_HEAD_INIT</span>(<span style="color: #a0522d;">name</span>) { &amp;(name), &amp;(name) }
+<span class="linenr">2:  </span><span style="color: #483d8b;">#define</span> <span style="color: #0000ff;">LIST_HEAD</span>(<span style="color: #a0522d;">name</span>) \
 <span class="linenr">3:  </span>    <span style="color: #a020f0;">struct</span> <span style="color: #228b22;">list_head</span> <span style="color: #a0522d;">name</span> = LIST_HEAD_INIT(name)
 </pre>
 
@@ -268,8 +270,8 @@
 
 
 <pre class="src src-c"><span class="linenr"> 1:  </span><span style="color: #b22222;">/*</span><span style="color: #b22222;">&#36825;&#27492;&#38750;&#31354;&#25351;&#38024;&#30340;&#20351;&#29992;&#20250;&#36896;&#25104;&#20013;&#26029;&#65292;&#20174;&#32780;&#30830;&#20445;list_head&#20351;&#29992;&#21069;&#24517;&#39035;&#34987;&#21021;&#22987;&#21270;</span><span style="color: #b22222;">*/</span>
-<span class="linenr"> 2:  </span><span style="color: #7a378b;">#define</span> <span style="color: #a0522d;">LIST_POISON1</span>  ((<span style="color: #228b22;">void</span> *) 0x00100100)
-<span class="linenr"> 3:  </span><span style="color: #7a378b;">#define</span> <span style="color: #a0522d;">LIST_POISON2</span>  ((<span style="color: #228b22;">void</span> *) 0x00200200)
+<span class="linenr"> 2:  </span><span style="color: #483d8b;">#define</span> <span style="color: #a0522d;">LIST_POISON1</span>  ((<span style="color: #228b22;">void</span> *) 0x00100100)
+<span class="linenr"> 3:  </span><span style="color: #483d8b;">#define</span> <span style="color: #a0522d;">LIST_POISON2</span>  ((<span style="color: #228b22;">void</span> *) 0x00200200)
 <span class="linenr"> 4:  </span><span style="color: #a020f0;">static</span> <span style="color: #a020f0;">inline</span> <span style="color: #228b22;">void</span> <span style="color: #0000ff;">__list_del</span>(<span style="color: #a020f0;">struct</span> <span style="color: #228b22;">list_head</span> * <span style="color: #a0522d;">prev</span>, <span style="color: #a020f0;">struct</span> <span style="color: #228b22;">list_head</span> * <span style="color: #a0522d;">next</span>)
 <span class="linenr"> 5:  </span>{
 <span class="linenr"> 6:  </span>    next-&gt;prev = prev;
@@ -306,10 +308,10 @@
 </p>
 
 
-<pre class="src src-c"><span class="linenr">1:  </span><span style="color: #7a378b;">#define</span> <span style="color: #0000ff;">container_of</span>(<span style="color: #a0522d;">ptr</span>, <span style="color: #a0522d;">type</span>, <span style="color: #a0522d;">member</span>) ({          \
+<pre class="src src-c"><span class="linenr">1:  </span><span style="color: #483d8b;">#define</span> <span style="color: #0000ff;">container_of</span>(<span style="color: #a0522d;">ptr</span>, <span style="color: #a0522d;">type</span>, <span style="color: #a0522d;">member</span>) ({          \
 <span class="linenr">2:  </span>        <span style="color: #a020f0;">const</span> typeof( ((<span style="color: #228b22;">type</span> *)0)-&gt;member ) *__mptr = (ptr);    \
 <span class="linenr">3:  </span>        (<span style="color: #228b22;">type</span> *)( (<span style="color: #228b22;">char</span> *)__mptr - offsetof(type,member) );})
-<span class="linenr">4:  </span><span style="color: #7a378b;">#define</span> <span style="color: #0000ff;">list_entry</span>(<span style="color: #a0522d;">ptr</span>, <span style="color: #a0522d;">type</span>, <span style="color: #a0522d;">member</span>) \
+<span class="linenr">4:  </span><span style="color: #483d8b;">#define</span> <span style="color: #0000ff;">list_entry</span>(<span style="color: #a0522d;">ptr</span>, <span style="color: #a0522d;">type</span>, <span style="color: #a0522d;">member</span>) \
 <span class="linenr">5:  </span>    container_of(ptr, type, member)
 </pre>
 
@@ -325,7 +327,7 @@
 </p>
 
 
-<pre class="src src-c"><span class="linenr">1:  </span><span style="color: #7a378b;">#define</span> <span style="color: #0000ff;">list_for_each</span>(<span style="color: #a0522d;">pos</span>, <span style="color: #a0522d;">head</span>) \
+<pre class="src src-c"><span class="linenr">1:  </span><span style="color: #483d8b;">#define</span> <span style="color: #0000ff;">list_for_each</span>(<span style="color: #a0522d;">pos</span>, <span style="color: #a0522d;">head</span>) \
 <span class="linenr">2:  </span>    <span style="color: #a020f0;">for</span> (pos = (head)-&gt;next; prefetch(pos-&gt;next), pos != (head); \
 <span class="linenr">3:  </span>            pos = pos-&gt;next)
 </pre>
@@ -342,7 +344,7 @@
 </p>
 
 
-<pre class="src src-c"><span class="linenr">1:  </span><span style="color: #7a378b;">#define</span> <span style="color: #0000ff;">list_for_each_entry</span>(<span style="color: #a0522d;">pos</span>, <span style="color: #a0522d;">head</span>, <span style="color: #a0522d;">member</span>)              \
+<pre class="src src-c"><span class="linenr">1:  </span><span style="color: #483d8b;">#define</span> <span style="color: #0000ff;">list_for_each_entry</span>(<span style="color: #a0522d;">pos</span>, <span style="color: #a0522d;">head</span>, <span style="color: #a0522d;">member</span>)              \
 <span class="linenr">2:  </span>    <span style="color: #a020f0;">for</span> (pos = list_entry((head)-&gt;next, typeof(*pos), member);  \
 <span class="linenr">3:  </span>         prefetch(pos-&gt;member.next), &amp;pos-&gt;member != (head);    \
 <span class="linenr">4:  </span>         pos = list_entry(pos-&gt;member.next, typeof(*pos), member))
@@ -368,9 +370,9 @@
 
 
 
-<pre class="src src-c"><span class="linenr">1:  </span><span style="color: #7a378b;">#define</span> <span style="color: #0000ff;">next_task</span>(<span style="color: #a0522d;">p</span>)    list_entry((p)-&gt;tasks.next, <span style="color: #a020f0;">struct</span> <span style="color: #228b22;">task_struct</span>, tasks)
-<span class="linenr">2:  </span><span style="color: #7a378b;">#define</span> <span style="color: #0000ff;">prev_task</span>(<span style="color: #a0522d;">p</span>)    list_entry((p)-&gt;tasks.prev, <span style="color: #a020f0;">struct</span> <span style="color: #228b22;">task_struct</span>, tasks)
-<span class="linenr">3:  </span><span style="color: #7a378b;">#define</span> <span style="color: #0000ff;">for_each_process</span>(<span style="color: #a0522d;">p</span>) \
+<pre class="src src-c"><span class="linenr">1:  </span><span style="color: #483d8b;">#define</span> <span style="color: #0000ff;">next_task</span>(<span style="color: #a0522d;">p</span>)    list_entry((p)-&gt;tasks.next, <span style="color: #a020f0;">struct</span> <span style="color: #228b22;">task_struct</span>, tasks)
+<span class="linenr">2:  </span><span style="color: #483d8b;">#define</span> <span style="color: #0000ff;">prev_task</span>(<span style="color: #a0522d;">p</span>)    list_entry((p)-&gt;tasks.prev, <span style="color: #a020f0;">struct</span> <span style="color: #228b22;">task_struct</span>, tasks)
+<span class="linenr">3:  </span><span style="color: #483d8b;">#define</span> <span style="color: #0000ff;">for_each_process</span>(<span style="color: #a0522d;">p</span>) \
 <span class="linenr">4:  </span>    <span style="color: #a020f0;">for</span> (p = &amp;init_task ; (p = next_task(p)) != &amp;init_task ; )
 </pre>
 
@@ -385,9 +387,9 @@
 
 
 
-<pre class="src src-c"><span class="linenr"> 1:  </span><span style="color: #7a378b;">#define</span> <span style="color: #0000ff;">remove_parent</span>(<span style="color: #a0522d;">p</span>)    list_del_init(&amp;(p)-&gt;sibling)
+<pre class="src src-c"><span class="linenr"> 1:  </span><span style="color: #483d8b;">#define</span> <span style="color: #0000ff;">remove_parent</span>(<span style="color: #a0522d;">p</span>)    list_del_init(&amp;(p)-&gt;sibling)
 <span class="linenr"> 2:  </span><span style="color: #b22222;">//</span><span style="color: #b22222;">&#28155;&#21152;&#21040;&#29238;&#36827;&#31243;&#25551;&#36848;&#31526;&#30340;&#23376;&#36827;&#31243;&#25551;&#36848;&#31526;&#38142;&#34920;&#30340;&#23614;&#37096;&#65288;parent&#20026;p&#30340;&#29238;&#36827;&#31243;&#65292;&#21017;&#20063;&#26159;p&#30340;&#20804;&#24351;&#36827;&#31243;&#30340;&#29238;&#36827;&#31243;&#65292;&#30456;&#24403;&#20110;&#21512;&#24182;&#38142;&#34920;&#65289;</span>
-<span class="linenr"> 3:  </span><span style="color: #7a378b;">#define</span> <span style="color: #0000ff;">add_parent</span>(<span style="color: #a0522d;">p</span>, <span style="color: #a0522d;">parent</span>)   list_add_tail(&amp;(p)-&gt;sibling,&amp;(parent)-&gt;children)
+<span class="linenr"> 3:  </span><span style="color: #483d8b;">#define</span> <span style="color: #0000ff;">add_parent</span>(<span style="color: #a0522d;">p</span>, <span style="color: #a0522d;">parent</span>)   list_add_tail(&amp;(p)-&gt;sibling,&amp;(parent)-&gt;children)
 <span class="linenr"> 4:  </span>
 <span class="linenr"> 5:  </span><span style="color: #b22222;">// </span><span style="color: #b22222;">&#21024;&#38500;&#32467;&#28857;&#24182;&#37325;&#26032;&#21021;&#22987;&#21270;&#32467;&#28857;</span>
 <span class="linenr"> 6:  </span><span style="color: #a020f0;">static</span> <span style="color: #a020f0;">inline</span> <span style="color: #228b22;">void</span> <span style="color: #0000ff;">list_del_init</span>(<span style="color: #a020f0;">struct</span> <span style="color: #228b22;">list_head</span> *<span style="color: #a0522d;">entry</span>)
@@ -396,13 +398,13 @@
 <span class="linenr"> 9:  </span>    INIT_LIST_HEAD(entry);
 <span class="linenr">10:  </span>}
 <span class="linenr">11:  </span>
-<span class="linenr">12:  </span><span style="color: #7a378b;">#define</span> <span style="color: #0000ff;">REMOVE_LINKS</span>(<span style="color: #a0522d;">p</span>) <span style="color: #a020f0;">do</span> {                    \
+<span class="linenr">12:  </span><span style="color: #483d8b;">#define</span> <span style="color: #0000ff;">REMOVE_LINKS</span>(<span style="color: #a0522d;">p</span>) <span style="color: #a020f0;">do</span> {                    \
 <span class="linenr">13:  </span>    <span style="color: #a020f0;">if</span> (thread_group_leader(p))             \
 <span class="linenr">14:  </span>        list_del_init(&amp;(p)-&gt;tasks);         \
 <span class="linenr">15:  </span>    remove_parent(p);                   \
 <span class="linenr">16:  </span>    } <span style="color: #a020f0;">while</span> (0)
 <span class="linenr">17:  </span>
-<span class="linenr">18:  </span><span style="color: #7a378b;">#define</span> <span style="color: #0000ff;">SET_LINKS</span>(<span style="color: #a0522d;">p</span>) <span style="color: #a020f0;">do</span> {                   \
+<span class="linenr">18:  </span><span style="color: #483d8b;">#define</span> <span style="color: #0000ff;">SET_LINKS</span>(<span style="color: #a0522d;">p</span>) <span style="color: #a020f0;">do</span> {                   \
 <span class="linenr">19:  </span>    <span style="color: #a020f0;">if</span> (thread_group_leader(p))             \
 <span class="linenr">20:  </span>        list_add_tail(&amp;(p)-&gt;tasks,&amp;init_task.tasks);    \
 <span class="linenr">21:  </span>    add_parent(p, (p)-&gt;parent);             \
@@ -454,7 +456,7 @@
 
 <pre class="src src-c"><span class="linenr">1:  </span><span style="color: #a020f0;">typedef</span> <span style="color: #a020f0;">struct</span> <span style="color: #228b22;">prio_array</span> <span style="color: #228b22;">prio_array_t</span>;
 <span class="linenr">2:  </span><span style="color: #b22222;">//</span><span style="color: #b22222;">(MAX_PRIO+1+7)/8&#34920;&#27604;max_prio/8&#19978;&#21462;&#25972;&#65292;&#25925;&#33509;max_prio=140&#65292;&#21017;bitmap_size&#65309;20</span>
-<span class="linenr">3:  </span><span style="color: #7a378b;">#define</span> <span style="color: #a0522d;">BITMAP_SIZE</span> ((((MAX_PRIO+1+7)/8)+<span style="color: #a020f0;">sizeof</span>(<span style="color: #228b22;">long</span>)-1)/<span style="color: #a020f0;">sizeof</span>(<span style="color: #228b22;">long</span>))
+<span class="linenr">3:  </span><span style="color: #483d8b;">#define</span> <span style="color: #a0522d;">BITMAP_SIZE</span> ((((MAX_PRIO+1+7)/8)+<span style="color: #a020f0;">sizeof</span>(<span style="color: #228b22;">long</span>)-1)/<span style="color: #a020f0;">sizeof</span>(<span style="color: #228b22;">long</span>))
 <span class="linenr">4:  </span><span style="color: #a020f0;">struct</span> <span style="color: #228b22;">prio_array</span> {
 <span class="linenr">5:  </span>    <span style="color: #228b22;">unsigned</span> <span style="color: #228b22;">int</span> <span style="color: #a0522d;">nr_active</span>;     <span style="color: #b22222;">//</span><span style="color: #b22222;">&#34920;&#31034;&#27963;&#21160;&#36827;&#31243;&#19968;&#20849;&#26377;&#22810;&#23569;&#20010;</span>
 <span class="linenr">6:  </span>    <span style="color: #228b22;">unsigned</span> <span style="color: #228b22;">long</span> <span style="color: #a0522d;">bitmap</span>[BITMAP_SIZE];  <span style="color: #b22222;">//</span><span style="color: #b22222;">&#19968;&#20849;160 bit&#65292;&#31532;j&#20301;&#20026;1&#34920;queue[j]&#38142;&#34920;&#19981;&#31354;&#65292;&#21542;&#21017;&#20026;&#31354;</span>
@@ -553,7 +555,7 @@
 <span class="linenr"> 4:  </span>
 <span class="linenr"> 5:  </span><span style="color: #a020f0;">struct</span> <span style="color: #228b22;">__wait_queue</span> {
 <span class="linenr"> 6:  </span>    <span style="color: #228b22;">unsigned</span> <span style="color: #228b22;">int</span> <span style="color: #a0522d;">flags</span>;         <span style="color: #b22222;">//</span><span style="color: #b22222;">&#26631;&#24535;&#65292;0&#34920;&#31034;&#38750;&#20114;&#26021;&#65292;1&#34920;&#31034;&#20114;&#26021;</span>
-<span class="linenr"> 7:  </span><span style="color: #7a378b;">#define</span> <span style="color: #a0522d;">WQ_FLAG_EXCLUSIVE</span>   0x01
+<span class="linenr"> 7:  </span><span style="color: #483d8b;">#define</span> <span style="color: #a0522d;">WQ_FLAG_EXCLUSIVE</span>   0x01
 <span class="linenr"> 8:  </span>    <span style="color: #a020f0;">struct</span> <span style="color: #228b22;">task_struct</span> * <span style="color: #a0522d;">task</span>;  <span style="color: #b22222;">//</span><span style="color: #b22222;">&#25351;&#21521;&#20854;&#20195;&#34920;&#36827;&#31243;&#30340;&#36827;&#31243;&#25551;&#36848;&#31526;</span>
 <span class="linenr"> 9:  </span>    <span style="color: #228b22;">wait_queue_func_t</span> <span style="color: #a0522d;">func</span>;     <span style="color: #b22222;">//</span><span style="color: #b22222;">&#20989;&#25968;&#65292;&#29992;&#26469;&#34920;&#31034;&#27492;&#27491;&#22312;&#30561;&#30496;&#20013;&#30340;&#36827;&#31243;&#24212;&#35813;&#22914;&#20309;&#34987;&#21796;&#37266;</span>
 <span class="linenr">10:  </span>    <span style="color: #a020f0;">struct</span> <span style="color: #228b22;">list_head</span> <span style="color: #a0522d;">task_list</span>; <span style="color: #b22222;">//</span><span style="color: #b22222;">&#29992;&#20110;&#38142;&#25509;</span>
@@ -568,19 +570,19 @@
 
 
 
-<pre class="src src-c"><span class="linenr"> 1:  </span><span style="color: #7a378b;">#define</span> <span style="color: #0000ff;">__WAITQUEUE_INITIALIZER</span>(<span style="color: #a0522d;">name</span>, <span style="color: #a0522d;">tsk</span>) {                \
+<pre class="src src-c"><span class="linenr"> 1:  </span><span style="color: #483d8b;">#define</span> <span style="color: #0000ff;">__WAITQUEUE_INITIALIZER</span>(<span style="color: #a0522d;">name</span>, <span style="color: #a0522d;">tsk</span>) {                \
 <span class="linenr"> 2:  </span>    .task       = tsk,                      \
 <span class="linenr"> 3:  </span>    .func       = default_wake_function,            \
 <span class="linenr"> 4:  </span>    .task_list  = { <span style="color: #008b8b;">NULL</span>, <span style="color: #008b8b;">NULL</span> } }
 <span class="linenr"> 5:  </span>
-<span class="linenr"> 6:  </span><span style="color: #7a378b;">#define</span> <span style="color: #0000ff;">DECLARE_WAITQUEUE</span>(<span style="color: #a0522d;">name</span>, <span style="color: #a0522d;">tsk</span>)                    \
+<span class="linenr"> 6:  </span><span style="color: #483d8b;">#define</span> <span style="color: #0000ff;">DECLARE_WAITQUEUE</span>(<span style="color: #a0522d;">name</span>, <span style="color: #a0522d;">tsk</span>)                    \
 <span class="linenr"> 7:  </span>    <span style="color: #228b22;">wait_queue_t</span> <span style="color: #a0522d;">name</span> = __WAITQUEUE_INITIALIZER(name, tsk)
 <span class="linenr"> 8:  </span>
-<span class="linenr"> 9:  </span><span style="color: #7a378b;">#define</span> <span style="color: #0000ff;">__WAIT_QUEUE_HEAD_INITIALIZER</span>(<span style="color: #a0522d;">name</span>) {               \
+<span class="linenr"> 9:  </span><span style="color: #483d8b;">#define</span> <span style="color: #0000ff;">__WAIT_QUEUE_HEAD_INITIALIZER</span>(<span style="color: #a0522d;">name</span>) {               \
 <span class="linenr">10:  </span>    .lock       = SPIN_LOCK_UNLOCKED,               \
 <span class="linenr">11:  </span>    .task_list  = { &amp;(name).task_list, &amp;(name).task_list } }
 <span class="linenr">12:  </span>
-<span class="linenr">13:  </span><span style="color: #7a378b;">#define</span> <span style="color: #0000ff;">DECLARE_WAIT_QUEUE_HEAD</span>(<span style="color: #a0522d;">name</span>) \
+<span class="linenr">13:  </span><span style="color: #483d8b;">#define</span> <span style="color: #0000ff;">DECLARE_WAIT_QUEUE_HEAD</span>(<span style="color: #a0522d;">name</span>) \
 <span class="linenr">14:  </span>    <span style="color: #228b22;">wait_queue_head_t</span> <span style="color: #a0522d;">name</span> = __WAIT_QUEUE_HEAD_INITIALIZER(name)
 </pre>
 
@@ -620,7 +622,7 @@
 
 
 
-<pre class="src src-c"><span class="linenr"> 1:  </span><span style="color: #7a378b;"> #define</span> <span style="color: #0000ff;">wake_up</span>(<span style="color: #a0522d;">x</span>)         __wake_up(x, TASK_UNINTERRUPTIBLE | TASK_INTERRUPTIBLE, 1, <span style="color: #008b8b;">NULL</span>)
+<pre class="src src-c"><span class="linenr"> 1:  </span><span style="color: #483d8b;"> #define</span> <span style="color: #0000ff;">wake_up</span>(<span style="color: #a0522d;">x</span>)         __wake_up(x, TASK_UNINTERRUPTIBLE | TASK_INTERRUPTIBLE, 1, <span style="color: #008b8b;">NULL</span>)
 <span class="linenr"> 2:  </span><span style="color: #b22222;">//</span><span style="color: #b22222;">q&#34920;&#31034;&#34920;&#22836;&#65292;mode&#34920;&#27169;&#24335;&#26159;&#20114;&#26021;&#36824;&#26159;&#38750;&#20114;&#26021;&#65292;nr_exclusive&#34920;&#21796;&#37266;&#20960;&#20010;&#20114;&#26021;&#36827;&#31243;</span>
 <span class="linenr"> 3:  </span><span style="color: #228b22;">void</span> <span style="color: #0000ff;">fastcall</span> __wake_up(<span style="color: #228b22;">wait_queue_head_t</span> *<span style="color: #a0522d;">q</span>, <span style="color: #228b22;">unsigned</span> <span style="color: #228b22;">int</span> <span style="color: #a0522d;">mode</span>, <span style="color: #228b22;">int</span> <span style="color: #a0522d;">nr_exclusive</span>, <span style="color: #228b22;">void</span> *<span style="color: #a0522d;">key</span>)
 <span class="linenr"> 4:  </span>{
@@ -635,7 +637,7 @@
 <span class="linenr">13:  </span>{
 <span class="linenr">14:  </span>    <span style="color: #a020f0;">struct</span> <span style="color: #228b22;">list_head</span> *<span style="color: #a0522d;">tmp</span>, *<span style="color: #a0522d;">next</span>;
 <span class="linenr">15:  </span>
-<span class="linenr">16:  </span>    <span style="color: #a0522d;">list_for_each_safe</span>(tmp, next, &amp;q-&gt;task_list) {
+<span class="linenr">16:  </span>    <span style="color: #0000ff;">list_for_each_safe</span>(tmp, next, &amp;q-&gt;task_list) {
 <span class="linenr">17:  </span>        <span style="color: #228b22;">wait_queue_t</span> *<span style="color: #a0522d;">curr</span>;
 <span class="linenr">18:  </span>        <span style="color: #228b22;">unsigned</span> <span style="color: #a0522d;">flags</span>;
 <span class="linenr">19:  </span>        curr = list_entry(tmp, wait_queue_t, task_list);
@@ -657,17 +659,17 @@
 
 
 
-<pre class="src src-c"><span class="linenr"> 1:  </span><span style="color: #7a378b;">#define</span> <span style="color: #a0522d;">SLEEP_ON_VAR</span>                    \
+<pre class="src src-c"><span class="linenr"> 1:  </span><span style="color: #483d8b;">#define</span> <span style="color: #a0522d;">SLEEP_ON_VAR</span>                    \
 <span class="linenr"> 2:  </span>    <span style="color: #228b22;">unsigned</span> <span style="color: #228b22;">long</span> flags;                \
 <span class="linenr"> 3:  </span>    <span style="color: #228b22;">wait_queue_t</span> <span style="color: #a0522d;">wait</span>;              \
 <span class="linenr"> 4:  </span>    init_waitqueue_entry(&amp;wait, current);
 <span class="linenr"> 5:  </span>
-<span class="linenr"> 6:  </span><span style="color: #7a378b;">#define</span> <span style="color: #a0522d;">SLEEP_ON_HEAD</span>                   \
+<span class="linenr"> 6:  </span><span style="color: #483d8b;">#define</span> <span style="color: #a0522d;">SLEEP_ON_HEAD</span>                   \
 <span class="linenr"> 7:  </span>    spin_lock_irqsave(&amp;q-&gt;lock,flags);      \
 <span class="linenr"> 8:  </span>    __add_wait_queue(q, &amp;wait);         \
 <span class="linenr"> 9:  </span>    spin_unlock(&amp;q-&gt;lock);
 <span class="linenr">10:  </span>
-<span class="linenr">11:  </span><span style="color: #7a378b;">#define</span> <span style="color: #a0522d;">SLEEP_ON_TAIL</span>                   \
+<span class="linenr">11:  </span><span style="color: #483d8b;">#define</span> <span style="color: #a0522d;">SLEEP_ON_TAIL</span>                   \
 <span class="linenr">12:  </span>    spin_lock_irq(&amp;q-&gt;lock);            \
 <span class="linenr">13:  </span>    __remove_wait_queue(q, &amp;wait);          \
 <span class="linenr">14:  </span>    spin_unlock_irqrestore(&amp;q-&gt;lock, flags);
@@ -755,7 +757,7 @@
 
 
 
-<pre class="src src-c"><span class="linenr"> 1:  </span><span style="color: #7a378b;">#define</span> <span style="color: #0000ff;">__wait_event</span>(<span style="color: #a0522d;">wq</span>, <span style="color: #a0522d;">condition</span>)                     \
+<pre class="src src-c"><span class="linenr"> 1:  </span><span style="color: #483d8b;">#define</span> <span style="color: #0000ff;">__wait_event</span>(<span style="color: #a0522d;">wq</span>, <span style="color: #a0522d;">condition</span>)                     \
 <span class="linenr"> 2:  </span><span style="color: #a020f0;">do</span> {                                    \
 <span class="linenr"> 3:  </span>    DEFINE_WAIT(__wait); <span style="color: #b22222;">//</span><span style="color: #b22222;">&#29992;&#24403;&#21069;&#36827;&#31243;&#21021;&#22987;&#21270;&#19968;&#20010;&#38142;&#34920;&#32467;&#28857;                     \</span>
 <span class="linenr"> 4:  </span>                                    \
@@ -768,7 +770,7 @@
 <span class="linenr">11:  </span>    finish_wait(&amp;wq, &amp;__wait);                  \
 <span class="linenr">12:  </span>} <span style="color: #a020f0;">while</span> (0)
 <span class="linenr">13:  </span>
-<span class="linenr">14:  </span><span style="color: #7a378b;">#define</span> <span style="color: #0000ff;">wait_event</span>(<span style="color: #a0522d;">wq</span>, <span style="color: #a0522d;">condition</span>)                   \
+<span class="linenr">14:  </span><span style="color: #483d8b;">#define</span> <span style="color: #0000ff;">wait_event</span>(<span style="color: #a0522d;">wq</span>, <span style="color: #a0522d;">condition</span>)                   \
 <span class="linenr">15:  </span><span style="color: #a020f0;">do</span> {                                    \
 <span class="linenr">16:  </span>    <span style="color: #a020f0;">if</span> (condition)                          \
 <span class="linenr">17:  </span>        <span style="color: #a020f0;">break</span>;                          \
@@ -818,19 +820,19 @@
 </p>
 
 
-<pre class="src src-c"><span class="linenr"> 1:  </span><span style="color: #7a378b;">#define</span> <span style="color: #a0522d;">RLIMIT_CPU</span>      0   <span style="color: #b22222;">/* </span><span style="color: #b22222;">CPU time in ms </span><span style="color: #b22222;">*/</span>
-<span class="linenr"> 2:  </span><span style="color: #7a378b;">#define</span> <span style="color: #a0522d;">RLIMIT_FSIZE</span>        1   <span style="color: #b22222;">/* </span><span style="color: #b22222;">Maximum filesize </span><span style="color: #b22222;">*/</span>
-<span class="linenr"> 3:  </span><span style="color: #7a378b;">#define</span> <span style="color: #a0522d;">RLIMIT_DATA</span>     2   <span style="color: #b22222;">/* </span><span style="color: #b22222;">max data size </span><span style="color: #b22222;">*/</span>
-<span class="linenr"> 4:  </span><span style="color: #7a378b;">#define</span> <span style="color: #a0522d;">RLIMIT_STACK</span>        3   <span style="color: #b22222;">/* </span><span style="color: #b22222;">max stack size </span><span style="color: #b22222;">*/</span>
-<span class="linenr"> 5:  </span><span style="color: #7a378b;">#define</span> <span style="color: #a0522d;">RLIMIT_CORE</span>     4   <span style="color: #b22222;">/* </span><span style="color: #b22222;">max core file size </span><span style="color: #b22222;">*/</span>
-<span class="linenr"> 6:  </span><span style="color: #7a378b;">#define</span> <span style="color: #a0522d;">RLIMIT_RSS</span>      5   <span style="color: #b22222;">/* </span><span style="color: #b22222;">max resident set size </span><span style="color: #b22222;">*/</span>
-<span class="linenr"> 7:  </span><span style="color: #7a378b;">#define</span> <span style="color: #a0522d;">RLIMIT_NPROC</span>        6   <span style="color: #b22222;">/* </span><span style="color: #b22222;">max number of processes </span><span style="color: #b22222;">*/</span>
-<span class="linenr"> 8:  </span><span style="color: #7a378b;">#define</span> <span style="color: #a0522d;">RLIMIT_NOFILE</span>       7   <span style="color: #b22222;">/* </span><span style="color: #b22222;">max number of open files </span><span style="color: #b22222;">*/</span>
-<span class="linenr"> 9:  </span><span style="color: #7a378b;">#define</span> <span style="color: #a0522d;">RLIMIT_MEMLOCK</span>      8   <span style="color: #b22222;">/* </span><span style="color: #b22222;">max locked-in-memory address space </span><span style="color: #b22222;">*/</span>
-<span class="linenr">10:  </span><span style="color: #7a378b;">#define</span> <span style="color: #a0522d;">RLIMIT_AS</span>       9   <span style="color: #b22222;">/* </span><span style="color: #b22222;">address space limit </span><span style="color: #b22222;">*/</span>
-<span class="linenr">11:  </span><span style="color: #7a378b;">#define</span> <span style="color: #a0522d;">RLIMIT_LOCKS</span>        10  <span style="color: #b22222;">/* </span><span style="color: #b22222;">maximum file locks held </span><span style="color: #b22222;">*/</span>
-<span class="linenr">12:  </span><span style="color: #7a378b;">#define</span> <span style="color: #a0522d;">RLIMIT_SIGPENDING</span>   11  <span style="color: #b22222;">/* </span><span style="color: #b22222;">max number of pending signals </span><span style="color: #b22222;">*/</span>
-<span class="linenr">13:  </span><span style="color: #7a378b;">#define</span> <span style="color: #a0522d;">RLIMIT_MSGQUEUE</span>     12  <span style="color: #b22222;">/* </span><span style="color: #b22222;">maximum bytes in POSIX mqueues </span><span style="color: #b22222;">*/</span>
+<pre class="src src-c"><span class="linenr"> 1:  </span><span style="color: #483d8b;">#define</span> <span style="color: #a0522d;">RLIMIT_CPU</span>      0   <span style="color: #b22222;">/* </span><span style="color: #b22222;">CPU time in ms </span><span style="color: #b22222;">*/</span>
+<span class="linenr"> 2:  </span><span style="color: #483d8b;">#define</span> <span style="color: #a0522d;">RLIMIT_FSIZE</span>        1   <span style="color: #b22222;">/* </span><span style="color: #b22222;">Maximum filesize </span><span style="color: #b22222;">*/</span>
+<span class="linenr"> 3:  </span><span style="color: #483d8b;">#define</span> <span style="color: #a0522d;">RLIMIT_DATA</span>     2   <span style="color: #b22222;">/* </span><span style="color: #b22222;">max data size </span><span style="color: #b22222;">*/</span>
+<span class="linenr"> 4:  </span><span style="color: #483d8b;">#define</span> <span style="color: #a0522d;">RLIMIT_STACK</span>        3   <span style="color: #b22222;">/* </span><span style="color: #b22222;">max stack size </span><span style="color: #b22222;">*/</span>
+<span class="linenr"> 5:  </span><span style="color: #483d8b;">#define</span> <span style="color: #a0522d;">RLIMIT_CORE</span>     4   <span style="color: #b22222;">/* </span><span style="color: #b22222;">max core file size </span><span style="color: #b22222;">*/</span>
+<span class="linenr"> 6:  </span><span style="color: #483d8b;">#define</span> <span style="color: #a0522d;">RLIMIT_RSS</span>      5   <span style="color: #b22222;">/* </span><span style="color: #b22222;">max resident set size </span><span style="color: #b22222;">*/</span>
+<span class="linenr"> 7:  </span><span style="color: #483d8b;">#define</span> <span style="color: #a0522d;">RLIMIT_NPROC</span>        6   <span style="color: #b22222;">/* </span><span style="color: #b22222;">max number of processes </span><span style="color: #b22222;">*/</span>
+<span class="linenr"> 8:  </span><span style="color: #483d8b;">#define</span> <span style="color: #a0522d;">RLIMIT_NOFILE</span>       7   <span style="color: #b22222;">/* </span><span style="color: #b22222;">max number of open files </span><span style="color: #b22222;">*/</span>
+<span class="linenr"> 9:  </span><span style="color: #483d8b;">#define</span> <span style="color: #a0522d;">RLIMIT_MEMLOCK</span>      8   <span style="color: #b22222;">/* </span><span style="color: #b22222;">max locked-in-memory address space </span><span style="color: #b22222;">*/</span>
+<span class="linenr">10:  </span><span style="color: #483d8b;">#define</span> <span style="color: #a0522d;">RLIMIT_AS</span>       9   <span style="color: #b22222;">/* </span><span style="color: #b22222;">address space limit </span><span style="color: #b22222;">*/</span>
+<span class="linenr">11:  </span><span style="color: #483d8b;">#define</span> <span style="color: #a0522d;">RLIMIT_LOCKS</span>        10  <span style="color: #b22222;">/* </span><span style="color: #b22222;">maximum file locks held </span><span style="color: #b22222;">*/</span>
+<span class="linenr">12:  </span><span style="color: #483d8b;">#define</span> <span style="color: #a0522d;">RLIMIT_SIGPENDING</span>   11  <span style="color: #b22222;">/* </span><span style="color: #b22222;">max number of pending signals </span><span style="color: #b22222;">*/</span>
+<span class="linenr">13:  </span><span style="color: #483d8b;">#define</span> <span style="color: #a0522d;">RLIMIT_MSGQUEUE</span>     12  <span style="color: #b22222;">/* </span><span style="color: #b22222;">maximum bytes in POSIX mqueues </span><span style="color: #b22222;">*/</span>
 </pre>
 
 <p>

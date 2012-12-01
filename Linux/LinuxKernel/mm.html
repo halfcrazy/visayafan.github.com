@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
                "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-CN" xml:lang="zh-CN">
 <head>
 <title>Linux内核－内存管理</title>
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
 <meta name="title" content="Linux内核－内存管理"/>
 <meta name="generator" content="Org-mode"/>
-<meta name="generated" content="2012-10-27 05:28:37 CST"/>
-<meta name="author" content="visaya fan"/>
+<meta name="generated" content="2012-12-02 00:33:37 CST"/>
+<meta name="author" content="visayafan"/>
 <meta name="description" content=""/>
 <meta name="keywords" content=""/>
 <div id="org-div-comments"><a href="../../index.html#linuxkernel">主页</a><br/><a href="#disqus_thread">评论</a></div>
@@ -62,14 +62,16 @@
 <h1 class="title">Linux内核－内存管理</h1>
 
 
-<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"> </script>
+<!-- <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"> </script> -->
+<link rel="stylesheet" type="text/css" href="../../Layout/CSS/bootstrap_old.css" />
 <link rel="stylesheet" type="text/css" href="../../Layout/CSS/vf.css" />
+<script src="../../Layout/JS/jquery_1.7.1.js"></script>
 <script src="../../Layout/JS/bootstrap_old.js"></script>
 
 
 
 <div id="table-of-contents">
-<h2>TOC</h2>
+<h2>目录</h2>
 <div id="text-table-of-contents">
 <ul>
 <li><a href="#sec-1">1 Page</a></li>
@@ -124,10 +126,10 @@
 <span class="linenr">12:  </span><span style="color: #b22222;">          &#26368;&#20302;&#20026;0&#34920;&#26144;&#23556;&#39029;&#65292;&#27492;&#26102;mapping&#25351;&#21521;&#25991;&#20214;&#33410;&#28857;&#22320;&#22336;&#31354;&#38388;&#12290;</span><span style="color: #b22222;">*/</span>
 <span class="linenr">13:  </span>    <span style="color: #228b22;">pgoff_t</span> <span style="color: #a0522d;">index</span>;          <span style="color: #b22222;">/* </span><span style="color: #b22222;">Our offset within mapping. </span><span style="color: #b22222;">*/</span>
 <span class="linenr">14:  </span>    <span style="color: #a020f0;">struct</span> <span style="color: #228b22;">list_head</span> <span style="color: #a0522d;">lru</span>;       
-<span class="linenr">15:  </span><span style="color: #7a378b;">#if</span> <span style="color: #7a378b;">defined</span>(WANT_PAGE_VIRTUAL)
+<span class="linenr">15:  </span><span style="color: #483d8b;">#if</span> <span style="color: #483d8b;">defined</span>(WANT_PAGE_VIRTUAL)
 <span class="linenr">16:  </span>    <span style="color: #228b22;">void</span> *<span style="color: #a0522d;">virtual</span>;          <span style="color: #b22222;">/* </span><span style="color: #b22222;">Kernel virtual address (NULL if</span>
 <span class="linenr">17:  </span><span style="color: #b22222;">                               not kmapped, ie. highmem) </span><span style="color: #b22222;">*/</span>
-<span class="linenr">18:  </span><span style="color: #7a378b;">#endif</span> <span style="color: #b22222;">/* </span><span style="color: #b22222;">WANT_PAGE_VIRTUAL </span><span style="color: #b22222;">*/</span>
+<span class="linenr">18:  </span><span style="color: #483d8b;">#endif</span> <span style="color: #b22222;">/* </span><span style="color: #b22222;">WANT_PAGE_VIRTUAL </span><span style="color: #b22222;">*/</span>
 <span class="linenr">19:  </span>}
 </pre>
 
@@ -158,14 +160,14 @@
 <span class="linenr">12:  </span>    <span style="color: #228b22;">wait_queue_head_t</span> <span style="color: #a0522d;">kswapd_wait</span>;    <span style="color: #b22222;">/* </span><span style="color: #b22222;">kswap&#21518;&#21488;&#36827;&#31243;&#30340;&#31561;&#24453;&#38431;&#21015; </span><span style="color: #b22222;">*/</span>
 <span class="linenr">13:  </span>    <span style="color: #a020f0;">struct</span> <span style="color: #228b22;">task_struct</span> *<span style="color: #a0522d;">kswapd</span>;
 <span class="linenr">14:  </span>    <span style="color: #228b22;">int</span> <span style="color: #a0522d;">kswapd_max_order</span>;
-<span class="linenr">15:  </span>} <span style="color: #a0522d;">pg_data_t</span>;
+<span class="linenr">15:  </span>} <span style="color: #228b22;">pg_data_t</span>;
 <span class="linenr">16:  </span>
 <span class="linenr">17:  </span>
 <span class="linenr">18:  </span><span style="color: #a020f0;">struct</span> <span style="color: #228b22;">zonelist</span> {
 <span class="linenr">19:  </span>    <span style="color: #a020f0;">struct</span> <span style="color: #228b22;">zone</span> *<span style="color: #a0522d;">zones</span>[MAX_NUMNODES * MAX_NR_ZONES + 1]; <span style="color: #b22222;">//</span><span style="color: #b22222;">&#26368;&#22823;zone&#20010;&#25968;x&#26368;&#22823;node&#20010;&#25968;&#65288;&#19968;&#20010;node&#21253;&#21547;&#33509;&#24178;&#20010;zone&#65289;&#30001;&#20110;&#20197;null&#32467;&#23614;&#65292;&#25925;&#65291;1</span>
 <span class="linenr">20:  </span>};
-<span class="linenr">21:  </span><span style="color: #7a378b;">#define</span> <span style="color: #a0522d;">GFP_ZONETYPES</span>   ((GFP_ZONEMASK + 1) / 2 + 1)        <span style="color: #b22222;">/* </span><span style="color: #b22222;">Loner </span><span style="color: #b22222;">*/</span>
-<span class="linenr">22:  </span><span style="color: #7a378b;">#define</span> <span style="color: #a0522d;">GFP_ZONEMASK</span>    0x03
+<span class="linenr">21:  </span><span style="color: #483d8b;">#define</span> <span style="color: #a0522d;">GFP_ZONETYPES</span>   ((GFP_ZONEMASK + 1) / 2 + 1)        <span style="color: #b22222;">/* </span><span style="color: #b22222;">Loner </span><span style="color: #b22222;">*/</span>
+<span class="linenr">22:  </span><span style="color: #483d8b;">#define</span> <span style="color: #a0522d;">GFP_ZONEMASK</span>    0x03
 </pre>
 
 
@@ -242,7 +244,7 @@
 </p>
 
 
-<pre class="src src-c"><span class="linenr"> 1:  </span><span style="color: #7a378b;">#define</span> <span style="color: #a0522d;">NODEZONE_SHIFT</span> (<span style="color: #a020f0;">sizeof</span>(page_flags_t)*8 - MAX_NODES_SHIFT - MAX_ZONES_SHIFT)
+<pre class="src src-c"><span class="linenr"> 1:  </span><span style="color: #483d8b;">#define</span> <span style="color: #a0522d;">NODEZONE_SHIFT</span> (<span style="color: #a020f0;">sizeof</span>(page_flags_t)*8 - MAX_NODES_SHIFT - MAX_ZONES_SHIFT)
 <span class="linenr"> 2:  </span><span style="color: #a020f0;">static</span> <span style="color: #a020f0;">inline</span> <span style="color: #a020f0;">struct</span> <span style="color: #228b22;">zone</span> *<span style="color: #0000ff;">page_zone</span>(<span style="color: #a020f0;">struct</span> <span style="color: #228b22;">page</span> *<span style="color: #a0522d;">page</span>)
 <span class="linenr"> 3:  </span>{
 <span class="linenr"> 4:  </span>    <span style="color: #b22222;">/* </span><span style="color: #b22222;">page-&gt;flags &gt;&gt; NODEZONE_SHIFT &#20854;&#23454;&#23601;&#26159;page-&gt;flags&#30340;&#21069;MAX_NODES_SHIFT+MAX_ZONES_SHIFT&#20301;&#65288;32&#20301;&#26426;&#19978;&#26159;8&#20301;&#65292;64&#20301;&#26426;&#19978;&#26159;12&#20301;&#65289; </span><span style="color: #b22222;">*/</span>
@@ -250,14 +252,14 @@
 <span class="linenr"> 6:  </span>}
 <span class="linenr"> 7:  </span>
 <span class="linenr"> 8:  </span><span style="color: #b22222;">/*</span><span style="color: #b22222;">&#22914;&#26524;&#26159;32&#20301;&#21017;&#23450;&#20041;max_nodes_shift&#20026;6&#65292;64&#20301;&#21017;&#23450;&#20041;&#20026;10  </span><span style="color: #b22222;">*/</span>
-<span class="linenr"> 9:  </span><span style="color: #7a378b;">#if</span> BITS_PER_LONG == 32 || <span style="color: #7a378b;">defined</span>(ARCH_HAS_ATOMIC_UNSIGNED)
+<span class="linenr"> 9:  </span><span style="color: #483d8b;">#if</span> BITS_PER_LONG == 32 || <span style="color: #483d8b;">defined</span>(ARCH_HAS_ATOMIC_UNSIGNED)
 <span class="linenr">10:  </span><span style="color: #b22222;">/* </span><span style="color: #b22222;">page-&gt;flags&#20013;&#19968;&#20849;&#20445;&#30041;&#20102;8&#20301;&#26469;&#20445;&#23384;node&#21644;zone&#20449;&#24687;&#65292;&#20854;&#20013;2&#20301;&#34987;&#29992;&#26469;&#20445;&#23384;zone&#31867;&#22411;&#65288;3&#20010;dma/highmem/normal&#65289;&#65292;&#25925;&#36824;&#21097;&#19979;6&#20301; </span><span style="color: #b22222;">*/</span>
-<span class="linenr">11:  </span><span style="color: #7a378b;">#define</span> <span style="color: #a0522d;">MAX_NODES_SHIFT</span>     6
-<span class="linenr">12:  </span><span style="color: #7a378b;">#elif</span> BITS_PER_LONG == 64
+<span class="linenr">11:  </span><span style="color: #483d8b;">#define</span> <span style="color: #a0522d;">MAX_NODES_SHIFT</span>     6
+<span class="linenr">12:  </span><span style="color: #483d8b;">#elif</span> BITS_PER_LONG == 64
 <span class="linenr">13:  </span><span style="color: #b22222;">/* </span><span style="color: #b22222;">64&#21017;&#26377;&#20805;&#36275;&#30340;&#31354;&#38388;&#65292;&#27492;&#22788;&#35774;&#32622;&#20026;10 </span><span style="color: #b22222;">*/</span>
-<span class="linenr">14:  </span><span style="color: #7a378b;">#define</span> <span style="color: #a0522d;">MAX_NODES_SHIFT</span>     10
+<span class="linenr">14:  </span><span style="color: #483d8b;">#define</span> <span style="color: #a0522d;">MAX_NODES_SHIFT</span>     10
 <span class="linenr">15:  </span><span style="color: #b22222;">/* </span><span style="color: #b22222;">2&#20301;&#29992;&#26469;&#20445;&#23384;3&#20010;zone&#36275;&#30691; </span><span style="color: #b22222;">*/</span>
-<span class="linenr">16:  </span><span style="color: #7a378b;">#define</span> <span style="color: #a0522d;">MAX_ZONES_SHIFT</span>     2
+<span class="linenr">16:  </span><span style="color: #483d8b;">#define</span> <span style="color: #a0522d;">MAX_ZONES_SHIFT</span>     2
 </pre>
 
 </div>
@@ -342,29 +344,29 @@ $$min\_free\_kbytes=\sqrt(16 \times (total\ size\ of\ zone\_dma\ and\ zone\_norm
 
 
 <pre class="src src-c"><span class="linenr"> 1:  </span><span style="color: #228b22;">&#21407;&#22987;&#26631;&#24535;</span>
-<span class="linenr"> 2:  </span><span style="color: #7a378b;">#define</span> <span style="color: #a0522d;">__GFP_DMA</span>   0x01        <span style="color: #b22222;">/* </span><span style="color: #b22222;">&#25351;&#23450;&#20174;ZONE_DMA&#20013;&#21462;&#39029; </span><span style="color: #b22222;">*/</span>
-<span class="linenr"> 3:  </span><span style="color: #7a378b;">#define</span> <span style="color: #a0522d;">__GFP_HIGHMEM</span>   0x02    <span style="color: #b22222;">/*  </span><span style="color: #b22222;">&#25351;&#23450;&#20174;ZONE_HIGHMEM&#20013;&#21462;&#39029; </span><span style="color: #b22222;">*/</span>
+<span class="linenr"> 2:  </span><span style="color: #483d8b;">#define</span> <span style="color: #a0522d;">__GFP_DMA</span>   0x01        <span style="color: #b22222;">/* </span><span style="color: #b22222;">&#25351;&#23450;&#20174;ZONE_DMA&#20013;&#21462;&#39029; </span><span style="color: #b22222;">*/</span>
+<span class="linenr"> 3:  </span><span style="color: #483d8b;">#define</span> <span style="color: #a0522d;">__GFP_HIGHMEM</span>   0x02    <span style="color: #b22222;">/*  </span><span style="color: #b22222;">&#25351;&#23450;&#20174;ZONE_HIGHMEM&#20013;&#21462;&#39029; </span><span style="color: #b22222;">*/</span>
 <span class="linenr"> 4:  </span>
-<span class="linenr"> 5:  </span><span style="color: #7a378b;">#define</span> <span style="color: #a0522d;">__GFP_WAIT</span>  0x10    <span style="color: #b22222;">/* </span><span style="color: #b22222;">&#20998;&#37197;&#22120;&#21487;&#20241;&#30496; </span><span style="color: #b22222;">*/</span>
-<span class="linenr"> 6:  </span><span style="color: #7a378b;">#define</span> <span style="color: #a0522d;">__GFP_HIGH</span>  0x20    <span style="color: #b22222;">/* </span><span style="color: #b22222;">Should access emergency pools? </span><span style="color: #b22222;">*/</span>        <span style="color: #b22222;">/* </span><span style="color: #b22222;">&#20998;&#37197;&#22120;&#21487;&#20197;&#35775;&#38382;&#32039;&#24613;&#32531;&#20914;&#21306;</span><span style="color: #b22222;">*/</span>
-<span class="linenr"> 7:  </span><span style="color: #7a378b;">#define</span> <span style="color: #a0522d;">__GFP_IO</span>    0x40    <span style="color: #b22222;">/* </span><span style="color: #b22222;">Can start physical IO? </span><span style="color: #b22222;">*/</span>        <span style="color: #b22222;">/*  </span><span style="color: #b22222;">&#20998;&#37197;&#22120;&#21487;&#20197;&#24320;&#21551;IO </span><span style="color: #b22222;">*/</span>
-<span class="linenr"> 8:  </span><span style="color: #7a378b;">#define</span> <span style="color: #a0522d;">__GFP_FS</span>    0x80    <span style="color: #b22222;">/* </span><span style="color: #b22222;">Can call down to low-level FS? </span><span style="color: #b22222;">*/</span>        <span style="color: #b22222;">/* </span><span style="color: #b22222;">&#20998;&#37197;&#22120;&#21487;&#20197;&#24320;&#21551;&#25991;&#20214;&#31995;&#32479; </span><span style="color: #b22222;">*/</span>
-<span class="linenr"> 9:  </span><span style="color: #7a378b;">#define</span> <span style="color: #a0522d;">__GFP_COLD</span>  0x100   <span style="color: #b22222;">/* </span><span style="color: #b22222;">Cache-cold page required </span><span style="color: #b22222;">*/</span>      <span style="color: #b22222;">/* </span><span style="color: #b22222;">&#20998;&#37197;&#22120;&#24212;&#35813;&#20351;&#29992;&#39640;&#36895;&#32531;&#23384;&#20013;&#24555;&#35201;&#28120;&#27760;&#30340;&#39029;</span><span style="color: #b22222;">*/</span>
-<span class="linenr">10:  </span><span style="color: #7a378b;">#define</span> <span style="color: #a0522d;">__GFP_NOWARN</span>    0x200   <span style="color: #b22222;">/* </span><span style="color: #b22222;">Suppress page allocation failure warning </span><span style="color: #b22222;">*/</span>  <span style="color: #b22222;">/* </span><span style="color: #b22222;">&#19981;&#24517;&#25171;&#21360;&#35686;&#21578;&#20449;&#24687;</span><span style="color: #b22222;">*/</span>
-<span class="linenr">11:  </span><span style="color: #7a378b;">#define</span> <span style="color: #a0522d;">__GFP_REPEAT</span>    0x400   <span style="color: #b22222;">/* </span><span style="color: #b22222;">Retry the allocation.  Might fail </span><span style="color: #b22222;">*/</span> <span style="color: #b22222;">/*  </span><span style="color: #b22222;">&#20998;&#37197;&#22833;&#36133;&#21017;&#37325;&#22797;&#20998;&#37197;*</span><span style="color: #b22222;">*/</span>
-<span class="linenr">12:  </span><span style="color: #7a378b;">#define</span> <span style="color: #a0522d;">__GFP_NOFAIL</span>    0x800   <span style="color: #b22222;">/* </span><span style="color: #b22222;">Retry for ever.  Cannot fail </span><span style="color: #b22222;">*/</span>      <span style="color: #b22222;">/*  </span><span style="color: #b22222;">&#20998;&#37197;&#22120;&#26080;&#38480;&#22320;&#37325;&#22797;&#36827;&#34892;&#20998;&#37197;&#65292;&#19981;&#33021;&#22833;&#36133;*</span><span style="color: #b22222;">*/</span>
-<span class="linenr">13:  </span><span style="color: #7a378b;">#define</span> <span style="color: #a0522d;">__GFP_NORETRY</span>   0x1000  <span style="color: #b22222;">/* </span><span style="color: #b22222;">Do not retry.  Might fail </span><span style="color: #b22222;">*/</span> <span style="color: #b22222;">/*  </span><span style="color: #b22222;">&#20998;&#37197;&#22833;&#36133;&#21518;&#21518;&#19981;&#20250;&#20877;&#36827;&#34892;&#20998;&#37197;*</span><span style="color: #b22222;">*/</span>
-<span class="linenr">14:  </span><span style="color: #7a378b;">#define</span> <span style="color: #a0522d;">__GFP_NO_GROW</span>   0x2000  <span style="color: #b22222;">/* </span><span style="color: #b22222;">Slab internal usage </span><span style="color: #b22222;">*/</span>       <span style="color: #b22222;">/*  </span><span style="color: #b22222;">slab&#20013;&#20351;&#29992;&#30340;*</span><span style="color: #b22222;">*/</span>
-<span class="linenr">15:  </span><span style="color: #7a378b;">#define</span> <span style="color: #a0522d;">__GFP_COMP</span>  0x4000  <span style="color: #b22222;">/* </span><span style="color: #b22222;">Add compound page metadata </span><span style="color: #b22222;">*/</span>
-<span class="linenr">16:  </span><span style="color: #7a378b;">#define</span> <span style="color: #a0522d;">__GFP_ZERO</span>  0x8000  <span style="color: #b22222;">/* </span><span style="color: #b22222;">Return zeroed page on success </span><span style="color: #b22222;">*/</span>
+<span class="linenr"> 5:  </span><span style="color: #483d8b;">#define</span> <span style="color: #a0522d;">__GFP_WAIT</span>  0x10    <span style="color: #b22222;">/* </span><span style="color: #b22222;">&#20998;&#37197;&#22120;&#21487;&#20241;&#30496; </span><span style="color: #b22222;">*/</span>
+<span class="linenr"> 6:  </span><span style="color: #483d8b;">#define</span> <span style="color: #a0522d;">__GFP_HIGH</span>  0x20    <span style="color: #b22222;">/* </span><span style="color: #b22222;">Should access emergency pools? </span><span style="color: #b22222;">*/</span>        <span style="color: #b22222;">/* </span><span style="color: #b22222;">&#20998;&#37197;&#22120;&#21487;&#20197;&#35775;&#38382;&#32039;&#24613;&#32531;&#20914;&#21306;</span><span style="color: #b22222;">*/</span>
+<span class="linenr"> 7:  </span><span style="color: #483d8b;">#define</span> <span style="color: #a0522d;">__GFP_IO</span>    0x40    <span style="color: #b22222;">/* </span><span style="color: #b22222;">Can start physical IO? </span><span style="color: #b22222;">*/</span>        <span style="color: #b22222;">/*  </span><span style="color: #b22222;">&#20998;&#37197;&#22120;&#21487;&#20197;&#24320;&#21551;IO </span><span style="color: #b22222;">*/</span>
+<span class="linenr"> 8:  </span><span style="color: #483d8b;">#define</span> <span style="color: #a0522d;">__GFP_FS</span>    0x80    <span style="color: #b22222;">/* </span><span style="color: #b22222;">Can call down to low-level FS? </span><span style="color: #b22222;">*/</span>        <span style="color: #b22222;">/* </span><span style="color: #b22222;">&#20998;&#37197;&#22120;&#21487;&#20197;&#24320;&#21551;&#25991;&#20214;&#31995;&#32479; </span><span style="color: #b22222;">*/</span>
+<span class="linenr"> 9:  </span><span style="color: #483d8b;">#define</span> <span style="color: #a0522d;">__GFP_COLD</span>  0x100   <span style="color: #b22222;">/* </span><span style="color: #b22222;">Cache-cold page required </span><span style="color: #b22222;">*/</span>      <span style="color: #b22222;">/* </span><span style="color: #b22222;">&#20998;&#37197;&#22120;&#24212;&#35813;&#20351;&#29992;&#39640;&#36895;&#32531;&#23384;&#20013;&#24555;&#35201;&#28120;&#27760;&#30340;&#39029;</span><span style="color: #b22222;">*/</span>
+<span class="linenr">10:  </span><span style="color: #483d8b;">#define</span> <span style="color: #a0522d;">__GFP_NOWARN</span>    0x200   <span style="color: #b22222;">/* </span><span style="color: #b22222;">Suppress page allocation failure warning </span><span style="color: #b22222;">*/</span>  <span style="color: #b22222;">/* </span><span style="color: #b22222;">&#19981;&#24517;&#25171;&#21360;&#35686;&#21578;&#20449;&#24687;</span><span style="color: #b22222;">*/</span>
+<span class="linenr">11:  </span><span style="color: #483d8b;">#define</span> <span style="color: #a0522d;">__GFP_REPEAT</span>    0x400   <span style="color: #b22222;">/* </span><span style="color: #b22222;">Retry the allocation.  Might fail </span><span style="color: #b22222;">*/</span> <span style="color: #b22222;">/*  </span><span style="color: #b22222;">&#20998;&#37197;&#22833;&#36133;&#21017;&#37325;&#22797;&#20998;&#37197;*</span><span style="color: #b22222;">*/</span>
+<span class="linenr">12:  </span><span style="color: #483d8b;">#define</span> <span style="color: #a0522d;">__GFP_NOFAIL</span>    0x800   <span style="color: #b22222;">/* </span><span style="color: #b22222;">Retry for ever.  Cannot fail </span><span style="color: #b22222;">*/</span>      <span style="color: #b22222;">/*  </span><span style="color: #b22222;">&#20998;&#37197;&#22120;&#26080;&#38480;&#22320;&#37325;&#22797;&#36827;&#34892;&#20998;&#37197;&#65292;&#19981;&#33021;&#22833;&#36133;*</span><span style="color: #b22222;">*/</span>
+<span class="linenr">13:  </span><span style="color: #483d8b;">#define</span> <span style="color: #a0522d;">__GFP_NORETRY</span>   0x1000  <span style="color: #b22222;">/* </span><span style="color: #b22222;">Do not retry.  Might fail </span><span style="color: #b22222;">*/</span> <span style="color: #b22222;">/*  </span><span style="color: #b22222;">&#20998;&#37197;&#22833;&#36133;&#21518;&#21518;&#19981;&#20250;&#20877;&#36827;&#34892;&#20998;&#37197;*</span><span style="color: #b22222;">*/</span>
+<span class="linenr">14:  </span><span style="color: #483d8b;">#define</span> <span style="color: #a0522d;">__GFP_NO_GROW</span>   0x2000  <span style="color: #b22222;">/* </span><span style="color: #b22222;">Slab internal usage </span><span style="color: #b22222;">*/</span>       <span style="color: #b22222;">/*  </span><span style="color: #b22222;">slab&#20013;&#20351;&#29992;&#30340;*</span><span style="color: #b22222;">*/</span>
+<span class="linenr">15:  </span><span style="color: #483d8b;">#define</span> <span style="color: #a0522d;">__GFP_COMP</span>  0x4000  <span style="color: #b22222;">/* </span><span style="color: #b22222;">Add compound page metadata </span><span style="color: #b22222;">*/</span>
+<span class="linenr">16:  </span><span style="color: #483d8b;">#define</span> <span style="color: #a0522d;">__GFP_ZERO</span>  0x8000  <span style="color: #b22222;">/* </span><span style="color: #b22222;">Return zeroed page on success </span><span style="color: #b22222;">*/</span>
 <span class="linenr">17:  </span>
 <span class="linenr">18:  </span><span style="color: #a0522d;">&#32452;&#21512;&#26631;&#24535;</span>
-<span class="linenr">19:  </span><span style="color: #7a378b;">#define</span> <span style="color: #a0522d;">GFP_ATOMIC</span>  (__GFP_HIGH)
-<span class="linenr">20:  </span><span style="color: #7a378b;">#define</span> <span style="color: #a0522d;">GFP_NOIO</span>    (__GFP_WAIT)
-<span class="linenr">21:  </span><span style="color: #7a378b;">#define</span> <span style="color: #a0522d;">GFP_NOFS</span>    (__GFP_WAIT | __GFP_IO)
-<span class="linenr">22:  </span><span style="color: #7a378b;">#define</span> <span style="color: #a0522d;">GFP_KERNEL</span>  (__GFP_WAIT | __GFP_IO | __GFP_FS)
-<span class="linenr">23:  </span><span style="color: #7a378b;">#define</span> <span style="color: #a0522d;">GFP_USER</span>    (__GFP_WAIT | __GFP_IO | __GFP_FS)
-<span class="linenr">24:  </span><span style="color: #7a378b;">#define</span> <span style="color: #a0522d;">GFP_HIGHUSER</span>    (__GFP_WAIT | __GFP_IO | __GFP_FS | __GFP_HIGHMEM)
+<span class="linenr">19:  </span><span style="color: #483d8b;">#define</span> <span style="color: #a0522d;">GFP_ATOMIC</span>  (__GFP_HIGH)
+<span class="linenr">20:  </span><span style="color: #483d8b;">#define</span> <span style="color: #a0522d;">GFP_NOIO</span>    (__GFP_WAIT)
+<span class="linenr">21:  </span><span style="color: #483d8b;">#define</span> <span style="color: #a0522d;">GFP_NOFS</span>    (__GFP_WAIT | __GFP_IO)
+<span class="linenr">22:  </span><span style="color: #483d8b;">#define</span> <span style="color: #a0522d;">GFP_KERNEL</span>  (__GFP_WAIT | __GFP_IO | __GFP_FS)
+<span class="linenr">23:  </span><span style="color: #483d8b;">#define</span> <span style="color: #a0522d;">GFP_USER</span>    (__GFP_WAIT | __GFP_IO | __GFP_FS)
+<span class="linenr">24:  </span><span style="color: #483d8b;">#define</span> <span style="color: #a0522d;">GFP_HIGHUSER</span>    (__GFP_WAIT | __GFP_IO | __GFP_FS | __GFP_HIGHMEM)
 </pre>
 
 <ul>
@@ -451,7 +453,7 @@ $$min\_free\_kbytes=\sqrt(16 \times (total\ size\ of\ zone\_dma\ and\ zone\_norm
 <span class="linenr">31:  </span>    __ClearPagePrivate(page);
 <span class="linenr">32:  </span>    page-&gt;private = 0;
 <span class="linenr">33:  </span>}
-<span class="linenr">34:  </span><span style="color: #7a378b;">#define</span> <span style="color: #0000ff;">__ClearPagePrivate</span>(<span style="color: #a0522d;">page</span>) __clear_bit(PG_private, &amp;(page)-&gt;flags)
+<span class="linenr">34:  </span><span style="color: #483d8b;">#define</span> <span style="color: #0000ff;">__ClearPagePrivate</span>(<span style="color: #a0522d;">page</span>) __clear_bit(PG_private, &amp;(page)-&gt;flags)
 <span class="linenr">35:  </span>
 <span class="linenr">36:  </span><span style="color: #a020f0;">static</span> <span style="color: #a020f0;">inline</span> <span style="color: #a020f0;">struct</span> <span style="color: #228b22;">page</span> *
 <span class="linenr">37:  </span><span style="color: #0000ff;">expand</span>(<span style="color: #a020f0;">struct</span> <span style="color: #228b22;">zone</span> *<span style="color: #a0522d;">zone</span>, <span style="color: #a020f0;">struct</span> <span style="color: #228b22;">page</span> *<span style="color: #a0522d;">page</span>,
@@ -476,7 +478,7 @@ $$min\_free\_kbytes=\sqrt(16 \times (total\ size\ of\ zone\_dma\ and\ zone\_norm
 <span class="linenr">56:  </span>    page-&gt;private = order;
 <span class="linenr">57:  </span>    __SetPagePrivate(page);
 <span class="linenr">58:  </span>}
-<span class="linenr">59:  </span><span style="color: #7a378b;">#define</span> <span style="color: #0000ff;">__SetPagePrivate</span>(<span style="color: #a0522d;">page</span>)  __set_bit(PG_private, &amp;(page)-&gt;flags)
+<span class="linenr">59:  </span><span style="color: #483d8b;">#define</span> <span style="color: #0000ff;">__SetPagePrivate</span>(<span style="color: #a0522d;">page</span>)  __set_bit(PG_private, &amp;(page)-&gt;flags)
 </pre>
 
 
@@ -552,7 +554,7 @@ $$min\_free\_kbytes=\sqrt(16 \times (total\ size\ of\ zone\_dma\ and\ zone\_norm
 <span class="linenr">56:  </span>               <span style="color: #a020f0;">return</span> 1;
 <span class="linenr">57:  </span>       <span style="color: #a020f0;">return</span> 0;
 <span class="linenr">58:  </span>}
-<span class="linenr">59:  </span><span style="color: #7a378b;">#define</span> <span style="color: #0000ff;">PagePrivate</span>(<span style="color: #a0522d;">page</span>)   test_bit(PG_private, &amp;(page)-&gt;flags)
+<span class="linenr">59:  </span><span style="color: #483d8b;">#define</span> <span style="color: #0000ff;">PagePrivate</span>(<span style="color: #a0522d;">page</span>)   test_bit(PG_private, &amp;(page)-&gt;flags)
 </pre>
 
 
@@ -598,9 +600,9 @@ $$min\_free\_kbytes=\sqrt(16 \times (total\ size\ of\ zone\_dma\ and\ zone\_norm
 <span class="linenr"> 6:  </span>    .flags      = SLAB_NO_REAP,
 <span class="linenr"> 7:  </span>    .spinlock   = SPIN_LOCK_UNLOCKED,
 <span class="linenr"> 8:  </span>    .name       = <span style="color: #8b2252;">"kmem_cache"</span>,
-<span class="linenr"> 9:  </span><span style="color: #7a378b;">#if</span> DEBUG
+<span class="linenr"> 9:  </span><span style="color: #483d8b;">#if</span> DEBUG
 <span class="linenr">10:  </span>    .reallen    = <span style="color: #a020f0;">sizeof</span>(kmem_cache_t),
-<span class="linenr">11:  </span><span style="color: #7a378b;">#endif</span>
+<span class="linenr">11:  </span><span style="color: #483d8b;">#endif</span>
 <span class="linenr">12:  </span>};
 </pre>
 
@@ -633,7 +635,7 @@ $$min\_free\_kbytes=\sqrt(16 \times (total\ size\ of\ zone\_dma\ and\ zone\_norm
 </p>
 
 
-<pre class="src src-c"><span class="linenr"> 1:  </span><span style="color: #7a378b;">#typedef</span> kmem_cache_t kmem_cache_s;
+<pre class="src src-c"><span class="linenr"> 1:  </span><span style="color: #483d8b;">#typedef</span> kmem_cache_t kmem_cache_s;
 <span class="linenr"> 2:  </span><span style="color: #a020f0;">struct</span> <span style="color: #228b22;">kmem_cache_s</span> {
 <span class="linenr"> 3:  </span><span style="color: #b22222;">/* </span><span style="color: #b22222;">1) per-cpu data, touched during every alloc/free </span><span style="color: #b22222;">*/</span>
 <span class="linenr"> 4:  </span>    <span style="color: #a020f0;">struct</span> <span style="color: #228b22;">array_cache</span>  *<span style="color: #a0522d;">array</span>[NR_CPUS];<span style="color: #b22222;">/*</span><span style="color: #b22222;">&#35265;&#31354;&#38386;slab&#23616;&#37096;&#32531;&#23384;</span><span style="color: #b22222;">*/</span>
@@ -664,7 +666,7 @@ $$min\_free\_kbytes=\sqrt(16 \times (total\ size\ of\ zone\_dma\ and\ zone\_norm
 <span class="linenr">29:  </span>    <span style="color: #a020f0;">const</span> <span style="color: #228b22;">char</span>      *<span style="color: #a0522d;">name</span>;      <span style="color: #b22222;">/* </span><span style="color: #b22222;">&#21517;&#23383; </span><span style="color: #b22222;">*/</span>
 <span class="linenr">30:  </span>    <span style="color: #a020f0;">struct</span> <span style="color: #228b22;">list_head</span>    <span style="color: #a0522d;">next</span>;   <span style="color: #b22222;">/* </span><span style="color: #b22222;">&#29992;&#20110;&#36830;&#25509;&#19979;&#19968;&#20010;cache&#26500;&#25104;&#21452;&#38142;&#34920;&#65292;&#34920;&#22836;&#20026;cache_chain </span><span style="color: #b22222;">*/</span>
 <span class="linenr">31:  </span>
-<span class="linenr">32:  </span><span style="color: #7a378b;">#if</span> STATS
+<span class="linenr">32:  </span><span style="color: #483d8b;">#if</span> STATS
 <span class="linenr">33:  </span>    <span style="color: #228b22;">unsigned</span> <span style="color: #228b22;">long</span>       <span style="color: #a0522d;">num_active</span>;
 <span class="linenr">34:  </span>    <span style="color: #228b22;">unsigned</span> <span style="color: #228b22;">long</span>       <span style="color: #a0522d;">num_allocations</span>;
 <span class="linenr">35:  </span>    <span style="color: #228b22;">unsigned</span> <span style="color: #228b22;">long</span>       <span style="color: #a0522d;">high_mark</span>;
@@ -677,11 +679,11 @@ $$min\_free\_kbytes=\sqrt(16 \times (total\ size\ of\ zone\_dma\ and\ zone\_norm
 <span class="linenr">42:  </span>    <span style="color: #228b22;">atomic_t</span>        <span style="color: #a0522d;">allocmiss</span>;
 <span class="linenr">43:  </span>    <span style="color: #228b22;">atomic_t</span>        <span style="color: #a0522d;">freehit</span>;
 <span class="linenr">44:  </span>    <span style="color: #228b22;">atomic_t</span>        <span style="color: #a0522d;">freemiss</span>;
-<span class="linenr">45:  </span><span style="color: #7a378b;">#endif</span>
-<span class="linenr">46:  </span><span style="color: #7a378b;">#if</span> DEBUG
+<span class="linenr">45:  </span><span style="color: #483d8b;">#endif</span>
+<span class="linenr">46:  </span><span style="color: #483d8b;">#if</span> DEBUG
 <span class="linenr">47:  </span>    <span style="color: #228b22;">int</span>         <span style="color: #a0522d;">dbghead</span>;
 <span class="linenr">48:  </span>    <span style="color: #228b22;">int</span>         <span style="color: #a0522d;">reallen</span>;
-<span class="linenr">49:  </span><span style="color: #7a378b;">#endif</span>
+<span class="linenr">49:  </span><span style="color: #483d8b;">#endif</span>
 <span class="linenr">50:  </span>};
 <span class="linenr">51:  </span>
 <span class="linenr">52:  </span><span style="color: #a020f0;">struct</span> <span style="color: #228b22;">kmem_list3</span> {
@@ -931,9 +933,9 @@ $$min\_free\_kbytes=\sqrt(16 \times (total\ size\ of\ zone\_dma\ and\ zone\_norm
 <span class="linenr"> 61:  </span>            slabp-&gt;inuse++;
 <span class="linenr"> 62:  </span>            <span style="color: #b22222;">/* </span><span style="color: #b22222;">slab&#25551;&#36848;&#31526;&#21518;&#30340;object&#25551;&#36848;&#20250;&#26500;&#25104;&#20102;&#31354;&#38386;object&#30340;&#38142;&#34920;&#65288;&#22238;&#24518;&#65306;on_slab&#21644;off_slab&#65289;&#65292;&#25925;slab_buffctl(slab)[slabp-&gt;free]&#37324;&#23384;&#25918;&#30340;&#26159;&#19979;&#19968;&#20010;free object&#30340;&#32034;&#24341;&#65292;&#30001;&#20110;&#27492;free object&#24050;&#32463;&#34987;local cache&#25250;&#21435;&#65292;&#25925;&#20854;&#19981;&#20877;free&#65292;&#25925;&#20462;&#25913;slabp-&gt;free&#20026;next </span><span style="color: #b22222;">*/</span>
 <span class="linenr"> 63:  </span>            next = slab_bufctl(slabp)[slabp-&gt;free];
-<span class="linenr"> 64:  </span><span style="color: #7a378b;">#if</span> DEBUG
+<span class="linenr"> 64:  </span><span style="color: #483d8b;">#if</span> DEBUG
 <span class="linenr"> 65:  </span>            slab_bufctl(slabp)[slabp-&gt;free] = BUFCTL_FREE;
-<span class="linenr"> 66:  </span><span style="color: #7a378b;">#endif</span>
+<span class="linenr"> 66:  </span><span style="color: #483d8b;">#endif</span>
 <span class="linenr"> 67:  </span>                slabp-&gt;free = next;
 <span class="linenr"> 68:  </span>        }
 <span class="linenr"> 69:  </span>        check_slabp(cachep, slabp);
@@ -1043,9 +1045,9 @@ $$min\_free\_kbytes=\sqrt(16 \times (total\ size\ of\ zone\_dma\ and\ zone\_norm
 <span class="linenr"> 3:  </span>    <span style="color: #228b22;">int</span> <span style="color: #a0522d;">batchcount</span>;
 <span class="linenr"> 4:  </span>
 <span class="linenr"> 5:  </span>    batchcount = ac-&gt;batchcount;
-<span class="linenr"> 6:  </span><span style="color: #7a378b;">#if</span> DEBUG
+<span class="linenr"> 6:  </span><span style="color: #483d8b;">#if</span> DEBUG
 <span class="linenr"> 7:  </span>    BUG_ON(!batchcount || batchcount &gt; ac-&gt;avail);
-<span class="linenr"> 8:  </span><span style="color: #7a378b;">#endif</span>
+<span class="linenr"> 8:  </span><span style="color: #483d8b;">#endif</span>
 <span class="linenr"> 9:  </span>    check_irq_off();
 <span class="linenr">10:  </span>    spin_lock(&amp;cachep-&gt;spinlock);
 <span class="linenr">11:  </span>    <span style="color: #b22222;">/* </span><span style="color: #b22222;">&#22914;&#26524;&#27492;cache&#20013;&#26377;&#20849;&#20139;array cache&#19988;&#27492;array cache&#20013;&#27809;&#26377;&#36798;&#21040;&#26368;&#22823;&#20540;&#65292;&#21017;&#25226;ac&#20013;batchcount&#20010;</span>
@@ -1068,7 +1070,7 @@ $$min\_free\_kbytes=\sqrt(16 \times (total\ size\ of\ zone\_dma\ and\ zone\_norm
 <span class="linenr">28:  </span>    <span style="color: #b22222;">/* </span><span style="color: #b22222;">&#37322;&#25918;&#20102;batchcount&#20010;obj&#65292;&#35843;&#25972;slab&#32467;&#26500; </span><span style="color: #b22222;">*/</span>
 <span class="linenr">29:  </span>    free_block(cachep, &amp;ac_entry(ac)[0], batchcount);
 <span class="linenr">30:  </span><span style="color: #008b8b;">free_done</span>:
-<span class="linenr">31:  </span><span style="color: #7a378b;">#if</span> STATS
+<span class="linenr">31:  </span><span style="color: #483d8b;">#if</span> STATS
 <span class="linenr">32:  </span>    {
 <span class="linenr">33:  </span>        <span style="color: #228b22;">int</span> <span style="color: #a0522d;">i</span> = 0;
 <span class="linenr">34:  </span>        <span style="color: #a020f0;">struct</span> <span style="color: #228b22;">list_head</span> *<span style="color: #a0522d;">p</span>;
@@ -1085,7 +1087,7 @@ $$min\_free\_kbytes=\sqrt(16 \times (total\ size\ of\ zone\_dma\ and\ zone\_norm
 <span class="linenr">45:  </span>        }
 <span class="linenr">46:  </span>        STATS_SET_FREEABLE(cachep, i);
 <span class="linenr">47:  </span>    }
-<span class="linenr">48:  </span><span style="color: #7a378b;">#endif</span>
+<span class="linenr">48:  </span><span style="color: #483d8b;">#endif</span>
 <span class="linenr">49:  </span>    spin_unlock(&amp;cachep-&gt;spinlock);
 <span class="linenr">50:  </span>    ac-&gt;avail -= batchcount;
 <span class="linenr">51:  </span>    memmove(&amp;ac_entry(ac)[0], &amp;ac_entry(ac)[batchcount],
@@ -1117,13 +1119,13 @@ $$min\_free\_kbytes=\sqrt(16 \times (total\ size\ of\ zone\_dma\ and\ zone\_norm
 <span class="linenr">16:  </span>        <span style="color: #b22222;">/* </span><span style="color: #b22222;">&#37322;&#25918;obj&#22312;obj&#25968;&#32452;&#20013;&#30340;&#19979;&#26631;&#65288;&#29992;&#26469;&#20026;&#25968;&#32452;&#38142;&#34920;&#26381;&#21153;&#65289; </span><span style="color: #b22222;">*/</span>
 <span class="linenr">17:  </span>        objnr = (objp - slabp-&gt;s_mem) / cachep-&gt;objsize;
 <span class="linenr">18:  </span>        check_slabp(cachep, slabp);
-<span class="linenr">19:  </span><span style="color: #7a378b;">#if</span> DEBUG
+<span class="linenr">19:  </span><span style="color: #483d8b;">#if</span> DEBUG
 <span class="linenr">20:  </span>        <span style="color: #a020f0;">if</span> (slab_bufctl(slabp)[objnr] != BUFCTL_FREE) {
 <span class="linenr">21:  </span>            printk(KERN_ERR <span style="color: #8b2252;">"slab: double free detected in cache '%s', objp %p.\n"</span>,
 <span class="linenr">22:  </span>                        cachep-&gt;name, objp);
 <span class="linenr">23:  </span>            BUG();
 <span class="linenr">24:  </span>        }
-<span class="linenr">25:  </span><span style="color: #7a378b;">#endif</span>
+<span class="linenr">25:  </span><span style="color: #483d8b;">#endif</span>
 <span class="linenr">26:  </span>        <span style="color: #b22222;">/* </span><span style="color: #b22222;">&#25226;&#23427;&#21152;&#21040;&#25968;&#32452;&#38142;&#34920;&#30340;&#31532;&#19968;&#20010; </span><span style="color: #b22222;">*/</span>
 <span class="linenr">27:  </span>        slab_bufctl(slabp)[objnr] = slabp-&gt;free;
 <span class="linenr">28:  </span>        slabp-&gt;free = objnr;
@@ -1235,7 +1237,7 @@ $$min\_free\_kbytes=\sqrt(16 \times (total\ size\ of\ zone\_dma\ and\ zone\_norm
 <span class="linenr"> 7:  </span>    <span style="color: #228b22;">mempool_alloc_t</span> *<span style="color: #a0522d;">alloc</span>;     <span style="color: #b22222;">/* </span><span style="color: #b22222;">&#20998;&#37197;&#20989;&#25968; </span><span style="color: #b22222;">*/</span>
 <span class="linenr"> 8:  </span>    <span style="color: #228b22;">mempool_free_t</span> *<span style="color: #a0522d;">free</span>;       <span style="color: #b22222;">/* </span><span style="color: #b22222;">&#37322;&#25918;&#20989;&#25968; </span><span style="color: #b22222;">*/</span>
 <span class="linenr"> 9:  </span>    <span style="color: #228b22;">wait_queue_head_t</span> <span style="color: #a0522d;">wait</span>;     <span style="color: #b22222;">/* </span><span style="color: #b22222;">&#31561;&#24453;&#38431;&#21015; </span><span style="color: #b22222;">*/</span>
-<span class="linenr">10:  </span>} <span style="color: #a0522d;">mempool_t</span>;
+<span class="linenr">10:  </span>} <span style="color: #228b22;">mempool_t</span>;
 <span class="linenr">11:  </span><span style="color: #a020f0;">typedef</span> <span style="color: #228b22;">void</span> * (<span style="color: #228b22;">mempool_alloc_t</span>)(<span style="color: #228b22;">int</span> <span style="color: #a0522d;">gfp_mask</span>, <span style="color: #228b22;">void</span> *<span style="color: #a0522d;">pool_data</span>);
 <span class="linenr">12:  </span><span style="color: #a020f0;">typedef</span> <span style="color: #228b22;">void</span> (<span style="color: #228b22;">mempool_free_t</span>)(<span style="color: #228b22;">void</span> *<span style="color: #a0522d;">element</span>, <span style="color: #228b22;">void</span> *<span style="color: #a0522d;">pool_data</span>);
 </pre>

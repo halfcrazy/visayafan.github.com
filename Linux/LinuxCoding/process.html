@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
                "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-CN" xml:lang="zh-CN">
 <head>
 <title>Unix环境高级编程－进程基础与控制</title>
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
 <meta name="title" content="Unix环境高级编程－进程基础与控制"/>
 <meta name="generator" content="Org-mode"/>
-<meta name="generated" content="2012-10-27 05:28:18 CST"/>
-<meta name="author" content="visaya fan"/>
+<meta name="generated" content="2012-12-02 00:33:23 CST"/>
+<meta name="author" content="visayafan"/>
 <meta name="description" content=""/>
 <meta name="keywords" content=""/>
 <div id="org-div-comments"><a href="../../index.html#linuxcoding">主页</a><br/><a href="#disqus_thread">评论</a></div>
@@ -22,14 +22,16 @@
 <h1 class="title">Unix环境高级编程－进程基础与控制</h1>
 
 
-<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"> </script>
+<!-- <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"> </script> -->
+<link rel="stylesheet" type="text/css" href="../../Layout/CSS/bootstrap_old.css" />
 <link rel="stylesheet" type="text/css" href="../../Layout/CSS/vf.css" />
+<script src="../../Layout/JS/jquery_1.7.1.js"></script>
 <script src="../../Layout/JS/bootstrap_old.js"></script>
 
 
 
 <div id="table-of-contents">
-<h2>TOC</h2>
+<h2>目录</h2>
 <div id="text-table-of-contents">
 <ul>
 <li><a href="#sec-1">1 atexit</a></li>
@@ -147,9 +149,9 @@
 </p>
 
 
-<pre class="src src-c"><span style="color: #7a378b;">#include</span> <span style="color: #8b2252;">&lt;stdio.h&gt;</span>
-<span style="color: #7a378b;">#include</span> <span style="color: #8b2252;">&lt;stdlib.h&gt;</span>
-<span style="color: #7a378b;">#include</span> <span style="color: #8b2252;">&lt;setjmp.h&gt;</span>
+<pre class="src src-c"><span style="color: #483d8b;">#include</span> <span style="color: #8b2252;">&lt;stdio.h&gt;</span>
+<span style="color: #483d8b;">#include</span> <span style="color: #8b2252;">&lt;stdlib.h&gt;</span>
+<span style="color: #483d8b;">#include</span> <span style="color: #8b2252;">&lt;setjmp.h&gt;</span>
 <span style="color: #228b22;">jmp_buf</span> <span style="color: #a0522d;">jmpbuffer</span>;
 <span style="color: #228b22;">void</span> <span style="color: #0000ff;">error_occured</span>();
 
@@ -193,14 +195,14 @@
 </div>
 <div class="modal-body">
 
-<pre class="src src-c"><span class="linenr"> 1:  </span><span style="color: #7a378b;">#include</span> <span style="color: #8b2252;">&lt;stdio.h&gt;</span>
-<span class="linenr"> 2:  </span><span style="color: #7a378b;">#include</span> <span style="color: #8b2252;">&lt;sys/resource.h&gt;</span>
-<span class="linenr"> 3:  </span><span style="color: #7a378b;">#include</span> <span style="color: #8b2252;">&lt;sys/time.h&gt;</span>
-<span class="linenr"> 4:  </span><span style="color: #7a378b;">#include</span> <span style="color: #8b2252;">&lt;stdlib.h&gt;</span>
-<span class="linenr"> 5:  </span><span style="color: #7a378b;">#include</span> <span style="color: #8b2252;">&lt;setjmp.h&gt;</span>
+<pre class="src src-c"><span class="linenr"> 1:  </span><span style="color: #483d8b;">#include</span> <span style="color: #8b2252;">&lt;stdio.h&gt;</span>
+<span class="linenr"> 2:  </span><span style="color: #483d8b;">#include</span> <span style="color: #8b2252;">&lt;sys/resource.h&gt;</span>
+<span class="linenr"> 3:  </span><span style="color: #483d8b;">#include</span> <span style="color: #8b2252;">&lt;sys/time.h&gt;</span>
+<span class="linenr"> 4:  </span><span style="color: #483d8b;">#include</span> <span style="color: #8b2252;">&lt;stdlib.h&gt;</span>
+<span class="linenr"> 5:  </span><span style="color: #483d8b;">#include</span> <span style="color: #8b2252;">&lt;setjmp.h&gt;</span>
 <span class="linenr"> 6:  </span>
-<span class="linenr"> 7:  </span><span style="color: #7a378b;">#define</span> <span style="color: #0000ff;">doit</span>(<span style="color: #a0522d;">name</span>) pr_lmt(#name, name) <span style="color: #b22222;">/* </span><span style="color: #b22222;">#&#23383;&#31526;&#20018;&#21019;&#24314;&#36816;&#31639;&#31526; </span><span style="color: #b22222;">*/</span>
-<span class="linenr"> 8:  </span><span style="color: #7a378b;">#define</span> <span style="color: #0000ff;">err_sys</span>(<span style="color: #a0522d;">error_msg</span>) {printf(<span style="color: #8b2252;">"%s"</span>,error_msg); <span style="color: #a020f0;">return</span>;}
+<span class="linenr"> 7:  </span><span style="color: #483d8b;">#define</span> <span style="color: #0000ff;">doit</span>(<span style="color: #a0522d;">name</span>) pr_lmt(#name, name) <span style="color: #b22222;">/* </span><span style="color: #b22222;">#&#23383;&#31526;&#20018;&#21019;&#24314;&#36816;&#31639;&#31526; </span><span style="color: #b22222;">*/</span>
+<span class="linenr"> 8:  </span><span style="color: #483d8b;">#define</span> <span style="color: #0000ff;">err_sys</span>(<span style="color: #a0522d;">error_msg</span>) {printf(<span style="color: #8b2252;">"%s"</span>,error_msg); <span style="color: #a020f0;">return</span>;}
 <span class="linenr"> 9:  </span>
 <span class="linenr">10:  </span><span style="color: #228b22;">void</span> <span style="color: #0000ff;">pr_lmt</span>(<span style="color: #228b22;">char</span>* <span style="color: #a0522d;">name</span>, <span style="color: #228b22;">int</span> <span style="color: #a0522d;">rsc</span>){
 <span class="linenr">11:  </span>    <span style="color: #a020f0;">struct</span> <span style="color: #228b22;">rlimit</span> <span style="color: #a0522d;">rlmt</span>;
@@ -253,8 +255,8 @@
 </p>
 
 
-<pre class="src src-c"><span style="color: #7a378b;">#include</span> <span style="color: #8b2252;">&lt;stdio.h&gt;</span>
-<span style="color: #7a378b;">#include</span> <span style="color: #8b2252;">&lt;unistd.h&gt;</span>
+<pre class="src src-c"><span style="color: #483d8b;">#include</span> <span style="color: #8b2252;">&lt;stdio.h&gt;</span>
+<span style="color: #483d8b;">#include</span> <span style="color: #8b2252;">&lt;unistd.h&gt;</span>
 
 <span style="color: #228b22;">int</span> <span style="color: #a0522d;">glb</span> = 1;
 <span style="color: #228b22;">int</span> <span style="color: #0000ff;">main</span>(<span style="color: #228b22;">int</span> <span style="color: #a0522d;">argc</span>, <span style="color: #228b22;">char</span> *<span style="color: #a0522d;">argv</span>[])
@@ -318,9 +320,9 @@ pid=8212, glb=1
 </div>
 <div class="modal-body">
 
-<pre class="src src-c"><span style="color: #7a378b;">#include</span> <span style="color: #8b2252;">&lt;stdio.h&gt;</span>
-<span style="color: #7a378b;">#include</span> <span style="color: #8b2252;">&lt;sys/wait.h&gt;</span>
-<span style="color: #7a378b;">#include</span> <span style="color: #8b2252;">&lt;unistd.h&gt;</span>
+<pre class="src src-c"><span style="color: #483d8b;">#include</span> <span style="color: #8b2252;">&lt;stdio.h&gt;</span>
+<span style="color: #483d8b;">#include</span> <span style="color: #8b2252;">&lt;sys/wait.h&gt;</span>
+<span style="color: #483d8b;">#include</span> <span style="color: #8b2252;">&lt;unistd.h&gt;</span>
 <span style="color: #228b22;">void</span> <span style="color: #0000ff;">pr_exit</span>(<span style="color: #228b22;">int</span> <span style="color: #a0522d;">status</span>){
     <span style="color: #a020f0;">if</span>(WIFEXITED(status))       <span style="color: #b22222;">/* </span><span style="color: #b22222;">&#27491;&#24120;exit&#65292;exit code&#21487;&#20197;&#29992; WEXITSTATUS(status)&#23439;&#24471;&#21040; </span><span style="color: #b22222;">*/</span>
         printf(<span style="color: #8b2252;">"normal termination, exit code %d\n"</span>, WEXITSTATUS(status));

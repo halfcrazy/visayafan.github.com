@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
                "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-CN" xml:lang="zh-CN">
 <head>
 <title>一道关于fork的面试题</title>
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
 <meta name="title" content="一道关于fork的面试题"/>
 <meta name="generator" content="Org-mode"/>
-<meta name="generated" content="2012-10-27 05:28:20 CST"/>
-<meta name="author" content="visaya fan"/>
+<meta name="generated" content="2012-12-02 00:33:24 CST"/>
+<meta name="author" content="visayafan"/>
 <meta name="description" content=""/>
 <meta name="keywords" content=""/>
 <div id="org-div-comments"><a href="../../index.html#linuxcoding">主页</a><br/><a href="#disqus_thread">评论</a></div>
@@ -62,8 +62,10 @@
 <h1 class="title">一道关于fork的面试题</h1>
 
 
-<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"> </script>
+<!-- <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"> </script> -->
+<link rel="stylesheet" type="text/css" href="../../Layout/CSS/bootstrap_old.css" />
 <link rel="stylesheet" type="text/css" href="../../Layout/CSS/vf.css" />
+<script src="../../Layout/JS/jquery_1.7.1.js"></script>
 <script src="../../Layout/JS/bootstrap_old.js"></script>
 
 <p>
@@ -79,9 +81,9 @@
 
 
 
-<pre class="src src-c"><span style="color: #7a378b;">#include</span> <span style="color: #8b2252;">&lt;stdio.h&gt;</span>
-<span style="color: #7a378b;">#include</span> <span style="color: #8b2252;">&lt;sys/types.h&gt;</span>
-<span style="color: #7a378b;">#include</span> <span style="color: #8b2252;">&lt;unistd.h&gt;</span>
+<pre class="src src-c"><span style="color: #483d8b;">#include</span> <span style="color: #8b2252;">&lt;stdio.h&gt;</span>
+<span style="color: #483d8b;">#include</span> <span style="color: #8b2252;">&lt;sys/types.h&gt;</span>
+<span style="color: #483d8b;">#include</span> <span style="color: #8b2252;">&lt;unistd.h&gt;</span>
 
 <span style="color: #228b22;">int</span> <span style="color: #0000ff;">main</span>(<span style="color: #228b22;">void</span>)
 {
@@ -100,9 +102,9 @@
 </p>
 
 
-<pre class="src src-c"><span style="color: #7a378b;">#include</span> <span style="color: #8b2252;">&lt;stdio.h&gt;</span>
-<span style="color: #7a378b;">#include</span> <span style="color: #8b2252;">&lt;sys/types.h&gt;</span>
-<span style="color: #7a378b;">#include</span> <span style="color: #8b2252;">&lt;unistd.h&gt;</span>
+<pre class="src src-c"><span style="color: #483d8b;">#include</span> <span style="color: #8b2252;">&lt;stdio.h&gt;</span>
+<span style="color: #483d8b;">#include</span> <span style="color: #8b2252;">&lt;sys/types.h&gt;</span>
+<span style="color: #483d8b;">#include</span> <span style="color: #8b2252;">&lt;unistd.h&gt;</span>
 <span style="color: #228b22;">int</span> <span style="color: #0000ff;">main</span>(<span style="color: #228b22;">void</span>)
 {
    <span style="color: #228b22;">int</span> <span style="color: #a0522d;">i</span>;
