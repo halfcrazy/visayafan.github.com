@@ -1,6 +1,80 @@
 #+OPTIONS: ^:{} _:{} num:t toc:t \n:t
 #+include "../../template.org"
-#+title: STL：映射 集合
+#+title: STL：关联式容器 Set Map
+
+* 底层实现
+set和map的底层实现是红黑树,遍历结果是有序的。
+C++11中的unordered_set和unordered_map底层实现是hashtable，遍历结果是无序的。
+#+begin_src c++
+#include <iostream>
+#include </usr/include/c++/4.5/bits/stl_tree.h>
+using namespace std;
+int main(int argc, char *argv[])
+{
+     typedef _Rb_tree<int, int, identity<int>, less<int> > vrbtree;
+     vrbtree rbtree;
+     cout<<"Init size: "<<rbtree.size()<<endl;
+     int tmp[] = {1,3,2,6,4,5};
+     for(int i=0; i<sizeof(tmp)/sizeof(int); ++i)
+          rbtree._M_insert_unique(tmp[i]);
+     for(vrbtree::const_iterator first=rbtree.begin(); first != rbtree.end(); ++first)
+          cout<<"value: "<<*first<<" color:"<<(first._M_node->_M_color?"black":"red")<<endl;
+     return 0;
+}
+结果：
+Init size: 0
+value: 1 color:black
+value: 2 color:black
+value: 3 color:black
+value: 4 color:red
+value: 5 color:red
+value: 6 color:black
+#+end_src
+* multi版本
+  multi_set, multi_map前者允许重复元素，后者允许重复键值。
+* set
+** insert
+   使用方法与map完全相同。当参数为iterator时返回值为void，当参数为value_type时返回一个iterator和bool。
+#+BEGIN_SRC c++
+     set<int> iset;
+     iset.insert(1);
+     pair<set<int>::iterator, bool> bset = iset.insert(1);
+     if(!bset.second)
+         cout<<"Already exist"<<endl;
+#+END_SRC     
+** lower_bound, upper_bound
+#+begin_src c++
+iterator lower_bound( const Key& key );
+const_iterator lower_bound( const Key& key ) const;
+
+iterator upper_bound( const Key& key );
+const_iterator upper_bound( const Key& key ) const;
+#+end_src
+   lower_bound 返回第一个>=key的迭代器。
+   upper_bound 返回第一个<=key的迭代器。
+   key超过其范围则根据其在范围的上方还是下方返回最大位置或最小位置迭代器。
+** equal_range
+#+begin_src c++
+std::pair<iterator,iterator> equal_range( const Key& key );
+std::pair<const_iterator,const_iterator> equal_range( const Key& key ) const;
+#+end_src
+   pair第1元素是集合中第1个>=key的迭代器，pair中第2个元素是第一个>key大的迭代器。如果没有=的元素则两个迭代器指向相同位置。
+#+begin_src c++
+     int tpAry[] = {1,3,2,6,4,5};
+     set<int>   iset(tpAry, tpAry+sizeof(tpAry)/sizeof(int));
+     for_each(iset.begin(), iset.end(), display<int>()); // 1 2 3 4 5 6
+     cout<<*iset.lower_bound(3)<<endl; // 3
+     cout<<*iset.lower_bound(7)<<endl; // 6
+     cout<<*iset.lower_bound(0)<<endl; // 1
+     cout<<*iset.upper_bound(0)<<endl; // 1
+     cout<<*iset.upper_bound(3)<<endl; // 3
+     cout<<*iset.upper_bound(7)<<endl; // 6
+     pair<set<int>::const_iterator, set<int>::const_iterator> lower_upper = iset.equal_range(3);
+     cout<<*lower_upper.first<<" "<<*lower_upper.second<<endl; // 3 4
+     iset.erase(3);
+     lower_upper = iset.equal_range(3);
+     cout<<*lower_upper.first<<" "<<*lower_upper.second<<endl; // 4 4
+#+end_src
 * map
 ** key_type mapped_type value_type
    前两个分别为键值。
@@ -27,31 +101,5 @@ iterator insert( iterator pos, const TYPE& pair );
 - 解析 ::
   m2.key_comp() 返回比较函数。i, m2[i]作为返回函数的参数，若i<m2[i]为真，否则为假，又有!所以若i>m[i]为真，所以i=0,1时均为假，i=2,3时为真，输出1，2.
 
-** equal_range()
-- 形式 ::
-   pair<iterator, iterator> equal_range( const key_type& key );
-- 返回值 ::
-   The function equal_range() returns two iterators - one to the first element that contains key, another to a point just after the last element that contains key. 
-   返回第一个find的iterator与最后一个find的下一个iterator。
-** upper_bound lower_bound
-   iterator upper_bound( const key_type& key );
-   iterator lower_bound( const key_type& key );
-   返回第一个大于/小于的iterator.
 ** size() max_size()
    前者返回map大小，后者返回map最大的存储个数。
-
-* set
-** insert
-   使用方法与map完全相同。当参数为iterator时返回值为void，当参数为value_type时返回一个iterator和bool。
-#+BEGIN_SRC c++
-     set<int> iset;
-     iset.insert(1);
-     pair<set<int>::iterator, bool> bset = iset.insert(1);
-     if(!bset.second)
-         cout<<"Already exist"<<endl;
-#+END_SRC     
-#+BEGIN_HTML
-<script src="../../Layout/JS/disqus-comment.js"></script>
-<div id="disqus_thread">
-</div>
-#+END_HTML

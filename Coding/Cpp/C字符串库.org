@@ -1,0 +1,43 @@
+#+OPTIONS: ^:{} _:{} num:t toc:t \n:t
+#+include "../../template.org"
+#+title:C字符串库
+
+* memmove memcpy
+#+begin_src c
+void* memmove( void* dest, const void* src, size_t count );
+void* memcpy( void* dest, const void* src, size_t count );
+#+end_src
+  都是将从src开始的count个字符移动到dest开始的空间去，区别在于：前者是先把数据拷贝到一个临时区域上然后再拷贝到目的地，所以即使源和目的有覆盖也可以照样正确拷贝，而后者则当有覆盖情况时则拷贝出错。
+
+* strcpy, strncpy
+#+begin_src c
+char *strcpy( char *dest, const char *src );
+char *strncpy( char *dest, const char *src, size_t count );
+#+end_src
+  strcpy如果字符串覆盖则出错。
+  strncpy 最多拷贝count个字符（包括换行符），字符串如果多于count个则只拷贝count个将导致目的字符串没有终结符，如果少于count个则添加NULL补全。
+* memcmp
+#+begin_src c
+int memcmp( const void* lhs, const void* rhs, size_t count );
+#+end_src
+  lexicographical字典排序。
+* strcmp strncmp
+#+begin_src c
+int strcmp( const char *lhs, const char *rhs );
+int strncmp( const char *lhs, const char *rhs, size_t count );
+#+end_src
+  比较两个字符串，同样是字典排序。
+* strcat
+#+begin_src c
+char *strcat( char *dest, const char *src );
+#+end_src
+  将src接到dest后，如果重叠则出错。
+* toupper, tolower
+#+begin_src c
+int tolower( int ch );
+int toupper( int ch );
+#+end_src
+  字符大小写转换。头文件<ctype.h>.
+#+begin_src c
+     cout<<(char)toupper('a')<<endl;
+#+end_src

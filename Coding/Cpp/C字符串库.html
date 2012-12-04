@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+               "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-CN" xml:lang="zh-CN">
+<head>
+<title>C字符串库</title>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
+<meta name="title" content="C字符串库"/>
+<meta name="generator" content="Org-mode"/>
+<meta name="generated" content="2012-12-04 00:04:44 中国标准时间"/>
+<meta name="author" content="visayafan"/>
+<meta name="description" content=""/>
+<meta name="keywords" content=""/>
+
+
+
+</head>
+<body>
+
+
+<div id="content">
+<h1 class="title">C字符串库</h1>
+
+
+<!-- <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"> </script> -->
+<link rel="stylesheet" type="text/css" href="../../Layout/CSS/bootstrap_old.css" />
+<link rel="stylesheet" type="text/css" href="../../Layout/CSS/vf.css" />
+<script src="../../Layout/JS/jquery_1.7.1.js"></script>
+<script src="../../Layout/JS/bootstrap_old.js"></script>
+
+
+
+<div id="table-of-contents">
+<h2>目录</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#sec-1">1 memmove memcpy</a></li>
+<li><a href="#sec-2">2 strcpy, strncpy</a></li>
+<li><a href="#sec-3">3 memcmp</a></li>
+<li><a href="#sec-4">4 strcmp strncmp</a></li>
+<li><a href="#sec-5">5 strcat</a></li>
+<li><a href="#sec-6">6 toupper, tolower</a></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-1" class="outline-2">
+<h2 id="sec-1"><span class="section-number-2">1</span> memmove memcpy</h2>
+<div class="outline-text-2" id="text-1">
+
+
+
+
+<pre class="src src-c"><span style="color: #228b22;">void</span>* <span style="color: #0000ff;">memmove</span>( <span style="color: #228b22;">void</span>* <span style="color: #a0522d;">dest</span>, <span style="color: #a020f0;">const</span> <span style="color: #228b22;">void</span>* <span style="color: #a0522d;">src</span>, <span style="color: #228b22;">size_t</span> <span style="color: #a0522d;">count</span> );
+<span style="color: #228b22;">void</span>* <span style="color: #0000ff;">memcpy</span>( <span style="color: #228b22;">void</span>* <span style="color: #a0522d;">dest</span>, <span style="color: #a020f0;">const</span> <span style="color: #228b22;">void</span>* <span style="color: #a0522d;">src</span>, <span style="color: #228b22;">size_t</span> <span style="color: #a0522d;">count</span> );
+</pre>
+
+<p>
+  都是将从src开始的count个字符移动到dest开始的空间去，区别在于：前者是先把数据拷贝到一个临时区域上然后再拷贝到目的地，所以即使源和目的有覆盖也可以照样正确拷贝，而后者则当有覆盖情况时则拷贝出错。<br/>
+</p>
+</div>
+
+</div>
+
+<div id="outline-container-2" class="outline-2">
+<h2 id="sec-2"><span class="section-number-2">2</span> strcpy, strncpy</h2>
+<div class="outline-text-2" id="text-2">
+
+
+
+
+<pre class="src src-c"><span style="color: #228b22;">char</span> *<span style="color: #0000ff;">strcpy</span>( <span style="color: #228b22;">char</span> *<span style="color: #a0522d;">dest</span>, <span style="color: #a020f0;">const</span> <span style="color: #228b22;">char</span> *<span style="color: #a0522d;">src</span> );
+<span style="color: #228b22;">char</span> *<span style="color: #0000ff;">strncpy</span>( <span style="color: #228b22;">char</span> *<span style="color: #a0522d;">dest</span>, <span style="color: #a020f0;">const</span> <span style="color: #228b22;">char</span> *<span style="color: #a0522d;">src</span>, <span style="color: #228b22;">size_t</span> <span style="color: #a0522d;">count</span> );
+</pre>
+
+<p>
+  strcpy如果字符串覆盖则出错。<br/>
+  strncpy 最多拷贝count个字符（包括换行符），字符串如果多于count个则只拷贝count个将导致目的字符串没有终结符，如果少于count个则添加NULL补全。<br/>
+</p></div>
+
+</div>
+
+<div id="outline-container-3" class="outline-2">
+<h2 id="sec-3"><span class="section-number-2">3</span> memcmp</h2>
+<div class="outline-text-2" id="text-3">
+
+
+
+
+<pre class="src src-c"><span style="color: #228b22;">int</span> <span style="color: #0000ff;">memcmp</span>( <span style="color: #a020f0;">const</span> <span style="color: #228b22;">void</span>* <span style="color: #a0522d;">lhs</span>, <span style="color: #a020f0;">const</span> <span style="color: #228b22;">void</span>* <span style="color: #a0522d;">rhs</span>, <span style="color: #228b22;">size_t</span> <span style="color: #a0522d;">count</span> );
+</pre>
+
+<p>
+  lexicographical字典排序。<br/>
+</p></div>
+
+</div>
+
+<div id="outline-container-4" class="outline-2">
+<h2 id="sec-4"><span class="section-number-2">4</span> strcmp strncmp</h2>
+<div class="outline-text-2" id="text-4">
+
+
+
+
+<pre class="src src-c"><span style="color: #228b22;">int</span> <span style="color: #0000ff;">strcmp</span>( <span style="color: #a020f0;">const</span> <span style="color: #228b22;">char</span> *<span style="color: #a0522d;">lhs</span>, <span style="color: #a020f0;">const</span> <span style="color: #228b22;">char</span> *<span style="color: #a0522d;">rhs</span> );
+<span style="color: #228b22;">int</span> <span style="color: #0000ff;">strncmp</span>( <span style="color: #a020f0;">const</span> <span style="color: #228b22;">char</span> *<span style="color: #a0522d;">lhs</span>, <span style="color: #a020f0;">const</span> <span style="color: #228b22;">char</span> *<span style="color: #a0522d;">rhs</span>, <span style="color: #228b22;">size_t</span> <span style="color: #a0522d;">count</span> );
+</pre>
+
+<p>
+  比较两个字符串，同样是字典排序。<br/>
+</p></div>
+
+</div>
+
+<div id="outline-container-5" class="outline-2">
+<h2 id="sec-5"><span class="section-number-2">5</span> strcat</h2>
+<div class="outline-text-2" id="text-5">
+
+
+
+
+<pre class="src src-c"><span style="color: #228b22;">char</span> *<span style="color: #0000ff;">strcat</span>( <span style="color: #228b22;">char</span> *<span style="color: #a0522d;">dest</span>, <span style="color: #a020f0;">const</span> <span style="color: #228b22;">char</span> *<span style="color: #a0522d;">src</span> );
+</pre>
+
+<p>
+  将src接到dest后，如果重叠则出错。<br/>
+</p></div>
+
+</div>
+
+<div id="outline-container-6" class="outline-2">
+<h2 id="sec-6"><span class="section-number-2">6</span> toupper, tolower</h2>
+<div class="outline-text-2" id="text-6">
+
+
+
+
+<pre class="src src-c"><span style="color: #228b22;">int</span> <span style="color: #0000ff;">tolower</span>( <span style="color: #228b22;">int</span> <span style="color: #a0522d;">ch</span> );
+<span style="color: #228b22;">int</span> <span style="color: #0000ff;">toupper</span>( <span style="color: #228b22;">int</span> <span style="color: #a0522d;">ch</span> );
+</pre>
+
+<p>
+  字符大小写转换。头文件&lt;ctype.h&gt;.<br/>
+</p>
+
+
+<pre class="src src-c">cout&lt;&lt;(<span style="color: #228b22;">char</span>)toupper(<span style="color: #8b2252;">'a'</span>)&lt;&lt;endl;
+</pre>
+
+</div>
+</div>
+</div>
+
+</body>
+</html>

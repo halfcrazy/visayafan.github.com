@@ -1,1 +1,0 @@
-0 */2 * * * rm -rf /home/visayafan/.config/chromium/Default/Local\ Storage > /dev/null 2>&1

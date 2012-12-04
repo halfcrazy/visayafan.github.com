@@ -1,0 +1,26 @@
+#+OPTIONS: ^:{} _:{} num:t toc:t \n:t
+#+include "../../template.org"
+#+title:Emacs Slime 笔记
+
+* REPL 命令
+  在slime-repl中输入逗号可命令
+  , cd directory
+  , pwd 打印当前所在目录
+  , quit 退出当前lisp
+  , compile-and-load => cl 编译并加载指定lisp文件
+  , help 显示所有可用命令
+  , change-package => !p in in-package 改变当前包
+  , defparameter => ! 定义一个全局变量
+* REPL 中快捷键
+  =C-RET= 补全括号并执行
+  =C-c C-o= 清空上次结果
+  =C-c M-o= 清空整个buffer
+* 提示补全
+  =C-c TAB=
+#+begin_src lisp
+(add-hook 'slime-mode-hook 'vf-slime-hook)
+(defun vf-slime-hook ()
+  ;; M-/ 符号补全
+  (define-key slime-mode-map (kbd "M-/") 'slime-complete-symbol))
+#+end_src
+  可自定义。

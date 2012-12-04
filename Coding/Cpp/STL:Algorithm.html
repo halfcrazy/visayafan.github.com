@@ -7,11 +7,11 @@
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
 <meta name="title" content="STL: Algorithm"/>
 <meta name="generator" content="Org-mode"/>
-<meta name="generated" content="2012-12-02 00:32:49 CST"/>
+<meta name="generated" content="2012-12-02 21:14:51 CST"/>
 <meta name="author" content="visayafan"/>
 <meta name="description" content=""/>
 <meta name="keywords" content=""/>
-<div id="org-div-comments"><a href="../../index.html#cpp">主页</a><br/><a href="#disqus_thread">评论</a></div>
+
 
 
 </head>
@@ -37,6 +37,18 @@
 <li><a href="#sec-1">1 copy</a></li>
 <li><a href="#sec-2">2 copy_backward</a></li>
 <li><a href="#sec-3">3 copy_n (C++11)</a></li>
+<li><a href="#sec-4">4 accumulate</a></li>
+<li><a href="#sec-5">5 inner_product</a></li>
+<li><a href="#sec-6">6 partial_sum</a></li>
+<li><a href="#sec-7">7 adjacent_difference</a></li>
+<li><a href="#sec-8">8 equal</a></li>
+<li><a href="#sec-9">9 fill</a></li>
+<li><a href="#sec-10">10 fill_n</a></li>
+<li><a href="#sec-11">11 iter_swap</a></li>
+<li><a href="#sec-12">12 swap</a></li>
+<li><a href="#sec-13">13 swap_range</a></li>
+<li><a href="#sec-14">14 lexicographical_compare</a></li>
+<li><a href="#sec-15">15 mismatch</a></li>
 </ul>
 </div>
 </div>
@@ -53,7 +65,7 @@
 </pre>
 
 <p>
-  所做的操作为 *d_first = *first, *(d_first+1)=*(first+1) &hellip;<br/>
+  所做的操作类似为 *d_first = *first, *(d_first+1)=*(first+1) &hellip;<br/>
 </p></div>
 
 </div>
@@ -72,11 +84,52 @@
 </pre>
 
 <p>
-  所做的操作为 *d_last=*last, *(d_last-1)=*(last-1),&hellip;<br/>
+  所做的操作类似为 *d_last=*last, *(d_last-1)=*(last-1),&hellip;<br/>
   与copy的区别在于指定目的区域的末地址，而copy指定的是首地址。且拷贝顺序不同。<br/>
-  此函数适用于拷贝区间与目的区间存在交叉，且从前拷贝到后的情况，例如：1-10区间拷贝到5-15，如果用copy函数则会毁坏数据，只能用copy_backward.<br/>
-  同理如果从5-15拷贝到1-10则必须用copy函数而不能用copy_backward函数。<br/>
-</p></div>
+  此函数适用于拷贝区间与目的区间存在交叉，且从前拷贝到后的情况，例如：1-10区间拷贝到5-15，如果用copy函数则 <b>有可能</b> 会毁坏数据.<br/>
+  同理如果从5-15拷贝到1-10如果用copy_backward则 <b>有可能</b> 毁坏数据。<br/>
+</p>
+<p>
+  <b>为什么是有可能?</b><br/>
+  因为两个copy根据其操作对象的不同采用不同的行为，如果是原始指针则采用 <b>memmove</b> 方法而此函数由于借助了其它辅助空间所以不会产生覆盖。<br/>
+</p>
+
+
+<pre class="src src-c++"><span style="color: #228b22;">int</span> <span style="color: #a0522d;">ary</span>[] = {0,1,2,3,4,5,6};
+copy(ary, ary+3, ary+1);
+for_each(ary, ary+<span style="color: #a020f0;">sizeof</span>(ary)/<span style="color: #a020f0;">sizeof</span>(<span style="color: #228b22;">int</span>), <span style="color: #228b22;">display</span>&lt;<span style="color: #228b22;">int</span>&gt;()); <span style="color: #b22222;">// </span><span style="color: #b22222;">0 0 1 2 4 5 6</span>
+</pre>
+
+<p>
+  表面上看应该会产生覆盖所以结果应该是 0 0 0 0 4 5 6，但其实结果是 0 0 1 2 4 5 6，原因就是因为原始指针调用的是 memmove.<br/>
+  由于vector内部typedef value_type* iterator;所以其迭代器也是原始指针，所以也调用的是memmove,不必担心覆盖的问题。<br/>
+</p>
+
+
+<pre class="src src-c++"><span style="color: #228b22;">int</span> <span style="color: #a0522d;">ary</span>[] = {0,1,2,3,4,5,6};
+<span style="color: #228b22;">vector</span>&lt;<span style="color: #228b22;">int</span>&gt; <span style="color: #0000ff;">ivec</span>(ary, ary+<span style="color: #a020f0;">sizeof</span>(ary)/<span style="color: #a020f0;">sizeof</span>(<span style="color: #228b22;">int</span>));
+copy(ivec.begin(), ivec.begin()+3, ivec.begin()+1);
+for_each(ivec.begin(), ivec.end(), <span style="color: #228b22;">display</span>&lt;<span style="color: #228b22;">int</span>&gt;()); <span style="color: #b22222;">// </span><span style="color: #b22222;">0 0 1 2 4 5 6</span>
+</pre>
+
+<p>
+  list由于其迭代器非原始指针，故最终调用的是循环复制，所以会造成覆盖。<br/>
+</p>
+
+
+<pre class="src src-c++"><span style="color: #228b22;">list</span>&lt;<span style="color: #228b22;">int</span>&gt; <span style="color: #0000ff;">List</span>(ary, ary+<span style="color: #a020f0;">sizeof</span>(ary)/<span style="color: #a020f0;">sizeof</span>(<span style="color: #228b22;">int</span>));
+<span style="color: #a020f0;">typedef</span> <span style="color: #008b8b;">list</span>&lt;<span style="color: #228b22;">int</span>&gt;::<span style="color: #228b22;">iterator</span> <span style="color: #228b22;">listiter</span>;
+<span style="color: #228b22;">listiter</span> <span style="color: #a0522d;">first</span>=List.begin();
+advance(first,2);
+<span style="color: #228b22;">listiter</span> <span style="color: #a0522d;">last</span>=List.end();
+advance(last, -2);
+<span style="color: #228b22;">listiter</span> <span style="color: #a0522d;">result</span>=List.begin();
+advance(result,4);
+copy(first, last, result);
+for_each(List.begin(), List.end(), <span style="color: #228b22;">display</span>&lt;<span style="color: #228b22;">int</span>&gt;());        <span style="color: #b22222;">//</span><span style="color: #b22222;">0 1 2 3 2 3 2 3 2</span>
+</pre>
+
+</div>
 
 </div>
 
@@ -92,6 +145,329 @@
 </pre>
 
 </div>
+
+</div>
+
+<div id="outline-container-4" class="outline-2">
+<h2 id="sec-4"><span class="section-number-2">4</span> accumulate</h2>
+<div class="outline-text-2" id="text-4">
+
+
+
+
+<pre class="src src-c++"><span style="color: #a020f0;">template</span>&lt; <span style="color: #a020f0;">class</span> <span style="color: #228b22;">InputIterator</span>, <span style="color: #a020f0;">class</span> <span style="color: #228b22;">T</span> &gt;
+<span style="color: #228b22;">T</span> <span style="color: #0000ff;">accumulate</span>( <span style="color: #228b22;">InputIterator</span> <span style="color: #a0522d;">first</span>, <span style="color: #228b22;">InputIterator</span> <span style="color: #a0522d;">last</span>, <span style="color: #228b22;">T</span> <span style="color: #a0522d;">init</span> );
+<span style="color: #a020f0;">template</span>&lt; <span style="color: #a020f0;">class</span> <span style="color: #228b22;">InputIterator</span>, <span style="color: #a020f0;">class</span> <span style="color: #228b22;">T</span>, <span style="color: #a020f0;">class</span> <span style="color: #228b22;">BinaryOperation</span> &gt;
+<span style="color: #228b22;">T</span> <span style="color: #0000ff;">accumulate</span>( <span style="color: #228b22;">InputIterator</span> <span style="color: #a0522d;">first</span>, <span style="color: #228b22;">InputIterator</span> <span style="color: #a0522d;">last</span>, <span style="color: #228b22;">T</span> <span style="color: #a0522d;">init</span>,
+              <span style="color: #228b22;">BinaryOperation</span> <span style="color: #a0522d;">op</span> );
+</pre>
+
+<ol>
+<li>返回对[first,last)之间的元素和init求和结果。<br/>
+</li>
+<li>与1的区别在于使用op函数而非求和函数。<br/>
+</li>
+</ol>
+
+
+
+
+<pre class="src src-c++"><span style="color: #228b22;">int</span> <span style="color: #a0522d;">ary</span>[] = {0,1,2,3,4,5,6,7,8};
+<span style="color: #b22222;">// </span><span style="color: #b22222;">0+0+1+2...</span>
+cout&lt;&lt;accumulate(ary, ary+<span style="color: #a020f0;">sizeof</span>(ary)/<span style="color: #a020f0;">sizeof</span>(<span style="color: #228b22;">int</span>), 0)&lt;&lt;endl; <span style="color: #b22222;">// </span><span style="color: #b22222;">36</span>
+<span style="color: #b22222;">// </span><span style="color: #b22222;">0-0-1-2-3-...</span>
+cout&lt;&lt;accumulate(ary, ary+<span style="color: #a020f0;">sizeof</span>(ary)/<span style="color: #a020f0;">sizeof</span>(<span style="color: #228b22;">int</span>), 0, <span style="color: #228b22;">minus</span>&lt;<span style="color: #228b22;">int</span>&gt;())&lt;&lt;endl; <span style="color: #b22222;">// </span><span style="color: #b22222;">-36</span>
+</pre>
+
+</div>
+
+</div>
+
+<div id="outline-container-5" class="outline-2">
+<h2 id="sec-5"><span class="section-number-2">5</span> inner_product</h2>
+<div class="outline-text-2" id="text-5">
+
+
+
+
+<pre class="src src-c++"><span style="color: #a020f0;">template</span>&lt; <span style="color: #a020f0;">class</span> <span style="color: #228b22;">InputIterator1</span>, <span style="color: #a020f0;">class</span> <span style="color: #228b22;">InputIterator2</span>, <span style="color: #a020f0;">class</span> <span style="color: #228b22;">T</span> &gt;
+<span style="color: #228b22;">T</span> <span style="color: #0000ff;">inner_product</span>( <span style="color: #228b22;">InputIterator1</span> <span style="color: #a0522d;">first1</span>, <span style="color: #228b22;">InputIterator1</span> <span style="color: #a0522d;">last1</span>,
+                 <span style="color: #228b22;">InputIterator2</span> <span style="color: #a0522d;">first2</span>, <span style="color: #228b22;">T</span> <span style="color: #a0522d;">value</span> );
+
+<span style="color: #a020f0;">template</span>&lt;
+    <span style="color: #a020f0;">class</span> <span style="color: #228b22;">InputIterator1</span>,
+    <span style="color: #a020f0;">class</span> <span style="color: #228b22;">InputIterator2</span>,
+    <span style="color: #a020f0;">class</span> <span style="color: #228b22;">T</span>,
+    <span style="color: #a020f0;">class</span> <span style="color: #228b22;">BinaryOperation1</span>,
+    <span style="color: #a020f0;">class</span> <span style="color: #228b22;">BinaryOperation2</span>
+&gt; <span style="color: #228b22;">T</span> <span style="color: #0000ff;">inner_product</span>( <span style="color: #228b22;">InputIterator1</span> <span style="color: #a0522d;">first1</span>, <span style="color: #228b22;">InputIterator1</span> <span style="color: #a0522d;">last1</span>,
+                   <span style="color: #228b22;">InputIterator2</span> <span style="color: #a0522d;">first2</span>, <span style="color: #228b22;">T</span> <span style="color: #a0522d;">value</span>,
+                   <span style="color: #228b22;">BinaryOperation1</span> <span style="color: #a0522d;">op1</span>,
+                   <span style="color: #228b22;">BinaryOperation2</span> <span style="color: #a0522d;">op2</span> );
+</pre>
+
+<ol>
+<li>[first1, last1)与first2开始last1-first1个构成的区间对应的元素相乘后相加。<br/>
+</li>
+<li>1中的相乘改为op2，相加改为op1.<br/>
+</li>
+</ol>
+
+
+
+
+<pre class="src src-c++"><span style="color: #228b22;">int</span> <span style="color: #a0522d;">ip1</span>[] = {1,2,3};
+<span style="color: #228b22;">int</span> <span style="color: #a0522d;">ip2</span>[] = {2,3,4,5,6};
+cout&lt;&lt;inner_product(ip1,ip1+3,ip2, 100)&lt;&lt;endl; <span style="color: #b22222;">// </span><span style="color: #b22222;">100+1*2+2*3+3*4=120</span>
+cout&lt;&lt;inner_product(ip1,ip1+3,ip2, 100, <span style="color: #228b22;">minus</span>&lt;<span style="color: #228b22;">int</span>&gt;(), <span style="color: #228b22;">plus</span>&lt;<span style="color: #228b22;">int</span>&gt;())&lt;&lt;endl; <span style="color: #b22222;">// </span><span style="color: #b22222;">100-(1+2)-(2+3)-(3+4)=85</span>
+</pre>
+
+</div>
+
+</div>
+
+<div id="outline-container-6" class="outline-2">
+<h2 id="sec-6"><span class="section-number-2">6</span> partial_sum</h2>
+<div class="outline-text-2" id="text-6">
+
+
+
+
+<pre class="src src-c++"><span style="color: #a020f0;">template</span>&lt; <span style="color: #a020f0;">class</span> <span style="color: #228b22;">InputIterator</span>, <span style="color: #a020f0;">class</span> <span style="color: #228b22;">OutputIterator</span> &gt;
+<span style="color: #228b22;">OutputIterator</span> <span style="color: #0000ff;">partial_sum</span>( <span style="color: #228b22;">InputIterator</span> <span style="color: #a0522d;">first</span>, <span style="color: #228b22;">InputIterator</span> <span style="color: #a0522d;">last</span>, <span style="color: #228b22;">OutputIterator</span> <span style="color: #a0522d;">d_first</span> );
+
+<span style="color: #a020f0;">template</span>&lt; <span style="color: #a020f0;">class</span> <span style="color: #228b22;">InputIterator</span>, <span style="color: #a020f0;">class</span> <span style="color: #228b22;">OutputIterator</span>, <span style="color: #a020f0;">class</span> <span style="color: #228b22;">BinaryOperation</span> &gt;
+<span style="color: #228b22;">OutputIterator</span> <span style="color: #0000ff;">partial_sum</span>( <span style="color: #228b22;">InputIterator</span> <span style="color: #a0522d;">first</span>, <span style="color: #228b22;">InputIterator</span> <span style="color: #a0522d;">last</span>, <span style="color: #228b22;">OutputIterator</span> <span style="color: #a0522d;">d_first</span>,
+                            <span style="color: #228b22;">BinaryOperation</span> <span style="color: #a0522d;">op</span> );
+</pre>
+
+<p>
+  所做的操作为：<br/>
+</p>
+
+
+<pre class="example">*(d_first)   = *first;
+*(d_first+1) = *first + *(first+1);
+*(d_first+2) = *first + *(first+1) + *(first+2);
+*(d_first+3) = *first + *(first+1) + *(first+2) + *(first+3);
+...
+</pre>
+
+<p>
+  第2个版本中用op操作替换+.<br/>
+</p>
+
+
+<pre class="src src-c++"><span style="color: #228b22;">int</span> <span style="color: #a0522d;">ip2</span>[] = {2,3,4,5,6};
+partial_sum(ip2, ip2+5, <span style="color: #228b22;">ostream_iterator</span>&lt;<span style="color: #228b22;">int</span>&gt;(cout, <span style="color: #8b2252;">" "</span>)); <span style="color: #b22222;">// </span><span style="color: #b22222;">2 5 9 14 20</span>
+partial_sum(ip2, ip2+5, <span style="color: #228b22;">ostream_iterator</span>&lt;<span style="color: #228b22;">int</span>&gt;(cout, <span style="color: #8b2252;">" "</span>), <span style="color: #228b22;">minus</span>&lt;<span style="color: #228b22;">int</span>&gt;()); <span style="color: #b22222;">// </span><span style="color: #b22222;">2 -1 -5 -10 -16</span>
+</pre>
+
+</div>
+
+</div>
+
+<div id="outline-container-7" class="outline-2">
+<h2 id="sec-7"><span class="section-number-2">7</span> adjacent_difference</h2>
+<div class="outline-text-2" id="text-7">
+
+<p>  与partial_sum相似。只是操作相邻元素。<br/>
+</p>
+
+
+<pre class="example">*(d_first)   = *first;
+*(d_first+1) = (*first+1) - *(first);
+*(d_first+2) = (*first+2) - *(first+1);
+*(d_first+3) = (*first+3) - *(first+2);
+</pre>
+
+
+
+<pre class="src src-c++"><span style="color: #228b22;">int</span> <span style="color: #a0522d;">ip2</span>[] = {2,3,4,5,6};
+adjacent_difference(ip2, ip2+5, <span style="color: #228b22;">ostream_iterator</span>&lt;<span style="color: #228b22;">int</span>&gt;(cout, <span style="color: #8b2252;">" "</span>)); <span style="color: #b22222;">// </span><span style="color: #b22222;">2 1 1 1 1</span>
+adjacent_difference(ip2, ip2+5, <span style="color: #228b22;">ostream_iterator</span>&lt;<span style="color: #228b22;">int</span>&gt;(cout, <span style="color: #8b2252;">" "</span>), <span style="color: #228b22;">plus</span>&lt;<span style="color: #228b22;">int</span>&gt;()); <span style="color: #b22222;">// </span><span style="color: #b22222;">2 5 7 9 11</span>
+</pre>
+
+</div>
+
+</div>
+
+<div id="outline-container-8" class="outline-2">
+<h2 id="sec-8"><span class="section-number-2">8</span> equal</h2>
+<div class="outline-text-2" id="text-8">
+
+
+
+
+<pre class="src src-c++"><span style="color: #a020f0;">template</span>&lt; <span style="color: #a020f0;">class</span> <span style="color: #228b22;">InputIterator1</span>, <span style="color: #a020f0;">class</span> <span style="color: #228b22;">InputIterator2</span> &gt;
+<span style="color: #228b22;">bool</span> <span style="color: #0000ff;">equal</span>( <span style="color: #228b22;">InputIterator1</span> <span style="color: #a0522d;">first1</span>, <span style="color: #228b22;">InputIterator1</span> <span style="color: #a0522d;">last1</span>, 
+            <span style="color: #228b22;">InputIterator2</span> <span style="color: #a0522d;">first2</span> );
+
+<span style="color: #a020f0;">template</span>&lt; <span style="color: #a020f0;">class</span> <span style="color: #228b22;">InputIterator1</span>, <span style="color: #a020f0;">class</span> <span style="color: #228b22;">InputIterator2</span>, <span style="color: #a020f0;">class</span> <span style="color: #228b22;">BinaryPredicate</span> &gt;
+<span style="color: #228b22;">bool</span> <span style="color: #0000ff;">equal</span>( <span style="color: #228b22;">InputIterator1</span> <span style="color: #a0522d;">first1</span>, <span style="color: #228b22;">InputIterator1</span> <span style="color: #a0522d;">last1</span>, 
+            <span style="color: #228b22;">InputIterator2</span> <span style="color: #a0522d;">first2</span>, <span style="color: #228b22;">BinaryPredicate</span> <span style="color: #a0522d;">p</span> );
+</pre>
+
+<p>
+  [first1,last1)之间的元素是否与first2开始的同等个数的区间对应元素相同。如果first2开始的元素个数没有first1到last1之间的多则结果不确定。<br/>
+  第2个版本可以自定义比较操作，默认是相等。<br/>
+</p>
+
+
+<pre class="src src-c++"><span style="color: #228b22;">int</span> <span style="color: #a0522d;">ip1</span>[] = {1,2,3};
+<span style="color: #228b22;">int</span> <span style="color: #a0522d;">ip2</span>[] = {1,2,3,4,5,6};
+cout&lt;&lt;equal(ip1,ip1+3,ip2)&lt;&lt;endl; <span style="color: #b22222;">// </span><span style="color: #b22222;">1</span>
+cout&lt;&lt;equal(ip1,ip1+3,ip2+1)&lt;&lt;endl; <span style="color: #b22222;">// </span><span style="color: #b22222;">0</span>
+cout&lt;&lt;equal(ip1,ip1+3,ip2+1, <span style="color: #228b22;">less</span>&lt;<span style="color: #228b22;">int</span>&gt;())&lt;&lt;endl; <span style="color: #b22222;">// </span><span style="color: #b22222;">1</span>
+</pre>
+
+</div>
+
+</div>
+
+<div id="outline-container-9" class="outline-2">
+<h2 id="sec-9"><span class="section-number-2">9</span> fill</h2>
+<div class="outline-text-2" id="text-9">
+
+
+
+
+<pre class="src src-c++"><span style="color: #a020f0;">template</span>&lt; <span style="color: #a020f0;">class</span> <span style="color: #228b22;">ForwardIterator</span>, <span style="color: #a020f0;">class</span> <span style="color: #228b22;">T</span> &gt;
+<span style="color: #228b22;">void</span> <span style="color: #0000ff;">fill</span>( <span style="color: #228b22;">ForwardIterator</span> <span style="color: #a0522d;">first</span>, <span style="color: #228b22;">ForwardIterator</span> <span style="color: #a0522d;">last</span>, <span style="color: #a020f0;">const</span> <span style="color: #228b22;">T</span>&amp; <span style="color: #a0522d;">value</span> );
+</pre>
+
+<p>
+  用value填充区间[first,last).<br/>
+</p></div>
+
+</div>
+
+<div id="outline-container-10" class="outline-2">
+<h2 id="sec-10"><span class="section-number-2">10</span> fill_n</h2>
+<div class="outline-text-2" id="text-10">
+
+
+
+
+<pre class="src src-c++"><span style="color: #a020f0;">template</span>&lt; <span style="color: #a020f0;">class</span> <span style="color: #228b22;">OutputIterator</span>, <span style="color: #a020f0;">class</span> <span style="color: #228b22;">Size</span>, <span style="color: #a020f0;">class</span> <span style="color: #228b22;">T</span> &gt;
+<span style="color: #228b22;">void</span> <span style="color: #0000ff;">fill_n</span>( <span style="color: #228b22;">OutputIterator</span> <span style="color: #a0522d;">first</span>, <span style="color: #228b22;">Size</span> <span style="color: #a0522d;">count</span>, <span style="color: #a020f0;">const</span> <span style="color: #228b22;">T</span>&amp; <span style="color: #a0522d;">value</span> );        <span style="color: #b22222;">//</span><span style="color: #b22222;">before c++11</span>
+
+<span style="color: #a020f0;">template</span>&lt; <span style="color: #a020f0;">class</span> <span style="color: #228b22;">OutputIterator</span>, <span style="color: #a020f0;">class</span> <span style="color: #228b22;">Size</span>, <span style="color: #a020f0;">class</span> <span style="color: #228b22;">T</span> &gt;
+<span style="color: #228b22;">OutputIterator</span> <span style="color: #0000ff;">fill_n</span>( <span style="color: #228b22;">OutputIterator</span> <span style="color: #a0522d;">first</span>, <span style="color: #228b22;">Size</span> <span style="color: #a0522d;">count</span>, <span style="color: #a020f0;">const</span> <span style="color: #228b22;">T</span>&amp; <span style="color: #a0522d;">value</span> ); <span style="color: #b22222;">//</span><span style="color: #b22222;">C++11</span>
+</pre>
+
+<p>
+  填充指定位置开始的指定个数元素，C++11中返回值与advance(first,count);相同。<br/>
+</p></div>
+
+</div>
+
+<div id="outline-container-11" class="outline-2">
+<h2 id="sec-11"><span class="section-number-2">11</span> iter_swap</h2>
+<div class="outline-text-2" id="text-11">
+
+
+
+
+<pre class="src src-c++"><span style="color: #a020f0;">template</span>&lt; <span style="color: #a020f0;">class</span> <span style="color: #228b22;">ForwardIterator1</span>, <span style="color: #a020f0;">class</span> <span style="color: #228b22;">ForwardIterator2</span> &gt;
+<span style="color: #228b22;">void</span> <span style="color: #0000ff;">iter_swap</span>( <span style="color: #228b22;">ForwardIterator1</span> <span style="color: #a0522d;">a</span>, <span style="color: #228b22;">ForwardIterator2</span> <span style="color: #a0522d;">b</span> );
+</pre>
+
+<p>
+  交换两个迭代器的内容。调用的是swap函数。<br/>
+</p></div>
+
+</div>
+
+<div id="outline-container-12" class="outline-2">
+<h2 id="sec-12"><span class="section-number-2">12</span> swap</h2>
+<div class="outline-text-2" id="text-12">
+
+
+
+
+<pre class="src src-c++"><span style="color: #a020f0;">template</span>&lt; <span style="color: #a020f0;">class</span> <span style="color: #228b22;">T</span> &gt;
+<span style="color: #228b22;">void</span> <span style="color: #0000ff;">swap</span>( <span style="color: #228b22;">T</span>&amp; <span style="color: #a0522d;">a</span>, <span style="color: #228b22;">T</span>&amp; <span style="color: #a0522d;">b</span> );
+
+<span style="color: #a020f0;">template</span>&lt; <span style="color: #a020f0;">class</span> <span style="color: #228b22;">T</span>, <span style="color: #228b22;">size_t</span> <span style="color: #a0522d;">N</span> &gt;
+<span style="color: #228b22;">void</span> <span style="color: #0000ff;">swap</span>( <span style="color: #228b22;">T</span> (&amp;<span style="color: #a0522d;">a</span>)[N], <span style="color: #228b22;">T</span> (&amp;<span style="color: #a0522d;">b</span>)[N]);       <span style="color: #b22222;">//</span><span style="color: #b22222;">c++11</span>
+</pre>
+
+<p>
+  swap可交换的对象包含了几乎所有的泛型对象：vector,list,queue&hellip;<br/>
+  C++11的swap调用的是swap_range(a, a+N, b);<br/>
+</p></div>
+
+</div>
+
+<div id="outline-container-13" class="outline-2">
+<h2 id="sec-13"><span class="section-number-2">13</span> swap_range</h2>
+<div class="outline-text-2" id="text-13">
+
+
+
+
+<pre class="src src-c++"><span style="color: #a020f0;">template</span>&lt; <span style="color: #a020f0;">class</span> <span style="color: #228b22;">ForwardIterator1</span>, <span style="color: #a020f0;">class</span> <span style="color: #228b22;">ForwardIterator2</span> &gt;
+<span style="color: #228b22;">ForwardIterator2</span> <span style="color: #0000ff;">swap_ranges</span>( <span style="color: #228b22;">ForwardIterator1</span> <span style="color: #a0522d;">first1</span>,
+                              <span style="color: #228b22;">ForwardIterator1</span> <span style="color: #a0522d;">last1</span>, 
+                              <span style="color: #228b22;">ForwardIterator2</span> <span style="color: #a0522d;">first2</span> )
+</pre>
+
+<p>
+  交换[first1,last1)与first2开始的区间。<br/>
+  内部调用的是iter_swap。<br/>
+</p></div>
+
+</div>
+
+<div id="outline-container-14" class="outline-2">
+<h2 id="sec-14"><span class="section-number-2">14</span> lexicographical_compare</h2>
+<div class="outline-text-2" id="text-14">
+
+
+
+
+<pre class="src src-c++"><span style="color: #a020f0;">template</span>&lt; <span style="color: #a020f0;">class</span> <span style="color: #228b22;">InputIterator1</span>, <span style="color: #a020f0;">class</span> <span style="color: #228b22;">InputIterator2</span> &gt;
+<span style="color: #228b22;">bool</span> <span style="color: #0000ff;">lexicographical_compare</span>( <span style="color: #228b22;">InputIterator1</span> <span style="color: #a0522d;">first1</span>, <span style="color: #228b22;">InputIterator1</span> <span style="color: #a0522d;">last1</span>,
+                              <span style="color: #228b22;">InputIterator2</span> <span style="color: #a0522d;">first2</span>, <span style="color: #228b22;">InputIterator2</span> <span style="color: #a0522d;">last2</span> );
+
+<span style="color: #a020f0;">template</span>&lt; <span style="color: #a020f0;">class</span> <span style="color: #228b22;">InputIterator1</span>, <span style="color: #a020f0;">class</span> <span style="color: #228b22;">InputIterator2</span>, <span style="color: #a020f0;">class</span> <span style="color: #228b22;">Compare</span> &gt;
+<span style="color: #228b22;">bool</span> <span style="color: #0000ff;">lexicographical_compare</span>( <span style="color: #228b22;">InputIterator1</span> <span style="color: #a0522d;">first1</span>, <span style="color: #228b22;">InputIterator1</span> <span style="color: #a0522d;">last1</span>,
+                              <span style="color: #228b22;">InputIterator2</span> <span style="color: #a0522d;">first2</span>, <span style="color: #228b22;">InputIterator2</span> <span style="color: #a0522d;">last2</span>,
+                              <span style="color: #228b22;">Compare</span> <span style="color: #a0522d;">comp</span> );
+</pre>
+
+<p>
+  以词典序排序。<br/>
+  先比较 min((last1-first1),(last2-first2)) 个，如果比较出来则返回否则第1个区间短则返回真否则返回假。<br/>
+</p></div>
+
+</div>
+
+<div id="outline-container-15" class="outline-2">
+<h2 id="sec-15"><span class="section-number-2">15</span> mismatch</h2>
+<div class="outline-text-2" id="text-15">
+
+
+
+
+<pre class="src src-c++"><span style="color: #a020f0;">template</span>&lt; <span style="color: #a020f0;">class</span> <span style="color: #228b22;">InputIterator1</span>, <span style="color: #a020f0;">class</span> <span style="color: #228b22;">InputIterator2</span> &gt;
+<span style="color: #008b8b;">std</span>::<span style="color: #228b22;">pair</span>&lt;<span style="color: #228b22;">InputIterator1</span>,<span style="color: #228b22;">InputIterator2</span>&gt;
+    <span style="color: #0000ff;">mismatch</span>( <span style="color: #228b22;">InputIterator1</span> <span style="color: #a0522d;">first1</span>,
+              <span style="color: #228b22;">InputIterator1</span> <span style="color: #a0522d;">last1</span>,
+              <span style="color: #228b22;">InputIterator2</span> <span style="color: #a0522d;">first2</span> );
+
+<span style="color: #a020f0;">template</span>&lt; <span style="color: #a020f0;">class</span> <span style="color: #228b22;">InputIterator1</span>, <span style="color: #a020f0;">class</span> <span style="color: #228b22;">InputIterator2</span>, <span style="color: #a020f0;">class</span> <span style="color: #228b22;">BinaryPredicate</span> &gt;
+<span style="color: #008b8b;">std</span>::<span style="color: #228b22;">pair</span>&lt;<span style="color: #228b22;">InputIterator1</span>,<span style="color: #228b22;">InputIterator2</span>&gt;
+    <span style="color: #0000ff;">mismatch</span>( <span style="color: #228b22;">InputIterator1</span> <span style="color: #a0522d;">first1</span>,
+              <span style="color: #228b22;">InputIterator1</span> <span style="color: #a0522d;">last1</span>,
+              <span style="color: #228b22;">InputIterator2</span> <span style="color: #a0522d;">first2</span>,
+              <span style="color: #228b22;">BinaryPredicate</span> <span style="color: #a0522d;">p</span> );
+</pre>
+
+<p>
+  返回第一次不匹配的第1个区间迭代器和第2个区间迭代器构成的pair.<br/>
+</p></div>
 </div>
 </div>
 

@@ -3,15 +3,15 @@
                "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="zh-CN" xml:lang="zh-CN">
 <head>
-<title>STL：映射 集合</title>
+<title>STL：关联式容器 Set Map</title>
 <meta http-equiv="Content-Type" content="text/html;charset=gb18030"/>
-<meta name="title" content="STL：映射 集合"/>
+<meta name="title" content="STL：关联式容器 Set Map"/>
 <meta name="generator" content="Org-mode"/>
-<meta name="generated" content="2012-12-02 00:29:21 CST"/>
+<meta name="generated" content="2012-12-02 23:05:13 CST"/>
 <meta name="author" content="visayafan"/>
 <meta name="description" content=""/>
 <meta name="keywords" content=""/>
-<div id="org-div-comments"><a href="../../index.html#cpp">主页</a><br/><a href="#disqus_thread">评论</a></div>
+
 
 
 </head>
@@ -19,7 +19,7 @@
 
 
 <div id="content">
-<h1 class="title">STL：映射 集合</h1>
+<h1 class="title">STL：关联式容器 Set Map</h1>
 
 
 <!-- <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"> </script> -->
@@ -29,23 +29,25 @@
 <script src="../../Layout/JS/bootstrap_old.js"></script>
 
 
+
 <div id="table-of-contents">
 <h2>目录</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#sec-1">1 map</a>
-<ul>
-<li><a href="#sec-1-1">1.1 key_type mapped_type value_type</a></li>
-<li><a href="#sec-1-2">1.2 map.insert()</a></li>
-<li><a href="#sec-1-3">1.3 key_comp()与value_comp()</a></li>
-<li><a href="#sec-1-4">1.4 equal_range()</a></li>
-<li><a href="#sec-1-5">1.5 upper_bound lower_bound</a></li>
-<li><a href="#sec-1-6">1.6 size() max_size()</a></li>
-</ul>
-</li>
+<li><a href="#sec-1">1 底层实现</a></li>
 <li><a href="#sec-2">2 set</a>
 <ul>
 <li><a href="#sec-2-1">2.1 insert</a></li>
+<li><a href="#sec-2-2">2.2 lower_bound, upper_bound</a></li>
+<li><a href="#sec-2-3">2.3 equal_range</a></li>
+</ul>
+</li>
+<li><a href="#sec-3">3 map</a>
+<ul>
+<li><a href="#sec-3-1">3.1 key_type mapped_type value_type</a></li>
+<li><a href="#sec-3-2">3.2 map.insert()</a></li>
+<li><a href="#sec-3-3">3.3 key_comp()与value_comp()</a></li>
+<li><a href="#sec-3-4">3.4 size() max_size()</a></li>
 </ul>
 </li>
 </ul>
@@ -53,15 +55,138 @@
 </div>
 
 <div id="outline-container-1" class="outline-2">
-<h2 id="sec-1"><span class="section-number-2">1</span> map</h2>
+<h2 id="sec-1"><span class="section-number-2">1</span> 底层实现</h2>
 <div class="outline-text-2" id="text-1">
+
+<p>set和map的底层实现是红黑树,遍历结果是有序的。<br/>
+C++11中的unordered_set和unordered_map底层实现是hashtable，遍历结果是无序的。<br/>
+</p>
+
+
+<pre class="src src-c++"><span style="color: #483d8b;">#include</span> <span style="color: #8b2252;">&lt;iostream&gt;</span>
+<span style="color: #483d8b;">#include</span> <span style="color: #8b2252;">&lt;/usr/include/c++/4.5/bits/stl_tree.h&gt;</span>
+<span style="color: #a020f0;">using</span> <span style="color: #a020f0;">namespace</span> <span style="color: #008b8b;">std</span>;
+<span style="color: #228b22;">int</span> <span style="color: #0000ff;">main</span>(<span style="color: #228b22;">int</span> <span style="color: #a0522d;">argc</span>, <span style="color: #228b22;">char</span> *<span style="color: #a0522d;">argv</span>[])
+{
+     <span style="color: #a020f0;">typedef</span> <span style="color: #228b22;">_Rb_tree</span>&lt;<span style="color: #228b22;">int</span>, <span style="color: #228b22;">int</span>, <span style="color: #228b22;">identity</span>&lt;<span style="color: #228b22;">int</span>&gt;, <span style="color: #228b22;">less</span>&lt;<span style="color: #228b22;">int</span>&gt; &gt; <span style="color: #228b22;">vrbtree</span>;
+     <span style="color: #228b22;">vrbtree</span> <span style="color: #a0522d;">rbtree</span>;
+     cout&lt;&lt;<span style="color: #8b2252;">"Init size: "</span>&lt;&lt;rbtree.size()&lt;&lt;endl;
+     <span style="color: #228b22;">int</span> <span style="color: #a0522d;">tmp</span>[] = {1,3,2,6,4,5};
+     <span style="color: #a020f0;">for</span>(<span style="color: #228b22;">int</span> <span style="color: #a0522d;">i</span>=0; i&lt;<span style="color: #a020f0;">sizeof</span>(tmp)/<span style="color: #a020f0;">sizeof</span>(<span style="color: #228b22;">int</span>); ++i)
+          rbtree._M_insert_unique(tmp[i]);
+     <span style="color: #a020f0;">for</span>(<span style="color: #008b8b;">vrbtree</span>::<span style="color: #228b22;">const_iterator</span> <span style="color: #a0522d;">first</span>=rbtree.begin(); first != rbtree.end(); ++first)
+          cout&lt;&lt;<span style="color: #8b2252;">"value: "</span>&lt;&lt;*first&lt;&lt;<span style="color: #8b2252;">" color:"</span>&lt;&lt;(first._M_node-&gt;_M_color?<span style="color: #8b2252;">"black"</span>:<span style="color: #8b2252;">"red"</span>)&lt;&lt;endl;
+     <span style="color: #a020f0;">return</span> 0;
+}
+&#32467;&#26524;&#65306;
+Init size: 0
+value: 1 color:black
+value: 2 color:black
+value: 3 color:black
+value: 4 color:red
+value: 5 color:red
+value: 6 color:black
+</pre>
+
+</div>
+
+</div>
+
+<div id="outline-container-2" class="outline-2">
+<h2 id="sec-2"><span class="section-number-2">2</span> set</h2>
+<div class="outline-text-2" id="text-2">
 
 
 </div>
 
-<div id="outline-container-1-1" class="outline-3">
-<h3 id="sec-1-1"><span class="section-number-3">1.1</span> key_type mapped_type value_type</h3>
-<div class="outline-text-3" id="text-1-1">
+<div id="outline-container-2-1" class="outline-3">
+<h3 id="sec-2-1"><span class="section-number-3">2.1</span> insert</h3>
+<div class="outline-text-3" id="text-2-1">
+
+<p>   使用方法与map完全相同。当参数为iterator时返回值为void，当参数为value_type时返回一个iterator和bool。<br/>
+</p>
+
+
+<pre class="src src-c++"><span style="color: #228b22;">set</span>&lt;<span style="color: #228b22;">int</span>&gt; <span style="color: #a0522d;">iset</span>;
+iset.insert(1);
+<span style="color: #228b22;">pair</span>&lt;<span style="color: #008b8b;">set</span>&lt;<span style="color: #228b22;">int</span>&gt;::iterator, <span style="color: #228b22;">bool</span>&gt; <span style="color: #a0522d;">bset</span> = iset.insert(1);
+<span style="color: #a020f0;">if</span>(!bset.second)
+    cout&lt;&lt;<span style="color: #8b2252;">"Already exist"</span>&lt;&lt;endl;
+</pre>
+
+</div>
+
+</div>
+
+<div id="outline-container-2-2" class="outline-3">
+<h3 id="sec-2-2"><span class="section-number-3">2.2</span> lower_bound, upper_bound</h3>
+<div class="outline-text-3" id="text-2-2">
+
+
+
+
+<pre class="src src-c++"><span style="color: #228b22;">iterator</span> <span style="color: #0000ff;">lower_bound</span>( <span style="color: #a020f0;">const</span> <span style="color: #228b22;">Key</span>&amp; <span style="color: #a0522d;">key</span> );
+<span style="color: #228b22;">const_iterator</span> <span style="color: #0000ff;">lower_bound</span>( <span style="color: #a020f0;">const</span> <span style="color: #228b22;">Key</span>&amp; <span style="color: #a0522d;">key</span> ) <span style="color: #a020f0;">const</span>;
+
+<span style="color: #228b22;">iterator</span> <span style="color: #0000ff;">upper_bound</span>( <span style="color: #a020f0;">const</span> <span style="color: #228b22;">Key</span>&amp; <span style="color: #a0522d;">key</span> );
+<span style="color: #228b22;">const_iterator</span> <span style="color: #0000ff;">upper_bound</span>( <span style="color: #a020f0;">const</span> <span style="color: #228b22;">Key</span>&amp; <span style="color: #a0522d;">key</span> ) <span style="color: #a020f0;">const</span>;
+</pre>
+
+<p>
+   lower_bound 返回第一个&gt;=key的迭代器。<br/>
+   upper_bound 返回第一个&lt;=key的迭代器。<br/>
+   key超过其范围则根据其在范围的上方还是下方返回最大位置或最小位置迭代器。<br/>
+</p></div>
+
+</div>
+
+<div id="outline-container-2-3" class="outline-3">
+<h3 id="sec-2-3"><span class="section-number-3">2.3</span> equal_range</h3>
+<div class="outline-text-3" id="text-2-3">
+
+
+
+
+<pre class="src src-c++"><span style="color: #008b8b;">std</span>::<span style="color: #228b22;">pair</span>&lt;<span style="color: #228b22;">iterator</span>,<span style="color: #228b22;">iterator</span>&gt; <span style="color: #0000ff;">equal_range</span>( <span style="color: #a020f0;">const</span> <span style="color: #228b22;">Key</span>&amp; <span style="color: #a0522d;">key</span> );
+<span style="color: #008b8b;">std</span>::<span style="color: #228b22;">pair</span>&lt;<span style="color: #228b22;">const_iterator</span>,<span style="color: #228b22;">const_iterator</span>&gt; <span style="color: #0000ff;">equal_range</span>( <span style="color: #a020f0;">const</span> <span style="color: #228b22;">Key</span>&amp; <span style="color: #a0522d;">key</span> ) <span style="color: #a020f0;">const</span>;
+</pre>
+
+<p>
+   pair第1元素是集合中第1个&gt;=key的迭代器，pair中第2个元素是第一个&gt;key大的迭代器。如果没有=的元素则两个迭代器指向相同位置。<br/>
+</p>
+
+
+<pre class="src src-c++"><span style="color: #228b22;">int</span> <span style="color: #a0522d;">tpAry</span>[] = {1,3,2,6,4,5};
+<span style="color: #228b22;">set</span>&lt;<span style="color: #228b22;">int</span>&gt;   <span style="color: #0000ff;">iset</span>(tpAry, tpAry+<span style="color: #a020f0;">sizeof</span>(tpAry)/<span style="color: #a020f0;">sizeof</span>(<span style="color: #228b22;">int</span>));
+for_each(iset.begin(), iset.end(), <span style="color: #228b22;">display</span>&lt;<span style="color: #228b22;">int</span>&gt;()); <span style="color: #b22222;">// </span><span style="color: #b22222;">1 2 3 4 5 6</span>
+cout&lt;&lt;*iset.lower_bound(3)&lt;&lt;endl; <span style="color: #b22222;">// </span><span style="color: #b22222;">3</span>
+cout&lt;&lt;*iset.lower_bound(7)&lt;&lt;endl; <span style="color: #b22222;">// </span><span style="color: #b22222;">6</span>
+cout&lt;&lt;*iset.lower_bound(0)&lt;&lt;endl; <span style="color: #b22222;">// </span><span style="color: #b22222;">1</span>
+cout&lt;&lt;*iset.upper_bound(0)&lt;&lt;endl; <span style="color: #b22222;">// </span><span style="color: #b22222;">1</span>
+cout&lt;&lt;*iset.upper_bound(3)&lt;&lt;endl; <span style="color: #b22222;">// </span><span style="color: #b22222;">3</span>
+cout&lt;&lt;*iset.upper_bound(7)&lt;&lt;endl; <span style="color: #b22222;">// </span><span style="color: #b22222;">6</span>
+<span style="color: #228b22;">pair</span>&lt;<span style="color: #008b8b;">set</span>&lt;<span style="color: #228b22;">int</span>&gt;::const_iterator, <span style="color: #008b8b;">set</span>&lt;<span style="color: #228b22;">int</span>&gt;::const_iterator&gt; <span style="color: #a0522d;">lower_upper</span> = iset.equal_range(3);
+cout&lt;&lt;*lower_upper.first&lt;&lt;<span style="color: #8b2252;">" "</span>&lt;&lt;*lower_upper.second&lt;&lt;endl; <span style="color: #b22222;">// </span><span style="color: #b22222;">3 4</span>
+iset.erase(3);
+lower_upper = iset.equal_range(3);
+cout&lt;&lt;*lower_upper.first&lt;&lt;<span style="color: #8b2252;">" "</span>&lt;&lt;*lower_upper.second&lt;&lt;endl; <span style="color: #b22222;">// </span><span style="color: #b22222;">4 4</span>
+</pre>
+
+</div>
+</div>
+
+</div>
+
+<div id="outline-container-3" class="outline-2">
+<h2 id="sec-3"><span class="section-number-2">3</span> map</h2>
+<div class="outline-text-2" id="text-3">
+
+
+</div>
+
+<div id="outline-container-3-1" class="outline-3">
+<h3 id="sec-3-1"><span class="section-number-3">3.1</span> key_type mapped_type value_type</h3>
+<div class="outline-text-3" id="text-3-1">
 
 <p>   前两个分别为键值。<br/>
    最后一个是(key_type, mapped_type)即pair类型。<br/>
@@ -69,9 +194,9 @@
 
 </div>
 
-<div id="outline-container-1-2" class="outline-3">
-<h3 id="sec-1-2"><span class="section-number-3">1.2</span> map.insert()</h3>
-<div class="outline-text-3" id="text-1-2">
+<div id="outline-container-3-2" class="outline-3">
+<h3 id="sec-3-2"><span class="section-number-3">3.2</span> map.insert()</h3>
+<div class="outline-text-3" id="text-3-2">
 
 
 
@@ -85,9 +210,9 @@
 
 </div>
 
-<div id="outline-container-1-3" class="outline-3">
-<h3 id="sec-1-3"><span class="section-number-3">1.3</span> key_comp()与value_comp()</h3>
-<div class="outline-text-3" id="text-1-3">
+<div id="outline-container-3-3" class="outline-3">
+<h3 id="sec-3-3"><span class="section-number-3">3.3</span> key_comp()与value_comp()</h3>
+<div class="outline-text-3" id="text-3-3">
 
 <p>  key_compare key_comp() const;<br/>
   The function key_comp() returns the function that compares keys. <br/>
@@ -116,74 +241,12 @@ m2[3]=2;
 
 </div>
 
-<div id="outline-container-1-4" class="outline-3">
-<h3 id="sec-1-4"><span class="section-number-3">1.4</span> equal_range()</h3>
-<div class="outline-text-3" id="text-1-4">
-
-<dl>
-<dt>形式</dt><dd>
-<p>
-   pair&lt;iterator, iterator&gt; equal_range( const key_type&amp; key );<br/>
-</p></dd>
-<dt>返回值</dt><dd>
-<p>
-   The function equal_range() returns two iterators - one to the first element that contains key, another to a point just after the last element that contains key. <br/>
-   返回第一个find的iterator与最后一个find的下一个iterator。<br/>
-</p></dd>
-</dl>
-
-</div>
-
-</div>
-
-<div id="outline-container-1-5" class="outline-3">
-<h3 id="sec-1-5"><span class="section-number-3">1.5</span> upper_bound lower_bound</h3>
-<div class="outline-text-3" id="text-1-5">
-
-<p>   iterator upper_bound( const key_type&amp; key );<br/>
-   iterator lower_bound( const key_type&amp; key );<br/>
-   返回第一个大于/小于的iterator.<br/>
-</p></div>
-
-</div>
-
-<div id="outline-container-1-6" class="outline-3">
-<h3 id="sec-1-6"><span class="section-number-3">1.6</span> size() max_size()</h3>
-<div class="outline-text-3" id="text-1-6">
+<div id="outline-container-3-4" class="outline-3">
+<h3 id="sec-3-4"><span class="section-number-3">3.4</span> size() max_size()</h3>
+<div class="outline-text-3" id="text-3-4">
 
 <p>   前者返回map大小，后者返回map最大的存储个数。<br/>
-</p>
-</div>
-</div>
-
-</div>
-
-<div id="outline-container-2" class="outline-2">
-<h2 id="sec-2"><span class="section-number-2">2</span> set</h2>
-<div class="outline-text-2" id="text-2">
-
-
-</div>
-
-<div id="outline-container-2-1" class="outline-3">
-<h3 id="sec-2-1"><span class="section-number-3">2.1</span> insert</h3>
-<div class="outline-text-3" id="text-2-1">
-
-<p>   使用方法与map完全相同。当参数为iterator时返回值为void，当参数为value_type时返回一个iterator和bool。<br/>
-</p>
-
-
-<pre class="src src-c++"><span style="color: #228b22;">set</span>&lt;<span style="color: #228b22;">int</span>&gt; <span style="color: #a0522d;">iset</span>;
-iset.insert(1);
-<span style="color: #228b22;">pair</span>&lt;<span style="color: #008b8b;">set</span>&lt;<span style="color: #228b22;">int</span>&gt;::iterator, <span style="color: #228b22;">bool</span>&gt; <span style="color: #a0522d;">bset</span> = iset.insert(1);
-<span style="color: #a020f0;">if</span>(!bset.second)
-    cout&lt;&lt;<span style="color: #8b2252;">"Already exist"</span>&lt;&lt;endl;
-</pre>
-
-<script src="../../Layout/JS/disqus-comment.js"></script>
-<div id="disqus_thread">
-</div>
-</div>
+</p></div>
 </div>
 </div>
 </div>
