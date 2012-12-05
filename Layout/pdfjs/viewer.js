@@ -44,7 +44,7 @@ var FindStates = {
 };
 
 //#if (FIREFOX || MOZCENTRAL || B2G || GENERIC || CHROME)
-//PDFJS.workerSrc = '../build/pdf.js';
+//PDFJS.workerSrc = 'pdf.js';
 //#endif
 
 var mozL10n = document.mozL10n || document.webL10n;
