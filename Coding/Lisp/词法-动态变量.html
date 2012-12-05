@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+               "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-CN" xml:lang="zh-CN">
+<head>
+<title>词法变量和动态变量</title>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
+<meta name="title" content="词法变量和动态变量"/>
+<meta name="generator" content="Org-mode"/>
+<meta name="generated" content="2012-12-04 23:20:15 CST"/>
+<meta name="author" content="visayafan"/>
+<meta name="description" content=""/>
+<meta name="keywords" content=""/>
+
+
+
+</head>
+<body>
+
+
+<div id="content">
+<h1 class="title">词法变量和动态变量</h1>
+
+
+<!-- <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"> </script> -->
+<link rel="stylesheet" type="text/css" href="../../Layout/CSS/bootstrap_old.css" />
+<link rel="stylesheet" type="text/css" href="../../Layout/CSS/vf.css" />
+<script src="../../Layout/JS/jquery_1.7.1.js"></script>
+<script src="../../Layout/JS/bootstrap_old.js"></script>
+
+
+<p>
+<code>defvar</code> 和 <code>defparameter</code> 的区别在于：后者问题将新初始值赋给变量而前者只有在变量未绑定时才将初值赋给变量。<br/>
+</p>
+
+
+<pre class="src src-lisp">CL-USER&gt; (<span style="color: #a020f0;">defvar</span> <span style="color: #a0522d;">*test*</span> 0.1)
+*TEST*
+CL-USER&gt; *test*
+0.1
+CL-USER&gt; (<span style="color: #a020f0;">defvar</span> <span style="color: #a0522d;">*test*</span> 0.2)
+*TEST*
+CL-USER&gt; *test*
+0.1
+</pre>
+
+<p>
+由于已经对*test*做了绑定，所以再次赋值时将不起作用。<br/>
+可以对*test*解绑定，之后再用defvar重新赋初值。<br/>
+</p>
+
+
+<pre class="src src-lisp">CL-USER&gt; (makunbound '*test*)
+*TEST*
+CL-USER&gt; *test*
+<span style="color: #b22222;">; </span><span style="color: #b22222;">Evaluation aborted on #&lt;UNBOUND-VARIABLE *TEST* {B7086D9}&gt;. &#30001;&#20110;&#35299;&#38500;&#32465;&#23450;&#25152;&#20197;&#27492;&#26102;&#19981;&#21487;&#20197;&#20877;&#23545;&#21464;&#37327;&#36827;&#34892;&#35775;&#38382;&#12290;</span>
+CL-USER&gt; (<span style="color: #a020f0;">defvar</span> <span style="color: #a0522d;">*test*</span> 0.2)
+*TEST*
+CL-USER&gt; *test*
+0.2
+</pre>
+
+
+<p>
+而defparameter则不同：<br/>
+</p>
+
+
+<pre class="src src-lisp">CL-USER&gt; (<span style="color: #a020f0;">defparameter</span> <span style="color: #a0522d;">*defp*</span> 0.1)
+*DEFP*
+CL-USER&gt; *defp*
+0.1
+CL-USER&gt; (<span style="color: #a020f0;">defparameter</span> <span style="color: #a0522d;">*defp*</span> 0.01)
+*DEFP*
+CL-USER&gt; *defp*
+0.01
+</pre>
+
+
+
+<hr/>
+
+<p>
+<b>如果一个文件的某变量是defvar形式定义的则当再次加载此文件时该变量的值不变。</b> 这对于某些希望含持久性数据的变量非常有用。<br/>
+</p>
+<p>
+<b>而defparameter定义的变量当再次加载时值又恢复到初值。</b><br/>
+</p>
+
+<hr/>
+
+<hr/>
+<p>
+let中定义的变量是临时局部变量，当脱离let作用域后此变量不复存在。<br/>
+但如果此变量是词法变量，则此变量会保留下来。<br/>
+</p>
+
+
+<pre class="src src-lisp">CL-USER&gt; (<span style="color: #a020f0;">defparameter</span> <span style="color: #a0522d;">*fn*</span> (<span style="color: #a020f0;">let</span> ((x 0))
+                              #'(<span style="color: #a020f0;">lambda</span> () (setf x (1+ x)))))
+*FN*
+CL-USER&gt; (funcall *fn*)
+1
+CL-USER&gt; (funcall *fn*)
+2
+CL-USER&gt; (funcall *fn*)
+3
+</pre>
+
+<p>
+上面中的返回lambda匿名函数被称为 <b>闭包</b> ，封闭包装了由Let创建的绑定。<br/>
+</p>
+
+<hr/>
+
+<hr/>
+<p>
+<b>闭包的例子：</b><br/>
+
+</p>
+<hr/>
+
+
+
+<pre class="src src-lisp">CL-USER&gt; (<span style="color: #a020f0;">defun</span> <span style="color: #0000ff;">make-adder</span> (n)
+           (<span style="color: #a020f0;">let</span> ((n n))
+             (function (<span style="color: #a020f0;">lambda</span> (m) (+ n m)))))
+MAKE-ADDER
+CL-USER&gt; (setq add17 (make-adder 17))
+#&lt;CLOSURE (<span style="color: #a020f0;">LAMBDA</span> (M)) {B6CBEAD}&gt;
+CL-USER&gt; (funcall add17 4)
+21
+CL-USER&gt; (funcall add17 11)
+28
+</pre>
+
+<p>
+上面的make-adder返回值是个闭包，let中定义的临时变量在离开let作用域后被保存了下来。<br/>
+（如果不是闭包，则(funcall add17 4)时会查找全局变量n，如果不存在则会出错）。<br/>
+</p>
+
+<hr/>
+
+<hr/>
+
+
+
+<pre class="src src-lisp">CL-USER&gt; (<span style="color: #a020f0;">defun</span> <span style="color: #0000ff;">make-counter</span> ()
+           (<span style="color: #a020f0;">let</span> ((n 0))
+             #'(<span style="color: #a020f0;">lambda</span> (<span style="color: #228b22;">&amp;optional</span> (m 1)) (incf n m))))
+MAKE-COUNTER
+CL-USER&gt; (setq count-1 (make-counter))
+#&lt;CLOSURE (<span style="color: #a020f0;">LAMBDA</span> (<span style="color: #228b22;">&amp;OPTIONAL</span> (M 1))) {BF0633D}&gt;
+CL-USER&gt; (funcall count-1 3)
+3
+CL-USER&gt; (funcall count-1 12)
+15
+CL-USER&gt; (setq count-2 (make-counter))
+#&lt;CLOSURE (<span style="color: #a020f0;">LAMBDA</span> (<span style="color: #228b22;">&amp;OPTIONAL</span> (M 1))) {B38B33D}&gt;
+CL-USER&gt; (funcall count-2 2)
+2
+CL-USER&gt; (funcall count-2 12)
+14
+</pre>
+
+<p>
+make-counter返回的函数对象是闭包，第1次调用make-counter返回结果赋给count-1，此时count-1有个私有的变量n；再次调用make-counter结果赋给count-2，此时count-2有一个和count-1不相关的私有变量n。<br/>
+</p></div>
+
+</body>
+</html>

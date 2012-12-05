@@ -1,0 +1,302 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+               "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-CN" xml:lang="zh-CN">
+<head>
+<title>PCL笔记：简单数据库</title>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
+<meta name="title" content="PCL笔记：简单数据库"/>
+<meta name="generator" content="Org-mode"/>
+<meta name="generated" content="2012-12-04 21:23:17 CST"/>
+<meta name="author" content="visayafan"/>
+<meta name="description" content=""/>
+<meta name="keywords" content=""/>
+
+
+
+</head>
+<body>
+
+
+<div id="content">
+<h1 class="title">PCL笔记：简单数据库</h1>
+
+
+<!-- <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"> </script> -->
+<link rel="stylesheet" type="text/css" href="../../Layout/CSS/bootstrap_old.css" />
+<link rel="stylesheet" type="text/css" href="../../Layout/CSS/vf.css" />
+<script src="../../Layout/JS/jquery_1.7.1.js"></script>
+<script src="../../Layout/JS/bootstrap_old.js"></script>
+
+
+<p>
+Practical Common Lisp （简称PCL）是本值得推荐的lisp入门书籍。<br/>
+</p>
+<p>
+第3章通过一个小型CD数据库来初步展示了Lisp的强大功能，本文为阅读笔记。<br/>
+</p>
+<p>
+数据库对用户接口无非是录入，查询，更新。下面依次实现这3个功能。<br/>
+</p>
+<p>
+假设CD纪录包含CD的名称，作者，排行，是否是摇滚。可以用一个列表来保存，<br/>
+</p>
+
+
+<pre class="src src-lisp">(<span style="color: #a020f0;">defvar</span> <span style="color: #a0522d;">*db*</span> nil)
+
+(<span style="color: #a020f0;">defun</span> <span style="color: #0000ff;">make-cd</span> (title artist rating ripped)
+  (list <span style="color: #483d8b;">:title</span> title <span style="color: #483d8b;">:artist</span> artist <span style="color: #483d8b;">:rating</span> rating <span style="color: #483d8b;">:ripped</span> ripped))
+
+(<span style="color: #a020f0;">defun</span> <span style="color: #0000ff;">add-record</span> (cd)
+  (push cd *db*))
+</pre>
+
+<p>
+上面代码实现了CD的录入。<br/>
+</p>
+
+
+<pre class="src src-lisp">CL-USER&gt; (add-record (make-cd <span style="color: #8b2252;">"Hello"</span> <span style="color: #8b2252;">"vf"</span> 9 t))
+((<span style="color: #483d8b;">:TITLE</span> <span style="color: #8b2252;">"Hello"</span> <span style="color: #483d8b;">:ARTIST</span> <span style="color: #8b2252;">"vf"</span> <span style="color: #483d8b;">:RATING</span> 9 <span style="color: #483d8b;">:RIPPED</span> T))
+</pre>
+
+
+<p>
+为方便用户输入，可以继续包装：<br/>
+</p>
+
+
+<pre class="src src-lisp">(<span style="color: #a020f0;">defun</span> <span style="color: #0000ff;">prompt-read</span> (prompt)
+  (format *query-io* <span style="color: #8b2252;">"~a: "</span> prompt)
+  (force-output *query-io*)
+  (read-line *query-io*))
+
+(<span style="color: #a020f0;">defun</span> <span style="color: #0000ff;">prompt-for-cd</span> ()
+  (make-cd
+   (prompt-read <span style="color: #8b2252;">"Title"</span>)
+   (prompt-read <span style="color: #8b2252;">"Artist"</span>)
+   (or (parse-integer (prompt-read <span style="color: #8b2252;">"Rating"</span>) <span style="color: #483d8b;">:junk-allowed</span> t) 0)
+   (y-or-n-p <span style="color: #8b2252;">"Ripped [Y/N]:"</span>)))
+</pre>
+
+
+<p>
+<code>parse-integer (STRING &amp;KEY (START 0) END (RADIX 10) JUNK-ALLOWED)</code> 将字符串start至end之间看成以radix为基的数字（忽略到开始结尾的空白符）。<br/>
+</p>
+
+
+<pre class="src src-lisp">CL-USER&gt; (parse-integer <span style="color: #8b2252;">" 123 "</span>)
+123
+5
+CL-USER&gt; (parse-integer <span style="color: #8b2252;">" 123 "</span> <span style="color: #483d8b;">:radix</span> 4)
+27
+5
+</pre>
+
+<p>
+字符串中包含非数字的字符且 junk-allowed 未指定为t时则出错。<br/>
+</p>
+<p>
+<code>y-or-n-p (&amp;OPTIONAL FORMAT-STRING &amp;REST ARGUMENTS)</code> 输出指定格式的字符串并从*query-io*中读取用户输入y/Y/n/N这4个字符中的一个，如果不在这4个字符中则提示用户出错并令其重新输入。<br/>
+</p>
+
+
+<pre class="src src-lisp">CL-USER&gt; (y-or-n-p <span style="color: #8b2252;">"Input: "</span>)
+Input:  (y or n) d
+
+Please type <span style="color: #8b2252;">"y"</span> for yes or <span style="color: #8b2252;">"n"</span> for no.
+Input:  (y or n) n
+
+NIL
+</pre>
+
+
+<p>
+<code>read-line (&amp;OPTIONAL (STREAM *STANDARD-INPUT*) (EOF-ERROR-P T) EOF-VALUE RECURSIVE-P)</code> 从指定输入中读取一行，默认是标准输入。<br/>
+<code>force-output (&amp;OPTIONAL (STREAM *STANDARD-OUTPUT*))</code> 强制输出，确保lisp打印提示信息之前不会等待换行。<br/>
+</p>
+
+
+<hr/>
+
+
+
+<pre class="src src-lisp">(<span style="color: #a020f0;">defun</span> <span style="color: #0000ff;">dump-db</span> ()
+  (<span style="color: #a020f0;">dolist</span> (cd *db*)
+    (format t <span style="color: #8b2252;">"~{~a: ~10t ~a~%~}~%"</span> cd)))
+</pre>
+
+<p>
+上面代码实现数据输出，其中format函数第1个参数t表示标准输出，格式中~{ ~}表开始结尾，~a表美化（字符串去掉引号，关键字去掉前面的冒号），~t表示制表符，10表宽度。<br/>
+</p>
+
+
+<pre class="src src-lisp">CL-USER&gt; (dump-db)
+TITLE:     Hello
+ARTIST:    vf
+RATING:    9
+RIPPED:    T
+</pre>
+
+
+<hr/>
+
+
+
+
+<pre class="src src-lisp">(<span style="color: #a020f0;">defun</span> <span style="color: #0000ff;">save-db</span> (filename)
+  (<span style="color: #a020f0;">with-open-file</span> (out filename
+                       <span style="color: #483d8b;">:direction</span> <span style="color: #483d8b;">:output</span>
+                       <span style="color: #483d8b;">:if-exists</span> <span style="color: #483d8b;">:supersede</span>)
+    (<span style="color: #a020f0;">with-standard-io-syntax</span>
+      (print *db* out))))
+</pre>
+
+<p>
+上面代码实现*db*内容保存到指定文件中。<br/>
+</p>
+
+
+
+<pre class="src src-lisp">(<span style="color: #a020f0;">defun</span> <span style="color: #0000ff;">load-db</span> (filename)
+  (<span style="color: #a020f0;">with-open-file</span> (in filename)
+    (<span style="color: #a020f0;">with-standard-io-syntax</span>
+      (setf *db* (read in)))))
+</pre>
+
+<p>
+上面代码实现从文件中读取数据存放到*db*中。<br/>
+</p>
+<p>
+<code>with-open-file ((STREAM FILESPEC &amp;REST OPTIONS) &amp;BODY BODY)</code> 打开指定文件操作结束后关闭文件。:direction指定输入:input还是输出:output. :if-exists指定文件存在时进行的操作，:supersede指覆盖。<br/>
+<code>print (OBJECT &amp;OPTIONAL STREAM)</code> 打印指定对象到指定流中。<br/>
+</p>
+
+<hr/>
+
+
+
+
+<pre class="src src-lisp">(<span style="color: #a020f0;">defun</span> <span style="color: #0000ff;">select</span> (select-fn)
+  (remove-if-not select-fn *db*))
+(<span style="color: #a020f0;">defun</span> <span style="color: #0000ff;">artist-selector</span> (artist)
+  #'(<span style="color: #a020f0;">lambda</span> (cd) (equal (getf cd <span style="color: #483d8b;">:artist</span>) artist)))
+</pre>
+
+<p>
+select参数select-fn是函数对象. <br/>
+<code>remove-if-not (PREDICATE SEQUENCE &amp;REST ARGS &amp;KEY FROM-END (START 0) (END NIL) (COUNT NIL) (KEY NIL))</code> 对序列SEQUENCE中每个元素依次调用PREDICATE函数，不满足的去掉，返回作用后列表的拷贝。<br/>
+<code>#`</code> 等价于 <code>function</code> 调用，返回函数对象。<br/>
+<code>getf (PLACE INDICATOR &amp;OPTIONAL (DEFAULT NIL))</code> 从指定变量中根据indicator取值。<br/>
+</p>
+<p>
+上面方法虽然可行，但要对属性列表中每个元素都要写一个函数，下面函数则较简单：<br/>
+</p>
+
+
+<pre class="src src-lisp">(<span style="color: #a020f0;">defun</span> <span style="color: #0000ff;">where</span> (<span style="color: #228b22;">&amp;key</span> title artist rating (ripped nil ripped-supplied-p))
+  #'(<span style="color: #a020f0;">lambda</span> (cd)
+      (and
+       (<span style="color: #a020f0;">if</span> title (equal (getf cd <span style="color: #483d8b;">:title</span>) title) t)
+       (<span style="color: #a020f0;">if</span> artist (equal (getf cd <span style="color: #483d8b;">:artist</span>) artist) t)
+       (<span style="color: #a020f0;">if</span> rating (equal (getf cd <span style="color: #483d8b;">:rating</span>) rating) t)
+       (<span style="color: #a020f0;">if</span> ripped-supplied-p (equal (getf cd <span style="color: #483d8b;">:ripped</span>) ripped) t))))
+</pre>
+
+
+<p>
+<code>&amp;key</code> 参数列表中的&amp;key表明后面的参数可以通过关键字访问，(key default-value key-supplied-p) 可以指定默认值，如果未传实参则值为nil，第3个参数key-supplied-p 为了区别传递的实参是NIL还是未传实参取默认值nil，为t则表明有相应实参否则表没有传递实参。<br/>
+</p>
+<p>
+<code>and</code> 和C中的&amp;&amp;一样都是“短路“形的，即遇到假则不再继续下去。此处如果参数中指定查询关键字则判断其值是否与当前cd值相同，若相同则返回真，否则为假（此时便不再进行下去，因为可以判断此纪录肯定不符合条件）。<br/>
+</p>
+<p>
+继续精简：<br/>
+</p>
+<p>
+此时如果想要为每个纪录添加一个关键字，例如年代:age ，则要在形参中添加age并在where中添加一条语句： (if age (equal (getf cd :age) age) t)。<br/>
+这样此数据库扩展起来将很不方便。<br/>
+</p>
+<p>
+可以采用下面宏方式来改写上面代码：<br/>
+</p>
+
+
+<pre class="src src-lisp">(<span style="color: #a020f0;">defun</span> <span style="color: #0000ff;">make-comparison-expr</span> (field value)
+  `(equal (getf cd ,field) ,value))
+
+(<span style="color: #a020f0;">defun</span> <span style="color: #0000ff;">make-comparison-list</span> (fields)
+  (<span style="color: #a020f0;">loop</span> while fields
+       collecting (make-comparison-expr (pop fields) (pop fields))))
+
+(<span style="color: #a020f0;">defmacro</span> <span style="color: #0000ff;">where</span> (<span style="color: #228b22;">&amp;rest</span> clauses)
+  `#'(<span style="color: #a020f0;">lambda</span> (cd) (and ,@(make-comparison-list clauses))))
+</pre>
+
+
+<p>
+反引号 <code>`</code> 表示不对除以,和,@开始的子表达式求值。 ,@后面紧跟列表，表示把列表里的元素和外层列表中的元素合起来。<br/>
+</p>
+
+
+<pre class="src src-lisp">CL-USER&gt; `(1 ,@(list 2 3) 4 ,(+ 1 2) (+ 1 2))
+(1 2 3 4 3 (+ 1 2))
+</pre>
+
+
+<p>
+<code>loop</code> 循环 collecting 返回由每次结果构成的列表。<br/>
+</p>
+<p>
+可以用 <code>macroexpand-1</code> 查看一次宏展开后的结果：<br/>
+</p>
+
+
+<pre class="src src-lisp">CL-USER&gt; (macroexpand-1 '(where <span style="color: #483d8b;">:artist</span> <span style="color: #8b2252;">"vf"</span> <span style="color: #483d8b;">:title</span> <span style="color: #8b2252;">"hello"</span>))
+#'(<span style="color: #a020f0;">LAMBDA</span> (CD)
+    (AND (EQUAL (GETF CD <span style="color: #483d8b;">:ARTIST</span>) <span style="color: #8b2252;">"vf"</span>) (EQUAL (GETF CD <span style="color: #483d8b;">:TITLE</span>) <span style="color: #8b2252;">"hello"</span>)))
+T
+</pre>
+
+
+
+<pre class="src src-lisp">CL-USER&gt; (select (where <span style="color: #483d8b;">:artist</span> <span style="color: #8b2252;">"vf"</span>))
+((<span style="color: #483d8b;">:TITLE</span> <span style="color: #8b2252;">"World"</span> <span style="color: #483d8b;">:ARTIST</span> <span style="color: #8b2252;">"vf"</span> <span style="color: #483d8b;">:RATING</span> 9 <span style="color: #483d8b;">:RIPPED</span> T)
+ (<span style="color: #483d8b;">:TITLE</span> <span style="color: #8b2252;">"Hello"</span> <span style="color: #483d8b;">:ARTIST</span> <span style="color: #8b2252;">"vf"</span> <span style="color: #483d8b;">:RATING</span> 9 <span style="color: #483d8b;">:RIPPED</span> T))
+</pre>
+
+
+
+<pre class="src src-lisp">(<span style="color: #a020f0;">defun</span> <span style="color: #0000ff;">update</span> (select-fn <span style="color: #228b22;">&amp;key</span> title artist rating (ripped 0 ripped-supplied-p))
+  (setf *db*
+        (mapcar
+         #'(<span style="color: #a020f0;">lambda</span> (cd)
+             (<span style="color: #a020f0;">when</span> (funcall select-fn cd)
+               (<span style="color: #a020f0;">if</span> title        (setf (getf cd <span style="color: #483d8b;">:title</span>) title))
+               (<span style="color: #a020f0;">if</span> artist       (setf (getf cd <span style="color: #483d8b;">:artist</span>) artist))
+               (<span style="color: #a020f0;">if</span> rating       (setf (getf cd <span style="color: #483d8b;">:rating</span>) rating))
+               (<span style="color: #a020f0;">if</span> ripped-supplied-p (setf (getf cd <span style="color: #483d8b;">:ripped</span>) ripped)))
+             cd) *db*)))
+</pre>
+
+<p>
+上面代码实现数据库更新。<br/>
+</p>
+<p>
+<code>mapcar (FUNCTION LIST &amp;REST MORE-LISTS)</code> 对LIST上每个元素均作用函数FUNCTION. 返回作用后的列表。<br/>
+</p>
+<p>
+每次遍历时将*db*中的一条纪录作为 lambda的参数cd，如果查询条件与当前纪录相符则修改相应的值。<br/>
+</p>
+
+
+<pre class="src src-lisp">CL-USER&gt; (update (where <span style="color: #483d8b;">:artist</span> <span style="color: #8b2252;">"vf"</span>) <span style="color: #483d8b;">:rating</span> 11)
+</pre>
+
+<p>
+将作者是vf的纪录的rating值都改成11。<br/>
+</p></div>
+
+</body>
+</html>

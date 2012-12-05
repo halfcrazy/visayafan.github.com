@@ -1,0 +1,193 @@
+#+OPTIONS: ^:{} _:{} num:t toc:t \n:t
+#+include "../../template.org"
+#+title: PCL笔记：简单数据库
+
+Practical Common Lisp （简称PCL）是本值得推荐的lisp入门书籍。
+
+第3章通过一个小型CD数据库来初步展示了Lisp的强大功能，本文为阅读笔记。
+
+数据库对用户接口无非是录入，查询，更新。下面依次实现这3个功能。
+
+假设CD纪录包含CD的名称，作者，排行，是否是摇滚。可以用一个列表来保存，
+#+begin_src lisp
+(defvar *db* nil)
+
+(defun make-cd (title artist rating ripped)
+  (list :title title :artist artist :rating rating :ripped ripped))
+
+(defun add-record (cd)
+  (push cd *db*))
+#+end_src
+上面代码实现了CD的录入。
+#+begin_src lisp
+CL-USER> (add-record (make-cd "Hello" "vf" 9 t))
+((:TITLE "Hello" :ARTIST "vf" :RATING 9 :RIPPED T))
+#+end_src
+
+为方便用户输入，可以继续包装：
+#+begin_src lisp
+(defun prompt-read (prompt)
+  (format *query-io* "~a: " prompt)
+  (force-output *query-io*)
+  (read-line *query-io*))
+
+(defun prompt-for-cd ()
+  (make-cd
+   (prompt-read "Title")
+   (prompt-read "Artist")
+   (or (parse-integer (prompt-read "Rating") :junk-allowed t) 0)
+   (y-or-n-p "Ripped [Y/N]:")))
+#+end_src
+
+=parse-integer (STRING &KEY (START 0) END (RADIX 10) JUNK-ALLOWED)= 将字符串start至end之间看成以radix为基的数字（忽略到开始结尾的空白符）。
+#+begin_src lisp
+CL-USER> (parse-integer " 123 ")
+123
+5
+CL-USER> (parse-integer " 123 " :radix 4)
+27
+5
+#+end_src
+字符串中包含非数字的字符且 junk-allowed 未指定为t时则出错。
+
+=y-or-n-p (&OPTIONAL FORMAT-STRING &REST ARGUMENTS)= 输出指定格式的字符串并从*query-io*中读取用户输入y/Y/n/N这4个字符中的一个，如果不在这4个字符中则提示用户出错并令其重新输入。
+#+begin_src lisp
+CL-USER> (y-or-n-p "Input: ")
+Input:  (y or n) d
+
+Please type "y" for yes or "n" for no.
+Input:  (y or n) n
+
+NIL
+#+end_src
+
+=read-line (&OPTIONAL (STREAM *STANDARD-INPUT*) (EOF-ERROR-P T) EOF-VALUE RECURSIVE-P)= 从指定输入中读取一行，默认是标准输入。
+=force-output (&OPTIONAL (STREAM *STANDARD-OUTPUT*))= 强制输出，确保lisp打印提示信息之前不会等待换行。
+
+
+--------
+#+begin_src lisp
+(defun dump-db ()
+  (dolist (cd *db*)
+    (format t "~{~a: ~10t ~a~%~}~%" cd)))
+#+end_src
+上面代码实现数据输出，其中format函数第1个参数t表示标准输出，格式中~{ ~}表开始结尾，~a表美化（字符串去掉引号，关键字去掉前面的冒号），~t表示制表符，10表宽度, ~%表换行。
+#+begin_src lisp
+CL-USER> (dump-db)
+TITLE:     Hello
+ARTIST:    vf
+RATING:    9
+RIPPED:    T
+#+end_src
+--------
+
+#+begin_src lisp
+(defun save-db (filename)
+  (with-open-file (out filename
+                       :direction :output
+                       :if-exists :supersede)
+    (with-standard-io-syntax
+      (print *db* out))))
+#+end_src
+上面代码实现*db*内容保存到指定文件中。
+
+#+begin_src lisp
+(defun load-db (filename)
+  (with-open-file (in filename)
+    (with-standard-io-syntax
+      (setf *db* (read in)))))
+#+end_src
+上面代码实现从文件中读取数据存放到*db*中。
+
+=with-open-file ((STREAM FILESPEC &REST OPTIONS) &BODY BODY)= 打开指定文件操作结束后关闭文件。:direction指定输入:input还是输出:output. :if-exists指定文件存在时进行的操作，:supersede指覆盖。
+=print (OBJECT &OPTIONAL STREAM)= 打印指定对象到指定流中。
+
+--------
+
+#+begin_src lisp
+(defun select (select-fn)
+  (remove-if-not select-fn *db*))
+(defun artist-selector (artist)
+  #'(lambda (cd) (equal (getf cd :artist) artist)))
+#+end_src
+select参数select-fn是函数对象. 
+=remove-if-not (PREDICATE SEQUENCE &REST ARGS &KEY FROM-END (START 0) (END NIL) (COUNT NIL) (KEY NIL))= 对序列SEQUENCE中每个元素依次调用PREDICATE函数，不满足的去掉，返回作用后列表的拷贝。
+=#`= 等价于 =function= 调用，返回函数对象。
+=getf (PLACE INDICATOR &OPTIONAL (DEFAULT NIL))= 从指定变量中根据indicator取值。
+
+上面方法虽然可行，但要对属性列表中每个元素都要写一个函数，下面函数则较简单：
+#+begin_src lisp
+(defun where (&key title artist rating (ripped nil ripped-supplied-p))
+  #'(lambda (cd)
+      (and
+       (if title (equal (getf cd :title) title) t)
+       (if artist (equal (getf cd :artist) artist) t)
+       (if rating (equal (getf cd :rating) rating) t)
+       (if ripped-supplied-p (equal (getf cd :ripped) ripped) t))))
+#+end_src
+
+=&key= 参数列表中的&key表明后面的参数可以通过关键字访问，(key default-value key-supplied-p) 可以指定默认值，如果未传实参则值为nil，第3个参数key-supplied-p 为了区别传递的实参是NIL还是未传实参取默认值nil，为t则表明有相应实参否则表没有传递实参。
+
+=and= 和C中的&&一样都是“短路“形的，即遇到假则不再继续下去。此处如果参数中指定查询关键字则判断其值是否与当前cd值相同，若相同则返回真，否则为假（此时便不再进行下去，因为可以判断此纪录肯定不符合条件）。
+
+继续精简：
+
+此时如果想要为每个纪录添加一个关键字，例如年代:age ，则要在形参中添加age并在where中添加一条语句： (if age (equal (getf cd :age) age) t)。
+这样此数据库扩展起来将很不方便。
+
+可以采用下面宏方式来改写上面代码：
+#+begin_src lisp
+(defun make-comparison-expr (field value)
+  `(equal (getf cd ,field) ,value))
+
+(defun make-comparison-list (fields)
+  (loop while fields
+       collecting (make-comparison-expr (pop fields) (pop fields))))
+
+(defmacro where (&rest clauses)
+  `#'(lambda (cd) (and ,@(make-comparison-list clauses))))
+#+end_src
+
+反引号 =`= 表示不对除以,和,@开始的子表达式求值。 ,@后面紧跟列表，表示把列表里的元素和外层列表中的元素合起来。
+#+begin_src lisp
+CL-USER> `(1 ,@(list 2 3) 4 ,(+ 1 2) (+ 1 2))
+(1 2 3 4 3 (+ 1 2))
+#+end_src
+
+=loop= 循环 collecting 返回由每次结果构成的列表。
+
+可以用 =macroexpand-1= 查看一次宏展开后的结果：
+#+begin_src lisp
+CL-USER> (macroexpand-1 '(where :artist "vf" :title "hello"))
+#'(LAMBDA (CD)
+    (AND (EQUAL (GETF CD :ARTIST) "vf") (EQUAL (GETF CD :TITLE) "hello")))
+T
+#+end_src
+
+#+begin_src lisp
+CL-USER> (select (where :artist "vf"))
+((:TITLE "World" :ARTIST "vf" :RATING 9 :RIPPED T)
+ (:TITLE "Hello" :ARTIST "vf" :RATING 9 :RIPPED T))
+#+end_src
+
+#+begin_src lisp
+(defun update (select-fn &key title artist rating (ripped 0 ripped-supplied-p))
+  (setf *db*
+        (mapcar
+         #'(lambda (cd)
+             (when (funcall select-fn cd)
+               (if title        (setf (getf cd :title) title))
+               (if artist       (setf (getf cd :artist) artist))
+               (if rating       (setf (getf cd :rating) rating))
+               (if ripped-supplied-p (setf (getf cd :ripped) ripped)))
+             cd) *db*)))
+#+end_src
+上面代码实现数据库更新。
+
+=mapcar (FUNCTION LIST &REST MORE-LISTS)= 对LIST上每个元素均作用函数FUNCTION. 返回作用后的列表。
+
+每次遍历时将*db*中的一条纪录作为 lambda的参数cd，如果查询条件与当前纪录相符则修改相应的值。
+#+begin_src lisp
+CL-USER> (update (where :artist "vf") :rating 11)
+#+end_src
+将作者是vf的纪录的rating值都改成11。

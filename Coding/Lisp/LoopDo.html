@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+               "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-CN" xml:lang="zh-CN">
+<head>
+<title>CL 循环</title>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
+<meta name="title" content="CL 循环"/>
+<meta name="generator" content="Org-mode"/>
+<meta name="generated" content="2012-12-05 00:09:51 CST"/>
+<meta name="author" content="visayafan"/>
+<meta name="description" content=""/>
+<meta name="keywords" content=""/>
+
+
+
+</head>
+<body>
+
+
+<div id="content">
+<h1 class="title">CL 循环</h1>
+
+
+<!-- <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"> </script> -->
+<link rel="stylesheet" type="text/css" href="../../Layout/CSS/bootstrap_old.css" />
+<link rel="stylesheet" type="text/css" href="../../Layout/CSS/vf.css" />
+<script src="../../Layout/JS/jquery_1.7.1.js"></script>
+<script src="../../Layout/JS/bootstrap_old.js"></script>
+
+
+
+<div id="table-of-contents">
+<h2>目录</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#sec-1">do</a></li>
+<li><a href="#sec-2">loop</a></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-1" class="outline-2">
+<h2 id="sec-1">do</h2>
+<div class="outline-text-2" id="text-1">
+
+<p>最常用的两个循环宏是dotimes, dolist.<br/>
+</p>
+<p>
+<b>dotimes</b><br/>
+</p>
+
+
+<pre class="src src-lisp">((VAR COUNT <span style="color: #228b22;">&amp;OPTIONAL</span> (RESULT NIL)) <span style="color: #228b22;">&amp;BODY</span> BODY)
+</pre>
+
+<p>
+VAR依次取0-COUNT-1，可选 RESULT有则返回值为RESULT。<br/>
+</p>
+<p>
+<b>dolist</b><br/>
+</p>
+
+
+<pre class="src src-lisp">((VAR LIST <span style="color: #228b22;">&amp;OPTIONAL</span> (RESULT NIL)) <span style="color: #228b22;">&amp;BODY</span> BODY
+                <span style="color: #228b22;">&amp;ENVIRONMENT</span> ENV)
+</pre>
+
+<p>
+VAR每次取LIST中一个元素，可选 RESULT为返回值。<br/>
+
+</p>
+<hr/>
+<p>
+dotimes宏调用了do宏：<br/>
+</p>
+
+
+<pre class="src src-lisp">CL-USER&gt; (macroexpand-1 '(<span style="color: #a020f0;">dotimes</span> (x 10) (print x)))
+(<span style="color: #a020f0;">DO</span> ((X 0 (1+ X))) ((&gt;= X 10) NIL) (<span style="color: #a020f0;">DECLARE</span> (TYPE UNSIGNED-BYTE X)) (PRINT X))
+CL-USER&gt; (macroexpand-1 '(<span style="color: #a020f0;">dolist</span> (var (list 1 2 3)) (print var)))
+</pre>
+
+
+<p>
+<b>do</b><br/>
+</p>
+
+
+<pre class="src src-lisp">(VARLIST ENDLIST <span style="color: #228b22;">&amp;BODY</span> BODY)
+</pre>
+
+<ol>
+<li>VARLIST是个三元素列表：(var [init] [next-value]). 如果无init则采用默认值，有init但无next-value则每次循环var值都不变，既有init又有next-value则第一次循环时var为init，接下来每次循环对next-value求值后赋给var.<br/>
+</li>
+<li>ENDLIST列表格式为(condition form*)，如果condition为真则终止循环并对form*求值，返回form*中最后一个求值结果。<br/>
+</li>
+<li>每次循环都会执行BODY<br/>
+</li>
+</ol>
+
+
+<p>
+计算第11个Fibonacci数：<br/>
+</p>
+
+
+<pre class="src src-lisp">CL-USER&gt; (<span style="color: #a020f0;">do</span> ((n 0 (1+ n))
+              (cur 0 next)
+              (next 1 (+ cur next)))
+             ((= 10 n) cur))
+55
+</pre>
+
+<p>
+注意由于是采用let形式的赋值，所以(+ cur next)中的cur是改变前的cur，所以上面程序正确。<br/>
+</p>
+
+<p>
+<i>do*</i><br/>
+do对VARLIST赋值采用的是let格式而do*采用的let*形式。<br/>
+</p></div>
+
+</div>
+
+<div id="outline-container-2" class="outline-2">
+<h2 id="sec-2">loop</h2>
+<div class="outline-text-2" id="text-2">
+
+</div>
+</div>
+</div>
+
+</body>
+</html>

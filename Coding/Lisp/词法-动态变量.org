@@ -1,0 +1,103 @@
+#+OPTIONS: ^:{} _:{} num:t toc:t \n:t
+#+include "../../template.org"
+#+title:词法变量,闭包和动态变量
+
+=defvar= 和 =defparameter= 的区别在于：后者问题将新初始值赋给变量而前者只有在变量未绑定时才将初值赋给变量。
+#+begin_src lisp
+CL-USER> (defvar *test* 0.1)
+*TEST*
+CL-USER> *test*
+0.1
+CL-USER> (defvar *test* 0.2)
+*TEST*
+CL-USER> *test*
+0.1
+#+end_src
+由于已经对*test*做了绑定，所以再次赋值时将不起作用。
+可以对*test*解绑定，之后再用defvar重新赋初值。
+#+begin_src lisp
+CL-USER> (makunbound '*test*)
+*TEST*
+CL-USER> *test*
+; Evaluation aborted on #<UNBOUND-VARIABLE *TEST* {B7086D9}>. 由于解除绑定所以此时不可以再对变量进行访问。
+CL-USER> (defvar *test* 0.2)
+*TEST*
+CL-USER> *test*
+0.2
+#+end_src
+
+而defparameter则不同：
+#+begin_src lisp
+CL-USER> (defparameter *defp* 0.1)
+*DEFP*
+CL-USER> *defp*
+0.1
+CL-USER> (defparameter *defp* 0.01)
+*DEFP*
+CL-USER> *defp*
+0.01
+#+end_src
+
+--------
+
+*如果一个文件的某变量是defvar形式定义的则当再次加载此文件时该变量的值不变。* 这对于某些希望含持久性数据的变量非常有用。
+
+*而defparameter定义的变量当再次加载时值又恢复到初值。*
+
+--------
+--------
+let中定义的变量是临时局部变量，当脱离let作用域后此变量不复存在。
+但如果此变量是词法变量，则此变量会保留下来。
+#+begin_src lisp
+CL-USER> (defparameter *fn* (let ((x 0))
+                              #'(lambda () (setf x (1+ x)))))
+*FN*
+CL-USER> (funcall *fn*)
+1
+CL-USER> (funcall *fn*)
+2
+CL-USER> (funcall *fn*)
+3
+#+end_src
+上面中的返回lambda匿名函数被称为 *闭包* ，封闭包装了由Let创建的绑定。
+
+--------
+--------
+*闭包的例子：*
+--------
+#+begin_src lisp
+CL-USER> (defun make-adder (n)
+           (let ((n n))
+             (function (lambda (m) (+ n m)))))
+MAKE-ADDER
+CL-USER> (setq add17 (make-adder 17))
+#<CLOSURE (LAMBDA (M)) {B6CBEAD}>
+CL-USER> (funcall add17 4)
+21
+CL-USER> (funcall add17 11)
+28
+#+end_src
+上面的make-adder返回值是个闭包，let中定义的临时变量在离开let作用域后被保存了下来。
+（如果不是闭包，则(funcall add17 4)时会查找全局变量n，如果不存在则会出错）。
+
+--------
+--------
+#+begin_src lisp
+CL-USER> (defun make-counter ()
+           (let ((n 0))
+             #'(lambda (&optional (m 1)) (incf n m))))
+MAKE-COUNTER
+CL-USER> (setq count-1 (make-counter))
+#<CLOSURE (LAMBDA (&OPTIONAL (M 1))) {BF0633D}>
+CL-USER> (funcall count-1 3)
+3
+CL-USER> (funcall count-1 12)
+15
+CL-USER> (setq count-2 (make-counter))
+#<CLOSURE (LAMBDA (&OPTIONAL (M 1))) {B38B33D}>
+CL-USER> (funcall count-2 2)
+2
+CL-USER> (funcall count-2 12)
+14
+#+end_src
+make-counter返回的函数对象是闭包，第1次调用make-counter返回结果赋给count-1，此时count-1有个私有的变量n；再次调用make-counter结果赋给count-2，此时count-2有一个和count-1不相关的私有变量n。

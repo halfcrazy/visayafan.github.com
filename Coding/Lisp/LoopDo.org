@@ -1,0 +1,48 @@
+#+OPTIONS: ^:{} _:{} num:nil toc:t \n:t
+#+include "../../template.org"
+#+title:CL 循环
+
+* do
+最常用的两个循环宏是dotimes, dolist.
+
+*dotimes*
+#+begin_src lisp
+((VAR COUNT &OPTIONAL (RESULT NIL)) &BODY BODY)
+#+end_src
+VAR依次取0-COUNT-1，可选 RESULT有则返回值为RESULT。
+
+*dolist*
+#+begin_src lisp
+((VAR LIST &OPTIONAL (RESULT NIL)) &BODY BODY
+                &ENVIRONMENT ENV)
+#+end_src
+VAR每次取LIST中一个元素，可选 RESULT为返回值。
+--------
+dotimes宏调用了do宏：
+#+begin_src lisp
+CL-USER> (macroexpand-1 '(dotimes (x 10) (print x)))
+(DO ((X 0 (1+ X))) ((>= X 10) NIL) (DECLARE (TYPE UNSIGNED-BYTE X)) (PRINT X))
+#+end_src
+
+*do*
+#+begin_src lisp
+(VARLIST ENDLIST &BODY BODY)
+#+end_src
+1. VARLIST是个三元素列表：(var [init] [next-value]). 如果无init则采用默认值，有init但无next-value则每次循环var值都不变，既有init又有next-value则第一次循环时var为init，接下来每次循环对next-value求值后赋给var.
+2. ENDLIST列表格式为(condition form*)，如果condition为真则终止循环并对form*求值，返回form*中最后一个求值结果。
+3. 每次循环都会执行BODY
+
+计算第11个Fibonacci数：
+#+begin_src lisp
+CL-USER> (do ((n 0 (1+ n))
+              (cur 0 next)
+              (next 1 (+ cur next)))
+             ((= 10 n) cur))
+55
+#+end_src
+注意由于是采用let形式的赋值，所以(+ cur next)中的cur是改变前的cur，所以上面程序正确。
+
+
+/do*/
+do对VARLIST赋值采用的是let格式而do*采用的let*形式。
+* loop
