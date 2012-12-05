@@ -1,0 +1,356 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+               "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-CN" xml:lang="zh-CN">
+<head>
+<title>C++11新特性</title>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
+<meta name="title" content="C++11新特性"/>
+<meta name="generator" content="Org-mode"/>
+<meta name="generated" content="2012-12-06 02:16:43 CST"/>
+<meta name="author" content="visayafan"/>
+<meta name="description" content=""/>
+<meta name="keywords" content=""/>
+
+
+
+</head>
+<body>
+
+
+<div id="content">
+<h1 class="title">C++11新特性</h1>
+
+
+<!-- <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"> </script> -->
+<link rel="stylesheet" type="text/css" href="../../Layout/CSS/bootstrap_old.css" />
+<link rel="stylesheet" type="text/css" href="../../Layout/CSS/vf.css" />
+<script src="../../Layout/JS/jquery_1.7.1.js"></script>
+<script src="../../Layout/JS/bootstrap_old.js"></script>
+
+
+
+<div id="table-of-contents">
+<h2>目录</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#sec-1">1 lambda表达式</a></li>
+<li><a href="#sec-2">2 auto</a></li>
+<li><a href="#sec-3">3 for</a></li>
+<li><a href="#sec-4">4 decltype</a></li>
+<li><a href="#sec-5">5 constexpr</a></li>
+<li><a href="#sec-6">6 右值引用</a></li>
+<li><a href="#sec-7">7 move</a></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-1" class="outline-2">
+<h2 id="sec-1"><span class="section-number-2">1</span> lambda表达式</h2>
+<div class="outline-text-2" id="text-1">
+
+<p>  参考此<a href="http://www.slideshare.net/visayafan/lambda-15504902">幻灯片</a>。<br/>
+</p>
+<p>  <br/>
+  其实就是匿名函数。被称为closure闭包对象。<br/>
+</p>
+
+
+<pre class="src src-c++"><span style="color: #228b22;">int</span> <span style="color: #a0522d;">n</span>=10;
+<span style="color: #b22222;">// </span><span style="color: #b22222;">cout&lt;&lt;([n](int k)-&gt;int{n=3; return n+k;})(10)&lt;&lt;endl; //&#20986;&#38169;</span>
+cout&lt;&lt;([n](<span style="color: #228b22;">int</span> <span style="color: #a0522d;">k</span>) <span style="color: #a020f0;">mutable</span>-&gt;<span style="color: #228b22;">int</span>{n=3; <span style="color: #a020f0;">return</span> n+k;})(10)&lt;&lt;endl; <span style="color: #b22222;">// </span><span style="color: #b22222;">13</span>
+cout&lt;&lt;n&lt;&lt;endl;     <span style="color: #b22222;">// </span><span style="color: #b22222;">10 &#22914;&#26524;&#19978;&#38754;&#20256;n&#26102;&#26159;&amp;n&#21017;&#27492;&#26102;n&#20026;3</span>
+</pre>
+
+<p>
+  格式：lambda-introducer lambda-declarator(opt) compound-statement<br/>
+</p><ol>
+<li>lambda-introducer 用 []来表示，其中可选传递变量, [n]表将n传递给L表达式，[&amp;n]表示将n的引用传递给L表达式。<br/>
+
+
+
+<pre class="src src-c++">[] <span style="color: #b22222;">// </span><span style="color: #b22222;">&#27809;&#26377;&#23450;&#20041;&#20219;&#20309;&#21464;&#37327;&#12290;&#20351;&#29992;&#26410;&#23450;&#20041;&#21464;&#37327;&#20250;&#23548;&#33268;&#38169;&#35823;&#12290;</span>
+[x, &amp;y] <span style="color: #b22222;">// </span><span style="color: #b22222;">x &#20197;&#20256;&#20540;&#26041;&#24335;&#20256;&#20837;(&#40664;&#35748;)&#65292;y &#20197;&#24341;&#29992;&#26041;&#24335;&#20256;&#20837;&#12290;</span>
+[&amp;] <span style="color: #b22222;">// </span><span style="color: #b22222;">&#20219;&#20309;&#34987;&#20351;&#29992;&#21040;&#30340;&#22806;&#37096;&#21464;&#37327;&#30342;&#38544;&#24335;&#22320;&#20197;&#24341;&#29992;&#26041;&#24335;&#21152;&#20197;&#20351;&#29992;&#12290;</span>
+[=] <span style="color: #b22222;">// </span><span style="color: #b22222;">&#20219;&#20309;&#34987;&#20351;&#29992;&#21040;&#30340;&#22806;&#37096;&#21464;&#37327;&#30342;&#38544;&#24335;&#22320;&#20197;&#20256;&#20540;&#26041;&#24335;&#21152;&#20197;&#20351;&#29992;&#12290;</span>
+[&amp;, x] <span style="color: #b22222;">// </span><span style="color: #b22222;">x &#26174;&#31034;&#22320;&#20197;&#20256;&#20540;&#26041;&#24335;&#21152;&#20197;&#20351;&#29992;&#12290;&#20854;&#20313;&#21464;&#37327;&#20197;&#24341;&#29992;&#26041;&#24335;&#21152;&#20197;&#20351;&#29992;&#12290;</span>
+[=, &amp;z] <span style="color: #b22222;">// </span><span style="color: #b22222;">z &#26174;&#31034;&#22320;&#20197;&#24341;&#29992;&#26041;&#24335;&#21152;&#20197;&#20351;&#29992;&#12290;&#20854;&#20313;&#21464;&#37327;&#20197;&#20256;&#20540;&#26041;&#24335;&#21152;&#20197;&#20351;&#29992;&#12290;</span>
+</pre>
+
+<p>
+    [] 等价于 [=]<br/>
+</p></li>
+<li>lambda-declarator 用来修饰lambda函数， mutable表示可以修改传入的变量，-&gt;int表返回值是int,如果编译器可以推断出来返回值则不会显示写出来。例如-&gt;int基本上编译器可以推断出来。<br/>
+     上面程序中第2条出错原因在于默认lambda函数是const函数，不能修改传入的变量。<br/>
+     没有参数列表则可以省略(),下面两条语句是一样的：<br/>
+
+
+
+<pre class="src src-c++">[](){cout&lt;&lt;<span style="color: #8b2252;">"hello"</span>&lt;&lt;endl;}();
+[]{cout&lt;&lt;<span style="color: #8b2252;">"hello"</span>&lt;&lt;endl;}();
+</pre>
+
+</li>
+<li>compound-statement 表函数主体<br/>
+</li>
+<li>保存lambda函数: std::function&lt;ReturnType(arg list type)&gt;<br/>
+</li>
+</ol>
+
+
+
+
+<pre class="src src-c++"><span style="color: #b22222;">// </span><span style="color: #b22222;">&#38656;&#35201;&#26174;&#31034;&#25351;&#26126;&#36820;&#22238;&#31867;&#22411; std::function&lt;void(int)&gt;</span>
+<span style="color: #a020f0;">auto</span> <span style="color: #228b22;">f</span> = [](<span style="color: #228b22;">int</span> <span style="color: #a0522d;">n</span>) -&gt;<span style="color: #228b22;">function</span>&lt;<span style="color: #228b22;">void</span>(<span style="color: #228b22;">int</span>)&gt;{
+     <span style="color: #b22222;">// </span><span style="color: #b22222;">&#36820;&#22238;&#20540;&#26159;&#20010;&#20989;&#25968;&#23545;&#35937;&#65292;&#21442;&#25968;&#20026;int&#65292;&#36820;&#22238;&#20540;&#20026;void</span>
+     <span style="color: #a020f0;">return</span> [n](<span style="color: #228b22;">int</span> <span style="color: #a0522d;">k</span>){cout&lt;&lt;n+k&lt;&lt;<span style="color: #8b2252;">" "</span>;};
+};
+</pre>
+
+<p>
+&ndash;&mdash;&mdash;  <br/>
+</p>
+
+
+<pre class="src src-c++"><span style="color: #228b22;">vector</span>&lt;<span style="color: #228b22;">int</span>&gt; <span style="color: #0000ff;">ivec</span>(10);      <span style="color: #b22222;">// </span><span style="color: #b22222;">10&#20010;0</span>
+<span style="color: #a020f0;">auto</span> <span style="color: #228b22;">g</span> = [](){<span style="color: #a020f0;">static</span> <span style="color: #228b22;">int</span> <span style="color: #a0522d;">cnt</span> = 0; <span style="color: #a020f0;">return</span> cnt++;};
+generate(ivec.begin(), ivec.end(), g); <span style="color: #b22222;">// </span><span style="color: #b22222;">&#27492;&#26102;ivec&#20869;&#23481;&#26159; 0 1 2..9</span>
+<span style="color: #a020f0;">auto</span> <span style="color: #228b22;">f</span> = [](<span style="color: #228b22;">int</span> <span style="color: #a0522d;">n</span>) -&gt;<span style="color: #228b22;">function</span>&lt;<span style="color: #228b22;">void</span>(<span style="color: #228b22;">int</span>)&gt;{
+     <span style="color: #a020f0;">return</span> [n](<span style="color: #228b22;">int</span> <span style="color: #a0522d;">k</span>){cout&lt;&lt;n+k&lt;&lt;<span style="color: #8b2252;">" "</span>;};
+};
+<span style="color: #a020f0;">auto</span> <span style="color: #228b22;">add2</span> = f(2);
+for_each(ivec.begin(), ivec.end(), add2); <span style="color: #b22222;">// </span><span style="color: #b22222;">2 3 4 5 6 7 8 9 10 11 &#23545;&#27599;&#20010;&#20803;&#32032;+2</span>
+<span style="color: #a020f0;">auto</span> <span style="color: #228b22;">add3</span> = f(3);
+for_each(ivec.begin(), ivec.end(), add3); <span style="color: #b22222;">// </span><span style="color: #b22222;">3 4 5 6 7 8 9 10 11 12 &#23545;&#27599;&#20010;&#20803;&#32032;+3</span>
+</pre>
+
+
+<hr/>
+
+
+
+<pre class="src src-c++"><span style="color: #a020f0;">struct</span> <span style="color: #228b22;">foo</span>
+{
+     <span style="color: #228b22;">int</span> <span style="color: #a0522d;">i</span>;
+     <span style="color: #0000ff;">foo</span>():i(0){}
+     <span style="color: #228b22;">void</span> <span style="color: #0000ff;">amazing</span>(){
+          [=]{i=8;}();
+          <span style="color: #b22222;">// </span><span style="color: #b22222;">[this] {i=8;}();   //&#21487;&#34892;</span>
+          <span style="color: #b22222;">// </span><span style="color: #b22222;">[] {i=8;}();   //&#20986;&#38169; &#8216;this&#8217; was not captured for this lambda function</span>
+
+     }
+};
+<span style="color: #228b22;">int</span> <span style="color: #0000ff;">main</span>(<span style="color: #228b22;">int</span> <span style="color: #a0522d;">argc</span>, <span style="color: #228b22;">char</span> *<span style="color: #a0522d;">argv</span>[])
+{
+     <span style="color: #228b22;">foo</span> <span style="color: #a0522d;">f</span>;             <span style="color: #b22222;">//</span><span style="color: #b22222;">0</span>
+     cout&lt;&lt;f.i&lt;&lt;endl;
+     f.amazing();
+     cout&lt;&lt;f.i&lt;&lt;endl;   <span style="color: #b22222;">//</span><span style="color: #b22222;">8</span>
+     <span style="color: #a020f0;">return</span> 0;
+}
+</pre>
+
+<p>
+[=]中this被隐式地捕获了，不需要mutable, 在里面可以修改i的值，<br/>
+
+</p>
+<hr/>
+
+
+<div class="row-fluid"> <div class="span7">
+
+<pre class="src src-c++"><span style="color: #a020f0;">struct</span> <span style="color: #228b22;">trace</span>
+{
+     <span style="color: #0000ff;">trace</span>()    {cout&lt;&lt;<span style="color: #8b2252;">"construct"</span>&lt;&lt;endl;}
+     <span style="color: #0000ff;">trace</span>(<span style="color: #a020f0;">const</span> <span style="color: #228b22;">trace</span>&amp;)        {cout&lt;&lt;<span style="color: #8b2252;">"copy construct"</span>&lt;&lt;endl;}
+     ~<span style="color: #0000ff;">trace</span>()   {cout&lt;&lt;<span style="color: #8b2252;">"destroy"</span>&lt;&lt;endl;}
+     <span style="color: #228b22;">trace</span>&amp; <span style="color: #a020f0;">operator</span><span style="color: #0000ff;">=</span>(<span style="color: #228b22;">trace</span>&amp;)   {cout&lt;&lt;<span style="color: #8b2252;">"assign"</span>; <span style="color: #a020f0;">return</span> *<span style="color: #a020f0;">this</span>;}
+     <span style="color: #228b22;">int</span> <span style="color: #a0522d;">i</span>;
+};
+<span style="color: #228b22;">int</span> <span style="color: #0000ff;">main</span>(<span style="color: #228b22;">int</span> <span style="color: #a0522d;">argc</span>, <span style="color: #228b22;">char</span> *<span style="color: #a0522d;">argv</span>[])
+{
+     {
+          <span style="color: #228b22;">trace</span> <span style="color: #a0522d;">t</span>;
+          <span style="color: #b22222;">//</span><span style="color: #b22222;">&#27492;&#22788;&#34429;&#28982;t&#34987;&#25429;&#33719;&#20102;&#65292;&#20294;&#30001;&#20110;&#27809;&#26377;&#29992;&#21040;&#65292;&#25152;&#20197;&#24182;&#27809;&#26377;&#26500;&#36896;&#19968;&#20010;&#20020;&#26102;&#21464;&#37327;&#65292;&#32534;&#35793;&#22120;&#24456;&#32874;&#26126;&#12290;</span>
+          <span style="color: #a020f0;">auto</span> <span style="color: #228b22;">fun</span>= [=]{};
+     }
+     cout&lt;&lt;<span style="color: #8b2252;">"--------------------"</span>&lt;&lt;endl;
+     {
+          <span style="color: #228b22;">trace</span> <span style="color: #a0522d;">t</span>;
+          <span style="color: #b22222;">// </span><span style="color: #b22222;">&#27492;&#22788;&#30001;&#20110;&#29992;&#21040;&#20102;t &#19988;&#26159;&#20540;&#25429;&#33719;&#65292;&#25152;&#20197;&#38656;&#35201;&#21019;&#24314;&#20020;&#26102;&#21464;&#37327;</span>
+          <span style="color: #a020f0;">auto</span> <span style="color: #228b22;">fun</span> = [=]{<span style="color: #228b22;">int</span> <span style="color: #a0522d;">i</span>=t.i;};
+          cout&lt;&lt;<span style="color: #8b2252;">"----"</span>&lt;&lt;endl;
+          <span style="color: #a020f0;">auto</span> <span style="color: #228b22;">t2</span> = t;
+     }
+     cout&lt;&lt;<span style="color: #8b2252;">"--------------------"</span>&lt;&lt;endl;
+     {
+          <span style="color: #228b22;">trace</span> <span style="color: #a0522d;">t</span>;
+          <span style="color: #b22222;">// </span><span style="color: #b22222;">&#27492;&#22788;&#29992;&#21040;&#20102;t&#20294;&#30001;&#20110;&#26159;&#24341;&#29992;&#25429;&#33719;&#65292;&#25925;&#19981;&#38656;&#35201;&#21019;&#24314;&#20020;&#26102;&#21464;&#37327;</span>
+          <span style="color: #a020f0;">auto</span> <span style="color: #228b22;">fun</span> = [&amp;]{<span style="color: #228b22;">int</span> <span style="color: #a0522d;">i</span>=t.i;};
+          cout&lt;&lt;<span style="color: #8b2252;">"----"</span>&lt;&lt;endl;
+          <span style="color: #a020f0;">auto</span> <span style="color: #228b22;">t2</span> = t;
+     }
+}
+</pre>
+
+</div> <div class="span3">
+<p>
+运算结果：<br/>
+</p>
+
+
+<pre class="example">construct
+destroy
+--------------------
+construct
+copy construct
+----
+copy construct
+destroy
+destroy
+destroy
+--------------------
+construct
+----
+copy construct
+destroy
+destroy
+</pre>
+
+
+
+</div></div>
+
+<hr/>
+
+
+
+<pre class="src src-c++"><span style="color: #228b22;">function</span>&lt;<span style="color: #228b22;">int</span>(<span style="color: #228b22;">int</span>)&gt; <span style="color: #a0522d;">fact</span>;
+fact = [&amp;fact](<span style="color: #228b22;">int</span> <span style="color: #a0522d;">n</span>) -&gt; <span style="color: #228b22;">int</span> {
+     <span style="color: #a020f0;">if</span>(!n){<span style="color: #a020f0;">return</span> 1;}
+     <span style="color: #a020f0;">else</span>{<span style="color: #a020f0;">return</span> n*fact(n-1);}
+};
+cout&lt;&lt;fact(5)&lt;&lt;endl;       <span style="color: #b22222;">// </span><span style="color: #b22222;">120</span>
+</pre>
+
+</div>
+
+</div>
+
+<div id="outline-container-2" class="outline-2">
+<h2 id="sec-2"><span class="section-number-2">2</span> auto</h2>
+<div class="outline-text-2" id="text-2">
+
+<p>  类型推导<br/>
+</p>
+
+
+<pre class="src src-c++"><span style="color: #228b22;">int</span> <span style="color: #a0522d;">n</span>=10;
+<span style="color: #a020f0;">auto</span> <span style="color: #228b22;">g</span> = [n](<span style="color: #228b22;">int</span> <span style="color: #a0522d;">k</span>) <span style="color: #a020f0;">mutable</span>-&gt;<span style="color: #228b22;">int</span>{n=3; <span style="color: #a020f0;">return</span> n+k;};
+cout&lt;&lt;g(10)&lt;&lt;endl;
+</pre>
+
+<p>
+  编译器根据上下文推断g的类型。<br/>
+</p>
+
+
+<pre class="src src-c++"><span style="color: #228b22;">vector</span>&lt;<span style="color: #228b22;">int</span>&gt; <span style="color: #0000ff;">ivec</span>(10);
+<span style="color: #a020f0;">auto</span> <span style="color: #228b22;">start</span> =  ivec.begin();
+cout&lt;&lt;*start&lt;&lt;endl;        <span style="color: #b22222;">// </span><span style="color: #b22222;">0</span>
+*start = 1;
+cout&lt;&lt;*start&lt;&lt;endl;        <span style="color: #b22222;">// </span><span style="color: #b22222;">1</span>
+</pre>
+
+<p>
+  编译器推断出start类型为 vector&lt;int&gt;::iterator<br/>
+</p></div>
+
+</div>
+
+<div id="outline-container-3" class="outline-2">
+<h2 id="sec-3"><span class="section-number-2">3</span> for</h2>
+<div class="outline-text-2" id="text-3">
+
+<p>  <a href="http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2009/n2930.html">http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2009/n2930.html</a><br/>
+  形式：<br/>
+</p>
+
+
+<pre class="example">for (for-range-declaration : expression)
+        statement
+</pre>
+
+<p>
+  expression表达式是数组或拥有begin(),end()方法的容器，自定义的容器要想使用此特性应该有begin,end方法且 支持 <i>* ++ !=</i> 三种操作。<br/>
+  声明中使用&amp;表引用访问。<br/>
+  要使用最新的编译器。gcc4.5中不支持，VS10也不支持。<br/>
+</p>
+
+
+<pre class="src src-c++"><span style="color: #228b22;">int</span> <span style="color: #a0522d;">array</span>[5] = { 1, 2, 3, 4, 5 };
+<span style="color: #a020f0;">for</span> (<span style="color: #228b22;">int</span>&amp; <span style="color: #a0522d;">x</span> : array)
+     x *= 2;
+</pre>
+
+</div>
+
+</div>
+
+<div id="outline-container-4" class="outline-2">
+<h2 id="sec-4"><span class="section-number-2">4</span> decltype</h2>
+<div class="outline-text-2" id="text-4">
+
+<p>  根据其它变量类型来声明变量。<br/>
+</p>
+
+
+<pre class="src src-c++"><span style="color: #228b22;">int</span> <span style="color: #a0522d;">a</span> = 0;
+decltype(a) b;
+cout&lt;&lt;<span style="color: #a020f0;">typeid</span>(a).name()&lt;&lt;endl; <span style="color: #b22222;">// </span><span style="color: #b22222;">i</span>
+cout&lt;&lt;<span style="color: #a020f0;">typeid</span>(b).name()&lt;&lt;endl; <span style="color: #b22222;">// </span><span style="color: #b22222;">i</span>
+
+<span style="color: #228b22;">vector</span>&lt;<span style="color: #228b22;">int</span>&gt; <span style="color: #0000ff;">ivec</span>(1);
+decltype(ivec[0]) x=a;     <span style="color: #b22222;">// </span><span style="color: #b22222;">int&amp; std::vector&lt;int&gt;::operator[]&#30340;&#36820;&#22238;&#31867;&#22411;&#26159;int&amp; (&#26082;&#21487;&#20197;&#20570;&#24038;&#20540;&#21448;&#21487;&#20197;&#20570;&#21491;&#20540;&#65289;</span>
+cout&lt;&lt;<span style="color: #a020f0;">typeid</span>(x).name()&lt;&lt;endl; <span style="color: #b22222;">// </span><span style="color: #b22222;">i</span>
+
+decltype((a)) d=a;         <span style="color: #b22222;">// </span><span style="color: #b22222;">int&amp;</span>
+cout&lt;&lt;<span style="color: #a020f0;">typeid</span>(d).name()&lt;&lt;endl; <span style="color: #b22222;">// </span><span style="color: #b22222;">i</span>
+
+decltype(0) g;             <span style="color: #b22222;">// </span><span style="color: #b22222;">int</span>
+</pre>
+
+</div>
+
+</div>
+
+<div id="outline-container-5" class="outline-2">
+<h2 id="sec-5"><span class="section-number-2">5</span> constexpr</h2>
+<div class="outline-text-2" id="text-5">
+
+<p>  如果一个函数的返回值是个常数，则可以用constexpr来修饰函数从而可以告知编译器进行优化。（遇到函数调用时直接替换成相应的常数？）<br/>
+  也可以用来声明常量（和const一样？）<br/>
+</p></div>
+
+</div>
+
+<div id="outline-container-6" class="outline-2">
+<h2 id="sec-6"><span class="section-number-2">6</span> 右值引用</h2>
+<div class="outline-text-2" id="text-6">
+
+<p>  <a href="http://www.cnblogs.com/l00l/archive/2012/05/01/2478174.html">http://www.cnblogs.com/l00l/archive/2012/05/01/2478174.html</a><br/>
+</p></div>
+
+</div>
+
+<div id="outline-container-7" class="outline-2">
+<h2 id="sec-7"><span class="section-number-2">7</span> move</h2>
+<div class="outline-text-2" id="text-7">
+
+<p>  <a href="http://blog.csdn.net/zwvista/article/details/5665566">http://blog.csdn.net/zwvista/article/details/5665566</a><br/>
+</p></div>
+</div>
+</div>
+
+</body>
+</html>

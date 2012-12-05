@@ -1,0 +1,198 @@
+#+OPTIONS: ^:{} _:{} num:t toc:t \n:t
+#+include "../../template.org"
+#+title:C++11新特性
+
+* lambda表达式
+  参考此[[http://www.slideshare.net/visayafan/lambda-15504902][幻灯片]]。
+  
+  其实就是匿名函数。被称为closure闭包对象。
+#+begin_src c++
+     int n=10;
+     // cout<<([n](int k)->int{n=3; return n+k;})(10)<<endl; //出错
+     cout<<([n](int k) mutable->int{n=3; return n+k;})(10)<<endl; // 13
+     cout<<n<<endl;     // 10 如果上面传n时是&n则此时n为3
+#+end_src
+  格式：lambda-introducer lambda-declarator(opt) compound-statement
+  1. lambda-introducer 用 []来表示，其中可选传递变量, [n]表将n传递给L表达式，[&n]表示将n的引用传递给L表达式。
+    #+begin_src c++
+    [] // 没有定义任何变量。使用未定义变量会导致错误。
+    [x, &y] // x 以传值方式传入(默认)，y 以引用方式传入。
+    [&] // 任何被使用到的外部变量皆隐式地以引用方式加以使用。
+    [=] // 任何被使用到的外部变量皆隐式地以传值方式加以使用。
+    [&, x] // x 显示地以传值方式加以使用。其余变量以引用方式加以使用。
+    [=, &z] // z 显示地以引用方式加以使用。其余变量以传值方式加以使用。
+    #+end_src
+    [] 等价于 [=]
+  2. lambda-declarator 用来修饰lambda函数， mutable表示可以修改传入的变量，->int表返回值是int,如果编译器可以推断出来返回值则不会显示写出来。例如->int基本上编译器可以推断出来。
+     上面程序中第2条出错原因在于默认lambda函数是const函数，不能修改传入的变量。
+     没有参数列表则可以省略(),下面两条语句是一样的：
+    #+begin_src c++
+         [](){cout<<"hello"<<endl;}();
+         []{cout<<"hello"<<endl;}();
+    #+end_src
+  3. compound-statement 表函数主体
+  4. 保存lambda函数: std::function<ReturnType(arg list type)>
+#+begin_src c++
+     // 需要显示指明返回类型 std::function<void(int)>
+     auto f = [](int n) ->function<void(int)>{
+          // 返回值是个函数对象，参数为int，返回值为void
+          return [n](int k){cout<<n+k<<" ";};
+     };
+#+end_src
+--------  
+#+begin_src c++
+     vector<int> ivec(10);      // 10个0
+     auto g = [](){static int cnt = 0; return cnt++;};
+     generate(ivec.begin(), ivec.end(), g); // 此时ivec内容是 0 1 2..9
+     auto f = [](int n) ->function<void(int)>{
+          return [n](int k){cout<<n+k<<" ";};
+     };
+     auto add2 = f(2);
+     for_each(ivec.begin(), ivec.end(), add2); // 2 3 4 5 6 7 8 9 10 11 对每个元素+2
+     auto add3 = f(3);
+     for_each(ivec.begin(), ivec.end(), add3); // 3 4 5 6 7 8 9 10 11 12 对每个元素+3
+#+end_src
+--------
+#+begin_src c++
+struct foo
+{
+     int i;
+     foo():i(0){}
+     void amazing(){
+          [=]{i=8;}();
+          // [this] {i=8;}();   //可行
+          // [] {i=8;}();   //出错 ‘this’ was not captured for this lambda function
+
+     }
+};
+int main(int argc, char *argv[])
+{
+     foo f;             //0
+     cout<<f.i<<endl;
+     f.amazing();
+     cout<<f.i<<endl;   //8
+     return 0;
+}
+#+end_src
+[=]中this被隐式地捕获了，不需要mutable, 在里面可以修改i的值，
+----------------
+#+html:<div class="row-fluid"> <div class="span7">
+#+begin_src c++
+struct trace
+{
+     trace()    {cout<<"construct"<<endl;}
+     trace(const trace&)        {cout<<"copy construct"<<endl;}
+     ~trace()   {cout<<"destroy"<<endl;}
+     trace& operator=(trace&)   {cout<<"assign"; return *this;}
+     int i;
+};
+int main(int argc, char *argv[])
+{
+     {
+          trace t;
+          //此处虽然t被捕获了，但由于没有用到，所以并没有构造一个临时变量，编译器很聪明。
+          auto fun= [=]{};
+     }
+     cout<<"--------------------"<<endl;
+     {
+          trace t;
+          // 此处由于用到了t 且是值捕获，所以需要创建临时变量
+          auto fun = [=]{int i=t.i;};
+          cout<<"----"<<endl;
+          auto t2 = t;
+     }
+     cout<<"--------------------"<<endl;
+     {
+          trace t;
+          // 此处用到了t但由于是引用捕获，故不需要创建临时变量
+          auto fun = [&]{int i=t.i;};
+          cout<<"----"<<endl;
+          auto t2 = t;
+     }
+}
+#+end_src
+#+html: </div> <div class="span3">
+运算结果：
+#+begin_example
+construct
+destroy
+--------------------
+construct
+copy construct
+----
+copy construct
+destroy
+destroy
+destroy
+--------------------
+construct
+----
+copy construct
+destroy
+destroy
+#+end_example
+#+html:</div></div>
+--------
+#+begin_src c++
+     function<int(int)> fact;
+     fact = [&fact](int n) -> int {
+          if(!n){return 1;}
+          else{return n*fact(n-1);}
+     };
+     cout<<fact(5)<<endl;       // 120
+#+end_src
+* auto
+  类型推导
+#+begin_src c++
+     int n=10;
+     auto g = [n](int k) mutable->int{n=3; return n+k;};
+     cout<<g(10)<<endl;
+#+end_src
+  编译器根据上下文推断g的类型。
+#+begin_src c++
+     vector<int> ivec(10);
+     auto start =  ivec.begin();
+     cout<<*start<<endl;        // 0
+     *start = 1;
+     cout<<*start<<endl;        // 1
+#+end_src
+  编译器推断出start类型为 vector<int>::iterator
+* for
+  http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2009/n2930.html
+  形式：
+#+begin_example
+for (for-range-declaration : expression)
+        statement
+#+end_example
+  expression表达式是数组或拥有begin(),end()方法的容器，自定义的容器要想使用此特性应该有begin,end方法且 支持 /* ++ !=/ 三种操作。
+  声明中使用&表引用访问。
+  要使用最新的编译器。gcc4.5中不支持，VS10也不支持。
+#+begin_src c++
+     int array[5] = { 1, 2, 3, 4, 5 };
+     for (int& x : array)
+          x *= 2;
+#+end_src
+* decltype
+  根据其它变量类型来声明变量。
+#+begin_src c++
+     int a = 0;
+     decltype(a) b;
+     cout<<typeid(a).name()<<endl; // i
+     cout<<typeid(b).name()<<endl; // i
+
+     vector<int> ivec(1);
+     decltype(ivec[0]) x=a;     // int& std::vector<int>::operator[]的返回类型是int& (既可以做左值又可以做右值）
+     cout<<typeid(x).name()<<endl; // i
+
+     decltype((a)) d=a;         // int&
+     cout<<typeid(d).name()<<endl; // i
+
+     decltype(0) g;             // int
+#+end_src
+* constexpr
+  如果一个函数的返回值是个常数，则可以用constexpr来修饰函数从而可以告知编译器进行优化。（遇到函数调用时直接替换成相应的常数？）
+  也可以用来声明常量（和const一样？）
+* 右值引用
+  http://www.cnblogs.com/l00l/archive/2012/05/01/2478174.html
+* move
+  http://blog.csdn.net/zwvista/article/details/5665566
