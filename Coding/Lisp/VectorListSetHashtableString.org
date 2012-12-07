@@ -1,0 +1,208 @@
+#+OPTIONS: ^:{} _:{} num:t toc:t \n:t
+#+include "../../template.org"
+#+title: 数据类型
+* 序列
+  vector, string, list都是sequence.
+** count
+   count item seq &key from-end start end key test
+   返回seq中item个数
+   1. from-end 从尾端开始
+   2. start end 子区间
+   3. test 两个参数返回boolean值的函数标识符，默认是eql
+   4. key 一个参数的函数标识符，返回值用于用于比较函数
+#+begin_src lisp
+CL-USER> test
+#(1 2 4 2 1 5)
+CL-USER> (count 1 test)
+2                               ;;1的个数
+CL-USER> (count 1 test :test #'<)
+4                               ;;比1大的个数 2 4 2 5
+CL-USER> (count 1 test :test #'< :key #'(lambda (x) (- x 2)))
+2                               ;;-2后依然比1大的个数 4 5
+CL-USER> (count-if #'(lambda (x) (< 1 x)) test)
+4                               ;;返回比1大的个数，和上面效果一样，只是调用函数不同。
+#+end_src
+   count-if, count-if-not与count区别在于没有test关键字和item，第1个参数为predicate(1个参数的函数标识符返回boolean)
+** find
+   find与count参数相同，返回值是查找元素所在元素。
+#+begin_src lisp
+CL-USER> tmp
+((1 2) (1 3) (2 3) (3 4))
+CL-USER> (find 1 tmp :key #'car :test #'(lambda (x y) (< x y)))
+(2 3)
+#+end_src
+   find-if, find-if-not 与count-if参数一样，同样用predicate代替了item和:test。
+** position
+   与find功能一样，返回值为查找元素所在序列的索引。
+#+begin_src lisp
+CL-USER> (position 1 tmp :key #'car :test #'(lambda (x y) (< x y)))
+2
+#+end_src
+   position-if, position-if-not与find-if参数一样。
+** remove
+   remove参数比count多关键字:count表最多删除count项.
+#+begin_src lisp
+CL-USER> (remove 1 tmp :key #'car :test #'(lambda (x y) (< x y)))
+((1 2) (1 3))
+#+end_src
+   remove-if, remove-if-not比count-if多count关键字。
+   remove-duplicates 删除序列中重复的元素。
+** delete
+   与remove的区别在于：delete *可能* 原地修改序列。
+#+begin_src lisp
+CL-USER> (remove 1 tmp :key #'car :test #'(lambda (x y) (< x y)))
+((1 2) (1 3))
+CL-USER> tmp
+((1 2) (1 3) (2 3) (3 4))
+CL-USER> (delete 1 tmp :key #'car :test #'(lambda (x y) (< x y)))
+((1 2) (1 3))
+CL-USER> tmp
+((1 2) (1 3))
+#+end_src
+   之所以说可能修改原来序列是因为有可能不修改：
+#+begin_src lisp
+CL-USER> (setf tmp (list '(1 2) '(1 3) '(2 3) '(3 4))) 
+CL-USER> (delete 1 tmp :key #'car)
+((2 3) (3 4))
+CL-USER> tmp
+((1 2) (1 3) (2 3) (3 4))
+#+end_src
+   因为tmp指向序列的开始位置，只有1，2个满足删除条件，所以直接返回第3，4个元素，tmp并没有改变。
+#+begin_html
+<link rel="stylesheet" href="../../Layout/CSS/jquery.lightbox-0.5.css" type="text/css" media="screen" />
+<script type="text/javascript" src="../../Layout/JS/jquery.lightbox-0.5.js"></script>
+<center> <a class="lightbox" href="images/delete1.jpeg"> <img class="lightbox " title="点击查看大图" src="images/delete1.jpeg" width="300"> </a> </center>
+<script type="text/javascript"> $(function() {$('a.lightbox').lightBox();}); </script>
+#+end_html
+   再例如：
+#+begin_src lisp
+CL-USER> (setf tmp (list '(1 2) '(2 3) '(1 3) '(3 4))) 
+CL-USER> (delete 1 tmp :key #'car)
+((2 3) (3 4))
+CL-USER> tmp
+((1 2) (2 3) (3 4))
+#+end_src
+#+begin_html
+<link rel="stylesheet" href="../../Layout/CSS/jquery.lightbox-0.5.css" type="text/css" media="screen" />
+<script type="text/javascript" src="../../Layout/JS/jquery.lightbox-0.5.js"></script>
+<center> <a class="lightbox" href="images/delete2.jpeg"> <img class="lightbox " title="点击查看大图" src="images/delete2.jpeg" width="300"> </a> </center>
+<script type="text/javascript"> $(function() {$('a.lightbox').lightBox();}); </script>
+#+end_html  
+   所以delete经常和setf一起出现：
+#+begin_src lisp
+CL-USER> (setf tmp (delete 1 tmp :key #'car))
+((2 3) (3 4))
+CL-USER> tmp
+((2 3) (3 4))
+#+end_src
+** substitute
+   substitute newitem olditem sequence &key from-end test test-not start end count key
+   将olditem替换成newitem.
+   substitute-if newitem predicate sequence &key from-end start end count key
+   substitue-if, -not 替换符合predicate的旧元素。
+   nsubstitute原地修改。
+   nsubstitute-if -not
+** concatenate
+   concatenate result-type &rest sequences => result-sequence
+   concatenate必须指定返回值类型。
+** sort, stable-sort
+   sort sequence predicate &key key => sorted-sequence
+   stable-sort sequence predicate &key key => sorted-sequence
+   排序。sort非稳定排序。破坏性原有序列。
+#+begin_src lisp
+CL-USER> (setq sort-test (list 4 3 2 1))
+CL-USER> (sort sort-test #'<)
+(1 2 3 4)
+CL-USER> sort-test
+(4)
+#+end_src
+#+begin_html
+<link rel="stylesheet" href="../../Layout/CSS/jquery.lightbox-0.5.css" type="text/css" media="screen" />
+<script type="text/javascript" src="../../Layout/JS/jquery.lightbox-0.5.js"></script>
+<center> <a class="lightbox" href="images/sort.jpg"> <img class="lightbox " title="点击查看大图" src="images/sort.jpg" width="300"> </a> </center>
+<script type="text/javascript"> $(function() {$('a.lightbox').lightBox();}); </script>
+#+end_html  
+   
+** subseq
+   subseq sequence start &optional end => subsequence
+   (setf (subseq sequence start &optional end) new-subsequence)
+   subseq返回子序列，可以为子序列赋值，如果新序列个数与子序列个数不同，则较短的那个决定有多少个元素被改变。
+** search
+   search sequence-1 sequence-2 &key from-end test test-not key start1 start2 end1 end2
+   与find不同的是可以指定查找为序列，而find只能查找元素。
+   start1 end1 用来表示查找序列sequence-1子序列。左闭右开。
+   start2 end2 用来表示原序列sequence-2子序列。
+   返回值为子序列所在位置。
+#+begin_src lisp
+CL-USER> (search "xfoox" "abcfooabc" :start1 1 :end1 4)
+3
+#+end_src
+   
+** mismatch
+   mismatch sequence-1 sequence-2 &key from-end test test-not key start1 start2 end1 end2
+   返回第1个不匹配的位置。如果匹配则返回nil。
+#+begin_src lisp
+CL-USER> (mismatch "foox" "fooabc")
+3
+CL-USER> (mismatch "foo" "fooabc")
+3       ;;foo是fooabc前缀则返回foo最后索引的下一个索引
+CL-USER> (mismatch "fooabc" "fooabc")
+NIL     ;;完全匹配则返回nil
+#+end_src
+** every, some, notevery, notany
+every predicate &rest sequences+ => generalized-boolean
+some predicate &rest sequences+ => result
+notevery predicate &rest sequences+ => generalized-boolean
+notany predicate &rest sequences+ => generalized-boolean
+   1. every 全真则返回真
+   2. notevery 全真返回假
+   3. some 全假返回假。
+   4. notany 全假返回真
+** map, map-into
+  map result-type function &rest sequences+ => result
+  map-into result-sequence function &rest sequences => result-sequence
+  map 序列中依次每个元素作为function的参数，返回结果构成的result-type类型的序列。
+#+begin_src lisp
+CL-USER> (map 'list #'* '(1 2 3) '(4 5 6))
+(4 10 18)
+CL-USER> (map 'vector #'* '(1 2 3) '(4 5 6))
+#(4 10 18)
+
+CL-USER> a 
+(1 2 3)
+CL-USER> b 
+(4 5 6)
+CL-USER> c
+(NIL NIL NIL)
+CL-USER> (map-into c #'* a b)
+(4 10 18)
+CL-USER> d
+(NIL)
+CL-USER> (map-into d #'* a b)
+(4)     ;;d空间不足。
+#+end_src
+** reduce
+   reduce function sequence &key key from-end start end initial-value => result
+   序列第1，2个元素作为function参数返回结果与第3个元素作为function参数返回结果与第4个....
+   下面对列表求和：
+#+begin_src lisp
+CL-USER> (reduce #'+ (list 1 2 3 4 5))
+15
+#+end_src
+* 向量
+  CL中向量表式形式为 #(elt1 elt2 ...)
+** 创建向量
+   1. vector &rest objs => vector
+      大小不可更改。
+   2. make-array dimensions &key element-type initial-element initial-contents adjustable fill-pointer displaced-to displaced-index-offset
+      1. 其中dimensions表维数，(mark-array 5)创建1x5的1维向量，(make-array '(3 4))创建3x4的2维维向量
+      2. element-type 指定元素类型
+      3. initial-element 初始值
+      4. initial-contents 以指定内容填充向量
+      5. fill-pointer 填充指针指向位置，只有开始到fill-pointer之间的元素才有效。默认此值为末尾。
+      6. adjustable 是否可以扩展
+      7. displace-to 用指定向量初始化
+         displace-index-offset 指定初始化向量的开始初始化位置，与displace-to一起使用。
+         如果initial-element或initial-contents被使用则此关键字不能被使用。
+      只有拥有fill-pointer的向量上才可以使用 vector-push, vector-pop （向量空间不足不会自动扩展）
+      只有在即有fill-pointer和adjustable为t的向量才可以使用 vector-push-extended (此时如果向量没有空间了则自动进行扩展）

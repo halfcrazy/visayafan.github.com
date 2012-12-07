@@ -1,0 +1,51 @@
+;; -*- mode: emacs-lisp; coding: emacs-mule; -*-
+;; --------------------------------------------------------------------------
+;; Desktop File for Emacs
+;; --------------------------------------------------------------------------
+;; Created Fri Dec  7 21:46:43 2012
+;; Desktop file format version 206
+;; Emacs version 24.2.1
+
+;; Global section:
+(setq desktop-missing-file-warning nil)
+(setq tags-file-name nil)
+(setq tags-table-list '("~/.emacs.d/TAGS"))
+(setq search-ring '("mini" "st" "common" "git" "vfin" "kom" "elisp" "emacs tricks<" "void" "5" "inclu" "g++" "find_first" "main" "ostr" "for_each"))
+(setq regexp-search-ring nil)
+(setq register-alist nil)
+(setq file-name-history '("~/visayafan.github.com/Coding/Lisp/" "~/study/coding/elisp/" "~/study/coding/linuxc/" "/mnt/Src/todo.org" "/home/visayafan/visayafan.github.com/Coding/Lisp/VectorListSetHashtableString.org" "~/visayafan.github.com/Coding/Lisp/LittleDB.html" "/usr/include/sys/cdefs.h" "/home/visayafan/visayafan.github.com/Coding/Lisp/LittleDB.org" "/home/visayafan/.emacs" "~/visayafan.github.com/Coding/Lisp/LittleDB.html" "/home/visayafan/visayafan.github.com/Coding/Lisp/LittleDB.org" "/home/visayafan/visayafan.github.com/Coding/Lisp/‘Êý‘¾Ý‘Àà‘ÐÍ.org" "/usr/include/sys/cdefs.h" "/home/visayafan/visayafan.github.com/Coding/Lisp/VectorListSetHashtableString.org" "/mnt/Src/Dropbox/software/emacs/.emacs.d/.emacs/vf-slime.el" "/home/visayafan/.emacs.d/.emacs/vf-slime.el" "/mnt/Src/Dropbox/software/emacs/.emacs.d/slime/slime.el" "/home/visayafan/visayafan.github.com/Coding/Lisp/EmacsSlime.org" "/home/visayafan/study/coding/elisp/" "/home/visayafan/study/coding/elisp/little-db.lisp" "/media/6A42-E81D/visaya/EBook/G.txt" "/media/6A42-E81D/visaya/EBook/T.txt" "/home/visayafan/visayafan.github.com/README.org" "/home/visayafan/.bashrc" "/mnt/Src/Dropbox/software/emacs/README.org" "/home/visayafan/study/coding/cc/test.cc" "/mnt/Src/visayafan.github.com/updates.html" "/mnt/Src/visayafan.github.com/Coding/Cpp/CC11.org" "/mnt/Src/visayafan.github.com/index.html" "/home/visayafan/visayafan.github.com/updates.html"))
+
+;; Buffer section -- buffers listed in same order as in buffer list:
+(desktop-create-buffer 206
+  "/home/visayafan/visayafan.github.com/Coding/Lisp/VectorListSetHashtableString.org"
+  "VectorListSetHashtableString.org"
+  'org-mode
+  '(linum-mode yas-minor-mode openwith-mode)
+  1754
+  '(1515 nil)
+  nil
+  nil
+  '((buffer-file-coding-system . utf-8-unix) (overwrite-mode) (truncate-lines)))
+
+(desktop-create-buffer 206
+  "/home/visayafan/visayafan.github.com/Coding/Lisp/LittleDB.html"
+  "LittleDB.html"
+  'html-mode
+  '(linum-mode semantic-highlight-edits-mode semantic-show-unmatched-syntax-mode semantic-show-parser-state-mode senator-minor-mode semantic-idle-scheduler-mode semantic-idle-summary-mode semantic-mru-bookmark-mode semantic-decoration-mode semantic-tag-folding-mode hs-minor-mode yas-minor-mode openwith-mode)
+  1
+  '(nil nil)
+  nil
+  nil
+  '((buffer-file-coding-system . utf-8-unix)))
+
+(desktop-create-buffer 206
+  "/home/visayafan/visayafan.github.com/Coding/Lisp/VectorListSetHashtableString.html"
+  "VectorListSetHashtableString.html"
+  'html-mode
+  '(linum-mode semantic-highlight-edits-mode semantic-show-unmatched-syntax-mode semantic-show-parser-state-mode senator-minor-mode semantic-idle-scheduler-mode semantic-idle-summary-mode semantic-mru-bookmark-mode semantic-decoration-mode semantic-tag-folding-mode hs-minor-mode yas-minor-mode openwith-mode)
+  1
+  '(nil nil)
+  nil
+  nil
+  '((buffer-file-coding-system . utf-8-unix)))
+

@@ -1,0 +1,459 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+               "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-CN" xml:lang="zh-CN">
+<head>
+<title>数据类型</title>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
+<meta name="title" content="数据类型"/>
+<meta name="generator" content="Org-mode"/>
+<meta name="generated" content="2012-12-07 23:03:48 CST"/>
+<meta name="author" content="visayafan"/>
+<meta name="description" content=""/>
+<meta name="keywords" content=""/>
+
+
+
+</head>
+<body>
+
+
+<div id="content">
+<h1 class="title">数据类型</h1>
+
+
+<!-- <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"> </script> -->
+<link rel="stylesheet" type="text/css" href="../../Layout/CSS/bootstrap_old.css" />
+<link rel="stylesheet" type="text/css" href="../../Layout/CSS/vf.css" />
+<script src="../../Layout/JS/jquery_1.7.1.js"></script>
+<script src="../../Layout/JS/bootstrap_old.js"></script>
+
+
+<div id="table-of-contents">
+<h2>目录</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#sec-1">1 序列</a>
+<ul>
+<li><a href="#sec-1-1">1.1 count</a></li>
+<li><a href="#sec-1-2">1.2 find</a></li>
+<li><a href="#sec-1-3">1.3 position</a></li>
+<li><a href="#sec-1-4">1.4 remove</a></li>
+<li><a href="#sec-1-5">1.5 delete</a></li>
+<li><a href="#sec-1-6">1.6 substitute</a></li>
+<li><a href="#sec-1-7">1.7 concatenate</a></li>
+<li><a href="#sec-1-8">1.8 sort, stable-sort</a></li>
+<li><a href="#sec-1-9">1.9 subseq</a></li>
+<li><a href="#sec-1-10">1.10 search</a></li>
+<li><a href="#sec-1-11">1.11 mismatch</a></li>
+<li><a href="#sec-1-12">1.12 every, some, notevery, notany</a></li>
+<li><a href="#sec-1-13">1.13 map, map-into</a></li>
+<li><a href="#sec-1-14">1.14 reduce</a></li>
+</ul>
+</li>
+<li><a href="#sec-2">2 向量</a>
+<ul>
+<li><a href="#sec-2-1">2.1 创建向量</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-1" class="outline-2">
+<h2 id="sec-1"><span class="section-number-2">1</span> 序列</h2>
+<div class="outline-text-2" id="text-1">
+
+<p>  vector, string, list都是sequence.<br/>
+</p>
+</div>
+
+<div id="outline-container-1-1" class="outline-3">
+<h3 id="sec-1-1"><span class="section-number-3">1.1</span> count</h3>
+<div class="outline-text-3" id="text-1-1">
+
+<p>   count item seq &amp;key from-end start end key test<br/>
+   返回seq中item个数<br/>
+</p><ol>
+<li>from-end 从尾端开始<br/>
+</li>
+<li>start end 子区间<br/>
+</li>
+<li>test 两个参数返回boolean值的函数标识符，默认是eql<br/>
+</li>
+<li>key 一个参数的函数标识符，返回值用于用于比较函数<br/>
+</li>
+</ol>
+
+
+
+
+<pre class="src src-lisp">CL-USER&gt; test
+#(1 2 4 2 1 5)
+CL-USER&gt; (count 1 test)
+2                               <span style="color: #b22222;">;;</span><span style="color: #b22222;">1&#30340;&#20010;&#25968;</span>
+CL-USER&gt; (count 1 test <span style="color: #483d8b;">:test</span> #'&lt;)
+4                               <span style="color: #b22222;">;;</span><span style="color: #b22222;">&#27604;1&#22823;&#30340;&#20010;&#25968; 2 4 2 5</span>
+CL-USER&gt; (count 1 test <span style="color: #483d8b;">:test</span> #'&lt; <span style="color: #483d8b;">:key</span> #'(<span style="color: #a020f0;">lambda</span> (x) (- x 2)))
+2                               <span style="color: #b22222;">;;</span><span style="color: #b22222;">-2&#21518;&#20381;&#28982;&#27604;1&#22823;&#30340;&#20010;&#25968; 4 5</span>
+CL-USER&gt; (count-if #'(<span style="color: #a020f0;">lambda</span> (x) (&lt; 1 x)) test)
+4                               <span style="color: #b22222;">;;</span><span style="color: #b22222;">&#36820;&#22238;&#27604;1&#22823;&#30340;&#20010;&#25968;&#65292;&#21644;&#19978;&#38754;&#25928;&#26524;&#19968;&#26679;&#65292;&#21482;&#26159;&#35843;&#29992;&#20989;&#25968;&#19981;&#21516;&#12290;</span>
+</pre>
+
+<p>
+   count-if, count-if-not与count区别在于没有test关键字和item，第1个参数为predicate(1个参数的函数标识符返回boolean)<br/>
+</p></div>
+
+</div>
+
+<div id="outline-container-1-2" class="outline-3">
+<h3 id="sec-1-2"><span class="section-number-3">1.2</span> find</h3>
+<div class="outline-text-3" id="text-1-2">
+
+<p>   find与count参数相同，返回值是查找元素所在元素。<br/>
+</p>
+
+
+<pre class="src src-lisp">CL-USER&gt; tmp
+((1 2) (1 3) (2 3) (3 4))
+CL-USER&gt; (find 1 tmp <span style="color: #483d8b;">:key</span> #'car <span style="color: #483d8b;">:test</span> #'(<span style="color: #a020f0;">lambda</span> (x y) (&lt; x y)))
+(2 3)
+</pre>
+
+<p>
+   find-if, find-if-not 与count-if参数一样，同样用predicate代替了item和:test。<br/>
+</p></div>
+
+</div>
+
+<div id="outline-container-1-3" class="outline-3">
+<h3 id="sec-1-3"><span class="section-number-3">1.3</span> position</h3>
+<div class="outline-text-3" id="text-1-3">
+
+<p>   与find功能一样，返回值为查找元素所在序列的索引。<br/>
+</p>
+
+
+<pre class="src src-lisp">CL-USER&gt; (position 1 tmp <span style="color: #483d8b;">:key</span> #'car <span style="color: #483d8b;">:test</span> #'(<span style="color: #a020f0;">lambda</span> (x y) (&lt; x y)))
+2
+</pre>
+
+<p>
+   position-if, position-if-not与find-if参数一样。<br/>
+</p></div>
+
+</div>
+
+<div id="outline-container-1-4" class="outline-3">
+<h3 id="sec-1-4"><span class="section-number-3">1.4</span> remove</h3>
+<div class="outline-text-3" id="text-1-4">
+
+<p>   remove参数比count多关键字:count表最多删除count项.<br/>
+</p>
+
+
+<pre class="src src-lisp">CL-USER&gt; (remove 1 tmp <span style="color: #483d8b;">:key</span> #'car <span style="color: #483d8b;">:test</span> #'(<span style="color: #a020f0;">lambda</span> (x y) (&lt; x y)))
+((1 2) (1 3))
+</pre>
+
+<p>
+   remove-if, remove-if-not比count-if多count关键字。<br/>
+   remove-duplicates 删除序列中重复的元素。<br/>
+</p></div>
+
+</div>
+
+<div id="outline-container-1-5" class="outline-3">
+<h3 id="sec-1-5"><span class="section-number-3">1.5</span> delete</h3>
+<div class="outline-text-3" id="text-1-5">
+
+<p>   与remove的区别在于：delete <b>可能</b> 原地修改序列。<br/>
+</p>
+
+
+<pre class="src src-lisp">CL-USER&gt; (remove 1 tmp <span style="color: #483d8b;">:key</span> #'car <span style="color: #483d8b;">:test</span> #'(<span style="color: #a020f0;">lambda</span> (x y) (&lt; x y)))
+((1 2) (1 3))
+CL-USER&gt; tmp
+((1 2) (1 3) (2 3) (3 4))
+CL-USER&gt; (delete 1 tmp <span style="color: #483d8b;">:key</span> #'car <span style="color: #483d8b;">:test</span> #'(<span style="color: #a020f0;">lambda</span> (x y) (&lt; x y)))
+((1 2) (1 3))
+CL-USER&gt; tmp
+((1 2) (1 3))
+</pre>
+
+<p>
+   之所以说可能修改原来序列是因为有可能不修改：<br/>
+</p>
+
+
+<pre class="src src-lisp">CL-USER&gt; (setf tmp (list '(1 2) '(1 3) '(2 3) '(3 4))) 
+CL-USER&gt; (delete 1 tmp <span style="color: #483d8b;">:key</span> #'car)
+((2 3) (3 4))
+CL-USER&gt; tmp
+((1 2) (1 3) (2 3) (3 4))
+</pre>
+
+<p>
+   因为tmp指向序列的开始位置，只有1，2个满足删除条件，所以直接返回第3，4个元素，tmp并没有改变。<br/>
+<link rel="stylesheet" href="../../Layout/CSS/jquery.lightbox-0.5.css" type="text/css" media="screen" />
+<script type="text/javascript" src="../../Layout/JS/jquery.lightbox-0.5.js"></script>
+<center> <a class="lightbox" href="images/delete1.jpeg"> <img class="lightbox " title="点击查看大图" src="images/delete1.jpeg" width="300"> </a> </center>
+<script type="text/javascript"> $(function() {$('a.lightbox').lightBox();}); </script>
+   再例如：<br/>
+</p>
+
+
+<pre class="src src-lisp">CL-USER&gt; (setf tmp (list '(1 2) '(2 3) '(1 3) '(3 4))) 
+CL-USER&gt; (delete 1 tmp <span style="color: #483d8b;">:key</span> #'car)
+((2 3) (3 4))
+CL-USER&gt; tmp
+((1 2) (2 3) (3 4))
+</pre>
+
+<link rel="stylesheet" href="../../Layout/CSS/jquery.lightbox-0.5.css" type="text/css" media="screen" />
+<script type="text/javascript" src="../../Layout/JS/jquery.lightbox-0.5.js"></script>
+<center> <a class="lightbox" href="images/delete2.jpeg"> <img class="lightbox " title="点击查看大图" src="images/delete2.jpeg" width="300"> </a> </center>
+<script type="text/javascript"> $(function() {$('a.lightbox').lightBox();}); </script>
+<p>
+   所以delete经常和setf一起出现：<br/>
+</p>
+
+
+<pre class="src src-lisp">CL-USER&gt; (setf tmp (delete 1 tmp <span style="color: #483d8b;">:key</span> #'car))
+((2 3) (3 4))
+CL-USER&gt; tmp
+((2 3) (3 4))
+</pre>
+
+</div>
+
+</div>
+
+<div id="outline-container-1-6" class="outline-3">
+<h3 id="sec-1-6"><span class="section-number-3">1.6</span> substitute</h3>
+<div class="outline-text-3" id="text-1-6">
+
+<p>   substitute newitem olditem sequence &amp;key from-end test test-not start end count key<br/>
+   将olditem替换成newitem.<br/>
+   substitute-if newitem predicate sequence &amp;key from-end start end count key<br/>
+   substitue-if, -not 替换符合predicate的旧元素。<br/>
+   nsubstitute原地修改。<br/>
+   nsubstitute-if -not<br/>
+</p></div>
+
+</div>
+
+<div id="outline-container-1-7" class="outline-3">
+<h3 id="sec-1-7"><span class="section-number-3">1.7</span> concatenate</h3>
+<div class="outline-text-3" id="text-1-7">
+
+<p>   concatenate result-type &amp;rest sequences =&gt; result-sequence<br/>
+   concatenate必须指定返回值类型。<br/>
+</p></div>
+
+</div>
+
+<div id="outline-container-1-8" class="outline-3">
+<h3 id="sec-1-8"><span class="section-number-3">1.8</span> sort, stable-sort</h3>
+<div class="outline-text-3" id="text-1-8">
+
+<p>   sort sequence predicate &amp;key key =&gt; sorted-sequence<br/>
+   stable-sort sequence predicate &amp;key key =&gt; sorted-sequence<br/>
+   排序。sort非稳定排序。破坏性原有序列。<br/>
+</p>
+
+
+<pre class="src src-lisp">CL-USER&gt; (setq sort-test (list 4 3 2 1))
+CL-USER&gt; (sort sort-test #'&lt;)
+(1 2 3 4)
+CL-USER&gt; sort-test
+(4)
+</pre>
+
+<link rel="stylesheet" href="../../Layout/CSS/jquery.lightbox-0.5.css" type="text/css" media="screen" />
+<script type="text/javascript" src="../../Layout/JS/jquery.lightbox-0.5.js"></script>
+<center> <a class="lightbox" href="images/sort.jpg"> <img class="lightbox " title="点击查看大图" src="images/sort.jpg" width="300"> </a> </center>
+<script type="text/javascript"> $(function() {$('a.lightbox').lightBox();}); </script>
+
+<p>   <br/>
+</p></div>
+
+</div>
+
+<div id="outline-container-1-9" class="outline-3">
+<h3 id="sec-1-9"><span class="section-number-3">1.9</span> subseq</h3>
+<div class="outline-text-3" id="text-1-9">
+
+<p>   subseq sequence start &amp;optional end =&gt; subsequence<br/>
+   (setf (subseq sequence start &amp;optional end) new-subsequence)<br/>
+   subseq返回子序列，可以为子序列赋值，如果新序列个数与子序列个数不同，则较短的那个决定有多少个元素被改变。<br/>
+</p></div>
+
+</div>
+
+<div id="outline-container-1-10" class="outline-3">
+<h3 id="sec-1-10"><span class="section-number-3">1.10</span> search</h3>
+<div class="outline-text-3" id="text-1-10">
+
+<p>   search sequence-1 sequence-2 &amp;key from-end test test-not key start1 start2 end1 end2<br/>
+   与find不同的是可以指定查找为序列，而find只能查找元素。<br/>
+   start1 end1 用来表示查找序列sequence-1子序列。左闭右开。<br/>
+   start2 end2 用来表示原序列sequence-2子序列。<br/>
+   返回值为子序列所在位置。<br/>
+</p>
+
+
+<pre class="src src-lisp">CL-USER&gt; (search <span style="color: #8b2252;">"xfoox"</span> <span style="color: #8b2252;">"abcfooabc"</span> <span style="color: #483d8b;">:start1</span> 1 <span style="color: #483d8b;">:end1</span> 4)
+3
+</pre>
+
+
+<p>   <br/>
+</p></div>
+
+</div>
+
+<div id="outline-container-1-11" class="outline-3">
+<h3 id="sec-1-11"><span class="section-number-3">1.11</span> mismatch</h3>
+<div class="outline-text-3" id="text-1-11">
+
+<p>   mismatch sequence-1 sequence-2 &amp;key from-end test test-not key start1 start2 end1 end2<br/>
+   返回第1个不匹配的位置。如果匹配则返回nil。<br/>
+</p>
+
+
+<pre class="src src-lisp">CL-USER&gt; (mismatch <span style="color: #8b2252;">"foox"</span> <span style="color: #8b2252;">"fooabc"</span>)
+3
+CL-USER&gt; (mismatch <span style="color: #8b2252;">"foo"</span> <span style="color: #8b2252;">"fooabc"</span>)
+3       <span style="color: #b22222;">;;</span><span style="color: #b22222;">foo&#26159;fooabc&#21069;&#32512;&#21017;&#36820;&#22238;foo&#26368;&#21518;&#32034;&#24341;&#30340;&#19979;&#19968;&#20010;&#32034;&#24341;</span>
+CL-USER&gt; (mismatch <span style="color: #8b2252;">"fooabc"</span> <span style="color: #8b2252;">"fooabc"</span>)
+NIL     <span style="color: #b22222;">;;</span><span style="color: #b22222;">&#23436;&#20840;&#21305;&#37197;&#21017;&#36820;&#22238;nil</span>
+</pre>
+
+</div>
+
+</div>
+
+<div id="outline-container-1-12" class="outline-3">
+<h3 id="sec-1-12"><span class="section-number-3">1.12</span> every, some, notevery, notany</h3>
+<div class="outline-text-3" id="text-1-12">
+
+<p>every predicate &amp;rest sequences+ =&gt; generalized-boolean<br/>
+some predicate &amp;rest sequences+ =&gt; result<br/>
+notevery predicate &amp;rest sequences+ =&gt; generalized-boolean<br/>
+notany predicate &amp;rest sequences+ =&gt; generalized-boolean<br/>
+</p><ol>
+<li>every 全真则返回真<br/>
+</li>
+<li>notevery 全真返回假<br/>
+</li>
+<li>some 全假返回假。<br/>
+</li>
+<li>notany 全假返回真<br/>
+</li>
+</ol>
+
+</div>
+
+</div>
+
+<div id="outline-container-1-13" class="outline-3">
+<h3 id="sec-1-13"><span class="section-number-3">1.13</span> map, map-into</h3>
+<div class="outline-text-3" id="text-1-13">
+
+<p>  map result-type function &amp;rest sequences+ =&gt; result<br/>
+  map-into result-sequence function &amp;rest sequences =&gt; result-sequence<br/>
+  map 序列中依次每个元素作为function的参数，返回结果构成的result-type类型的序列。<br/>
+</p>
+
+
+<pre class="src src-lisp">CL-USER&gt; (map 'list #'* '(1 2 3) '(4 5 6))
+(4 10 18)
+CL-USER&gt; (map 'vector #'* '(1 2 3) '(4 5 6))
+#(4 10 18)
+
+CL-USER&gt; a 
+(1 2 3)
+CL-USER&gt; b 
+(4 5 6)
+CL-USER&gt; c
+(NIL NIL NIL)
+CL-USER&gt; (map-into c #'* a b)
+(4 10 18)
+CL-USER&gt; d
+(NIL)
+CL-USER&gt; (map-into d #'* a b)
+(4)     <span style="color: #b22222;">;;</span><span style="color: #b22222;">d&#31354;&#38388;&#19981;&#36275;&#12290;</span>
+</pre>
+
+</div>
+
+</div>
+
+<div id="outline-container-1-14" class="outline-3">
+<h3 id="sec-1-14"><span class="section-number-3">1.14</span> reduce</h3>
+<div class="outline-text-3" id="text-1-14">
+
+<p>   reduce function sequence &amp;key key from-end start end initial-value =&gt; result<br/>
+   序列第1，2个元素作为function参数返回结果与第3个元素作为function参数返回结果与第4个&hellip;.<br/>
+   下面对列表求和：<br/>
+</p>
+
+
+<pre class="src src-lisp">CL-USER&gt; (reduce #'+ (list 1 2 3 4 5))
+15
+</pre>
+
+</div>
+</div>
+
+</div>
+
+<div id="outline-container-2" class="outline-2">
+<h2 id="sec-2"><span class="section-number-2">2</span> 向量</h2>
+<div class="outline-text-2" id="text-2">
+
+<p>  CL中向量表式形式为 #(elt1 elt2 &hellip;)<br/>
+</p>
+</div>
+
+<div id="outline-container-2-1" class="outline-3">
+<h3 id="sec-2-1"><span class="section-number-3">2.1</span> 创建向量</h3>
+<div class="outline-text-3" id="text-2-1">
+
+<ol>
+<li>vector &amp;rest objs =&gt; vector<br/>
+      大小不可更改。<br/>
+</li>
+<li>make-array dimensions &amp;key element-type initial-element initial-contents adjustable fill-pointer displaced-to displaced-index-offset<br/>
+<ol>
+<li>其中dimensions表维数，(mark-array 5)创建1x5的1维向量，(make-array '(3 4))创建3x4的2维维向量<br/>
+</li>
+<li>element-type 指定元素类型<br/>
+</li>
+<li>initial-element 初始值<br/>
+</li>
+<li>initial-contents 以指定内容填充向量<br/>
+</li>
+<li>fill-pointer 填充指针指向位置，只有开始到fill-pointer之间的元素才有效。默认此值为末尾。<br/>
+</li>
+<li>adjustable 是否可以扩展<br/>
+</li>
+<li>displace-to 用指定向量初始化<br/>
+         displace-index-offset 指定初始化向量的开始初始化位置，与displace-to一起使用。<br/>
+         如果initial-element或initial-contents被使用则此关键字不能被使用。<br/>
+</li>
+</ol>
+
+<p>      只有拥有fill-pointer的向量上才可以使用 vector-push, vector-pop （向量空间不足不会自动扩展）<br/>
+      只有在即有fill-pointer和adjustable为t的向量才可以使用 vector-push-extended (此时如果向量没有空间了则自动进行扩展）<br/>
+</p></li>
+</ol>
+
+</div>
+</div>
+</div>
+</div>
+
+</body>
+</html>

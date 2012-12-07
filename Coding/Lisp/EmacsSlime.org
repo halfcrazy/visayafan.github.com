@@ -15,6 +15,8 @@
   =C-RET= 补全括号并执行
   =C-c C-o= 清空上次结果
   =C-c M-o= 清空整个buffer
+  =C-c C-l= 加载文件
+  =C-c C-k= 编译加载当前buffer所对应的文件
 * 提示补全
   =C-c TAB=
 #+begin_src lisp
