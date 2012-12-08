@@ -65,9 +65,11 @@ grep -nH -e "pattern" filename
   默认绑定到M-z，删除当前位置到下一个输入字符之间的字符，有时候会很有用。
 * fill-paragraph
   默认绑定到M-q，调整region,不满一行的由下一行补齐,默认宽度由fill-column变量决定。
-* /sudo::/
+* =/sudo::/=
   如果你用普通用户权限打开emacs，则此时打开超级用户权限的文件是无法修改的，以超级用户重新打开一个emacs可行但考虑到emacs的启动速度，这绝对不是个好主意。
-  解决办法：C-x C-f /sudo::/ Enter 之后输入密码即可以超级用户权限打开一个文件。
+  解决办法：
+:  C-x C-f /sudo::/ Enter
+  之后输入密码即可以超级用户权限打开一个文件。
 * 正则表达式
   Emacs中正则表达式要注意group和重复所用的括号需要转义， =\(\)= , =\{3,6\}=
   语法类包括：
@@ -181,7 +183,16 @@ hello
 %T 格式为： 11:46:33 
 %r 格式为： 11:46:33 AM
 还有其它的org中的关键字
-#+end_example  
+#+end_example
+  利用宏可以减少冗余文本使内容更清晰，比如我在extension.org里定义了如下宏：
+: #+macro:lightbox #+html:<link rel="stylesheet" href="../../Layout/CSS/jquery.lightbox-0.5.css" type="text/css" media="screen" /> <script type="text/javascript" src="../../Layout/JS/jquery.lightbox-0.5.js"></script> <center> <a class="lightbox" href="$1"> <img class="lightbox " title="点击查看大图" src="$1" width="300"> </a> </center> <script type="text/javascript"> $(function() {$('a.lightbox').lightBox();}); </script>
+  我在欲导出HTML的Org文件比如emacs_trick.org头部写上：
+: #+SETUPFILE: "extension.org" 
+  则便可以在emacs_trick.org中使用此宏。
+: {{{lightbox(images/image_name.jpg)}}}
+  只需要一行就搞定了。
+
+  这样我就可以把所有的宏全部写在extension.org里，然后可以重复使用：只需要SETUPFILE指定就可以使用了。
 * org-mode 中嵌入latex公式
 #+begin_example
 $$ \(\)表行内，$$ $$ \[ \] 表行间

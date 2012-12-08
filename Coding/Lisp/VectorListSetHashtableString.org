@@ -1,5 +1,6 @@
 #+OPTIONS: ^:{} _:{} num:t toc:t \n:t
-#+include "../../template.org"
+#+SETUPFILE: "../../extension.org"
+#+INCLUDE: "../../template-toc.org"
 #+title: 数据类型
 * 序列
   vector, string, list都是sequence.
@@ -68,12 +69,7 @@ CL-USER> tmp
 ((1 2) (1 3) (2 3) (3 4))
 #+end_src
    因为tmp指向序列的开始位置，只有1，2个满足删除条件，所以直接返回第3，4个元素，tmp并没有改变。
-#+begin_html
-<link rel="stylesheet" href="../../Layout/CSS/jquery.lightbox-0.5.css" type="text/css" media="screen" />
-<script type="text/javascript" src="../../Layout/JS/jquery.lightbox-0.5.js"></script>
-<center> <a class="lightbox" href="images/delete1.jpeg"> <img class="lightbox " title="点击查看大图" src="images/delete1.jpeg" width="300"> </a> </center>
-<script type="text/javascript"> $(function() {$('a.lightbox').lightBox();}); </script>
-#+end_html
+{{{lightbox(images/delete1.jpeg)}}}
    再例如：
 #+begin_src lisp
 CL-USER> (setf tmp (list '(1 2) '(2 3) '(1 3) '(3 4))) 
@@ -82,12 +78,7 @@ CL-USER> (delete 1 tmp :key #'car)
 CL-USER> tmp
 ((1 2) (2 3) (3 4))
 #+end_src
-#+begin_html
-<link rel="stylesheet" href="../../Layout/CSS/jquery.lightbox-0.5.css" type="text/css" media="screen" />
-<script type="text/javascript" src="../../Layout/JS/jquery.lightbox-0.5.js"></script>
-<center> <a class="lightbox" href="images/delete2.jpeg"> <img class="lightbox " title="点击查看大图" src="images/delete2.jpeg" width="300"> </a> </center>
-<script type="text/javascript"> $(function() {$('a.lightbox').lightBox();}); </script>
-#+end_html  
+{{{lightbox(images/delete2.jpeg)}}}
    所以delete经常和setf一起出现：
 #+begin_src lisp
 CL-USER> (setf tmp (delete 1 tmp :key #'car))
@@ -116,13 +107,7 @@ CL-USER> (sort sort-test #'<)
 CL-USER> sort-test
 (4)
 #+end_src
-#+begin_html
-<link rel="stylesheet" href="../../Layout/CSS/jquery.lightbox-0.5.css" type="text/css" media="screen" />
-<script type="text/javascript" src="../../Layout/JS/jquery.lightbox-0.5.js"></script>
-<center> <a class="lightbox" href="images/sort.jpg"> <img class="lightbox " title="点击查看大图" src="images/sort.jpg" width="300"> </a> </center>
-<script type="text/javascript"> $(function() {$('a.lightbox').lightBox();}); </script>
-#+end_html  
-   
+{{{lightbox(images/sort.jpg)}}}   
 ** subseq
    subseq sequence start &optional end => subsequence
    (setf (subseq sequence start &optional end) new-subsequence)
@@ -184,11 +169,65 @@ CL-USER> (map-into d #'* a b)
 ** reduce
    reduce function sequence &key key from-end start end initial-value => result
    序列第1，2个元素作为function参数返回结果与第3个元素作为function参数返回结果与第4个....
+   如果有initial-value则将其先与第1个传递给function生成结果与第2个传递给function....
    下面对列表求和：
 #+begin_src lisp
 CL-USER> (reduce #'+ (list 1 2 3 4 5))
 15
 #+end_src
+** length
+   返回序列长度。
+** reverse, nreverse
+   reverse sequence => reversed-sequence
+   返回逆转后的序列，区别在于：前者返回一个新的序列，而nreverse是原地操作。
+#+html:<div class="row-fluid"> <div class="span5">
+#+begin_src lisp
+CL-USER> foo
+(1 2 3)
+CL-USER> (reverse foo)
+(3 2 1)
+CL-USER> foo
+(1 2 3)
+CL-USER> (nreverse foo)
+(3 2 1)
+CL-USER> foo
+(1)
+#+end_src
+#+html: </div> <div class="span5">
+{{{lightbox(images/nreverse.jpg)}}}
+#+html:</div></div>
+* 哈希表
+  哈希表是类似如下所示的特殊列表：
+{{{lightbox(images/hashtable.jpg)}}}
+** make-hash-table
+   make-hash-table &key test size rehash-size rehash-threshold => hash-table
+   1. test 指定此hashtable的key的比较函数，默认函数为eql
+   2. size 此hashtable的初始空间，最多存储size*rehash-threshold个就必须扩展此哈希表
+   3. rehash-size 当哈希表必须扩张时指定最小扩张数量。整数表示扩张指定个，浮点数表示扩张后是原来的倍数。
+   4. rehash-threshold 已用空间与总空间比值的上限，超过此上限就需要进行扩张。
+** gethash
+   gethash key hash-table &optional default => value, present-p
+   (setf (gethash key hash-table &optional default) new-value)
+   gethash取key所对的值，如果key不存在则返回default，若未指定default,则返回NIL。
+   为了区别key对应的value是nil还是key本来就不存在，gethash返回2个值。present-p为nil表示所查找的key不存在，此时value无效。
+   可以为gethash返回值赋值，如果存在则覆盖原来的值，如果不存在则将key,new-value插入到哈希表中。
+** remhash
+   remhash key hash-table => generalized-boolean
+   删除哈希表里的一对元素。返回值为NIL表key不存在。
+** maphash
+   maphash function hash-table => nil
+   function是个二参数函数，每次迭代取一对key,value传递给function.
+** hash-table-count
+   hash-table-count hash-table => count
+   返回哈希表中实体个数，若空则返回0。
+** hash-table-size
+   hash-table-size hash-table => size
+   返回哈希表大小，>= hash-table-count
+** clrhash
+   clrhash hash-table => hash-table
+   清空哈希表。
+** hash-table-p
+   hash-table-p object => generalized-boolean
 * 向量
   CL中向量表式形式为 #(elt1 elt2 ...)
 ** 创建向量
@@ -206,3 +245,248 @@ CL-USER> (reduce #'+ (list 1 2 3 4 5))
          如果initial-element或initial-contents被使用则此关键字不能被使用。
       只有拥有fill-pointer的向量上才可以使用 vector-push, vector-pop （向量空间不足不会自动扩展）
       只有在即有fill-pointer和adjustable为t的向量才可以使用 vector-push-extended (此时如果向量没有空间了则自动进行扩展）
+* 列表
+** cons cell 点对单元
+   以下用CC简称Cons Cell.
+*** cons
+    创建一个CC.
+*** car, cdr
+    返回第1个，第2个值。
+*** consp, atom
+    consp/atom object => generalized-boolean
+    测试是否是cons cell
+    测试是否是atom (非cons cell)
+** listp
+   listp object => generalized-boolean
+   是否是cons cell或nil
+** null
+   null object => boolean
+   测试是否是空列表即nil
+   也可以用not但null只用于列表。
+** endp
+   endp list => generalized-boolean
+   如果是空列表是返回T，如果是非空列表则返回nil。
+   与null的区别在于：如果是非列表则引起异常。
+#+begin_src lisp
+CL-USER> (null 'a)
+NIL
+CL-USER> (endp 'a)
+; Evaluation aborted on #<TYPE-ERROR expected-type: LIST datum: A>.
+#+end_src
+** first, second, third...,tenth, rest
+   first, rest相当于car, cdr
+   first, second, thrid...返回第几个元素。
+** nth
+   nth n list => object
+   返回索引为n的元素。从0开始。
+** nthcdr
+   nthcdr n list => tail
+   等价于进行n次cdr操作。
+   (nthcdr 0 list)返回list本身。
+** member, member-if,not
+   member item list &key key test test-not => tail
+   member-if predicate list &key key => tail
+   查找item是否是list一员，如果是则返回以item开头的子列表。
+** append
+#+html:<div class="row-fluid"> <div class="span5">
+   append &rest lists => result
+   所有lists合并成一个新的list并返回。
+   实际进行的操作：除最后一个list外所有其它list均进行复制操作，将复制后的list与最后一个list链接在一起，只有最后一个list是共享的。
+   #+html: </div> <div class="span5">
+{{{lightbox(images/append.jpg)}}}
+   #+html:</div></div>
+** nconc
+#+html:<div class="row-fluid"> <div class="span5">
+   nconc &rest lists => concatenated-list
+   与append不同之处在于此函数为原地修改。
+#+html: </div> <div class="span5">
+{{{lightbox(images/nconc.jpg)}}}
+#+html:</div></div>
+** push
+   push item place => new-place-value
+   将item加入到place的前面，原地修改。
+
+   *经常使用到的一个组合是：push和nreverse，将元素PUSH进保存在局部变量的列表里然后进行 nreverse 操作*
+   
+** last
+   last list &optional n => tail
+   最后n个元素。
+#+begin_src lisp
+CL-USER> (last (list 1 2 (list 3 4)))
+((3 4))
+#+end_src
+{{{lightbox(images/last.jpg)}}}
+** butlast, nbutlast
+   butlast list &optional n => result-list
+   除了最后n个元素。
+   nbutlast可能修改原列表。
+#+begin_src lisp
+CL-USER> a
+(1 2 (3 4))
+CL-USER> (nbutlast a)
+(1 2)
+CL-USER> a
+(1 2)
+#+end_src
+** list*
+   与list的区别在于：list最后一个元素是做为最后一个cons的car,而list*的最后一个元素做为最后一个cons的cdr.
+#+html:<div class="row-fluid"> <div class="span5">
+#+begin_src lisp
+CL-USER> (list 1 2 3)
+(1 2 3)
+CL-USER> (list* 1 2 3)
+(1 2 . 3)
+CL-USER> (list* 1 2 (list 3 4))
+(1 2 3 4)
+#+end_src
+#+html: </div> <div class="span5">
+{{{lightbox(images/list.jpg)}}}
+\\
+{{{lightbox(images/listplus.jpg)}}}
+#+html:</div></div>
+** rplaca, rplacd
+   rplaca cons object => cons
+   rplacd cons object => cons
+   用object替换掉cons的car/cdr.
+** mapcar, maplist, mapcan, mapcon, mapc, mapl
+   mapcar function &rest lists+ => result-list
+   1. mapcar 第次迭代一个元素。
+     #+begin_src lisp
+     CL-USER> (mapcar #'+ '(1 2) '(3 4))
+     (4 6)
+     #+end_src
+   2. maplist 第N次迭代取list的第N-1次cdr
+      第1次function(list1, list2), 第2次 function( (cdr list1) (cdr list2)) 第3次 function( (cddr list1) (cddr list2)) 第4次 function( (cdddr list1) (cdddr list2)) ...
+     #+begin_src lisp
+     CL-USER> (maplist #'append '(1 2 3 4) '(5 6) '(7 8 9))
+     ((1 2 3 4 5 6 7 8 9) (2 3 4 6 8 9))     ;第1次(append '(1 2 3 4) '(5 6) '(7 8 9)) 第2次(append '(2 3 4) '(6) '(8 9)) 每次append返回结果作为结果列表的一元素
+     (maplist #'(lambda (x) (if (member (car x) (cdr x)) 0 1)) '(a b a c d b c)) =>  (0 0 1 0 1 1 1)
+     #+end_src
+   3. mapcan, mapcon分别相似于mapcar, maplist，只是用函数结果构成列表时不是用的list而是nconc
+     #+begin_src lisp
+      (mapcon f x1 ... xn)
+        ==  (apply #'nconc (maplist f x1 ... xn))
+     #+end_src  
+     #+begin_src lisp
+     CL-USER> (setf test '(1 2 3))
+     (1 2 3)
+     CL-USER> (mapcar #'(lambda (x) (and (numberp x) (list x))) test)
+     ((1) (2) (3))      ;第1次返回(1),第2次(2)...结果(list (1) (2) (3)) => ((1) (2) (3))
+     CL-USER> (mapcan #'(lambda (x) (and (numberp x) (list x))) test)
+     (1 2 3)            ;                      结果(nconc (1) (2) (3)) => (1 2 3)
+     #+end_src     
+   4. mapc,mapl类似mapcar,maplist只是并不累积应用function后的返回值而返回参数第1个列表。
+      当返回值不重要时使用此函数。
+     #+begin_src lisp
+     CL-USER> (setf dummy nil)
+     NIL
+     CL-USER> (mapc #'(lambda (&rest x) (setq dummy (append dummy x))) '(1 2 3 4) '(a b c) '(x y z))
+     (1 2 3 4)                               ;返回值与mapcar不同
+     CL-USER> dummy
+     (1 A X 2 B Y 3 C Z)                     ;但每次传递参数和mapcar相同
+     #+end_src
+** ldiff, tailp
+   tailp object list => generalized-boolean
+   ldiff list object => result-list
+   tailp 如果object是list的尾子列表则返回真。
+   ldiff 如果object是list的尾子列表则返回list去掉object后的列表，不修改原列表。
+** revappend, nrevconc
+   revappend list tail => result-list
+   nreconc list tail => result-list
+   revappend 拷贝list，将其进行逆转，将tail接到其后。
+   nrevconc 对list逆转采用的是nreverse.
+   前者并未修改任何列表，后者修改了list并未修改tail.
+* 列表当树
+** copy-tree, copy-list
+   与copy-list的区别在于：彻底地拷贝一个列表。
+   copy-list只拷贝最外层的结构，而深层的则被共享。
+{{{lightbox(images/copy-list.jpg)}}}
+** tree-equal
+   tree-equal tree-1 tree-2 &key test test-not => generalized-boolean
+   深层次比较，不仅支干相同，叶子也相同。
+** subst, subst-if, subst-if-not
+   subst new old tree &key key test test-not => new-tree
+   subst-if new predicate tree &key key => new-tree
+   对树的每个结点都进行比较替换。
+#+begin_src lisp
+CL-USER> a
+((11 2) (3 4) (5 6))
+CL-USER> (substitute 1 11 a)
+((11 2) (3 4) (5 6))            ;;替换失败，第1次拿11与(11 2)比较，第2次与(3 4)比较，当然失败
+CL-USER> (subst 1 11 a)
+((1 2) (3 4) (5 6))             ;;替换成功，遍历树进行替换
+#+end_src
+* 列表当集合
+** adjoin
+   adjoin item list &key key test test-not => new-list
+   如果item不在list中则压入，返回插入后列表。
+   与pushnew区别在于：不修改原列表。
+** pushnew
+   pushnew item place &key key test test-not
+   将item压入place中，如重复则什么也不做。其中重复判断标准由函数test决定，key决定传递给test的参数。
+   <=> (setf place (adjoin item list))
+** intersection, union, set-difference, set-exclusive-or
+   intersection list-1 list-2 &key key test test-not => result-list
+   求交并差对称差
+** subsetp
+   subsetp list-1 list-2 &key key test test-not => generalized-boolean
+   判断list1是否是list2的子集。
+#+begin_src lisp
+CL-USER> (subsetp (list 1 1 2) (list 1 2 3))
+T
+CL-USER> (subsetp (list 1 4) (list 1 2 3))
+NIL
+#+end_src
+
+* 列表当关联列表，属性列表
+** alist
+   关联列表相当于小型的哈希表。其元素为cons.
+*** assoc, assoc-if, -not
+    assoc item alist &key key test test-not => entry
+    assoc-if predicate alist &key key => entry
+    在alist中查询item.
+*** acons
+   在alist前面加上一对键值：
+#+begin_src lisp
+CL-USER> (setf alist (cons (cons 3 "three") alist))
+#+end_src
+   CL提供了函数acons:
+#+begin_src lisp
+CL-USER> (setf alist (acons 3 "three" alist))
+#+end_src
+   *由于acons并非原地修改所以要想保存结果给原来值必须要借助setf*
+*** pairlis
+    pairlis keys data &optional alist => new-alist
+#+begin_src lisp
+CL-USER> (pairlis '(a b c) '(1 2 3))
+((C . 3) (B . 2) (A . 1))
+#+end_src
+*** copy-alist
+    比copy-list多拷贝了每个元素的cons结构。
+{{{lightbox(images/copy-alist.jpg)}}}
+** plist
+   与alist不同，plist是没有分支的列表，第n个值与第n+1个值构成键值对（n为奇数）。
+#+begin_src lisp
+CL-USER> (setf plist '(a 1 b 2 c 3))
+#+end_src
+*** getf
+    getf plist indicator &optional default => value
+    (setf (getf place indicator &optional default) new-value)
+    从plist中查找indicator对应的值，若不存在则返回默认值default.不存在default则返回NIL。
+#+begin_src lisp
+CL-USER> (getf plist 'a)
+1
+CL-USER> (getf plist 'd "no found")
+"no found"
+#+end_src
+*** remf
+    remf place indicator => generalized-boolean
+    从属性列表place中删除indicator对应的键值。
+#+begin_src lisp
+CL-USER> plist
+(A 1 B 2 C 3)
+CL-USER> (remf plist 'a)
+T
+CL-USER> plist
+(B 2 C 3)
+#+end_src

@@ -7,7 +7,7 @@
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
 <meta name="title" content="Emacs Trick"/>
 <meta name="generator" content="Org-mode"/>
-<meta name="generated" content="2012-11-25 19:50:35 CST"/>
+<meta name="generated" content="2012-12-08 19:59:21 CST"/>
 <meta name="author" content="visayafan"/>
 <meta name="description" content=""/>
 <meta name="keywords" content=""/>
@@ -91,7 +91,7 @@
 <li><a href="#sec-10">10 backup-by-copying-when-linked</a></li>
 <li><a href="#sec-11">11 zap-to-char</a></li>
 <li><a href="#sec-12">12 fill-paragraph</a></li>
-<li><a href="#sec-13">13 <i>sudo::</i></a></li>
+<li><a href="#sec-13">13 <code>/sudo::/</code></a></li>
 <li><a href="#sec-14">14 正则表达式</a></li>
 <li><a href="#sec-15">15 eshell 别名/使用.bashrc中定义的别名</a></li>
 <li><a href="#sec-16">16 解决org-mode example/src/quote上面多一行问题</a></li>
@@ -209,7 +209,7 @@
 
 
 <pre class="src src-lisp">(<span style="color: #a020f0;">require</span> '<span style="color: #008b8b;">ace-jump-mode</span>)
-(define-key global-map (kbd <span style="color: #8b2252;">"C-c SPC"</span>) 'ace-jump-mode)
+(<span style="color: #a020f0;">define-key</span> global-map (kbd <span style="color: #8b2252;">"C-c SPC"</span>) 'ace-jump-mode)
 </pre>
 
 <p>
@@ -308,11 +308,16 @@
 </div>
 
 <div id="outline-container-13" class="outline-2">
-<h2 id="sec-13"><span class="section-number-2">13</span> <i>sudo::</i></h2>
+<h2 id="sec-13"><span class="section-number-2">13</span> <code>/sudo::/</code></h2>
 <div class="outline-text-2" id="text-13">
 
 <p>  如果你用普通用户权限打开emacs，则此时打开超级用户权限的文件是无法修改的，以超级用户重新打开一个emacs可行但考虑到emacs的启动速度，这绝对不是个好主意。<br/>
-  解决办法：C-x C-f <i>sudo::</i> Enter 之后输入密码即可以超级用户权限打开一个文件。<br/>
+  解决办法：<br/>
+</p><pre class="example">
+ C-x C-f /sudo::/ Enter
+</pre>
+
+<p>  之后输入密码即可以超级用户权限打开一个文件。<br/>
 </p></div>
 
 </div>
@@ -501,7 +506,27 @@ format 其中format格式必须可以被函数 =format-time-string= 识别，常
 还有其它的org中的关键字
 </pre>
 
-</div>
+<p>
+  利用宏可以减少冗余文本使内容更清晰，比如我在extension.org里定义了如下宏：<br/>
+</p><pre class="example">
+#+macro:lightbox #+html:&lt;link rel="stylesheet" href="../../Layout/CSS/jquery.lightbox-0.5.css" type="text/css" media="screen" /&gt; &lt;script type="text/javascript" src="../../Layout/JS/jquery.lightbox-0.5.js"&gt;&lt;/script&gt; &lt;center&gt; &lt;a class="lightbox" href="$1"&gt; &lt;img class="lightbox " title="点击查看大图" src="$1" width="300"&gt; &lt;/a&gt; &lt;/center&gt; &lt;script type="text/javascript"&gt; $(function() {$('a.lightbox').lightBox();}); &lt;/script&gt;
+</pre>
+
+<p>  我在欲导出HTML的Org文件比如emacs_trick.org头部写上：<br/>
+</p><pre class="example">
+#+SETUPFILE: "extension.org" 
+</pre>
+
+<p>  则便可以在emacs_trick.org中使用此宏。<br/>
+</p><pre class="example">
+{{{lightbox(images/image_name.jpg)}}}
+</pre>
+
+<p>  只需要一行就搞定了。<br/>
+</p>
+<p>
+  这样我就可以把所有的宏全部写在extension.org里，然后可以重复使用：只需要SETUPFILE指定就可以使用了。<br/>
+</p></div>
 
 </div>
 

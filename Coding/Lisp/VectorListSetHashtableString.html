@@ -7,7 +7,7 @@
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
 <meta name="title" content="数据类型"/>
 <meta name="generator" content="Org-mode"/>
-<meta name="generated" content="2012-12-07 23:03:48 CST"/>
+<meta name="generated" content="2012-12-08 23:32:28 CST"/>
 <meta name="author" content="visayafan"/>
 <meta name="description" content=""/>
 <meta name="keywords" content=""/>
@@ -24,7 +24,7 @@
 
 <!-- <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"> </script> -->
 <link rel="stylesheet" type="text/css" href="../../Layout/CSS/bootstrap_old.css" />
-<link rel="stylesheet" type="text/css" href="../../Layout/CSS/vf.css" />
+<link rel="stylesheet" type="text/css" href="../../Layout/CSS/too_many_toc.css" />
 <script src="../../Layout/JS/jquery_1.7.1.js"></script>
 <script src="../../Layout/JS/bootstrap_old.js"></script>
 
@@ -49,11 +49,86 @@
 <li><a href="#sec-1-12">1.12 every, some, notevery, notany</a></li>
 <li><a href="#sec-1-13">1.13 map, map-into</a></li>
 <li><a href="#sec-1-14">1.14 reduce</a></li>
+<li><a href="#sec-1-15">1.15 length</a></li>
+<li><a href="#sec-1-16">1.16 reverse, nreverse</a></li>
 </ul>
 </li>
-<li><a href="#sec-2">2 向量</a>
+<li><a href="#sec-2">2 哈希表</a>
 <ul>
-<li><a href="#sec-2-1">2.1 创建向量</a></li>
+<li><a href="#sec-2-1">2.1 make-hash-table</a></li>
+<li><a href="#sec-2-2">2.2 gethash</a></li>
+<li><a href="#sec-2-3">2.3 remhash</a></li>
+<li><a href="#sec-2-4">2.4 maphash</a></li>
+<li><a href="#sec-2-5">2.5 hash-table-count</a></li>
+<li><a href="#sec-2-6">2.6 hash-table-size</a></li>
+<li><a href="#sec-2-7">2.7 clrhash</a></li>
+<li><a href="#sec-2-8">2.8 hash-table-p</a></li>
+</ul>
+</li>
+<li><a href="#sec-3">3 向量</a>
+<ul>
+<li><a href="#sec-3-1">3.1 创建向量</a></li>
+</ul>
+</li>
+<li><a href="#sec-4">4 列表</a>
+<ul>
+<li><a href="#sec-4-1">4.1 cons cell 点对单元</a>
+<ul>
+<li><a href="#sec-4-1-1">4.1.1 cons</a></li>
+<li><a href="#sec-4-1-2">4.1.2 car, cdr</a></li>
+<li><a href="#sec-4-1-3">4.1.3 consp, atom</a></li>
+</ul>
+</li>
+<li><a href="#sec-4-2">4.2 listp</a></li>
+<li><a href="#sec-4-3">4.3 null</a></li>
+<li><a href="#sec-4-4">4.4 endp</a></li>
+<li><a href="#sec-4-5">4.5 first, second, third&hellip;,tenth, rest</a></li>
+<li><a href="#sec-4-6">4.6 nth</a></li>
+<li><a href="#sec-4-7">4.7 nthcdr</a></li>
+<li><a href="#sec-4-8">4.8 member, member-if,not</a></li>
+<li><a href="#sec-4-9">4.9 append</a></li>
+<li><a href="#sec-4-10">4.10 nconc</a></li>
+<li><a href="#sec-4-11">4.11 push</a></li>
+<li><a href="#sec-4-12">4.12 last</a></li>
+<li><a href="#sec-4-13">4.13 butlast, nbutlast</a></li>
+<li><a href="#sec-4-14">4.14 list*</a></li>
+<li><a href="#sec-4-15">4.15 rplaca, rplacd</a></li>
+<li><a href="#sec-4-16">4.16 mapcar, maplist, mapcan, mapcon, mapc, mapl</a></li>
+<li><a href="#sec-4-17">4.17 ldiff, tailp</a></li>
+<li><a href="#sec-4-18">4.18 revappend, nrevconc</a></li>
+</ul>
+</li>
+<li><a href="#sec-5">5 列表当树</a>
+<ul>
+<li><a href="#sec-5-1">5.1 copy-tree, copy-list</a></li>
+<li><a href="#sec-5-2">5.2 tree-equal</a></li>
+<li><a href="#sec-5-3">5.3 subst, subst-if, subst-if-not</a></li>
+</ul>
+</li>
+<li><a href="#sec-6">6 列表当集合</a>
+<ul>
+<li><a href="#sec-6-1">6.1 adjoin</a></li>
+<li><a href="#sec-6-2">6.2 pushnew</a></li>
+<li><a href="#sec-6-3">6.3 intersection, union, set-difference, set-exclusive-or</a></li>
+<li><a href="#sec-6-4">6.4 subsetp</a></li>
+</ul>
+</li>
+<li><a href="#sec-7">7 列表当关联列表，属性列表</a>
+<ul>
+<li><a href="#sec-7-1">7.1 alist</a>
+<ul>
+<li><a href="#sec-7-1-1">7.1.1 assoc, assoc-if, -not</a></li>
+<li><a href="#sec-7-1-2">7.1.2 acons</a></li>
+<li><a href="#sec-7-1-3">7.1.3 pairlis</a></li>
+<li><a href="#sec-7-1-4">7.1.4 copy-alist</a></li>
+</ul>
+</li>
+<li><a href="#sec-7-2">7.2 plist</a>
+<ul>
+<li><a href="#sec-7-2-1">7.2.1 getf</a></li>
+<li><a href="#sec-7-2-2">7.2.2 remf</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -195,10 +270,7 @@ CL-USER&gt; tmp
 
 <p>
    因为tmp指向序列的开始位置，只有1，2个满足删除条件，所以直接返回第3，4个元素，tmp并没有改变。<br/>
-<link rel="stylesheet" href="../../Layout/CSS/jquery.lightbox-0.5.css" type="text/css" media="screen" />
-<script type="text/javascript" src="../../Layout/JS/jquery.lightbox-0.5.js"></script>
-<center> <a class="lightbox" href="images/delete1.jpeg"> <img class="lightbox " title="点击查看大图" src="images/delete1.jpeg" width="300"> </a> </center>
-<script type="text/javascript"> $(function() {$('a.lightbox').lightBox();}); </script>
+<link rel="stylesheet" href="../../Layout/CSS/jquery.lightbox-0.5.css" type="text/css" media="screen" /> <script type="text/javascript" src="../../Layout/JS/jquery.lightbox-0.5.js"></script> <center> <a class="lightbox" href="images/delete1.jpeg"> <img class="lightbox " title="点击查看大图" src="images/delete1.jpeg" width="300"> </a> </center> <script type="text/javascript"> $(function() {$('a.lightbox').lightBox();}); </script>
    再例如：<br/>
 </p>
 
@@ -210,10 +282,9 @@ CL-USER&gt; tmp
 ((1 2) (2 3) (3 4))
 </pre>
 
-<link rel="stylesheet" href="../../Layout/CSS/jquery.lightbox-0.5.css" type="text/css" media="screen" />
-<script type="text/javascript" src="../../Layout/JS/jquery.lightbox-0.5.js"></script>
-<center> <a class="lightbox" href="images/delete2.jpeg"> <img class="lightbox " title="点击查看大图" src="images/delete2.jpeg" width="300"> </a> </center>
-<script type="text/javascript"> $(function() {$('a.lightbox').lightBox();}); </script>
+
+
+<link rel="stylesheet" href="../../Layout/CSS/jquery.lightbox-0.5.css" type="text/css" media="screen" /> <script type="text/javascript" src="../../Layout/JS/jquery.lightbox-0.5.js"></script> <center> <a class="lightbox" href="images/delete2.jpeg"> <img class="lightbox " title="点击查看大图" src="images/delete2.jpeg" width="300"> </a> </center> <script type="text/javascript"> $(function() {$('a.lightbox').lightBox();}); </script>
 <p>
    所以delete经常和setf一起出现：<br/>
 </p>
@@ -270,13 +341,10 @@ CL-USER&gt; sort-test
 (4)
 </pre>
 
-<link rel="stylesheet" href="../../Layout/CSS/jquery.lightbox-0.5.css" type="text/css" media="screen" />
-<script type="text/javascript" src="../../Layout/JS/jquery.lightbox-0.5.js"></script>
-<center> <a class="lightbox" href="images/sort.jpg"> <img class="lightbox " title="点击查看大图" src="images/sort.jpg" width="300"> </a> </center>
-<script type="text/javascript"> $(function() {$('a.lightbox').lightBox();}); </script>
 
-<p>   <br/>
-</p></div>
+
+<link rel="stylesheet" href="../../Layout/CSS/jquery.lightbox-0.5.css" type="text/css" media="screen" /> <script type="text/javascript" src="../../Layout/JS/jquery.lightbox-0.5.js"></script> <center> <a class="lightbox" href="images/sort.jpg"> <img class="lightbox " title="点击查看大图" src="images/sort.jpg" width="300"> </a> </center> <script type="text/javascript"> $(function() {$('a.lightbox').lightBox();}); </script>   
+</div>
 
 </div>
 
@@ -396,6 +464,7 @@ CL-USER&gt; (map-into d #'* a b)
 
 <p>   reduce function sequence &amp;key key from-end start end initial-value =&gt; result<br/>
    序列第1，2个元素作为function参数返回结果与第3个元素作为function参数返回结果与第4个&hellip;.<br/>
+   如果有initial-value则将其先与第1个传递给function生成结果与第2个传递给function&hellip;.<br/>
    下面对列表求和：<br/>
 </p>
 
@@ -405,21 +474,158 @@ CL-USER&gt; (map-into d #'* a b)
 </pre>
 
 </div>
+
+</div>
+
+<div id="outline-container-1-15" class="outline-3">
+<h3 id="sec-1-15"><span class="section-number-3">1.15</span> length</h3>
+<div class="outline-text-3" id="text-1-15">
+
+<p>   返回序列长度。<br/>
+</p></div>
+
+</div>
+
+<div id="outline-container-1-16" class="outline-3">
+<h3 id="sec-1-16"><span class="section-number-3">1.16</span> reverse, nreverse</h3>
+<div class="outline-text-3" id="text-1-16">
+
+<p>   reverse sequence =&gt; reversed-sequence<br/>
+   返回逆转后的序列，区别在于：前者返回一个新的序列，而nreverse是原地操作。<br/>
+<div class="row-fluid"> <div class="span5">
+
+<pre class="src src-lisp">CL-USER&gt; foo
+(1 2 3)
+CL-USER&gt; (reverse foo)
+(3 2 1)
+CL-USER&gt; foo
+(1 2 3)
+CL-USER&gt; (nreverse foo)
+(3 2 1)
+CL-USER&gt; foo
+(1)
+</pre>
+
+</div> <div class="span5">
+<link rel="stylesheet" href="../../Layout/CSS/jquery.lightbox-0.5.css" type="text/css" media="screen" /> <script type="text/javascript" src="../../Layout/JS/jquery.lightbox-0.5.js"></script> <center> <a class="lightbox" href="images/nreverse.jpg"> <img class="lightbox " title="点击查看大图" src="images/nreverse.jpg" width="300"> </a> </center> <script type="text/javascript"> $(function() {$('a.lightbox').lightBox();}); </script>
+</div></div>
+</p></div>
 </div>
 
 </div>
 
 <div id="outline-container-2" class="outline-2">
-<h2 id="sec-2"><span class="section-number-2">2</span> 向量</h2>
+<h2 id="sec-2"><span class="section-number-2">2</span> 哈希表</h2>
 <div class="outline-text-2" id="text-2">
+
+<p>  哈希表是类似如下所示的特殊列表：<br/>
+<link rel="stylesheet" href="../../Layout/CSS/jquery.lightbox-0.5.css" type="text/css" media="screen" /> <script type="text/javascript" src="../../Layout/JS/jquery.lightbox-0.5.js"></script> <center> <a class="lightbox" href="images/hashtable.jpg"> <img class="lightbox " title="点击查看大图" src="images/hashtable.jpg" width="300"> </a> </center> <script type="text/javascript"> $(function() {$('a.lightbox').lightBox();}); </script>
+</p>
+</div>
+
+<div id="outline-container-2-1" class="outline-3">
+<h3 id="sec-2-1"><span class="section-number-3">2.1</span> make-hash-table</h3>
+<div class="outline-text-3" id="text-2-1">
+
+<p>   make-hash-table &amp;key test size rehash-size rehash-threshold =&gt; hash-table<br/>
+</p><ol>
+<li>test 指定此hashtable的key的比较函数，默认函数为eql<br/>
+</li>
+<li>size 此hashtable的初始空间，最多存储size*rehash-threshold个就必须扩展此哈希表<br/>
+</li>
+<li>rehash-size 当哈希表必须扩张时指定最小扩张数量。整数表示扩张指定个，浮点数表示扩张后是原来的倍数。<br/>
+</li>
+<li>rehash-threshold 已用空间与总空间比值的上限，超过此上限就需要进行扩张。<br/>
+</li>
+</ol>
+
+</div>
+
+</div>
+
+<div id="outline-container-2-2" class="outline-3">
+<h3 id="sec-2-2"><span class="section-number-3">2.2</span> gethash</h3>
+<div class="outline-text-3" id="text-2-2">
+
+<p>   gethash key hash-table &amp;optional default =&gt; value, present-p<br/>
+   (setf (gethash key hash-table &amp;optional default) new-value)<br/>
+   gethash取key所对的值，如果key不存在则返回default，若未指定default,则返回NIL。<br/>
+   为了区别key对应的value是nil还是key本来就不存在，gethash返回2个值。present-p为nil表示所查找的key不存在，此时value无效。<br/>
+   可以为gethash返回值赋值，如果存在则覆盖原来的值，如果不存在则将key,new-value插入到哈希表中。<br/>
+</p></div>
+
+</div>
+
+<div id="outline-container-2-3" class="outline-3">
+<h3 id="sec-2-3"><span class="section-number-3">2.3</span> remhash</h3>
+<div class="outline-text-3" id="text-2-3">
+
+<p>   remhash key hash-table =&gt; generalized-boolean<br/>
+   删除哈希表里的一对元素。返回值为NIL表key不存在。<br/>
+</p></div>
+
+</div>
+
+<div id="outline-container-2-4" class="outline-3">
+<h3 id="sec-2-4"><span class="section-number-3">2.4</span> maphash</h3>
+<div class="outline-text-3" id="text-2-4">
+
+<p>   maphash function hash-table =&gt; nil<br/>
+   function是个二参数函数，每次迭代取一对key,value传递给function.<br/>
+</p></div>
+
+</div>
+
+<div id="outline-container-2-5" class="outline-3">
+<h3 id="sec-2-5"><span class="section-number-3">2.5</span> hash-table-count</h3>
+<div class="outline-text-3" id="text-2-5">
+
+<p>   hash-table-count hash-table =&gt; count<br/>
+   返回哈希表中实体个数，若空则返回0。<br/>
+</p></div>
+
+</div>
+
+<div id="outline-container-2-6" class="outline-3">
+<h3 id="sec-2-6"><span class="section-number-3">2.6</span> hash-table-size</h3>
+<div class="outline-text-3" id="text-2-6">
+
+<p>   hash-table-size hash-table <code>&gt; size    返回哈希表大小，&gt;</code> hash-table-count<br/>
+</p></div>
+
+</div>
+
+<div id="outline-container-2-7" class="outline-3">
+<h3 id="sec-2-7"><span class="section-number-3">2.7</span> clrhash</h3>
+<div class="outline-text-3" id="text-2-7">
+
+<p>   clrhash hash-table =&gt; hash-table<br/>
+   清空哈希表。<br/>
+</p></div>
+
+</div>
+
+<div id="outline-container-2-8" class="outline-3">
+<h3 id="sec-2-8"><span class="section-number-3">2.8</span> hash-table-p</h3>
+<div class="outline-text-3" id="text-2-8">
+
+<p>   hash-table-p object =&gt; generalized-boolean<br/>
+</p></div>
+</div>
+
+</div>
+
+<div id="outline-container-3" class="outline-2">
+<h2 id="sec-3"><span class="section-number-2">3</span> 向量</h2>
+<div class="outline-text-2" id="text-3">
 
 <p>  CL中向量表式形式为 #(elt1 elt2 &hellip;)<br/>
 </p>
 </div>
 
-<div id="outline-container-2-1" class="outline-3">
-<h3 id="sec-2-1"><span class="section-number-3">2.1</span> 创建向量</h3>
-<div class="outline-text-3" id="text-2-1">
+<div id="outline-container-3-1" class="outline-3">
+<h3 id="sec-3-1"><span class="section-number-3">3.1</span> 创建向量</h3>
+<div class="outline-text-3" id="text-3-1">
 
 <ol>
 <li>vector &amp;rest objs =&gt; vector<br/>
@@ -450,6 +656,595 @@ CL-USER&gt; (map-into d #'* a b)
 </p></li>
 </ol>
 
+</div>
+</div>
+
+</div>
+
+<div id="outline-container-4" class="outline-2">
+<h2 id="sec-4"><span class="section-number-2">4</span> 列表</h2>
+<div class="outline-text-2" id="text-4">
+
+
+</div>
+
+<div id="outline-container-4-1" class="outline-3">
+<h3 id="sec-4-1"><span class="section-number-3">4.1</span> cons cell 点对单元</h3>
+<div class="outline-text-3" id="text-4-1">
+
+<p>   以下用CC简称Cons Cell.<br/>
+</p>
+</div>
+
+<div id="outline-container-4-1-1" class="outline-4">
+<h4 id="sec-4-1-1"><span class="section-number-4">4.1.1</span> cons</h4>
+<div class="outline-text-4" id="text-4-1-1">
+
+<p>    创建一个CC.<br/>
+</p></div>
+
+</div>
+
+<div id="outline-container-4-1-2" class="outline-4">
+<h4 id="sec-4-1-2"><span class="section-number-4">4.1.2</span> car, cdr</h4>
+<div class="outline-text-4" id="text-4-1-2">
+
+<p>    返回第1个，第2个值。<br/>
+</p></div>
+
+</div>
+
+<div id="outline-container-4-1-3" class="outline-4">
+<h4 id="sec-4-1-3"><span class="section-number-4">4.1.3</span> consp, atom</h4>
+<div class="outline-text-4" id="text-4-1-3">
+
+<p>    consp/atom object =&gt; generalized-boolean<br/>
+    测试是否是cons cell<br/>
+    测试是否是atom (非cons cell)<br/>
+</p></div>
+</div>
+
+</div>
+
+<div id="outline-container-4-2" class="outline-3">
+<h3 id="sec-4-2"><span class="section-number-3">4.2</span> listp</h3>
+<div class="outline-text-3" id="text-4-2">
+
+<p>   listp object =&gt; generalized-boolean<br/>
+   是否是cons cell或nil<br/>
+</p></div>
+
+</div>
+
+<div id="outline-container-4-3" class="outline-3">
+<h3 id="sec-4-3"><span class="section-number-3">4.3</span> null</h3>
+<div class="outline-text-3" id="text-4-3">
+
+<p>   null object =&gt; boolean<br/>
+   测试是否是空列表即nil<br/>
+   也可以用not但null只用于列表。<br/>
+</p></div>
+
+</div>
+
+<div id="outline-container-4-4" class="outline-3">
+<h3 id="sec-4-4"><span class="section-number-3">4.4</span> endp</h3>
+<div class="outline-text-3" id="text-4-4">
+
+<p>   endp list =&gt; generalized-boolean<br/>
+   如果是空列表是返回T，如果是非空列表则返回nil。<br/>
+   与null的区别在于：如果是非列表则引起异常。<br/>
+</p>
+
+
+<pre class="src src-lisp">CL-USER&gt; (null 'a)
+NIL
+CL-USER&gt; (endp 'a)
+<span style="color: #b22222;">; </span><span style="color: #b22222;">Evaluation aborted on #&lt;TYPE-ERROR expected-type: LIST datum: A&gt;.</span>
+</pre>
+
+</div>
+
+</div>
+
+<div id="outline-container-4-5" class="outline-3">
+<h3 id="sec-4-5"><span class="section-number-3">4.5</span> first, second, third&hellip;,tenth, rest</h3>
+<div class="outline-text-3" id="text-4-5">
+
+<p>   first, rest相当于car, cdr<br/>
+   first, second, thrid&hellip;返回第几个元素。<br/>
+</p></div>
+
+</div>
+
+<div id="outline-container-4-6" class="outline-3">
+<h3 id="sec-4-6"><span class="section-number-3">4.6</span> nth</h3>
+<div class="outline-text-3" id="text-4-6">
+
+<p>   nth n list =&gt; object<br/>
+   返回索引为n的元素。从0开始。<br/>
+</p></div>
+
+</div>
+
+<div id="outline-container-4-7" class="outline-3">
+<h3 id="sec-4-7"><span class="section-number-3">4.7</span> nthcdr</h3>
+<div class="outline-text-3" id="text-4-7">
+
+<p>   nthcdr n list =&gt; tail<br/>
+   等价于进行n次cdr操作。<br/>
+   (nthcdr 0 list)返回list本身。<br/>
+</p></div>
+
+</div>
+
+<div id="outline-container-4-8" class="outline-3">
+<h3 id="sec-4-8"><span class="section-number-3">4.8</span> member, member-if,not</h3>
+<div class="outline-text-3" id="text-4-8">
+
+<p>   member item list &amp;key key test test-not =&gt; tail<br/>
+   member-if predicate list &amp;key key =&gt; tail<br/>
+   查找item是否是list一员，如果是则返回以item开头的子列表。<br/>
+</p></div>
+
+</div>
+
+<div id="outline-container-4-9" class="outline-3">
+<h3 id="sec-4-9"><span class="section-number-3">4.9</span> append</h3>
+<div class="outline-text-3" id="text-4-9">
+
+
+<div class="row-fluid"> <div class="span5">
+<p>
+   append &amp;rest lists =&gt; result<br/>
+   所有lists合并成一个新的list并返回。<br/>
+   实际进行的操作：除最后一个list外所有其它list均进行复制操作，将复制后的list与最后一个list链接在一起，只有最后一个list是共享的。<br/>
+   </div> <div class="span5">
+<link rel="stylesheet" href="../../Layout/CSS/jquery.lightbox-0.5.css" type="text/css" media="screen" /> <script type="text/javascript" src="../../Layout/JS/jquery.lightbox-0.5.js"></script> <center> <a class="lightbox" href="images/append.jpg"> <img class="lightbox " title="点击查看大图" src="images/append.jpg" width="300"> </a> </center> <script type="text/javascript"> $(function() {$('a.lightbox').lightBox();}); </script>
+   </div></div>
+</p></div>
+
+</div>
+
+<div id="outline-container-4-10" class="outline-3">
+<h3 id="sec-4-10"><span class="section-number-3">4.10</span> nconc</h3>
+<div class="outline-text-3" id="text-4-10">
+
+
+<div class="row-fluid"> <div class="span5">
+<p>
+   nconc &amp;rest lists =&gt; concatenated-list<br/>
+   与append不同之处在于此函数为原地修改。<br/>
+</div> <div class="span5">
+<link rel="stylesheet" href="../../Layout/CSS/jquery.lightbox-0.5.css" type="text/css" media="screen" /> <script type="text/javascript" src="../../Layout/JS/jquery.lightbox-0.5.js"></script> <center> <a class="lightbox" href="images/nconc.jpg"> <img class="lightbox " title="点击查看大图" src="images/nconc.jpg" width="300"> </a> </center> <script type="text/javascript"> $(function() {$('a.lightbox').lightBox();}); </script>
+</div></div>
+</p></div>
+
+</div>
+
+<div id="outline-container-4-11" class="outline-3">
+<h3 id="sec-4-11"><span class="section-number-3">4.11</span> push</h3>
+<div class="outline-text-3" id="text-4-11">
+
+<p>   push item place =&gt; new-place-value<br/>
+   将item加入到place的前面，原地修改。<br/>
+</p>
+<p>
+   <b>经常使用到的一个组合是：push和nreverse，将元素PUSH进保存在局部变量的列表里然后进行 nreverse 操作</b><br/>
+</p>
+<p>   <br/>
+</p></div>
+
+</div>
+
+<div id="outline-container-4-12" class="outline-3">
+<h3 id="sec-4-12"><span class="section-number-3">4.12</span> last</h3>
+<div class="outline-text-3" id="text-4-12">
+
+<p>   last list &amp;optional n =&gt; tail<br/>
+   最后n个元素。<br/>
+</p>
+
+
+<pre class="src src-lisp">CL-USER&gt; (last (list 1 2 (list 3 4)))
+((3 4))
+</pre>
+
+
+
+<link rel="stylesheet" href="../../Layout/CSS/jquery.lightbox-0.5.css" type="text/css" media="screen" /> <script type="text/javascript" src="../../Layout/JS/jquery.lightbox-0.5.js"></script> <center> <a class="lightbox" href="images/last.jpg"> <img class="lightbox " title="点击查看大图" src="images/last.jpg" width="300"> </a> </center> <script type="text/javascript"> $(function() {$('a.lightbox').lightBox();}); </script>
+</div>
+
+</div>
+
+<div id="outline-container-4-13" class="outline-3">
+<h3 id="sec-4-13"><span class="section-number-3">4.13</span> butlast, nbutlast</h3>
+<div class="outline-text-3" id="text-4-13">
+
+<p>   butlast list &amp;optional n =&gt; result-list<br/>
+   除了最后n个元素。<br/>
+   nbutlast可能修改原列表。<br/>
+</p>
+
+
+<pre class="src src-lisp">CL-USER&gt; a
+(1 2 (3 4))
+CL-USER&gt; (nbutlast a)
+(1 2)
+CL-USER&gt; a
+(1 2)
+</pre>
+
+</div>
+
+</div>
+
+<div id="outline-container-4-14" class="outline-3">
+<h3 id="sec-4-14"><span class="section-number-3">4.14</span> list*</h3>
+<div class="outline-text-3" id="text-4-14">
+
+<p>   与list的区别在于：list最后一个元素是做为最后一个cons的car,而list*的最后一个元素做为最后一个cons的cdr.<br/>
+<div class="row-fluid"> <div class="span5">
+
+<pre class="src src-lisp">CL-USER&gt; (list 1 2 3)
+(1 2 3)
+CL-USER&gt; (list* 1 2 3)
+(1 2 . 3)
+CL-USER&gt; (list* 1 2 (list 3 4))
+(1 2 3 4)
+</pre>
+
+</div> <div class="span5">
+<link rel="stylesheet" href="../../Layout/CSS/jquery.lightbox-0.5.css" type="text/css" media="screen" /> <script type="text/javascript" src="../../Layout/JS/jquery.lightbox-0.5.js"></script> <center> <a class="lightbox" href="images/list.jpg"> <img class="lightbox " title="点击查看大图" src="images/list.jpg" width="300"> </a> </center> <script type="text/javascript"> $(function() {$('a.lightbox').lightBox();}); </script>
+<br/>
+<link rel="stylesheet" href="../../Layout/CSS/jquery.lightbox-0.5.css" type="text/css" media="screen" /> <script type="text/javascript" src="../../Layout/JS/jquery.lightbox-0.5.js"></script> <center> <a class="lightbox" href="images/listplus.jpg"> <img class="lightbox " title="点击查看大图" src="images/listplus.jpg" width="300"> </a> </center> <script type="text/javascript"> $(function() {$('a.lightbox').lightBox();}); </script>
+</div></div>
+</p></div>
+
+</div>
+
+<div id="outline-container-4-15" class="outline-3">
+<h3 id="sec-4-15"><span class="section-number-3">4.15</span> rplaca, rplacd</h3>
+<div class="outline-text-3" id="text-4-15">
+
+<p>   rplaca cons object =&gt; cons<br/>
+   rplacd cons object =&gt; cons<br/>
+   用object替换掉cons的car/cdr.<br/>
+</p></div>
+
+</div>
+
+<div id="outline-container-4-16" class="outline-3">
+<h3 id="sec-4-16"><span class="section-number-3">4.16</span> mapcar, maplist, mapcan, mapcon, mapc, mapl</h3>
+<div class="outline-text-3" id="text-4-16">
+
+<p>   mapcar function &amp;rest lists+ =&gt; result-list<br/>
+</p><ol>
+<li>mapcar 第次迭代一个元素。<br/>
+
+
+
+<pre class="src src-lisp">CL-USER&gt; (mapcar #'+ '(1 2) '(3 4))
+(4 6)
+</pre>
+
+</li>
+<li>maplist 第N次迭代取list的第N-1次cdr<br/>
+      第1次function(list1, list2), 第2次 function( (cdr list1) (cdr list2)) 第3次 function( (cddr list1) (cddr list2)) 第4次 function( (cdddr list1) (cdddr list2)) &hellip;<br/>
+
+
+
+<pre class="src src-lisp">CL-USER&gt; (maplist #'append '(1 2 3 4) '(5 6) '(7 8 9))
+((1 2 3 4 5 6 7 8 9) (2 3 4 6 8 9))     <span style="color: #b22222;">;</span><span style="color: #b22222;">&#31532;1&#27425;(append '(1 2 3 4) '(5 6) '(7 8 9)) &#31532;2&#27425;(append '(2 3 4) '(6) '(8 9)) &#27599;&#27425;append&#36820;&#22238;&#32467;&#26524;&#20316;&#20026;&#32467;&#26524;&#21015;&#34920;&#30340;&#19968;&#20803;&#32032;</span>
+(maplist #'(<span style="color: #a020f0;">lambda</span> (x) (<span style="color: #a020f0;">if</span> (member (car x) (cdr x)) 0 1)) '(a b a c d b c)) =&gt;  (0 0 1 0 1 1 1)
+</pre>
+
+</li>
+<li>mapcan, mapcon分别相似于mapcar, maplist，只是用函数结果构成列表时不是用的list而是nconc<br/>
+
+
+
+<pre class="src src-lisp">(mapcon f x1 ... xn)
+  ==  (apply #'nconc (maplist f x1 ... xn))
+</pre>
+
+
+<pre class="src src-lisp">CL-USER&gt; (setf test '(1 2 3))
+(1 2 3)
+CL-USER&gt; (mapcar #'(<span style="color: #a020f0;">lambda</span> (x) (and (numberp x) (list x))) test)
+((1) (2) (3))      <span style="color: #b22222;">;</span><span style="color: #b22222;">&#31532;1&#27425;&#36820;&#22238;(1),&#31532;2&#27425;(2)...&#32467;&#26524;(list (1) (2) (3)) =&gt; ((1) (2) (3))</span>
+CL-USER&gt; (mapcan #'(<span style="color: #a020f0;">lambda</span> (x) (and (numberp x) (list x))) test)
+(1 2 3)            <span style="color: #b22222;">;                      </span><span style="color: #b22222;">&#32467;&#26524;(nconc (1) (2) (3)) =&gt; (1 2 3)</span>
+</pre>
+
+</li>
+<li>mapc,mapl类似mapcar,maplist只是并不累积应用function后的返回值而返回参数第1个列表。<br/>
+      当返回值不重要时使用此函数。<br/>
+
+
+
+<pre class="src src-lisp">CL-USER&gt; (setf dummy nil)
+NIL
+CL-USER&gt; (mapc #'(<span style="color: #a020f0;">lambda</span> (<span style="color: #228b22;">&amp;rest</span> x) (setq dummy (append dummy x))) '(1 2 3 4) '(a b c) '(x y z))
+(1 2 3 4)                               <span style="color: #b22222;">;</span><span style="color: #b22222;">&#36820;&#22238;&#20540;&#19982;mapcar&#19981;&#21516;</span>
+CL-USER&gt; dummy
+(1 A X 2 B Y 3 C Z)                     <span style="color: #b22222;">;</span><span style="color: #b22222;">&#20294;&#27599;&#27425;&#20256;&#36882;&#21442;&#25968;&#21644;mapcar&#30456;&#21516;</span>
+</pre>
+
+</li>
+</ol>
+
+</div>
+
+</div>
+
+<div id="outline-container-4-17" class="outline-3">
+<h3 id="sec-4-17"><span class="section-number-3">4.17</span> ldiff, tailp</h3>
+<div class="outline-text-3" id="text-4-17">
+
+<p>   tailp object list =&gt; generalized-boolean<br/>
+   ldiff list object =&gt; result-list<br/>
+   tailp 如果object是list的尾子列表则返回真。<br/>
+   ldiff 如果object是list的尾子列表则返回list去掉object后的列表，不修改原列表。<br/>
+</p></div>
+
+</div>
+
+<div id="outline-container-4-18" class="outline-3">
+<h3 id="sec-4-18"><span class="section-number-3">4.18</span> revappend, nrevconc</h3>
+<div class="outline-text-3" id="text-4-18">
+
+<p>   revappend list tail =&gt; result-list<br/>
+   nreconc list tail =&gt; result-list<br/>
+   revappend 拷贝list，将其进行逆转，将tail接到其后。<br/>
+   nrevconc 对list逆转采用的是nreverse.<br/>
+   前者并未修改任何列表，后者修改了list并未修改tail.<br/>
+</p></div>
+</div>
+
+</div>
+
+<div id="outline-container-5" class="outline-2">
+<h2 id="sec-5"><span class="section-number-2">5</span> 列表当树</h2>
+<div class="outline-text-2" id="text-5">
+
+
+</div>
+
+<div id="outline-container-5-1" class="outline-3">
+<h3 id="sec-5-1"><span class="section-number-3">5.1</span> copy-tree, copy-list</h3>
+<div class="outline-text-3" id="text-5-1">
+
+<p>   与copy-list的区别在于：彻底地拷贝一个列表。<br/>
+   copy-list只拷贝最外层的结构，而深层的则被共享。<br/>
+<link rel="stylesheet" href="../../Layout/CSS/jquery.lightbox-0.5.css" type="text/css" media="screen" /> <script type="text/javascript" src="../../Layout/JS/jquery.lightbox-0.5.js"></script> <center> <a class="lightbox" href="images/copy-list.jpg"> <img class="lightbox " title="点击查看大图" src="images/copy-list.jpg" width="300"> </a> </center> <script type="text/javascript"> $(function() {$('a.lightbox').lightBox();}); </script>
+</p></div>
+
+</div>
+
+<div id="outline-container-5-2" class="outline-3">
+<h3 id="sec-5-2"><span class="section-number-3">5.2</span> tree-equal</h3>
+<div class="outline-text-3" id="text-5-2">
+
+<p>   tree-equal tree-1 tree-2 &amp;key test test-not =&gt; generalized-boolean<br/>
+   深层次比较，不仅支干相同，叶子也相同。<br/>
+</p></div>
+
+</div>
+
+<div id="outline-container-5-3" class="outline-3">
+<h3 id="sec-5-3"><span class="section-number-3">5.3</span> subst, subst-if, subst-if-not</h3>
+<div class="outline-text-3" id="text-5-3">
+
+<p>   subst new old tree &amp;key key test test-not =&gt; new-tree<br/>
+   subst-if new predicate tree &amp;key key =&gt; new-tree<br/>
+   对树的每个结点都进行比较替换。<br/>
+</p>
+
+
+<pre class="src src-lisp">CL-USER&gt; a
+((11 2) (3 4) (5 6))
+CL-USER&gt; (substitute 1 11 a)
+((11 2) (3 4) (5 6))            <span style="color: #b22222;">;;</span><span style="color: #b22222;">&#26367;&#25442;&#22833;&#36133;&#65292;&#31532;1&#27425;&#25343;11&#19982;(11 2)&#27604;&#36739;&#65292;&#31532;2&#27425;&#19982;(3 4)&#27604;&#36739;&#65292;&#24403;&#28982;&#22833;&#36133;</span>
+CL-USER&gt; (subst 1 11 a)
+((1 2) (3 4) (5 6))             <span style="color: #b22222;">;;</span><span style="color: #b22222;">&#26367;&#25442;&#25104;&#21151;&#65292;&#36941;&#21382;&#26641;&#36827;&#34892;&#26367;&#25442;</span>
+</pre>
+
+</div>
+</div>
+
+</div>
+
+<div id="outline-container-6" class="outline-2">
+<h2 id="sec-6"><span class="section-number-2">6</span> 列表当集合</h2>
+<div class="outline-text-2" id="text-6">
+
+
+</div>
+
+<div id="outline-container-6-1" class="outline-3">
+<h3 id="sec-6-1"><span class="section-number-3">6.1</span> adjoin</h3>
+<div class="outline-text-3" id="text-6-1">
+
+<p>   adjoin item list &amp;key key test test-not =&gt; new-list<br/>
+   如果item不在list中则压入，返回插入后列表。<br/>
+   与pushnew区别在于：不修改原列表。<br/>
+</p></div>
+
+</div>
+
+<div id="outline-container-6-2" class="outline-3">
+<h3 id="sec-6-2"><span class="section-number-3">6.2</span> pushnew</h3>
+<div class="outline-text-3" id="text-6-2">
+
+<p>   pushnew item place &amp;key key test test-not<br/>
+   将item压入place中，如重复则什么也不做。其中重复判断标准由函数test决定，key决定传递给test的参数。<br/>
+   &lt;=&gt; (setf place (adjoin item list))<br/>
+</p></div>
+
+</div>
+
+<div id="outline-container-6-3" class="outline-3">
+<h3 id="sec-6-3"><span class="section-number-3">6.3</span> intersection, union, set-difference, set-exclusive-or</h3>
+<div class="outline-text-3" id="text-6-3">
+
+<p>   intersection list-1 list-2 &amp;key key test test-not =&gt; result-list<br/>
+   求交并差对称差<br/>
+</p></div>
+
+</div>
+
+<div id="outline-container-6-4" class="outline-3">
+<h3 id="sec-6-4"><span class="section-number-3">6.4</span> subsetp</h3>
+<div class="outline-text-3" id="text-6-4">
+
+<p>   subsetp list-1 list-2 &amp;key key test test-not =&gt; generalized-boolean<br/>
+   判断list1是否是list2的子集。<br/>
+</p>
+
+
+<pre class="src src-lisp">CL-USER&gt; (subsetp (list 1 1 2) (list 1 2 3))
+T
+CL-USER&gt; (subsetp (list 1 4) (list 1 2 3))
+NIL
+</pre>
+
+
+</div>
+</div>
+
+</div>
+
+<div id="outline-container-7" class="outline-2">
+<h2 id="sec-7"><span class="section-number-2">7</span> 列表当关联列表，属性列表</h2>
+<div class="outline-text-2" id="text-7">
+
+
+</div>
+
+<div id="outline-container-7-1" class="outline-3">
+<h3 id="sec-7-1"><span class="section-number-3">7.1</span> alist</h3>
+<div class="outline-text-3" id="text-7-1">
+
+<p>   关联列表相当于小型的哈希表。其元素为cons.<br/>
+</p>
+</div>
+
+<div id="outline-container-7-1-1" class="outline-4">
+<h4 id="sec-7-1-1"><span class="section-number-4">7.1.1</span> assoc, assoc-if, -not</h4>
+<div class="outline-text-4" id="text-7-1-1">
+
+<p>    assoc item alist &amp;key key test test-not =&gt; entry<br/>
+    assoc-if predicate alist &amp;key key =&gt; entry<br/>
+    在alist中查询item.<br/>
+</p></div>
+
+</div>
+
+<div id="outline-container-7-1-2" class="outline-4">
+<h4 id="sec-7-1-2"><span class="section-number-4">7.1.2</span> acons</h4>
+<div class="outline-text-4" id="text-7-1-2">
+
+<p>   在alist前面加上一对键值：<br/>
+</p>
+
+
+<pre class="src src-lisp">CL-USER&gt; (setf alist (cons (cons 3 <span style="color: #8b2252;">"three"</span>) alist))
+</pre>
+
+<p>
+   CL提供了函数acons:<br/>
+</p>
+
+
+<pre class="src src-lisp">CL-USER&gt; (setf alist (acons 3 <span style="color: #8b2252;">"three"</span> alist))
+</pre>
+
+<p>
+   <b>由于acons并非原地修改所以要想保存结果给原来值必须要借助setf</b><br/>
+</p></div>
+
+</div>
+
+<div id="outline-container-7-1-3" class="outline-4">
+<h4 id="sec-7-1-3"><span class="section-number-4">7.1.3</span> pairlis</h4>
+<div class="outline-text-4" id="text-7-1-3">
+
+<p>    pairlis keys data &amp;optional alist =&gt; new-alist<br/>
+</p>
+
+
+<pre class="src src-lisp">CL-USER&gt; (pairlis '(a b c) '(1 2 3))
+((C . 3) (B . 2) (A . 1))
+</pre>
+
+</div>
+
+</div>
+
+<div id="outline-container-7-1-4" class="outline-4">
+<h4 id="sec-7-1-4"><span class="section-number-4">7.1.4</span> copy-alist</h4>
+<div class="outline-text-4" id="text-7-1-4">
+
+<p>    比copy-list多拷贝了每个元素的cons结构。<br/>
+<link rel="stylesheet" href="../../Layout/CSS/jquery.lightbox-0.5.css" type="text/css" media="screen" /> <script type="text/javascript" src="../../Layout/JS/jquery.lightbox-0.5.js"></script> <center> <a class="lightbox" href="images/copy-alist.jpg"> <img class="lightbox " title="点击查看大图" src="images/copy-alist.jpg" width="300"> </a> </center> <script type="text/javascript"> $(function() {$('a.lightbox').lightBox();}); </script>
+</p></div>
+</div>
+
+</div>
+
+<div id="outline-container-7-2" class="outline-3">
+<h3 id="sec-7-2"><span class="section-number-3">7.2</span> plist</h3>
+<div class="outline-text-3" id="text-7-2">
+
+<p>   与alist不同，plist是没有分支的列表，第n个值与第n+1个值构成键值对（n为奇数）。<br/>
+</p>
+
+
+<pre class="src src-lisp">CL-USER&gt; (setf plist '(a 1 b 2 c 3))
+</pre>
+
+
+</div>
+
+<div id="outline-container-7-2-1" class="outline-4">
+<h4 id="sec-7-2-1"><span class="section-number-4">7.2.1</span> getf</h4>
+<div class="outline-text-4" id="text-7-2-1">
+
+<p>    getf plist indicator &amp;optional default =&gt; value<br/>
+    (setf (getf place indicator &amp;optional default) new-value)<br/>
+    从plist中查找indicator对应的值，若不存在则返回默认值default.不存在default则返回NIL。<br/>
+</p>
+
+
+<pre class="src src-lisp">CL-USER&gt; (getf plist 'a)
+1
+CL-USER&gt; (getf plist 'd <span style="color: #8b2252;">"no found"</span>)
+<span style="color: #8b2252;">"no found"</span>
+</pre>
+
+</div>
+
+</div>
+
+<div id="outline-container-7-2-2" class="outline-4">
+<h4 id="sec-7-2-2"><span class="section-number-4">7.2.2</span> remf</h4>
+<div class="outline-text-4" id="text-7-2-2">
+
+<p>    remf place indicator =&gt; generalized-boolean<br/>
+    从属性列表place中删除indicator对应的键值。<br/>
+</p>
+
+
+<pre class="src src-lisp">CL-USER&gt; plist
+(A 1 B 2 C 3)
+CL-USER&gt; (remf plist 'a)
+T
+CL-USER&gt; plist
+(B 2 C 3)
+</pre>
+
+</div>
 </div>
 </div>
 </div>
