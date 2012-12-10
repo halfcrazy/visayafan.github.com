@@ -2,7 +2,7 @@
 from subprocess import call
 import re
 
-call('cd ~/visayafan.github.com', shell=True)
+#call('cd ~/visayafan.github.com', shell=True)
 call('git blame index.html > shan.html', shell=True)
 content = open('shan.html', 'r').read()
 call('rm -rf shan.html', shell=True)
