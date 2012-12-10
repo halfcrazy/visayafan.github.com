@@ -1,0 +1,277 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+               "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-CN" xml:lang="zh-CN">
+<head>
+<title>CL:面向对象</title>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
+<meta name="title" content="CL:面向对象"/>
+<meta name="generator" content="Org-mode"/>
+<meta name="generated" content="2012-12-10 21:58:14 CST"/>
+<meta name="author" content="visayafan"/>
+<meta name="description" content=""/>
+<meta name="keywords" content=""/>
+
+
+
+</head>
+<body>
+
+
+<div id="content">
+<h1 class="title">CL:面向对象</h1>
+
+
+<!-- <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"> </script> -->
+<link rel="stylesheet" type="text/css" href="../../Layout/CSS/bootstrap_old.css" />
+<link rel="stylesheet" type="text/css" href="../../Layout/CSS/vf.css" />
+<script src="../../Layout/JS/jquery_1.7.1.js"></script>
+<script src="../../Layout/JS/bootstrap_old.js"></script>
+
+
+<p>
+与C++或Java不同，CL类中的成员叫slot(槽)，CL中成员函数和数据成员是分开的。<br/>
+</p>
+<div style="text-align: center">
+
+<link rel="stylesheet" href="../../Layout/CSS/jquery.lightbox-0.5.css" type="text/css" media="screen" /> <script type="text/javascript" src="../../Layout/JS/jquery.lightbox-0.5.js"></script> <center> <a class="lightbox" href="images/lisp_class.jpeg"> <img class="lightbox " title="点击查看大图" src="images/lisp_class.jpeg" width="300"> </a> </center> <script type="text/javascript"> $(function() {$('a.lightbox').lightBox();}); </script>
+
+</div>
+
+<p>
+<code>defgeneric</code> 定义一个广义函数，此函数不做任何事情。<br/>
+<code>defmethod</code> 定义方法的具体实现。<br/>
+每个类都有一个 <code>class procedure order</code> ，根据相关程度排序，越相关的排在最前面。函数实现内可以通过调用 <code>call-next-method</code> 来调用下一个相关方法。<br/>
+图中由于没有直接实现C的方法，与它最相关的就是其基类的相关方法，如果C有多个基类则继承列表中排在前面的优先级大。<br/>
+</p>
+
+<div id="table-of-contents">
+<h2>目录</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#sec-1">1 defclass 创建一个类</a></li>
+<li><a href="#sec-2">2 广义函数</a></li>
+<li><a href="#sec-3">3 with-slots和with-accessors来方便访问类中slot</a></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-1" class="outline-2">
+<h2 id="sec-1"><span class="section-number-2">1</span> defclass 创建一个类</h2>
+<div class="outline-text-2" id="text-1">
+
+<p>  defclass class-name ({superclass-name}*) ({slot-specifier}*)<br/>
+</p>
+<p>
+  其中slot-specifier形如：(slot-name [slot-option])<br/>
+  slot-option可以是：<br/>
+</p><ol>
+<li>:initarg initarg-name 使用 <code>make-instance</code> 生成一个对象时可以根据此关键字来指定初始值<br/>
+</li>
+<li>:initform form 若创建对象时没有指定值则默认使用form的求值结果<br/>
+</li>
+<li>:reader reader-function-name 可以使用 reader-function-name 来访问该成员<br/>
+</li>
+<li>:writer writer-function-name 可以使用 writer-function-name 来设置该成员<br/>
+</li>
+<li>:accessor accessor-function-name 可以同时读取和创建对应的setf函数<br/>
+</li>
+<li>:documentation string 文档<br/>
+</li>
+<li>: allocation :class|:instance 默认是:instance，:class表示该类所有对象共享此<br/>
+</li>
+</ol>
+
+
+<p>
+  initarg, reader, writer, accessor 可以有多个值，例如：子类与父类为相同slot指定了不同的initarg-name时，子类中2个intiarg-name都可以用。<br/>
+</p>
+
+
+<pre class="src src-lisp">CL-USER&gt; (<span style="color: #a020f0;">defclass</span> <span style="color: #228b22;">A</span> ()
+           (x y))
+</pre>
+
+<p>
+  定义一个名为A的类，有2个slot：x, y.<br/>
+</p>
+
+
+<pre class="src src-lisp">CL-USER&gt; (<span style="color: #a020f0;">defclass</span> <span style="color: #228b22;">A</span> ()
+           ((x
+            <span style="color: #483d8b;">:initarg</span> <span style="color: #483d8b;">:xarg</span>
+            <span style="color: #483d8b;">:initform</span> (<span style="color: #ff0000; font-weight: bold;">error</span> <span style="color: #8b2252;">"You must specify this value"</span>))
+            (y
+             <span style="color: #483d8b;">:initarg</span> <span style="color: #483d8b;">:yarg</span>
+             <span style="color: #483d8b;">:initform</span> 0)))
+CL-USER&gt; (make-instance 'A)
+<span style="color: #b22222;">; </span><span style="color: #b22222;">Evaluation aborted on #&lt;SIMPLE-ERROR "You must specify this value" {B1B0081}&gt;.</span>
+CL-USER&gt; (setf a-obj (make-instance 'A <span style="color: #483d8b;">:xarg</span> 10))
+CL-USER&gt; (slot-value a-obj 'x)
+10
+CL-USER&gt; (slot-value a-obj 'y)
+0
+</pre>
+
+<p>
+  为x添加初始时使用的关键字xarg，如果初始时没有指定其值，则initiform会执行，而error函数通知系统出错，通过这种方法可以强制要求用户为其slot传递初始值。<br/>
+  通过 <code>slot-value</code> 可以访问某对象的slot。可以直接为其返回值加以setf函数来设置其值： <code>(setf (slot-value a-obj 'x) 20)</code> 。<br/>
+  可以为slot添加 :reader :writer来方便取值赋值。<br/>
+</p>
+
+
+<pre class="src src-lisp">CL-USER&gt; (<span style="color: #a020f0;">defclass</span> <span style="color: #228b22;">B</span> ()
+           ((x <span style="color: #483d8b;">:initarg</span> <span style="color: #483d8b;">:x</span> <span style="color: #483d8b;">:initform</span> 10 <span style="color: #483d8b;">:reader</span> read-x)
+           (y <span style="color: #483d8b;">:initarg</span> <span style="color: #483d8b;">:y</span> <span style="color: #483d8b;">:initform</span> 10 <span style="color: #483d8b;">:reader</span> read-y <span style="color: #483d8b;">:writer</span> (setf read-y))))
+CL-USER&gt; (setf b-obj (make-instance 'B <span style="color: #483d8b;">:x</span> 20))
+CL-USER&gt; (read-x b-obj)
+20
+CL-USER&gt; (read-y b-obj)
+10
+CL-USER&gt; (setf (read-y b-obj) 30)
+30
+CL-USER&gt; (read-y b-obj)
+30
+</pre>
+
+</div>
+
+</div>
+
+<div id="outline-container-2" class="outline-2">
+<h2 id="sec-2"><span class="section-number-2">2</span> 广义函数</h2>
+<div class="outline-text-2" id="text-2">
+
+
+
+
+<pre class="src src-lisp">CL-USER&gt; (<span style="color: #a020f0;">defgeneric</span> <span style="color: #0000ff;">setb</span> (bt x-value y-value))
+CL-USER&gt; (<span style="color: #a020f0;">defmethod</span> <span style="color: #0000ff;">setb</span> ((bt B) x-value y-value)
+           (setf (slot-value bt 'x) x-value
+                 (slot-value bt 'y) y-value))
+CL-USER&gt; (setb b-obj 1 2)
+2
+CL-USER&gt; (read-x b-obj)
+1
+CL-USER&gt; (read-y b-obj)
+2
+</pre>
+
+<p>
+  defmethod中参数必须与相应的defgeneric中的参数一致，且指定某个参数的类型。<br/>
+  设C继承了B<br/>
+</p>
+
+
+<pre class="src src-lisp">CL-USER&gt; (<span style="color: #a020f0;">defclass</span> <span style="color: #228b22;">C</span>(B)
+           ((z <span style="color: #483d8b;">:initarg</span> <span style="color: #483d8b;">:z</span> <span style="color: #483d8b;">:initform</span> 0)))
+CL-USER&gt; (setf c-obj (make-instance 'C))
+CL-USER&gt; (setb c-obj 1 2)
+</pre>
+
+<p>
+  由于没有实现参数为C的setb故调用的是参数为B的setb。<br/>
+</p>
+
+
+<pre class="src src-lisp">CL-USER&gt; (<span style="color: #a020f0;">defmethod</span> <span style="color: #0000ff;">setb</span> ((bt C) x-value y-value)
+           (format t <span style="color: #8b2252;">"C"</span>))
+CL-USER&gt; (setb c-obj 1 2)
+C
+NIL
+</pre>
+
+<p>
+  实现参数C的setb后调用与之最相关的参数为C的setb.<br/>
+  在参数C的setb中加入 <code>call-next-method</code> 方法，则调用 <code>call-procedure-order</code> 中比其低一级的方法：<br/>
+</p>
+
+
+<pre class="src src-lisp">CL-USER&gt; (<span style="color: #a020f0;">defmethod</span> <span style="color: #0000ff;">setb</span> ((bt C) x-value y-value)
+           (format t <span style="color: #8b2252;">"C"</span>)
+           (call-next-method))
+CL-USER&gt; (setb c-obj 1 2)
+C
+2
+CL-USER&gt; (read-x c-obj)
+1
+CL-USER&gt; (read-y c-obj)
+2
+</pre>
+
+<p>
+  即调用完参数C的setb又调用了参数B的setb.（相当于C++中通过::域作用符来调用基类的成员函数）。<br/>
+</p></div>
+
+</div>
+
+<div id="outline-container-3" class="outline-2">
+<h2 id="sec-3"><span class="section-number-2">3</span> with-slots和with-accessors来方便访问类中slot</h2>
+<div class="outline-text-2" id="text-3">
+
+<p>  每次访问对象中的slot时可以使用slot-value，但写起来麻烦，为了简化引入了with-slots:<br/>
+</p>
+
+
+<pre class="src src-lisp">(<span style="color: #a020f0;">with-slots</span> (slots*) instance-form
+      body-form*)
+</pre>
+
+<p>
+  其中slot为对象中slot名称，形式为 (slot1 slot2 ..)，可以定义其别名：((s1 slot1) (s2 slot2) ..)避免名称过长引起的不便。<br/>
+  上面的参数为B的setb可以写成：<br/>
+</p>
+
+
+<pre class="src src-lisp">CL-USER&gt; (<span style="color: #a020f0;">defmethod</span> <span style="color: #0000ff;">setb</span> ((bt B) x-value y-value)
+           (<span style="color: #a020f0;">with-slots</span> (x y) bt
+             (setf x x-value y y-value))) 
+CL-USER&gt; (setb b-obj 3 4)
+4
+CL-USER&gt; (read-x b-obj)
+3
+</pre>
+
+<p>
+  with-accessors与with-slots形式相同，区别在于槽列中第一项为变量名和:accessor中指定的函数：<br/>
+</p>
+
+
+<pre class="src src-lisp">CL-USER&gt; (<span style="color: #a020f0;">defclass</span> <span style="color: #228b22;">thing</span> ()
+           ((x <span style="color: #483d8b;">:initarg</span> <span style="color: #483d8b;">:x</span> <span style="color: #483d8b;">:accessor</span> thing-x)
+            (y <span style="color: #483d8b;">:initarg</span> <span style="color: #483d8b;">:y</span> <span style="color: #483d8b;">:accessor</span> thing-y)))
+CL-USER&gt; (<span style="color: #a020f0;">defmethod</span> (<span style="color: #0000ff;">setf thing-x</span>) <span style="color: #483d8b;">:before</span> (new-x (thing thing))
+           (format t <span style="color: #8b2252;">"~&amp;Changing X from ~D to ~D in ~S.~%"</span>
+                   (thing-x thing) new-x thing))
+CL-USER&gt; (setq thing1 (make-instance 'thing <span style="color: #483d8b;">:x</span> 1 <span style="color: #483d8b;">:y</span> 2))
+CL-USER&gt; (setq thing2 (make-instance 'thing <span style="color: #483d8b;">:x</span> 7 <span style="color: #483d8b;">:y</span> 8))
+CL-USER&gt; (<span style="color: #a020f0;">with-accessors</span> ((x1 thing-x) (y1 thing-y))
+             thing1
+           (<span style="color: #a020f0;">with-accessors</span> ((x2 thing-x) (y2 thing-y))
+               thing2
+             (list (list x1 (thing-x thing1) y1 (thing-y thing1)
+                         x2 (thing-x thing2) y2 (thing-y thing2))
+                   (setq x1 (+ y1 x2))
+                   (list x1 (thing-x thing1) y1 (thing-y thing1)
+                         x2 (thing-x thing2) y2 (thing-y thing2))
+                   (setf (thing-x thing2) (list x1))
+                   (list x1 (thing-x thing1) y1 (thing-y thing1)
+                         x2 (thing-x thing2) y2 (thing-y thing2)))))
+</pre>
+
+<p>
+  结果：<br/>
+</p>
+
+
+<pre class="example">Changing X from 1 to 9 in #&lt;THING {C0F6079}&gt;.
+Changing X from 7 to (9) in #&lt;THING {C0F6001}&gt;.
+((1 1 2 2 7 7 8 8) 9 (9 9 2 2 7 7 8 8) (9) (9 9 2 2 (9) (9) 8 8))
+</pre>
+
+</div>
+</div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,156 @@
+#+OPTIONS: ^:{} _:{} num:t toc:t \n:t
+#+INCLUDE "../../template.org"
+#+SETUPFILE: "../../extension.org"
+#+title: CL:面向对象
+
+与C++或Java不同，CL类中的成员叫slot(槽)，CL中成员函数和数据成员是分开的。
+#+BEGIN_CENTER
+{{{lightbox(images/lisp_class.jpeg)}}}
+#+END_CENTER
+=defgeneric= 定义一个广义函数，此函数不做任何事情。
+=defmethod= 定义方法的具体实现。
+每个类都有一个 =class procedure order= ，根据相关程度排序，越相关的排在最前面。函数实现内可以通过调用 =call-next-method= 来调用下一个相关方法。
+图中由于没有直接实现C的方法，与它最相关的就是其基类的相关方法，如果C有多个基类则继承列表中排在前面的优先级大。
+
+* defclass 创建一个类
+  defclass class-name ({superclass-name}*) ({slot-specifier}*)
+
+  其中slot-specifier形如：(slot-name [slot-option])
+  slot-option可以是：
+  1. :initarg initarg-name 使用 =make-instance= 生成一个对象时可以根据此关键字来指定初始值
+  2. :initform form 若创建对象时没有指定值则默认使用form的求值结果
+  3. :reader reader-function-name 可以使用 reader-function-name 来访问该成员
+  4. :writer writer-function-name 可以使用 writer-function-name 来设置该成员
+  5. :accessor accessor-function-name 可以同时读取和创建对应的setf函数
+  6. :documentation string 文档
+  7. : allocation :class|:instance 默认是:instance，:class表示该类所有对象共享此
+
+  initarg, reader, writer, accessor 可以有多个值，例如：子类与父类为相同slot指定了不同的initarg-name时，子类中2个intiarg-name都可以用。
+#+begin_src lisp
+CL-USER> (defclass A ()
+           (x y))
+#+end_src
+  定义一个名为A的类，有2个slot：x, y.
+#+begin_src lisp
+CL-USER> (defclass A ()
+           ((x
+            :initarg :xarg
+            :initform (error "You must specify this value"))
+            (y
+             :initarg :yarg
+             :initform 0)))
+CL-USER> (make-instance 'A)
+; Evaluation aborted on #<SIMPLE-ERROR "You must specify this value" {B1B0081}>.
+CL-USER> (setf a-obj (make-instance 'A :xarg 10))
+CL-USER> (slot-value a-obj 'x)
+10
+CL-USER> (slot-value a-obj 'y)
+0
+#+end_src
+  为x添加初始时使用的关键字xarg，如果初始时没有指定其值，则initiform会执行，而error函数通知系统出错，通过这种方法可以强制要求用户为其slot传递初始值。
+  通过 =slot-value= 可以访问某对象的slot。可以直接为其返回值加以setf函数来设置其值： =(setf (slot-value a-obj 'x) 20)= 。
+  可以为slot添加 :reader :writer来方便取值赋值。
+#+begin_src lisp
+CL-USER> (defclass B ()
+           ((x :initarg :x :initform 10 :reader read-x)
+           (y :initarg :y :initform 10 :reader read-y :writer (setf read-y))))
+CL-USER> (setf b-obj (make-instance 'B :x 20))
+CL-USER> (read-x b-obj)
+20
+CL-USER> (read-y b-obj)
+10
+CL-USER> (setf (read-y b-obj) 30)
+30
+CL-USER> (read-y b-obj)
+30
+#+end_src
+* 广义函数
+#+begin_src lisp
+CL-USER> (defgeneric setb (bt x-value y-value))
+CL-USER> (defmethod setb ((bt B) x-value y-value)
+           (setf (slot-value bt 'x) x-value
+                 (slot-value bt 'y) y-value))
+CL-USER> (setb b-obj 1 2)
+2
+CL-USER> (read-x b-obj)
+1
+CL-USER> (read-y b-obj)
+2
+#+end_src
+  defmethod中参数必须与相应的defgeneric中的参数一致，且指定某个参数的类型。
+  设C继承了B
+#+begin_src lisp
+CL-USER> (defclass C(B)
+           ((z :initarg :z :initform 0)))
+CL-USER> (setf c-obj (make-instance 'C))
+CL-USER> (setb c-obj 1 2)
+#+end_src
+  由于没有实现参数为C的setb故调用的是参数为B的setb。
+#+begin_src lisp
+CL-USER> (defmethod setb ((bt C) x-value y-value)
+           (format t "C"))
+CL-USER> (setb c-obj 1 2)
+C
+NIL
+#+end_src
+  实现参数C的setb后调用与之最相关的参数为C的setb.
+  在参数C的setb中加入 =call-next-method= 方法，则调用 =call-procedure-order= 中比其低一级的方法：
+#+begin_src lisp
+CL-USER> (defmethod setb ((bt C) x-value y-value)
+           (format t "C")
+           (call-next-method))
+CL-USER> (setb c-obj 1 2)
+C
+2
+CL-USER> (read-x c-obj)
+1
+CL-USER> (read-y c-obj)
+2
+#+end_src
+  即调用完参数C的setb又调用了参数B的setb.（相当于C++中通过::域作用符来调用基类的成员函数）。
+* with-slots和with-accessors来方便访问类中slot
+  每次访问对象中的slot时可以使用slot-value，但写起来麻烦，为了简化引入了with-slots:
+#+begin_src lisp
+  (with-slots (slots*) instance-form
+        body-form*)
+#+end_src
+  其中slot为对象中slot名称，形式为 (slot1 slot2 ..)，可以定义其别名：((s1 slot1) (s2 slot2) ..)避免名称过长引起的不便。
+  上面的参数为B的setb可以写成：
+#+begin_src lisp
+CL-USER> (defmethod setb ((bt B) x-value y-value)
+           (with-slots (x y) bt
+             (setf x x-value y y-value))) 
+CL-USER> (setb b-obj 3 4)
+4
+CL-USER> (read-x b-obj)
+3
+#+end_src
+  with-accessors与with-slots形式相同，区别在于槽列中第一项为变量名和:accessor中指定的函数：
+#+begin_src lisp
+CL-USER> (defclass thing ()
+           ((x :initarg :x :accessor thing-x)
+            (y :initarg :y :accessor thing-y)))
+CL-USER> (defmethod (setf thing-x) :before (new-x (thing thing))
+           (format t "~&Changing X from ~D to ~D in ~S.~%"
+                   (thing-x thing) new-x thing))
+CL-USER> (setq thing1 (make-instance 'thing :x 1 :y 2))
+CL-USER> (setq thing2 (make-instance 'thing :x 7 :y 8))
+CL-USER> (with-accessors ((x1 thing-x) (y1 thing-y))
+             thing1
+           (with-accessors ((x2 thing-x) (y2 thing-y))
+               thing2
+             (list (list x1 (thing-x thing1) y1 (thing-y thing1)
+                         x2 (thing-x thing2) y2 (thing-y thing2))
+                   (setq x1 (+ y1 x2))
+                   (list x1 (thing-x thing1) y1 (thing-y thing1)
+                         x2 (thing-x thing2) y2 (thing-y thing2))
+                   (setf (thing-x thing2) (list x1))
+                   (list x1 (thing-x thing1) y1 (thing-y thing1)
+                         x2 (thing-x thing2) y2 (thing-y thing2)))))
+#+end_src
+  结果：
+#+begin_example
+Changing X from 1 to 9 in #<THING {C0F6079}>.
+Changing X from 7 to (9) in #<THING {C0F6001}>.
+((1 1 2 2 7 7 8 8) 9 (9 9 2 2 7 7 8 8) (9) (9 9 2 2 (9) (9) 8 8))
+#+end_example

@@ -1,0 +1,138 @@
+#+OPTIONS: ^:{} _:{} num:t toc:t \n:t
+#+include "../../template-toc.org"
+#+title:STL:序列式容器
+
+* vector
+* List
+** push_front, push_back, pop_front, pop_back
+#+begin_src c++
+void push_back( const T& value );
+void push_front( const T& value );
+void pop_front();
+void pop_back();
+#+end_src  
+** sort
+#+begin_src c++
+void sort();
+template< class Compare > 
+void sort( Compare comp );
+#+end_src
+  对链表进行排序。
+** splice
+#+begin_src c++
+// 将列表other接到pos前面
+void splice(const_iterator pos, list& other);
+// 将列表other中it指向的结点接到pos前面
+void splice(const_iterator pos, list& other, const_iterator it);
+// 将列表other区间[first,last)的元素接到pos前面
+void splice(const_iterator pos, list& other, 
+            const_iterator first, const_iterator last);
+#+end_src
+** merge
+
+#+begin_src c++
+void merge( list& other );
+template <class Compare> 
+void merge( list& other, Compare comp );
+#+end_src
+  使用该函数的前提是两个列表已经排好序。将列表other整合到调用者列表上。
+** unique
+#+begin_src c++
+void unique();  
+#+end_src
+  去除 *连续的* 重复元素。
+** swap
+#+begin_src c++
+void swap( list& other );
+#+end_src
+  和other交换元素。只需要改变指针即可，常数时间完成。
+** erase
+#+begin_src c++
+iterator erase( iterator loc );
+iterator erase( iterator start, iterator end );
+#+end_src
+  删除指定位置或者区间的元素。
+** clear
+   等价于erase(List.begin(), List.end());
+** reverse
+   将列表调转方向。迭代器仍是原来结点的迭代器。
+* deque
+  deque与vector类似，不同之处在于不仅可以push_back，pop_back还可以push_front, pop_front。其内部实际上是由逻辑连续但实际分散的块构成（缓冲区）。为了区分边界，迭代器中不仅要包含当前元素的指针(cur)，还要包括所在块（缓冲区）的起始和结尾指针(first, last)。
+  用于连接各个缓冲区的是中央控制器（map)，其实是个缓冲区指针的一维数组。迭代器中还包含一个指向相应元素所在缓冲区map中元素的指针，以便迭代器进行 ++, --, +n操作时方便从一个缓冲区跳到另一个缓冲区中。
+  所有缓冲区只有start和finish对应的缓冲区可以有空闲，二者之间的缓冲区（如果有的话）都是满的。
+  如果中央控制器要更新时尽量使用中间空间，尽量使前插入和后插入有空间可用。
+* queue, stack
+  queue FIFO，对deque进行改装，push调用了deque的push_back，而pop调用了pop_front.
+  stack FILO, 也是对deque改装，push调用了push_back, pop调用了pop_back.
+  这一类由其它组件改造而成的组件称之为 adapter 适配器/配接器。
+* priority_queue
+  其内部实际原理是用 max heap。
+  algorithm.h中包含了几个用于构造最大堆的函数。
+#+begin_src c++
+     int ary[6] = {3, 4, 2, 5, 6, 8};
+     vector<int> ivec(ary, ary+6);
+     make_heap(ivec.begin(), ivec.end());
+     for(vector<int>::iterator iter=ivec.begin(); iter!=ivec.end(); ++iter)
+          cout<<*iter<<' ';     // 8 6 3 5 4 2 
+     cout<<endl;
+     pop_heap(ivec.begin(), ivec.end());
+     for(vector<int>::iterator iter=ivec.begin(); iter!=ivec.end(); ++iter)
+          cout<<*iter<<' ';     // 6 5 3 2 4 8
+     sort_heap(ivec.begin(), ivec.end()-1); // ivec最后一个元素不再是堆中的元素
+     for(vector<int>::iterator iter=ivec.begin(); iter!=ivec.end()-1; ++iter)
+          cout<<*iter<<' ';     // 2 3 4 5 6
+#+end_src
+** make_heap
+   将一个数组或容器进行重新排序生成相应的最大堆。
+** push_heap
+#+begin_src c++
+template< class RandomAccessIterator >
+void push_heap( RandomAccessIterator first, RandomAccessIterator last );
+template< class RandomAccessIterator, class Compare >
+void push_heap( RandomAccessIterator first, RandomAccessIterator last,
+                Compare comp );
+#+end_src
+   向最大堆中添加一个元素（前提是参与最大堆的容器是可扩展的，vector可以，但array就不可以）。
+   其中[first,last)区间内容必须是堆，否则结果不定。
+** pop_heap
+#+begin_src c++
+template< class RandomAccessIterator >
+void pop_heap( RandomAccessIterator first, RandomAccessIterator last );
+template< class RandomAccessIterator, class Compare >
+void pop_heap( RandomAccessIterator first, RandomAccessIterator last,
+               Compare comp );
+#+end_src
+   取中最大元素，但并没有删除而是放到参与最大堆容器的最尾部。例如上面第二次输出中8放到最后面。
+   priority_queue中pop函数正是调用了此函数之后调用 pop_back 将最大元素删除。
+** sort_heap
+   将排序结果保存在原容器中，由于pop_heap每次将最大值保存在最后一个元素中，故此函数实现只需要不断地调用 pop_heap即可。
+#+begin_src c++
+     int ary[6] = {3, 4, 2, 5, 6, 8};
+     vector<int> ivec(ary, ary+6);
+     while(!ipq.empty()){
+          cout<<ipq.top()<<' '; // 8 6 5 4 3 2
+          ipq.pop();
+     }
+#+end_src
+
+#+begin_src c++
+template<
+    class T,
+    class Container = std::vector<T>,
+    class Compare = std::less<typename Container::value_type>
+> class priority_queue;
+#+end_src
+   默认容器用的是vector,比较函数是less.
+** empty
+   其内部实现是调用的是Container.empty()
+** size
+   同理调用的是Container.size()
+** top
+   Container.front()
+** push
+   内部调用的是泛型算法 push_heap
+** pop
+   内部调用的 pop_heap并将最后一个元素 pop_back
+* 分享/评论
+#+html:<a class="btn btn-primary" href="https://raw.github.com/visayafan/visayafan.github.com/master/Coding/Cpp/STL:SequenceContainer.org">View Org Source</a>
+#+include "../../disqus.org"
