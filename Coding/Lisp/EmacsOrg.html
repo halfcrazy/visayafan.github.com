@@ -1,0 +1,353 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+               "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-CN" xml:lang="zh-CN">
+<head>
+<title>Emacs Org-Mode</title>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
+<meta name="title" content="Emacs Org-Mode"/>
+<meta name="generator" content="Org-mode"/>
+<meta name="generated" content="2012-12-12 23:12:26 CST"/>
+<meta name="author" content="visayafan"/>
+<meta name="description" content=""/>
+<meta name="keywords" content=""/>
+
+
+<script type="text/javascript" src="http://orgmode.org/mathjax/MathJax.js">
+<!--/*--><![CDATA[/*><!--*/
+    MathJax.Hub.Config({
+        // Only one of the two following lines, depending on user settings
+        // First allows browser-native MathML display, second forces HTML/CSS
+        //  config: ["MMLorHTML.js"], jax: ["input/TeX"],
+            jax: ["input/TeX", "output/HTML-CSS"],
+        extensions: ["tex2jax.js","TeX/AMSmath.js","TeX/AMSsymbols.js",
+                     "TeX/noUndefined.js"],
+        tex2jax: {
+            inlineMath: [ ["\\(","\\)"] ],
+            displayMath: [ ['$$','$$'], ["\\[","\\]"], ["\\begin{displaymath}","\\end{displaymath}"] ],
+            skipTags: ["script","noscript","style","textarea","pre","code"],
+            ignoreClass: "tex2jax_ignore",
+            processEscapes: false,
+            processEnvironments: true,
+            preview: "TeX"
+        },
+        showProcessingMessages: true,
+        displayAlign: "center",
+        displayIndent: "2em",
+
+        "HTML-CSS": {
+             scale: 100,
+             availableFonts: ["STIX","TeX"],
+             preferredFont: "TeX",
+             webFont: "TeX",
+             imageFont: "TeX",
+             showMathMenu: true,
+        },
+        MMLorHTML: {
+             prefer: {
+                 MSIE:    "MML",
+                 Firefox: "MML",
+                 Opera:   "HTML",
+                 other:   "HTML"
+             }
+        }
+    });
+/*]]>*///-->
+</script>
+</head>
+<body>
+
+
+<div id="content">
+<h1 class="title">Emacs Org-Mode</h1>
+
+
+<!-- <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"> </script> -->
+<link rel="stylesheet" type="text/css" href="../../Layout/CSS/bootstrap_old.css" />
+<link rel="stylesheet" type="text/css" href="../../Layout/CSS/too_many_toc.css" />
+<script src="../../Layout/JS/jquery_1.7.1.js"></script>
+<script src="../../Layout/JS/bootstrap_old.js"></script>
+
+
+<div id="table-of-contents">
+<h2>目录</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#sec-1">1 解决org-mode example/src/quote上面多一行问题</a></li>
+<li><a href="#sec-2">2 org-mode example/src过大</a></li>
+<li><a href="#sec-3">3 org-mode中使用宏</a></li>
+<li><a href="#sec-4">4 org-mode 中嵌入latex公式</a></li>
+<li><a href="#sec-5">5 org-mode 中block中嵌入#+begin_example</a></li>
+<li><a href="#sec-6">6 org-mode导出HTML目录显示“目录”而非默认的Table Of Content</a></li>
+<li><a href="#sec-7">7 org-mode导出PDF目录显示“目录”而非默认的Contents</a></li>
+<li><a href="#sec-8">8 org-mode的表格中输入|</a></li>
+<li><a href="#sec-9">9 Org Mode HTML导出时内部链接</a></li>
+<li><a href="#sec-10">10 Emacs Org配置简单快捷键</a></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-1" class="outline-2">
+<h2 id="sec-1"><span class="section-number-2">1</span> 解决org-mode example/src/quote上面多一行问题</h2>
+<div class="outline-text-2" id="text-1">
+
+<p>  不知道是不是org-mode的bug？如下所示的代码<br/>
+</p>
+
+
+<pre class="src src-org">abc
+cef
+<span style="color: #b22222;">#+begin_example</span>
+<span style="color: #7f7f7f;">hello</span>
+<span style="color: #b22222;">#+end_example  </span>
+</pre>
+
+<p>
+  经编译后生成：<br/>
+</p>
+
+
+<pre class="example">&lt;p&gt;  abc&lt;br/&gt;
+  cef&lt;br/&gt;
+&lt;/p&gt;
+&lt;p&gt;&lt;br&gt;
+&lt;pre class="example"&gt;hello
+&lt;/pre&gt;
+&lt;/p&gt;
+</pre>
+
+<p>
+  但浏览器解析是这样解析的：<br/>
+</p>
+
+
+<pre class="example">&lt;p&gt;  abc&lt;br/&gt;
+  cef&lt;br/&gt;
+&lt;/p&gt;
+&lt;p&gt;&lt;br&gt;&lt;/p&gt;
+&lt;pre class="example"&gt;hello
+&lt;/pre&gt;
+</pre>
+
+<p>
+  这样就会在cef和hello之间多出一行。<br/>
+  分析lisp/org-html.el代码发现原因在:<br/>
+</p>
+
+
+<pre class="src src-lisp"><span style="color: #b22222;">;; </span><span style="color: #b22222;">Check if the line break needs to be conserved</span>
+(<span style="color: #a020f0;">cond</span>
+ ((string-match <span style="color: #8b2252;">"\\\\\\\\[ \t]*$"</span> line)
+  (setq line (replace-match <span style="color: #8b2252;">"&lt;br/&gt;"</span> t t line)))
+ (org-export-preserve-breaks
+  (setq line (concat line <span style="color: #8b2252;">"&lt;br/&gt;"</span>))
+  ))
+</pre>
+
+<p>
+  不管line是否为空都会给line后面加上&lt;br/&gt;，而实际上当Line为空时没有必要加上&lt;br/&gt;，于是可以修改:<br/>
+</p>
+
+
+<pre class="src src-lisp"><span style="color: #b22222;">;; </span><span style="color: #b22222;">Check if the line break needs to be conserved</span>
+(<span style="color: #a020f0;">cond</span>
+ ((string-match <span style="color: #8b2252;">"\\\\\\\\[ \t]*$"</span> line)
+  (setq line (replace-match <span style="color: #8b2252;">"&lt;br/&gt;"</span> t t line)))
+ (org-export-preserve-breaks
+  (<span style="color: #a020f0;">if</span> (not (string= line <span style="color: #8b2252;">""</span>))
+      (setq line (concat line <span style="color: #8b2252;">"&lt;br/&gt;"</span>)))
+  ))
+</pre>
+
+<p>
+  这样便解决了多一行的问题。<br/>
+</p></div>
+
+</div>
+
+<div id="outline-container-2" class="outline-2">
+<h2 id="sec-2"><span class="section-number-2">2</span> org-mode example/src过大</h2>
+<div class="outline-text-2" id="text-2">
+
+<p>  当在#+begin_example #+end_example或者#+begin_src #+end_src环境中内容过多时会占用大量空间，一个解决办法是加上 <code>-t</code> 选项并配合 <code>-h height -w width</code> 选项来指定高宽，使它成为有滚动条的区域。但好像无法使用语法高亮。<br/>
+</p></div>
+
+</div>
+
+<div id="outline-container-3" class="outline-2">
+<h2 id="sec-3"><span class="section-number-2">3</span> org-mode中使用宏</h2>
+<div class="outline-text-2" id="text-3">
+
+<p>  在文章的开始定义宏，格式为 #+macro: macro_name macro_content_with_$1_arg1_$2_arg2_&hellip;<br/>
+  在文章中使用宏 {{{macro_name(args)}}}<br/>
+  其中org-mode内置的宏包括<br/>
+</p>
+
+
+<pre class="example">Emacs Org-Mode
+visayafan
+format 其中format格式必须可以被函数 =format-time-string= 识别，常用的包括 %Y-%m-%d-%H-%M-%S 年月日时分秒
+%x 格式为： 10/29/2012 
+%X 格式为： 11:46:33 AM 
+%c 格式为： Mon 29 Oct 2012 11:46:33 AM CST 
+%D 格式为： 10/29/12 
+%R 格式为： 11:46 
+%T 格式为： 11:46:33 
+%r 格式为： 11:46:33 AM
+还有其它的org中的关键字
+</pre>
+
+<p>
+  利用宏可以减少冗余文本使内容更清晰，比如我在extension.org里定义了如下宏：<br/>
+</p><pre class="example">
+#+macro:lightbox #+html:&lt;link rel="stylesheet" href="../../Layout/CSS/jquery.lightbox-0.5.css" type="text/css" media="screen" /&gt; &lt;script type="text/javascript" src="../../Layout/JS/jquery.lightbox-0.5.js"&gt;&lt;/script&gt; &lt;center&gt; &lt;a class="lightbox" href="$1"&gt; &lt;img class="lightbox " title="点击查看大图" src="$1" width="300"&gt; &lt;/a&gt; &lt;/center&gt; &lt;script type="text/javascript"&gt; $(function() {$('a.lightbox').lightBox();}); &lt;/script&gt;
+</pre>
+
+<p>  我在欲导出HTML的Org文件比如emacs_trick.org头部写上：<br/>
+</p><pre class="example">
+#+SETUPFILE: "extension.org" 
+</pre>
+
+<p>  则便可以在emacs_trick.org中使用此宏。<br/>
+</p><pre class="example">
+#+html:&lt;link rel="stylesheet" href="../../Layout/CSS/jquery.lightbox-0.5.css" type="text/css" media="screen" /&gt; &lt;script type="text/javascript" src="../../Layout/JS/jquery.lightbox-0.5.js"&gt;&lt;/script&gt; &lt;center&gt; &lt;a class="lightbox" href="images/image_name.jpg"&gt; &lt;img class="lightbox " title="点击查看大图" src="images/image_name.jpg" width="300"&gt; &lt;/a&gt; &lt;/center&gt; &lt;script type="text/javascript"&gt; $(function() {$('a.lightbox').lightBox();}); &lt;/script&gt;
+</pre>
+
+<p>  只需要一行就搞定了。<br/>
+</p>
+<p>
+  这样我就可以把所有的宏全部写在extension.org里，然后可以重复使用：只需要SETUPFILE指定就可以使用了。<br/>
+</p></div>
+
+</div>
+
+<div id="outline-container-4" class="outline-2">
+<h2 id="sec-4"><span class="section-number-2">4</span> org-mode 中嵌入latex公式</h2>
+<div class="outline-text-2" id="text-4">
+
+
+
+
+<pre class="example">$$ \(\)表行内，$$ $$ \[ \] 表行间
+</pre>
+
+
+<pre class="example">If $a^2=b$ and \( b=2 \), then the solution must be
+either $$ a=+\sqrt{2} $$ or \[ a=-\sqrt{2} \].
+</pre>
+
+</div>
+
+</div>
+
+<div id="outline-container-5" class="outline-2">
+<h2 id="sec-5"><span class="section-number-2">5</span> org-mode 中block中嵌入#+begin_example</h2>
+<div class="outline-text-2" id="text-5">
+
+<pre class="example">
+#+begin_example
+#+begin_example
+这种情况导出的不会包含#+begin_example,因为把想要字面导出的#+begin_example当成了example环境
+#+end_example
+#+end_example
+</pre>
+
+<p>  应该这样写<br/>
+</p><pre class="example">
+#+begin_src org
+#+begin_example
+这样就对了,在这种情况下可以快捷键C-c ' 来进入源码编辑模式
+#+end_example
+#+end_src
+</pre>
+
+<p>  也可以在第行前面加上:空格 来表示字面解析：<br/>
+</p>
+
+
+<pre class="src src-org"><span style="color: #7f7f7f;">: #+begin_example</span>
+<span style="color: #7f7f7f;">: &#36825;&#26679;&#23601;&#23545;&#20102;</span>
+<span style="color: #7f7f7f;">: #+end_example</span>
+</pre>
+
+
+</div>
+
+</div>
+
+<div id="outline-container-6" class="outline-2">
+<h2 id="sec-6"><span class="section-number-2">6</span> org-mode导出HTML目录显示“目录”而非默认的Table Of Content</h2>
+<div class="outline-text-2" id="text-6">
+
+<p>  <code>M-x customize-variable ENTER org-export-language-setup</code> 在最后ins插入新的List:<br/>
+<center>
+<img src="./image/中文目录.png"  alt="./image/中文目录.png" />  <br/>
+</center>
+  再 <code>M-x customize-variable ENTER org-export-default-language</code> 改成 zh-CN<br/>
+</p></div>
+
+</div>
+
+<div id="outline-container-7" class="outline-2">
+<h2 id="sec-7"><span class="section-number-2">7</span> org-mode导出PDF目录显示“目录”而非默认的Contents</h2>
+<div class="outline-text-2" id="text-7">
+
+<p>  在 <code>org-export-latex-classes</code> 中加上 <code>\\renewcommand\\contentsname{目录}</code><br/>
+</p></div>
+
+</div>
+
+<div id="outline-container-8" class="outline-2">
+<h2 id="sec-8"><span class="section-number-2">8</span> org-mode的表格中输入|</h2>
+<div class="outline-text-2" id="text-8">
+
+<p>  两种办法：<br/>
+</p><ol>
+<li><code>\vert{}</code> 使用 \(\LaTeX\)<br/>
+</li>
+<li>快捷键 <code>C-c C-x \</code><br/>
+</li>
+</ol>
+
+
+</div>
+
+</div>
+
+<div id="outline-container-9" class="outline-2">
+<h2 id="sec-9"><span class="section-number-2">9</span> Org Mode HTML导出时内部链接</h2>
+<div class="outline-text-2" id="text-9">
+
+<p>  在一篇文章中建立内部链接很简单，添加anchor，<br/>
+</p>
+
+
+<pre class="example">#&lt;&lt;anchor&gt;&gt;
+</pre>
+
+<p>
+  在想要链接到上面的地主添加链接即可:<br/>
+</p>
+
+
+<pre class="example">[[anchor]]
+</pre>
+
+
+</div>
+
+</div>
+
+<div id="outline-container-10" class="outline-2">
+<h2 id="sec-10"><span class="section-number-2">10</span> Emacs Org配置简单快捷键</h2>
+<div class="outline-text-2" id="text-10">
+
+<p>  <code>M-x custoize-varialbe RET org-structure-template-alistu</code><br/>
+</p>
+<p>  <br/>
+</p></div>
+</div>
+</div>
+
+</body>
+</html>

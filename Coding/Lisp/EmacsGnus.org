@@ -1,0 +1,186 @@
+#+OPTIONS: ^:{} _:{} num:t toc:t \n:t
+#+INCLUDE "../../template.org"
+#+SETUPFILE: "../../extension.org"
+#+title:Emacs Gnus
+新闻组类似现在的BBS或论坛，使用人数越来越少，但仍旧坚持使用的人中有很多大牛，可以从中学到很多东西，并且里面的技术氛围很深厚，说废话的人很少，这是我选择使用新闻组的原因。
+
+要阅读新闻组（NewsGroup or Usenet）中的内容首先需要一个服务器，此服务器中存在所有新闻组内容，客户端连接上后可以从上面下载所有内容的列表，然后再从中订阅自己喜欢的内容。Gnus就是这样一个客户端，服务器你可以花钱买，服务肯定好，但对于我这样的穷人来说自然选择免费的。
+
+新闻组服务器地址格式类似 news.example.net，国内的有新帆：news.newsfan.net，其它可以参考[[http://www.williamlong.info/archives/176.html][月光博客]] 。国外的免费的比较快的是news.aioe.org. 
+* 配置
+  将下面配置保存到 ~/.gnus.el中：
+#+html: <style type="text/css"> textarea{width:100%;}</style>
+#+begin_src lisp -t -h 15
+(setq user-full-name "visayafan")
+(setq user-mail-address "visayafan@gmail.com")
+
+(setq gnus-select-method '(nntp "news.aioe.org"))
+(setq gnus-select-method '(nntp "news.aioe.org"))
+(add-to-list 'gnus-secondary-select-methods '(nntp "news.gnus.org"))
+(add-to-list 'gnus-secondary-select-methods '(nntp  "news.gmane.org"))
+(add-to-list 'gnus-secondary-select-methods '(nntp "news.newsgroup.com.hk"))
+(add-to-list 'gnus-secondary-select-methods '(nntp  "news.newsfan.net"))
+
+;; 开启代理功能,为了能让gnus支持离线浏览,gnus 5.10.x会自动开启该功能。
+(gnus-agentize)
+
+;; 满71字符自动换行
+(add-hook 'message-mode-hook (lambda () (setq fill-column 72) (turn-on-auto-fill)))
+
+;; 发送设置
+(setq gnus-posting-styles
+      '((".*"
+         (name "visayafan")
+         (address "visayafan@gmail.com")
+         (User-Agent "Emacs+gnus"))
+        ;;邮件发送方式的发送配置
+        ((message-mail-p)
+         (name"visayafan")
+         (address "visayafan@gmail.com")
+         (User-Agent "Emacs+gnus"))
+        ;;发送帖子的设定
+        ;; (".*newsfan.*"
+        ;;  (name "visayafan")
+        ;;  (address "visayafan@gmail.com")
+        ;;  (User-Agent "Emacs+gnus")
+        ))
+
+
+;; 语言环境设定
+(set-language-environment 'Chinese-GB)
+(setq gnus-default-charset 'chinese-iso-8bit
+      gnus-group-name-charset-group-alist '((".*" . cn-gb-2312))
+      gnus-summary-show-article-charset-alist
+      '((1 . cn-gb-2312)
+        (2 . gb18030)
+        (3 . chinese-iso-8bit)
+        (4 . gbk)
+        (5 . big5)
+        (6 . utf-8))
+      gnus-newsgroup-ignored-charsets
+      '(unknown-8bit x-unknown iso-8859-1))
+
+;;解决gb18030乱码
+(setq gnus-newsgroup-ignored-charsets 
+      '(unknown-8bit x-unknown gb18030))
+
+;;设定要显示的头信息
+(setq gnus-visible-headers
+      "^\\(^From:\\|^Subject:\\|^Date:\\|^Followup-To:
+            \\|^X-Newsreader:\\|^User-Agent:\\|^X-Mailer:
+            \\|Line:\\|Lines:\\|Content-Type:\\|NNTP-Posting-Host\\)")
+
+;;设定屏幕的分割比例
+(gnus-add-configuration '(article (vertical 1.0 (summary .40 point) (article 1.0))))
+
+;;自动显示图片
+(auto-image-file-mode)
+(setq mm-inline-large-images t)
+(add-to-list 'mm-attachment-override-types "image/*")
+
+;; 杂项
+(setq gnus-confirm-mail-reply-to-news t
+      message-kill-buffer-on-exit t
+      message-elide-ellipsis "[...]\n")
+#+end_src
+  通过gnus-select-method和gnus-secondary-select-method变量设置了几个新闻组地址，连接失败的可以把它们删掉（我这儿都连上了）。
+* 使用
+  =M-x gnus= 便可进入Gnus。
+  =gnus-group-enter-server-mode= 快捷键 =^= 可以查看所有服务器的连接状态， =opened= 正常， =denied= 表连接失败。
+  =RET= 可进入相应的服务器。此时会下载此服务器上所有组列表，之后进入 =*Gnus Browse Server*= 缓冲区。选中感兴趣的组回车即可进入 =summary= 缓冲区，在帖子标题上空格即可在下面打开一个 =Article= 帖子弱冲区.
+  
+* 快捷键
+  |-----------------------------+----------------------------------------------------------------------------------------------------|
+  | *Summary Buffer*            |                                                                                                    |
+  |-----------------------------+----------------------------------------------------------------------------------------------------|
+  | T H                         | Thread Hide all                                                                                    |
+  | T S                         | Thread Show all                                                                                    |
+  | C-M-s or T s                | show this thread                                                                                   |
+  | C-M-h or T h                | hide this thread                                                                                   |
+  | C-M-f                       | forward a thread                                                                                   |
+  | C-M-b                       | backward a thread                                                                                  |
+  | n                           | next unreaded thread                                                                               |
+  | p                           | previous unreaded thread                                                                           |
+  | M-g                         | 刷新，在Group缓冲区里是g                                                                                    |
+  | SPACE                       | view this thread                                                                                   |
+  | W W s                       | article hide signature 在读帖的时候很多人搞些莫名其妙的签名比较烦人，可以将其去掉                  |
+  | W W a                       | article hide all 去掉所有的，包括 标题，引用，签名。具体可查看article菜单                          |
+  | T d                         | thread down 可以加前缀，表向上几级                                                                 |
+  | T u                         | thread up                                                                                          |
+  | T o                         | thread top                                                                                         |
+  | C-M-k                       | mark thread as read                                                                                |
+  | T E                         | mark thread as expired                                                                             |
+  | a                           | 发帖                                                                                               |
+  | r                           | reply email 与邮件作者私聊，不会公开在组中                                                         |
+  | R                           | reply and yank 回信并在信中引用别人的帖子                                                          |
+  | C-c C-c                     | send                                                                                               |
+  | C-c C-k                     | cancel send                                                                                        |
+  | C-c C-d                     | don't send and save as draft                                                                       |
+  | C-c C-m f or C-c RET f      | 添加附件                                                                                           |
+  | f                           | followup 回帖                                                                                      |
+  | F                           | followup and yank 回帖的时候引用别人的帖子                                                         |
+  | c                           | 标记所有帖子为已读                                                                                 |
+  | C-c C-f                     | forward this message to somebody others 转发给另外一个人                                           |
+  | S o p                       | forward this message to another newsgroup 转发给另一个新闻组                                       |
+  | A T                         | 此时你在一个thread的某个帖子上 A T即可查看整个thread的所有帖子                                     |
+  |-----------------------------+----------------------------------------------------------------------------------------------------|
+  | *Mark*                      | *含义*                                                                                             |
+  |-----------------------------+----------------------------------------------------------------------------------------------------|
+  | R                           | 读过一个帖子后默认会加上该标记，下次再进入的时候此帖子不会再显示，这些R标记的帖子都是真正读过的    |
+  | r                           | 用命令d即可添加一个r标记，下次不显示此帖，可能因为不喜欢没有读，想当于delete删除这个帖子           |
+  | O                           | 表明这个是old老帖，默认Gnus不会显示老帖的，除非使用命令/ o强制显示                                 |
+  |-----------------------------+----------------------------------------------------------------------------------------------------|
+  | ！                          | ticked 表示此帖很重要，你想每次进入新闻组的时候都显示它                                            |
+  |                             | （如果此帖被服务器管理员因不合格或过期原因删掉了则不会再显示）所以最好将认为重要的帖子备份在本机上 |
+  | ？                          | dormant 如果此帖不再有人回则此标记与R一样不会再显示，如果有人回帖则此帖会再次现身                  |
+  |-----------------------------+----------------------------------------------------------------------------------------------------|
+  | 空格                        | 帖子前面什么也没有则表示这是个未读的帖子                                                           |
+  |-----------------------------+----------------------------------------------------------------------------------------------------|
+  | *Gnus Broswe Server Buffer* |                                                                                                    |
+  |-----------------------------+----------------------------------------------------------------------------------------------------|
+  | u                           | subscribe this group                                                                               |
+  | q                           | exit                                                                                               |
+  |-----------------------------+----------------------------------------------------------------------------------------------------|
+  | *Article Buffer*            |                                                                                                    |
+  |-----------------------------+----------------------------------------------------------------------------------------------------|
+  | s                           | go to summary buffer                                                                               |
+  | C-c RET                     | 为光标位置下的邮件地址发邮件                                                                       |
+  | SPC                         | 下个回帖                                                                                           |
+  | Del                         | 上个回贴                                                                                           |
+  |-----------------------------+----------------------------------------------------------------------------------------------------|
+  | *Group Buffer*              |                                                                                                    |
+  |-----------------------------+----------------------------------------------------------------------------------------------------|
+  | c                           | 标记光标所在组的所有未读帖子为已读                                                                 |
+  | C                           | 把所有组所有未读帖子都标记为已读                                                                   |
+  | g                           | 刷新                                                                                               |
+  | l                           | 只显示有未读消息的组                                                                               |
+  | L                           | 显示所有组（不管有没有未读消息）                                                                   |
+  | a                           | 发帖（自己手工输入新闻组名称）                                                                     |
+  | u                           | 订阅或取消订阅光标所在新闻组                                                                       |
+  | C-k                         | 从订阅列表里删除某个新闻组                                                                         |
+  |-----------------------------+----------------------------------------------------------------------------------------------------|
+
+* 再配置
+** 起动时即折叠所有thread
+#+begin_src lisp
+(setq gnus-thread-hide-subtree t)
+#+end_src
+** 起动时即隐藏所有签名
+#+begin_src lisp
+(setq gnus-treat-hide-signature t)
+#+end_src
+** 签名
+   定制变量 =gnus-posting-style=.
+#+begin_src lisp
+ (setq gnus-posting-styles 
+       '((".*" (signature-file "~/emacs/gnus/.signature_english")) 
+         ("cn.*" (signature-file "~/emacs/gnus/.signature_chinese")))) 
+#+end_src
+   如果是以cn开头的则用.signature_chinese否则用english.
+** 翻页
+   一般summary缓冲区在上，article缓冲区在下，如果article缓冲区帖子过长，在summary缓冲区用 *空格* 和 *退格* 为其翻页而不需要离开summary缓冲区，如果帖子到底了则再按空格则会翻到下个帖子.
+** 保存本地
+#+begin_src lisp
+(setq gnus-use-cache t)
+#+end_src
+   在summary缓冲区中帖子标题上加上 =*= 就可以保存到本地了，默认路径是 ~/News/cache/YourGroupName。 =M *= 即可删除本地保存。

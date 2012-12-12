@@ -1,0 +1,219 @@
+#+OPTIONS: ^:{} _:{} num:t toc:t \n:t
+#+INCLUDE "../../template.org"
+#+SETUPFILE: "../../extension.org"
+#+title: C++类
+
+* 空类对象有1个字节的内存占用
+  为了区别各个对象必须要有1个字节的占用空间。
+* GCC中继承内存布局
+  1. GCC中类对象把vptr放在最开始位置，大小为4B。
+  2. 多重继承多个基类内存布局顺序以继承中声明顺序方式排序。
+  3. 虚继承中将以虚继承方式继承下来的基类放在最后面。
+     B，C虚继承A，D继承B，C。D类对象内存布局中首先是B（包括B的vptr和变量），然后是C（同理包括C的vptr和变量），接着是D（包括自己的vptr和变量），最后是A。
+* 数据成员的绑定
+  1. 成员函数体是在整个类分析完成后才开始分析的。
+  2. 成员函数参数列表是伴随着类自上而下分析进行分析的。
+{{{left(4)}}}
+#+begin_src c++
+typedef int length;
+class A{
+public:
+     void f(length a){
+          cout<<sizeof(a)<<endl; // 4
+          length x;
+          cout<<sizeof(x)<<endl; // 8
+     }
+private:
+     typedef double length;
+public:
+     void g(length b){
+          cout<<sizeof(b)<<endl; // 8
+          length y;
+          cout<<sizeof(y)<<endl; // 8
+     }
+};
+
+int main(int argc, char *argv[])
+{
+     A a;
+     a.f(3);
+     a.g(3);
+     return 0;
+}
+#+end_src  
+{{{middle(7)}}}
+sizeof(a)为4是因为(2)，分析到f(length a)时此时length为int。
+sizeof(b)为8是因为分析到g(length b)时length已经被typdef double length重新定义了，此时length为double。
+sizeof(x)和size(y)是8是因为它们都在函数体内，而函数体是在整个类分析完成后才开始分析的，此时length为double.
+{{{right}}}
+* 由于继承引发的空间浪费
+{{{left(3)}}}
+#+begin_src c++
+class A{
+public:
+     int x;
+     char c1;
+};
+
+class B:public A{
+public:
+     char c2;
+};
+
+class C:public B{
+public:
+     char c3;
+};
+int main(int argc, char *argv[])
+{
+     A a; B b; C c;
+     cout<<sizeof(a) <<' '<<sizeof(b)<<' '<<sizeof(c)<<endl;
+     return 0;
+}
+#+end_src
+{{{middle(8)}}}
+按照《Inside the C++ Object Model》里面说的结果应该是 8 12 16.
+但实际运行结果为 8 12 12.
+调试发现C中的c3放在了c2的下一字节上。按照Lippman书上说的这种做法应该不对。
+否则下面代码会发生错误：
+{{{left(4)}}}
+#+begin_src c++
+     c.c3='c';
+     B *pb = &b;
+     C *pc = &c;
+     cout<<c.c3<<endl;
+     *pc = *static_cast<C*>(pb);
+     cout<<c.c3<<endl;
+#+end_src
+{{{right}}}
+将pb静态转化为C类型指针后将其指向的值赋值给c，按理说应该不影响c中的c3才对，因为c3是C特有的。但在GCC下发生了覆盖导致c3的值不确定。
+
+猜想可能是GCC的错？
+{{{right}}}
+* 虚继承，虚基类
+  例如下面的例子：
+{{{lightbox(images/virtual-base-class.gif)}}}
+  如果按照普通继承方式则pegasus中将含有2份Animal的变量，而实际上一份即可，故引入虚继承。
+  虚继承不需要对Animal做任何改变，只需要改变Horse, Bird继承Animal时的方式即可。
+
+  通过虚继承方式继承的子类中通过默认构造函数添加代码的方式向类对象中加入了指向虚基类的指针。
+  故下面结果为：1448
+#+begin_src c++
+class Animal{};
+class Horse:public virtual Animal{};
+class Bird:public virtual Animal{};
+class Pegasus:public Horse, public Bird{};
+
+int main(int argc, char *argv[])
+{
+     Animal a; Horse h; Bird b; Pegasus p;
+     cout<<sizeof(a)<<sizeof(h)<<sizeof(b)<<sizeof(p)<<endl;
+     return 0;
+}
+#+end_src
+  普通继承中Pegasus构造函数调用过程：先调用Horse的构造函数，而Horse又调用了Animal的构造函数。再调用Bird的构造函数，而Bird又调用了Animal的构造函数。
+  虚继承下Pegasus构造函数调用过程：Animal的构造函数，Horse的构造函数（没有调用Animal的构造函数），最后是Bird的构造函数（同样没有调用Animal的构造函数）.
+  不采用虚继承时调用方式见此[[http://blog.csdn.net/wangxingbao4227/article/details/6772579][博文]]。
+  [[http://www.java-samples.com/showtutorial.php?tutorialid%3D463][例子]]
+#+html: <style type="text/css"> textarea{width:100%;}</style>  
+#+begin_src c++ -t -h 14
+typedef int HANDS;
+enum COLOR { Red, Green, Blue, Yellow, White, Black, Brown } ;
+enum BOOL { FALSE, TRUE };
+
+class Animal        // common base to both horse and bird
+{
+public:
+     Animal(int);
+     virtual ~Animal() { cout << "Animal destructor...\n"; }
+     virtual int GetAge() const { return itsAge; }
+     virtual void SetAge(int age) { itsAge = age; }
+private:
+     int itsAge;
+};
+
+Animal::Animal(int age):
+     itsAge(age)
+{
+     cout << "Animal constructor...\n";
+}
+
+class Horse : virtual public Animal
+{
+public:
+     Horse(COLOR color, HANDS height, int age);
+     virtual ~Horse() { cout << "Horse destructor...\n"; }
+     virtual void Whinny()const { cout << "Whinny!... "; }
+     virtual HANDS GetHeight() const { return itsHeight; }
+     virtual COLOR GetColor() const { return itsColor; }
+protected:
+     HANDS itsHeight;
+     COLOR itsColor;
+};
+
+Horse::Horse(COLOR color, HANDS height, int age):
+     Animal(age),
+     itsColor(color),itsHeight(height)
+{
+     cout << "Horse constructor...\n";
+}
+
+class Bird : virtual public Animal
+{
+public:
+     Bird(COLOR color, BOOL migrates, int age);
+     virtual ~Bird() {cout << "Bird destructor...\n";  }
+     virtual void Chirp()const { cout << "Chirp... ";  }
+     virtual void Fly()const 
+          { cout << "I can fly! I can fly! I can fly! "; }
+     virtual COLOR GetColor()const { return itsColor; }
+     virtual BOOL GetMigration() const { return itsMigration; }
+protected:
+     COLOR itsColor;
+     BOOL itsMigration;
+};
+
+Bird::Bird(COLOR color, BOOL migrates, int age):
+     Animal(age),
+     itsColor(color), itsMigration(migrates)
+{
+     cout << "Bird constructor...\n";
+}
+
+class Pegasus : public Horse, public Bird
+{
+public:
+     void Chirp()const { Whinny(); }
+     Pegasus(COLOR, HANDS, BOOL, long, int);
+     ~Pegasus() {cout << "Pegasus destructor...\n";}
+     virtual long GetNumberBelievers() const 
+          { return  itsNumberBelievers; }
+     virtual COLOR GetColor()const { return Horse::itsColor; }
+private:
+     long itsNumberBelievers;
+};
+
+Pegasus::Pegasus(
+     COLOR aColor,
+     HANDS height,
+     BOOL migrates,
+     long NumBelieve,
+     int age):
+     Horse(aColor, height,age),
+     Bird(aColor, migrates,age),
+     Animal(age*2),
+     itsNumberBelievers(NumBelieve)
+{
+     cout << "Pegasus constructor...\n";
+}
+
+int main()
+{
+     Pegasus *pPeg = new Pegasus(Red, 5, TRUE, 10, 2);
+     int age = pPeg->GetAge();
+     cout << "This pegasus is " << age << " years old.\n";
+     delete pPeg;
+     return 0;
+ }
+#+end_src  
+

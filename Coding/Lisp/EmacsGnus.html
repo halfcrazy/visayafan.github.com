@@ -1,0 +1,335 @@
+<?xml version="1.0" encoding="gb18030"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+               "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-CN" xml:lang="zh-CN">
+<head>
+<title>Emacs Gnus</title>
+<meta http-equiv="Content-Type" content="text/html;charset=gb18030"/>
+<meta name="title" content="Emacs Gnus"/>
+<meta name="generator" content="Org-mode"/>
+<meta name="generated" content="2012-12-12 23:13:00 CST"/>
+<meta name="author" content="visayafan"/>
+<meta name="description" content=""/>
+<meta name="keywords" content=""/>
+
+
+
+</head>
+<body>
+
+
+<div id="content">
+<h1 class="title">Emacs Gnus</h1>
+
+
+<!-- <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"> </script> -->
+<link rel="stylesheet" type="text/css" href="../../Layout/CSS/bootstrap_old.css" />
+<link rel="stylesheet" type="text/css" href="../../Layout/CSS/vf.css" />
+<script src="../../Layout/JS/jquery_1.7.1.js"></script>
+<script src="../../Layout/JS/bootstrap_old.js"></script>
+
+<p>
+新闻组类似现在的BBS或论坛，使用人数越来越少，但仍旧坚持使用的人中有很多大牛，可以从中学到很多东西，并且里面的技术氛围很深厚，说废话的人很少，这是我选择使用新闻组的原因。<br/>
+</p>
+<p>
+要阅读新闻组（NewsGroup or Usenet）中的内容首先需要一个服务器，此服务器中存在所有新闻组内容，客户端连接上后可以从上面下载所有内容的列表，然后再从中订阅自己喜欢的内容。Gnus就是这样一个客户端，服务器你可以花钱买，服务肯定好，但对于我这样的穷人来说自然选择免费的。<br/>
+</p>
+<p>
+新闻组服务器地址格式类似 news.example.net，国内的有新帆：news.newsfan.net，其它可以参考<a href="http://www.williamlong.info/archives/176.html">月光博客</a> 。国外的免费的比较快的是news.aioe.org. <br/>
+</p>
+<div id="table-of-contents">
+<h2>目录</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#sec-1">1 配置</a></li>
+<li><a href="#sec-2">2 使用</a></li>
+<li><a href="#sec-3">3 快捷键</a></li>
+<li><a href="#sec-4">4 再配置</a>
+<ul>
+<li><a href="#sec-4-1">4.1 起动时即折叠所有thread</a></li>
+<li><a href="#sec-4-2">4.2 起动时即隐藏所有签名</a></li>
+<li><a href="#sec-4-3">4.3 签名</a></li>
+<li><a href="#sec-4-4">4.4 翻页</a></li>
+<li><a href="#sec-4-5">4.5 保存本地</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-1" class="outline-2">
+<h2 id="sec-1"><span class="section-number-2">1</span> 配置</h2>
+<div class="outline-text-2" id="text-1">
+
+<p>  将下面配置保存到 ~/.gnus.el中：<br/>
+<style type="text/css"> textarea{width:100%;}</style>
+
+<p><textarea cols="80" rows="15">(setq user-full-name "visayafan")
+(setq user-mail-address "visayafan@gmail.com")
+
+(setq gnus-select-method '(nntp "news.aioe.org"))
+(setq gnus-select-method '(nntp "news.aioe.org"))
+(add-to-list 'gnus-secondary-select-methods '(nntp "news.gnus.org"))
+(add-to-list 'gnus-secondary-select-methods '(nntp  "news.gmane.org"))
+(add-to-list 'gnus-secondary-select-methods '(nntp "news.newsgroup.com.hk"))
+(add-to-list 'gnus-secondary-select-methods '(nntp  "news.newsfan.net"))
+
+;; 开启代理功能,为了能让gnus支持离线浏览,gnus 5.10.x会自动开启该功能。
+(gnus-agentize)
+
+;; 满71字符自动换行
+(add-hook 'message-mode-hook (lambda () (setq fill-column 72) (turn-on-auto-fill)))
+
+;; 发送设置
+(setq gnus-posting-styles
+      '((".*"
+         (name "visayafan")
+         (address "visayafan@gmail.com")
+         (User-Agent "Emacs+gnus"))
+        ;;邮件发送方式的发送配置
+        ((message-mail-p)
+         (name"visayafan")
+         (address "visayafan@gmail.com")
+         (User-Agent "Emacs+gnus"))
+        ;;发送帖子的设定
+        ;; (".*newsfan.*"
+        ;;  (name "visayafan")
+        ;;  (address "visayafan@gmail.com")
+        ;;  (User-Agent "Emacs+gnus")
+        ))
+
+
+;; 语言环境设定
+(set-language-environment 'Chinese-GB)
+(setq gnus-default-charset 'chinese-iso-8bit
+      gnus-group-name-charset-group-alist '((".*" . cn-gb-2312))
+      gnus-summary-show-article-charset-alist
+      '((1 . cn-gb-2312)
+        (2 . gb18030)
+        (3 . chinese-iso-8bit)
+        (4 . gbk)
+        (5 . big5)
+        (6 . utf-8))
+      gnus-newsgroup-ignored-charsets
+      '(unknown-8bit x-unknown iso-8859-1))
+
+;;解决gb18030乱码
+(setq gnus-newsgroup-ignored-charsets 
+      '(unknown-8bit x-unknown gb18030))
+
+;;设定要显示的头信息
+(setq gnus-visible-headers
+      "^\\(^From:\\|^Subject:\\|^Date:\\|^Followup-To:
+            \\|^X-Newsreader:\\|^User-Agent:\\|^X-Mailer:
+            \\|Line:\\|Lines:\\|Content-Type:\\|NNTP-Posting-Host\\)")
+
+;;设定屏幕的分割比例
+(gnus-add-configuration '(article (vertical 1.0 (summary .40 point) (article 1.0))))
+
+;;自动显示图片
+(auto-image-file-mode)
+(setq mm-inline-large-images t)
+(add-to-list 'mm-attachment-override-types "image/*")
+
+;; 杂项
+(setq gnus-confirm-mail-reply-to-news t
+      message-kill-buffer-on-exit t
+      message-elide-ellipsis "[...]\n")
+</textarea>
+</p>
+
+  通过gnus-select-method和gnus-secondary-select-method变量设置了几个新闻组地址，连接失败的可以把它们删掉（我这儿都连上了）。<br/>
+</p></div>
+
+</div>
+
+<div id="outline-container-2" class="outline-2">
+<h2 id="sec-2"><span class="section-number-2">2</span> 使用</h2>
+<div class="outline-text-2" id="text-2">
+
+<p>  <code>M-x gnus</code> 便可进入Gnus。<br/>
+  <code>gnus-group-enter-server-mode</code> 快捷键 <code>^</code> 可以查看所有服务器的连接状态， <code>opened</code> 正常， <code>denied</code> 表连接失败。<br/>
+  <code>RET</code> 可进入相应的服务器。此时会下载此服务器上所有组列表，之后进入 <code>*Gnus Browse Server*</code> 缓冲区。选中感兴趣的组回车即可进入 <code>summary</code> 缓冲区，在帖子标题上空格即可在下面打开一个 <code>Article</code> 帖子弱冲区.<br/>
+</p>
+<p>  <br/>
+</p></div>
+
+</div>
+
+<div id="outline-container-3" class="outline-2">
+<h2 id="sec-3"><span class="section-number-2">3</span> 快捷键</h2>
+<div class="outline-text-2" id="text-3">
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+<caption></caption>
+<colgroup><col class="left" /><col class="left" />
+</colgroup>
+<thead>
+<tr><th scope="col" class="left"><b>Summary Buffer</b></th><th scope="col" class="left"></th></tr>
+</thead>
+<tbody>
+<tr><td class="left">T H</td><td class="left">Thread Hide all</td></tr>
+<tr><td class="left">T S</td><td class="left">Thread Show all</td></tr>
+<tr><td class="left">C-M-s or T s</td><td class="left">show this thread</td></tr>
+<tr><td class="left">C-M-h or T h</td><td class="left">hide this thread</td></tr>
+<tr><td class="left">C-M-f</td><td class="left">forward a thread</td></tr>
+<tr><td class="left">C-M-b</td><td class="left">backward a thread</td></tr>
+<tr><td class="left">n</td><td class="left">next unreaded thread</td></tr>
+<tr><td class="left">p</td><td class="left">previous unreaded thread</td></tr>
+<tr><td class="left">M-g</td><td class="left">刷新，在Group缓冲区里是g</td></tr>
+<tr><td class="left">SPACE</td><td class="left">view this thread</td></tr>
+<tr><td class="left">W W s</td><td class="left">article hide signature 在读帖的时候很多人搞些莫名其妙的签名比较烦人，可以将其去掉</td></tr>
+<tr><td class="left">W W a</td><td class="left">article hide all 去掉所有的，包括 标题，引用，签名。具体可查看article菜单</td></tr>
+<tr><td class="left">T d</td><td class="left">thread down 可以加前缀，表向上几级</td></tr>
+<tr><td class="left">T u</td><td class="left">thread up</td></tr>
+<tr><td class="left">T o</td><td class="left">thread top</td></tr>
+<tr><td class="left">C-M-k</td><td class="left">mark thread as read</td></tr>
+<tr><td class="left">T E</td><td class="left">mark thread as expired</td></tr>
+<tr><td class="left">a</td><td class="left">发帖</td></tr>
+<tr><td class="left">r</td><td class="left">reply email 与邮件作者私聊，不会公开在组中</td></tr>
+<tr><td class="left">R</td><td class="left">reply and yank 回信并在信中引用别人的帖子</td></tr>
+<tr><td class="left">C-c C-c</td><td class="left">send</td></tr>
+<tr><td class="left">C-c C-k</td><td class="left">cancel send</td></tr>
+<tr><td class="left">C-c C-d</td><td class="left">don't send and save as draft</td></tr>
+<tr><td class="left">C-c C-m f or C-c RET f</td><td class="left">添加附件</td></tr>
+<tr><td class="left">f</td><td class="left">followup 回帖</td></tr>
+<tr><td class="left">F</td><td class="left">followup and yank 回帖的时候引用别人的帖子</td></tr>
+<tr><td class="left">c</td><td class="left">标记所有帖子为已读</td></tr>
+<tr><td class="left">C-c C-f</td><td class="left">forward this message to somebody others 转发给另外一个人</td></tr>
+<tr><td class="left">S o p</td><td class="left">forward this message to another newsgroup 转发给另一个新闻组</td></tr>
+<tr><td class="left">A T</td><td class="left">此时你在一个thread的某个帖子上 A T即可查看整个thread的所有帖子</td></tr>
+</tbody>
+<tbody>
+<tr><td class="left"><b>Mark</b></td><td class="left"><b>含义</b></td></tr>
+</tbody>
+<tbody>
+<tr><td class="left">R</td><td class="left">读过一个帖子后默认会加上该标记，下次再进入的时候此帖子不会再显示，这些R标记的帖子都是真正读过的</td></tr>
+<tr><td class="left">r</td><td class="left">用命令d即可添加一个r标记，下次不显示此帖，可能因为不喜欢没有读，想当于delete删除这个帖子</td></tr>
+<tr><td class="left">O</td><td class="left">表明这个是old老帖，默认Gnus不会显示老帖的，除非使用命令/ o强制显示</td></tr>
+</tbody>
+<tbody>
+<tr><td class="left">！</td><td class="left">ticked 表示此帖很重要，你想每次进入新闻组的时候都显示它</td></tr>
+<tr><td class="left"></td><td class="left">（如果此帖被服务器管理员因不合格或过期原因删掉了则不会再显示）所以最好将认为重要的帖子备份在本机上</td></tr>
+<tr><td class="left">？</td><td class="left">dormant 如果此帖不再有人回则此标记与R一样不会再显示，如果有人回帖则此帖会再次现身</td></tr>
+</tbody>
+<tbody>
+<tr><td class="left">空格</td><td class="left">帖子前面什么也没有则表示这是个未读的帖子</td></tr>
+</tbody>
+<tbody>
+<tr><td class="left"><b>Gnus Broswe Server Buffer</b></td><td class="left"></td></tr>
+</tbody>
+<tbody>
+<tr><td class="left">u</td><td class="left">subscribe this group</td></tr>
+<tr><td class="left">q</td><td class="left">exit</td></tr>
+</tbody>
+<tbody>
+<tr><td class="left"><b>Article Buffer</b></td><td class="left"></td></tr>
+</tbody>
+<tbody>
+<tr><td class="left">s</td><td class="left">go to summary buffer</td></tr>
+<tr><td class="left">C-c RET</td><td class="left">为光标位置下的邮件地址发邮件</td></tr>
+<tr><td class="left">SPC</td><td class="left">下个回帖</td></tr>
+<tr><td class="left">Del</td><td class="left">上个回贴</td></tr>
+</tbody>
+<tbody>
+<tr><td class="left"><b>Group Buffer</b></td><td class="left"></td></tr>
+</tbody>
+<tbody>
+<tr><td class="left">c</td><td class="left">标记光标所在组的所有未读帖子为已读</td></tr>
+<tr><td class="left">C</td><td class="left">把所有组所有未读帖子都标记为已读</td></tr>
+<tr><td class="left">g</td><td class="left">刷新</td></tr>
+<tr><td class="left">l</td><td class="left">只显示有未读消息的组</td></tr>
+<tr><td class="left">L</td><td class="left">显示所有组（不管有没有未读消息）</td></tr>
+<tr><td class="left">a</td><td class="left">发帖（自己手工输入新闻组名称）</td></tr>
+<tr><td class="left">u</td><td class="left">订阅或取消订阅光标所在新闻组</td></tr>
+<tr><td class="left">C-k</td><td class="left">从订阅列表里删除某个新闻组</td></tr>
+</tbody>
+</table>
+
+
+</div>
+
+</div>
+
+<div id="outline-container-4" class="outline-2">
+<h2 id="sec-4"><span class="section-number-2">4</span> 再配置</h2>
+<div class="outline-text-2" id="text-4">
+
+
+</div>
+
+<div id="outline-container-4-1" class="outline-3">
+<h3 id="sec-4-1"><span class="section-number-3">4.1</span> 起动时即折叠所有thread</h3>
+<div class="outline-text-3" id="text-4-1">
+
+
+
+
+<pre class="src src-lisp">(setq gnus-thread-hide-subtree t)
+</pre>
+
+</div>
+
+</div>
+
+<div id="outline-container-4-2" class="outline-3">
+<h3 id="sec-4-2"><span class="section-number-3">4.2</span> 起动时即隐藏所有签名</h3>
+<div class="outline-text-3" id="text-4-2">
+
+
+
+
+<pre class="src src-lisp">(setq gnus-treat-hide-signature t)
+</pre>
+
+</div>
+
+</div>
+
+<div id="outline-container-4-3" class="outline-3">
+<h3 id="sec-4-3"><span class="section-number-3">4.3</span> 签名</h3>
+<div class="outline-text-3" id="text-4-3">
+
+<p>   定制变量 <code>gnus-posting-style</code>.<br/>
+</p>
+
+
+<pre class="src src-lisp">(setq gnus-posting-styles 
+      '((<span style="color: #8b2252;">".*"</span> (signature-file <span style="color: #8b2252;">"~/emacs/gnus/.signature_english"</span>)) 
+        (<span style="color: #8b2252;">"cn.*"</span> (signature-file <span style="color: #8b2252;">"~/emacs/gnus/.signature_chinese"</span>)))) 
+</pre>
+
+<p>
+   如果是以cn开头的则用.signature_chinese否则用english.<br/>
+</p></div>
+
+</div>
+
+<div id="outline-container-4-4" class="outline-3">
+<h3 id="sec-4-4"><span class="section-number-3">4.4</span> 翻页</h3>
+<div class="outline-text-3" id="text-4-4">
+
+<p>   一般summary缓冲区在上，article缓冲区在下，如果article缓冲区帖子过长，在summary缓冲区用 <b>空格</b> 和 <b>退格</b> 为其翻页而不需要离开summary缓冲区，如果帖子到底了则再按空格则会翻到下个帖子.<br/>
+</p></div>
+
+</div>
+
+<div id="outline-container-4-5" class="outline-3">
+<h3 id="sec-4-5"><span class="section-number-3">4.5</span> 保存本地</h3>
+<div class="outline-text-3" id="text-4-5">
+
+
+
+
+<pre class="src src-lisp">(setq gnus-use-cache t)
+</pre>
+
+<p>
+   在summary缓冲区中帖子标题上加上 <code>*</code> 就可以保存到本地了，默认路径是 ~/News/cache/YourGroupName。 <code>M *</code> 即可删除本地保存。<br/>
+</p></div>
+</div>
+</div>
+</div>
+
+</body>
+</html>

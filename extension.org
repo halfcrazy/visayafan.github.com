@@ -3,3 +3,7 @@
 
 #+macro: image #+html:<img src="$1"></img> 
 
+#+macro: left #+html:<div class="row-fluid"> <div class="span$1">
+#+macro: middle #+html: </div> <div class="span$1">
+#+macro: right #+html:</div></div>
+

@@ -114,111 +114,6 @@ cd ~/.emacs.d/eshell && cat alias > tmp && echo -e "\n" >> tmp && alias | sed -E
     (erase-buffer)))
 #+end_src
   
-* 解决org-mode example/src/quote上面多一行问题
-  不知道是不是org-mode的bug？如下所示的代码
-#+begin_src org
-abc
-cef
-#+begin_example
-hello
-#+end_example  
-#+end_src
-  经编译后生成：
-#+begin_example
-<p>  abc<br/>
-  cef<br/>
-</p>
-<p><br>
-<pre class="example">hello
-</pre>
-</p>
-#+end_example
-  但浏览器解析是这样解析的：
-#+begin_example
-<p>  abc<br/>
-  cef<br/>
-</p>
-<p><br></p>
-<pre class="example">hello
-</pre>
-#+end_example
-  这样就会在cef和hello之间多出一行。
-  分析lisp/org-html.el代码发现原因在:
-#+begin_src lisp
-;; Check if the line break needs to be conserved
-(cond
- ((string-match "\\\\\\\\[ \t]*$" line)
-  (setq line (replace-match "<br/>" t t line)))
- (org-export-preserve-breaks
-  (setq line (concat line "<br/>"))
-  ))
-#+end_src
-  不管line是否为空都会给line后面加上<br/>，而实际上当Line为空时没有必要加上<br/>，于是可以修改:
-#+begin_src lisp
-;; Check if the line break needs to be conserved
-(cond
- ((string-match "\\\\\\\\[ \t]*$" line)
-  (setq line (replace-match "<br/>" t t line)))
- (org-export-preserve-breaks
-  (if (not (string= line ""))
-      (setq line (concat line "<br/>")))
-  ))
-#+end_src
-  这样便解决了多一行的问题。
-* org-mode example/src过大
-  当在#+begin_example #+end_example或者#+begin_src #+end_src环境中内容过多时会占用大量空间，一个解决办法是加上 =-t= 选项并配合 =-h height -w width= 选项来指定高宽，使它成为有滚动条的区域。但好像无法使用语法高亮。
-* org-mode中使用宏
-  在文章的开始定义宏，格式为 #+macro: macro_name macro_content_with_$1_arg1_$2_arg2_...
-  在文章中使用宏 {{{macro_name(args)}}}
-  其中org-mode内置的宏包括
-#+begin_example
-{{{title}}}
-{{{author}}}
-{{{date(format)}}} 其中format格式必须可以被函数 =format-time-string= 识别，常用的包括 %Y-%m-%d-%H-%M-%S 年月日时分秒
-%x 格式为： 10/29/2012 
-%X 格式为： 11:46:33 AM 
-%c 格式为： Mon 29 Oct 2012 11:46:33 AM CST 
-%D 格式为： 10/29/12 
-%R 格式为： 11:46 
-%T 格式为： 11:46:33 
-%r 格式为： 11:46:33 AM
-还有其它的org中的关键字
-#+end_example
-  利用宏可以减少冗余文本使内容更清晰，比如我在extension.org里定义了如下宏：
-: #+macro:lightbox #+html:<link rel="stylesheet" href="../../Layout/CSS/jquery.lightbox-0.5.css" type="text/css" media="screen" /> <script type="text/javascript" src="../../Layout/JS/jquery.lightbox-0.5.js"></script> <center> <a class="lightbox" href="$1"> <img class="lightbox " title="点击查看大图" src="$1" width="300"> </a> </center> <script type="text/javascript"> $(function() {$('a.lightbox').lightBox();}); </script>
-  我在欲导出HTML的Org文件比如emacs_trick.org头部写上：
-: #+SETUPFILE: "extension.org" 
-  则便可以在emacs_trick.org中使用此宏。
-: {{{lightbox(images/image_name.jpg)}}}
-  只需要一行就搞定了。
-
-  这样我就可以把所有的宏全部写在extension.org里，然后可以重复使用：只需要SETUPFILE指定就可以使用了。
-* org-mode 中嵌入latex公式
-#+begin_example
-$$ \(\)表行内，$$ $$ \[ \] 表行间
-#+end_example
-#+begin_example
-If $a^2=b$ and \( b=2 \), then the solution must be
-either $$ a=+\sqrt{2} $$ or \[ a=-\sqrt{2} \].
-#+end_example  
-* org-mode 中block中嵌入#+begin_example
-: #+begin_example
-: #+begin_example
-: 这种情况导出的不会包含#+begin_example,因为把想要字面导出的#+begin_example当成了example环境
-: #+end_example
-: #+end_example
-  应该这样写
-: #+begin_src org
-: #+begin_example
-: 这样就对了,在这种情况下可以快捷键C-c ' 来进入源码编辑模式
-: #+end_example
-: #+end_src
-  也可以在第行前面加上:空格 来表示字面解析：
-#+begin_src org
-  ,: #+begin_example
-  ,: 这样就对了
-  ,: #+end_example
-#+end_src
 * Ubuntu安装Emacs24.2及配置CEDET,ECB
 ** ./configure前需要安装的信赖包
 #+begin_example
@@ -262,18 +157,6 @@ sudo apt-get install libncurses5-dev
 <center> <a class="lightbox" href="./image/emacs-dired.png"> <img class="lightbox " title="jQuery.lightbox" src="./image/emacs-dired.png" width="400"> </a> </center>
 d<script type="text/javascript"> $(function() {$('a.lightbox').lightBox();}); </script>
 #+end_html
-* org-mode导出HTML目录显示“目录”而非默认的Table Of Content
-  =M-x customize-variable ENTER org-export-language-setup= 在最后ins插入新的List:
-#+html:<center>
-[[./image/中文目录.png]]  
-#+html:</center>
-  再 =M-x customize-variable ENTER org-export-default-language= 改成 zh-CN
-* org-mode导出PDF目录显示“目录”而非默认的Contents
-  在 =org-export-latex-classes= 中加上 =\\renewcommand\\contentsname{目录}=
-* org-mode的表格中输入|
-  两种办法：
-  1. =\vert{}= 使用 $\LaTeX$
-  2. 快捷键 =C-c C-x \=
 * Emacs中使用输入法
   可以 =M-x customize-variable RET default-input-method= 来指定默认的输入法，例如 =chinese-pinyin= 。
   默认是 =C-\= 来调用。
@@ -303,15 +186,6 @@ d<script type="text/javascript"> $(function() {$('a.lightbox').lightBox();}); </
 (prefer-coding-system 'utf-8)
 (prefer-coding-system 'chinese-gbk)
 #+end_src
-* Org Mode HTML导出时内部链接
-  在一篇文章中建立内部链接很简单，添加anchor，
-#+begin_example
-#<<anchor>>
-#+end_example
-  在想要链接到上面的地主添加链接即可:
-#+begin_example
-[[anchor]]
-#+end_example  
 * Yasnippet共享
   在c mode和c++ mode下都可以使用cc mode里面的yasnippet，其方法是在 snippet/c-mode和snippet/c++-mode目录下均存在.yas-parents其内容均为cc-mode。
 这样便省去了重复定制yasnippet。
@@ -386,6 +260,10 @@ d<script type="text/javascript"> $(function() {$('a.lightbox').lightBox();}); </
     (set-frame-parameter frame 'menu-bar-lines 0))))
 (add-hook 'after-make-frame-functions 'customize-terminal-frame)
 #+end_src
+* Emacs Gnus 阅读新闻组
+  [[./EmacsGnus.html][配置+使用]]
+* Emacs Org-Mode 写文章做笔记
+  [[./EmacsOrg.html][配置+使用]]
 * 分享/评论
 #+html:<a class="btn btn-primary" href="https://raw.github.com/visayafan/visayafan.github.com/master/Others/o/Emacs.org">View Org Source</a>
 #+include "../../disqus.org"

@@ -7,7 +7,7 @@
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
 <meta name="title" content="C++11新特性"/>
 <meta name="generator" content="Org-mode"/>
-<meta name="generated" content="2012-12-06 03:24:37 CST"/>
+<meta name="generated" content="2012-12-12 01:59:29 CST"/>
 <meta name="author" content="visayafan"/>
 <meta name="description" content=""/>
 <meta name="keywords" content=""/>
@@ -78,7 +78,7 @@ cout&lt;&lt;n&lt;&lt;endl;     <span style="color: #b22222;">// </span><span sty
 </pre>
 
 <p>
-    [] 等价于 [=]<br/>
+    [] 默认是传值。<br/>
 </p></li>
 <li>lambda-declarator 用来修饰lambda函数， mutable表示可以修改传入的变量，-&gt;int表返回值是int,如果编译器可以推断出来返回值则不会显示写出来。例如-&gt;int基本上编译器可以推断出来。<br/>
      上面程序中第2条出错原因在于默认lambda函数是const函数，不能修改传入的变量。<br/>

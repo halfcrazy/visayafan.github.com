@@ -1,0 +1,322 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+               "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-CN" xml:lang="zh-CN">
+<head>
+<title>C++类</title>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
+<meta name="title" content="C++类"/>
+<meta name="generator" content="Org-mode"/>
+<meta name="generated" content="2012-12-12 21:05:19 CST"/>
+<meta name="author" content="visayafan"/>
+<meta name="description" content=""/>
+<meta name="keywords" content=""/>
+
+
+
+</head>
+<body>
+
+
+<div id="content">
+<h1 class="title">C++类</h1>
+
+
+<!-- <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"> </script> -->
+<link rel="stylesheet" type="text/css" href="../../Layout/CSS/bootstrap_old.css" />
+<link rel="stylesheet" type="text/css" href="../../Layout/CSS/vf.css" />
+<script src="../../Layout/JS/jquery_1.7.1.js"></script>
+<script src="../../Layout/JS/bootstrap_old.js"></script>
+
+
+
+<div id="table-of-contents">
+<h2>目录</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#sec-1">1 空类对象有1个字节的内存占用</a></li>
+<li><a href="#sec-2">2 GCC中继承内存布局</a></li>
+<li><a href="#sec-3">3 数据成员的绑定</a></li>
+<li><a href="#sec-4">4 由于继承引发的空间浪费</a></li>
+<li><a href="#sec-5">5 虚继承，虚基类</a></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-1" class="outline-2">
+<h2 id="sec-1"><span class="section-number-2">1</span> 空类对象有1个字节的内存占用</h2>
+<div class="outline-text-2" id="text-1">
+
+<p>  为了区别各个对象必须要有1个字节的占用空间。<br/>
+</p></div>
+
+</div>
+
+<div id="outline-container-2" class="outline-2">
+<h2 id="sec-2"><span class="section-number-2">2</span> GCC中继承内存布局</h2>
+<div class="outline-text-2" id="text-2">
+
+<ol>
+<li>GCC中类对象把vptr放在最开始位置，大小为4B。<br/>
+</li>
+<li>多重继承多个基类内存布局顺序以继承中声明顺序方式排序。<br/>
+</li>
+<li>虚继承中将以虚继承方式继承下来的基类放在最后面。<br/>
+     B，C虚继承A，D继承B，C。D类对象内存布局中首先是B（包括B的vptr和变量），然后是C（同理包括C的vptr和变量），接着是D（包括自己的vptr和变量），最后是A。<br/>
+</li>
+</ol>
+
+</div>
+
+</div>
+
+<div id="outline-container-3" class="outline-2">
+<h2 id="sec-3"><span class="section-number-2">3</span> 数据成员的绑定</h2>
+<div class="outline-text-2" id="text-3">
+
+<ol>
+<li>成员函数体是在整个类分析完成后才开始分析的。<br/>
+</li>
+<li>成员函数参数列表是伴随着类自上而下分析进行分析的。<br/>
+</li>
+</ol>
+
+
+<div class="row-fluid"> <div class="span4">
+
+<pre class="src src-c++"><span style="color: #a020f0;">typedef</span> <span style="color: #228b22;">int</span> <span style="color: #228b22;">length</span>;
+<span style="color: #a020f0;">class</span> <span style="color: #228b22;">A</span>{
+<span style="color: #a020f0;">public</span>:
+     <span style="color: #228b22;">void</span> <span style="color: #0000ff;">f</span>(<span style="color: #228b22;">length</span> <span style="color: #a0522d;">a</span>){
+          cout&lt;&lt;<span style="color: #a020f0;">sizeof</span>(a)&lt;&lt;endl; <span style="color: #b22222;">// </span><span style="color: #b22222;">4</span>
+          <span style="color: #228b22;">length</span> <span style="color: #a0522d;">x</span>;
+          cout&lt;&lt;<span style="color: #a020f0;">sizeof</span>(x)&lt;&lt;endl; <span style="color: #b22222;">// </span><span style="color: #b22222;">8</span>
+     }
+<span style="color: #a020f0;">private</span>:
+     <span style="color: #a020f0;">typedef</span> <span style="color: #228b22;">double</span> <span style="color: #228b22;">length</span>;
+<span style="color: #a020f0;">public</span>:
+     <span style="color: #228b22;">void</span> <span style="color: #0000ff;">g</span>(<span style="color: #228b22;">length</span> <span style="color: #a0522d;">b</span>){
+          cout&lt;&lt;<span style="color: #a020f0;">sizeof</span>(b)&lt;&lt;endl; <span style="color: #b22222;">// </span><span style="color: #b22222;">8</span>
+          <span style="color: #228b22;">length</span> <span style="color: #a0522d;">y</span>;
+          cout&lt;&lt;<span style="color: #a020f0;">sizeof</span>(y)&lt;&lt;endl; <span style="color: #b22222;">// </span><span style="color: #b22222;">8</span>
+     }
+};
+
+<span style="color: #228b22;">int</span> <span style="color: #0000ff;">main</span>(<span style="color: #228b22;">int</span> <span style="color: #a0522d;">argc</span>, <span style="color: #228b22;">char</span> *<span style="color: #a0522d;">argv</span>[])
+{
+     <span style="color: #228b22;">A</span> <span style="color: #a0522d;">a</span>;
+     a.f(3);
+     a.g(3);
+     <span style="color: #a020f0;">return</span> 0;
+}
+</pre>
+
+</div> <div class="span7">
+<p>
+sizeof(a)为4是因为(2)，分析到f(length a)时此时length为int。<br/>
+sizeof(b)为8是因为分析到g(length b)时length已经被typdef double length重新定义了，此时length为double。<br/>
+sizeof(x)和size(y)是8是因为它们都在函数体内，而函数体是在整个类分析完成后才开始分析的，此时length为double.<br/>
+</div></div>
+</p></div>
+
+</div>
+
+<div id="outline-container-4" class="outline-2">
+<h2 id="sec-4"><span class="section-number-2">4</span> 由于继承引发的空间浪费</h2>
+<div class="outline-text-2" id="text-4">
+
+
+<div class="row-fluid"> <div class="span3">
+
+<pre class="src src-c++"><span style="color: #a020f0;">class</span> <span style="color: #228b22;">A</span>{
+<span style="color: #a020f0;">public</span>:
+     <span style="color: #228b22;">int</span> <span style="color: #a0522d;">x</span>;
+     <span style="color: #228b22;">char</span> <span style="color: #a0522d;">c1</span>;
+};
+
+<span style="color: #a020f0;">class</span> <span style="color: #228b22;">B</span>:<span style="color: #a020f0;">public</span> <span style="color: #228b22;">A</span>{
+<span style="color: #a020f0;">public</span>:
+     <span style="color: #228b22;">char</span> <span style="color: #a0522d;">c2</span>;
+};
+
+<span style="color: #a020f0;">class</span> <span style="color: #228b22;">C</span>:<span style="color: #a020f0;">public</span> <span style="color: #228b22;">B</span>{
+<span style="color: #a020f0;">public</span>:
+     <span style="color: #228b22;">char</span> <span style="color: #a0522d;">c3</span>;
+};
+<span style="color: #228b22;">int</span> <span style="color: #0000ff;">main</span>(<span style="color: #228b22;">int</span> <span style="color: #a0522d;">argc</span>, <span style="color: #228b22;">char</span> *<span style="color: #a0522d;">argv</span>[])
+{
+     <span style="color: #228b22;">A</span> <span style="color: #a0522d;">a</span>; <span style="color: #228b22;">B</span> <span style="color: #a0522d;">b</span>; <span style="color: #228b22;">C</span> <span style="color: #a0522d;">c</span>;
+     cout&lt;&lt;<span style="color: #a020f0;">sizeof</span>(a) &lt;&lt;<span style="color: #8b2252;">' '</span>&lt;&lt;<span style="color: #a020f0;">sizeof</span>(b)&lt;&lt;<span style="color: #8b2252;">' '</span>&lt;&lt;<span style="color: #a020f0;">sizeof</span>(c)&lt;&lt;endl;
+     <span style="color: #a020f0;">return</span> 0;
+}
+</pre>
+
+</div> <div class="span8">
+<p>
+按照《Inside the C++ Object Model》里面说的结果应该是 8 12 16.<br/>
+但实际运行结果为 8 12 12.<br/>
+调试发现C中的c3放在了c2的下一字节上。按照Lippman书上说的这种做法应该不对。<br/>
+否则下面代码会发生错误：<br/>
+<div class="row-fluid"> <div class="span4">
+
+<pre class="src src-c++">c.c3=<span style="color: #8b2252;">'c'</span>;
+<span style="color: #228b22;">B</span> *<span style="color: #a0522d;">pb</span> = &amp;b;
+<span style="color: #228b22;">C</span> *<span style="color: #a0522d;">pc</span> = &amp;c;
+cout&lt;&lt;c.c3&lt;&lt;endl;
+*pc = *<span style="color: #a020f0;">static_cast</span>&lt;C*&gt;(pb);
+cout&lt;&lt;c.c3&lt;&lt;endl;
+</pre>
+
+</div></div>
+将pb静态转化为C类型指针后将其指向的值赋值给c，按理说应该不影响c中的c3才对，因为c3是C特有的。但在GCC下发生了覆盖导致c3的值不确定。<br/>
+</p>
+<p>
+猜想可能是GCC的错？<br/>
+</div></div>
+</p></div>
+
+</div>
+
+<div id="outline-container-5" class="outline-2">
+<h2 id="sec-5"><span class="section-number-2">5</span> 虚继承，虚基类</h2>
+<div class="outline-text-2" id="text-5">
+
+<p>  例如下面的例子：<br/>
+<link rel="stylesheet" href="../../Layout/CSS/jquery.lightbox-0.5.css" type="text/css" media="screen" /> <script type="text/javascript" src="../../Layout/JS/jquery.lightbox-0.5.js"></script> <center> <a class="lightbox" href="images/virtual-base-class.gif"> <img class="lightbox " title="点击查看大图" src="images/virtual-base-class.gif" width="300"> </a> </center> <script type="text/javascript"> $(function() {$('a.lightbox').lightBox();}); </script>
+  如果按照普通继承方式则pegasus中将含有2份Animal的变量，而实际上一份即可，故引入虚继承。<br/>
+  虚继承不需要对Animal做任何改变，只需要改变Horse, Bird继承Animal时的方式即可。<br/>
+</p>
+<p>
+  通过虚继承方式继承的子类中通过默认构造函数添加代码的方式向类对象中加入了指向虚基类的指针。<br/>
+  故下面结果为：1448<br/>
+</p>
+
+
+<pre class="src src-c++"><span style="color: #a020f0;">class</span> <span style="color: #228b22;">Animal</span>{};
+<span style="color: #a020f0;">class</span> <span style="color: #228b22;">Horse</span>:<span style="color: #a020f0;">public</span> <span style="color: #a020f0;">virtual</span> <span style="color: #228b22;">Animal</span>{};
+<span style="color: #a020f0;">class</span> <span style="color: #228b22;">Bird</span>:<span style="color: #a020f0;">public</span> <span style="color: #a020f0;">virtual</span> <span style="color: #228b22;">Animal</span>{};
+<span style="color: #a020f0;">class</span> <span style="color: #228b22;">Pegasus</span>:<span style="color: #a020f0;">public</span> <span style="color: #228b22;">Horse</span>, <span style="color: #a020f0;">public</span> <span style="color: #228b22;">Bird</span>{};
+
+<span style="color: #228b22;">int</span> <span style="color: #0000ff;">main</span>(<span style="color: #228b22;">int</span> <span style="color: #a0522d;">argc</span>, <span style="color: #228b22;">char</span> *<span style="color: #a0522d;">argv</span>[])
+{
+     <span style="color: #228b22;">Animal</span> <span style="color: #a0522d;">a</span>; <span style="color: #228b22;">Horse</span> <span style="color: #a0522d;">h</span>; <span style="color: #228b22;">Bird</span> <span style="color: #a0522d;">b</span>; <span style="color: #228b22;">Pegasus</span> <span style="color: #a0522d;">p</span>;
+     cout&lt;&lt;<span style="color: #a020f0;">sizeof</span>(a)&lt;&lt;<span style="color: #a020f0;">sizeof</span>(h)&lt;&lt;<span style="color: #a020f0;">sizeof</span>(b)&lt;&lt;<span style="color: #a020f0;">sizeof</span>(p)&lt;&lt;endl;
+     <span style="color: #a020f0;">return</span> 0;
+}
+</pre>
+
+<p>
+  普通继承中Pegasus构造函数调用过程：先调用Horse的构造函数，而Horse又调用了Animal的构造函数。再调用Bird的构造函数，而Bird又调用了Animal的构造函数。<br/>
+  虚继承下Pegasus构造函数调用过程：Animal的构造函数，Horse的构造函数（没有调用Animal的构造函数），最后是Bird的构造函数（同样没有调用Animal的构造函数）.<br/>
+  不采用虚继承时调用方式见此<a href="http://blog.csdn.net/wangxingbao4227/article/details/6772579">博文</a>。<br/>
+  <a href="http://www.java-samples.com/showtutorial.php?tutorialid=463">例子</a><br/>
+<style type="text/css"> textarea{width:100%;}</style>  
+
+<p><textarea cols="80" rows="14">typedef int HANDS;
+enum COLOR { Red, Green, Blue, Yellow, White, Black, Brown } ;
+enum BOOL { FALSE, TRUE };
+
+class Animal        // common base to both horse and bird
+{
+public:
+     Animal(int);
+     virtual ~Animal() { cout << "Animal destructor...\n"; }
+     virtual int GetAge() const { return itsAge; }
+     virtual void SetAge(int age) { itsAge = age; }
+private:
+     int itsAge;
+};
+
+Animal::Animal(int age):
+     itsAge(age)
+{
+     cout << "Animal constructor...\n";
+}
+
+class Horse : virtual public Animal
+{
+public:
+     Horse(COLOR color, HANDS height, int age);
+     virtual ~Horse() { cout << "Horse destructor...\n"; }
+     virtual void Whinny()const { cout << "Whinny!... "; }
+     virtual HANDS GetHeight() const { return itsHeight; }
+     virtual COLOR GetColor() const { return itsColor; }
+protected:
+     HANDS itsHeight;
+     COLOR itsColor;
+};
+
+Horse::Horse(COLOR color, HANDS height, int age):
+     Animal(age),
+     itsColor(color),itsHeight(height)
+{
+     cout << "Horse constructor...\n";
+}
+
+class Bird : virtual public Animal
+{
+public:
+     Bird(COLOR color, BOOL migrates, int age);
+     virtual ~Bird() {cout << "Bird destructor...\n";  }
+     virtual void Chirp()const { cout << "Chirp... ";  }
+     virtual void Fly()const 
+          { cout << "I can fly! I can fly! I can fly! "; }
+     virtual COLOR GetColor()const { return itsColor; }
+     virtual BOOL GetMigration() const { return itsMigration; }
+protected:
+     COLOR itsColor;
+     BOOL itsMigration;
+};
+
+Bird::Bird(COLOR color, BOOL migrates, int age):
+     Animal(age),
+     itsColor(color), itsMigration(migrates)
+{
+     cout << "Bird constructor...\n";
+}
+
+class Pegasus : public Horse, public Bird
+{
+public:
+     void Chirp()const { Whinny(); }
+     Pegasus(COLOR, HANDS, BOOL, long, int);
+     ~Pegasus() {cout << "Pegasus destructor...\n";}
+     virtual long GetNumberBelievers() const 
+          { return  itsNumberBelievers; }
+     virtual COLOR GetColor()const { return Horse::itsColor; }
+private:
+     long itsNumberBelievers;
+};
+
+Pegasus::Pegasus(
+     COLOR aColor,
+     HANDS height,
+     BOOL migrates,
+     long NumBelieve,
+     int age):
+     Horse(aColor, height,age),
+     Bird(aColor, migrates,age),
+     Animal(age*2),
+     itsNumberBelievers(NumBelieve)
+{
+     cout << "Pegasus constructor...\n";
+}
+
+int main()
+{
+     Pegasus *pPeg = new Pegasus(Red, 5, TRUE, 10, 2);
+     int age = pPeg->GetAge();
+     cout << "This pegasus is " << age << " years old.\n";
+     delete pPeg;
+     return 0;
+ }
+</textarea>
+</p>
+
+
+</p></div>
+</div>
+</div>
+
+</body>
+</html>

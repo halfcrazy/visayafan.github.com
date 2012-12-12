@@ -1,8 +1,7 @@
-#+OPTIONS: "\n:t
-#+OPTIONS: ^:{}
-#+OPTIONS: _:{}
-#+TITLE: 
-
+#+OPTIONS: ^:{} _:{} num:t toc:t \n:t
+#+INCLUDE "../../template.org"
+#+SETUPFILE: "../../extension.org"
+#+title:C++模板
 * 术语
 ** type parameter
    类型参数(STL源码剖析中翻译为型别参数)
@@ -100,3 +99,18 @@ public:
 <div id="disqus_thread">
 </div>
 #+END_HTML
+* const函数
+  STL vector重载operator[]:
+#+begin_src c++
+reference operator[](size_type __n) {return *(this->_M_impl._M_start + __n);}
+const_reference operator[](size_type __n) const {return *(this->_M_impl._M_start + __n);}
+#+end_src
+  函数末尾加上const含义是函数体不能修改成员变量。
+  实际情况是隐含的this指针性质发生变化：
+#+begin_src c++
+reference operator[](class_type *this, size_type n);
+const_reference operator[](const class_type *this, size_type n);
+#+end_src
+  由于this是const class_type*类型，故无法修改this指向的类对象。
+
+  当const class调用时用的是第2个，返回是const_reference。当non-const类调用时调用第1个，返回reference.
