@@ -94,11 +94,6 @@ public:
     //....
 };
 #+END_SRC    
-#+BEGIN_HTML
-<script src="../../Layout/JS/disqus-comment.js"></script>
-<div id="disqus_thread">
-</div>
-#+END_HTML
 * const∫Ø ˝
   STL vector÷ÿ‘ÿoperator[]:
 #+begin_src c++

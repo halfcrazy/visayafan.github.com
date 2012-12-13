@@ -7,7 +7,7 @@
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
 <meta name="title" content="C++类"/>
 <meta name="generator" content="Org-mode"/>
-<meta name="generated" content="2012-12-12 21:05:19 CST"/>
+<meta name="generated" content="2012-12-13 18:15:59 CST"/>
 <meta name="author" content="visayafan"/>
 <meta name="description" content=""/>
 <meta name="keywords" content=""/>
@@ -24,7 +24,7 @@
 
 <!-- <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"> </script> -->
 <link rel="stylesheet" type="text/css" href="../../Layout/CSS/bootstrap_old.css" />
-<link rel="stylesheet" type="text/css" href="../../Layout/CSS/vf.css" />
+<link rel="stylesheet" type="text/css" href="../../Layout/CSS/style.css" />
 <script src="../../Layout/JS/jquery_1.7.1.js"></script>
 <script src="../../Layout/JS/bootstrap_old.js"></script>
 
@@ -210,110 +210,109 @@ cout&lt;&lt;c.c3&lt;&lt;endl;
   虚继承下Pegasus构造函数调用过程：Animal的构造函数，Horse的构造函数（没有调用Animal的构造函数），最后是Bird的构造函数（同样没有调用Animal的构造函数）.<br/>
   不采用虚继承时调用方式见此<a href="http://blog.csdn.net/wangxingbao4227/article/details/6772579">博文</a>。<br/>
   <a href="http://www.java-samples.com/showtutorial.php?tutorialid=463">例子</a><br/>
-<style type="text/css"> textarea{width:100%;}</style>  
+<div style="height:200px;overflow:auto;border-style:solid;border-width:1px;border-color:#DDD">
 
-<p><textarea cols="80" rows="14">typedef int HANDS;
-enum COLOR { Red, Green, Blue, Yellow, White, Black, Brown } ;
-enum BOOL { FALSE, TRUE };
+<pre class="src src-c++"><span style="color: #a020f0;">typedef</span> <span style="color: #228b22;">int</span> <span style="color: #228b22;">HANDS</span>;
+<span style="color: #a020f0;">enum</span> <span style="color: #228b22;">COLOR</span> { <span style="color: #a0522d;">Red</span>, <span style="color: #a0522d;">Green</span>, <span style="color: #a0522d;">Blue</span>, <span style="color: #a0522d;">Yellow</span>, <span style="color: #a0522d;">White</span>, <span style="color: #a0522d;">Black</span>, <span style="color: #a0522d;">Brown</span> } ;
+<span style="color: #a020f0;">enum</span> <span style="color: #228b22;">BOOL</span> { <span style="color: #a0522d;">FALSE</span>, <span style="color: #a0522d;">TRUE</span> };
 
-class Animal        // common base to both horse and bird
+<span style="color: #a020f0;">class</span> <span style="color: #228b22;">Animal</span>        <span style="color: #b22222;">// </span><span style="color: #b22222;">common base to both horse and bird</span>
 {
-public:
-     Animal(int);
-     virtual ~Animal() { cout << "Animal destructor...\n"; }
-     virtual int GetAge() const { return itsAge; }
-     virtual void SetAge(int age) { itsAge = age; }
-private:
-     int itsAge;
+<span style="color: #a020f0;">public</span>:
+     <span style="color: #0000ff;">Animal</span>(<span style="color: #228b22;">int</span>);
+     <span style="color: #a020f0;">virtual</span> ~<span style="color: #0000ff;">Animal</span>() { cout &lt;&lt; <span style="color: #8b2252;">"Animal destructor...\n"</span>; }
+     <span style="color: #a020f0;">virtual</span> <span style="color: #228b22;">int</span> <span style="color: #0000ff;">GetAge</span>() <span style="color: #a020f0;">const</span> { <span style="color: #a020f0;">return</span> itsAge; }
+     <span style="color: #a020f0;">virtual</span> <span style="color: #228b22;">void</span> <span style="color: #0000ff;">SetAge</span>(<span style="color: #228b22;">int</span> <span style="color: #a0522d;">age</span>) { itsAge = age; }
+<span style="color: #a020f0;">private</span>:
+     <span style="color: #228b22;">int</span> <span style="color: #a0522d;">itsAge</span>;
 };
 
-Animal::Animal(int age):
+<span style="color: #008b8b;">Animal</span>::<span style="color: #0000ff;">Animal</span>(<span style="color: #228b22;">int</span> <span style="color: #a0522d;">age</span>):
      itsAge(age)
 {
-     cout << "Animal constructor...\n";
+     cout &lt;&lt; <span style="color: #8b2252;">"Animal constructor...\n"</span>;
 }
 
-class Horse : virtual public Animal
+<span style="color: #a020f0;">class</span> <span style="color: #228b22;">Horse</span> : <span style="color: #a020f0;">virtual</span> <span style="color: #a020f0;">public</span> <span style="color: #228b22;">Animal</span>
 {
-public:
-     Horse(COLOR color, HANDS height, int age);
-     virtual ~Horse() { cout << "Horse destructor...\n"; }
-     virtual void Whinny()const { cout << "Whinny!... "; }
-     virtual HANDS GetHeight() const { return itsHeight; }
-     virtual COLOR GetColor() const { return itsColor; }
-protected:
-     HANDS itsHeight;
-     COLOR itsColor;
+<span style="color: #a020f0;">public</span>:
+     <span style="color: #0000ff;">Horse</span>(<span style="color: #228b22;">COLOR</span> <span style="color: #a0522d;">color</span>, <span style="color: #228b22;">HANDS</span> <span style="color: #a0522d;">height</span>, <span style="color: #228b22;">int</span> <span style="color: #a0522d;">age</span>);
+     <span style="color: #a020f0;">virtual</span> ~<span style="color: #0000ff;">Horse</span>() { cout &lt;&lt; <span style="color: #8b2252;">"Horse destructor...\n"</span>; }
+     <span style="color: #a020f0;">virtual</span> <span style="color: #228b22;">void</span> <span style="color: #0000ff;">Whinny</span>()<span style="color: #a020f0;">const</span> { cout &lt;&lt; <span style="color: #8b2252;">"Whinny!... "</span>; }
+     <span style="color: #a020f0;">virtual</span> <span style="color: #228b22;">HANDS</span> <span style="color: #0000ff;">GetHeight</span>() <span style="color: #a020f0;">const</span> { <span style="color: #a020f0;">return</span> itsHeight; }
+     <span style="color: #a020f0;">virtual</span> <span style="color: #228b22;">COLOR</span> <span style="color: #0000ff;">GetColor</span>() <span style="color: #a020f0;">const</span> { <span style="color: #a020f0;">return</span> itsColor; }
+<span style="color: #a020f0;">protected</span>:
+     <span style="color: #228b22;">HANDS</span> <span style="color: #a0522d;">itsHeight</span>;
+     <span style="color: #228b22;">COLOR</span> <span style="color: #a0522d;">itsColor</span>;
 };
 
-Horse::Horse(COLOR color, HANDS height, int age):
+<span style="color: #008b8b;">Horse</span>::<span style="color: #0000ff;">Horse</span>(<span style="color: #228b22;">COLOR</span> <span style="color: #a0522d;">color</span>, <span style="color: #228b22;">HANDS</span> <span style="color: #a0522d;">height</span>, <span style="color: #228b22;">int</span> <span style="color: #a0522d;">age</span>):
      Animal(age),
      itsColor(color),itsHeight(height)
 {
-     cout << "Horse constructor...\n";
+     cout &lt;&lt; <span style="color: #8b2252;">"Horse constructor...\n"</span>;
 }
 
-class Bird : virtual public Animal
+<span style="color: #a020f0;">class</span> <span style="color: #228b22;">Bird</span> : <span style="color: #a020f0;">virtual</span> <span style="color: #a020f0;">public</span> <span style="color: #228b22;">Animal</span>
 {
-public:
-     Bird(COLOR color, BOOL migrates, int age);
-     virtual ~Bird() {cout << "Bird destructor...\n";  }
-     virtual void Chirp()const { cout << "Chirp... ";  }
-     virtual void Fly()const 
-          { cout << "I can fly! I can fly! I can fly! "; }
-     virtual COLOR GetColor()const { return itsColor; }
-     virtual BOOL GetMigration() const { return itsMigration; }
-protected:
-     COLOR itsColor;
-     BOOL itsMigration;
+<span style="color: #a020f0;">public</span>:
+     <span style="color: #0000ff;">Bird</span>(<span style="color: #228b22;">COLOR</span> <span style="color: #a0522d;">color</span>, <span style="color: #228b22;">BOOL</span> <span style="color: #a0522d;">migrates</span>, <span style="color: #228b22;">int</span> <span style="color: #a0522d;">age</span>);
+     <span style="color: #a020f0;">virtual</span> ~<span style="color: #0000ff;">Bird</span>() {cout &lt;&lt; <span style="color: #8b2252;">"Bird destructor...\n"</span>;  }
+     <span style="color: #a020f0;">virtual</span> <span style="color: #228b22;">void</span> <span style="color: #0000ff;">Chirp</span>()<span style="color: #a020f0;">const</span> { cout &lt;&lt; <span style="color: #8b2252;">"Chirp... "</span>;  }
+     <span style="color: #a020f0;">virtual</span> <span style="color: #228b22;">void</span> <span style="color: #0000ff;">Fly</span>()<span style="color: #a020f0;">const</span> 
+          { cout &lt;&lt; <span style="color: #8b2252;">"I can fly! I can fly! I can fly! "</span>; }
+     <span style="color: #a020f0;">virtual</span> <span style="color: #228b22;">COLOR</span> <span style="color: #0000ff;">GetColor</span>()<span style="color: #a020f0;">const</span> { <span style="color: #a020f0;">return</span> itsColor; }
+     <span style="color: #a020f0;">virtual</span> <span style="color: #228b22;">BOOL</span> <span style="color: #0000ff;">GetMigration</span>() <span style="color: #a020f0;">const</span> { <span style="color: #a020f0;">return</span> itsMigration; }
+<span style="color: #a020f0;">protected</span>:
+     <span style="color: #228b22;">COLOR</span> <span style="color: #a0522d;">itsColor</span>;
+     <span style="color: #228b22;">BOOL</span> <span style="color: #a0522d;">itsMigration</span>;
 };
 
-Bird::Bird(COLOR color, BOOL migrates, int age):
+<span style="color: #008b8b;">Bird</span>::<span style="color: #0000ff;">Bird</span>(<span style="color: #228b22;">COLOR</span> <span style="color: #a0522d;">color</span>, <span style="color: #228b22;">BOOL</span> <span style="color: #a0522d;">migrates</span>, <span style="color: #228b22;">int</span> <span style="color: #a0522d;">age</span>):
      Animal(age),
      itsColor(color), itsMigration(migrates)
 {
-     cout << "Bird constructor...\n";
+     cout &lt;&lt; <span style="color: #8b2252;">"Bird constructor...\n"</span>;
 }
 
-class Pegasus : public Horse, public Bird
+<span style="color: #a020f0;">class</span> <span style="color: #228b22;">Pegasus</span> : <span style="color: #a020f0;">public</span> <span style="color: #228b22;">Horse</span>, <span style="color: #a020f0;">public</span> <span style="color: #228b22;">Bird</span>
 {
-public:
-     void Chirp()const { Whinny(); }
-     Pegasus(COLOR, HANDS, BOOL, long, int);
-     ~Pegasus() {cout << "Pegasus destructor...\n";}
-     virtual long GetNumberBelievers() const 
-          { return  itsNumberBelievers; }
-     virtual COLOR GetColor()const { return Horse::itsColor; }
-private:
-     long itsNumberBelievers;
+<span style="color: #a020f0;">public</span>:
+     <span style="color: #228b22;">void</span> <span style="color: #0000ff;">Chirp</span>()<span style="color: #a020f0;">const</span> { Whinny(); }
+     <span style="color: #0000ff;">Pegasus</span>(<span style="color: #228b22;">COLOR</span>, <span style="color: #228b22;">HANDS</span>, <span style="color: #228b22;">BOOL</span>, <span style="color: #228b22;">long</span>, <span style="color: #228b22;">int</span>);
+     ~<span style="color: #0000ff;">Pegasus</span>() {cout &lt;&lt; <span style="color: #8b2252;">"Pegasus destructor...\n"</span>;}
+     <span style="color: #a020f0;">virtual</span> <span style="color: #228b22;">long</span> <span style="color: #0000ff;">GetNumberBelievers</span>() <span style="color: #a020f0;">const</span> 
+          { <span style="color: #a020f0;">return</span>  itsNumberBelievers; }
+     <span style="color: #a020f0;">virtual</span> <span style="color: #228b22;">COLOR</span> <span style="color: #0000ff;">GetColor</span>()<span style="color: #a020f0;">const</span> { <span style="color: #a020f0;">return</span> <span style="color: #008b8b;">Horse</span>::itsColor; }
+<span style="color: #a020f0;">private</span>:
+     <span style="color: #228b22;">long</span> <span style="color: #a0522d;">itsNumberBelievers</span>;
 };
 
-Pegasus::Pegasus(
-     COLOR aColor,
-     HANDS height,
-     BOOL migrates,
-     long NumBelieve,
-     int age):
+<span style="color: #008b8b;">Pegasus</span>::<span style="color: #0000ff;">Pegasus</span>(
+     <span style="color: #228b22;">COLOR</span> <span style="color: #a0522d;">aColor</span>,
+     <span style="color: #228b22;">HANDS</span> <span style="color: #a0522d;">height</span>,
+     <span style="color: #228b22;">BOOL</span> <span style="color: #a0522d;">migrates</span>,
+     <span style="color: #228b22;">long</span> <span style="color: #a0522d;">NumBelieve</span>,
+     <span style="color: #228b22;">int</span> <span style="color: #a0522d;">age</span>):
      Horse(aColor, height,age),
      Bird(aColor, migrates,age),
      Animal(age*2),
      itsNumberBelievers(NumBelieve)
 {
-     cout << "Pegasus constructor...\n";
+     cout &lt;&lt; <span style="color: #8b2252;">"Pegasus constructor...\n"</span>;
 }
 
-int main()
+<span style="color: #228b22;">int</span> <span style="color: #0000ff;">main</span>()
 {
-     Pegasus *pPeg = new Pegasus(Red, 5, TRUE, 10, 2);
-     int age = pPeg->GetAge();
-     cout << "This pegasus is " << age << " years old.\n";
-     delete pPeg;
-     return 0;
+     <span style="color: #228b22;">Pegasus</span> *<span style="color: #a0522d;">pPeg</span> = <span style="color: #a020f0;">new</span> <span style="color: #228b22;">Pegasus</span>(Red, 5, TRUE, 10, 2);
+     <span style="color: #228b22;">int</span> <span style="color: #a0522d;">age</span> = pPeg-&gt;GetAge();
+     cout &lt;&lt; <span style="color: #8b2252;">"This pegasus is "</span> &lt;&lt; age &lt;&lt; <span style="color: #8b2252;">" years old.\n"</span>;
+     <span style="color: #a020f0;">delete</span> pPeg;
+     <span style="color: #a020f0;">return</span> 0;
  }
-</textarea>
-</p>
+</pre>
 
-
+</div>
 </p></div>
 </div>
 </div>

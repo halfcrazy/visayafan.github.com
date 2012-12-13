@@ -179,8 +179,12 @@
    如果是以cn开头的则用.signature_chinese否则用english.
 ** 翻页
    一般summary缓冲区在上，article缓冲区在下，如果article缓冲区帖子过长，在summary缓冲区用 *空格* 和 *退格* 为其翻页而不需要离开summary缓冲区，如果帖子到底了则再按空格则会翻到下个帖子.
-** 保存本地
+** 缓存
 #+begin_src lisp
 (setq gnus-use-cache t)
 #+end_src
    在summary缓冲区中帖子标题上加上 =*= 就可以保存到本地了，默认路径是 ~/News/cache/YourGroupName。 =M *= 即可删除本地保存。
+** 保存到本地
+   上面是缓存到本地，即再次打开此article时候是从缓存读取而非再次下载。保存的名字是数字不适合人查找再次查看。
+   要想真正保存可以在summary缓冲区中 =o= ，输入保存路径及名称。
+   其它保存方式参考[[http://www.gnu.org/software/emacs/manual/html_node/gnus/Saving-Articles.html][Gnus官方手册]]。

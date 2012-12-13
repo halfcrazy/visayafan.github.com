@@ -50,6 +50,13 @@ git config --list
    或者直接查看~/.gitconfig文件内容
 * git status
   反映git commit执行之前的变化，git commit执行之后再用此命令将看不到变化
+* git init
+** --bare
+   假设在A目录下git init则会在A目录下生成一个.git文件里存放配置文件。
+   如果加上--bare选项则不会生成.git文件，配置文件会出现在在当前A目录下。
+** --git-dir
+   使用--git-dir=directory选项则--bare将配置文件生成在directory目录下。
+   =git init= 等价于 /git --git-dir=.git init --bare/
 * git add
   将未追踪文件或者修改文件添加到暂存区。之后便可以commit到仓库中。
   表明xxx将要提交到respository中，如果xxx不想被提交则可以省去此步骤直接commit
@@ -57,6 +64,11 @@ git config --list
   -u 只查看跟踪文件，不会暂存文件，如果跟踪文件在工作目录下被删除，则这些跟踪文件被删除
 
   add一个文件后又后悔了（commit之前），可以用 git reset HEAD filename来取消对filename的add
+#<<gitclone>>  
+* git clone
+** --recursive
+   如果repo下有子submodule，如果只运行 git clone的话不会clone子模块，需要 git submodule init 注册子模块，然后 git submodule update来更新子模块。
+   可以加上--recursive选项来clone repo（包括子模块），等于上面操作的和。
 * git rm
   git rm filename 把filename从仓库中删除
   
@@ -198,6 +210,32 @@ $ git commit --amend
 * fast forward
   如果顺着一个分支走下去可以到达另一个分支的话,那么 Git 在合并两者时,只会简单地把指针右移,因为这种单线的历史分支不存在任何需要解决的分歧,所以这种合并过程可以 称为快进(Fast forward)。
 
+* git submodule
+  从别处clone下来的repo中如果有submodule则需要用 clone --recursive 或 git submodule init 后git submodule update 参考 [[gitclone][git clone]]
+  此处切进子模块所在的目录，git branch可看到并没有在任何分支上：
+#+begin_example
+minimap$ git branch 
+* (no branch)
+  master
+#+end_example
+  如果需要进行修改操作需要切换分支：git checkout master.
+  如果没有切换分支而进行add commit 操作会得到 =detached HEAD= 错误提示：
+#+begin_example
+minimap$ touch hello
+minimap$ git add .
+minimap$ git commit -m "add hello"
+[detached HEAD 310819a] add hello
+ 0 files changed, 0 insertions(+), 0 deletions(-)
+ create mode 100644 hello
+#+end_example
+  此时再切换master分支后发现刚才的修改不见了，可以合并分支解决：
+#+begin_example
+minimap$ git checkout master 
+Previous HEAD position was 310819a... add hello
+Switched to branch 'master
+minimap$ git merge 310819a
+#+end_example
+  git pull 不会更新repo下的submodule repo，要想使当前repo与远程仓库完全一致，需要pull之后再使用git submodule update使
 * tricks
 ** git中永久删除一个文件
   git rm filename可以从repo中删除一个文件，但仍旧可以其库存历史将其恢复

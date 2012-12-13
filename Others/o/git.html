@@ -7,7 +7,7 @@
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
 <meta name="title" content="Git笔记"/>
 <meta name="generator" content="Org-mode"/>
-<meta name="generated" content="2012-11-12 06:56:06 CST"/>
+<meta name="generated" content="2012-12-13 20:49:07 CST"/>
 <meta name="author" content="visayafan"/>
 <meta name="description" content=""/>
 <meta name="keywords" content=""/>
@@ -22,8 +22,8 @@
 <h1 class="title">Git笔记</h1>
 
 
-<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"> </script>
-<link rel="stylesheet" type="text/css" href="../../Layout/CSS/bootstrap.min.css" />
+<!-- <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"> </script> -->
+<link rel="stylesheet" type="text/css" href="../../Layout/CSS/bootstrap_old.css" />
 <link rel="stylesheet" type="text/css" href="../../Layout/CSS/too_many_toc.css" />
 <script src="../../Layout/JS/jquery_1.7.1.js"></script>
 <script src="../../Layout/JS/bootstrap_old.js"></script>
@@ -50,35 +50,47 @@ git中文件分为4类：未追踪文件，修改文件，暂存文件，仓库�
 </ul>
 </li>
 <li><a href="#sec-5">5 git status</a></li>
-<li><a href="#sec-6">6 git add</a></li>
-<li><a href="#sec-7">7 git rm</a></li>
-<li><a href="#sec-8">8 git mv</a></li>
-<li><a href="#sec-9">9 git log</a></li>
-<li><a href="#sec-10">10 git commit</a>
+<li><a href="#sec-6">6 git init</a>
 <ul>
-<li><a href="#sec-10-1">10.1 -m</a></li>
-<li><a href="#sec-10-2">10.2 -amend</a></li>
+<li><a href="#sec-6-1">6.1 &ndash;bare</a></li>
+<li><a href="#sec-6-2">6.2 &ndash;git-dir</a></li>
 </ul>
 </li>
-<li><a href="#sec-11">11 git show</a></li>
-<li><a href="#sec-12">12 gitk</a></li>
-<li><a href="#sec-13">13 git reset</a></li>
-<li><a href="#sec-14">14 git mergetool</a></li>
-<li><a href="#sec-15">15 git branch</a></li>
-<li><a href="#sec-16">16 git remote</a></li>
-<li><a href="#sec-17">17 git fetch</a></li>
-<li><a href="#sec-18">18 git pull</a></li>
-<li><a href="#sec-19">19 git push</a></li>
-<li><a href="#sec-20">20 git tag</a></li>
-<li><a href="#sec-21">21 git diff</a></li>
-<li><a href="#sec-22">22 git rebase</a></li>
-<li><a href="#sec-23">23 fast forward</a></li>
-<li><a href="#sec-24">24 tricks</a>
+<li><a href="#sec-7">7 git add</a></li>
+<li><a href="#sec-8">8 git clone</a>
 <ul>
-<li><a href="#sec-24-1">24.1 git中永久删除一个文件</a></li>
+<li><a href="#sec-8-1">8.1 &ndash;recursive</a></li>
 </ul>
 </li>
-<li><a href="#sec-25">25 分享评论</a></li>
+<li><a href="#sec-9">9 git rm</a></li>
+<li><a href="#sec-10">10 git mv</a></li>
+<li><a href="#sec-11">11 git log</a></li>
+<li><a href="#sec-12">12 git commit</a>
+<ul>
+<li><a href="#sec-12-1">12.1 -m</a></li>
+<li><a href="#sec-12-2">12.2 -amend</a></li>
+</ul>
+</li>
+<li><a href="#sec-13">13 git show</a></li>
+<li><a href="#sec-14">14 gitk</a></li>
+<li><a href="#sec-15">15 git reset</a></li>
+<li><a href="#sec-16">16 git mergetool</a></li>
+<li><a href="#sec-17">17 git branch</a></li>
+<li><a href="#sec-18">18 git remote</a></li>
+<li><a href="#sec-19">19 git fetch</a></li>
+<li><a href="#sec-20">20 git pull</a></li>
+<li><a href="#sec-21">21 git push</a></li>
+<li><a href="#sec-22">22 git tag</a></li>
+<li><a href="#sec-23">23 git diff</a></li>
+<li><a href="#sec-24">24 git rebase</a></li>
+<li><a href="#sec-25">25 fast forward</a></li>
+<li><a href="#sec-26">26 git submodule</a></li>
+<li><a href="#sec-27">27 tricks</a>
+<ul>
+<li><a href="#sec-27-1">27.1 git中永久删除一个文件</a></li>
+</ul>
+</li>
+<li><a href="#sec-28">28 分享评论</a></li>
 </ul>
 </div>
 </div>
@@ -220,8 +232,36 @@ git config --global user.email visayafan@gmail.com
 </div>
 
 <div id="outline-container-6" class="outline-2">
-<h2 id="sec-6"><span class="section-number-2">6</span> git add</h2>
+<h2 id="sec-6"><span class="section-number-2">6</span> git init</h2>
 <div class="outline-text-2" id="text-6">
+
+
+</div>
+
+<div id="outline-container-6-1" class="outline-3">
+<h3 id="sec-6-1"><span class="section-number-3">6.1</span> &ndash;bare</h3>
+<div class="outline-text-3" id="text-6-1">
+
+<p>   假设在A目录下git init则会在A目录下生成一个.git文件里存放配置文件。<br/>
+   如果加上&ndash;bare选项则不会生成.git文件，配置文件会出现在在当前A目录下。<br/>
+</p></div>
+
+</div>
+
+<div id="outline-container-6-2" class="outline-3">
+<h3 id="sec-6-2"><span class="section-number-3">6.2</span> &ndash;git-dir</h3>
+<div class="outline-text-3" id="text-6-2">
+
+<p>   使用&ndash;git-dir=directory选项则&ndash;bare将配置文件生成在directory目录下。<br/>
+   <code>git init</code> 等价于 <i>git &ndash;git-dir=.git init &ndash;bare</i><br/>
+</p></div>
+</div>
+
+</div>
+
+<div id="outline-container-7" class="outline-2">
+<h2 id="sec-7"><span class="section-number-2">7</span> git add</h2>
+<div class="outline-text-2" id="text-7">
 
 <p>  将未追踪文件或者修改文件添加到暂存区。之后便可以commit到仓库中。<br/>
   表明xxx将要提交到respository中，如果xxx不想被提交则可以省去此步骤直接commit<br/>
@@ -234,9 +274,27 @@ git config --global user.email visayafan@gmail.com
 
 </div>
 
-<div id="outline-container-7" class="outline-2">
-<h2 id="sec-7"><span class="section-number-2">7</span> git rm</h2>
-<div class="outline-text-2" id="text-7">
+<div id="outline-container-8" class="outline-2">
+<h2 id="sec-8"><a name="gitclone" id="gitclone"></a><span class="section-number-2">8</span> git clone</h2>
+<div class="outline-text-2" id="text-8">
+
+
+</div>
+
+<div id="outline-container-8-1" class="outline-3">
+<h3 id="sec-8-1"><span class="section-number-3">8.1</span> &ndash;recursive</h3>
+<div class="outline-text-3" id="text-8-1">
+
+<p>   如果repo下有子submodule，如果只运行 git clone的话不会clone子模块，需要 git submodule init 注册子模块，然后 git submodule update来更新子模块。<br/>
+   可以加上&ndash;recursive选项来clone repo（包括子模块），等于上面操作的和。<br/>
+</p></div>
+</div>
+
+</div>
+
+<div id="outline-container-9" class="outline-2">
+<h2 id="sec-9"><span class="section-number-2">9</span> git rm</h2>
+<div class="outline-text-2" id="text-9">
 
 <p>  git rm filename 把filename从仓库中删除<br/>
 </p>
@@ -258,9 +316,9 @@ git config --global user.email visayafan@gmail.com
 
 </div>
 
-<div id="outline-container-8" class="outline-2">
-<h2 id="sec-8"><span class="section-number-2">8</span> git mv</h2>
-<div class="outline-text-2" id="text-8">
+<div id="outline-container-10" class="outline-2">
+<h2 id="sec-10"><span class="section-number-2">10</span> git mv</h2>
+<div class="outline-text-2" id="text-10">
 
 <p>  等价操作：<br/>
 </p>
@@ -275,9 +333,9 @@ git add b
 
 </div>
 
-<div id="outline-container-9" class="outline-2">
-<h2 id="sec-9"><span class="section-number-2">9</span> git log</h2>
-<div class="outline-text-2" id="text-9">
+<div id="outline-container-11" class="outline-2">
+<h2 id="sec-11"><span class="section-number-2">11</span> git log</h2>
+<div class="outline-text-2" id="text-11">
 
 <p>  查看历史记录（即git commit的保存结点),显示作者，时间，当时-m指定的信息，一个很长的序列号（唯一的）<br/>
   git log -2 查看最近2次的log<br/>
@@ -336,16 +394,16 @@ test$ git log --since=2.weeks --pretty=oneline #2周前
 
 </div>
 
-<div id="outline-container-10" class="outline-2">
-<h2 id="sec-10"><span class="section-number-2">10</span> git commit</h2>
-<div class="outline-text-2" id="text-10">
+<div id="outline-container-12" class="outline-2">
+<h2 id="sec-12"><span class="section-number-2">12</span> git commit</h2>
+<div class="outline-text-2" id="text-12">
 
 
 </div>
 
-<div id="outline-container-10-1" class="outline-3">
-<h3 id="sec-10-1"><span class="section-number-3">10.1</span> -m</h3>
-<div class="outline-text-3" id="text-10-1">
+<div id="outline-container-12-1" class="outline-3">
+<h3 id="sec-12-1"><span class="section-number-3">12.1</span> -m</h3>
+<div class="outline-text-3" id="text-12-1">
 
 <p>   -m 'message'  #跟数据库一样保存一个结点以便以后返回<br/>
    先add后commit，可以直接用命令 git commit -am 'commit message' 但只暂存跟踪文件，未跟踪文件不会被暂存，如果当前工作目录中有想被提交的新建文件时不要这么用。<br/>
@@ -353,9 +411,9 @@ test$ git log --since=2.weeks --pretty=oneline #2周前
 
 </div>
 
-<div id="outline-container-10-2" class="outline-3">
-<h3 id="sec-10-2"><span class="section-number-3">10.2</span> -amend</h3>
-<div class="outline-text-3" id="text-10-2">
+<div id="outline-container-12-2" class="outline-3">
+<h3 id="sec-12-2"><span class="section-number-3">12.2</span> -amend</h3>
+<div class="outline-text-3" id="text-12-2">
 
 <p>   修复，如果commit后发现有文件忘记add了，可以add后commit -amend<br/>
 </p>
@@ -373,27 +431,27 @@ $ git commit --amend
 
 </div>
 
-<div id="outline-container-11" class="outline-2">
-<h2 id="sec-11"><span class="section-number-2">11</span> git show</h2>
-<div class="outline-text-2" id="text-11">
+<div id="outline-container-13" class="outline-2">
+<h2 id="sec-13"><span class="section-number-2">13</span> git show</h2>
+<div class="outline-text-2" id="text-13">
 
 <p>  显示上一次commit，显示序列号作者时间和diff<br/>
 </p></div>
 
 </div>
 
-<div id="outline-container-12" class="outline-2">
-<h2 id="sec-12"><span class="section-number-2">12</span> gitk</h2>
-<div class="outline-text-2" id="text-12">
+<div id="outline-container-14" class="outline-2">
+<h2 id="sec-14"><span class="section-number-2">14</span> gitk</h2>
+<div class="outline-text-2" id="text-14">
 
 <p>  如果commit很多的话会比较乱，gitk以图形的方式显示出所有的commit。(另外安装 sudo apt-get install gitk)<br/>
 </p></div>
 
 </div>
 
-<div id="outline-container-13" class="outline-2">
-<h2 id="sec-13"><span class="section-number-2">13</span> git reset</h2>
-<div class="outline-text-2" id="text-13">
+<div id="outline-container-15" class="outline-2">
+<h2 id="sec-15"><span class="section-number-2">15</span> git reset</h2>
+<div class="outline-text-2" id="text-15">
 
 <ul>
 <li>返回到之前某个commit状态，例如git reset &ndash;hard 8198c8f 此时git push会出错，要加&ndash;force(-f)强制选项，git push &ndash;force<br/>
@@ -406,11 +464,11 @@ $ git commit --amend
 
 </div>
 
-<div id="outline-container-14" class="outline-2">
-<h2 id="sec-14"><span class="section-number-2">14</span> git mergetool</h2>
-<div class="outline-text-2" id="text-14">
+<div id="outline-container-16" class="outline-2">
+<h2 id="sec-16"><span class="section-number-2">16</span> git mergetool</h2>
+<div class="outline-text-2" id="text-16">
 
-<p>  参照：<a href="#sec-15">git branch</a>, <a href="#sec-17">git fetch</a><br/>
+<p>  参照：<a href="#sec-17">git branch</a>, <a href="#sec-19">git fetch</a><br/>
   多个人共同维护一个项目时，一个人push一个filename文件，另一个人也要push filename文件时会发生冲突。<br/>
   此时可以用 git mergetool来调用外部应用程序比较两个文件，由两人协商最终push哪个。<br/>
   经过比较修改后的文件再push不会冲突（github默认此结果是我们协商的结果）<br/>
@@ -418,9 +476,9 @@ $ git commit --amend
 
 </div>
 
-<div id="outline-container-15" class="outline-2">
-<h2 id="sec-15"><span class="section-number-2">15</span> git branch</h2>
-<div class="outline-text-2" id="text-15">
+<div id="outline-container-17" class="outline-2">
+<h2 id="sec-17"><span class="section-number-2">17</span> git branch</h2>
+<div class="outline-text-2" id="text-17">
 
 <ol>
 <li>git branch -a 绿色的代表本机，红色的代表github<br/>
@@ -436,7 +494,7 @@ $ git commit --amend
 </li>
 <li>git branch &ndash;merge 可以用来查看已经被merge的分支，一般显示出的分支可以被删除了（已经完成其任务）。<br/>
 </li>
-<li>git push origin :suffix <a href="#sec-19">git push</a>有个<a href="#push">语法</a>：git push [远程仓库名] [本地分支]:[远程分支]  本地分支为空则表明在此处提取空白变成远程分支，即清空远程分支<br/>
+<li>git push origin :suffix <a href="#sec-21">git push</a>有个<a href="#push">语法</a>：git push [远程仓库名] [本地分支]:[远程分支]  本地分支为空则表明在此处提取空白变成远程分支，即清空远程分支<br/>
 </li>
 </ol>
 
@@ -444,9 +502,9 @@ $ git commit --amend
 
 </div>
 
-<div id="outline-container-16" class="outline-2">
-<h2 id="sec-16"><span class="section-number-2">16</span> git remote</h2>
-<div class="outline-text-2" id="text-16">
+<div id="outline-container-18" class="outline-2">
+<h2 id="sec-18"><span class="section-number-2">18</span> git remote</h2>
+<div class="outline-text-2" id="text-18">
 
 <p>  从远程仓库上用git clone下载下来的可以理解为有两个分支origin/master和master，其中origin为远程仓库名，前者分支是不受你支配的，你所在的是master分支，当你push的时候，git会比较你的origion/master和远程仓库的是否一样，如果一样并且你有权限则可以push，如果不一样则需要用 <code>git fetch</code> 下载下来进行合并，此时的远程仓库和你的仓库里的origin/master更改为和master指向同一结点。<br/>
 </p><ul>
@@ -466,11 +524,11 @@ $ git commit --amend
 
 </div>
 
-<div id="outline-container-17" class="outline-2">
-<h2 id="sec-17"><span class="section-number-2">17</span> git fetch</h2>
-<div class="outline-text-2" id="text-17">
+<div id="outline-container-19" class="outline-2">
+<h2 id="sec-19"><span class="section-number-2">19</span> git fetch</h2>
+<div class="outline-text-2" id="text-19">
 
-<p>  如果多个人同时向远程仓库提交则有可能后提交者与先前提交者存在冲突，因为本地origin/master指向结点和远程仓库上origin/master不一样(<a href="#sec-16">git remote</a>)，此时后提交者要先用 <code>git fetch</code> 将前者已经提交的版本下载下来进行合并操作然后才能进行push。origin/master只有这种情况才会改变其指向。<br/>
+<p>  如果多个人同时向远程仓库提交则有可能后提交者与先前提交者存在冲突，因为本地origin/master指向结点和远程仓库上origin/master不一样(<a href="#sec-18">git remote</a>)，此时后提交者要先用 <code>git fetch</code> 将前者已经提交的版本下载下来进行合并操作然后才能进行push。origin/master只有这种情况才会改变其指向。<br/>
 </p><ul>
 <li>如果要抓取所有shortname有但本地没有的，可以git fetch shortname<br/>
 </li>
@@ -482,18 +540,18 @@ $ git commit --amend
 
 </div>
 
-<div id="outline-container-18" class="outline-2">
-<h2 id="sec-18"><span class="section-number-2">18</span> git pull</h2>
-<div class="outline-text-2" id="text-18">
+<div id="outline-container-20" class="outline-2">
+<h2 id="sec-20"><span class="section-number-2">20</span> git pull</h2>
+<div class="outline-text-2" id="text-20">
 
 <p>  git fetch只是从远程repo中拉来本地repo但并不合并，git pull则与本地repo自动合并。<br/>
 </p></div>
 
 </div>
 
-<div id="outline-container-19" class="outline-2">
-<h2 id="sec-19"><span class="section-number-2">19</span> git push</h2>
-<div class="outline-text-2" id="text-19">
+<div id="outline-container-21" class="outline-2">
+<h2 id="sec-21"><span class="section-number-2">21</span> git push</h2>
+<div class="outline-text-2" id="text-21">
 
 <p>  git push [远程仓库名] [分支名]<br/>
   git push等价于git push origin master<br/>
@@ -504,9 +562,9 @@ $ git commit --amend
 
 </div>
 
-<div id="outline-container-20" class="outline-2">
-<h2 id="sec-20"><span class="section-number-2">20</span> git tag</h2>
-<div class="outline-text-2" id="text-20">
+<div id="outline-container-22" class="outline-2">
+<h2 id="sec-22"><span class="section-number-2">22</span> git tag</h2>
+<div class="outline-text-2" id="text-22">
 
 <p>  查看所有标签，或git tag v1.4查看v1.4标签的详细信息。<br/>
 </p><ul>
@@ -520,9 +578,9 @@ $ git commit --amend
 
 </div>
 
-<div id="outline-container-21" class="outline-2">
-<h2 id="sec-21"><span class="section-number-2">21</span> git diff</h2>
-<div class="outline-text-2" id="text-21">
+<div id="outline-container-23" class="outline-2">
+<h2 id="sec-23"><span class="section-number-2">23</span> git diff</h2>
+<div class="outline-text-2" id="text-23">
 
 <p>  查看没有暂存的改动，如果暂存后立即用git diff则看不到差异。<br/>
 </p><ol>
@@ -538,12 +596,11 @@ $ git commit --amend
 
 </div>
 
-<div id="outline-container-22" class="outline-2">
-<h2 id="sec-22"><span class="section-number-2">22</span> git rebase</h2>
-<div class="outline-text-2" id="text-22">
+<div id="outline-container-24" class="outline-2">
+<h2 id="sec-24"><span class="section-number-2">24</span> git rebase</h2>
+<div class="outline-text-2" id="text-24">
 
-<p>  <code>git rebase branch2</code><br/>
-  将当前分支HEAD指针指向branch2后一个结点。<br/>
+<p>  <code>git rebase branch2</code> 将当前分支HEAD指针指向branch2后一个结点。<br/>
   和进行merge操作结果是完全一样，只是提交历史不同。衍合是按照每行的修改次序重演一遍修改,而合并是把最终结果合在一起。<br/>
   会产生新的历史记录，使提交历史显得更整洁。<br/>
   但 <b>一旦分支中的提交对象发布到公共仓库,就千万不要对该分支进行衍合操作。</b><br/>
@@ -552,15 +609,13 @@ $ git commit --amend
 <script type="text/javascript" src="../../Layout/JS/jquery.lightbox-0.5.js"></script>
 <center> <a class="lightbox" href="./image/rebase.png"> <img class="lightbox " title="jQuery.lightbox" src="./image/rebase.png" width="300"> </a> </center>
 <script type="text/javascript"> $(function() {$('a.lightbox').lightBox();}); </script>
-</p>
-<p>  <br/>
 </p></div>
 
 </div>
 
-<div id="outline-container-23" class="outline-2">
-<h2 id="sec-23"><span class="section-number-2">23</span> fast forward</h2>
-<div class="outline-text-2" id="text-23">
+<div id="outline-container-25" class="outline-2">
+<h2 id="sec-25"><span class="section-number-2">25</span> fast forward</h2>
+<div class="outline-text-2" id="text-25">
 
 <p>  如果顺着一个分支走下去可以到达另一个分支的话,那么 Git 在合并两者时,只会简单地把指针右移,因为这种单线的历史分支不存在任何需要解决的分歧,所以这种合并过程可以 称为快进(Fast forward)。<br/>
 </p>
@@ -568,16 +623,61 @@ $ git commit --amend
 
 </div>
 
-<div id="outline-container-24" class="outline-2">
-<h2 id="sec-24"><span class="section-number-2">24</span> tricks</h2>
-<div class="outline-text-2" id="text-24">
+<div id="outline-container-26" class="outline-2">
+<h2 id="sec-26"><span class="section-number-2">26</span> git submodule</h2>
+<div class="outline-text-2" id="text-26">
+
+<p>  从别处clone下来的repo中如果有submodule则需要用 clone &ndash;recursive 或 git submodule init 后git submodule update 参考 <a href="#sec-8">git clone</a><br/>
+  此处切进子模块所在的目录，git branch可看到并没有在任何分支上：<br/>
+</p>
+
+
+<pre class="example">minimap$ git branch 
+* (no branch)
+  master
+</pre>
+
+<p>
+  如果需要进行修改操作需要切换分支：git checkout master.<br/>
+  如果没有切换分支而进行add commit 操作会得到 <code>detached HEAD</code> 错误提示：<br/>
+</p>
+
+
+<pre class="example">minimap$ touch hello
+minimap$ git add .
+minimap$ git commit -m "add hello"
+[detached HEAD 310819a] add hello
+ 0 files changed, 0 insertions(+), 0 deletions(-)
+ create mode 100644 hello
+</pre>
+
+<p>
+  此时再切换master分支后发现刚才的修改不见了，可以合并分支解决：<br/>
+</p>
+
+
+<pre class="example">minimap$ git checkout master 
+Previous HEAD position was 310819a... add hello
+Switched to branch 'master
+minimap$ git merge 310819a
+</pre>
+
+<p>
+  git pull 不会更新repo下的submodule repo，要想使当前repo与远程仓库完全一致，需要pull之后再使用git submodule update使<br/>
+</p></div>
+
+</div>
+
+<div id="outline-container-27" class="outline-2">
+<h2 id="sec-27"><span class="section-number-2">27</span> tricks</h2>
+<div class="outline-text-2" id="text-27">
 
 
 </div>
 
-<div id="outline-container-24-1" class="outline-3">
-<h3 id="sec-24-1"><span class="section-number-3">24.1</span> git中永久删除一个文件</h3>
-<div class="outline-text-3" id="text-24-1">
+<div id="outline-container-27-1" class="outline-3">
+<h3 id="sec-27-1"><span class="section-number-3">27.1</span> git中永久删除一个文件</h3>
+<div class="outline-text-3" id="text-27-1">
 
 <p>  git rm filename可以从repo中删除一个文件，但仍旧可以其库存历史将其恢复<br/>
 </p>
@@ -641,9 +741,9 @@ $ du -hs
 
 </div>
 
-<div id="outline-container-25" class="outline-2">
-<h2 id="sec-25"><span class="section-number-2">25</span> 分享评论</h2>
-<div class="outline-text-2" id="text-25">
+<div id="outline-container-28" class="outline-2">
+<h2 id="sec-28"><span class="section-number-2">28</span> 分享评论</h2>
+<div class="outline-text-2" id="text-28">
 
 
 <a class="bshareDiv" href="http://www.bshare.cn/share">分享按钮</a><script type="text/javascript" charset="utf-8" src="http://static.bshare.cn/b/buttonLite.js#uuid=&amp;style=10&amp;bgcolor=Blue"></script>

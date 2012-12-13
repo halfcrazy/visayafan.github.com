@@ -7,7 +7,7 @@
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
 <meta name="title" content="Emacs Org-Mode"/>
 <meta name="generator" content="Org-mode"/>
-<meta name="generated" content="2012-12-12 23:12:26 CST"/>
+<meta name="generated" content="2012-12-13 18:29:34 CST"/>
 <meta name="author" content="visayafan"/>
 <meta name="description" content=""/>
 <meta name="keywords" content=""/>
@@ -169,8 +169,64 @@ cef
 <h2 id="sec-2"><span class="section-number-2">2</span> org-mode example/src过大</h2>
 <div class="outline-text-2" id="text-2">
 
-<p>  当在#+begin_example #+end_example或者#+begin_src #+end_src环境中内容过多时会占用大量空间，一个解决办法是加上 <code>-t</code> 选项并配合 <code>-h height -w width</code> 选项来指定高宽，使它成为有滚动条的区域。但好像无法使用语法高亮。<br/>
-</p></div>
+<p>  当在#+begin_example #+end_example或者#+begin_src #+end_src环境中内容过多时会占用大量空间，一个解决办法是加上 <code>-t</code> 选项并配合 <code>-h height -w width</code> 选项来指定高宽，使它成为有滚动条的区域。但好像无法使用语法高亮并且此区域内容是可编辑的。<br/>
+</p>
+<p>
+  另一个解决办法是加在src或example外围加上div:<br/>
+例如：<br/>
+</p><pre class="example">
+#+html: &lt;div style="height:100px;overflow:auto;border-style:solid;border-width:1px"&gt;
+#+begin_src c++
+typedef int HANDS;
+enum COLOR { Red, Green, Blue, Yellow, White, Black, Brown } ;
+enum BOOL { FALSE, TRUE };
+
+class Animal        // common base to both horse and bird
+{
+public:
+     Animal(int);
+     virtual ~Animal() { cout &lt;&lt; "Animal destructor...\n"; }
+     virtual int GetAge() const { return itsAge; }
+     virtual void SetAge(int age) { itsAge = age; }
+private:
+     int itsAge;
+};
+#+end_src  
+#+html: &lt;/div&gt;
+</pre>
+
+<p>效果如下：<br/>
+<div style="height:100px;overflow:auto;border-style:solid;border-width:1px">
+
+<pre class="src src-c++"><span style="color: #a020f0;">typedef</span> <span style="color: #228b22;">int</span> <span style="color: #228b22;">HANDS</span>;
+<span style="color: #a020f0;">enum</span> <span style="color: #228b22;">COLOR</span> { <span style="color: #a0522d;">Red</span>, <span style="color: #a0522d;">Green</span>, <span style="color: #a0522d;">Blue</span>, <span style="color: #a0522d;">Yellow</span>, <span style="color: #a0522d;">White</span>, <span style="color: #a0522d;">Black</span>, <span style="color: #a0522d;">Brown</span> } ;
+<span style="color: #a020f0;">enum</span> <span style="color: #228b22;">BOOL</span> { <span style="color: #a0522d;">FALSE</span>, <span style="color: #a0522d;">TRUE</span> };
+
+<span style="color: #a020f0;">class</span> <span style="color: #228b22;">Animal</span>        <span style="color: #b22222;">// </span><span style="color: #b22222;">common base to both horse and bird</span>
+{
+<span style="color: #a020f0;">public</span>:
+     <span style="color: #0000ff;">Animal</span>(<span style="color: #228b22;">int</span>);
+     <span style="color: #a020f0;">virtual</span> ~<span style="color: #0000ff;">Animal</span>() { cout &lt;&lt; <span style="color: #8b2252;">"Animal destructor...\n"</span>; }
+     <span style="color: #a020f0;">virtual</span> <span style="color: #228b22;">int</span> <span style="color: #0000ff;">GetAge</span>() <span style="color: #a020f0;">const</span> { <span style="color: #a020f0;">return</span> itsAge; }
+     <span style="color: #a020f0;">virtual</span> <span style="color: #228b22;">void</span> <span style="color: #0000ff;">SetAge</span>(<span style="color: #228b22;">int</span> <span style="color: #a0522d;">age</span>) { itsAge = age; }
+<span style="color: #a020f0;">private</span>:
+     <span style="color: #228b22;">int</span> <span style="color: #a0522d;">itsAge</span>;
+};
+</pre>
+
+</div>
+  可以定制yasnippet以方便以后使用：<br/>
+</p>
+
+
+<pre class="example"># -*- mode: snippet -*-
+# name: longsrc
+# --
+&lt;div style="height:${1:200px};overflow:auto;border-style:solid;border-width:1px"&gt;
+&lt;/div&gt;
+</pre>
+
+</div>
 
 </div>
 
@@ -208,12 +264,8 @@ format 其中format格式必须可以被函数 =format-time-string= 识别，常
 #+SETUPFILE: "extension.org" 
 </pre>
 
-<p>  则便可以在emacs_trick.org中使用此宏。<br/>
-</p><pre class="example">
-#+html:&lt;link rel="stylesheet" href="../../Layout/CSS/jquery.lightbox-0.5.css" type="text/css" media="screen" /&gt; &lt;script type="text/javascript" src="../../Layout/JS/jquery.lightbox-0.5.js"&gt;&lt;/script&gt; &lt;center&gt; &lt;a class="lightbox" href="images/image_name.jpg"&gt; &lt;img class="lightbox " title="点击查看大图" src="images/image_name.jpg" width="300"&gt; &lt;/a&gt; &lt;/center&gt; &lt;script type="text/javascript"&gt; $(function() {$('a.lightbox').lightBox();}); &lt;/script&gt;
-</pre>
-
-<p>  只需要一行就搞定了。<br/>
+<p>  则便可以在emacs_trick.org中使用此宏: <code>{{{</code> <code>lightbox(images/image_name.jpg)</code> <code>}}}</code><br/>
+  只需要一行就搞定了。<br/>
 </p>
 <p>
   这样我就可以把所有的宏全部写在extension.org里，然后可以重复使用：只需要SETUPFILE指定就可以使用了。<br/>
@@ -281,7 +333,7 @@ either $$ a=+\sqrt{2} $$ or \[ a=-\sqrt{2} \].
 
 <p>  <code>M-x customize-variable ENTER org-export-language-setup</code> 在最后ins插入新的List:<br/>
 <center>
-<img src="./image/中文目录.png"  alt="./image/中文目录.png" />  <br/>
+<img src="./images/中文目录.png"  alt="./images/中文目录.png" />  <br/>
 </center>
   再 <code>M-x customize-variable ENTER org-export-default-language</code> 改成 zh-CN<br/>
 </p></div>
@@ -342,7 +394,7 @@ either $$ a=+\sqrt{2} $$ or \[ a=-\sqrt{2} \].
 <h2 id="sec-10"><span class="section-number-2">10</span> Emacs Org配置简单快捷键</h2>
 <div class="outline-text-2" id="text-10">
 
-<p>  <code>M-x custoize-varialbe RET org-structure-template-alistu</code><br/>
+<p>  <code>M-x custoize-varialbe RET org-structure-template-alist</code><br/>
 </p>
 <p>  <br/>
 </p></div>

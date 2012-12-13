@@ -115,8 +115,8 @@ int main(int argc, char *argv[])
   虚继承下Pegasus构造函数调用过程：Animal的构造函数，Horse的构造函数（没有调用Animal的构造函数），最后是Bird的构造函数（同样没有调用Animal的构造函数）.
   不采用虚继承时调用方式见此[[http://blog.csdn.net/wangxingbao4227/article/details/6772579][博文]]。
   [[http://www.java-samples.com/showtutorial.php?tutorialid%3D463][例子]]
-#+html: <style type="text/css"> textarea{width:100%;}</style>  
-#+begin_src c++ -t -h 14
+{{{srcbegin(200)}}}
+#+begin_src c++
 typedef int HANDS;
 enum COLOR { Red, Green, Blue, Yellow, White, Black, Brown } ;
 enum BOOL { FALSE, TRUE };
@@ -216,4 +216,4 @@ int main()
      return 0;
  }
 #+end_src  
-
+{{{srcend}}}
