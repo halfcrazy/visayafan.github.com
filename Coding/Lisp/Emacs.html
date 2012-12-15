@@ -7,11 +7,11 @@
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
 <meta name="title" content="Emacs Trick"/>
 <meta name="generator" content="Org-mode"/>
-<meta name="generated" content="2012-12-12 20:06:16 CST"/>
+<meta name="generated" content="2012-12-14 09:05:04 CST"/>
 <meta name="author" content="visayafan"/>
 <meta name="description" content=""/>
 <meta name="keywords" content=""/>
-
+<div id="org-div-comments"><a href="../../index.html#lisp">主页</a></div>
 
 <script type="text/javascript" src="http://orgmode.org/mathjax/MathJax.js">
 <!--/*--><![CDATA[/*><!--*/
@@ -94,33 +94,25 @@
 <li><a href="#sec-13">13 <code>/sudo::/</code></a></li>
 <li><a href="#sec-14">14 正则表达式</a></li>
 <li><a href="#sec-15">15 eshell 别名/使用.bashrc中定义的别名</a></li>
-<li><a href="#sec-16">16 解决org-mode example/src/quote上面多一行问题</a></li>
-<li><a href="#sec-17">17 org-mode example/src过大</a></li>
-<li><a href="#sec-18">18 org-mode中使用宏</a></li>
-<li><a href="#sec-19">19 org-mode 中嵌入latex公式</a></li>
-<li><a href="#sec-20">20 org-mode 中block中嵌入#+begin_example</a></li>
-<li><a href="#sec-21">21 Ubuntu安装Emacs24.2及配置CEDET,ECB</a>
+<li><a href="#sec-16">16 Ubuntu安装Emacs24.2及配置CEDET,ECB</a>
 <ul>
-<li><a href="#sec-21-1">21.1 ./configure前需要安装的信赖包</a></li>
-<li><a href="#sec-21-2">21.2 配置cedet, ecb</a></li>
+<li><a href="#sec-16-1">16.1 ./configure前需要安装的信赖包</a></li>
+<li><a href="#sec-16-2">16.2 配置cedet, ecb</a></li>
 </ul>
 </li>
-<li><a href="#sec-22">22 dired-mode下批量修改文件名</a></li>
-<li><a href="#sec-23">23 org-mode导出HTML目录显示“目录”而非默认的Table Of Content</a></li>
-<li><a href="#sec-24">24 org-mode导出PDF目录显示“目录”而非默认的Contents</a></li>
-<li><a href="#sec-25">25 org-mode的表格中输入|</a></li>
-<li><a href="#sec-26">26 Emacs中使用输入法</a></li>
-<li><a href="#sec-27">27 乱码</a></li>
-<li><a href="#sec-28">28 Org Mode HTML导出时内部链接</a></li>
-<li><a href="#sec-29">29 Yasnippet共享</a></li>
-<li><a href="#sec-30">30 Yasnippet中使用elisp制定模板</a></li>
-<li><a href="#sec-31">31 eshell命令大小写不敏感</a></li>
-<li><a href="#sec-32">32 win7下find问题</a></li>
-<li><a href="#sec-33">33 CC-Mode</a></li>
-<li><a href="#sec-34">34 Emacs Client启动后字体不正常和tabber不能使用解决办法</a></li>
-<li><a href="#sec-35">35 Emacs Org配置简单快捷键</a></li>
-<li><a href="#sec-36">36 Emacs Gnus 阅读新闻组</a></li>
-<li><a href="#sec-37">37 分享/评论</a></li>
+<li><a href="#sec-17">17 dired-mode下批量修改文件名</a></li>
+<li><a href="#sec-18">18 Emacs中使用输入法</a></li>
+<li><a href="#sec-19">19 乱码</a></li>
+<li><a href="#sec-20">20 Yasnippet共享</a></li>
+<li><a href="#sec-21">21 Yasnippet中使用elisp制定模板</a></li>
+<li><a href="#sec-22">22 eshell命令大小写不敏感</a></li>
+<li><a href="#sec-23">23 win7下find问题</a></li>
+<li><a href="#sec-24">24 CC-Mode</a></li>
+<li><a href="#sec-25">25 Emacs Client启动后字体不正常和tabber不能使用解决办法</a></li>
+<li><a href="#sec-26">26 Emacs Gnus 阅读新闻组</a></li>
+<li><a href="#sec-27">27 Emacs Org-Mode 写文章做笔记</a></li>
+<li><a href="#sec-28">28 Emacs 搜索总结</a></li>
+<li><a href="#sec-29">29 分享/评论</a></li>
 </ul>
 </div>
 </div>
@@ -399,202 +391,15 @@
 </div>
 
 <div id="outline-container-16" class="outline-2">
-<h2 id="sec-16"><span class="section-number-2">16</span> 解决org-mode example/src/quote上面多一行问题</h2>
+<h2 id="sec-16"><span class="section-number-2">16</span> Ubuntu安装Emacs24.2及配置CEDET,ECB</h2>
 <div class="outline-text-2" id="text-16">
 
-<p>  不知道是不是org-mode的bug？如下所示的代码<br/>
-</p>
-
-
-<pre class="src src-org">abc
-cef
-<span style="color: #b22222;">#+begin_example</span>
-<span style="color: #7f7f7f;">hello</span>
-<span style="color: #b22222;">#+end_example  </span>
-</pre>
-
-<p>
-  经编译后生成：<br/>
-</p>
-
-
-<pre class="example">&lt;p&gt;  abc&lt;br/&gt;
-  cef&lt;br/&gt;
-&lt;/p&gt;
-&lt;p&gt;&lt;br&gt;
-&lt;pre class="example"&gt;hello
-&lt;/pre&gt;
-&lt;/p&gt;
-</pre>
-
-<p>
-  但浏览器解析是这样解析的：<br/>
-</p>
-
-
-<pre class="example">&lt;p&gt;  abc&lt;br/&gt;
-  cef&lt;br/&gt;
-&lt;/p&gt;
-&lt;p&gt;&lt;br&gt;&lt;/p&gt;
-&lt;pre class="example"&gt;hello
-&lt;/pre&gt;
-</pre>
-
-<p>
-  这样就会在cef和hello之间多出一行。<br/>
-  分析lisp/org-html.el代码发现原因在:<br/>
-</p>
-
-
-<pre class="src src-lisp"><span style="color: #b22222;">;; </span><span style="color: #b22222;">Check if the line break needs to be conserved</span>
-(<span style="color: #a020f0;">cond</span>
- ((string-match <span style="color: #8b2252;">"\\\\\\\\[ \t]*$"</span> line)
-  (setq line (replace-match <span style="color: #8b2252;">"&lt;br/&gt;"</span> t t line)))
- (org-export-preserve-breaks
-  (setq line (concat line <span style="color: #8b2252;">"&lt;br/&gt;"</span>))
-  ))
-</pre>
-
-<p>
-  不管line是否为空都会给line后面加上&lt;br/&gt;，而实际上当Line为空时没有必要加上&lt;br/&gt;，于是可以修改:<br/>
-</p>
-
-
-<pre class="src src-lisp"><span style="color: #b22222;">;; </span><span style="color: #b22222;">Check if the line break needs to be conserved</span>
-(<span style="color: #a020f0;">cond</span>
- ((string-match <span style="color: #8b2252;">"\\\\\\\\[ \t]*$"</span> line)
-  (setq line (replace-match <span style="color: #8b2252;">"&lt;br/&gt;"</span> t t line)))
- (org-export-preserve-breaks
-  (<span style="color: #a020f0;">if</span> (not (string= line <span style="color: #8b2252;">""</span>))
-      (setq line (concat line <span style="color: #8b2252;">"&lt;br/&gt;"</span>)))
-  ))
-</pre>
-
-<p>
-  这样便解决了多一行的问题。<br/>
-</p></div>
 
 </div>
 
-<div id="outline-container-17" class="outline-2">
-<h2 id="sec-17"><span class="section-number-2">17</span> org-mode example/src过大</h2>
-<div class="outline-text-2" id="text-17">
-
-<p>  当在#+begin_example #+end_example或者#+begin_src #+end_src环境中内容过多时会占用大量空间，一个解决办法是加上 <code>-t</code> 选项并配合 <code>-h height -w width</code> 选项来指定高宽，使它成为有滚动条的区域。但好像无法使用语法高亮。<br/>
-</p></div>
-
-</div>
-
-<div id="outline-container-18" class="outline-2">
-<h2 id="sec-18"><span class="section-number-2">18</span> org-mode中使用宏</h2>
-<div class="outline-text-2" id="text-18">
-
-<p>  在文章的开始定义宏，格式为 #+macro: macro_name macro_content_with_$1_arg1_$2_arg2_&hellip;<br/>
-  在文章中使用宏 {{{macro_name(args)}}}<br/>
-  其中org-mode内置的宏包括<br/>
-</p>
-
-
-<pre class="example">Emacs Trick
-visayafan
-format 其中format格式必须可以被函数 =format-time-string= 识别，常用的包括 %Y-%m-%d-%H-%M-%S 年月日时分秒
-%x 格式为： 10/29/2012 
-%X 格式为： 11:46:33 AM 
-%c 格式为： Mon 29 Oct 2012 11:46:33 AM CST 
-%D 格式为： 10/29/12 
-%R 格式为： 11:46 
-%T 格式为： 11:46:33 
-%r 格式为： 11:46:33 AM
-还有其它的org中的关键字
-</pre>
-
-<p>
-  利用宏可以减少冗余文本使内容更清晰，比如我在extension.org里定义了如下宏：<br/>
-</p><pre class="example">
-#+macro:lightbox #+html:&lt;link rel="stylesheet" href="../../Layout/CSS/jquery.lightbox-0.5.css" type="text/css" media="screen" /&gt; &lt;script type="text/javascript" src="../../Layout/JS/jquery.lightbox-0.5.js"&gt;&lt;/script&gt; &lt;center&gt; &lt;a class="lightbox" href="$1"&gt; &lt;img class="lightbox " title="点击查看大图" src="$1" width="300"&gt; &lt;/a&gt; &lt;/center&gt; &lt;script type="text/javascript"&gt; $(function() {$('a.lightbox').lightBox();}); &lt;/script&gt;
-</pre>
-
-<p>  我在欲导出HTML的Org文件比如emacs_trick.org头部写上：<br/>
-</p><pre class="example">
-#+SETUPFILE: "extension.org" 
-</pre>
-
-<p>  则便可以在emacs_trick.org中使用此宏。<br/>
-</p><pre class="example">
-{{{lightbox(images/image_name.jpg)}}}
-</pre>
-
-<p>  只需要一行就搞定了。<br/>
-</p>
-<p>
-  这样我就可以把所有的宏全部写在extension.org里，然后可以重复使用：只需要SETUPFILE指定就可以使用了。<br/>
-</p></div>
-
-</div>
-
-<div id="outline-container-19" class="outline-2">
-<h2 id="sec-19"><span class="section-number-2">19</span> org-mode 中嵌入latex公式</h2>
-<div class="outline-text-2" id="text-19">
-
-
-
-
-<pre class="example">$$ \(\)表行内，$$ $$ \[ \] 表行间
-</pre>
-
-
-<pre class="example">If $a^2=b$ and \( b=2 \), then the solution must be
-either $$ a=+\sqrt{2} $$ or \[ a=-\sqrt{2} \].
-</pre>
-
-</div>
-
-</div>
-
-<div id="outline-container-20" class="outline-2">
-<h2 id="sec-20"><span class="section-number-2">20</span> org-mode 中block中嵌入#+begin_example</h2>
-<div class="outline-text-2" id="text-20">
-
-<pre class="example">
-#+begin_example
-#+begin_example
-这种情况导出的不会包含#+begin_example,因为把想要字面导出的#+begin_example当成了example环境
-#+end_example
-#+end_example
-</pre>
-
-<p>  应该这样写<br/>
-</p><pre class="example">
-#+begin_src org
-#+begin_example
-这样就对了,在这种情况下可以快捷键C-c ' 来进入源码编辑模式
-#+end_example
-#+end_src
-</pre>
-
-<p>  也可以在第行前面加上:空格 来表示字面解析：<br/>
-</p>
-
-
-<pre class="src src-org"><span style="color: #7f7f7f;">: #+begin_example</span>
-<span style="color: #7f7f7f;">: &#36825;&#26679;&#23601;&#23545;&#20102;</span>
-<span style="color: #7f7f7f;">: #+end_example</span>
-</pre>
-
-</div>
-
-</div>
-
-<div id="outline-container-21" class="outline-2">
-<h2 id="sec-21"><span class="section-number-2">21</span> Ubuntu安装Emacs24.2及配置CEDET,ECB</h2>
-<div class="outline-text-2" id="text-21">
-
-
-</div>
-
-<div id="outline-container-21-1" class="outline-3">
-<h3 id="sec-21-1"><span class="section-number-3">21.1</span> ./configure前需要安装的信赖包</h3>
-<div class="outline-text-3" id="text-21-1">
+<div id="outline-container-16-1" class="outline-3">
+<h3 id="sec-16-1"><span class="section-number-3">16.1</span> ./configure前需要安装的信赖包</h3>
+<div class="outline-text-3" id="text-16-1">
 
 
 
@@ -611,9 +416,9 @@ sudo apt-get install libncurses5-dev
 
 </div>
 
-<div id="outline-container-21-2" class="outline-3">
-<h3 id="sec-21-2"><span class="section-number-3">21.2</span> 配置cedet, ecb</h3>
-<div class="outline-text-3" id="text-21-2">
+<div id="outline-container-16-2" class="outline-3">
+<h3 id="sec-16-2"><span class="section-number-3">16.2</span> 配置cedet, ecb</h3>
+<div class="outline-text-3" id="text-16-2">
 
 <p>   要想使用cedet1.1和ecb2.4必须修改ecb2.4/ecb-upgrade.el中：<br/>
 </p><ol>
@@ -659,9 +464,9 @@ sudo apt-get install libncurses5-dev
 
 </div>
 
-<div id="outline-container-22" class="outline-2">
-<h2 id="sec-22"><span class="section-number-2">22</span> dired-mode下批量修改文件名</h2>
-<div class="outline-text-2" id="text-22">
+<div id="outline-container-17" class="outline-2">
+<h2 id="sec-17"><span class="section-number-2">17</span> dired-mode下批量修改文件名</h2>
+<div class="outline-text-2" id="text-17">
 
 <p>  C-x d打开一个目录后， <code>M-x wdired-change-to-wdired-mode</code> 进入可编辑模式，这样可以批量给文件改名。<br/>
 <link rel="stylesheet" href="../../Layout/CSS/jquery.lightbox-0.5.css" type="text/css" media="screen" />
@@ -672,47 +477,9 @@ d<script type="text/javascript"> $(function() {$('a.lightbox').lightBox();}); </
 
 </div>
 
-<div id="outline-container-23" class="outline-2">
-<h2 id="sec-23"><span class="section-number-2">23</span> org-mode导出HTML目录显示“目录”而非默认的Table Of Content</h2>
-<div class="outline-text-2" id="text-23">
-
-<p>  <code>M-x customize-variable ENTER org-export-language-setup</code> 在最后ins插入新的List:<br/>
-<center>
-<img src="./image/中文目录.png"  alt="./image/中文目录.png" />  <br/>
-</center>
-  再 <code>M-x customize-variable ENTER org-export-default-language</code> 改成 zh-CN<br/>
-</p></div>
-
-</div>
-
-<div id="outline-container-24" class="outline-2">
-<h2 id="sec-24"><span class="section-number-2">24</span> org-mode导出PDF目录显示“目录”而非默认的Contents</h2>
-<div class="outline-text-2" id="text-24">
-
-<p>  在 <code>org-export-latex-classes</code> 中加上 <code>\\renewcommand\\contentsname{目录}</code><br/>
-</p></div>
-
-</div>
-
-<div id="outline-container-25" class="outline-2">
-<h2 id="sec-25"><span class="section-number-2">25</span> org-mode的表格中输入|</h2>
-<div class="outline-text-2" id="text-25">
-
-<p>  两种办法：<br/>
-</p><ol>
-<li><code>\vert{}</code> 使用 \(\LaTeX\)<br/>
-</li>
-<li>快捷键 <code>C-c C-x \</code><br/>
-</li>
-</ol>
-
-</div>
-
-</div>
-
-<div id="outline-container-26" class="outline-2">
-<h2 id="sec-26"><span class="section-number-2">26</span> Emacs中使用输入法</h2>
-<div class="outline-text-2" id="text-26">
+<div id="outline-container-18" class="outline-2">
+<h2 id="sec-18"><span class="section-number-2">18</span> Emacs中使用输入法</h2>
+<div class="outline-text-2" id="text-18">
 
 <p>  可以 <code>M-x customize-variable RET default-input-method</code> 来指定默认的输入法，例如 <code>chinese-pinyin</code> 。<br/>
   默认是 <code>C-\</code> 来调用。<br/>
@@ -738,9 +505,9 @@ d<script type="text/javascript"> $(function() {$('a.lightbox').lightBox();}); </
 
 </div>
 
-<div id="outline-container-27" class="outline-2">
-<h2 id="sec-27"><span class="section-number-2">27</span> 乱码</h2>
-<div class="outline-text-2" id="text-27">
+<div id="outline-container-19" class="outline-2">
+<h2 id="sec-19"><span class="section-number-2">19</span> 乱码</h2>
+<div class="outline-text-2" id="text-19">
 
 <p>  可以 <code>C-x RET r TAB</code> 来选择编码。<br/>
   中文乱码可以在.emacs中加入以下代码：<br/>
@@ -764,32 +531,9 @@ d<script type="text/javascript"> $(function() {$('a.lightbox').lightBox();}); </
 
 </div>
 
-<div id="outline-container-28" class="outline-2">
-<h2 id="sec-28"><span class="section-number-2">28</span> Org Mode HTML导出时内部链接</h2>
-<div class="outline-text-2" id="text-28">
-
-<p>  在一篇文章中建立内部链接很简单，添加anchor，<br/>
-</p>
-
-
-<pre class="example">#&lt;&lt;anchor&gt;&gt;
-</pre>
-
-<p>
-  在想要链接到上面的地主添加链接即可:<br/>
-</p>
-
-
-<pre class="example">[[anchor]]
-</pre>
-
-</div>
-
-</div>
-
-<div id="outline-container-29" class="outline-2">
-<h2 id="sec-29"><span class="section-number-2">29</span> Yasnippet共享</h2>
-<div class="outline-text-2" id="text-29">
+<div id="outline-container-20" class="outline-2">
+<h2 id="sec-20"><span class="section-number-2">20</span> Yasnippet共享</h2>
+<div class="outline-text-2" id="text-20">
 
 <p>  在c mode和c++ mode下都可以使用cc mode里面的yasnippet，其方法是在 snippet/c-mode和snippet/c++-mode目录下均存在.yas-parents其内容均为cc-mode。<br/>
 这样便省去了重复定制yasnippet。<br/>
@@ -797,9 +541,9 @@ d<script type="text/javascript"> $(function() {$('a.lightbox').lightBox();}); </
 
 </div>
 
-<div id="outline-container-30" class="outline-2">
-<h2 id="sec-30"><span class="section-number-2">30</span> Yasnippet中使用elisp制定模板</h2>
-<div class="outline-text-2" id="text-30">
+<div id="outline-container-21" class="outline-2">
+<h2 id="sec-21"><span class="section-number-2">21</span> Yasnippet中使用elisp制定模板</h2>
+<div class="outline-text-2" id="text-21">
 
 <p>  yasnippet模板中``之间的elisp语句会被编译后替代原来代码，我每次写文章时打开一个org mode的新buffer时，首先要在文件头部包含一些相同的内容，例如：#+include "../../template.org" 其中../../template.org包含一些CSS控制文件，这些内容是固定不变的，所以直接写在yasnippet模板里就可以，但有些东西，例如标题，是与当前文件有关的，此时可以用elisp来实现动态插入标题：<br/>
 </p><pre class="example">
@@ -828,9 +572,9 @@ d<script type="text/javascript"> $(function() {$('a.lightbox').lightBox();}); </
 
 </div>
 
-<div id="outline-container-31" class="outline-2">
-<h2 id="sec-31"><span class="section-number-2">31</span> eshell命令大小写不敏感</h2>
-<div class="outline-text-2" id="text-31">
+<div id="outline-container-22" class="outline-2">
+<h2 id="sec-22"><span class="section-number-2">22</span> eshell命令大小写不敏感</h2>
+<div class="outline-text-2" id="text-22">
 
 <p>  需要修改变量eshell-glob-case-insensitive为nil，可以用customize-variable来修改，也可以在配置文件中加上：<br/>
 </p>
@@ -846,27 +590,27 @@ d<script type="text/javascript"> $(function() {$('a.lightbox').lightBox();}); </
 
 </div>
 
-<div id="outline-container-32" class="outline-2">
-<h2 id="sec-32"><span class="section-number-2">32</span> win7下find问题</h2>
-<div class="outline-text-2" id="text-32">
+<div id="outline-container-23" class="outline-2">
+<h2 id="sec-23"><span class="section-number-2">23</span> win7下find问题</h2>
+<div class="outline-text-2" id="text-23">
 
 <p>  尽管安装了GNUWin32但使用rgrep时仍然出问题，其实问题在于Win7自带的find命令，把system32下的find.exe改个名即可<br/>
 </p></div>
 
 </div>
 
-<div id="outline-container-33" class="outline-2">
-<h2 id="sec-33"><span class="section-number-2">33</span> CC-Mode</h2>
-<div class="outline-text-2" id="text-33">
+<div id="outline-container-24" class="outline-2">
+<h2 id="sec-24"><span class="section-number-2">24</span> CC-Mode</h2>
+<div class="outline-text-2" id="text-24">
 
 <p>  <a href="./CC-Mode.html">CC-Mode</a><br/>
 </p></div>
 
 </div>
 
-<div id="outline-container-34" class="outline-2">
-<h2 id="sec-34"><span class="section-number-2">34</span> Emacs Client启动后字体不正常和tabber不能使用解决办法</h2>
-<div class="outline-text-2" id="text-34">
+<div id="outline-container-25" class="outline-2">
+<h2 id="sec-25"><span class="section-number-2">25</span> Emacs Client启动后字体不正常和tabber不能使用解决办法</h2>
+<div class="outline-text-2" id="text-25">
 
 
 
@@ -915,27 +659,67 @@ d<script type="text/javascript"> $(function() {$('a.lightbox').lightBox();}); </
 
 </div>
 
-<div id="outline-container-35" class="outline-2">
-<h2 id="sec-35"><span class="section-number-2">35</span> Emacs Org配置简单快捷键</h2>
-<div class="outline-text-2" id="text-35">
-
-<p>  <code>M-x custoize-varialbe RET org-structure-template-alistu</code><br/>
-</p></div>
-
-</div>
-
-<div id="outline-container-36" class="outline-2">
-<h2 id="sec-36"><span class="section-number-2">36</span> Emacs Gnus 阅读新闻组</h2>
-<div class="outline-text-2" id="text-36">
+<div id="outline-container-26" class="outline-2">
+<h2 id="sec-26"><span class="section-number-2">26</span> Emacs Gnus 阅读新闻组</h2>
+<div class="outline-text-2" id="text-26">
 
 <p>  <a href="./EmacsGnus.html">配置+使用</a><br/>
 </p></div>
 
 </div>
 
-<div id="outline-container-37" class="outline-2">
-<h2 id="sec-37"><span class="section-number-2">37</span> 分享/评论</h2>
-<div class="outline-text-2" id="text-37">
+<div id="outline-container-27" class="outline-2">
+<h2 id="sec-27"><span class="section-number-2">27</span> Emacs Org-Mode 写文章做笔记</h2>
+<div class="outline-text-2" id="text-27">
+
+<p>  <a href="./EmacsOrg.html">配置+使用</a><br/>
+</p></div>
+
+</div>
+
+<div id="outline-container-28" class="outline-2">
+<h2 id="sec-28"><span class="section-number-2">28</span> Emacs 搜索总结</h2>
+<div class="outline-text-2" id="text-28">
+
+<ul>
+<li>搜索内容都是小写字母，搜索时不区分大小写；搜索内容只要有一个大写字母，搜索时区分大小写<br/>
+</li>
+<li>C-s C-w：以光标后的一个单词(自动转为小写)做为搜索词立即开始搜索以下操作要在搜索开始后，才有效<br/>
+</li>
+<li>C-w(isearch-yank-word-or-char)：从buffer中取得char或word粘贴到搜索词之后<br/>
+</li>
+<li>C-y(isearch-yank-line)：从buffer中取得一行粘贴到搜索词之后<br/>
+</li>
+<li>C-s C-w：以光标后的一个单词(自动转为小写)做为搜索词立即开始搜索<br/>
+</li>
+<li>M-c(isearch-toggle-case-fold)：打开或关毕搜索大小写敏感<br/>
+</li>
+<li>M-e(isearch-edit-string)：光标跳到minibuffer，修改搜索词<br/>
+</li>
+<li>M-n(isearch-ring-advance)：搜索时循环查找后面的搜索词<br/>
+</li>
+<li>M-p(isearch-ring-retreat)：搜索时循环查找前面的搜索词<br/>
+</li>
+<li>M-r(isearch-toggle-regexp)：打开或关闭正则方式搜索<br/>
+</li>
+<li>M-s w(isearch-toggle-word)：以单词方式搜索<br/>
+</li>
+<li>M-y(isearch-yank-kill)：将kill ring中的内容放到搜索词中<br/>
+</li>
+<li>C-M-w 删除搜索词中最后一个字符<br/>
+</li>
+<li>C-M-y 将当前光标后一个字符复制到搜索词后<br/>
+</li>
+</ul>
+
+
+</div>
+
+</div>
+
+<div id="outline-container-29" class="outline-2">
+<h2 id="sec-29"><span class="section-number-2">29</span> 分享/评论</h2>
+<div class="outline-text-2" id="text-29">
 
 
 <a class="btn btn-primary" href="https://raw.github.com/visayafan/visayafan.github.com/master/Others/o/Emacs.org">View Org Source</a>

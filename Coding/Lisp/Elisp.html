@@ -7,11 +7,11 @@
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
 <meta name="title" content="Elisp笔记"/>
 <meta name="generator" content="Org-mode"/>
-<meta name="generated" content="2012-11-19 22:37:01 CST"/>
+<meta name="generated" content="2012-12-14 09:05:07 CST"/>
 <meta name="author" content="visayafan"/>
 <meta name="description" content=""/>
 <meta name="keywords" content=""/>
-
+<div id="org-div-comments"><a href="../../index.html#lisp">主页</a></div>
 
 
 </head>
@@ -23,7 +23,7 @@
 
 
 <!-- <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"> </script> -->
-<link rel="stylesheet" type="text/css" href="../../Layout/CSS/bootstrap.min.css" />
+<link rel="stylesheet" type="text/css" href="../../Layout/CSS/bootstrap_old.css" />
 <link rel="stylesheet" type="text/css" href="../../Layout/CSS/too_many_toc.css" />
 <script src="../../Layout/JS/jquery_1.7.1.js"></script>
 <script src="../../Layout/JS/bootstrap_old.js"></script>
@@ -49,7 +49,11 @@ vector string number 是自我求值类型，即对其自身求值后仍为自�
 <li><a href="#sec-3">3 数组</a></li>
 <li><a href="#sec-4">4 Ring</a></li>
 <li><a href="#sec-5">5 符号</a></li>
-<li><a href="#sec-6">6 文本属性</a></li>
+<li><a href="#sec-6">6 文本属性</a>
+<ul>
+<li><a href="#sec-6-1">6.1 display用于文本替换</a></li>
+</ul>
+</li>
 <li><a href="#sec-7">7 变量</a></li>
 <li><a href="#sec-8">8 正则表达式</a></li>
 <li><a href="#sec-9">9 缓冲区</a></li>
@@ -360,7 +364,40 @@ ring-insert-at-beginning ring obj
 <div class="outline-text-2" id="text-6">
 
 <p>  buffer中的每个字符或字符串都有一个文本属性列表，列表中每个元素都有一个名字和值。<br/>
-</p></div>
+</p>
+</div>
+
+<div id="outline-container-6-1" class="outline-3">
+<h3 id="sec-6-1"><span class="section-number-3">6.1</span> display用于文本替换</h3>
+<div class="outline-text-3" id="text-6-1">
+
+<p>   下面函数用于把当前buffer前10个字符替换成一个A，因为前10个字符的display属性是相同的字符串对象。<br/>
+</p>
+
+
+<pre class="src src-lisp">(<span style="color: #a020f0;">defun</span> <span style="color: #0000ff;">foo</span> ()
+  (<span style="color: #a020f0;">dotimes</span> (i 5)
+    (<span style="color: #a020f0;">let</span> ((string <span style="color: #8b2252;">"A"</span>)
+          (start (+ i i (point-min))))
+      (put-text-property start (1+ start) 'display string)
+      (put-text-property start (+ 2 start) 'display string))))
+</pre>
+
+<p>
+   下面的函数由于concat创建新的字符串对象，所以每两个文本属性相同，所以前10个字符被替换成5个A：<br/>
+</p>
+
+
+<pre class="src src-lisp">(<span style="color: #a020f0;">defun</span> <span style="color: #0000ff;">foo</span> ()
+  (<span style="color: #a020f0;">dotimes</span> (i 5)
+    (<span style="color: #a020f0;">let</span> ((string (concat <span style="color: #8b2252;">"A"</span>))
+          (start (+ i i (point-min))))
+      (put-text-property start (1+ start) 'display string)
+      (put-text-property start (+ 2 start) 'display string))))
+</pre>
+
+</div>
+</div>
 
 </div>
 
@@ -588,6 +625,7 @@ describe-categories
 (replace-match NEWTEXT <span style="color: #228b22;">&amp;optional</span> FIXEDCASE LITERAL STRING SUBEXP)       &#23558;&#19978;&#27425;&#26597;&#25214;&#21040;&#30340;&#20869;&#23481;&#26367;&#25442;&#25104;NEWTEXT
 (<span style="color: #a020f0;">save-restriction</span> <span style="color: #228b22;">&amp;rest</span> BODY)           C-x n n =&gt;narrow to region C-x n w =&gt; widen &#22312;narrow-to-region&#21518;&#30340;&#32467;&#26524;&#19978;&#25191;&#34892;BODY&#65292;&#20043;&#21518;&#20877;widen&#65292;&#21363;&#20316;&#29992;BODY&#22312;&#25351;&#23450;region&#19978;
 (subst-char-in-region START END FROMCHAR TOCHAR <span style="color: #228b22;">&amp;optional</span> NOUNDO) &#22312;START&#21040;END&#20043;&#38388;&#23558;FROMECHAR&#36716;&#25442;&#25104;TOCHAR
+(buffer-substring START END)            &#36820;&#22238;&#24403;&#21069;buffer&#20013;&#25351;&#23450;&#20301;&#32622;&#30340;&#20869;&#23481;
 </pre>
 
 </div>

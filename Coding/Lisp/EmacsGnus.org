@@ -1,5 +1,5 @@
 #+OPTIONS: ^:{} _:{} num:t toc:t \n:t
-#+INCLUDE "../../template.org"
+#+INCLUDE "../../template-toc.org"
 #+SETUPFILE: "../../extension.org"
 #+title:Emacs Gnus
 新闻组类似现在的BBS或论坛，使用人数越来越少，但仍旧坚持使用的人中有很多大牛，可以从中学到很多东西，并且里面的技术氛围很深厚，说废话的人很少，这是我选择使用新闻组的原因。
@@ -9,84 +9,18 @@
 新闻组服务器地址格式类似 news.example.net，国内的有新帆：news.newsfan.net，其它可以参考[[http://www.williamlong.info/archives/176.html][月光博客]] 。国外的免费的比较快的是news.aioe.org. 
 * 配置
   将下面配置保存到 ~/.gnus.el中：
-#+html: <style type="text/css"> textarea{width:100%;}</style>
-#+begin_src lisp -t -h 15
-(setq user-full-name "visayafan")
-(setq user-mail-address "visayafan@gmail.com")
-
-(setq gnus-select-method '(nntp "news.aioe.org"))
-(setq gnus-select-method '(nntp "news.aioe.org"))
-(add-to-list 'gnus-secondary-select-methods '(nntp "news.gnus.org"))
-(add-to-list 'gnus-secondary-select-methods '(nntp  "news.gmane.org"))
-(add-to-list 'gnus-secondary-select-methods '(nntp "news.newsgroup.com.hk"))
-(add-to-list 'gnus-secondary-select-methods '(nntp  "news.newsfan.net"))
-
-;; 开启代理功能,为了能让gnus支持离线浏览,gnus 5.10.x会自动开启该功能。
-(gnus-agentize)
-
-;; 满71字符自动换行
-(add-hook 'message-mode-hook (lambda () (setq fill-column 72) (turn-on-auto-fill)))
-
-;; 发送设置
-(setq gnus-posting-styles
-      '((".*"
-         (name "visayafan")
-         (address "visayafan@gmail.com")
-         (User-Agent "Emacs+gnus"))
-        ;;邮件发送方式的发送配置
-        ((message-mail-p)
-         (name"visayafan")
-         (address "visayafan@gmail.com")
-         (User-Agent "Emacs+gnus"))
-        ;;发送帖子的设定
-        ;; (".*newsfan.*"
-        ;;  (name "visayafan")
-        ;;  (address "visayafan@gmail.com")
-        ;;  (User-Agent "Emacs+gnus")
-        ))
-
-
-;; 语言环境设定
-(set-language-environment 'Chinese-GB)
-(setq gnus-default-charset 'chinese-iso-8bit
-      gnus-group-name-charset-group-alist '((".*" . cn-gb-2312))
-      gnus-summary-show-article-charset-alist
-      '((1 . cn-gb-2312)
-        (2 . gb18030)
-        (3 . chinese-iso-8bit)
-        (4 . gbk)
-        (5 . big5)
-        (6 . utf-8))
-      gnus-newsgroup-ignored-charsets
-      '(unknown-8bit x-unknown iso-8859-1))
-
-;;解决gb18030乱码
-(setq gnus-newsgroup-ignored-charsets 
-      '(unknown-8bit x-unknown gb18030))
-
-;;设定要显示的头信息
-(setq gnus-visible-headers
-      "^\\(^From:\\|^Subject:\\|^Date:\\|^Followup-To:
-            \\|^X-Newsreader:\\|^User-Agent:\\|^X-Mailer:
-            \\|Line:\\|Lines:\\|Content-Type:\\|NNTP-Posting-Host\\)")
-
-;;设定屏幕的分割比例
-(gnus-add-configuration '(article (vertical 1.0 (summary .40 point) (article 1.0))))
-
-;;自动显示图片
-(auto-image-file-mode)
-(setq mm-inline-large-images t)
-(add-to-list 'mm-attachment-override-types "image/*")
-
-;; 杂项
-(setq gnus-confirm-mail-reply-to-news t
-      message-kill-buffer-on-exit t
-      message-elide-ellipsis "[...]\n")
+{{{srcbegin(200)}}}
+#+begin_src lisp
+#+include "~/.emacs.d/gnus/.gnus.el"
 #+end_src
+{{{srcend}}}
+
   通过gnus-select-method和gnus-secondary-select-method变量设置了几个新闻组地址，连接失败的可以把它们删掉（我这儿都连上了）。
 * 使用
   =M-x gnus= 便可进入Gnus。
+  
   =gnus-group-enter-server-mode= 快捷键 =^= 可以查看所有服务器的连接状态， =opened= 正常， =denied= 表连接失败。
+
   =RET= 可进入相应的服务器。此时会下载此服务器上所有组列表，之后进入 =*Gnus Browse Server*= 缓冲区。选中感兴趣的组回车即可进入 =summary= 缓冲区，在帖子标题上空格即可在下面打开一个 =Article= 帖子弱冲区.
   
 * 快捷键
@@ -99,9 +33,10 @@
   | C-M-h or T h                | hide this thread                                                                                   |
   | C-M-f                       | forward a thread                                                                                   |
   | C-M-b                       | backward a thread                                                                                  |
-  | n                           | next unreaded thread                                                                               |
-  | p                           | previous unreaded thread                                                                           |
-  | M-g                         | 刷新，在Group缓冲区里是g                                                                                    |
+  | n/p                         | next/previous unreaded thread                                                                      |
+  | N/P                         | next/previous thread                                                                               |
+  | M-n/p                       | next/previous unread subject                                                                       |
+  | M-g                         | 刷新，在Group缓冲区里是g                                                                           |
   | SPACE                       | view this thread                                                                                   |
   | W W s                       | article hide signature 在读帖的时候很多人搞些莫名其妙的签名比较烦人，可以将其去掉                  |
   | W W a                       | article hide all 去掉所有的，包括 标题，引用，签名。具体可查看article菜单                          |
@@ -136,6 +71,8 @@
   |-----------------------------+----------------------------------------------------------------------------------------------------|
   | 空格                        | 帖子前面什么也没有则表示这是个未读的帖子                                                           |
   |-----------------------------+----------------------------------------------------------------------------------------------------|
+  | G H/h                       | 将光标之上/下的内容都标记为已读                                                                    |
+  |-----------------------------+----------------------------------------------------------------------------------------------------|
   | *Gnus Broswe Server Buffer* |                                                                                                    |
   |-----------------------------+----------------------------------------------------------------------------------------------------|
   | u                           | subscribe this group                                                                               |
@@ -143,7 +80,7 @@
   |-----------------------------+----------------------------------------------------------------------------------------------------|
   | *Article Buffer*            |                                                                                                    |
   |-----------------------------+----------------------------------------------------------------------------------------------------|
-  | s                           | go to summary buffer                                                                               |
+  | s/h                         | go to summary/article buffer                                                                       |
   | C-c RET                     | 为光标位置下的邮件地址发邮件                                                                       |
   | SPC                         | 下个回帖                                                                                           |
   | Del                         | 上个回贴                                                                                           |
@@ -158,6 +95,10 @@
   | a                           | 发帖（自己手工输入新闻组名称）                                                                     |
   | u                           | 订阅或取消订阅光标所在新闻组                                                                       |
   | C-k                         | 从订阅列表里删除某个新闻组                                                                         |
+  |-----------------------------+----------------------------------------------------------------------------------------------------|
+  | *RSS*                       |                                                                                                    |
+  |-----------------------------+----------------------------------------------------------------------------------------------------|
+  | G R                         | 订阅RSS                                                                                            |
   |-----------------------------+----------------------------------------------------------------------------------------------------|
 
 * 再配置
@@ -188,3 +129,154 @@
    上面是缓存到本地，即再次打开此article时候是从缓存读取而非再次下载。保存的名字是数字不适合人查找再次查看。
    要想真正保存可以在summary缓冲区中 =o= ，输入保存路径及名称。
    其它保存方式参考[[http://www.gnu.org/software/emacs/manual/html_node/gnus/Saving-Articles.html][Gnus官方手册]]。
+* 解决读取慢的问题
+  方法：利用leafnode在后台将远程服务器上的帖子读到本机，然后Gnus从本机上读取帖子。
+  1. Ubuntu安装leafnode: sudo apt-get install leafnode, 其它OS可以在其[[http://leafnode.sourceforge.net/][官网]] 找到安装方法。
+     Ubuntu安装过程中会有输入新闻组服务器地址可以输入：news.aioe.org，其实无所谓，之后还要手动配置。
+  2. 首先配置hostname，原因可以参考[[http://www.leafnode.org/doc_en/README-FQDN.html][官网的FAQ]]， 大致意思是说：要配置hostname使其全球唯一，否则如果有两个相同hostname的话服务器不知道该发给谁会将其抛弃，结果谁也收不到。修改 /etc/hosts 修改 =127.0.1.1 localhost(可能不一样)= 为 =127.0.1.1 fan.visayafan.com localhost= ,其中你应该将 fan.visayafan.com设置成唯一（随便设置只要唯一即可）， =localhost= 与前面修改前一样，将其作为 =fan.visayafan.com= 的别名，以避免修改系统中其它用到原来hostname的应用程序。
+  3. 编辑：/etc/news/leafnode/config文件，其中大部分配置用默认的就可以了，需要修改的只有几个：
+     + expire = 3000 表示3000之内不读的帖子将会被标记为过期之后会被删除，我们可以将其设大点，3000意味着8年内下载回来的帖子不会被自动删除。
+     + 如果刚才在安装配置的时候输入了服务器地址则可以看到server = news.aioe.org配置，可以添加多个：
+       #+begin_example
+       server = news.aioe.org
+       server = news.gmane.org
+       server = news.newsfan.net
+       #+end_example
+     + maxfetch = 20000 表示每次取回数不超过20000，设值大点
+     + maxage = 300 如果此值设得大的话可能会造成经常收到旧帖子（以前读过的）的现象，如果你不想经常可以把此值设得小点，默认值是10天。此处设为300天。
+  4. 之后便可以用fetchnews命令往本地上下载了： sudo fetchnews -vv (其中-vv表输入详细信息，-vvv更详细，-vvvv更更详细是调试时用的)，输出信息大致是：
+     {{{srcbegin(200)}}}
+     #+begin_example
+     leafnode 1.11.8: verbosity level is 1, debugmode is 0
+     try_lock(timeout=5), fqdn="fan.visayafan.com"
+     news.aioe.org: connecting to port nntp...
+     news.aioe.org: connected to 94.75.214.39:119, reply: 200
+     news.aioe.org: connected.
+     news.aioe.org: using STAT <message-ID> command.
+     news.aioe.org: 0 articles posted.
+     news.aioe.org: getting new newsgroups
+     news.aioe.org: got 0 new newsgroups.
+     news.aioe.org: conversation completed, disconnected.
+     news.gmane.org: connecting to port nntp...
+     news.gmane.org: connected to 80.91.229.13:119, reply: 200
+     news.gmane.org: connected.
+     news.gmane.org: using STAT <message-ID> command.
+     news.gmane.org: 0 articles posted.
+     news.gmane.org: getting new newsgroups
+     news.gmane.org: got 0 new newsgroups.
+     news.gmane.org: conversation completed, disconnected.
+     news.newsfan.net: connecting to port nntp...
+     news.newsfan.net: connected to 58.59.1.215:119, reply: 200
+     news.newsfan.net: connected.
+     news.newsfan.net: using STAT <message-ID> command.
+     news.newsfan.net: 0 articles posted.
+     news.newsfan.net: getting new newsgroups
+     news.newsfan.net: got 0 new newsgroups.
+     news.newsfan.net: conversation completed, disconnected.
+     wrote active file with 51062 lines
+     Started process to update overview data in the background.
+     Network activity has finished.
+     #+end_example
+     {{{srcend}}}
+     *如果此时出现hostname不唯一的错误提示的话可能需要重启系统使刚才修改的hosts生效。*
+  5. 此时下载的只是一个目录清单而已，可以在 /var/spool/news/leaf.node下看到一个4M大小的groupinfo，此文件里包含刚才3个服务器里所有组名（非常多的组）。
+  6. 此时用命令 =ps aux|grep leafnode= 可以看到有一个进程在执行，此进程是被加入到[[http://blog.csdn.net/tianlesoftware/article/details/5315039][crontab]] 中（定时执行），默认时间1小时执行一次，可以将其修改为10分钟，修改 /etc/cron.d/leafnode 为：
+    #+begin_example
+# Cron entries for Leafnode.
+# Run /etc/news/leafnode/do-fetch-news every hour.
+*/10 * * * *  news if [ -x /etc/news/leafnode/do-fetch-news ]; then /etc/news/leafnode/do-fetch-news; fi
+#+end_example
+  7. 修改.gnus.el中 =(setq gnus-select-method '(nntp "news.aioe.org"))= 为 =(setq gnus-select-method '(nntp "localhost"))= ，注释掉 gnus-secondary-select-method的行。
+     之后启动Gnus此时由于本机上没有任何组的任何帖子所以Group缓冲区为空，按下 =L= 即可显示出以前曾经订阅过的组，如果是第一次使用则可以 =^= 进入server之后在localhost上回车打开组列表清单（时间会很长，因为是4M的文本文件），之后在感兴趣的组上 =u= 订阅。
+     进入组的 summary 缓冲区后只会看到一个帖子，这是leafnode的说明，大致意思是说：此组的帖子会在下次程序执行的时候下载下来。由于刚才把定时设置为10分钟，故10分钟后再进入此组便可看到帖子。也可以手动运行刚才 =ps aux|grep leafnode= 看到的执行程序即： =sudo /bin/sh /etc/news/leafnode/do-fetch-news= ，之后等待几分钟即可（视网速而定）。
+     此时再查看 =/var/spoon/news/interesting.groups= 即可看到刚才订阅的组名。如果订阅的是 =comp.lang.c++= 则可以在 =/var/spoon/news= 目录下看到此目录结构： =comp/lang/c++= ，此目录内存放的是刚才下载下来的帖子。
+  8. 如果觉得下载下来的帖子有点少可以用 =-x= 选项指定下载数量： =~$ sudo fetchnews -v -x 4000= ，指定从订阅的组中下载4000个帖子（当然前提是如果此组帖子数量大于4000）。(时间会很长)
+* 使用经验
+** 不用重启添加新的新闻组服务器
+   首先在.gnus.el中添加，例如：news.x-privat.org
+#+begin_src lisp
+(add-to-list 'gnus-secondary-select-methods '(nntp  "news.x-privat.org"))
+#+end_src
+   之后在Group缓冲区 =F= 查找新新闻组服务器。
+** 查看整个thread
+   如果一个thead是回复别人的帖子而那个帖子你已经看过了，因为看过了所以不会显示出来（即老贴，header前面标记O），此时可以用 =A T= =gnus-summary-refer-thread=得到整个thread。
+   如果一个人的帖子中引用了别人说的话，可以用 =A R= =gnus-summary-refer-references= 来取回帖中引用帖的原帖（包括引用帖中的引用帖）。
+   上面是取回所有引用帖的原帖，而有时我们只想查看那个人引用帖的原帖，而不想看引用帖中的引用帖，即只想递归1次，用 =^= =gnus-summary-refer-parent-article=。
+--------
+   比如：A发表了一篇帖子，内容为1；B在回A帖子的时候引用了A的帖子，回复内容为2；C回复B的时候引用了B的帖子，回复内容为3；则看到的应该是：
+{{{left(4)}}}
+#+begin_example
+From: A
+1
+#+end_example
+{{{middle(4)}}}
+#+begin_example
+From: B
+2
+> 1
+#+end_example
+{{{middle(4)}}}
+#+begin_example
+From: C
+3
+>2
+>>1
+#+end_example
+{{{right}}}
+  如果A，B的帖子你都看过了则此时AB的帖子不会显示，你只看过C的帖子，但你想知道AB说了什么，可以用 =A T=，会取回整个thread里所有帖子。C引用了B的话，如果你想看B说了什么，可以用 =^=。C引用的B中又引用了A，用 =A R= 则可以递归取回引用帖子即A，B的帖子。
+--------
+** 自动取回整个thread
+   像上面例子中，打开Gnus后只看到C的帖子，如果你想Gnus自动取回整个thread，可以设置 =gnus-fetch-old-headers= 为 non-nil：
+#+begin_src lisp
+(setq gnus-fetch-old-headers 'some)
+#+end_src
+   但如果帖子很长的话每次都取回整个thread可以会花很长时间，可以设置 =gnus-build-sparse-threads= 为non-nil，它不会取回整个thread，只会取回新帖了引用的那些旧帖，此时的thread是不完整的：
+#+begin_src lisp
+(setq gnus-build-sparse-threads 'some)
+#+end_src
+** 查看所有头信息
+   在 summary 缓冲区或 article 缓冲区下 =t= 即可在自定义头信息和全部头信息之间切换。
+   也可以 =C-u g= 查看未格式化的原始信息来查看全部头信息， =g= 查看格式化后信息（进行高亮显示和格式整理）。
+** 自定义组
+   如果你想自定义让一个组让其和其它组不一样，可以在group缓冲区上光标放在指定组上 =G c= 即可进入此组的配置buffer.
+** 使用agent来下载帖子
+   [[http://www.gnu.org/software/emacs/manual/html_node/gnus/Gnus-Unplugged.html#Gnus-Unplugged][Gnus Unpluged 官网帮助]]
+   [[http://www.gnus.org/manual/gnus_401.html#SEC524][Gnus FAQ]]
+   agent有unpluged和pluged两种状态，可以在Emacs状态栏上看到（Group buffer里）。
+*** agent工作流程：
+    1. 现在本机没有连网，=J j= 将agent设置为unpluged状态，用户使用gnus阅读帖子(pluged状态且没有连网则guns是用不了的)。
+    2. 如果想查看是否有更新。切换agent状态为pluged，然后连上网，=g= 刷新，可以选择继续阅读，也可以选择将更新的部分全部下载到本机，然后切换agent状态为unpluged，断开网络，再阅读。
+    这对网络很差或是网络按时计费的情况会很有会。
+    agent是个big cache, headers如果本地有会从本地读取，Gnus只下载一次headers但不会缓存articles，原因是太大（除非是[[cache][自己标记下载]]的），可以通过设置 gnus-agent-cache 为 t 从而既缓存headers又缓存 articles。
+*** 具体使用
+#<<agentize>>
+    * 要使用agent首先要把一个server agentized: 进入server buffer，在一个服务器名称前面 =J a= 即可，此时会在该服务器名称后面看到 agent 。
+    * 之后进入group buffer，可以选择查看帖子，也可以选择将这个group的帖子全部下载下来（也可以选择性下载 [[catetory][agent categories]]）, 在 agent菜单下。
+#<<cache>>
+       也可以下载某个帖子，先用 =#= 标记然后 =J s= 下载= *或* 用 =%= 标记（快捷键为 =@= ）然后 =J u= 下载。
+#<<category>>
+    * category构成包括：名字，几个组，条件。
+      所有组都在默认default分类中，此分类条件为short(只下载行数少于100行的article)。
+      可以自已新建组： =J C= 进入category buffer，菜单 categories下可以选择新建分类，为分类添加组，改变其条件。
+      条件可以是: [[http://www.gnu.org/software/emacs/manual/html_node/gnus/Category-Syntax.html#Category-Syntax][short long span true false low high]]
+      选择short则只有article行比 =gnus-agent-short-article= 才下载(默认100行，可以在菜单下 =edit categories= 修改)，long默认为200行，同理知其它。
+      例如我建一个名为ccc的分类，里面有3个组： =("comp.lang.c++" "comp.lang.c" "comp.lang.c++.moderated")= ，predicate条件为 =long= 。并且把 default条件改为false（因为不想每次都对所有组进行操作）。
+      这样在group buffer里 =J s= 即可下载 指定3个组里少于200行的所有article。（可以把200改大点，这样就可以下载 3个组里几乎所有articles了 或直接用 true）。
+      可以copy（只拷贝条件）这个分类生成一个名为lisp的分类，添加两个组 =("comp.lang.lisp" "gmane.lisp.china")= ，由于是拷贝的所以条件仍旧是 long ，之后在group buffer里 =J s= 就可以下载5个组的所有新的article了。
+      注意：
+      1. 切换进group要看状态栏上当前状态是什么，要切换回pluged状态才能用 =J s= 下载更新。（unpluged状态下是不会连网的）
+      2. 由于 gmane.lisp.china和其它4个不是同一个服务器（分别是 news.gmane.org和 news.aioe.org），所以要进行前要确保两个服务器都已经被 [[agentize][agentized]] 了。
+      3. 如果要回帖的话应该切换到pluged状态（我猜是，还没回过帖）
+*** Gnus auto-save file exists. Do you want to read it?
+    这是因为上次没有正常退出Gnus（q键退出）导致。
+** 自定义group buffer里格式
+   [[http://www.gnu.org/software/emacs/manual/html_node/gnus/Group-Line-Specification.html][参考手册]]
+   默认是 =%M%S%5y:%B%(%g%)\n= 可以通过修改 =gnus-group-line-format= 变量来修改：
+#+begin_src lisp
+(setq gnus-group-line-format "%M%S%p%P%5y/%5t:%B%(%g%)")
+#+end_src
+   添加了 /%5t 显示该新闻组总共多少articles。
+** Group Buffer里新闻组进行分类
+   分类是按topic进行分类的，先用 =t= 切换到topic视图，然后将光标放在Gnus上 =T n= 新建一个topic, =T m= 将光标所在处的新闻组移动到指定的topic里，可以通过 =T= =C-h= 查看其它命令。
+** Group Buffer里对新闻组位置排序
+   通过 =C-k= 和 =C-y=。

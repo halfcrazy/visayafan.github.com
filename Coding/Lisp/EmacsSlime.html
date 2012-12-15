@@ -7,7 +7,7 @@
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
 <meta name="title" content="Emacs Slime 笔记"/>
 <meta name="generator" content="Org-mode"/>
-<meta name="generated" content="2012-12-04 18:26:26 CST"/>
+<meta name="generated" content="2012-12-15 22:32:09 CST"/>
 <meta name="author" content="visayafan"/>
 <meta name="description" content=""/>
 <meta name="keywords" content=""/>
@@ -24,10 +24,9 @@
 
 <!-- <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"> </script> -->
 <link rel="stylesheet" type="text/css" href="../../Layout/CSS/bootstrap_old.css" />
-<link rel="stylesheet" type="text/css" href="../../Layout/CSS/vf.css" />
+<link rel="stylesheet" type="text/css" href="../../Layout/CSS/style.css" />
 <script src="../../Layout/JS/jquery_1.7.1.js"></script>
 <script src="../../Layout/JS/bootstrap_old.js"></script>
-
 
 
 <div id="table-of-contents">
@@ -46,14 +45,25 @@
 <div class="outline-text-2" id="text-1">
 
 <p>  在slime-repl中输入逗号可命令<br/>
-  , cd directory<br/>
-  , pwd 打印当前所在目录<br/>
-  , quit 退出当前lisp<br/>
-  , compile-and-load =&gt; cl 编译并加载指定lisp文件<br/>
-  , help 显示所有可用命令<br/>
-  , change-package =&gt; !p in in-package 改变当前包<br/>
-  , defparameter =&gt; ! 定义一个全局变量<br/>
-</p></div>
+</p><table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+<caption></caption>
+<colgroup><col class="left" /><col class="left" /><col class="left" />
+</colgroup>
+<thead>
+<tr><th scope="col" class="left"><b>完整命令</b></th><th scope="col" class="left"><b>快捷</b></th><th scope="col" class="left"><b>功能</b></th></tr>
+</thead>
+<tbody>
+<tr><td class="left">, cd</td><td class="left"></td><td class="left">directory</td></tr>
+<tr><td class="left">, pwd</td><td class="left"></td><td class="left">打印当前所在目录</td></tr>
+<tr><td class="left">, quit</td><td class="left"></td><td class="left">退出当前lisp</td></tr>
+<tr><td class="left">, compile-and-load</td><td class="left">cl</td><td class="left">编译并加载指定lisp文件</td></tr>
+<tr><td class="left">, help</td><td class="left"></td><td class="left">显示所有可用命令</td></tr>
+<tr><td class="left">, change-package</td><td class="left">!p</td><td class="left">in in-package 改变当前包</td></tr>
+<tr><td class="left">, defparameter</td><td class="left">!</td><td class="left">定义一个全局变量</td></tr>
+</tbody>
+</table>
+
+</div>
 
 </div>
 
@@ -61,10 +71,21 @@
 <h2 id="sec-2"><span class="section-number-2">2</span> REPL 中快捷键</h2>
 <div class="outline-text-2" id="text-2">
 
-<p>  <code>C-RET</code> 补全括号并执行<br/>
-  <code>C-c C-o</code> 清空上次结果<br/>
-  <code>C-c M-o</code> 清空整个buffer<br/>
-</p></div>
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+<caption></caption>
+<colgroup><col class="left" /><col class="left" />
+</colgroup>
+<tbody>
+<tr><td class="left">C-RET</td><td class="left">补全括号并执行</td></tr>
+<tr><td class="left">C-c C-o</td><td class="left">清空上次结果</td></tr>
+<tr><td class="left">C-c M-o</td><td class="left">清空整个buffer</td></tr>
+<tr><td class="left">C-c C-l</td><td class="left">加载文件</td></tr>
+<tr><td class="left">C-c C-k</td><td class="left">编译加载当前buffer所对应的文件</td></tr>
+<tr><td class="left">C-c C-]</td><td class="left">补全剩余的括号</td></tr>
+</tbody>
+</table>
+
+</div>
 
 </div>
 

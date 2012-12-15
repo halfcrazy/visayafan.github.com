@@ -1,129 +1,129 @@
 <?xml version="1.0" encoding="gb18030"?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-          "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+               "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="zh-CN" xml:lang="zh-CN">
-  <head>
-    <title>Java_Collections</title>
-    <meta http-equiv="Content-Type" content="text/html;charset=gb18030"/>
-    <meta name="title" content="Java_Collections"/>
-    <meta name="generator" content="Org-mode"/>
-    <meta name="generated" content="2012-12-02 00:32:58 CST"/>
-    <meta name="author" content="visayafan"/>
-    <meta name="description" content=""/>
-    <meta name="keywords" content=""/>
-    <div id="org-div-comments"><a href="../../index.html#java">主页</a><br/><a href="#disqus_thread">评论</a></div>
+<head>
+<title>Java_Collections</title>
+<meta http-equiv="Content-Type" content="text/html;charset=gb18030"/>
+<meta name="title" content="Java_Collections"/>
+<meta name="generator" content="Org-mode"/>
+<meta name="generated" content="2012-12-14 09:04:37 CST"/>
+<meta name="author" content="visayafan"/>
+<meta name="description" content=""/>
+<meta name="keywords" content=""/>
+<div id="org-div-comments"><a href="../../index.html#java">主页</a></div>
 
 
-  </head>
-  <body>
+</head>
+<body>
 
 
-    <div id="content">
-      <h1 class="title">Java_Collections</h1>
+<div id="content">
+<h1 class="title">Java_Collections</h1>
 
 
-      <!-- <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"> </script> -->
-      <link rel="stylesheet" type="text/css" href="../../Layout/CSS/bootstrap_old.css" />
-      <link rel="stylesheet" type="text/css" href="../../Layout/CSS/vf.css" />
-      <script src="../../Layout/JS/jquery_1.7.1.js"></script>
-      <script src="../../Layout/JS/bootstrap_old.js"></script>
+<!-- <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"> </script> -->
+<link rel="stylesheet" type="text/css" href="../../Layout/CSS/bootstrap_old.css" />
+<link rel="stylesheet" type="text/css" href="../../Layout/CSS/style.css" />
+<script src="../../Layout/JS/jquery_1.7.1.js"></script>
+<script src="../../Layout/JS/bootstrap_old.js"></script>
 
 
-      <div id="table-of-contents">
-        <h2>目录</h2>
-        <div id="text-table-of-contents">
-          <ul>
-            <li><a href="#sec-1">1 图表示</a></li>
-            <li><a href="#sec-2">2 Collection/Map 继承结构</a></li>
-            <li><a href="#sec-3">3 Collection接口</a></li>
-            <li><a href="#sec-4">4 hashCode()/equals()</a></li>
-            <li><a href="#sec-5">5 TreeSet</a>
-              <ul>
-                <li><a href="#sec-5-1">5.1 SortedSet&lt;E&gt; headSet(E toElement)</a></li>
-              </ul>
-            </li>
-          </ul>
-        </div>
-      </div>
+<div id="table-of-contents">
+<h2>目录</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#sec-1">1 图表示</a></li>
+<li><a href="#sec-2">2 Collection/Map 继承结构</a></li>
+<li><a href="#sec-3">3 Collection接口</a></li>
+<li><a href="#sec-4">4 hashCode()/equals()</a></li>
+<li><a href="#sec-5">5 TreeSet</a>
+<ul>
+<li><a href="#sec-5-1">5.1 SortedSet&lt;E&gt; headSet(E toElement)</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
 
-      <div id="outline-container-1" class="outline-2">
-        <h2 id="sec-1"><span class="section-number-2">1</span> 图表示</h2>
-        <div class="outline-text-2" id="text-1">
+<div id="outline-container-1" class="outline-2">
+<h2 id="sec-1"><span class="section-number-2">1</span> 图表示</h2>
+<div class="outline-text-2" id="text-1">
 
-          <p>  虚线+空三角 表继承<br/>
-            实现+空三角 表实现<br/>
-          </p>
-        </div>
+<p>  虚线+空三角 表继承<br/>
+  实现+空三角 表实现<br/>
+</p>
+</div>
 
-      </div>
+</div>
 
-      <div id="outline-container-2" class="outline-2">
-        <h2 id="sec-2"><span class="section-number-2">2</span> Collection/Map 继承结构</h2>
-        <div class="outline-text-2" id="text-2">
+<div id="outline-container-2" class="outline-2">
+<h2 id="sec-2"><span class="section-number-2">2</span> Collection/Map 继承结构</h2>
+<div class="outline-text-2" id="text-2">
 
-          <p>  Collection-&gt;Set-&gt;HanshSet/SortedSet/TreeSet<br/>
+<p>  Collection-&gt;Set-&gt;HanshSet/SortedSet/TreeSet<br/>
             -&gt;List-&gt;LinkedList/ArrayList<br/>
-            Map-&gt;HashMap<br/>
-            -&gt;TreeMap-&gt;SortedMap<br/>
-          </p>
-          <p>     <br/>
-            Collection与Map接口完全不同。<br/>
-            Collection接口是一组允许重复的对象。<br/>
-            Set继承自Collection无序但不允许重复。<br/>
-            List继承自Collection有序但允许重复，引用位置下标。<br/>
-            Map接口既不继承Collection也不继承Set，是键值对。<br/>
-          </p>
-          <p>  <br/>
-            ArrayList旧为Vector，LinkedList旧为Stack。<br/>
-        </p></div>
+  Map-&gt;HashMap<br/>
+     -&gt;TreeMap-&gt;SortedMap<br/>
+</p>
+<p>     <br/>
+  Collection与Map接口完全不同。<br/>
+  Collection接口是一组允许重复的对象。<br/>
+  Set继承自Collection无序但不允许重复。<br/>
+  List继承自Collection有序但允许重复，引用位置下标。<br/>
+  Map接口既不继承Collection也不继承Set，是键值对。<br/>
+</p>
+<p>  <br/>
+  ArrayList旧为Vector，LinkedList旧为Stack。<br/>
+</p></div>
 
-      </div>
+</div>
 
-      <div id="outline-container-3" class="outline-2">
-        <h2 id="sec-3"><span class="section-number-2">3</span> Collection接口</h2>
-        <div class="outline-text-2" id="text-3">
+<div id="outline-container-3" class="outline-2">
+<h2 id="sec-3"><span class="section-number-2">3</span> Collection接口</h2>
+<div class="outline-text-2" id="text-3">
 
-          <p>  用于表示任何或元素组。<br/>
-            Iterator接口：主要用来枚举集合中的元素。<br/>
-        </p></div>
+<p>  用于表示任何或元素组。<br/>
+  Iterator接口：主要用来枚举集合中的元素。<br/>
+</p></div>
 
-      </div>
+</div>
 
-      <div id="outline-container-4" class="outline-2">
-        <h2 id="sec-4"><span class="section-number-2">4</span> hashCode()/equals()</h2>
-        <div class="outline-text-2" id="text-4">
+<div id="outline-container-4" class="outline-2">
+<h2 id="sec-4"><span class="section-number-2">4</span> hashCode()/equals()</h2>
+<div class="outline-text-2" id="text-4">
 
-          <p>  hashCode相同但equals不一定相同，但eqals相同时hashCode一定相同。<br/>
-        </p></div>
+<p>  hashCode相同但equals不一定相同，但eqals相同时hashCode一定相同。<br/>
+</p></div>
 
-      </div>
+</div>
 
-      <div id="outline-container-5" class="outline-2">
-        <h2 id="sec-5"><span class="section-number-2">5</span> TreeSet</h2>
-        <div class="outline-text-2" id="text-5">
+<div id="outline-container-5" class="outline-2">
+<h2 id="sec-5"><span class="section-number-2">5</span> TreeSet</h2>
+<div class="outline-text-2" id="text-5">
 
-          <p>  红黑树实现的<br/>
-          </p>
-        </div>
+<p>  红黑树实现的<br/>
+</p>
+</div>
 
-        <div id="outline-container-5-1" class="outline-3">
-          <h3 id="sec-5-1"><span class="section-number-3">5.1</span> SortedSet&lt;E&gt; headSet(E toElement)</h3>
-          <div class="outline-text-3" id="text-5-1">
+<div id="outline-container-5-1" class="outline-3">
+<h3 id="sec-5-1"><span class="section-number-3">5.1</span> SortedSet&lt;E&gt; headSet(E toElement)</h3>
+<div class="outline-text-3" id="text-5-1">
 
-            <p>   返回元素严格比toElement小的集合<br/>
-              <code>headSet(E toElement, boolean inclusive)</code> 如果inclusive=true则返回不大于toElement的元素的集合<br/>
-            </p>
-            <p>   <br/>
-            </p>
+<p>   返回元素严格比toElement小的集合<br/>
+   <code>headSet(E toElement, boolean inclusive)</code> 如果inclusive=true则返回不大于toElement的元素的集合<br/>
+</p>
+<p>   <br/>
+</p>
 
 
-            <script src="../../Layout/JS/disqus-comment.js"></script>
-            <div id="disqus_thread">
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+<script src="../../Layout/JS/disqus-comment.js"></script>
+<div id="disqus_thread">
+</div>
+</div>
+</div>
+</div>
+</div>
 
-  </body>
+</body>
 </html>

@@ -7,11 +7,11 @@
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
 <meta name="title" content="CL 循环"/>
 <meta name="generator" content="Org-mode"/>
-<meta name="generated" content="2012-12-05 00:09:51 CST"/>
+<meta name="generated" content="2012-12-14 09:04:57 CST"/>
 <meta name="author" content="visayafan"/>
 <meta name="description" content=""/>
 <meta name="keywords" content=""/>
-
+<div id="org-div-comments"><a href="../../index.html#lisp">主页</a></div>
 
 
 </head>
@@ -24,7 +24,7 @@
 
 <!-- <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"> </script> -->
 <link rel="stylesheet" type="text/css" href="../../Layout/CSS/bootstrap_old.css" />
-<link rel="stylesheet" type="text/css" href="../../Layout/CSS/vf.css" />
+<link rel="stylesheet" type="text/css" href="../../Layout/CSS/style.css" />
 <script src="../../Layout/JS/jquery_1.7.1.js"></script>
 <script src="../../Layout/JS/bootstrap_old.js"></script>
 
@@ -78,7 +78,6 @@ dotimes宏调用了do宏：<br/>
 
 <pre class="src src-lisp">CL-USER&gt; (macroexpand-1 '(<span style="color: #a020f0;">dotimes</span> (x 10) (print x)))
 (<span style="color: #a020f0;">DO</span> ((X 0 (1+ X))) ((&gt;= X 10) NIL) (<span style="color: #a020f0;">DECLARE</span> (TYPE UNSIGNED-BYTE X)) (PRINT X))
-CL-USER&gt; (macroexpand-1 '(<span style="color: #a020f0;">dolist</span> (var (list 1 2 3)) (print var)))
 </pre>
 
 

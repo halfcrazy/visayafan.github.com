@@ -7,11 +7,11 @@
 <meta http-equiv="Content-Type" content="text/html;charset=gb18030"/>
 <meta name="title" content="STL：关联式容器 Set Map"/>
 <meta name="generator" content="Org-mode"/>
-<meta name="generated" content="2012-12-02 23:05:13 CST"/>
+<meta name="generated" content="2012-12-14 09:03:14 CST"/>
 <meta name="author" content="visayafan"/>
 <meta name="description" content=""/>
 <meta name="keywords" content=""/>
-
+<div id="org-div-comments"><a href="../../index.html#cpp">主页</a></div>
 
 
 </head>
@@ -24,7 +24,7 @@
 
 <!-- <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"> </script> -->
 <link rel="stylesheet" type="text/css" href="../../Layout/CSS/bootstrap_old.css" />
-<link rel="stylesheet" type="text/css" href="../../Layout/CSS/vf.css" />
+<link rel="stylesheet" type="text/css" href="../../Layout/CSS/style.css" />
 <script src="../../Layout/JS/jquery_1.7.1.js"></script>
 <script src="../../Layout/JS/bootstrap_old.js"></script>
 
@@ -35,19 +35,20 @@
 <div id="text-table-of-contents">
 <ul>
 <li><a href="#sec-1">1 底层实现</a></li>
-<li><a href="#sec-2">2 set</a>
+<li><a href="#sec-2">2 multi版本</a></li>
+<li><a href="#sec-3">3 set</a>
 <ul>
-<li><a href="#sec-2-1">2.1 insert</a></li>
-<li><a href="#sec-2-2">2.2 lower_bound, upper_bound</a></li>
-<li><a href="#sec-2-3">2.3 equal_range</a></li>
+<li><a href="#sec-3-1">3.1 insert</a></li>
+<li><a href="#sec-3-2">3.2 lower_bound, upper_bound</a></li>
+<li><a href="#sec-3-3">3.3 equal_range</a></li>
 </ul>
 </li>
-<li><a href="#sec-3">3 map</a>
+<li><a href="#sec-4">4 map</a>
 <ul>
-<li><a href="#sec-3-1">3.1 key_type mapped_type value_type</a></li>
-<li><a href="#sec-3-2">3.2 map.insert()</a></li>
-<li><a href="#sec-3-3">3.3 key_comp()与value_comp()</a></li>
-<li><a href="#sec-3-4">3.4 size() max_size()</a></li>
+<li><a href="#sec-4-1">4.1 key_type mapped_type value_type</a></li>
+<li><a href="#sec-4-2">4.2 map.insert()</a></li>
+<li><a href="#sec-4-3">4.3 key_comp()与value_comp()</a></li>
+<li><a href="#sec-4-4">4.4 size() max_size()</a></li>
 </ul>
 </li>
 </ul>
@@ -93,15 +94,24 @@ value: 6 color:black
 </div>
 
 <div id="outline-container-2" class="outline-2">
-<h2 id="sec-2"><span class="section-number-2">2</span> set</h2>
+<h2 id="sec-2"><span class="section-number-2">2</span> multi版本</h2>
 <div class="outline-text-2" id="text-2">
+
+<p>  multi_set, multi_map前者允许重复元素，后者允许重复键值。<br/>
+</p></div>
+
+</div>
+
+<div id="outline-container-3" class="outline-2">
+<h2 id="sec-3"><span class="section-number-2">3</span> set</h2>
+<div class="outline-text-2" id="text-3">
 
 
 </div>
 
-<div id="outline-container-2-1" class="outline-3">
-<h3 id="sec-2-1"><span class="section-number-3">2.1</span> insert</h3>
-<div class="outline-text-3" id="text-2-1">
+<div id="outline-container-3-1" class="outline-3">
+<h3 id="sec-3-1"><span class="section-number-3">3.1</span> insert</h3>
+<div class="outline-text-3" id="text-3-1">
 
 <p>   使用方法与map完全相同。当参数为iterator时返回值为void，当参数为value_type时返回一个iterator和bool。<br/>
 </p>
@@ -118,9 +128,9 @@ iset.insert(1);
 
 </div>
 
-<div id="outline-container-2-2" class="outline-3">
-<h3 id="sec-2-2"><span class="section-number-3">2.2</span> lower_bound, upper_bound</h3>
-<div class="outline-text-3" id="text-2-2">
+<div id="outline-container-3-2" class="outline-3">
+<h3 id="sec-3-2"><span class="section-number-3">3.2</span> lower_bound, upper_bound</h3>
+<div class="outline-text-3" id="text-3-2">
 
 
 
@@ -140,9 +150,9 @@ iset.insert(1);
 
 </div>
 
-<div id="outline-container-2-3" class="outline-3">
-<h3 id="sec-2-3"><span class="section-number-3">2.3</span> equal_range</h3>
-<div class="outline-text-3" id="text-2-3">
+<div id="outline-container-3-3" class="outline-3">
+<h3 id="sec-3-3"><span class="section-number-3">3.3</span> equal_range</h3>
+<div class="outline-text-3" id="text-3-3">
 
 
 
@@ -177,16 +187,16 @@ cout&lt;&lt;*lower_upper.first&lt;&lt;<span style="color: #8b2252;">" "</span>&l
 
 </div>
 
-<div id="outline-container-3" class="outline-2">
-<h2 id="sec-3"><span class="section-number-2">3</span> map</h2>
-<div class="outline-text-2" id="text-3">
+<div id="outline-container-4" class="outline-2">
+<h2 id="sec-4"><span class="section-number-2">4</span> map</h2>
+<div class="outline-text-2" id="text-4">
 
 
 </div>
 
-<div id="outline-container-3-1" class="outline-3">
-<h3 id="sec-3-1"><span class="section-number-3">3.1</span> key_type mapped_type value_type</h3>
-<div class="outline-text-3" id="text-3-1">
+<div id="outline-container-4-1" class="outline-3">
+<h3 id="sec-4-1"><span class="section-number-3">4.1</span> key_type mapped_type value_type</h3>
+<div class="outline-text-3" id="text-4-1">
 
 <p>   前两个分别为键值。<br/>
    最后一个是(key_type, mapped_type)即pair类型。<br/>
@@ -194,9 +204,9 @@ cout&lt;&lt;*lower_upper.first&lt;&lt;<span style="color: #8b2252;">" "</span>&l
 
 </div>
 
-<div id="outline-container-3-2" class="outline-3">
-<h3 id="sec-3-2"><span class="section-number-3">3.2</span> map.insert()</h3>
-<div class="outline-text-3" id="text-3-2">
+<div id="outline-container-4-2" class="outline-3">
+<h3 id="sec-4-2"><span class="section-number-3">4.2</span> map.insert()</h3>
+<div class="outline-text-3" id="text-4-2">
 
 
 
@@ -210,9 +220,9 @@ cout&lt;&lt;*lower_upper.first&lt;&lt;<span style="color: #8b2252;">" "</span>&l
 
 </div>
 
-<div id="outline-container-3-3" class="outline-3">
-<h3 id="sec-3-3"><span class="section-number-3">3.3</span> key_comp()与value_comp()</h3>
-<div class="outline-text-3" id="text-3-3">
+<div id="outline-container-4-3" class="outline-3">
+<h3 id="sec-4-3"><span class="section-number-3">4.3</span> key_comp()与value_comp()</h3>
+<div class="outline-text-3" id="text-4-3">
 
 <p>  key_compare key_comp() const;<br/>
   The function key_comp() returns the function that compares keys. <br/>
@@ -241,9 +251,9 @@ m2[3]=2;
 
 </div>
 
-<div id="outline-container-3-4" class="outline-3">
-<h3 id="sec-3-4"><span class="section-number-3">3.4</span> size() max_size()</h3>
-<div class="outline-text-3" id="text-3-4">
+<div id="outline-container-4-4" class="outline-3">
+<h3 id="sec-4-4"><span class="section-number-3">4.4</span> size() max_size()</h3>
+<div class="outline-text-3" id="text-4-4">
 
 <p>   前者返回map大小，后者返回map最大的存储个数。<br/>
 </p></div>

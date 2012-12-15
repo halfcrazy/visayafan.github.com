@@ -1,0 +1,8 @@
+#+OPTIONS: ^:{} _:{} num:t toc:nil \n:t
+#+INCLUDE "../../template.org"
+#+SETUPFILE: "../../extension.org"
+#+title:名言警句
+
+--------
+1. 广度是深度的副产品
+--------

@@ -264,6 +264,22 @@ d<script type="text/javascript"> $(function() {$('a.lightbox').lightBox();}); </
   [[./EmacsGnus.html][配置+使用]]
 * Emacs Org-Mode 写文章做笔记
   [[./EmacsOrg.html][配置+使用]]
+* Emacs 搜索总结
+- 搜索内容都是小写字母，搜索时不区分大小写；搜索内容只要有一个大写字母，搜索时区分大小写
+- C-s C-w：以光标后的一个单词(自动转为小写)做为搜索词立即开始搜索以下操作要在搜索开始后，才有效
+- C-w(isearch-yank-word-or-char)：从buffer中取得char或word粘贴到搜索词之后
+- C-y(isearch-yank-line)：从buffer中取得一行粘贴到搜索词之后
+- C-s C-w：以光标后的一个单词(自动转为小写)做为搜索词立即开始搜索
+- M-c(isearch-toggle-case-fold)：打开或关毕搜索大小写敏感
+- M-e(isearch-edit-string)：光标跳到minibuffer，修改搜索词
+- M-n(isearch-ring-advance)：搜索时循环查找后面的搜索词
+- M-p(isearch-ring-retreat)：搜索时循环查找前面的搜索词
+- M-r(isearch-toggle-regexp)：打开或关闭正则方式搜索
+- M-s w(isearch-toggle-word)：以单词方式搜索
+- M-y(isearch-yank-kill)：将kill ring中的内容放到搜索词中
+- C-M-w 删除搜索词中最后一个字符
+- C-M-y 将当前光标后一个字符复制到搜索词后
+
 * 分享/评论
 #+html:<a class="btn btn-primary" href="https://raw.github.com/visayafan/visayafan.github.com/master/Others/o/Emacs.org">View Org Source</a>
 #+include "../../disqus.org"
