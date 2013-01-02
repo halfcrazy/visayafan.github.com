@@ -280,3 +280,90 @@ From: C
    分类是按topic进行分类的，先用 =t= 切换到topic视图，然后将光标放在Gnus上 =T n= 新建一个topic, =T m= 将光标所在处的新闻组移动到指定的topic里，可以通过 =T= =C-h= 查看其它命令。
 ** Group Buffer里对新闻组位置排序
    通过 =C-k= 和 =C-y=。
+** summary buffer里返回上次阅读的帖子
+    =G l= 
+** summary buffer里 =/ N= 取回新帖子
+** article 禁止自动折行
+#+begin_src lisp
+(setq gnus-treat-fill-long-lines nil)
+#+end_src
+** 只刷新光标所在处组
+   [[http://www.gnu.org/software/emacs/manual/html_node/gnus/Scanning-New-Messages.html][手册]]
+   在group buffer里 =g= 可以查看是否有新帖，不过是所有组的。=M-g gnus-group-get-new-news-this-group= 可以只查看光标所在组有没有新帖。
+   如果在summary buffer里 =M-g= 可以重新加载该组。
+   默认情况下由于 =gnus-goto-next-group-when-activating= 为真所以刷新完当前组后会将光标移动到下一组上，可以将其设置为 nil 来制止光标移动。
+** 重新启动Gnus
+   =R gnus-group-restart= 
+** gnus parameters
+   在group buffer里 =G p= 即可进入配置。
+   或直接在配置文件中配置变量 =gnus-parameters=。
+*** display控制进入summary时帖子显示方式 
+    display 可以控制进入group时显示帖子的方式。[[http://www.gnu.org/software/emacs/manual/html_node/gnus/Group-Parameters.html][参考手册]]
+    1. all 表显示所有帖子包括 读过的和未读过的
+    2. an integer 表示只显示最新帖子的个数
+    3. default 默认方式只显示标记为！的和未读的帖子
+    4. 符合某种条件的
+*** posing-style 设置回帖显示
+** 快速拷贝URL
+   将光标放在URL上 =u= 即可拷贝光标处URL。
+** 什么叫一个thread
+   比如下面的情况：
+#+begin_example
+1
+    2
+        2.1
+              2.1.1
+              2.1.2
+        2.2
+    3
+        3.1
+        3.2
+              3.2.1
+              3.2.2
+        3.3
+#+end_example
+   1是发起人，所有帖子是一个thread。
+   2回复1, 2.1, 2.2回复2，则2.1（包含子帖2.1.1, 2.1.2）, 2.2构成2的thread。
+   如果光标放在2.1上 =A T= 取得该thread的所有帖子则只会取回 2.1.1 2.1.2，同理在2上 =A T= 则会取回2.1 2.2及其子帖，不会取回 3 的帖子.
+** Article Washing
+*** 去掉Article中的空白行
+    Article->Washing->Remove Blanks 可以选择删除哪些空白行。
+*** 不要折行
+    Washing->Word Wrap
+    =W w=
+** 整合C-M-h和C-M-s
+   前者用于hide当前thread，后者用于show当前thread.
+   折叠与展开是两个键，我们不禁想如果只有一个就好了，自动判断当前情况：如果当前状态是展开则折叠之，如果是折叠则展开之。
+   下面函数可以做到（注意由于用到了并未对用户公开的函数所以必须放到/usr/local/share/emacs/24.2/lisp/gnus下的gnus-sum.el.gz中并删除gnus-sum.elc）：
+#+begin_src lisp
+(defun vf-hide-show-thread ()
+  "If the current thread is folded then unfold it, vice versa"
+  (interactive)
+  (let ((first-children (car (gnus-summary-article-children))))
+    (if first-children
+        (progn
+          (next-line)
+          ;; check whether current line is the folded last line, if so, unfold it
+          (if (string= (what-line) (save-excursion (end-of-buffer) (what-line)))
+              (progn
+                (previous-line)
+                (gnus-summary-show-thread))
+            (if (eq (gnus-summary-article-number) first-children)
+                (progn
+                  (previous-line)
+                  (gnus-summary-hide-thread))
+              (progn
+                (previous-line)
+                (gnus-summary-show-thread)))))
+      (message "no subtree here"))))
+#+end_src
+   之后在.emacs中添加：
+#+begin_src lisp
+(setq gnus-summary-mode-hook
+      '(lambda ()
+         (local-unset-key [(tab)])
+         (local-set-key [(tab)] 'vf-hide-show-thread)))
+#+end_src
+   这样便用TAB键代替了上面两个键。
+   使用byte-compile-file重新编译文件以加快加载速度。（Linux下需要root用户权限，可以用root权限打开emacs进行编译或用参考[[./Emacs.html#sudo][sudo]]）
+   (自己写的第一个elisp函数，感觉不是很好又想不到其它好办法，如果今后有高手想到更好的办法记得一定要告诉我)

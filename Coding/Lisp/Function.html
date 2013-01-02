@@ -1,0 +1,379 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+               "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-CN" xml:lang="zh-CN">
+<head>
+<title>CL 函数</title>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
+<meta name="title" content="CL 函数"/>
+<meta name="generator" content="Org-mode"/>
+<meta name="generated" content="2012-12-22 21:30:16 CST"/>
+<meta name="author" content="visayafan"/>
+<meta name="description" content=""/>
+<meta name="keywords" content=""/>
+
+
+
+</head>
+<body>
+
+
+<div id="content">
+<h1 class="title">CL 函数</h1>
+
+
+<!-- <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"> </script> -->
+<link rel="stylesheet" type="text/css" href="../../Layout/CSS/bootstrap_old.css" />
+<link rel="stylesheet" type="text/css" href="../../Layout/CSS/too_many_toc.css" />
+<script src="../../Layout/JS/jquery_1.7.1.js"></script>
+<script src="../../Layout/JS/bootstrap_old.js"></script>
+
+
+
+<div id="table-of-contents">
+<h2>目录</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#sec-1">1 typecase ctypecase etypecase</a></li>
+<li><a href="#sec-2">2 sleep</a></li>
+<li><a href="#sec-3">3 time</a></li>
+<li><a href="#sec-4">4 get-universal-time get-decoded-time decode-universal-time encode-universal-time</a></li>
+<li><a href="#sec-5">5 defstruct</a></li>
+<li><a href="#sec-6">6 prog prog*</a></li>
+<li><a href="#sec-7">7 setq psetq</a></li>
+<li><a href="#sec-8">8 print print1 princ pprint write</a></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-1" class="outline-2">
+<h2 id="sec-1"><span class="section-number-2">1</span> typecase ctypecase etypecase</h2>
+<div class="outline-text-2" id="text-1">
+
+
+
+
+<pre class="src src-lisp">typecase keyform {normal-clause}* [otherwise-clause] =&gt; result*
+ctypecase keyplace {normal-clause}* =&gt; result*
+etypecase keyform {normal-clause}* =&gt; result*
+</pre>
+
+<p>
+  根据keyform的类型来进行 switch case选择执行语句。<br/>
+  区别在于: typecase 在normal-clause中如果没有匹配项但有otherwise-clause则执行otherwise里语句，否则返回NIL。ctypecase如果没有匹配则会进入调试状态。etypecase如果没有匹配则会产生错误。<br/>
+  其中otherwise-clause是 ({otherwise | t} form*)<br/>
+</p>
+
+
+<pre class="src src-lisp">(<span style="color: #a020f0;">defun</span> <span style="color: #0000ff;">what-is-it</span> (x)
+  (<span style="color: #a020f0;">typecase</span> x
+    (float <span style="color: #8b2252;">"a float"</span>)
+    (list <span style="color: #8b2252;">"list"</span>)
+    (otherwise <span style="color: #8b2252;">"others"</span>)))
+</pre>
+
+</div>
+
+</div>
+
+<div id="outline-container-2" class="outline-2">
+<h2 id="sec-2"><span class="section-number-2">2</span> sleep</h2>
+<div class="outline-text-2" id="text-2">
+
+
+
+
+<pre class="src src-lisp">sleep seconds =&gt; nil
+</pre>
+
+<p>
+  休眠<br/>
+</p></div>
+
+</div>
+
+<div id="outline-container-3" class="outline-2">
+<h2 id="sec-3"><span class="section-number-2">3</span> time</h2>
+<div class="outline-text-2" id="text-3">
+
+
+
+
+<pre class="src src-lisp">time form =&gt; result*
+</pre>
+
+<p>
+  返回程序执行时间。<br/>
+</p>
+
+
+<pre class="src src-lisp">CL-USER&gt; (time (sleep 1))
+Evaluation took:
+  1.000 seconds of real time
+  0.004000 seconds of total run time (0.004000 user, 0.000000 system)
+  0.40% CPU
+  568,932,400 processor cycles
+  12,912 bytes consed
+NIL
+</pre>
+
+</div>
+
+</div>
+
+<div id="outline-container-4" class="outline-2">
+<h2 id="sec-4"><span class="section-number-2">4</span> get-universal-time get-decoded-time decode-universal-time encode-universal-time</h2>
+<div class="outline-text-2" id="text-4">
+
+<p>  get-universal-time 返回自1990后的秒数。<br/>
+  get-decoded-time 返回形式：second, minute, hour, date, month, year, day, daylight-p, zone<br/>
+  decode-universal-time 将universal time 转换成 decoded time. encode-univeral-time进行相返操作。<br/>
+</p></div>
+
+</div>
+
+<div id="outline-container-5" class="outline-2">
+<h2 id="sec-5"><span class="section-number-2">5</span> defstruct</h2>
+<div class="outline-text-2" id="text-5">
+
+
+
+
+<pre class="src src-lisp">defstruct name-and-opts [docs] {slot}
+name-and-opts ==&gt; name | name [options]
+      options ==&gt;    conc-name-opts |
+                     {constructor-opts} |
+                     copier-opts |
+                     include-opts |
+                     initial-offset-opts |
+                     named-opts |
+                     predicate-opts|
+                     printer-opts|
+                     type-opts
+      slot ==&gt; <span style="color: #483d8b;">:type</span> slot-type | <span style="color: #483d8b;">:read-only</span> slot-read-only-p 
+</pre>
+
+<ol>
+<li>conc-name-opts ==&gt; :conc-name | (:conc-name) | (:conc-name prefix)<br/>
+   默认情况下slot-name前加上结构体的名字做为前缀即可访问该slot，(:conc-name prefix)可以指定前缀为prefix，如果为(:conc-name)或:conc-name则没有前缀。<br/>
+</li>
+<li>constructor-opts ==&gt; :constructor | (:constructor) | (:constructor ctor-name) | (:constructor ctor-name ctor-arglist)<br/>
+   默认情况下struct name前加make-为构造此struct的函数，可以用:constructor来指定构造函数的名称，如果有ctor-arglist则用来初始化列表中的slot。如果为 (:constructor nil) 则表示此struct没有构造函数，即不能用来实例化对象。<br/>
+
+
+
+<pre class="src src-lisp">CL-USER&gt; (<span style="color: #a020f0;">defstruct</span> (<span style="color: #228b22;">person33</span> (<span style="color: #483d8b;">:constructor</span> person33 (name age))) name age)
+PERSON33
+CL-USER&gt; (setq per (person33 <span style="color: #8b2252;">"han"</span> 10))
+#S(PERSON33 <span style="color: #483d8b;">:NAME</span> <span style="color: #8b2252;">"han"</span> <span style="color: #483d8b;">:AGE</span> 10)
+CL-USER&gt; per
+#S(PERSON33 <span style="color: #483d8b;">:NAME</span> <span style="color: #8b2252;">"han"</span> <span style="color: #483d8b;">:AGE</span> 10)
+</pre>
+
+</li>
+<li>copier-opts ==&gt; :copier | (:copier) | (:copier copier-name)<br/>
+   默认情况下struct name前加copy-为拷贝struct函数，此关键字可以指定拷贝函数的名称。<br/>
+</li>
+<li>predicate-opts =&gt; :predicate | (:predicate) | (:predicate predicate-name)<br/>
+   默认情况下struct name后加-p为判断一个obj是否是name对象，此关键字可以自定义此函数名。<br/>
+</li>
+<li>include-opts ==&gt; (:include included-struct-name {slot-desps})<br/>
+   继承某个struct中的slot。<br/>
+   可以继承某个struct所有slot也可以只继承指定个slot<br/>
+   slot-desps ==&gt; slot-name | slot-name [solt-initform [slot-opts]]<br/>
+<ol>
+<li>slot-name 为included-struct-name中的slot name<br/>
+</li>
+<li>slot-initform 为slot-name的初始值<br/>
+</li>
+</ol>
+
+</li>
+<li>initial-offset-opts ==&gt; (:initial-offset initial-offset) <br/>
+   在struct对象最前面加上initial-offset个slot.<br/>
+
+
+
+<pre class="src src-lisp">CL-USER&gt; (<span style="color: #a020f0;">defstruct</span> (<span style="color: #228b22;">ppl</span> <span style="color: #483d8b;">:named</span> (<span style="color: #483d8b;">:type</span> list) (<span style="color: #483d8b;">:initial-offset</span> 3)) name age)
+PPL
+CL-USER&gt; (setf people (make-ppl <span style="color: #483d8b;">:name</span> <span style="color: #8b2252;">"Han"</span> <span style="color: #483d8b;">:age</span> 30))
+(NIL NIL NIL PPL <span style="color: #8b2252;">"Han"</span> 30)
+</pre>
+
+</li>
+<li>type ==&gt; (:type type-name)<br/>
+   指定struct的类型，默认情况是 structure-object<br/>
+</li>
+<li>named ==&gt; :named<br/>
+
+
+
+<pre class="src src-lisp">CL-USER&gt; (<span style="color: #a020f0;">defstruct</span> (<span style="color: #228b22;">dog</span> (<span style="color: #483d8b;">:type</span> list)) name age)
+DOG
+CL-USER&gt; (setq my-dog (make-dog <span style="color: #483d8b;">:name</span> <span style="color: #8b2252;">"bobby"</span> <span style="color: #483d8b;">:age</span> 10))
+(<span style="color: #8b2252;">"bobby"</span> 10)
+CL-USER&gt; (dog-p my-dog)         <span style="color: #b22222;">;;</span><span style="color: #b22222;">wrong</span>
+</pre>
+
+<p>
+  由于指定了dog struct为list类型，所以用dog-p判断时不能决定my-dog是否为dog struct的对象。<br/>
+  需要加上:named选项，此时会在dog struct 对象前面加 struct name以便区别.<br/>
+</p>
+
+
+<pre class="src src-lisp">CL-USER&gt; (<span style="color: #a020f0;">defstruct</span> (<span style="color: #228b22;">cat</span> <span style="color: #483d8b;">:named</span> (<span style="color: #483d8b;">:type</span> list)) name age)
+CAT
+CL-USER&gt; (setq my-cat (make-cat <span style="color: #483d8b;">:name</span> <span style="color: #8b2252;">"bobby"</span> <span style="color: #483d8b;">:age</span> 10))
+(CAT <span style="color: #8b2252;">"bobby"</span> 10)                <span style="color: #b22222;">;;</span><span style="color: #b22222;">&#27880;&#24847;&#22312;&#21069;&#38754;&#21152;&#19978;struct name</span>
+CL-USER&gt; (cat-p my-cat)
+T
+CL-USER&gt; (first my-cat)
+CAT
+CL-USER&gt; (listp my-cat)
+T
+</pre>
+
+</li>
+<li>printer-opts ==&gt; (:print-function printer-name) | (:print-function) <br/>
+   打印形式<br/>
+</li>
+</ol>
+
+</div>
+
+</div>
+
+<div id="outline-container-6" class="outline-2">
+<h2 id="sec-6"><span class="section-number-2">6</span> prog prog*</h2>
+<div class="outline-text-2" id="text-6">
+
+<p>  prog ({var | (var [init-form])}*) declaration* {tag | statement}*<br/>
+</p>
+
+
+<pre class="src src-lisp">(<span style="color: #a020f0;">prog</span> (var1 var2 (var3 init-form-3) var4 (var5 init-form-5))
+      declaration*
+      statement1
+ tag1
+      statement2
+      statement3
+      statement4
+ tag2
+      statement5
+      ...
+      )
+</pre>
+
+<p>
+  prog: init-form首先依次求值，完成后再并行绑定到（<a href="#sec-7">setq,psetq</a>）变量中。<br/>
+  prog*是依次求值init-form然后绑定。<br/>
+  prog默认创建一个nil block，可以在prog内在任何时间用return返回。<br/>
+</p>
+
+
+<pre class="src src-lisp">(<span style="color: #a020f0;">prog</span> variable-list declaration . body)
+==  (<span style="color: #a020f0;">block</span> nil (<span style="color: #a020f0;">let</span> variable-list declaration (<span style="color: #a020f0;">tagbody</span> . body)))
+</pre>
+
+</div>
+
+</div>
+
+<div id="outline-container-7" class="outline-2">
+<h2 id="sec-7"><a name="psetq" id="psetq"></a><span class="section-number-2">7</span> setq psetq</h2>
+<div class="outline-text-2" id="text-7">
+
+<p>  psetq是并行绑定，即把所以表达式求值完后再绑定，而setq是顺序绑定。<br/>
+</p>
+
+
+<pre class="src src-lisp">CL-USER&gt; (<span style="color: #a020f0;">let</span> ((x 10))
+           (psetq x 1 y (1+ x))
+           (list x y))
+(1 11)
+CL-USER&gt; (<span style="color: #a020f0;">let</span> ((x 10))
+           (setq x 1 y (1+ x))
+           (list x y))
+(1 2)
+</pre>
+
+</div>
+
+</div>
+
+<div id="outline-container-8" class="outline-2">
+<h2 id="sec-8"><span class="section-number-2">8</span> print print1 princ pprint write</h2>
+<div class="outline-text-2" id="text-8">
+
+
+
+
+<pre class="src src-lisp">write object <span style="color: #228b22;">&amp;key</span> array base case circle escape gensym length level lines miser-width pprint-dispatch pretty radix readably right-margin stream =&gt; object 
+prin1 object <span style="color: #228b22;">&amp;optional</span> output-stream =&gt; object
+princ object <span style="color: #228b22;">&amp;optional</span> output-stream =&gt; object
+print object <span style="color: #228b22;">&amp;optional</span> output-stream =&gt; object
+pprint object <span style="color: #228b22;">&amp;optional</span> output-stream =&gt; &lt;no values&gt;
+</pre>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+<caption></caption>
+<colgroup><col class="left" /><col class="left" /><col class="left" />
+</colgroup>
+<tbody>
+<tr><td class="left">Parameter</td><td class="left">Corresponding Dynamic Variable</td><td class="left"></td></tr>
+<tr><td class="left">array</td><td class="left">*print-array*</td><td class="left"></td></tr>
+<tr><td class="left">base</td><td class="left">*print-base*</td><td class="left">基数</td></tr>
+<tr><td class="left">radix</td><td class="left">*print-radix*</td><td class="left"></td></tr>
+<tr><td class="left">case</td><td class="left">*print-case*</td><td class="left">大小写</td></tr>
+<tr><td class="left">circle</td><td class="left">*print-circle*</td><td class="left">是否打印循环列表</td></tr>
+<tr><td class="left">escape</td><td class="left">*print-escape*</td><td class="left">是否打印escape character</td></tr>
+<tr><td class="left">gensym</td><td class="left">*print-gensym*</td><td class="left">控制是否打印#:</td></tr>
+<tr><td class="left">length</td><td class="left">*print-length*</td><td class="left">控制打印对象深度</td></tr>
+<tr><td class="left">level</td><td class="left">*print-level*</td><td class="left"></td></tr>
+<tr><td class="left">lines</td><td class="left">*print-lines*</td><td class="left">最多打印行数</td></tr>
+<tr><td class="left">miser-width</td><td class="left">*print-miser-width*</td><td class="left"></td></tr>
+<tr><td class="left">pprint-dispatch</td><td class="left">*print-pprint-dispatch*</td><td class="left"></td></tr>
+<tr><td class="left">pretty</td><td class="left">*print-pretty*</td><td class="left">是否符合人阅读</td></tr>
+<tr><td class="left">readably</td><td class="left">*print-readably*</td><td class="left"></td></tr>
+<tr><td class="left">right-margin</td><td class="left">*print-right-margin*</td><td class="left"></td></tr>
+</tbody>
+</table>
+
+
+<p>  <br/>
+  print print1 princ pprint 是绑定某些值的write的实现。<br/>
+</p><ol>
+<li>prin1 适合解释器阅读，其*print-escape*为t<br/>
+</li>
+<li>princ 和prin1相似，但*print-escape*为nil,*print-readably*为nil,方便人阅读<br/>
+</li>
+<li>print 与prin1相似，会在输出前面加空行和一个空格<br/>
+</li>
+<li>pprint 与print相似，但*print-pretty*为non-nil，会消除多余的空格，适合人阅读。<br/>
+</li>
+</ol>
+
+
+
+
+<pre class="src src-lisp">(prin1 object output-stream)
+==  (write object <span style="color: #483d8b;">:stream</span> output-stream <span style="color: #483d8b;">:escape</span> t)
+(princ object output-stream)
+==  (write object stream output-stream <span style="color: #483d8b;">:escape</span> nil <span style="color: #483d8b;">:readably</span> nil)
+ (print object output-stream)
+==  (<span style="color: #a020f0;">progn</span> (terpri output-stream)
+           (write object <span style="color: #483d8b;">:stream</span> output-stream
+                         <span style="color: #483d8b;">:escape</span> t)
+           (write-char #\space output-stream))
+(pprint object output-stream)
+==  (write object <span style="color: #483d8b;">:stream</span> output-stream <span style="color: #483d8b;">:escape</span> t <span style="color: #483d8b;">:pretty</span> t)
+</pre>
+
+
+<p>  <br/>
+</p></div>
+</div>
+</div>
+
+</body>
+</html>

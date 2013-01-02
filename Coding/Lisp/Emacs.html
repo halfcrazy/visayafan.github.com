@@ -7,11 +7,11 @@
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
 <meta name="title" content="Emacs Trick"/>
 <meta name="generator" content="Org-mode"/>
-<meta name="generated" content="2012-12-14 09:05:04 CST"/>
+<meta name="generated" content="2013-01-01 22:44:19 CST"/>
 <meta name="author" content="visayafan"/>
 <meta name="description" content=""/>
 <meta name="keywords" content=""/>
-<div id="org-div-comments"><a href="../../index.html#lisp">主页</a></div>
+
 
 <script type="text/javascript" src="http://orgmode.org/mathjax/MathJax.js">
 <!--/*--><![CDATA[/*><!--*/
@@ -112,7 +112,10 @@
 <li><a href="#sec-26">26 Emacs Gnus 阅读新闻组</a></li>
 <li><a href="#sec-27">27 Emacs Org-Mode 写文章做笔记</a></li>
 <li><a href="#sec-28">28 Emacs 搜索总结</a></li>
-<li><a href="#sec-29">29 分享/评论</a></li>
+<li><a href="#sec-29">29 Emacs Compile 出现乱码</a></li>
+<li><a href="#sec-30">30 Emacs M-x 目录操作</a></li>
+<li><a href="#sec-31">31 查看当前buffer所有mode帮助信息</a></li>
+<li><a href="#sec-32">32 分享/评论</a></li>
 </ul>
 </div>
 </div>
@@ -302,7 +305,7 @@
 </div>
 
 <div id="outline-container-13" class="outline-2">
-<h2 id="sec-13"><span class="section-number-2">13</span> <code>/sudo::/</code></h2>
+<h2 id="sec-13"><a name="sudo" id="sudo"></a><span class="section-number-2">13</span> <code>/sudo::/</code></h2>
 <div class="outline-text-2" id="text-13">
 
 <p>  如果你用普通用户权限打开emacs，则此时打开超级用户权限的文件是无法修改的，以超级用户重新打开一个emacs可行但考虑到emacs的启动速度，这绝对不是个好主意。<br/>
@@ -514,8 +517,7 @@ d<script type="text/javascript"> $(function() {$('a.lightbox').lightBox();}); </
 </p>
 
 
-<pre class="src src-lisp">(prefer-coding-system 'utf-8)
-(prefer-coding-system 'gb18030)
+<pre class="src src-lisp">(prefer-coding-system 'gb18030)
 </pre>
 
 <p>
@@ -718,8 +720,46 @@ d<script type="text/javascript"> $(function() {$('a.lightbox').lightBox();}); </
 </div>
 
 <div id="outline-container-29" class="outline-2">
-<h2 id="sec-29"><span class="section-number-2">29</span> 分享/评论</h2>
+<h2 id="sec-29"><span class="section-number-2">29</span> Emacs Compile 出现乱码</h2>
 <div class="outline-text-2" id="text-29">
+
+<p>  编译的时候出现 <i>new.cc: In function â\200\230int main()â\200\231:</i> 之类。<br/>
+  <a href="http://stackoverflow.com/questions/10374200/shell-in-emacs-displays-names-of-variables-by-preceding-them-200-230">解决办法</a><br/>
+</p>
+
+
+<pre class="src src-lisp">(setq default-process-coding-system '(utf-8-unix . utf-8-unix))
+</pre>
+
+</div>
+
+</div>
+
+<div id="outline-container-30" class="outline-2">
+<h2 id="sec-30"><span class="section-number-2">30</span> Emacs M-x 目录操作</h2>
+<div class="outline-text-2" id="text-30">
+
+<p>  <code>copy-directory</code><br/>
+  <code>delete-directory</code><br/>
+  <code>make-directroy</code><br/>
+  <code>list-directory</code><br/>
+  操作可以在eshell下完成，不过对于不想离开当前buffer的情况下这直接运行上面命令的方式也是很高效的.<br/>
+</p></div>
+
+</div>
+
+<div id="outline-container-31" class="outline-2">
+<h2 id="sec-31"><span class="section-number-2">31</span> 查看当前buffer所有mode帮助信息</h2>
+<div class="outline-text-2" id="text-31">
+
+<p>  <code>C-h m</code><br/>
+</p></div>
+
+</div>
+
+<div id="outline-container-32" class="outline-2">
+<h2 id="sec-32"><span class="section-number-2">32</span> 分享/评论</h2>
+<div class="outline-text-2" id="text-32">
 
 
 <a class="btn btn-primary" href="https://raw.github.com/visayafan/visayafan.github.com/master/Others/o/Emacs.org">View Org Source</a>

@@ -7,7 +7,7 @@
 <meta http-equiv="Content-Type" content="text/html;charset=gb18030"/>
 <meta name="title" content="Emacs Gnus"/>
 <meta name="generator" content="Org-mode"/>
-<meta name="generated" content="2012-12-16 05:11:48 CST"/>
+<meta name="generated" content="2013-01-01 22:44:36 CST"/>
 <meta name="author" content="visayafan"/>
 <meta name="description" content=""/>
 <meta name="keywords" content=""/>
@@ -72,6 +72,26 @@
 <li><a href="#sec-6-7">6.7 自定义group buffer里格式</a></li>
 <li><a href="#sec-6-8">6.8 Group Buffer里新闻组进行分类</a></li>
 <li><a href="#sec-6-9">6.9 Group Buffer里对新闻组位置排序</a></li>
+<li><a href="#sec-6-10">6.10 summary buffer里返回上次阅读的帖子</a></li>
+<li><a href="#sec-6-11">6.11 summary buffer里 <code>/ N</code> 取回新帖子</a></li>
+<li><a href="#sec-6-12">6.12 article 禁止自动折行</a></li>
+<li><a href="#sec-6-13">6.13 只刷新光标所在处组</a></li>
+<li><a href="#sec-6-14">6.14 重新启动Gnus</a></li>
+<li><a href="#sec-6-15">6.15 gnus parameters</a>
+<ul>
+<li><a href="#sec-6-15-1">6.15.1 display控制进入summary时帖子显示方式</a></li>
+<li><a href="#sec-6-15-2">6.15.2 posing-style 设置回帖显示</a></li>
+</ul>
+</li>
+<li><a href="#sec-6-16">6.16 快速拷贝URL</a></li>
+<li><a href="#sec-6-17">6.17 什么叫一个thread</a></li>
+<li><a href="#sec-6-18">6.18 Article Washing</a>
+<ul>
+<li><a href="#sec-6-18-1">6.18.1 去掉Article中的空白行</a></li>
+<li><a href="#sec-6-18-2">6.18.2 不要折行</a></li>
+</ul>
+</li>
+<li><a href="#sec-6-19">6.19 整合C-M-h和C-M-s</a></li>
 </ul>
 </li>
 </ul>
@@ -93,14 +113,15 @@
 (add-to-list 'gnus-secondary-select-methods '(nntp <span style="color: #8b2252;">"news.gnus.org"</span>))
 (add-to-list 'gnus-secondary-select-methods '(nntp  <span style="color: #8b2252;">"news.gmane.org"</span>))
 (add-to-list 'gnus-secondary-select-methods '(nntp  <span style="color: #8b2252;">"news.newsfan.net"</span>))
-<span style="color: #b22222;">;; </span><span style="color: #b22222;">(add-to-list 'gnus-secondary-select-methods '(nntp "news.newsgroup.com.hk"))</span>
-<span style="color: #b22222;">;; </span><span style="color: #b22222;">(add-to-list 'gnus-secondary-select-methods '(nntp  "news.newsfan.net"))</span>
 
 <span style="color: #b22222;">;; </span><span style="color: #b22222;">&#28385;71&#23383;&#31526;&#33258;&#21160;&#25442;&#34892;</span>
 (add-hook 'message-mode-hook (<span style="color: #a020f0;">lambda</span> () (setq fill-column 72) (turn-on-auto-fill)))
 
 <span style="color: #b22222;">;; </span><span style="color: #b22222;">&#21457;&#36865;&#35774;&#32622;</span>
-(setq gnus-posting-styles '((<span style="color: #8b2252;">".*"</span> (name <span style="color: #8b2252;">"visayafan"</span>) (address <span style="color: #8b2252;">"visayafan@googlmail.invalid"</span>))))
+(setq gnus-posting-styles '((<span style="color: #8b2252;">".*"</span>
+                             (name <span style="color: #8b2252;">"visayafan"</span>)
+                             (body <span style="color: #8b2252;">"\n\nvisayafan\n--\n"</span>) 
+                             (address <span style="color: #8b2252;">"visayafan@gmail.com"</span>))))
 
 <span style="color: #b22222;">;; </span><span style="color: #b22222;">&#35821;&#35328;&#29615;&#22659;&#35774;&#23450;</span>
 (set-language-environment 'UTF-8)
@@ -122,18 +143,6 @@
           (6 . utf-8))
       gnus-newsgroup-ignored-charsets
         '(unknown-8bit x-unknown iso-8859-1 gb18030 x-gbk))
-<span style="color: #b22222;">;; </span><span style="color: #b22222;">(set-language-environment 'Chinese-GB)</span>
-<span style="color: #b22222;">;; </span><span style="color: #b22222;">(setq gnus-default-charset 'chinese-iso-8bit</span>
-<span style="color: #b22222;">;;       </span><span style="color: #b22222;">gnus-group-name-charset-group-alist '((".*" . cn-gb-2312))</span>
-<span style="color: #b22222;">;;       </span><span style="color: #b22222;">gnus-summary-show-article-charset-alist</span>
-<span style="color: #b22222;">;;       </span><span style="color: #b22222;">'((1 . cn-gb-2312)</span>
-<span style="color: #b22222;">;;         </span><span style="color: #b22222;">(2 . gb18030)</span>
-<span style="color: #b22222;">;;         </span><span style="color: #b22222;">(3 . chinese-iso-8bit)</span>
-<span style="color: #b22222;">;;         </span><span style="color: #b22222;">(4 . gbk)</span>
-<span style="color: #b22222;">;;         </span><span style="color: #b22222;">(5 . big5)</span>
-<span style="color: #b22222;">;;         </span><span style="color: #b22222;">(6 . utf-8))</span>
-<span style="color: #b22222;">;;       </span><span style="color: #b22222;">gnus-newsgroup-ignored-charsets</span>
-<span style="color: #b22222;">;;       </span><span style="color: #b22222;">'(unknown-8bit x-unknown iso-8859-1))</span>
 
 <span style="color: #b22222;">;;</span><span style="color: #b22222;">&#35299;&#20915;gb18030&#20081;&#30721;</span>
 (setq gnus-newsgroup-ignored-charsets 
@@ -144,7 +153,8 @@
       <span style="color: #8b2252;">"^</span><span style="color: #8b2252; font-weight: bold;">\\</span><span style="color: #8b2252; font-weight: bold;">(</span><span style="color: #8b2252;">^From:</span><span style="color: #8b2252; font-weight: bold;">\\</span><span style="color: #8b2252; font-weight: bold;">|</span><span style="color: #8b2252;">^Subject:</span><span style="color: #8b2252; font-weight: bold;">\\</span><span style="color: #8b2252; font-weight: bold;">|</span><span style="color: #8b2252;">^Date:</span><span style="color: #8b2252; font-weight: bold;">\\</span><span style="color: #8b2252; font-weight: bold;">)</span><span style="color: #8b2252;">"</span>)
 
 <span style="color: #b22222;">;;</span><span style="color: #b22222;">&#35774;&#23450;&#23631;&#24149;&#30340;&#20998;&#21106;&#27604;&#20363;</span>
-(gnus-add-configuration '(article (vertical 1.0 (summary .382 point) (article 1.0))))
+<span style="color: #b22222;">;; </span><span style="color: #b22222;">(gnus-add-configuration '(article (vertical 1.0 (summary .382 point) (article 1.0))))</span>
+(gnus-add-configuration '(article (vertical 1.0 (summary .319 point) (article 1.0))))
 
 <span style="color: #b22222;">;;</span><span style="color: #b22222;">&#33258;&#21160;&#26174;&#31034;&#22270;&#29255;</span>
 (auto-image-file-mode)
@@ -688,6 +698,213 @@ Network activity has finished.
 <div class="outline-text-3" id="text-6-9">
 
 <p>   通过 <code>C-k</code> 和 <code>C-y</code>。<br/>
+</p></div>
+
+</div>
+
+<div id="outline-container-6-10" class="outline-3">
+<h3 id="sec-6-10"><span class="section-number-3">6.10</span> summary buffer里返回上次阅读的帖子</h3>
+<div class="outline-text-3" id="text-6-10">
+
+<p>    <code>G l</code> <br/>
+</p></div>
+
+</div>
+
+<div id="outline-container-6-11" class="outline-3">
+<h3 id="sec-6-11"><span class="section-number-3">6.11</span> summary buffer里 <code>/ N</code> 取回新帖子</h3>
+<div class="outline-text-3" id="text-6-11">
+
+</div>
+
+</div>
+
+<div id="outline-container-6-12" class="outline-3">
+<h3 id="sec-6-12"><span class="section-number-3">6.12</span> article 禁止自动折行</h3>
+<div class="outline-text-3" id="text-6-12">
+
+
+
+
+<pre class="src src-lisp">(setq gnus-treat-fill-long-lines nil)
+</pre>
+
+</div>
+
+</div>
+
+<div id="outline-container-6-13" class="outline-3">
+<h3 id="sec-6-13"><span class="section-number-3">6.13</span> 只刷新光标所在处组</h3>
+<div class="outline-text-3" id="text-6-13">
+
+<p>   <a href="http://www.gnu.org/software/emacs/manual/html_node/gnus/Scanning-New-Messages.html">手册</a><br/>
+   在group buffer里 <code>g</code> 可以查看是否有新帖，不过是所有组的。<code>M-g gnus-group-get-new-news-this-group</code> 可以只查看光标所在组有没有新帖。<br/>
+   如果在summary buffer里 <code>M-g</code> 可以重新加载该组。<br/>
+   默认情况下由于 <code>gnus-goto-next-group-when-activating</code> 为真所以刷新完当前组后会将光标移动到下一组上，可以将其设置为 nil 来制止光标移动。<br/>
+</p></div>
+
+</div>
+
+<div id="outline-container-6-14" class="outline-3">
+<h3 id="sec-6-14"><span class="section-number-3">6.14</span> 重新启动Gnus</h3>
+<div class="outline-text-3" id="text-6-14">
+
+<p>   <code>R gnus-group-restart</code> <br/>
+</p></div>
+
+</div>
+
+<div id="outline-container-6-15" class="outline-3">
+<h3 id="sec-6-15"><span class="section-number-3">6.15</span> gnus parameters</h3>
+<div class="outline-text-3" id="text-6-15">
+
+<p>   在group buffer里 <code>G p</code> 即可进入配置。<br/>
+   或直接在配置文件中配置变量 <code>gnus-parameters</code>。<br/>
+</p>
+</div>
+
+<div id="outline-container-6-15-1" class="outline-4">
+<h4 id="sec-6-15-1"><span class="section-number-4">6.15.1</span> display控制进入summary时帖子显示方式</h4>
+<div class="outline-text-4" id="text-6-15-1">
+
+<p>    display 可以控制进入group时显示帖子的方式。<a href="http://www.gnu.org/software/emacs/manual/html_node/gnus/Group-Parameters.html">参考手册</a><br/>
+</p><ol>
+<li>all 表显示所有帖子包括 读过的和未读过的<br/>
+</li>
+<li>an integer 表示只显示最新帖子的个数<br/>
+</li>
+<li>default 默认方式只显示标记为！的和未读的帖子<br/>
+</li>
+<li>符合某种条件的<br/>
+</li>
+</ol>
+
+</div>
+
+</div>
+
+<div id="outline-container-6-15-2" class="outline-4">
+<h4 id="sec-6-15-2"><span class="section-number-4">6.15.2</span> posing-style 设置回帖显示</h4>
+<div class="outline-text-4" id="text-6-15-2">
+
+</div>
+</div>
+
+</div>
+
+<div id="outline-container-6-16" class="outline-3">
+<h3 id="sec-6-16"><span class="section-number-3">6.16</span> 快速拷贝URL</h3>
+<div class="outline-text-3" id="text-6-16">
+
+<p>   将光标放在URL上 <code>u</code> 即可拷贝光标处URL。<br/>
+</p></div>
+
+</div>
+
+<div id="outline-container-6-17" class="outline-3">
+<h3 id="sec-6-17"><span class="section-number-3">6.17</span> 什么叫一个thread</h3>
+<div class="outline-text-3" id="text-6-17">
+
+<p>   比如下面的情况：<br/>
+</p>
+
+
+<pre class="example">1
+    2
+        2.1
+              2.1.1
+              2.1.2
+        2.2
+    3
+        3.1
+        3.2
+              3.2.1
+              3.2.2
+        3.3
+</pre>
+
+<p>
+   1是发起人，所有帖子是一个thread。<br/>
+   2回复1, 2.1, 2.2回复2，则2.1（包含子帖2.1.1, 2.1.2）, 2.2构成2的thread。<br/>
+   如果光标放在2.1上 <code>A T</code> 取得该thread的所有帖子则只会取回 2.1.1 2.1.2，同理在2上 <code>A T</code> 则会取回2.1 2.2及其子帖，不会取回 3 的帖子.<br/>
+</p></div>
+
+</div>
+
+<div id="outline-container-6-18" class="outline-3">
+<h3 id="sec-6-18"><span class="section-number-3">6.18</span> Article Washing</h3>
+<div class="outline-text-3" id="text-6-18">
+
+
+</div>
+
+<div id="outline-container-6-18-1" class="outline-4">
+<h4 id="sec-6-18-1"><span class="section-number-4">6.18.1</span> 去掉Article中的空白行</h4>
+<div class="outline-text-4" id="text-6-18-1">
+
+<p>    Article-&gt;Washing-&gt;Remove Blanks 可以选择删除哪些空白行。<br/>
+</p></div>
+
+</div>
+
+<div id="outline-container-6-18-2" class="outline-4">
+<h4 id="sec-6-18-2"><span class="section-number-4">6.18.2</span> 不要折行</h4>
+<div class="outline-text-4" id="text-6-18-2">
+
+<p>    Washing-&gt;Word Wrap<br/>
+    <code>W w</code><br/>
+</p></div>
+</div>
+
+</div>
+
+<div id="outline-container-6-19" class="outline-3">
+<h3 id="sec-6-19"><span class="section-number-3">6.19</span> 整合C-M-h和C-M-s</h3>
+<div class="outline-text-3" id="text-6-19">
+
+<p>   前者用于hide当前thread，后者用于show当前thread.<br/>
+   折叠与展开是两个键，我们不禁想如果只有一个就好了，自动判断当前情况：如果当前状态是展开则折叠之，如果是折叠则展开之。<br/>
+   下面函数可以做到（注意由于用到了并未对用户公开的函数所以必须放到/usr/local/share/emacs/24.2/lisp/gnus下的gnus-sum.el.gz中并删除gnus-sum.elc）：<br/>
+</p>
+
+
+<pre class="src src-lisp">(<span style="color: #a020f0;">defun</span> <span style="color: #0000ff;">vf-hide-show-thread</span> ()
+  <span style="color: #8b2252;">"If the current thread is folded then unfold it, vice versa"</span>
+  (interactive)
+  (<span style="color: #a020f0;">let</span> ((first-children (car (gnus-summary-article-children))))
+    (<span style="color: #a020f0;">if</span> first-children
+        (<span style="color: #a020f0;">progn</span>
+          (next-line)
+          <span style="color: #b22222;">;; </span><span style="color: #b22222;">check whether current line is the folded last line, if so, unfold it</span>
+          (<span style="color: #a020f0;">if</span> (string= (what-line) (<span style="color: #a020f0;">save-excursion</span> (end-of-buffer) (what-line)))
+              (<span style="color: #a020f0;">progn</span>
+                (previous-line)
+                (gnus-summary-show-thread))
+            (<span style="color: #a020f0;">if</span> (eq (gnus-summary-article-number) first-children)
+                (<span style="color: #a020f0;">progn</span>
+                  (previous-line)
+                  (gnus-summary-hide-thread))
+              (<span style="color: #a020f0;">progn</span>
+                (previous-line)
+                (gnus-summary-show-thread)))))
+      (message <span style="color: #8b2252;">"no subtree here"</span>))))
+</pre>
+
+<p>
+   之后在.emacs中添加：<br/>
+</p>
+
+
+<pre class="src src-lisp">(setq gnus-summary-mode-hook
+      '(<span style="color: #a020f0;">lambda</span> ()
+         (local-unset-key [(tab)])
+         (local-set-key [(tab)] 'vf-hide-show-thread)))
+</pre>
+
+<p>
+   这样便用TAB键代替了上面两个键。<br/>
+   使用byte-compile-file重新编译文件以加快加载速度。（Linux下需要root用户权限，可以用root权限打开emacs进行编译或用参考<a href="./Emacs.html#sudo">sudo</a>）<br/>
+   (自己写的第一个elisp函数，感觉不是很好又想不到其它好办法，如果今后有高手想到更好的办法记得一定要告诉我)<br/>
 </p></div>
 </div>
 </div>

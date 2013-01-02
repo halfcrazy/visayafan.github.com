@@ -4,5 +4,9 @@
 #+title:名言警句
 
 --------
-1. 广度是深度的副产品
+广度是深度的副产品
+--------
+RTFM Read The Fucking Manual
+--------
+ RTFSC Read The Fucking Source Code
 --------

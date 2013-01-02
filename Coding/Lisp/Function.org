@@ -1,0 +1,222 @@
+#+OPTIONS: ^:{} _:{} num:t toc:t \n:t
+#+INCLUDE "../../template-toc.org"
+#+SETUPFILE: "../../extension.org"
+#+title: CL 函数
+
+* typecase ctypecase etypecase
+#+begin_src lisp
+typecase keyform {normal-clause}* [otherwise-clause] => result*
+ctypecase keyplace {normal-clause}* => result*
+etypecase keyform {normal-clause}* => result*
+#+end_src
+  根据keyform的类型来进行 switch case选择执行语句。
+  区别在于: typecase 在normal-clause中如果没有匹配项但有otherwise-clause则执行otherwise里语句，否则返回NIL。ctypecase如果没有匹配则会进入调试状态。etypecase如果没有匹配则会产生错误。
+  其中otherwise-clause是 ({otherwise | t} form*)
+#+begin_src lisp
+(defun what-is-it (x)
+  (typecase x
+    (float "a float")
+    (list "list")
+    (otherwise "others")))
+#+end_src
+* sleep
+#+begin_src lisp
+sleep seconds => nil
+#+end_src
+  休眠
+* time
+#+begin_src lisp
+time form => result*
+#+end_src
+  返回程序执行时间。
+#+begin_src lisp
+CL-USER> (time (sleep 1))
+Evaluation took:
+  1.000 seconds of real time
+  0.004000 seconds of total run time (0.004000 user, 0.000000 system)
+  0.40% CPU
+  568,932,400 processor cycles
+  12,912 bytes consed
+NIL
+#+end_src
+* get-universal-time get-decoded-time decode-universal-time encode-universal-time
+  get-universal-time 返回自1990后的秒数。
+  get-decoded-time 返回形式：second, minute, hour, date, month, year, day, daylight-p, zone
+  decode-universal-time 将universal time 转换成 decoded time. encode-univeral-time进行相返操作。
+* defstruct
+#+begin_src lisp
+defstruct name-and-opts [docs] {slot}
+name-and-opts ==> name | name [options]
+      options ==>    conc-name-opts |
+                     {constructor-opts} |
+                     copier-opts |
+                     include-opts |
+                     initial-offset-opts |
+                     named-opts |
+                     predicate-opts|
+                     printer-opts|
+                     type-opts
+      slot ==> :type slot-type | :read-only slot-read-only-p 
+#+end_src
+1. conc-name-opts ==> :conc-name | (:conc-name) | (:conc-name prefix)
+   默认情况下slot-name前加上结构体的名字做为前缀即可访问该slot，(:conc-name prefix)可以指定前缀为prefix，如果为(:conc-name)或:conc-name则没有前缀。
+2. constructor-opts ==> :constructor | (:constructor) | (:constructor ctor-name) | (:constructor ctor-name ctor-arglist)
+   默认情况下struct name前加make-为构造此struct的函数，可以用:constructor来指定构造函数的名称，如果有ctor-arglist则用来初始化列表中的slot。如果为 (:constructor nil) 则表示此struct没有构造函数，即不能用来实例化对象。
+  #+begin_src lisp
+  CL-USER> (defstruct (person33 (:constructor person33 (name age))) name age)
+  PERSON33
+  CL-USER> (setq per (person33 "han" 10))
+  #S(PERSON33 :NAME "han" :AGE 10)
+  CL-USER> per
+  #S(PERSON33 :NAME "han" :AGE 10)
+  #+end_src
+3. copier-opts ==> :copier | (:copier) | (:copier copier-name)
+   默认情况下struct name前加copy-为拷贝struct函数，此关键字可以指定拷贝函数的名称。
+4. predicate-opts => :predicate | (:predicate) | (:predicate predicate-name)
+   默认情况下struct name后加-p为判断一个obj是否是name对象，此关键字可以自定义此函数名。
+5. include-opts ==> (:include included-struct-name {slot-desps})
+   继承某个struct中的slot。
+   可以继承某个struct所有slot也可以只继承指定个slot
+   slot-desps ==> slot-name | slot-name [solt-initform [slot-opts]]
+   1. slot-name 为included-struct-name中的slot name
+   2. slot-initform 为slot-name的初始值
+6. initial-offset-opts ==> (:initial-offset initial-offset) 
+   在struct对象最前面加上initial-offset个slot.
+  #+begin_src lisp
+  CL-USER> (defstruct (ppl :named (:type list) (:initial-offset 3)) name age)
+  PPL
+  CL-USER> (setf people (make-ppl :name "Han" :age 30))
+  (NIL NIL NIL PPL "Han" 30)
+  #+end_src
+7. type ==> (:type type-name)
+   指定struct的类型，默认情况是 structure-object
+8. named ==> :named
+  #+begin_src lisp
+  CL-USER> (defstruct (dog (:type list)) name age)
+  DOG
+  CL-USER> (setq my-dog (make-dog :name "bobby" :age 10))
+  ("bobby" 10)
+  CL-USER> (dog-p my-dog)         ;;wrong
+  #+end_src
+  由于指定了dog struct为list类型，所以用dog-p判断时不能决定my-dog是否为dog struct的对象。
+  需要加上:named选项，此时会在dog struct 对象前面加 struct name以便区别.
+  #+begin_src lisp
+  CL-USER> (defstruct (cat :named (:type list)) name age)
+  CAT
+  CL-USER> (setq my-cat (make-cat :name "bobby" :age 10))
+  (CAT "bobby" 10)                ;;注意在前面加上struct name
+  CL-USER> (cat-p my-cat)
+  T
+  CL-USER> (first my-cat)
+  CAT
+  CL-USER> (listp my-cat)
+  T
+  #+end_src
+9. printer-opts ==> (:print-function printer-name) | (:print-function) 
+   打印形式
+* prog prog* prog1 prog2
+#+begin_src lisp
+  prog ({var | (var [init-form])}*) declaration* {tag | statement}*
+  prog1 first-form form* => result-1
+  prog2 first-form second-form form* => result-2
+#+end_src
+  prog1 先执行 first-form 后执行 form*， 返回值是 first-form
+  prog2 先执行 first-form 和 second-form 再执行 form* 返回值是 second-form
+  与progn的区别在于返回值不同
+#+begin_src lisp
+ (prog (var1 var2 (var3 init-form-3) var4 (var5 init-form-5))
+       declaration*
+       statement1
+  tag1
+       statement2
+       statement3
+       statement4
+  tag2
+       statement5
+       ...
+       )
+#+end_src
+  prog: init-form首先依次求值，完成后再并行绑定到（[[psetq][setq,psetq]]）变量中。
+  prog*是依次求值init-form然后绑定。
+  prog默认创建一个nil block，可以在prog内在任何时间用return返回。
+#+begin_src lisp
+(prog variable-list declaration . body)
+==  (block nil (let variable-list declaration (tagbody . body)))
+#+end_src
+#<<psetq>>
+* setq psetq
+  psetq是并行绑定，即把所以表达式求值完后再绑定，而setq是顺序绑定。
+#+begin_src lisp
+CL-USER> (let ((x 10))
+           (psetq x 1 y (1+ x))
+           (list x y))
+(1 11)
+CL-USER> (let ((x 10))
+           (setq x 1 y (1+ x))
+           (list x y))
+(1 2)
+#+end_src
+* print print1 princ pprint write
+#+begin_src lisp
+write object &key array base case circle escape gensym length level lines miser-width pprint-dispatch pretty radix readably right-margin stream => object 
+prin1 object &optional output-stream => object
+princ object &optional output-stream => object
+print object &optional output-stream => object
+pprint object &optional output-stream => <no values>
+#+end_src
+| Parameter       | Corresponding Dynamic Variable |                          |
+| array           |*print-array*                   |                          |
+| base            |*print-base*                   | 基数                     |
+| radix           |*print-radix*                  |                          |
+| case            |*print-case*                   | 大小写                   |
+| circle          |*print-circle*                 | 是否打印循环列表         |
+| escape          |*print-escape*                 | 是否打印escape character |
+| gensym          |*print-gensym*                 | 控制是否打印#:           |
+| length          |*print-length*                 | 控制打印对象深度                 |
+| level           |*print-level*                  |                          |
+| lines           |*print-lines*                  |    最多打印行数                |
+| miser-width     |*print-miser-width*            |                          |
+| pprint-dispatch |*print-pprint-dispatch*        |                          |
+| pretty          |*print-pretty*                 |   是否符合人阅读                |
+| readably        |*print-readably*               |                          |
+| right-margin    |*print-right-margin*           |                          |
+  
+  print print1 princ pprint 是绑定某些值的write的实现。
+  1. prin1 适合解释器阅读，其*print-escape*为t
+  2. princ 和prin1相似，但*print-escape*为nil,*print-readably*为nil,方便人阅读
+  3. print 与prin1相似，会在输出前面加空行和一个空格
+  4. pprint 与print相似，但*print-pretty*为non-nil，会消除多余的空格，适合人阅读。
+#+begin_src lisp
+(prin1 object output-stream)
+==  (write object :stream output-stream :escape t)
+(princ object output-stream)
+==  (write object stream output-stream :escape nil :readably nil)
+ (print object output-stream)
+==  (progn (terpri output-stream)
+           (write object :stream output-stream
+                         :escape t)
+           (write-char #\space output-stream))
+(pprint object output-stream)
+==  (write object :stream output-stream :escape t :pretty t)
+#+end_src
+  
+* ignore-errors
+  ignore-errors form* => result*
+  如果出错不进入调试器。
+* lisp-implementation-type lisp-implementation-version
+  查看实现类型和版本
+* machine-version machine-type machine-instance
+  查看机器配置
+* funcall apply
+#+begin_src lisp
+apply function &rest args+ => result*
+funcall function &rest args => result*
+#+end_src
+  (apply fun (a1 a2 a3)) <==> (funcall fun a1 a2 a3)
+#+begin_src lisp
+(apply #'mapcar #'+ '((1 2 3) (4 5 6) (7 8 9) ))
+#+end_src
+  #'+和'((1 2 3) (4 5 6) (7 8 9) )做为mapcar的参数，等价于：
+#+begin_src lisp
+(mapcar #'+ '(1 2 3) '(4 5 6) '(7 8 9))
+#+end_src

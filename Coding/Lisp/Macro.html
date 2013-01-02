@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+               "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-CN" xml:lang="zh-CN">
+<head>
+<title>Macro</title>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
+<meta name="title" content="Macro"/>
+<meta name="generator" content="Org-mode"/>
+<meta name="generated" content="2012-12-26 00:36:23 CST"/>
+<meta name="author" content="visayafan"/>
+<meta name="description" content=""/>
+<meta name="keywords" content=""/>
+
+
+
+</head>
+<body>
+
+
+<div id="content">
+<h1 class="title">Macro</h1>
+
+
+<!-- <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"> </script> -->
+<link rel="stylesheet" type="text/css" href="../../Layout/CSS/bootstrap_old.css" />
+<link rel="stylesheet" type="text/css" href="../../Layout/CSS/too_many_toc.css" />
+<script src="../../Layout/JS/jquery_1.7.1.js"></script>
+<script src="../../Layout/JS/bootstrap_old.js"></script>
+
+
+<div id="table-of-contents">
+<h2>目录</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#sec-1">1 编译期/执行期</a></li>
+<li><a href="#sec-2">2 反引号与引号的区别</a></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-1" class="outline-2">
+<h2 id="sec-1"><span class="section-number-2">1</span> 编译期/执行期</h2>
+<div class="outline-text-2" id="text-1">
+
+
+
+
+<pre class="src src-lisp">CL-USER&gt; (<span style="color: #a020f0;">defmacro</span> <span style="color: #0000ff;">test</span> (x)
+           (<span style="color: #a020f0;">let</span> ((len (length x)))
+             `(princ ,len)))
+TEST
+CL-USER&gt; (test '(1 2 3))
+2
+</pre>
+
+<p>
+  <code>(test '(1 2 3))</code> test是macro，编译期展开，传递给宏test的是(quote (1 2 3))是个2元列表，又(length x)并没有在'内，所以会在编译期的时候被求值，结果为2。<br/>
+</p>
+
+
+<pre class="src src-lisp">CL-USER&gt; (<span style="color: #a020f0;">defmacro</span> <span style="color: #0000ff;">test</span> (a)
+           `(princ (length ,a)))
+TEST
+CL-USER&gt; (macroexpand-1 '(test '(1 2 3)))
+(PRINC (LENGTH '(1 2 3)))
+CL-USER&gt; (test '(1 2 3))
+3
+</pre>
+
+<p>
+  length函数的执行被放到执行期，函数求值参数首先会被求值， <code>(quote (1 2 3))</code> 求值结果为列表 <code>(1 2 3)</code> 长度为3。<br/>
+</p>
+
+
+<pre class="src src-lisp">CL-USER&gt; (<span style="color: #a020f0;">defmacro</span> <span style="color: #0000ff;">test</span> (a)
+           `(princ ,(length a)))
+TEST
+CL-USER&gt; (macroexpand-1 '(test '(1 2 3)))
+(PRINC 2)
+T
+CL-USER&gt; (macroexpand-1 '(test (1 2 3)))
+(PRINC 3)
+T
+</pre>
+
+<p>
+  length在编译期求值，参数为'(1 2 3) 此时a是列表 <code>(quote (1 2 3))</code> 长度为2。参数为(1 2 3)时a是列表(1 2 3)长度为3。<br/>
+</p></div>
+
+</div>
+
+<div id="outline-container-2" class="outline-2">
+<h2 id="sec-2"><span class="section-number-2">2</span> 反引号与引号的区别</h2>
+<div class="outline-text-2" id="text-2">
+
+<p>  如果引号后跟的表达式没有逗号则一样。表示执行时原样返回后跟的表达式。<br/>
+</p>
+
+
+<pre class="src src-lisp">'(1 2 3) ==&gt; `(1 2 3)
+</pre>
+
+<p>
+  都是一个有2个元素的列表(quote (1 2 3))，执行时生成(1 2 3)。<br/>
+  反引号后面的表达式中可以有逗号表示逗号后跟的表达式需要求值，没有逗号的原样返回。<br/>
+</p>
+
+
+<pre class="src src-lisp">(setq b '(1 2 3))
+'(a b c)  =&gt;&#36816;&#34892;&#32467;&#26524; (a b c)
+`(a ,b c) =&gt; &#36816;&#34892;&#32467;&#26524; (a (1 2 3) c)
+</pre>
+
+
+<pre class="src src-lisp">(mapcar #'funcall `(,(<span style="color: #a020f0;">lambda</span> (x) (- x 2)) 1-) '(2 2)) =&gt; (0 1)
+</pre>
+
+<p>
+  上面语句需要 <code>(lambda (x) (- x 2))</code> 的返回的函数对象做为第1个元素做为funcall的第1个参数，此时不能用引号，只能用反引号（使用引号传递给funcall第1个参数是个列表而非函数对象）。<br/>
+</p></div>
+</div>
+</div>
+
+</body>
+</html>

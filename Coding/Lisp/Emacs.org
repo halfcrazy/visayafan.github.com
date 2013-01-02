@@ -65,6 +65,7 @@ grep -nH -e "pattern" filename
   默认绑定到M-z，删除当前位置到下一个输入字符之间的字符，有时候会很有用。
 * fill-paragraph
   默认绑定到M-q，调整region,不满一行的由下一行补齐,默认宽度由fill-column变量决定。
+#<<sudo>>
 * =/sudo::/=
   如果你用普通用户权限打开emacs，则此时打开超级用户权限的文件是无法修改的，以超级用户重新打开一个emacs可行但考虑到emacs的启动速度，这绝对不是个好主意。
   解决办法：
@@ -178,7 +179,6 @@ d<script type="text/javascript"> $(function() {$('a.lightbox').lightBox();}); </
   可以 =C-x RET r TAB= 来选择编码。
   中文乱码可以在.emacs中加入以下代码：
 #+begin_src lisp
-(prefer-coding-system 'utf-8)
 (prefer-coding-system 'gb18030)
 #+end_src
   或：
@@ -280,6 +280,20 @@ d<script type="text/javascript"> $(function() {$('a.lightbox').lightBox();}); </
 - C-M-w 删除搜索词中最后一个字符
 - C-M-y 将当前光标后一个字符复制到搜索词后
 
+* Emacs Compile 出现乱码
+  编译的时候出现 /new.cc: In function â\200\230int main()â\200\231:/ 之类。
+  [[http://stackoverflow.com/questions/10374200/shell-in-emacs-displays-names-of-variables-by-preceding-them-200-230][解决办法]]
+#+begin_src lisp
+(setq default-process-coding-system '(utf-8-unix . utf-8-unix))
+#+end_src
+* Emacs M-x 目录操作
+  =copy-directory=
+  =delete-directory=
+  =make-directroy=
+  =list-directory=
+  操作可以在eshell下完成，不过对于不想离开当前buffer的情况下这直接运行上面命令的方式也是很高效的.
+* 查看当前buffer所有mode帮助信息
+  =C-h m=
 * 分享/评论
 #+html:<a class="btn btn-primary" href="https://raw.github.com/visayafan/visayafan.github.com/master/Others/o/Emacs.org">View Org Source</a>
 #+include "../../disqus.org"

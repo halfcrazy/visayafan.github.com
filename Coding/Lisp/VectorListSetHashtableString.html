@@ -7,11 +7,11 @@
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
 <meta name="title" content="数据类型"/>
 <meta name="generator" content="Org-mode"/>
-<meta name="generated" content="2012-12-14 09:04:57 CST"/>
+<meta name="generated" content="2012-12-31 21:08:08 CST"/>
 <meta name="author" content="visayafan"/>
 <meta name="description" content=""/>
 <meta name="keywords" content=""/>
-<div id="org-div-comments"><a href="../../index.html#lisp">主页</a></div>
+
 
 
 </head>
@@ -98,35 +98,41 @@
 <li><a href="#sec-4-18">4.18 revappend, nrevconc</a></li>
 </ul>
 </li>
-<li><a href="#sec-5">5 列表当树</a>
+<li><a href="#sec-5">5 字符串</a>
 <ul>
-<li><a href="#sec-5-1">5.1 copy-tree, copy-list</a></li>
-<li><a href="#sec-5-2">5.2 tree-equal</a></li>
-<li><a href="#sec-5-3">5.3 subst, subst-if, subst-if-not</a></li>
+<li><a href="#sec-5-1">5.1 char</a></li>
+<li><a href="#sec-5-2">5.2 parse-integer</a></li>
 </ul>
 </li>
-<li><a href="#sec-6">6 列表当集合</a>
+<li><a href="#sec-6">6 列表当树</a>
 <ul>
-<li><a href="#sec-6-1">6.1 adjoin</a></li>
-<li><a href="#sec-6-2">6.2 pushnew</a></li>
-<li><a href="#sec-6-3">6.3 intersection, union, set-difference, set-exclusive-or</a></li>
-<li><a href="#sec-6-4">6.4 subsetp</a></li>
+<li><a href="#sec-6-1">6.1 copy-tree, copy-list</a></li>
+<li><a href="#sec-6-2">6.2 tree-equal</a></li>
+<li><a href="#sec-6-3">6.3 subst, subst-if, subst-if-not</a></li>
 </ul>
 </li>
-<li><a href="#sec-7">7 列表当关联列表，属性列表</a>
+<li><a href="#sec-7">7 列表当集合</a>
 <ul>
-<li><a href="#sec-7-1">7.1 alist</a>
-<ul>
-<li><a href="#sec-7-1-1">7.1.1 assoc, assoc-if, -not</a></li>
-<li><a href="#sec-7-1-2">7.1.2 acons</a></li>
-<li><a href="#sec-7-1-3">7.1.3 pairlis</a></li>
-<li><a href="#sec-7-1-4">7.1.4 copy-alist</a></li>
+<li><a href="#sec-7-1">7.1 adjoin</a></li>
+<li><a href="#sec-7-2">7.2 pushnew</a></li>
+<li><a href="#sec-7-3">7.3 intersection, union, set-difference, set-exclusive-or</a></li>
+<li><a href="#sec-7-4">7.4 subsetp</a></li>
 </ul>
 </li>
-<li><a href="#sec-7-2">7.2 plist</a>
+<li><a href="#sec-8">8 列表当关联列表，属性列表</a>
 <ul>
-<li><a href="#sec-7-2-1">7.2.1 getf</a></li>
-<li><a href="#sec-7-2-2">7.2.2 remf</a></li>
+<li><a href="#sec-8-1">8.1 alist</a>
+<ul>
+<li><a href="#sec-8-1-1">8.1.1 assoc, assoc-if, -not</a></li>
+<li><a href="#sec-8-1-2">8.1.2 acons</a></li>
+<li><a href="#sec-8-1-3">8.1.3 pairlis</a></li>
+<li><a href="#sec-8-1-4">8.1.4 copy-alist</a></li>
+</ul>
+</li>
+<li><a href="#sec-8-2">8.2 plist</a>
+<ul>
+<li><a href="#sec-8-2-1">8.2.1 getf</a></li>
+<li><a href="#sec-8-2-2">8.2.2 remf</a></li>
 </ul>
 </li>
 </ul>
@@ -842,7 +848,7 @@ CL-USER&gt; (endp 'a)
 <div class="outline-text-3" id="text-4-12">
 
 <p>   last list &amp;optional n =&gt; tail<br/>
-   最后n个元素。<br/>
+   最后n个cons.<br/>
 </p>
 
 
@@ -850,10 +856,10 @@ CL-USER&gt; (endp 'a)
 ((3 4))
 </pre>
 
-
-
+<p>
+   返回的是((3 4) . nil) ==&gt; ((3 4))<br/>
 <link rel="stylesheet" href="../../Layout/CSS/jquery.lightbox-0.5.css" type="text/css" media="screen" /> <script type="text/javascript" src="../../Layout/JS/jquery.lightbox-0.5.js"></script> <center> <a class="lightbox" href="images/last.jpg"> <img class="lightbox " title="点击查看大图" src="images/last.jpg" width="300"> </a> </center> <script type="text/javascript"> $(function() {$('a.lightbox').lightBox();}); </script>
-</div>
+</p></div>
 
 </div>
 
@@ -1005,15 +1011,66 @@ CL-USER&gt; dummy
 </div>
 
 <div id="outline-container-5" class="outline-2">
-<h2 id="sec-5"><span class="section-number-2">5</span> 列表当树</h2>
+<h2 id="sec-5"><span class="section-number-2">5</span> 字符串</h2>
 <div class="outline-text-2" id="text-5">
 
 
 </div>
 
 <div id="outline-container-5-1" class="outline-3">
-<h3 id="sec-5-1"><span class="section-number-3">5.1</span> copy-tree, copy-list</h3>
+<h3 id="sec-5-1"><span class="section-number-3">5.1</span> char</h3>
 <div class="outline-text-3" id="text-5-1">
+
+
+
+
+<pre class="src src-lisp">char string index =&gt; character
+schar string index =&gt; character
+(setf (char string index) new-character)
+(setf (schar string index) new-character)
+</pre>
+
+<p>
+   返回字符串string索引index上的字符<br/>
+</p></div>
+
+</div>
+
+<div id="outline-container-5-2" class="outline-3">
+<h3 id="sec-5-2"><span class="section-number-3">5.2</span> parse-integer</h3>
+<div class="outline-text-3" id="text-5-2">
+
+
+
+
+<pre class="src src-lisp">parse-integer string <span style="color: #228b22;">&amp;key</span> start end radix junk-allowed =&gt; integer, pos
+</pre>
+
+<p>
+   将一个数字构成的字符串变成数。<br/>
+</p>
+
+
+<pre class="src src-lisp">(<span style="color: #a020f0;">let</span> ((list '((<span style="color: #8b2252;">"cal"</span> <span style="color: #8b2252;">"623"</span>) (<span style="color: #8b2252;">"bill"</span> <span style="color: #8b2252;">"156"</span>) (<span style="color: #8b2252;">"joe"</span> <span style="color: #8b2252;">"389"</span>))))
+  (sort list #'&lt; <span style="color: #483d8b;">:key</span> #'(<span style="color: #a020f0;">lambda</span> (item)
+                          (parse-integer (second item)))))
+</pre>
+
+</div>
+</div>
+
+</div>
+
+<div id="outline-container-6" class="outline-2">
+<h2 id="sec-6"><span class="section-number-2">6</span> 列表当树</h2>
+<div class="outline-text-2" id="text-6">
+
+
+</div>
+
+<div id="outline-container-6-1" class="outline-3">
+<h3 id="sec-6-1"><span class="section-number-3">6.1</span> copy-tree, copy-list</h3>
+<div class="outline-text-3" id="text-6-1">
 
 <p>   与copy-list的区别在于：彻底地拷贝一个列表。<br/>
    copy-list只拷贝最外层的结构，而深层的则被共享。<br/>
@@ -1022,9 +1079,9 @@ CL-USER&gt; dummy
 
 </div>
 
-<div id="outline-container-5-2" class="outline-3">
-<h3 id="sec-5-2"><span class="section-number-3">5.2</span> tree-equal</h3>
-<div class="outline-text-3" id="text-5-2">
+<div id="outline-container-6-2" class="outline-3">
+<h3 id="sec-6-2"><span class="section-number-3">6.2</span> tree-equal</h3>
+<div class="outline-text-3" id="text-6-2">
 
 <p>   tree-equal tree-1 tree-2 &amp;key test test-not =&gt; generalized-boolean<br/>
    深层次比较，不仅支干相同，叶子也相同。<br/>
@@ -1032,9 +1089,9 @@ CL-USER&gt; dummy
 
 </div>
 
-<div id="outline-container-5-3" class="outline-3">
-<h3 id="sec-5-3"><span class="section-number-3">5.3</span> subst, subst-if, subst-if-not</h3>
-<div class="outline-text-3" id="text-5-3">
+<div id="outline-container-6-3" class="outline-3">
+<h3 id="sec-6-3"><span class="section-number-3">6.3</span> subst, subst-if, subst-if-not</h3>
+<div class="outline-text-3" id="text-6-3">
 
 <p>   subst new old tree &amp;key key test test-not =&gt; new-tree<br/>
    subst-if new predicate tree &amp;key key =&gt; new-tree<br/>
@@ -1055,16 +1112,16 @@ CL-USER&gt; (subst 1 11 a)
 
 </div>
 
-<div id="outline-container-6" class="outline-2">
-<h2 id="sec-6"><span class="section-number-2">6</span> 列表当集合</h2>
-<div class="outline-text-2" id="text-6">
+<div id="outline-container-7" class="outline-2">
+<h2 id="sec-7"><span class="section-number-2">7</span> 列表当集合</h2>
+<div class="outline-text-2" id="text-7">
 
 
 </div>
 
-<div id="outline-container-6-1" class="outline-3">
-<h3 id="sec-6-1"><span class="section-number-3">6.1</span> adjoin</h3>
-<div class="outline-text-3" id="text-6-1">
+<div id="outline-container-7-1" class="outline-3">
+<h3 id="sec-7-1"><span class="section-number-3">7.1</span> adjoin</h3>
+<div class="outline-text-3" id="text-7-1">
 
 <p>   adjoin item list &amp;key key test test-not =&gt; new-list<br/>
    如果item不在list中则压入，返回插入后列表。<br/>
@@ -1073,9 +1130,9 @@ CL-USER&gt; (subst 1 11 a)
 
 </div>
 
-<div id="outline-container-6-2" class="outline-3">
-<h3 id="sec-6-2"><span class="section-number-3">6.2</span> pushnew</h3>
-<div class="outline-text-3" id="text-6-2">
+<div id="outline-container-7-2" class="outline-3">
+<h3 id="sec-7-2"><span class="section-number-3">7.2</span> pushnew</h3>
+<div class="outline-text-3" id="text-7-2">
 
 <p>   pushnew item place &amp;key key test test-not<br/>
    将item压入place中，如重复则什么也不做。其中重复判断标准由函数test决定，key决定传递给test的参数。<br/>
@@ -1084,9 +1141,9 @@ CL-USER&gt; (subst 1 11 a)
 
 </div>
 
-<div id="outline-container-6-3" class="outline-3">
-<h3 id="sec-6-3"><span class="section-number-3">6.3</span> intersection, union, set-difference, set-exclusive-or</h3>
-<div class="outline-text-3" id="text-6-3">
+<div id="outline-container-7-3" class="outline-3">
+<h3 id="sec-7-3"><span class="section-number-3">7.3</span> intersection, union, set-difference, set-exclusive-or</h3>
+<div class="outline-text-3" id="text-7-3">
 
 <p>   intersection list-1 list-2 &amp;key key test test-not =&gt; result-list<br/>
    求交并差对称差<br/>
@@ -1094,9 +1151,9 @@ CL-USER&gt; (subst 1 11 a)
 
 </div>
 
-<div id="outline-container-6-4" class="outline-3">
-<h3 id="sec-6-4"><span class="section-number-3">6.4</span> subsetp</h3>
-<div class="outline-text-3" id="text-6-4">
+<div id="outline-container-7-4" class="outline-3">
+<h3 id="sec-7-4"><span class="section-number-3">7.4</span> subsetp</h3>
+<div class="outline-text-3" id="text-7-4">
 
 <p>   subsetp list-1 list-2 &amp;key key test test-not =&gt; generalized-boolean<br/>
    判断list1是否是list2的子集。<br/>
@@ -1115,24 +1172,24 @@ NIL
 
 </div>
 
-<div id="outline-container-7" class="outline-2">
-<h2 id="sec-7"><span class="section-number-2">7</span> 列表当关联列表，属性列表</h2>
-<div class="outline-text-2" id="text-7">
+<div id="outline-container-8" class="outline-2">
+<h2 id="sec-8"><span class="section-number-2">8</span> 列表当关联列表，属性列表</h2>
+<div class="outline-text-2" id="text-8">
 
 
 </div>
 
-<div id="outline-container-7-1" class="outline-3">
-<h3 id="sec-7-1"><span class="section-number-3">7.1</span> alist</h3>
-<div class="outline-text-3" id="text-7-1">
+<div id="outline-container-8-1" class="outline-3">
+<h3 id="sec-8-1"><span class="section-number-3">8.1</span> alist</h3>
+<div class="outline-text-3" id="text-8-1">
 
 <p>   关联列表相当于小型的哈希表。其元素为cons.<br/>
 </p>
 </div>
 
-<div id="outline-container-7-1-1" class="outline-4">
-<h4 id="sec-7-1-1"><span class="section-number-4">7.1.1</span> assoc, assoc-if, -not</h4>
-<div class="outline-text-4" id="text-7-1-1">
+<div id="outline-container-8-1-1" class="outline-4">
+<h4 id="sec-8-1-1"><span class="section-number-4">8.1.1</span> assoc, assoc-if, -not</h4>
+<div class="outline-text-4" id="text-8-1-1">
 
 <p>    assoc item alist &amp;key key test test-not =&gt; entry<br/>
     assoc-if predicate alist &amp;key key =&gt; entry<br/>
@@ -1141,9 +1198,9 @@ NIL
 
 </div>
 
-<div id="outline-container-7-1-2" class="outline-4">
-<h4 id="sec-7-1-2"><span class="section-number-4">7.1.2</span> acons</h4>
-<div class="outline-text-4" id="text-7-1-2">
+<div id="outline-container-8-1-2" class="outline-4">
+<h4 id="sec-8-1-2"><span class="section-number-4">8.1.2</span> acons</h4>
+<div class="outline-text-4" id="text-8-1-2">
 
 <p>   在alist前面加上一对键值：<br/>
 </p>
@@ -1166,9 +1223,9 @@ NIL
 
 </div>
 
-<div id="outline-container-7-1-3" class="outline-4">
-<h4 id="sec-7-1-3"><span class="section-number-4">7.1.3</span> pairlis</h4>
-<div class="outline-text-4" id="text-7-1-3">
+<div id="outline-container-8-1-3" class="outline-4">
+<h4 id="sec-8-1-3"><span class="section-number-4">8.1.3</span> pairlis</h4>
+<div class="outline-text-4" id="text-8-1-3">
 
 <p>    pairlis keys data &amp;optional alist =&gt; new-alist<br/>
 </p>
@@ -1182,9 +1239,9 @@ NIL
 
 </div>
 
-<div id="outline-container-7-1-4" class="outline-4">
-<h4 id="sec-7-1-4"><span class="section-number-4">7.1.4</span> copy-alist</h4>
-<div class="outline-text-4" id="text-7-1-4">
+<div id="outline-container-8-1-4" class="outline-4">
+<h4 id="sec-8-1-4"><span class="section-number-4">8.1.4</span> copy-alist</h4>
+<div class="outline-text-4" id="text-8-1-4">
 
 <p>    比copy-list多拷贝了每个元素的cons结构。<br/>
 <link rel="stylesheet" href="../../Layout/CSS/jquery.lightbox-0.5.css" type="text/css" media="screen" /> <script type="text/javascript" src="../../Layout/JS/jquery.lightbox-0.5.js"></script> <center> <a class="lightbox" href="images/copy-alist.jpg"> <img class="lightbox " title="点击查看大图" src="images/copy-alist.jpg" width="300"> </a> </center> <script type="text/javascript"> $(function() {$('a.lightbox').lightBox();}); </script>
@@ -1193,9 +1250,9 @@ NIL
 
 </div>
 
-<div id="outline-container-7-2" class="outline-3">
-<h3 id="sec-7-2"><span class="section-number-3">7.2</span> plist</h3>
-<div class="outline-text-3" id="text-7-2">
+<div id="outline-container-8-2" class="outline-3">
+<h3 id="sec-8-2"><span class="section-number-3">8.2</span> plist</h3>
+<div class="outline-text-3" id="text-8-2">
 
 <p>   与alist不同，plist是没有分支的列表，第n个值与第n+1个值构成键值对（n为奇数）。<br/>
 </p>
@@ -1207,9 +1264,9 @@ NIL
 
 </div>
 
-<div id="outline-container-7-2-1" class="outline-4">
-<h4 id="sec-7-2-1"><span class="section-number-4">7.2.1</span> getf</h4>
-<div class="outline-text-4" id="text-7-2-1">
+<div id="outline-container-8-2-1" class="outline-4">
+<h4 id="sec-8-2-1"><span class="section-number-4">8.2.1</span> getf</h4>
+<div class="outline-text-4" id="text-8-2-1">
 
 <p>    getf plist indicator &amp;optional default =&gt; value<br/>
     (setf (getf place indicator &amp;optional default) new-value)<br/>
@@ -1227,9 +1284,9 @@ CL-USER&gt; (getf plist 'd <span style="color: #8b2252;">"no found"</span>)
 
 </div>
 
-<div id="outline-container-7-2-2" class="outline-4">
-<h4 id="sec-7-2-2"><span class="section-number-4">7.2.2</span> remf</h4>
-<div class="outline-text-4" id="text-7-2-2">
+<div id="outline-container-8-2-2" class="outline-4">
+<h4 id="sec-8-2-2"><span class="section-number-4">8.2.2</span> remf</h4>
+<div class="outline-text-4" id="text-8-2-2">
 
 <p>    remf place indicator =&gt; generalized-boolean<br/>
     从属性列表place中删除indicator对应的键值。<br/>

@@ -1,0 +1,29 @@
+#+OPTIONS: ^:{} _:{} num:t toc:t \n:t
+#+INCLUDE "../../template.org"
+#+SETUPFILE: "../../extension.org"
+#+title:CL IO
+
+* read-from-string
+#+begin_src lisp
+read-from-string string &optional eof-error-p eof-value &key start end preserve-whitespace => object, position
+#+end_src
+  从字符串中读取，返回值是获取的对象和区取对象的个数
+#+begin_src lisp
+CL-USER> (read-from-string "012345" t nil :start 3 :end 5)
+34
+5
+#+end_src
+* with-output-to-string
+#+begin_src lisp
+with-output-to-string (var &optional string-form &key element-type) declaration* form*
+#+end_src
+  创建一个输出流并向流中输出最终关闭流。
+#+begin_src lisp
+CL-USER> (setq fstr (make-array 0 :element-type 'base-char :fill-pointer 0 :adjustable t))
+CL-USER> (with-output-to-string (s fstr)
+           (format s "hello")
+           (output-stream-p s))
+T
+CL-USER> fstr
+"hello"
+#+end_src

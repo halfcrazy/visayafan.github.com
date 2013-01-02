@@ -310,11 +310,12 @@ CL-USER> (endp 'a)
    
 ** last
    last list &optional n => tail
-   最后n个元素。
+   最后n个cons.
 #+begin_src lisp
 CL-USER> (last (list 1 2 (list 3 4)))
 ((3 4))
 #+end_src
+   返回的是((3 4) . nil) ==> ((3 4))
 {{{lightbox(images/last.jpg)}}}
 ** butlast, nbutlast
    butlast list &optional n => result-list
@@ -396,6 +397,25 @@ CL-USER> (list* 1 2 (list 3 4))
    revappend 拷贝list，将其进行逆转，将tail接到其后。
    nrevconc 对list逆转采用的是nreverse.
    前者并未修改任何列表，后者修改了list并未修改tail.
+* 字符串
+** char
+#+begin_src lisp
+char string index => character
+schar string index => character
+(setf (char string index) new-character)
+(setf (schar string index) new-character)
+#+end_src
+   返回字符串string索引index上的字符
+** parse-integer
+#+begin_src lisp
+parse-integer string &key start end radix junk-allowed => integer, pos
+#+end_src
+   将一个数字构成的字符串变成数。
+#+begin_src lisp
+(let ((list '(("cal" "623") ("bill" "156") ("joe" "389"))))
+  (sort list #'< :key #'(lambda (item)
+                          (parse-integer (second item)))))
+#+end_src
 * 列表当树
 ** copy-tree, copy-list
    与copy-list的区别在于：彻底地拷贝一个列表。
