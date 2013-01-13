@@ -2,7 +2,7 @@
 #+include: ../../template-toc.org
 #+title:命令行trick
 
-参考：http://blog.urfix.com/25-linux-commands/
+参考[fn:1]
 * ls -
   返回上次所在目录
 * cp filename{,.bak}
@@ -156,5 +156,12 @@ awk -F'\\\\\\\\' '{ORS=" ";for(i=1;i<=NF;i++) print $i;}' test
 - 总结 ::
 对于纯粹匹配\，当欲匹配\个数为n时需要\个数可以为1-4xn。
 对于匹配\但后面还跟字符时，当欲匹配\个数为n时需要\个数必须严格为4xn.
+* 命令行提示符显示git分支名
+  添加到.bashrc中：
+#+begin_example
+PS1="\W\$(git branch 2>/dev/null | grep -e '\* ' | sed 's/^..\(.*\)/{\1}/')\$"
+#+end_example
+* Footnotes
+[fn:1] http://blog.urfix.com/25-linux-commands/
 * 分享/评论
 #+include "../../disqus.org"

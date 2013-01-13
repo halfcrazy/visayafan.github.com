@@ -61,3 +61,48 @@ Your abstract goes here...
 \end{abstract}
 #+end_example
 默认的摘要名称为 Abstract。要改变摘要名称: =\renewcommand{\abstractname}{Executive Summary}=
+* 公式
+** 自定义TAG
+   可以用\tag命令来自定义TAG，但在lyx中要先将公式环境切换到ASM环境：Edit->Math->Chang Formula Type->ASM align environment。
+** 长公式换行
+   [[http://comments.gmane.org/gmane.editors.lyx.general/67870][参考]]
+   在公式上右键 AMS enviroment->AMS multiline enviroment，开始输入公式，此公式是左对齐的，在需要换行的地方Ctrl-RET即可新建一行此行的公式是上一行公式的继续，是右对齐的。
+   注意：用 =Alt-m (= 类似命令生成的括号内的内容被lyx看成整体不可分割，所以不能在这种括号里面换行（实在没有办法只有用手工输入括号的办法了，这样输出结果括号会略小）。
+** theorem
+   进入theorem环境：=M-x layout Theorem=
+   非Lyx下改变theorem名称和编号：
+#+begin_src tex
+\newtheoremstyle{mythm}%名字
+        {1.5ex plus 1ex minus .2ex}%上方的空行
+        {1.5ex plus 1ex minus .2ex }%下方的空行
+        {}%内容字体
+        {}%缩进
+        {\hei}%定理头部字体
+        {}%定理头部后的标点
+        {1em}%定理头部后的空格
+        {}%定理头部的说明
+\theoremstyle{mythm}
+\newtheorem{definition}{\hspace{2em}定义}[section]
+\newtheorem{axiom}{\hspace{2em}公理}
+\newtheorem{theorem}{\hspace{2em}定理}[section]
+\newtheorem{propsition}{\hspace{2em}命题}[section]
+\newtheorem{corollary}{\hspace{2em}推论}[section]
+\newtheorem{lemma}{\hspace{2em}引理}[section]
+\newtheorem{example}{\hspace{2em}例}[section]
+\newtheorem{exercise}{\hspace{2em}习题}[section]
+#+end_src
+   Lyx下改变theorem名称和编号:
+   见[[http://wiki.lyx.org/LyX/I18nLabels][lyx wiki]]
+#+begin_src tex
+\newtheorem{theo}{定理}[section]
+\renewenvironment{thm}{\begin{theo}}{\end{theo}}
+#+end_src
+* 插入源码
+  1. 可以通过 insert->program listing 来插入源码，不过此时源码是没有高亮的。
+  2. 可以通过 insert->file->child document来选择源码所在的文件，include type选择program listing，可选标题，more parameters中可以输入language=C++可以通过？来查看更多可用语言。
+  默认源码标题类似 Listing 1:标题，可以通过 =\renewcommand{\lstlistingname}{源码}= 变成 源码1：标题
+* 日期
+  如果不想要日期可以用 =\date{}=
+* 参考文献
+  默认是Reference，可以修改 =\renewcommand\refname{参考文献}=
+  

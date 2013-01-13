@@ -1,0 +1,12 @@
+#+BEGIN_HTML
+<link rel="stylesheet" type="text/css" href="../../../Layout/CSS/style.css" />
+<style type="text/css" media="screen">
+body {
+width: 600px;
+padding-top: 60px;
+}
+p{
+text-indent: 2em;
+}
+</style>
+#+END_HTML 

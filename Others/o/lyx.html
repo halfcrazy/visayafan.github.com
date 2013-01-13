@@ -3,11 +3,11 @@
                "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="zh-CN" xml:lang="zh-CN">
 <head>
-<title>lyx 笔记 </title>
+<title>Lyx 笔记 </title>
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
-<meta name="title" content="lyx 笔记 "/>
+<meta name="title" content="Lyx 笔记 "/>
 <meta name="generator" content="Org-mode"/>
-<meta name="generated" content="2013-01-02 17:43:28 CST"/>
+<meta name="generated" content="2013-01-03 04:14:53 CST"/>
 <meta name="author" content="visayafan"/>
 <meta name="description" content=""/>
 <meta name="keywords" content=""/>
@@ -19,7 +19,7 @@
 
 
 <div id="content">
-<h1 class="title">lyx 笔记 </h1>
+<h1 class="title">Lyx 笔记 </h1>
 
 
 <!-- <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"> </script> -->
@@ -37,6 +37,13 @@
 <li><a href="#sec-1">1 Preamble</a></li>
 <li><a href="#sec-2">2 中文段落缩进</a></li>
 <li><a href="#sec-3">3 摘要</a></li>
+<li><a href="#sec-4">4 公式</a>
+<ul>
+<li><a href="#sec-4-1">4.1 自定义TAG</a></li>
+<li><a href="#sec-4-2">4.2 长公式换行</a></li>
+<li><a href="#sec-4-3">4.3 theorem</a></li>
+</ul>
+</li>
 </ul>
 </div>
 </div>
@@ -123,6 +130,74 @@ Your abstract goes here...
 <p>
 默认的摘要名称为 Abstract。要改变摘要名称: <code>\renewcommand{\abstractname}{Executive Summary}</code><br/>
 </p></div>
+
+</div>
+
+<div id="outline-container-4" class="outline-2">
+<h2 id="sec-4"><span class="section-number-2">4</span> 公式</h2>
+<div class="outline-text-2" id="text-4">
+
+
+</div>
+
+<div id="outline-container-4-1" class="outline-3">
+<h3 id="sec-4-1"><span class="section-number-3">4.1</span> 自定义TAG</h3>
+<div class="outline-text-3" id="text-4-1">
+
+<p>   可以用\tag命令来自定义TAG，但在lyx中要先将公式环境切换到ASM环境：Edit-&gt;Math-&gt;Chang Formula Type-&gt;ASM align environment。<br/>
+</p></div>
+
+</div>
+
+<div id="outline-container-4-2" class="outline-3">
+<h3 id="sec-4-2"><span class="section-number-3">4.2</span> 长公式换行</h3>
+<div class="outline-text-3" id="text-4-2">
+
+<p>   <a href="http://comments.gmane.org/gmane.editors.lyx.general/67870">参考</a><br/>
+   在公式上右键 AMS enviroment-&gt;AMS multiline enviroment，开始输入公式，此公式是左对齐的，在需要换行的地方Ctrl-RET即可新建一行此行的公式是上一行公式的继续，是右对齐的。<br/>
+   注意：用 <code>Alt-m (</code> 类似命令生成的括号内的内容被lyx看成整体不可分割，所以不能在这种括号里面换行（实在没有办法只有用手工输入括号的办法了，这样输出结果括号会略小）。<br/>
+</p></div>
+
+</div>
+
+<div id="outline-container-4-3" class="outline-3">
+<h3 id="sec-4-3"><span class="section-number-3">4.3</span> theorem</h3>
+<div class="outline-text-3" id="text-4-3">
+
+<p>   <code>M-x layout Theorem</code><br/>
+</p>
+
+
+<pre class="src src-tex"><span style="color: #a020f0;">\newtheoremstyle</span>{mythm}<span style="color: #b22222;">%&#21517;&#23383;</span>
+        {1.5ex plus 1ex minus .2ex}<span style="color: #b22222;">%&#19978;&#26041;&#30340;&#31354;&#34892;</span>
+        {1.5ex plus 1ex minus .2ex }<span style="color: #b22222;">%&#19979;&#26041;&#30340;&#31354;&#34892;</span>
+        {}<span style="color: #b22222;">%&#20869;&#23481;&#23383;&#20307;</span>
+        {}<span style="color: #b22222;">%&#32553;&#36827;</span>
+        {<span style="color: #a020f0;">\hei</span>}<span style="color: #b22222;">%&#23450;&#29702;&#22836;&#37096;&#23383;&#20307;</span>
+        {}<span style="color: #b22222;">%&#23450;&#29702;&#22836;&#37096;&#21518;&#30340;&#26631;&#28857;</span>
+        {1em}<span style="color: #b22222;">%&#23450;&#29702;&#22836;&#37096;&#21518;&#30340;&#31354;&#26684;</span>
+        {}<span style="color: #b22222;">%&#23450;&#29702;&#22836;&#37096;&#30340;&#35828;&#26126;</span>
+<span style="color: #a020f0;">\theoremstyle</span>{mythm}
+<span style="color: #a020f0;">\newtheorem</span>{<span style="color: #0000ff;">definition</span>}{<span style="color: #a020f0;">\hspace</span>{2em}&#23450;&#20041;}[section]
+<span style="color: #a020f0;">\newtheorem</span>{<span style="color: #0000ff;">axiom</span>}{<span style="color: #a020f0;">\hspace</span>{2em}&#20844;&#29702;}
+<span style="color: #a020f0;">\newtheorem</span>{<span style="color: #0000ff;">theorem</span>}{<span style="color: #a020f0;">\hspace</span>{2em}&#23450;&#29702;}[section]
+<span style="color: #a020f0;">\newtheorem</span>{<span style="color: #0000ff;">propsition</span>}{<span style="color: #a020f0;">\hspace</span>{2em}&#21629;&#39064;}[section]
+<span style="color: #a020f0;">\newtheorem</span>{<span style="color: #0000ff;">corollary</span>}{<span style="color: #a020f0;">\hspace</span>{2em}&#25512;&#35770;}[section]
+<span style="color: #a020f0;">\newtheorem</span>{<span style="color: #0000ff;">lemma</span>}{<span style="color: #a020f0;">\hspace</span>{2em}&#24341;&#29702;}[section]
+<span style="color: #a020f0;">\newtheorem</span>{<span style="color: #0000ff;">example</span>}{<span style="color: #a020f0;">\hspace</span>{2em}&#20363;}[section]
+<span style="color: #a020f0;">\newtheorem</span>{<span style="color: #0000ff;">exercise</span>}{<span style="color: #a020f0;">\hspace</span>{2em}&#20064;&#39064;}[section]
+</pre>
+
+<p>
+   改变定理编号为节+顺序编号：<br/>
+</p><pre class="example">
+\renewcommand{\thethm}{\arabic{section}.\arabic{thm}}
+</pre>
+
+
+<p>   <br/>
+</p></div>
+</div>
 </div>
 </div>
 
