@@ -7,7 +7,7 @@
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
 <meta name="title" content="Emacs Org-Mode"/>
 <meta name="generator" content="Org-mode"/>
-<meta name="generated" content="2012-12-14 21:09:16 CST"/>
+<meta name="generated" content="2013-01-17 22:18:29 CST"/>
 <meta name="author" content="visayafan"/>
 <meta name="description" content=""/>
 <meta name="keywords" content=""/>
@@ -56,9 +56,6 @@
 </script>
 </head>
 <body>
-<div id="org-div-home-and-up">
- <a accesskey="H" href="EmacsClass.org"> HOME </a>
-</div>
 
 
 <div id="content">
@@ -70,6 +67,7 @@
 <link rel="stylesheet" type="text/css" href="../../Layout/CSS/too_many_toc.css" />
 <script src="../../Layout/JS/jquery_1.7.1.js"></script>
 <script src="../../Layout/JS/bootstrap_old.js"></script>
+
 
 
 <div id="table-of-contents">
@@ -88,6 +86,8 @@
 <li><a href="#sec-10">10 Emacs Org配置简单快捷键</a></li>
 <li><a href="#sec-11">11 org-mode 外部链接</a></li>
 <li><a href="#sec-12">12 org-mode M-RET插入多余的空白行</a></li>
+<li><a href="#sec-13">13 org-sync</a></li>
+<li><a href="#sec-14">14 GTD</a></li>
 </ul>
 </div>
 </div>
@@ -241,7 +241,7 @@ private:
 
 <p>  在文章的开始定义宏，格式为 #+macro: macro_name macro_content_with_$1_arg1_$2_arg2_&hellip;<br/>
   宏中\n表示换行。<br/>
-  在文章中使用宏 {{{macro_name(args)}}}<br/>
+  在文章中使用宏 {{{macro_name(args)}}}，多个参数用,隔开<br/>
   宏定义时可以嵌套，但宏调用时不应该嵌套。<br/>
   其中org-mode内置的宏包括<br/>
 </p>
@@ -452,6 +452,17 @@ either $$ a=+\sqrt{2} $$ or \[ a=-\sqrt{2} \].
  elisp:(find-file-other-frame "Elisp.org") Elisp form to evaluate
 </pre>
 
+<p>
+  例如下面导b同HTML结果为： <a href="mailto:visayafan@gmail.com">Send Me a mail</a><br/>
+</p><pre class="example">
+[[mailto:visayafan@gmail.com][Send Me a mail]]
+</pre>
+
+<p>  在下面语句上 <code>C-c C-o</code> <code>y</code> 即可查看 elisp 语句执行结果：<br/>
+</p><pre class="example">
+[[elisp:(buffer-name)]]
+</pre>
+
 </div>
 
 </div>
@@ -463,6 +474,38 @@ either $$ a=+\sqrt{2} $$ or \[ a=-\sqrt{2} \].
 <p>  <a href="http://orgmode.org/worg/org-faq.html#blank-line-after-headlines-and-list-items">为什么要插入空白行</a><br/>
   解决办法： <code>customzie-variable RET org-blank-before-new-entry</code> 将两个Choice都选为Never即可。  <br/>
 </p></div>
+
+</div>
+
+<div id="outline-container-13" class="outline-2">
+<h2 id="sec-13"><span class="section-number-2">13</span> org-sync</h2>
+<div class="outline-text-2" id="text-13">
+
+<p>  用Org文档来同步Bug跟踪，暂用不到。<br/>
+  <a href="http://orgmode.org/worg/org-contrib/gsoc2012/student-projects/org-sync/">官网</a>， <a href="https://www.youtube.com/watch?v=kbj6-j0teCY">视频</a> <br/>
+</p></div>
+
+</div>
+
+<div id="outline-container-14" class="outline-2">
+<h2 id="sec-14"><span class="section-number-2">14</span> GTD</h2>
+<div class="outline-text-2" id="text-14">
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+<caption></caption>
+<colgroup><col class="left" /><col class="left" />
+</colgroup>
+<tbody>
+<tr><td class="left">C-c C-q</td><td class="left">插入标签</td></tr>
+<tr><td class="left">C-c C-c</td><td class="left">同上</td></tr>
+<tr><td class="left">C-c \</td><td class="left">查找某个TAG下的所有项目</td></tr>
+<tr><td class="left">C-c / m</td><td class="left">建立符合某个TAG的tree</td></tr>
+<tr><td class="left">C-c &gt;</td><td class="left">calendar</td></tr>
+<tr><td class="left">C-c &lt;</td><td class="left">把光标所在处的时间插入到文件中</td></tr>
+</tbody>
+</table>
+
+</div>
 </div>
 </div>
 

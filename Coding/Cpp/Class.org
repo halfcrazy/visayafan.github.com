@@ -1,5 +1,5 @@
 #+OPTIONS: ^:{} _:{} num:t toc:t \n:t
-#+INCLUDE "../../template.org"
+#+INCLUDE "../../template-toc.org"
 #+SETUPFILE: "../../extension.org"
 #+title: C++类
 
@@ -92,6 +92,7 @@ int main(int argc, char *argv[])
 {{{right}}}
 * 虚继承，虚基类
   例如下面的例子：
+#<<xujicheng>>
 {{{lightbox(images/virtual-base-class.gif)}}}
   如果按照普通继承方式则pegasus中将含有2份Animal的变量，而实际上一份即可，故引入虚继承。
   虚继承不需要对Animal做任何改变，只需要改变Horse, Bird继承Animal时的方式即可。
@@ -217,3 +218,327 @@ int main()
  }
 #+end_src  
 {{{srcend}}}
+* 初始化列表赋值顺序
+  赋值顺序与变量声明顺序相同，则与初始化列表里顺序无关。
+#+begin_src c++
+class test
+{
+public:
+     test(int x): b(x), a(b){}  // 由于a声明在先所以a先初始化，即a=b,此时b=x还没有执行，故a结果为一随机数
+     void print_out(){
+          cout<<a<<" "<<b<<endl;
+     }
+     int a, b;
+};
+#+end_src
+* 虚继承构造函数调用顺序
+  [[xujicheng][图]]中Pegasus的构造函数的调用基类的顺序为：Animal->Horse->Bird，即先调用虚基类，且Horse和Bird中的构造函数不再调用Animal的构造函数。
+{{{left(4)}}}
+#+begin_src c++
+class Top{
+public:
+     Top(){cout<<"top"<<endl;}
+     int a;
+};
+class Left: virtual public Top{
+public:
+     Left(){cout<<"Left"<<endl;}
+     int b;
+};
+class Right: virtual public Top{
+public:
+     Right(){cout<<"Right"<<endl;}
+     int c;
+};
+class Bottom: public Left, public Right{
+public:
+     Bottom(){cout<<"Bottom"<<endl;}
+     int d;
+};
+
+int main(int argc, char *argv[])
+{
+     Bottom b;
+     return 0;
+}
+#+end_src
+  结果为：
+#+begin_src c++
+top
+Left
+Right
+Bottom
+#+end_src
+{{{middle(2)}}}
+{{{middle(5)}}}
+实际展开过程为参数列表添加了额外的bool参数用来压抑Left和Right对Top构造函数的调用：
+参考：《深入理解C++对象模型》第5章虚拟继承
+#+begin_src c++
+Left* Left(Left * const this, bool __most_derived){
+        if(__most_derived)
+                this->Top::Top();
+        cout<<"Left"<<endl;
+        return this;
+}
+Right* Right(Right * const this, bool __most_derived){
+        if(__most_derived)
+                this->Top::Top();
+        cout<<"Right"<<endl;
+        return this;
+}
+Bottom* Bottom(Bottom * const this, bool __most_derived){
+        if(__most_derived)
+                this->Top::Top();
+        this->Left::Left(false);
+        this->Right::Right(false);
+        cout<<"Bottom"<<endl;
+        return this;
+} 
+#+end_src
+由于Bottom里为Left构造函数传false，所以Left不用调用Top的构造函数，同理Right。这样Bottom最终只调用一次Top的构造函数。
+{{{right}}}
+* 虚继承构造函数里调用虚函数
+  调用的构造函数所属类里的那个虚函数。Bottom ctor调用Top ctor时由于Bottom对象还没有完全构造好所以Top ctor里的虚函数不能是Bottom里的。
+  此时不能使用虚函数机制，应该展开应该静态方式调用： =Top* Top(Top *const this){this->Top::which_called();}=
+  参考：《深入理解C++对象模型》第5章vptr初始化语义学
+{{{lightbox(./images/Top.png,300)}}}
+#+begin_src c++
+class Top{
+public:
+     Top(){which_called();}
+     virtual void which_called(){cout<<"Top"<<endl;}
+     int a;
+};
+class Left: virtual public Top{
+public:
+     Left(){which_called();}
+     virtual void which_called(){cout<<"Left"<<endl;}
+     int b;
+};
+class Right: virtual public Top{
+public:
+     Right(){which_called();}
+     virtual void which_called(){cout<<"Right"<<endl;}
+     int c;
+};
+class Bottom: public Left, public Right{
+public:
+     Bottom(){which_called();}
+     virtual void which_called(){cout<<"Bottom"<<endl;}
+     int d;
+};
+
+int main(int argc, char *argv[])
+{
+     Bottom b;
+     return 0;
+}
+#+end_src
+* 多态
+#+begin_src c++
+class A{
+public:
+     void x(){cout<<"AX"<<endl;}
+     virtual void y(){cout<<"Ay"<<endl;}
+};
+class B: public A{
+public:
+     void x(){cout<<"BX"<<endl;}
+     void y(){cout<<"BY"<<endl;}
+};
+int main(int argc, char *argv[])
+{
+     B b;
+     A* pa=&b;
+     pa->x();
+     pa->y();
+     return 0;
+}
+#+end_src
+  结果为：
+#+begin_src c++
+AX
+BY
+#+end_src
+  动态决议pa->y();调用的是哪个类的y.
+  b只有一个vptr(有几个基类就有几个vptr)
+* 虚析构函数
+{{{left(4)}}}
+#+begin_src c++
+class A
+{
+public:
+     A(){cout<<"ctor A"<<endl;}
+     virtual void x(){};
+     ~A(){cout<<"virtual ~A"<<endl;};
+};
+
+class B: public A
+{
+public:
+     B(){cout<<"ctor B"<<endl;}
+     ~B(){cout<<"virtual ~B"<<endl;};
+};
+
+int main(int argc, char *argv[])
+{
+     A* pa=new B;
+     delete pa;
+     return 0;
+}
+#+end_src
+  结果：
+#+begin_src c++
+ctor A
+ctor B
+virtual ~A
+#+end_src
+{{{middle(2)}}}
+{{{middle(4)}}}
+#+begin_src c++
+class A
+{
+public:
+     A(){cout<<"ctor A"<<endl;}
+     virtual void x(){};
+     virtual ~A(){cout<<"virtual ~A"<<endl;};
+};
+
+class B: public A
+{
+public:
+     B(){cout<<"ctor B"<<endl;}
+     ~B(){cout<<"virtual ~B"<<endl;};
+};
+
+int main(int argc, char *argv[])
+{
+     A* pa=new B;
+     delete pa;
+     return 0;
+}
+#+end_src
+结果：
+#+begin_src c++
+ctor A
+ctor B
+virtual ~B
+virtual ~A
+#+end_src
+{{{right}}}
+左边可以看到用基类指针来操控子类对象时，如果析构函数不是virtual的则子类的析构函数不会被调用，这通常情况下不是我们想看到的。
+
+所以一般的结论是： *如果一个类中有虚函数就一定为它加上虚析构函数*。原因：
+1. 如果一个类有虚函数功能，它经常作为一个基类使用。
+2. 如果它是一个基类，它的派生类经常使用new来分配。
+3. 如果一个派生类对象使用new来分配，并且通过一个指向它的基类的指针来控制，那么它经常通过一个指向它的基类的指针来删除它（如果基类没有虚析构函数，结果将是不确定的，实际发生时，派生类的析构函数永远不会被调用）。
+
+*纯虚析构函数必须要被定义* 因为虚析构函数工作的方式是：最底层的派生类的析构函数最先被调用，然后各个基类的析构函数被调用。这就是说，即使是抽象类，编译器也要产生对此类的析构函数进行调用，所以要保证为它提供函数体（哪怕是空的）。如果不这么做，链接器就会检测出来，最后还是得回去把它添上。
+#+begin_src c++
+class A
+{
+public:
+     virtual ~A() =0;
+};
+A::~A(){}       // 此行是必须的，抽象类的虚析构函数必须要被定义否则编译不过
+
+class B: public A
+{
+public:
+     ~B(){cout<<"virtual ~B"<<endl;};
+};
+int main(int argc, char *argv[])
+{
+     A* pa=new B;
+     delete pa;
+     return 0;
+}
+#+end_src
+* 重载overload, 重写（覆盖）override
+  1. overload 指同一个类中函数名相同但参数列表不同的函数
+  2. override 指基类与子类中，子类重新定义了基类中的某个虚函数（函数名，参数列表和返回值完全相同）
+* 名称重整/修饰（name mangling/decoration）
+  参考[[http://en.wikipedia.org/wiki/Name_mangling][wikipedia]]
+  为了解决名字冲突问题对函数名和变量名采用某种规则对其进行修饰。
+* RTTI
+  Run Time Type Information
+** typeid
+   *Attention:  typeid是个keyword，是个操作符，并不是函数，是由编译器实现而非库函数实现的*
+#+begin_src c++
+class type_info
+{
+private:
+     type_info(const type_info &);
+     type_info& operator =(const type_info&);
+public:
+     virtual ~type_info();
+     bool operator = =(conST type_info&) const;
+     bool operator !=(const type_info&)const;
+     const char * name() const;
+     bool before(const type_info&);
+};
+#+end_src
+   type_info的复制构造函数和赋值构造函数都是私有的，所以不能构造对象，即 =type_info a;= 是非法的。
+   
+   =typeid(type) or type(expression)= 返回type_info引用（至于为什么typeid内可以拥有type_info对象从而返回type_info引用 Attention 中已经解释过 typeid不是函数，编译器内部实现的，不遵守语言规则，具体怎么实现我也不知道）。
+   于是可以通过 =typeid(type).name()= 返回类型名称，可以比较 =typeid(t1)==typeid(t2)= 。
+
+#+begin_src c++
+class A{
+public:
+     virtual void fun(){};
+};
+class B:public A{
+};
+int main(int argc, char *argv[])
+{
+     B b;
+     A* pa=&b;
+     cout<<typeid(pa).name()<<endl;     // P1A
+     cout<<typeid(*pa).name()<<endl;    // 1B
+     return 0;
+}
+#+end_src
+   typeid用于多态情况时，基类指针指向子类对象时，typeid作用于该解引用后的指针上结果为子类名而非基类名。
+** daynamic_cast
+   动态将指向子类的基类指针转换成子类指针。
+#+begin_src c++
+int main(int argc, char *argv[])
+{
+     B b, *pb;
+     A* pa=&b;
+     pb=dynamic_cast<B*>(pa);
+     return 0;
+}
+#+end_src
+   不保证能够转换成功，若转换失败则返回NULL，所以使用前一定要检查。
+#+begin_src c++
+if(pb){
+///
+}else{
+}
+#+end_src
+   dynamic_cast转换符只能用于指针或者引用。dynamic_cast转换符只能用于含有虚函数的类。
+
+   可以用dynamic_cast来检查一个基类指针是否指向子类对象：
+#+begin_src c++
+B b, *pb;
+A* pa=&b;
+if(dynamic_cast<B*>(pa)){
+     cout<<"A is a base class of B because dynamic_cast succeed"; 
+}else{
+     cout<<"A is a base class of B because dynamic_cast failed"; 
+}
+#+end_src
+   可以用typeid来实现：
+#+begin_src c++
+if(typeid(pa) == typeid(B)){
+        cout<<"A is a base class of B because the results of typeid are equal"; 
+}else{
+        cout<<"A is a base class of B because the results of typeid are equal"; 
+}
+#+end_src
+*** const_cast, static_cast, reinterpret_cast
+    *const_cast* 作用是去掉 const或volatile限制，例如：typeid(T)返回const type_inf&，type_info不能声明对象所以不能这样写 =type_info t = typeid(int);= 但可以用type_info指针指向返回结果： =type_info* pt = const_cast<type_info*>(&typeid(int));= 然后可以 =pt->name();=
+    *static_cast* 相当于C中的强制类型转换，适用于非多态的情况。
+    *reinterpret_cast* 该操作符用于将一种类型转换为另一种不同的类型，比如可以把一个整型转换为一个指针，或把一个指针转换为一个整型，因此使用该操作符的危险性较高，一般不应使用该操作符。

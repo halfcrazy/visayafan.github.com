@@ -1,0 +1,66 @@
+#+OPTIONS: ^:{} _:{} num:t toc:t \n:t
+#+INCLUDE "../../template-toc.org"
+#+SETUPFILE: "../../extension.org"
+#+title:GDB 笔记
+
+* print 查看数据
+#+begin_src c++
+print  variable        查看变量
+print  *array@len      查看数组（array是数组指针，len是需要数据长度）
+缩写为p
+#+end_src
+可以通过添加参数来设置输出格式：
+#+begin_src c++
+/x   按十六进制格式显示变量。
+/d   按十进制格式显示变量。
+/u   按十六进制格式显示无符号整型。
+/o   按八进制格式显示变量。
+/t   按二进制格式显示变量。
+/a   按十六进制格式显示变量。
+/c   按字符格式显示变量。
+/f   按浮点数格式显示变量。
+#+end_src
+* examine 查看内存
+#+begin_example
+examine /n f u + 内存地址（指针变量）
+缩写为x
+#+end_example
+n 表示显示内存长度
+f 表示输出格式（见上）
+u 表示字节数制定（b 单字节；h 双字节；w 四字节；g 八字节；默认为四字节）
+如：
+x /10cw pFilePath  （pFilePath为一个字符串指针，指针占4字节） 查看pFilePath后的10个字符
+x /x p （p是一个int*） 以16进制形式查看p指向内容（默认p大小为4字节，长度为1即4个字节）
+* disassemble 查看汇编
+  =disassemble= 不加参数会显示整个程序的汇编码，后面可以加函数名，或地址范围。
+  =nexti stepi= 和 =next step= 的区别在于不是执行一条C语句而是一条机器指令即一条汇编语句。
+  =x /ni $pc= 或 =display /ni $pc= （其中n是数字） 用来查看下面将要执行的n条汇编语句，区别在于后者GDB每次停下都会显示下面将要执行的n条汇编语句而前者只显示这一次，对于后者可以用 =undisplay= 来取消。
+  Emacs下可以GUD->GDB window->disassembly.
+* display
+  可以用 =display variable-name= 使GDB每次暂停时都显示指定变量，前面的 =display /i $pc= 显示下条汇编语句。
+  用 =undisplay variable-name= 取消每次都显示， undisplay不加参数表取消所有显示，display不加参数显示一次所有每次暂停都要显示的内容。
+* list
+  可以查看即将执行的语句.
+* until
+  后跟行数，表一直执行到第几行。也可以跟函数名表遇到此函数就暂停。
+* finish
+  从一个stack中返回，即退出当前函数（在主函数中没用）
+* 查看寄存器
+  =info registers= 查看所有寄存器的内容。
+  =p $eax= 查看指定寄存器的内容。
+* 快捷键
+  [[http://www.gnu.org/software/emacs/manual/html_node/emacs/Commands-of-GUD.html][手册]]
+  | C-x SPC | 在光标所在行设置断点   |
+  | C-c C-s | step                   |
+  | C-c C-n | next                   |
+  | C-c C-i | stepi                  |
+  | C-c C-r | run                    |
+  | C-c C-b | breakpoint 当前行         |
+  | C-c C-d | 删除当前执行行处的断点 |
+  | C-c C-t | 当前行设置临时断点     |
+  | C-c C-u | until 光标所在的行     |
+  | C-c C-f | finish                 |
+* Trick
+  1. 不退出GDB，重新编译源码，此时再继续使用GDB时会检测到执行文件有更新会重新加载执行文件。
+  2. 加载执行文件 =file filename= ，可以用 =cd= 切换目录
+  3. 删除所有断点 =delete breakpoints=

@@ -294,6 +294,9 @@ d<script type="text/javascript"> $(function() {$('a.lightbox').lightBox();}); </
   操作可以在eshell下完成，不过对于不想离开当前buffer的情况下这直接运行上面命令的方式也是很高效的.
 * 查看当前buffer所有mode帮助信息
   =C-h m=
+* 利用CEDET生成UML
+  在C++文件中菜单 cedet->UML->autogenerate UML chart for class 输入类名则会生成相应的dot文件并调用graphviz来编译生成对应的图片。
+  自动生成的图片感觉有些问题，可以安装 graphviz-dot-mode，在生成的dot文件上 C-c c编译 C-c p生成对应的图片。
 * 分享/评论
 #+html:<a class="btn btn-primary" href="https://raw.github.com/visayafan/visayafan.github.com/master/Others/o/Emacs.org">View Org Source</a>
 #+include "../../disqus.org"

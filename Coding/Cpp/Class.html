@@ -7,11 +7,11 @@
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
 <meta name="title" content="C++类"/>
 <meta name="generator" content="Org-mode"/>
-<meta name="generated" content="2012-12-14 09:04:27 CST"/>
+<meta name="generated" content="2013-01-18 00:11:53 CST"/>
 <meta name="author" content="visayafan"/>
 <meta name="description" content=""/>
 <meta name="keywords" content=""/>
-<div id="org-div-comments"><a href="../../index.html#cpp">主页</a></div>
+
 
 
 </head>
@@ -24,7 +24,7 @@
 
 <!-- <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"> </script> -->
 <link rel="stylesheet" type="text/css" href="../../Layout/CSS/bootstrap_old.css" />
-<link rel="stylesheet" type="text/css" href="../../Layout/CSS/style.css" />
+<link rel="stylesheet" type="text/css" href="../../Layout/CSS/too_many_toc.css" />
 <script src="../../Layout/JS/jquery_1.7.1.js"></script>
 <script src="../../Layout/JS/bootstrap_old.js"></script>
 
@@ -39,6 +39,23 @@
 <li><a href="#sec-3">3 数据成员的绑定</a></li>
 <li><a href="#sec-4">4 由于继承引发的空间浪费</a></li>
 <li><a href="#sec-5">5 虚继承，虚基类</a></li>
+<li><a href="#sec-6">6 初始化列表赋值顺序</a></li>
+<li><a href="#sec-7">7 虚继承构造函数调用顺序</a></li>
+<li><a href="#sec-8">8 虚继承构造函数里调用虚函数</a></li>
+<li><a href="#sec-9">9 多态</a></li>
+<li><a href="#sec-10">10 虚析构函数</a></li>
+<li><a href="#sec-11">11 重载overload, 重写（覆盖）override</a></li>
+<li><a href="#sec-12">12 名称重整/修饰（name mangling/decoration）</a></li>
+<li><a href="#sec-13">13 RTTI</a>
+<ul>
+<li><a href="#sec-13-1">13.1 typeid</a></li>
+<li><a href="#sec-13-2">13.2 daynamic_cast</a>
+<ul>
+<li><a href="#sec-13-2-1">13.2.1 const_cast, static_cast, reinterpret_cast</a></li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 </div>
 </div>
@@ -182,7 +199,8 @@ cout&lt;&lt;c.c3&lt;&lt;endl;
 <div class="outline-text-2" id="text-5">
 
 <p>  例如下面的例子：<br/>
-<link rel="stylesheet" href="../../Layout/CSS/jquery.lightbox-0.5.css" type="text/css" media="screen" /> <script type="text/javascript" src="../../Layout/JS/jquery.lightbox-0.5.js"></script> <center> <a class="lightbox" href="images/virtual-base-class.gif"> <img class="lightbox " title="点击查看大图" src="images/virtual-base-class.gif" width="300"> </a> </center> <script type="text/javascript"> $(function() {$('a.lightbox').lightBox();}); </script>
+<a name="xujicheng" id="xujicheng"></a><br/>
+<link rel="stylesheet" href="../../Layout/CSS/jquery.lightbox-0.5.css" type="text/css" media="screen" /> <script type="text/javascript" src="../../Layout/JS/jquery.lightbox-0.5.js"></script> <center> <a class="lightbox" href="images/virtual-base-class.gif"> <img class="lightbox " title="点击查看大图" src="images/virtual-base-class.gif" width="$2"> </a> </center> <script type="text/javascript"> $(function() {$('a.lightbox').lightBox();}); </script>
   如果按照普通继承方式则pegasus中将含有2份Animal的变量，而实际上一份即可，故引入虚继承。<br/>
   虚继承不需要对Animal做任何改变，只需要改变Horse, Bird继承Animal时的方式即可。<br/>
 </p>
@@ -314,6 +332,487 @@ cout&lt;&lt;c.c3&lt;&lt;endl;
 
 </div>
 </p></div>
+
+</div>
+
+<div id="outline-container-6" class="outline-2">
+<h2 id="sec-6"><span class="section-number-2">6</span> 初始化列表赋值顺序</h2>
+<div class="outline-text-2" id="text-6">
+
+<p>  赋值顺序与变量声明顺序相同，则与初始化列表里顺序无关。<br/>
+</p>
+
+
+<pre class="src src-c++"><span style="color: #a020f0;">class</span> <span style="color: #228b22;">test</span>
+{
+<span style="color: #a020f0;">public</span>:
+     <span style="color: #0000ff;">test</span>(<span style="color: #228b22;">int</span> <span style="color: #a0522d;">x</span>): b(x), a(b){}  <span style="color: #b22222;">// </span><span style="color: #b22222;">&#30001;&#20110;a&#22768;&#26126;&#22312;&#20808;&#25152;&#20197;a&#20808;&#21021;&#22987;&#21270;&#65292;&#21363;a=b,&#27492;&#26102;b=x&#36824;&#27809;&#26377;&#25191;&#34892;&#65292;&#25925;a&#32467;&#26524;&#20026;&#19968;&#38543;&#26426;&#25968;</span>
+     <span style="color: #228b22;">void</span> <span style="color: #0000ff;">print_out</span>(){
+          cout&lt;&lt;a&lt;&lt;<span style="color: #8b2252;">" "</span>&lt;&lt;b&lt;&lt;endl;
+     }
+     <span style="color: #228b22;">int</span> <span style="color: #a0522d;">a</span>, <span style="color: #a0522d;">b</span>;
+};
+</pre>
+
+</div>
+
+</div>
+
+<div id="outline-container-7" class="outline-2">
+<h2 id="sec-7"><span class="section-number-2">7</span> 虚继承构造函数调用顺序</h2>
+<div class="outline-text-2" id="text-7">
+
+<p>  <a href="#xujicheng">图</a>中Pegasus的构造函数的调用基类的顺序为：Animal-&gt;Horse-&gt;Bird，即先调用虚基类，且Horse和Bird中的构造函数不再调用Animal的构造函数。<br/>
+<div class="row-fluid"> <div class="span4">
+
+<pre class="src src-c++"><span style="color: #a020f0;">class</span> <span style="color: #228b22;">Top</span>{
+<span style="color: #a020f0;">public</span>:
+     <span style="color: #0000ff;">Top</span>(){cout&lt;&lt;<span style="color: #8b2252;">"top"</span>&lt;&lt;endl;}
+     <span style="color: #228b22;">int</span> <span style="color: #a0522d;">a</span>;
+};
+<span style="color: #a020f0;">class</span> <span style="color: #228b22;">Left</span>: <span style="color: #a020f0;">virtual</span> <span style="color: #a020f0;">public</span> <span style="color: #228b22;">Top</span>{
+<span style="color: #a020f0;">public</span>:
+     <span style="color: #0000ff;">Left</span>(){cout&lt;&lt;<span style="color: #8b2252;">"Left"</span>&lt;&lt;endl;}
+     <span style="color: #228b22;">int</span> <span style="color: #a0522d;">b</span>;
+};
+<span style="color: #a020f0;">class</span> <span style="color: #228b22;">Right</span>: <span style="color: #a020f0;">virtual</span> <span style="color: #a020f0;">public</span> <span style="color: #228b22;">Top</span>{
+<span style="color: #a020f0;">public</span>:
+     <span style="color: #0000ff;">Right</span>(){cout&lt;&lt;<span style="color: #8b2252;">"Right"</span>&lt;&lt;endl;}
+     <span style="color: #228b22;">int</span> <span style="color: #a0522d;">c</span>;
+};
+<span style="color: #a020f0;">class</span> <span style="color: #228b22;">Bottom</span>: <span style="color: #a020f0;">public</span> <span style="color: #228b22;">Left</span>, <span style="color: #a020f0;">public</span> <span style="color: #228b22;">Right</span>{
+<span style="color: #a020f0;">public</span>:
+     <span style="color: #0000ff;">Bottom</span>(){cout&lt;&lt;<span style="color: #8b2252;">"Bottom"</span>&lt;&lt;endl;}
+     <span style="color: #228b22;">int</span> <span style="color: #a0522d;">d</span>;
+};
+
+<span style="color: #228b22;">int</span> <span style="color: #0000ff;">main</span>(<span style="color: #228b22;">int</span> <span style="color: #a0522d;">argc</span>, <span style="color: #228b22;">char</span> *<span style="color: #a0522d;">argv</span>[])
+{
+     <span style="color: #228b22;">Bottom</span> <span style="color: #a0522d;">b</span>;
+     <span style="color: #a020f0;">return</span> 0;
+}
+</pre>
+
+  结果为：<br/>
+</p>
+
+
+<pre class="src src-c++">top
+Left
+<span style="color: #228b22;">Right</span>
+<span style="color: #a0522d;">Bottom</span>
+</pre>
+
+
+
+</div> <div class="span2">
+</div> <div class="span5">
+<p>
+实际展开过程为参数列表添加了额外的bool参数用来压抑Left和Right对Top构造函数的调用：<br/>
+参考：《深入理解C++对象模型》第5章虚拟继承<br/>
+</p>
+
+
+<pre class="src src-c++"><span style="color: #228b22;">Left</span>* <span style="color: #0000ff;">Left</span>(Left * <span style="color: #a020f0;">const</span> <span style="color: #a020f0;">this</span>, <span style="color: #228b22;">bool</span> <span style="color: #a0522d;">__most_derived</span>){
+        <span style="color: #a020f0;">if</span>(__most_derived)
+                <span style="color: #a020f0;">this</span>-&gt;<span style="color: #008b8b;">Top</span>::Top();
+        cout&lt;&lt;<span style="color: #8b2252;">"Left"</span>&lt;&lt;endl;
+        <span style="color: #a020f0;">return</span> <span style="color: #a020f0;">this</span>;
+}
+<span style="color: #228b22;">Right</span>* <span style="color: #0000ff;">Right</span>(Right * <span style="color: #a020f0;">const</span> <span style="color: #a020f0;">this</span>, <span style="color: #228b22;">bool</span> <span style="color: #a0522d;">__most_derived</span>){
+        <span style="color: #a020f0;">if</span>(__most_derived)
+                <span style="color: #a020f0;">this</span>-&gt;<span style="color: #008b8b;">Top</span>::Top();
+        cout&lt;&lt;<span style="color: #8b2252;">"Right"</span>&lt;&lt;endl;
+        <span style="color: #a020f0;">return</span> <span style="color: #a020f0;">this</span>;
+}
+<span style="color: #228b22;">Bottom</span>* <span style="color: #0000ff;">Bottom</span>(Bottom * <span style="color: #a020f0;">const</span> <span style="color: #a020f0;">this</span>, <span style="color: #228b22;">bool</span> <span style="color: #a0522d;">__most_derived</span>){
+        <span style="color: #a020f0;">if</span>(__most_derived)
+                <span style="color: #a020f0;">this</span>-&gt;<span style="color: #008b8b;">Top</span>::Top();
+        <span style="color: #a020f0;">this</span>-&gt;<span style="color: #008b8b;">Left</span>::Left(<span style="color: #008b8b;">false</span>);
+        <span style="color: #a020f0;">this</span>-&gt;<span style="color: #008b8b;">Right</span>::Right(<span style="color: #008b8b;">false</span>);
+        cout&lt;&lt;<span style="color: #8b2252;">"Bottom"</span>&lt;&lt;endl;
+        <span style="color: #a020f0;">return</span> <span style="color: #a020f0;">this</span>;
+} 
+</pre>
+
+<p>
+由于Bottom里为Left构造函数传false，所以Left不用调用Top的构造函数，同理Right。这样Bottom最终只调用一次Top的构造函数。<br/>
+</div></div>
+</p></div>
+
+</div>
+
+<div id="outline-container-8" class="outline-2">
+<h2 id="sec-8"><span class="section-number-2">8</span> 虚继承构造函数里调用虚函数</h2>
+<div class="outline-text-2" id="text-8">
+
+<p>  调用的构造函数所属类里的那个虚函数。Bottom ctor调用Top ctor时由于Bottom对象还没有完全构造好所以Top ctor里的虚函数不能是Bottom里的。<br/>
+  此时不能使用虚函数机制，应该展开应该静态方式调用： <code>Top* Top(Top *const this){this-&gt;Top::which_called();}</code><br/>
+  参考：《深入理解C++对象模型》第5章vptr初始化语义学<br/>
+<link rel="stylesheet" href="../../Layout/CSS/jquery.lightbox-0.5.css" type="text/css" media="screen" /> <script type="text/javascript" src="../../Layout/JS/jquery.lightbox-0.5.js"></script> <center> <a class="lightbox" href="./images/Top.png"> <img class="lightbox " title="点击查看大图" src="./images/Top.png" width="300"> </a> </center> <script type="text/javascript"> $(function() {$('a.lightbox').lightBox();}); </script>
+
+<pre class="src src-c++"><span style="color: #a020f0;">class</span> <span style="color: #228b22;">Top</span>{
+<span style="color: #a020f0;">public</span>:
+     <span style="color: #0000ff;">Top</span>(){which_called();}
+     <span style="color: #a020f0;">virtual</span> <span style="color: #228b22;">void</span> <span style="color: #0000ff;">which_called</span>(){cout&lt;&lt;<span style="color: #8b2252;">"Top"</span>&lt;&lt;endl;}
+     <span style="color: #228b22;">int</span> <span style="color: #a0522d;">a</span>;
+};
+<span style="color: #a020f0;">class</span> <span style="color: #228b22;">Left</span>: <span style="color: #a020f0;">virtual</span> <span style="color: #a020f0;">public</span> <span style="color: #228b22;">Top</span>{
+<span style="color: #a020f0;">public</span>:
+     <span style="color: #0000ff;">Left</span>(){which_called();}
+     <span style="color: #a020f0;">virtual</span> <span style="color: #228b22;">void</span> <span style="color: #0000ff;">which_called</span>(){cout&lt;&lt;<span style="color: #8b2252;">"Left"</span>&lt;&lt;endl;}
+     <span style="color: #228b22;">int</span> <span style="color: #a0522d;">b</span>;
+};
+<span style="color: #a020f0;">class</span> <span style="color: #228b22;">Right</span>: <span style="color: #a020f0;">virtual</span> <span style="color: #a020f0;">public</span> <span style="color: #228b22;">Top</span>{
+<span style="color: #a020f0;">public</span>:
+     <span style="color: #0000ff;">Right</span>(){which_called();}
+     <span style="color: #a020f0;">virtual</span> <span style="color: #228b22;">void</span> <span style="color: #0000ff;">which_called</span>(){cout&lt;&lt;<span style="color: #8b2252;">"Right"</span>&lt;&lt;endl;}
+     <span style="color: #228b22;">int</span> <span style="color: #a0522d;">c</span>;
+};
+<span style="color: #a020f0;">class</span> <span style="color: #228b22;">Bottom</span>: <span style="color: #a020f0;">public</span> <span style="color: #228b22;">Left</span>, <span style="color: #a020f0;">public</span> <span style="color: #228b22;">Right</span>{
+<span style="color: #a020f0;">public</span>:
+     <span style="color: #0000ff;">Bottom</span>(){which_called();}
+     <span style="color: #a020f0;">virtual</span> <span style="color: #228b22;">void</span> <span style="color: #0000ff;">which_called</span>(){cout&lt;&lt;<span style="color: #8b2252;">"Bottom"</span>&lt;&lt;endl;}
+     <span style="color: #228b22;">int</span> <span style="color: #a0522d;">d</span>;
+};
+
+<span style="color: #228b22;">int</span> <span style="color: #0000ff;">main</span>(<span style="color: #228b22;">int</span> <span style="color: #a0522d;">argc</span>, <span style="color: #228b22;">char</span> *<span style="color: #a0522d;">argv</span>[])
+{
+     <span style="color: #228b22;">Bottom</span> <span style="color: #a0522d;">b</span>;
+     <span style="color: #a020f0;">return</span> 0;
+}
+</pre>
+
+</p></div>
+
+</div>
+
+<div id="outline-container-9" class="outline-2">
+<h2 id="sec-9"><span class="section-number-2">9</span> 多态</h2>
+<div class="outline-text-2" id="text-9">
+
+
+
+
+<pre class="src src-c++"><span style="color: #a020f0;">class</span> <span style="color: #228b22;">A</span>{
+<span style="color: #a020f0;">public</span>:
+     <span style="color: #228b22;">void</span> <span style="color: #0000ff;">x</span>(){cout&lt;&lt;<span style="color: #8b2252;">"AX"</span>&lt;&lt;endl;}
+     <span style="color: #a020f0;">virtual</span> <span style="color: #228b22;">void</span> <span style="color: #0000ff;">y</span>(){cout&lt;&lt;<span style="color: #8b2252;">"Ay"</span>&lt;&lt;endl;}
+};
+<span style="color: #a020f0;">class</span> <span style="color: #228b22;">B</span>: <span style="color: #a020f0;">public</span> <span style="color: #228b22;">A</span>{
+<span style="color: #a020f0;">public</span>:
+     <span style="color: #228b22;">void</span> <span style="color: #0000ff;">x</span>(){cout&lt;&lt;<span style="color: #8b2252;">"BX"</span>&lt;&lt;endl;}
+     <span style="color: #228b22;">void</span> <span style="color: #0000ff;">y</span>(){cout&lt;&lt;<span style="color: #8b2252;">"BY"</span>&lt;&lt;endl;}
+};
+<span style="color: #228b22;">int</span> <span style="color: #0000ff;">main</span>(<span style="color: #228b22;">int</span> <span style="color: #a0522d;">argc</span>, <span style="color: #228b22;">char</span> *<span style="color: #a0522d;">argv</span>[])
+{
+     <span style="color: #228b22;">B</span> <span style="color: #a0522d;">b</span>;
+     <span style="color: #228b22;">A</span>* <span style="color: #a0522d;">pa</span>=&amp;b;
+     pa-&gt;x();
+     pa-&gt;y();
+     <span style="color: #a020f0;">return</span> 0;
+}
+</pre>
+
+<p>
+  结果为：<br/>
+</p>
+
+
+<pre class="src src-c++"><span style="color: #228b22;">AX</span>
+<span style="color: #a0522d;">BY</span>
+</pre>
+
+<p>
+  动态决议pa-&gt;y();调用的是哪个类的y.<br/>
+  b只有一个vptr(有几个基类就有几个vptr)<br/>
+</p></div>
+
+</div>
+
+<div id="outline-container-10" class="outline-2">
+<h2 id="sec-10"><span class="section-number-2">10</span> 虚析构函数</h2>
+<div class="outline-text-2" id="text-10">
+
+
+<div class="row-fluid"> <div class="span4">
+
+<pre class="src src-c++"><span style="color: #a020f0;">class</span> <span style="color: #228b22;">A</span>
+{
+<span style="color: #a020f0;">public</span>:
+     <span style="color: #0000ff;">A</span>(){cout&lt;&lt;<span style="color: #8b2252;">"ctor A"</span>&lt;&lt;endl;}
+     <span style="color: #a020f0;">virtual</span> <span style="color: #228b22;">void</span> <span style="color: #0000ff;">x</span>(){};
+     ~<span style="color: #0000ff;">A</span>(){cout&lt;&lt;<span style="color: #8b2252;">"virtual ~A"</span>&lt;&lt;endl;};
+};
+
+<span style="color: #a020f0;">class</span> <span style="color: #228b22;">B</span>: <span style="color: #a020f0;">public</span> <span style="color: #228b22;">A</span>
+{
+<span style="color: #a020f0;">public</span>:
+     <span style="color: #0000ff;">B</span>(){cout&lt;&lt;<span style="color: #8b2252;">"ctor B"</span>&lt;&lt;endl;}
+     ~<span style="color: #0000ff;">B</span>(){cout&lt;&lt;<span style="color: #8b2252;">"virtual ~B"</span>&lt;&lt;endl;};
+};
+
+<span style="color: #228b22;">int</span> <span style="color: #0000ff;">main</span>(<span style="color: #228b22;">int</span> <span style="color: #a0522d;">argc</span>, <span style="color: #228b22;">char</span> *<span style="color: #a0522d;">argv</span>[])
+{
+     <span style="color: #228b22;">A</span>* <span style="color: #a0522d;">pa</span>=<span style="color: #a020f0;">new</span> <span style="color: #228b22;">B</span>;
+     <span style="color: #a020f0;">delete</span> pa;
+     <span style="color: #a020f0;">return</span> 0;
+}
+</pre>
+
+<p>
+  结果：<br/>
+</p>
+
+
+<pre class="src src-c++">ctor A
+ctor <span style="color: #228b22;">B</span>
+<span style="color: #a020f0;">virtual</span> ~A
+</pre>
+
+
+
+</div> <div class="span2">
+</div> <div class="span4">
+
+<pre class="src src-c++"><span style="color: #a020f0;">class</span> <span style="color: #228b22;">A</span>
+{
+<span style="color: #a020f0;">public</span>:
+     <span style="color: #0000ff;">A</span>(){cout&lt;&lt;<span style="color: #8b2252;">"ctor A"</span>&lt;&lt;endl;}
+     <span style="color: #a020f0;">virtual</span> <span style="color: #228b22;">void</span> <span style="color: #0000ff;">x</span>(){};
+     <span style="color: #a020f0;">virtual</span> ~<span style="color: #0000ff;">A</span>(){cout&lt;&lt;<span style="color: #8b2252;">"virtual ~A"</span>&lt;&lt;endl;};
+};
+
+<span style="color: #a020f0;">class</span> <span style="color: #228b22;">B</span>: <span style="color: #a020f0;">public</span> <span style="color: #228b22;">A</span>
+{
+<span style="color: #a020f0;">public</span>:
+     <span style="color: #0000ff;">B</span>(){cout&lt;&lt;<span style="color: #8b2252;">"ctor B"</span>&lt;&lt;endl;}
+     ~<span style="color: #0000ff;">B</span>(){cout&lt;&lt;<span style="color: #8b2252;">"virtual ~B"</span>&lt;&lt;endl;};
+};
+
+<span style="color: #228b22;">int</span> <span style="color: #0000ff;">main</span>(<span style="color: #228b22;">int</span> <span style="color: #a0522d;">argc</span>, <span style="color: #228b22;">char</span> *<span style="color: #a0522d;">argv</span>[])
+{
+     <span style="color: #228b22;">A</span>* <span style="color: #a0522d;">pa</span>=<span style="color: #a020f0;">new</span> <span style="color: #228b22;">B</span>;
+     <span style="color: #a020f0;">delete</span> pa;
+     <span style="color: #a020f0;">return</span> 0;
+}
+</pre>
+
+<p>
+结果：<br/>
+</p>
+
+
+<pre class="src src-c++">ctor A
+ctor B
+<span style="color: #a020f0;">virtual</span> ~<span style="color: #228b22;">B</span>
+<span style="color: #a020f0;">virtual</span> ~A
+</pre>
+
+
+
+</div></div>
+<p>
+左边可以看到用基类指针来操控子类对象时，如果析构函数不是virtual的则子类的析构函数不会被调用，这通常情况下不是我们想看到的。<br/>
+</p>
+<p>
+所以一般的结论是： <b>如果一个类中有虚函数就一定为它加上虚析构函数</b>。原因：<br/>
+</p><ol>
+<li>如果一个类有虚函数功能，它经常作为一个基类使用。<br/>
+</li>
+<li>如果它是一个基类，它的派生类经常使用new来分配。<br/>
+</li>
+<li>如果一个派生类对象使用new来分配，并且通过一个指向它的基类的指针来控制，那么它经常通过一个指向它的基类的指针来删除它（如果基类没有虚析构函数，结果将是不确定的，实际发生时，派生类的析构函数永远不会被调用）。<br/>
+</li>
+</ol>
+
+
+<p>
+<b>纯虚析构函数必须要被定义</b> 因为虚析构函数工作的方式是：最底层的派生类的析构函数最先被调用，然后各个基类的析构函数被调用。这就是说，即使是抽象类，编译器也要产生对此类的析构函数进行调用，所以要保证为它提供函数体（哪怕是空的）。如果不这么做，链接器就会检测出来，最后还是得回去把它添上。<br/>
+</p>
+
+
+<pre class="src src-c++"><span style="color: #a020f0;">class</span> <span style="color: #228b22;">A</span>
+{
+<span style="color: #a020f0;">public</span>:
+     <span style="color: #a020f0;">virtual</span> ~<span style="color: #0000ff;">A</span>() =0;
+};
+<span style="color: #008b8b;">A</span>::~<span style="color: #0000ff;">A</span>(){}       <span style="color: #b22222;">// </span><span style="color: #b22222;">&#27492;&#34892;&#26159;&#24517;&#39035;&#30340;&#65292;&#25277;&#35937;&#31867;&#30340;&#34394;&#26512;&#26500;&#20989;&#25968;&#24517;&#39035;&#35201;&#34987;&#23450;&#20041;&#21542;&#21017;&#32534;&#35793;&#19981;&#36807;</span>
+
+<span style="color: #a020f0;">class</span> <span style="color: #228b22;">B</span>: <span style="color: #a020f0;">public</span> <span style="color: #228b22;">A</span>
+{
+<span style="color: #a020f0;">public</span>:
+     ~<span style="color: #0000ff;">B</span>(){cout&lt;&lt;<span style="color: #8b2252;">"virtual ~B"</span>&lt;&lt;endl;};
+};
+<span style="color: #228b22;">int</span> <span style="color: #0000ff;">main</span>(<span style="color: #228b22;">int</span> <span style="color: #a0522d;">argc</span>, <span style="color: #228b22;">char</span> *<span style="color: #a0522d;">argv</span>[])
+{
+     <span style="color: #228b22;">A</span>* <span style="color: #a0522d;">pa</span>=<span style="color: #a020f0;">new</span> <span style="color: #228b22;">B</span>;
+     <span style="color: #a020f0;">delete</span> pa;
+     <span style="color: #a020f0;">return</span> 0;
+}
+</pre>
+
+</div>
+
+</div>
+
+<div id="outline-container-11" class="outline-2">
+<h2 id="sec-11"><span class="section-number-2">11</span> 重载overload, 重写（覆盖）override</h2>
+<div class="outline-text-2" id="text-11">
+
+<ol>
+<li>overload 指同一个类中函数名相同但参数列表不同的函数<br/>
+</li>
+<li>override 指基类与子类中，子类重新定义了基类中的某个虚函数（函数名，参数列表和返回值完全相同）<br/>
+</li>
+</ol>
+
+</div>
+
+</div>
+
+<div id="outline-container-12" class="outline-2">
+<h2 id="sec-12"><span class="section-number-2">12</span> 名称重整/修饰（name mangling/decoration）</h2>
+<div class="outline-text-2" id="text-12">
+
+<p>  参考<a href="http://en.wikipedia.org/wiki/Name_mangling">wikipedia</a><br/>
+  为了解决名字冲突问题对函数名和变量名采用某种规则对其进行修饰。<br/>
+</p></div>
+
+</div>
+
+<div id="outline-container-13" class="outline-2">
+<h2 id="sec-13"><span class="section-number-2">13</span> RTTI</h2>
+<div class="outline-text-2" id="text-13">
+
+<p>  Run Time Type Information<br/>
+</p>
+</div>
+
+<div id="outline-container-13-1" class="outline-3">
+<h3 id="sec-13-1"><span class="section-number-3">13.1</span> typeid</h3>
+<div class="outline-text-3" id="text-13-1">
+
+<p>   <b>Attention:  typeid是个keyword，是个操作符，并不是函数，是由编译器实现而非库函数实现的</b><br/>
+</p>
+
+
+<pre class="src src-c++"><span style="color: #a020f0;">class</span> <span style="color: #228b22;">type_info</span>
+{
+<span style="color: #a020f0;">private</span>:
+     <span style="color: #0000ff;">type_info</span>(<span style="color: #a020f0;">const</span> <span style="color: #228b22;">type_info</span> &amp;);
+     <span style="color: #228b22;">type_info</span>&amp; <span style="color: #a020f0;">operator</span> <span style="color: #0000ff;">=</span>(<span style="color: #a020f0;">const</span> <span style="color: #228b22;">type_info</span>&amp;);
+<span style="color: #a020f0;">public</span>:
+     <span style="color: #a020f0;">virtual</span> ~<span style="color: #0000ff;">type_info</span>();
+     <span style="color: #228b22;">bool</span> <span style="color: #a020f0;">operator</span> <span style="color: #a0522d;">=</span> =(conST <span style="color: #228b22;">type_info</span>&amp;) <span style="color: #a020f0;">const</span>;
+     <span style="color: #228b22;">bool</span> <span style="color: #a020f0;">operator</span> <span style="color: #0000ff;">!=</span>(<span style="color: #a020f0;">const</span> <span style="color: #228b22;">type_info</span>&amp;)<span style="color: #a020f0;">const</span>;
+     <span style="color: #a020f0;">const</span> <span style="color: #228b22;">char</span> * <span style="color: #0000ff;">name</span>() <span style="color: #a020f0;">const</span>;
+     <span style="color: #228b22;">bool</span> <span style="color: #0000ff;">before</span>(<span style="color: #a020f0;">const</span> <span style="color: #228b22;">type_info</span>&amp;);
+};
+</pre>
+
+<p>
+   type_info的复制构造函数和赋值构造函数都是私有的，所以不能构造对象，即 <code>type_info a;</code> 是非法的。<br/>
+</p>
+<p>   <br/>
+   <code>typeid(type) or type(expression)</code> 返回type_info引用（至于为什么typeid内可以拥有type_info对象从而返回type_info引用 Attention 中已经解释过 typeid不是函数，编译器内部实现的，不遵守语言规则，具体怎么实现我也不知道）。<br/>
+   于是可以通过 <code>typeid(type).name()</code> 返回类型名称，可以比较 <code>typeid(t1)==typeid(t2)</code> 。<br/>
+</p>
+
+
+
+<pre class="src src-c++"><span style="color: #a020f0;">class</span> <span style="color: #228b22;">A</span>{
+<span style="color: #a020f0;">public</span>:
+     <span style="color: #a020f0;">virtual</span> <span style="color: #228b22;">void</span> <span style="color: #0000ff;">fun</span>(){};
+};
+<span style="color: #a020f0;">class</span> <span style="color: #228b22;">B</span>:<span style="color: #a020f0;">public</span> <span style="color: #228b22;">A</span>{
+};
+<span style="color: #228b22;">int</span> <span style="color: #0000ff;">main</span>(<span style="color: #228b22;">int</span> <span style="color: #a0522d;">argc</span>, <span style="color: #228b22;">char</span> *<span style="color: #a0522d;">argv</span>[])
+{
+     <span style="color: #228b22;">B</span> <span style="color: #a0522d;">b</span>;
+     <span style="color: #228b22;">A</span>* <span style="color: #a0522d;">pa</span>=&amp;b;
+     cout&lt;&lt;<span style="color: #a020f0;">typeid</span>(pa).name()&lt;&lt;endl;     <span style="color: #b22222;">// </span><span style="color: #b22222;">P1A</span>
+     cout&lt;&lt;<span style="color: #a020f0;">typeid</span>(*pa).name()&lt;&lt;endl;    <span style="color: #b22222;">// </span><span style="color: #b22222;">1B</span>
+     <span style="color: #a020f0;">return</span> 0;
+}
+</pre>
+
+<p>
+   typeid用于多态情况时，基类指针指向子类对象时，typeid作用于该解引用后的指针上结果为子类名而非基类名。<br/>
+</p></div>
+
+</div>
+
+<div id="outline-container-13-2" class="outline-3">
+<h3 id="sec-13-2"><span class="section-number-3">13.2</span> daynamic_cast</h3>
+<div class="outline-text-3" id="text-13-2">
+
+<p>   动态将指向子类的基类指针转换成子类指针。<br/>
+</p>
+
+
+<pre class="src src-c++"><span style="color: #228b22;">int</span> <span style="color: #0000ff;">main</span>(<span style="color: #228b22;">int</span> <span style="color: #a0522d;">argc</span>, <span style="color: #228b22;">char</span> *<span style="color: #a0522d;">argv</span>[])
+{
+     <span style="color: #228b22;">B</span> <span style="color: #a0522d;">b</span>, *<span style="color: #a0522d;">pb</span>;
+     <span style="color: #228b22;">A</span>* <span style="color: #a0522d;">pa</span>=&amp;b;
+     pb=<span style="color: #a020f0;">dynamic_cast</span>&lt;B*&gt;(pa);
+     <span style="color: #a020f0;">return</span> 0;
+}
+</pre>
+
+<p>
+   不保证能够转换成功，若转换失败则返回NULL，所以使用前一定要检查。<br/>
+</p>
+
+
+<pre class="src src-c++"><span style="color: #a020f0;">if</span>(pb){
+<span style="color: #b22222;">///</span>
+}<span style="color: #a020f0;">else</span>{
+}
+</pre>
+
+<p>
+   dynamic_cast转换符只能用于指针或者引用。dynamic_cast转换符只能用于含有虚函数的类。<br/>
+</p>
+<p>
+   可以用dynamic_cast来检查一个基类指针是否指向子类对象：<br/>
+</p>
+
+
+<pre class="src src-c++"><span style="color: #228b22;">B</span> <span style="color: #a0522d;">b</span>, *<span style="color: #a0522d;">pb</span>;
+<span style="color: #228b22;">A</span>* <span style="color: #a0522d;">pa</span>=&amp;b;
+<span style="color: #a020f0;">if</span>(<span style="color: #a020f0;">dynamic_cast</span>&lt;B*&gt;(pa)){
+     cout&lt;&lt;<span style="color: #8b2252;">"A is a base class of B because dynamic_cast succeed"</span>; 
+}<span style="color: #a020f0;">else</span>{
+     cout&lt;&lt;<span style="color: #8b2252;">"A is a base class of B because dynamic_cast failed"</span>; 
+}
+</pre>
+
+<p>
+   可以用typeid来实现：<br/>
+</p>
+
+
+<pre class="src src-c++"><span style="color: #a020f0;">if</span>(<span style="color: #a020f0;">typeid</span>(pa) == <span style="color: #a020f0;">typeid</span>(B)){
+        cout&lt;&lt;<span style="color: #8b2252;">"A is a base class of B because the results of typeid are equal"</span>; 
+}<span style="color: #a020f0;">else</span>{
+        cout&lt;&lt;<span style="color: #8b2252;">"A is a base class of B because the results of typeid are equal"</span>; 
+}
+</pre>
+
+
+</div>
+
+<div id="outline-container-13-2-1" class="outline-4">
+<h4 id="sec-13-2-1"><span class="section-number-4">13.2.1</span> const_cast, static_cast, reinterpret_cast</h4>
+<div class="outline-text-4" id="text-13-2-1">
+
+<p>    <b>const_cast</b> 作用是去掉 const或volatile限制，例如：typeid(T)返回const type_inf&amp;，type_info不能声明对象所以不能这样写 <code>type_info t = typeid(int);</code> 但可以用type_info指针指向返回结果： <code>type_info* pt = const_cast&lt;type_info*&gt;(&amp;typeid(int));</code> 然后可以 <code>pt-&gt;name();</code><br/>
+    <b>static_cast</b> 相当于C中的强制类型转换，适用于非多态的情况。<br/>
+    <b>reinterpret_cast</b> 该操作符用于将一种类型转换为另一种不同的类型，比如可以把一个整型转换为一个指针，或把一个指针转换为一个整型，因此使用该操作符的危险性较高，一般不应使用该操作符。<br/>
+</p></div>
+</div>
+</div>
 </div>
 </div>
 

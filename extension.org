@@ -1,5 +1,5 @@
 #定义宏,简化原org文件
-#+macro:lightbox #+html:<link rel="stylesheet" href="../../Layout/CSS/jquery.lightbox-0.5.css" type="text/css" media="screen" /> <script type="text/javascript" src="../../Layout/JS/jquery.lightbox-0.5.js"></script> <center> <a class="lightbox" href="$1"> <img class="lightbox " title="点击查看大图" src="$1" width="300"> </a> </center> <script type="text/javascript"> $(function() {$('a.lightbox').lightBox();}); </script>
+#+macro:lightbox #+html:<link rel="stylesheet" href="../../Layout/CSS/jquery.lightbox-0.5.css" type="text/css" media="screen" /> <script type="text/javascript" src="../../Layout/JS/jquery.lightbox-0.5.js"></script> <center> <a class="lightbox" href="$1"> <img class="lightbox " title="点击查看大图" src="$1" width="$2"> </a> </center> <script type="text/javascript"> $(function() {$('a.lightbox').lightBox();}); </script>
 
 #+macro: image #+html:<img src="$1"></img> 
 

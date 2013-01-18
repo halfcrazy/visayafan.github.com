@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+               "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-CN" xml:lang="zh-CN">
+<head>
+<title>GDB 笔记</title>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
+<meta name="title" content="GDB 笔记"/>
+<meta name="generator" content="Org-mode"/>
+<meta name="generated" content="2013-01-18 21:18:17 CST"/>
+<meta name="author" content="visayafan"/>
+<meta name="description" content=""/>
+<meta name="keywords" content=""/>
+
+
+
+</head>
+<body>
+
+
+<div id="content">
+<h1 class="title">GDB 笔记</h1>
+
+
+<!-- <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"> </script> -->
+<link rel="stylesheet" type="text/css" href="../../Layout/CSS/bootstrap_old.css" />
+<link rel="stylesheet" type="text/css" href="../../Layout/CSS/too_many_toc.css" />
+<script src="../../Layout/JS/jquery_1.7.1.js"></script>
+<script src="../../Layout/JS/bootstrap_old.js"></script>
+
+
+
+<div id="table-of-contents">
+<h2>目录</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#sec-1">1 print 查看数据</a></li>
+<li><a href="#sec-2">2 examine 查看内存</a></li>
+<li><a href="#sec-3">3 disassemble 查看汇编</a></li>
+<li><a href="#sec-4">4 display</a></li>
+<li><a href="#sec-5">5 list</a></li>
+<li><a href="#sec-6">6 until</a></li>
+<li><a href="#sec-7">7 finish</a></li>
+<li><a href="#sec-8">8 查看寄存器</a></li>
+<li><a href="#sec-9">9 快捷键</a></li>
+<li><a href="#sec-10">10 Trick</a></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-1" class="outline-2">
+<h2 id="sec-1"><span class="section-number-2">1</span> print 查看数据</h2>
+<div class="outline-text-2" id="text-1">
+
+
+
+
+<pre class="src src-c++">print  variable        &#26597;&#30475;&#21464;&#37327;
+<span style="color: #228b22;">print</span>  *<span style="color: #a0522d;">array</span>@len      &#26597;&#30475;&#25968;&#32452;&#65288;array&#26159;&#25968;&#32452;&#25351;&#38024;&#65292;len&#26159;&#38656;&#35201;&#25968;&#25454;&#38271;&#24230;&#65289;
+&#32553;&#20889;&#20026;p
+</pre>
+
+<p>
+可以通过添加参数来设置输出格式：<br/>
+</p>
+
+
+<pre class="src src-c++">/x   &#25353;&#21313;&#20845;&#36827;&#21046;&#26684;&#24335;&#26174;&#31034;&#21464;&#37327;&#12290;
+/d   &#25353;&#21313;&#36827;&#21046;&#26684;&#24335;&#26174;&#31034;&#21464;&#37327;&#12290;
+/u   &#25353;&#21313;&#20845;&#36827;&#21046;&#26684;&#24335;&#26174;&#31034;&#26080;&#31526;&#21495;&#25972;&#22411;&#12290;
+/o   &#25353;&#20843;&#36827;&#21046;&#26684;&#24335;&#26174;&#31034;&#21464;&#37327;&#12290;
+/t   &#25353;&#20108;&#36827;&#21046;&#26684;&#24335;&#26174;&#31034;&#21464;&#37327;&#12290;
+/a   &#25353;&#21313;&#20845;&#36827;&#21046;&#26684;&#24335;&#26174;&#31034;&#21464;&#37327;&#12290;
+/c   &#25353;&#23383;&#31526;&#26684;&#24335;&#26174;&#31034;&#21464;&#37327;&#12290;
+/f   &#25353;&#28014;&#28857;&#25968;&#26684;&#24335;&#26174;&#31034;&#21464;&#37327;&#12290;
+</pre>
+
+</div>
+
+</div>
+
+<div id="outline-container-2" class="outline-2">
+<h2 id="sec-2"><span class="section-number-2">2</span> examine 查看内存</h2>
+<div class="outline-text-2" id="text-2">
+
+
+
+
+<pre class="example">examine /n f u + 内存地址（指针变量）
+缩写为x
+</pre>
+
+<p>
+n 表示显示内存长度<br/>
+f 表示输出格式（见上）<br/>
+u 表示字节数制定（b 单字节；h 双字节；w 四字节；g 八字节；默认为四字节）<br/>
+如：<br/>
+x /10cw pFilePath  （pFilePath为一个字符串指针，指针占4字节） 查看pFilePath后的10个字符<br/>
+x /x p （p是一个int*） 以16进制形式查看p指向内容（默认p大小为4字节，长度为1即4个字节）<br/>
+</p></div>
+
+</div>
+
+<div id="outline-container-3" class="outline-2">
+<h2 id="sec-3"><span class="section-number-2">3</span> disassemble 查看汇编</h2>
+<div class="outline-text-2" id="text-3">
+
+<p>  <code>disassemble</code> 不加参数会显示整个程序的汇编码，后面可以加函数名，或地址范围。<br/>
+  <code>nexti stepi</code> 和 <code>next step</code> 的区别在于不是执行一条C语句而是一条机器指令即一条汇编语句。<br/>
+  <code>x /ni $pc</code> 或 <code>display /ni $pc</code> （其中n是数字） 用来查看下面将要执行的n条汇编语句，区别在于后者GDB每次停下都会显示下面将要执行的n条汇编语句而前者只显示这一次，对于后者可以用 <code>undisplay</code> 来取消。<br/>
+  Emacs下可以GUD-&gt;GDB window-&gt;disassembly.<br/>
+</p></div>
+
+</div>
+
+<div id="outline-container-4" class="outline-2">
+<h2 id="sec-4"><span class="section-number-2">4</span> display</h2>
+<div class="outline-text-2" id="text-4">
+
+<p>  可以用 <code>display variable-name</code> 使GDB每次暂停时都显示指定变量，前面的 <code>display /i $pc</code> 显示下条汇编语句。<br/>
+  用 <code>undisplay variable-name</code> 取消每次都显示， undisplay不加参数表取消所有显示，display不加参数显示一次所有每次暂停都要显示的内容。<br/>
+</p></div>
+
+</div>
+
+<div id="outline-container-5" class="outline-2">
+<h2 id="sec-5"><span class="section-number-2">5</span> list</h2>
+<div class="outline-text-2" id="text-5">
+
+<p>  可以查看即将执行的语句.<br/>
+</p></div>
+
+</div>
+
+<div id="outline-container-6" class="outline-2">
+<h2 id="sec-6"><span class="section-number-2">6</span> until</h2>
+<div class="outline-text-2" id="text-6">
+
+<p>  后跟行数，表一直执行到第几行。也可以跟函数名表遇到此函数就暂停。<br/>
+</p></div>
+
+</div>
+
+<div id="outline-container-7" class="outline-2">
+<h2 id="sec-7"><span class="section-number-2">7</span> finish</h2>
+<div class="outline-text-2" id="text-7">
+
+<p>  从一个stack中返回，即退出当前函数（在主函数中没用）<br/>
+</p></div>
+
+</div>
+
+<div id="outline-container-8" class="outline-2">
+<h2 id="sec-8"><span class="section-number-2">8</span> 查看寄存器</h2>
+<div class="outline-text-2" id="text-8">
+
+<p>  <code>info registers</code> 查看所有寄存器的内容。<br/>
+  <code>p $eax</code> 查看指定寄存器的内容。<br/>
+</p></div>
+
+</div>
+
+<div id="outline-container-9" class="outline-2">
+<h2 id="sec-9"><span class="section-number-2">9</span> 快捷键</h2>
+<div class="outline-text-2" id="text-9">
+
+<p>  <a href="http://www.gnu.org/software/emacs/manual/html_node/emacs/Commands-of-GUD.html">手册</a><br/>
+</p><table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+<caption></caption>
+<colgroup><col class="left" /><col class="left" />
+</colgroup>
+<tbody>
+<tr><td class="left">C-x SPC</td><td class="left">在光标所在行设置断点</td></tr>
+<tr><td class="left">C-c C-s</td><td class="left">step</td></tr>
+<tr><td class="left">C-c C-n</td><td class="left">next</td></tr>
+<tr><td class="left">C-c C-i</td><td class="left">stepi</td></tr>
+<tr><td class="left">C-c C-r</td><td class="left">run</td></tr>
+<tr><td class="left">C-c C-b</td><td class="left">breakpoint 当前行</td></tr>
+<tr><td class="left">C-c C-d</td><td class="left">删除当前执行行处的断点</td></tr>
+<tr><td class="left">C-c C-t</td><td class="left">当前行设置临时断点</td></tr>
+<tr><td class="left">C-c C-u</td><td class="left">until 光标所在的行</td></tr>
+<tr><td class="left">C-c C-f</td><td class="left">finish</td></tr>
+</tbody>
+</table>
+
+</div>
+
+</div>
+
+<div id="outline-container-10" class="outline-2">
+<h2 id="sec-10"><span class="section-number-2">10</span> Trick</h2>
+<div class="outline-text-2" id="text-10">
+
+<ol>
+<li>不退出GDB，重新编译源码，此时再继续使用GDB时会检测到执行文件有更新会重新加载执行文件。<br/>
+</li>
+<li>加载执行文件 <code>file filename</code> ，可以用 <code>cd</code> 切换目录<br/>
+</li>
+<li>删除所有断点 <code>delete breakpoints</code><br/>
+</li>
+</ol>
+
+</div>
+</div>
+</div>
+
+</body>
+</html>

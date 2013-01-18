@@ -8,12 +8,12 @@
    2. [[http://changblog.com/122][爽玩dropbox4：让dropbox同步任意位置的文件]]
 ** Emacs
    1. [[http://batsov.com/articles/2012/02/19/color-theming-in-emacs-reloaded/][Color Theming in Emacs: Reloaded]]
-
 * Ubuntu
   1. [[http://xlambda.com/blog/2012/03/04/manage-gnome-shell-extensions/][Gnome-shell扩展管理]]
   2. [[http://xlambda.com/blog/2011/11/13/tinker-with-gnome-shell/][折腾gnome-shell]]
-  3. [[http://blog.csdn.net/sun_168/article/details/8046164][ 重装win系统后修复ubuntu的grub引导程序]]
+  3. [[http://blog.csdn.net/sun_168/article/details/8046164][重装win系统后修复ubuntu的grub引导程序]]
+* Lisp
+* C/C++
+  1. [[http://www.phpcompiler.org/articles/virtualinheritance.html][GCC多继承/虚继承内存布局]]
 * 其它
   1. [[http://mo.dbxdb.com/][下载Youtube字幕]]
-* lisp
-** quicklisp 快速安装Lisp包的工具

@@ -1,0 +1,63 @@
+** DONE GCC C++ 虚拟继承                                          :Read:C/CC:
+   CLOSED: [2013-01-14 Mon 23:52]
+   - CLOSING NOTE [2013-01-14 Mon 23:52] \\
+     虚基类偏移的存放位置在 （虚表地址-12），跟所在类的偏移存放在（虚表地址-8）处
+   http://www.phpcompiler.org/articles/virtualinheritance.html
+** DONE Common Lisp FAQ                                           :Read:Lisp:
+   CLOSED: [2013-01-15 Tue 00:17]
+   http://random-state.net/files/nikodemus-cl-faq.txt
+** DONE 解决chrome goagent https访问
+   CLOSED: [2013-01-17 Thu 20:40]
+   Ubuntu下的chrome没有搞定，不过firefox搞定了，以后可以用firefox来看twitter和facebook
+** TODO 解决掉手机里的书签                                             :Lisp:
+   - [X] http://simpleprogrammer.com/2012/12/01/why-c-is-not-back/
+   - [X] http://www.zpub.com/notes/idle.html
+   - [ ] http://www.nhplace.com/kent/Papers/Technical-Issues.html
+   - [ ] http://www.nhplace.com/kent/Papers/cl-untold-story.html
+** TODO 解决掉微博中转发微博                                           :Read:
+   
+** TODO 解决下面的问题
+   http://simpleprogrammer.com/2012/12/01/why-c-is-not-back/
+   - [ ] 1.  How many ways are there to initialize a primitive data type in C++ and what are they?
+   - [X] 2.  Why should you declare a destructor as virtual?
+   - [X] 3.  What does it mean that C++ supports overloading?
+   - [X] 4.  What are examples of overloading in C++?
+   - [X] 5.  What is name mangling in C++ and why is it used?
+   - [X] 6.  What is an abstract base class?
+   - [X] 7.  What is RTTI?
+   - [X] 8.  How can you access a variable that is “hidden” by another variable of the same name?
+   - [ ] 9.  What is a namespace and how is it used.
+   - [ ] 10. What are the differences between a class and a struct in C++, and how does this compare to C?
+   - [ ] 11. What are templates? How are they used?
+   - [ ] 12. What is a copy constructor and when is it used, especially in comparison to the equal operator.
+   - [ ] 13. What is the difference between a “shallow” and a “deep” copy?
+   - [ ] 14. What is the const operator and how is it used?
+   - [ ] 15. What are the differences between passing by reference, passing by value, and passing by pointer in C++?
+   - [ ] 16. When is it and when is it not a good idea to return a value by reference in C++?
+   - [ ] 17. What is the difference between a variable created on the stack and one created on the heap?
+   - [ ] 18. How do you free memory allocated dynamically for an array? What are the implications of just using delete?
+   - [ ] 19. What is multiple inheritance? When should it be used?
+   - [ ] 20. What is a pure virtual function?
+   - [ ] 21. What does the keyword mutable do?
+   - [ ] 22. What does the keyword volatile do?
+   - [X] 23. What is the STL?
+   - [X] 24. What is a Vector?
+   - [ ] 25. What is contained in the <algorithms> header?
+   - [ ] 26. What is the difference between #include <iostream.h> and #include <iostream>?
+   - [X] 27. What’s the difference between “++i” and “i++”?
+   - [X] 28. What is short circuit evaluation? How can it be used? Why can is be dangerous?
+   - [X] 29. What is the ‘,’ operator?
+   - [ ] 30. What is the only ternary operator? How is it used?
+   - [X] 31. What is the use of a const member function and how can it be used?
+   - [ ] 32. How is try/catch used in C++?
+   - [ ] 33. Why should you never throw an exception in a destructor?
+   - [ ] 34. What is the explicit keyword?
+   - [X] 35. What is the proper way to perform a cast in C++?
+   - [X] 36. What does inline do?
+** TODO 翻译                                                        :English:
+*** TODO The Most Important C++ Software...Ever
+    http://www.artima.com/cppsource/top_cpp_software.html
+*** TODO The Most Important C++ Books...Ever
+    http://www.artima.com/cppsource/top_cpp_books.html
+*** TODO The Most Important C++ Non-Book Publications...Ever
+    http://www.artima.com/cppsource/top_cpp_publications.html
