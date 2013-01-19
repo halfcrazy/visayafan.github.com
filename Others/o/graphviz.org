@@ -1,0 +1,173 @@
+#+OPTIONS: ^:{} _:{} num:t toc:t \n:t
+#+INCLUDE "../../template.org"
+#+SETUPFILE: "../../extension.org"
+#+title:Graphviz 笔记
+* 语法
+  1. digraph表direction graph即有向图，边用->表示。graph表无向图，边用--表示
+  2. subgraph表子图，功能有3个：1.表示图结构，表明某些结点和边应该画在一起。2.方便为某些结点设置统一的属性。3.设置布局。
+  3. 注释和C++相同。以#开头的行将会被摒弃。行尾的分号可有可无。
+  4. 可以用charset设置字符集。
+  5. 真用true,yes或正数表示，假用false,no或0表示。
+  6. 关键字：node, edge, graph, digraph, subgraph, and strict
+  7. a->b; a->c;可以简写为：a->{b,c};
+* 属性
+  1. color 默认为黑色，可以用RGB: color="#ff0000"，也可以用[[http://www.graphviz.org/content/color-names][事先定义好的一些]]: color=red
+  2. dir arrowhead arrowtail: dir=forward|back|both|none 表几个箭头及方向，arrowhead前箭头，arrowtail尾箭头，
+     [[http://www.graphviz.org/content/attrs#karrowType][箭头类型]]， 例如 a->b[dir=both arrowhead=diamond arrowtail=box color="red:blue"]; 其中两个color分别表前和后箭头颜色。
+  3. style 设置[[http://www.graphviz.org/content/attrs#kstyle][结点/边的风格]]
+  4. fillcolor 当style=filled的时候设置填充的颜色。
+  5. shape 设置结点的形状，主要有 [[http://www.graphviz.org/content/node-shapes#polygon][polygon-based]] [[http://www.graphviz.org/content/node-shapes#record][record]] [[http://www.graphviz.org/content/node-shapes#epsf][user-defined]]
+  6. sides 当shape=polygon时边数
+  7. peripheries 当shape=polygon时设置边的层数，默认为1
+  8. distortion 当shape=polygon时若为正数则上面比下面大，否则相反。
+  9. rank "same", "min", "source", "max", "sink"
+  10. rankdir "TB" top-bottom, "LR" left-right, "BT" bottom-top, "RL" right-left 默认是TB
+  11. fontsize 字体大小
+  12. size 图大小
+  13. height 设置结点的高度
+  14. label 对象上的文字,如果shape=record则label[[http://www.graphviz.org/content/node-shapes#record][另有含义]].
+  15. nodesep 指定两个结点的最小间距
+  16. splines 表[[http://www.graphviz.org/content/attrs#dsplines][图连线方式]]
+* 例子
+[[http://www.graphviz.org/Gallery.php][官网例子]]（点击图片查看代码）
+--------
+{{{left(5)}}}
+#+begin_example
+digraph G{
+    subgraph cluster0{
+        style=filled;
+        color=lightgrey;
+        node[style=filled color=white];
+        label="process #1";
+        a0->a1->a2->a3;
+    }
+    subgraph cluster1{
+        node[style=filled fillcolor=lightgrey];
+        color=blue;
+        b0->b1->b2->b3;
+        label="process #2";
+    }
+    start[shape=Mdiamond];
+    end[shape=Msquare];
+    a0[label="中"];
+    b0[label="文"];
+    start->a0;
+    start->b0;
+    a3->end;
+    b3->end;
+    b2->a3;
+    a1->b3;
+}
+#+end_example
+{{{middle(2)}}}
+{{{middle(4)}}}
+{{{lightbox(images/test.png,250)}}} 
+{{{right}}}
+--------
+{{{left(5)}}}
+#+begin_example
+digraph G{
+    nodesep=.05;
+    node[shape=record height=.1 width=.1];
+    rankdir=LR;
+    x[label="<f0>|<f1>|<f2>|<f3>|<f4>|<f5>|<f6>|", height=2.5];
+    node[width=1.5];
+    a[label="{<n>414|523|<p>}"];
+    b[label="{<n>414|523|<p>}"];
+    c[label="{<n>414|523|<p>}"];
+    d[label="{<n>414|523|<p>}"];
+    x:f0->a:n;
+    x:f1->b:n;
+    x:f2->c:n;
+    b:p->d:n;
+}
+#+end_example
+{{{middle(2)}}}
+{{{middle(4)}}}
+{{{lightbox(images/hash.png,350)}}} 
+{{{right}}}
+--------
+{{{left(5)}}}
+#+begin_example
+digraph G{
+    node[shape=record height=.1];
+    G[label="<a>|<b>G|<c>"];
+    E[label="<a>|<b>E|<c>"];
+    R[label="<a>|<b>R|<c>"];
+    G:b->E:b;
+    G:b->R:b;
+}
+#+end_example
+{{{middle(2)}}}
+{{{middle(4)}}}
+{{{lightbox(images/binary.png,300)}}} 
+{{{right}}}
+--------
+{{{left(5)}}}
+#+begin_example
+digraph G{
+    size="4,4";
+    a[style=filled fillcolor=red shape=polygon sides=5 peripheries=3];
+    c[shape=parallelogram];
+    d[shape=box];
+    a->b->c;
+    b->d;
+    e[shape=polygon side=4 distortion=.7];
+}
+#+end_example
+{{{middle(2)}}}
+{{{middle(4)}}}
+{{{lightbox(images/peripheries.png,250)}}} 
+{{{right}}}
+--------
+{{{left(5)}}}
+#+begin_example
+digraph G{
+    size="4,4";
+    main[shape=box];
+    main->parse;
+    parse->execute;
+    main->init[style=dotted];
+    main->cleanup;
+    execute->{printf; make_string};
+    init->make_string;
+    edge[color=red];
+    main->printf[style=bold, label="100 times"];
+    make_string[label="make a\n string"];
+    node[shape=box, style=filled, color="#ff0000"];
+    execute->compare[dir=both arrowhead=diamond arrowtail=box color="blue:green"];
+}
+#+end_example
+{{{middle(2)}}}
+{{{middle(4)}}}
+{{{lightbox(images/mix.png,300)}}} 
+{{{right}}}
+--------
+{{{left(4)}}}
+#+begin_example
+digraph finite_state_machine {
+	rankdir=LR;
+	size="8,5"
+	node [shape = doublecircle];
+    LR_0 LR_3 LR_4 LR_8;
+	node [shape = circle];
+	LR_0 -> LR_2 [ label = "SS(B)" ];
+	LR_0 -> LR_1 [ label = "SS(S)" ];
+	LR_1 -> LR_3 [ label = "S($end)" ];
+	LR_2 -> LR_6 [ label = "SS(b)" ];
+	LR_2 -> LR_5 [ label = "SS(a)" ];
+	LR_2 -> LR_4 [ label = "S(A)" ];
+	LR_5 -> LR_7 [ label = "S(b)" ];
+	LR_5 -> LR_5 [ label = "S(a)" ];
+	LR_6 -> LR_6 [ label = "S(b)" ];
+	LR_6 -> LR_5 [ label = "S(a)" ];
+	LR_7 -> LR_8 [ label = "S(b)" ];
+	LR_7 -> LR_5 [ label = "S(a)" ];
+	LR_8 -> LR_6 [ label = "S(b)" ];
+	LR_8 -> LR_5 [ label = "S(a)" ];
+}
+#+end_example
+{{{middle(8)}}}
+{{{lightbox(images/finite.png,650)}}} 
+{{{right}}}
+--------

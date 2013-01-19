@@ -1,0 +1,289 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+               "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-CN" xml:lang="zh-CN">
+<head>
+<title>Graphviz 笔记</title>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
+<meta name="title" content="Graphviz 笔记"/>
+<meta name="generator" content="Org-mode"/>
+<meta name="generated" content="2013-01-19 00:50:25 CST"/>
+<meta name="author" content="visayafan"/>
+<meta name="description" content=""/>
+<meta name="keywords" content=""/>
+
+
+
+</head>
+<body>
+
+
+<div id="content">
+<h1 class="title">Graphviz 笔记</h1>
+
+
+<!-- <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"> </script> -->
+<link rel="stylesheet" type="text/css" href="../../Layout/CSS/bootstrap_old.css" />
+<link rel="stylesheet" type="text/css" href="../../Layout/CSS/style.css" />
+<script src="../../Layout/JS/jquery_1.7.1.js"></script>
+<script src="../../Layout/JS/bootstrap_old.js"></script>
+
+
+<div id="table-of-contents">
+<h2>目录</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#sec-1">1 语法</a></li>
+<li><a href="#sec-2">2 属性</a></li>
+<li><a href="#sec-3">3 例子</a></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-1" class="outline-2">
+<h2 id="sec-1"><span class="section-number-2">1</span> 语法</h2>
+<div class="outline-text-2" id="text-1">
+
+<ol>
+<li>digraph表direction graph即有向图，边用-&gt;表示。graph表无向图，边用&ndash;表示<br/>
+</li>
+<li>subgraph表子图，功能有3个：1.表示图结构，表明某些结点和边应该画在一起。2.方便为某些结点设置统一的属性。3.设置布局。<br/>
+</li>
+<li>注释和C++相同。以#开头的行将会被摒弃。行尾的分号可有可无。<br/>
+</li>
+<li>可以用charset设置字符集。<br/>
+</li>
+<li>真用true,yes或正数表示，假用false,no或0表示。<br/>
+</li>
+<li>关键字：node, edge, graph, digraph, subgraph, and strict<br/>
+</li>
+<li>a-&gt;b; a-&gt;c;可以简写为：a-&gt;{b,c};<br/>
+</li>
+</ol>
+
+</div>
+
+</div>
+
+<div id="outline-container-2" class="outline-2">
+<h2 id="sec-2"><span class="section-number-2">2</span> 属性</h2>
+<div class="outline-text-2" id="text-2">
+
+<ol>
+<li>color 默认为黑色，可以用RGB: color="#ff0000"，也可以用<a href="http://www.graphviz.org/content/color-names">事先定义好的一些</a>: color=red<br/>
+</li>
+<li>dir arrowhead arrowtail: dir=forward|back|both|none 表几个箭头及方向，arrowhead前箭头，arrowtail尾箭头，<br/>
+     <a href="http://www.graphviz.org/content/attrs#karrowType">箭头类型</a>， 例如 a-&gt;b[dir=both arrowhead=diamond arrowtail=box color="red:blue"]; 其中两个color分别表前和后箭头颜色。<br/>
+</li>
+<li>style 设置<a href="http://www.graphviz.org/content/attrs#kstyle">结点/边的风格</a><br/>
+</li>
+<li>fillcolor 当style=filled的时候设置填充的颜色。<br/>
+</li>
+<li>shape 设置结点的形状，主要有 <a href="http://www.graphviz.org/content/node-shapes#polygon">polygon-based</a> <a href="http://www.graphviz.org/content/node-shapes#record">record</a> <a href="http://www.graphviz.org/content/node-shapes#epsf">user-defined</a><br/>
+</li>
+<li>sides 当shape=polygon时边数<br/>
+</li>
+<li>peripheries 当shape=polygon时设置边的层数，默认为1<br/>
+</li>
+<li>distortion 当shape=polygon时若为正数则上面比下面大，否则相反。<br/>
+</li>
+<li>rank "same", "min", "source", "max", "sink"<br/>
+</li>
+<li>rankdir "TB" top-bottom, "LR" left-right, "BT" bottom-top, "RL" right-left 默认是TB<br/>
+</li>
+<li>fontsize 字体大小<br/>
+</li>
+<li>size 图大小<br/>
+</li>
+<li>height 设置结点的高度<br/>
+</li>
+<li>label 对象上的文字,如果shape=record则label<a href="http://www.graphviz.org/content/node-shapes#record">另有含义</a>.<br/>
+</li>
+<li>nodesep 指定两个结点的最小间距<br/>
+</li>
+<li>splines 表<a href="http://www.graphviz.org/content/attrs#dsplines">图连线方式</a><br/>
+</li>
+</ol>
+
+</div>
+
+</div>
+
+<div id="outline-container-3" class="outline-2">
+<h2 id="sec-3"><span class="section-number-2">3</span> 例子</h2>
+<div class="outline-text-2" id="text-3">
+
+<p><a href="http://www.graphviz.org/Gallery.php">官网例子</a>（点击图片查看代码）<br/>
+
+</p>
+<hr/>
+
+
+<div class="row-fluid"> <div class="span5">
+
+<pre class="example">digraph G{
+    subgraph cluster0{
+        style=filled;
+        color=lightgrey;
+        node[style=filled color=white];
+        label="process #1";
+        a0-&gt;a1-&gt;a2-&gt;a3;
+    }
+    subgraph cluster1{
+        node[style=filled fillcolor=lightgrey];
+        color=blue;
+        b0-&gt;b1-&gt;b2-&gt;b3;
+        label="process #2";
+    }
+    start[shape=Mdiamond];
+    end[shape=Msquare];
+    a0[label="中"];
+    b0[label="文"];
+    start-&gt;a0;
+    start-&gt;b0;
+    a3-&gt;end;
+    b3-&gt;end;
+    b2-&gt;a3;
+    a1-&gt;b3;
+}
+</pre>
+
+</div> <div class="span2">
+</div> <div class="span4">
+<link rel="stylesheet" href="../../Layout/CSS/jquery.lightbox-0.5.css" type="text/css" media="screen" /> <script type="text/javascript" src="../../Layout/JS/jquery.lightbox-0.5.js"></script> <center> <a class="lightbox" href="images/test.png"> <img class="lightbox " title="点击查看大图" src="images/test.png" width="250"> </a> </center> <script type="text/javascript"> $(function() {$('a.lightbox').lightBox();}); </script> 
+</div></div>
+
+<hr/>
+
+
+<div class="row-fluid"> <div class="span5">
+
+<pre class="example">digraph G{
+    nodesep=.05;
+    node[shape=record height=.1 width=.1];
+    rankdir=LR;
+    x[label="&lt;f0&gt;|&lt;f1&gt;|&lt;f2&gt;|&lt;f3&gt;|&lt;f4&gt;|&lt;f5&gt;|&lt;f6&gt;|", height=2.5];
+    node[width=1.5];
+    a[label="{&lt;n&gt;414|523|&lt;p&gt;}"];
+    b[label="{&lt;n&gt;414|523|&lt;p&gt;}"];
+    c[label="{&lt;n&gt;414|523|&lt;p&gt;}"];
+    d[label="{&lt;n&gt;414|523|&lt;p&gt;}"];
+    x:f0-&gt;a:n;
+    x:f1-&gt;b:n;
+    x:f2-&gt;c:n;
+    b:p-&gt;d:n;
+}
+</pre>
+
+</div> <div class="span2">
+</div> <div class="span4">
+<link rel="stylesheet" href="../../Layout/CSS/jquery.lightbox-0.5.css" type="text/css" media="screen" /> <script type="text/javascript" src="../../Layout/JS/jquery.lightbox-0.5.js"></script> <center> <a class="lightbox" href="images/hash.png"> <img class="lightbox " title="点击查看大图" src="images/hash.png" width="350"> </a> </center> <script type="text/javascript"> $(function() {$('a.lightbox').lightBox();}); </script> 
+</div></div>
+
+<hr/>
+
+
+<div class="row-fluid"> <div class="span5">
+
+<pre class="example">digraph G{
+    node[shape=record height=.1];
+    G[label="&lt;a&gt;|&lt;b&gt;G|&lt;c&gt;"];
+    E[label="&lt;a&gt;|&lt;b&gt;E|&lt;c&gt;"];
+    R[label="&lt;a&gt;|&lt;b&gt;R|&lt;c&gt;"];
+    G:b-&gt;E:b;
+    G:b-&gt;R:b;
+}
+</pre>
+
+</div> <div class="span2">
+</div> <div class="span4">
+<link rel="stylesheet" href="../../Layout/CSS/jquery.lightbox-0.5.css" type="text/css" media="screen" /> <script type="text/javascript" src="../../Layout/JS/jquery.lightbox-0.5.js"></script> <center> <a class="lightbox" href="images/binary.png"> <img class="lightbox " title="点击查看大图" src="images/binary.png" width="300"> </a> </center> <script type="text/javascript"> $(function() {$('a.lightbox').lightBox();}); </script> 
+</div></div>
+
+<hr/>
+
+
+<div class="row-fluid"> <div class="span5">
+
+<pre class="example">digraph G{
+    size="4,4";
+    a[style=filled fillcolor=red shape=polygon sides=5 peripheries=3];
+    c[shape=parallelogram];
+    d[shape=box];
+    a-&gt;b-&gt;c;
+    b-&gt;d;
+    e[shape=polygon side=4 distortion=.7];
+}
+</pre>
+
+</div> <div class="span2">
+</div> <div class="span4">
+<link rel="stylesheet" href="../../Layout/CSS/jquery.lightbox-0.5.css" type="text/css" media="screen" /> <script type="text/javascript" src="../../Layout/JS/jquery.lightbox-0.5.js"></script> <center> <a class="lightbox" href="images/peripheries.png"> <img class="lightbox " title="点击查看大图" src="images/peripheries.png" width="250"> </a> </center> <script type="text/javascript"> $(function() {$('a.lightbox').lightBox();}); </script> 
+</div></div>
+
+<hr/>
+
+
+<div class="row-fluid"> <div class="span5">
+
+<pre class="example">digraph G{
+    size="4,4";
+    main[shape=box];
+    main-&gt;parse;
+    parse-&gt;execute;
+    main-&gt;init[style=dotted];
+    main-&gt;cleanup;
+    execute-&gt;{printf; make_string};
+    init-&gt;make_string;
+    edge[color=red];
+    main-&gt;printf[style=bold, label="100 times"];
+    make_string[label="make a\n string"];
+    node[shape=box, style=filled, color="#ff0000"];
+    execute-&gt;compare[dir=both arrowhead=diamond arrowtail=box color="blue:green"];
+}
+</pre>
+
+</div> <div class="span2">
+</div> <div class="span4">
+<link rel="stylesheet" href="../../Layout/CSS/jquery.lightbox-0.5.css" type="text/css" media="screen" /> <script type="text/javascript" src="../../Layout/JS/jquery.lightbox-0.5.js"></script> <center> <a class="lightbox" href="images/mix.png"> <img class="lightbox " title="点击查看大图" src="images/mix.png" width="300"> </a> </center> <script type="text/javascript"> $(function() {$('a.lightbox').lightBox();}); </script> 
+</div></div>
+
+<hr/>
+
+
+<div class="row-fluid"> <div class="span4">
+
+<pre class="example">digraph finite_state_machine {
+    rankdir=LR;
+    size="8,5"
+    node [shape = doublecircle];
+    LR_0 LR_3 LR_4 LR_8;
+    node [shape = circle];
+    LR_0 -&gt; LR_2 [ label = "SS(B)" ];
+    LR_0 -&gt; LR_1 [ label = "SS(S)" ];
+    LR_1 -&gt; LR_3 [ label = "S($end)" ];
+    LR_2 -&gt; LR_6 [ label = "SS(b)" ];
+    LR_2 -&gt; LR_5 [ label = "SS(a)" ];
+    LR_2 -&gt; LR_4 [ label = "S(A)" ];
+    LR_5 -&gt; LR_7 [ label = "S(b)" ];
+    LR_5 -&gt; LR_5 [ label = "S(a)" ];
+    LR_6 -&gt; LR_6 [ label = "S(b)" ];
+    LR_6 -&gt; LR_5 [ label = "S(a)" ];
+    LR_7 -&gt; LR_8 [ label = "S(b)" ];
+    LR_7 -&gt; LR_5 [ label = "S(a)" ];
+    LR_8 -&gt; LR_6 [ label = "S(b)" ];
+    LR_8 -&gt; LR_5 [ label = "S(a)" ];
+}
+</pre>
+
+</div> <div class="span8">
+<link rel="stylesheet" href="../../Layout/CSS/jquery.lightbox-0.5.css" type="text/css" media="screen" /> <script type="text/javascript" src="../../Layout/JS/jquery.lightbox-0.5.js"></script> <center> <a class="lightbox" href="images/finite.png"> <img class="lightbox " title="点击查看大图" src="images/finite.png" width="650"> </a> </center> <script type="text/javascript"> $(function() {$('a.lightbox').lightBox();}); </script> 
+</div></div>
+
+<hr/>
+</div>
+</div>
+</div>
+
+</body>
+</html>

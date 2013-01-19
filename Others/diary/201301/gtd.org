@@ -14,8 +14,9 @@
    - [X] http://www.zpub.com/notes/idle.html
    - [ ] http://www.nhplace.com/kent/Papers/Technical-Issues.html
    - [ ] http://www.nhplace.com/kent/Papers/cl-untold-story.html
-** TODO 解决掉微博中转发微博                                           :Read:
-   
+** TODO 解决掉微博中转发微博                                      :Read:C/CC:
+   C++11 http://blog.csdn.net/lanphaday/article/details/6564162
+   C++ String http://blogs.360.cn/blog/linux-gcc-stl-string-in-depth/
 ** TODO 解决下面的问题
    http://simpleprogrammer.com/2012/12/01/why-c-is-not-back/
    - [ ] 1.  How many ways are there to initialize a primitive data type in C++ and what are they?

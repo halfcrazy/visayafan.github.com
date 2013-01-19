@@ -204,7 +204,7 @@ $ git commit --amend
 #+begin_html
 <link rel="stylesheet" href="../../Layout/CSS/jquery.lightbox-0.5.css" type="text/css" media="screen" />
 <script type="text/javascript" src="../../Layout/JS/jquery.lightbox-0.5.js"></script>
-<center> <a class="lightbox" href="./image/rebase.png"> <img class="lightbox " title="jQuery.lightbox" src="./image/rebase.png" width="300"> </a> </center>
+<center> <a class="lightbox" href="./images/rebase.png"> <img class="lightbox " title="jQuery.lightbox" src="./images/rebase.png" width="300"> </a> </center>
 <script type="text/javascript"> $(function() {$('a.lightbox').lightBox();}); </script>
 #+end_html  
 * fast forward
