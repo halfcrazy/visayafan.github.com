@@ -461,7 +461,7 @@ int main(int argc, char *argv[])
   参考[[http://en.wikipedia.org/wiki/Name_mangling][wikipedia]]
   为了解决名字冲突问题对函数名和变量名采用某种规则对其进行修饰。
 * RTTI
-  Run Time Type Information
+  Run Time Type Information/Identification
 ** typeid
    *Attention:  typeid是个keyword，是个操作符，并不是函数，是由编译器实现而非库函数实现的*
 #+begin_src c++
