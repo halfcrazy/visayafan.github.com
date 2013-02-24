@@ -1,0 +1,6 @@
+
+* DONE The story of us: WW2
+  CLOSED: [2013-02-23 Sat 23:59]
+  记住所有单词，能够完全听懂
+* TODO 编译原理视频自底向上视频听完
+* TODO The story of us: WW2 单词整理

@@ -1,0 +1,197 @@
+#+OPTIONS: ^:{} _:{} num:t toc:t \n:t
+#+INCLUDE "../../template.org"
+#+SETUPFILE: "../../extension.org"
+#+title:Amercia-The Story Of Us-World War Ⅱ
+#+begin_html
+<center><iframe width="560" height="315" src="http://www.youtube.com/embed/CuU21Z4PEfM?rel=0" frameborder="0" allowfullscreen></iframe></center>
+#+end_html
+* trailblazer
+  trail 路
+  blaze 烧
+  blaze a trail 开辟道路
+  trailblazer 开拓者，先驱
+#+begin_example
+We're pioneers...and trailblazers.
+#+end_example  
+* ration
+  为士兵，海员或平民提供的固定数量的供给（尤其是在战时或物资紧缺的时候）
+  来自rate,按比例分配
+  SYN：portion
+#+begin_example
+Now every weapon, ration, medical supply is mass-produced on a scale never seen in human history.
+#+end_example
+* treachery
+  背叛
+  SYN: betrayal, disloyalty
+  adj: treacherous
+  adv: treacherously
+#+begin_example
+But the road to greatness begins with treachery.
+#+end_example  
+* cutting-edge
+  前沿
+  SYN:forefront
+#+begin_example
+A pack of cutting-edge killing machines are on a mission.
+#+end_example
+* stunning
+  令人震惊的
+  SYN: astonishing, surprising
+#+begin_example
+When Pearl Harbor was attacked, it was one of the most stunning moments in Amercian history. 
+#+end_example
+* tactical
+  战术上的，战略上的
+  n: tactic
+#+begin_example
+If I could reach out and touch you from greater distance, I had a tactical strategic advantage.
+#+end_example
+* sitting ducks
+  无助的/活靶子/牺牲品
+#+begin_example
+We had almost our whole fleet in one little harbor, one little area. We're sitting ducks.
+#+end_example
+* flaunt
+  炫耀
+  SYN: show off, vaunt
+#+begin_example
+The surprise attack flaunts the specialty of Amercian rifle man in the War of Independence. The
+tactic that made Amercia free is now being used against it.
+#+end_example
+* gadget
+  小玩意，小器件
+  SYN：widget, whatsis
+#+begin_example
+but radar is still considered a gadget by the military.
+#+end_example
+* out of action
+  坏了/不能用了
+  put out of action 失去战斗力
+#+begin_example
+All eight battleships are put out of action.
+#+end_example
+* squadron
+  squad 小队/班[军]
+  squadron 空军中队/小舰队 
+#+begin_example
+The low flying Japanese squadron vanishes from the screen.
+#+end_example
+* infamy
+  extremely bad reputation. 声名狼藉
+  infamous 无耻的/声名狼藉的
+#+begin_example
+A day that will live in infamy.
+#+end_example
+* unleash
+  leash 皮带/束缚
+  unleash 释放/发泄
+* wrath
+  strong, fierce anger
+#+begin_example
+It unleash the wrath of Amercia and I think it gave us an energy that carried us through the rest of the war. 
+#+end_example
+* underutilize
+  未充分利用
+  utilize->utilization
+* spree
+  狂欢
+  go on a spree 放纵/不受约束
+#+begin_example
+We are ready to go on a building spree.
+#+end_example
+* arsenal
+  兵工厂/军火库
+#+begin_example
+Amercia tranforms into an arsenal democracy.
+#+end_example
+* bumper
+  bump 冲撞
+  bumper 保险杠/缓冲器
+#+begin_example
+Even the front bumper is a seat.
+#+end_example
+* jerricans
+  油桶
+* glider
+  glide 滑翔
+  glider 滑翔机
+* SUV
+  Sport Utility Vehicles 越野车 
+* munition
+  军需品
+#+begin_example
+Now she works in a munitions factory.
+#+end_example
+* magnesium
+  镁
+* detonator
+  雷管
+* cramped
+  cramp 抽筋
+  cramped 拥挤的
+* casualty
+  死亡人数
+* rest on
+  depend on
+* elation
+  elate 使高兴
+  elation 兴高采烈
+#+begin_example
+A feeling of elation took hold of us as we winged back across the channel. 
+#+end_example
+* segregate
+  隔离/分离
+  segregation/segregated
+* overlord
+  霸王
+  Operation Overlord
+* draw on
+  make use of
+* plasma
+  血浆
+* ritual
+  仪式/礼仪
+* rattle
+  发出响声
+* stealth
+  secret
+* gut
+  内脏
+#+begin_example
+There were men with guts hanging out of their wounds and body parts lying along out path. 
+#+end_example
+* staggering
+  surprising
+* fission
+  分裂/裂变
+* intact
+  完好无损的
+  remain uninjured, sound or whole
+* vibrant
+  保持生机的
+#+begin_example
+Amercia's distance from battle leaves its infrastructure intact and its economy vibrant. 
+#+end_example
+* colossus
+  巨人
+  colossal 巨大的
+  SYN: giant gigantic
+#+begin_example
+Amercia could be the colossus that it became.
+#+end_example
+* dynamite
+  炸药
+#+begin_example
+When it went off in the New Mexico dawn, that first atomic bomd, we thought of Afred Nobel and
+his hope, his vain hope, that dynamite would put an end to wars.
+#+end_example
+* wreak
+  wreak havoc or destruction 造成损坏
+#+begin_example
+Wreaking that kind of mass destruction, that was something new in history of warfare.
+#+end_example
+* escalate
+  加剧/逐步增强
+#+begin_example
+The use of bombing escalates on all sides in World War Ⅱ.
+#+end_example

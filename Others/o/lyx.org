@@ -106,3 +106,13 @@ Your abstract goes here...
 * 参考文献
   默认是Reference，可以修改 =\renewcommand\refname{参考文献}=
   
+* 分栏
+  可以用宏包multicol来实现。
+#+begin_example
+\uspackage{multicol}
+
+\columnseprule=0.2pt %分隔线，默认没有
+\begin{multicols}{2}
+内容
+\end{multicols}
+#+end_example

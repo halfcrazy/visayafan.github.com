@@ -233,9 +233,10 @@ either $$ a=+\sqrt{2} $$ or \[ a=-\sqrt{2} \].
   用Org文档来同步Bug跟踪，暂用不到。
   [[http://orgmode.org/worg/org-contrib/gsoc2012/student-projects/org-sync/][官网]]， [[https://www.youtube.com/watch?v%3Dkbj6-j0teCY][视频]] 
 * GTD
-| C-c C-q | 插入标签                |
-| C-c C-c | 同上                    |
-| C-c \   | 查找某个TAG下的所有项目 |
-| C-c / m | 建立符合某个TAG的tree |
-| C-c >   | calendar              |
-| C-c <   | 把光标所在处的时间插入到文件中       |
+| C-c C-q | 插入标签                       |
+| C-c C-c | 同上                           |
+| C-c \   | 查找某个TAG下的所有项目        |
+| C-c / m | 建立符合某个TAG的tree          |
+| C-c >   | calendar                       |
+| C-c <   | 把光标所在处的时间插入到文件中 |
+| C-c C-t | todo/done                      |
