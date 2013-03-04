@@ -1,0 +1,62 @@
+\documentclass{article}
+\usepackage{fontspec,xunicode,xltxtra}
+\usepackage{listings}
+\usepackage{geometry}
+\usepackage{xcolor}
+\usepackage{color}
+\usepackage{float}
+\usepackage{multicol}
+\usepackage{indentfirst} %for pargraph indent
+\setmainfont[BoldFont=Adobe Heiti Std]{Adobe Song Std}
+\setsansfont[BoldFont=Adobe Heiti Std]{Adobe Kaiti Std}
+\setmonofont{Bitstream Vera Sans Mono}
+\XeTeXlinebreaklocale "zh" %
+\XeTeXlinebreakskip = 0pt plus 1pt minus 0.1pt
+\newcommand\li{\fontspec{LiSu}}
+\newcommand\hei{\fontspec{SimHei}}
+\newcommand\you{\fontspec{YouYuan}}
+\newcommand\sun{\fontspec{SimSun}}
+\newcommand\fangsong{\fontspec{仿宋_GB2312}}
+\newcommand\kai{\fontspec{KaiTi_GB2312}}
+\usepackage{titlesec}
+\titleformat{\chapter}{\centering\huge}{第\thechapter{}章}{1em}{\textbf}
+\titleformat{\part}{\centering\huge}{第\thepart{}部分}{1em}{\textbf}
+\renewcommand{\contentsname}{目~录}
+\renewcommand{\listfigurename}{插图目录}
+\renewcommand{\listtablename}{表格目录}
+\renewcommand{\indexname}{索引}
+\renewcommand{\tablename}{表}
+\renewcommand{\figurename}{图}
+\renewcommand\refname{参考文献}
+\lstset{
+  basicstyle=\scriptsize,
+  numbers=left,
+  keywordstyle=\color{blue},
+  numberstyle={\tiny\color{lightgray}},
+  stepnumber=1, %行号会逐行往上递增
+  numbersep=5pt,
+  commentstyle=\small\color{red},
+  %backgroundcolor=\color[rgb]{0.95,1.0,1.0},
+  showspaces=false,
+  showtabs=false,
+  frame=shadowbox, framexleftmargin=5mm, rulesepcolor=\color{red!20!green!20!blue!20!},
+  % frame=single,
+  % TABframe=single,
+  tabsize=4,
+  breaklines=tr,
+  extendedchars=false %这一条命令可以解决代码跨页时，章节标题，页眉等汉字不显示的问题
+}
+\geometry{left=2.5cm,right=2.5cm,top=2cm,bottom=2.5cm}
+\date{}
+
+
+\begin{document}
+\title{这里是标题}
+\maketitle
+\columnseprule=0.2pt
+\begin{multicols}{3}
+\noindent
+
+\end{multicols}
+\end{document}
+

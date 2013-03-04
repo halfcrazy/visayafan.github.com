@@ -7,7 +7,7 @@
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
 <meta name="title" content="Lyx 笔记 "/>
 <meta name="generator" content="Org-mode"/>
-<meta name="generated" content="2013-01-03 04:14:53 CST"/>
+<meta name="generated" content="2013-02-26 23:56:13 CST"/>
 <meta name="author" content="visayafan"/>
 <meta name="description" content=""/>
 <meta name="keywords" content=""/>
@@ -44,6 +44,11 @@
 <li><a href="#sec-4-3">4.3 theorem</a></li>
 </ul>
 </li>
+<li><a href="#sec-5">5 插入源码</a></li>
+<li><a href="#sec-6">6 日期</a></li>
+<li><a href="#sec-7">7 参考文献</a></li>
+<li><a href="#sec-8">8 分栏</a></li>
+<li><a href="#sec-9">9 设置页边距</a></li>
 </ul>
 </div>
 </div>
@@ -164,7 +169,8 @@ Your abstract goes here...
 <h3 id="sec-4-3"><span class="section-number-3">4.3</span> theorem</h3>
 <div class="outline-text-3" id="text-4-3">
 
-<p>   <code>M-x layout Theorem</code><br/>
+<p>   进入theorem环境：=M-x layout Theorem=<br/>
+   非Lyx下改变theorem名称和编号：<br/>
 </p>
 
 
@@ -189,14 +195,85 @@ Your abstract goes here...
 </pre>
 
 <p>
-   改变定理编号为节+顺序编号：<br/>
-</p><pre class="example">
-\renewcommand{\thethm}{\arabic{section}.\arabic{thm}}
+   Lyx下改变theorem名称和编号:<br/>
+   见<a href="http://wiki.lyx.org/LyX/I18nLabels">lyx wiki</a><br/>
+</p>
+
+
+<pre class="src src-tex"><span style="color: #a020f0;">\newtheorem</span>{<span style="color: #0000ff;">theo</span>}{&#23450;&#29702;}[section]
+<span style="color: #a020f0;">\renewenvironment</span>{<span style="color: #0000ff;">thm</span>}{<span style="color: #a020f0;">\begin</span>{<span style="color: #0000ff;">theo</span>}}{<span style="color: #a020f0;">\end</span>{<span style="color: #0000ff;">theo</span>}}
 </pre>
 
+</div>
+</div>
 
-<p>   <br/>
+</div>
+
+<div id="outline-container-5" class="outline-2">
+<h2 id="sec-5"><span class="section-number-2">5</span> 插入源码</h2>
+<div class="outline-text-2" id="text-5">
+
+<ol>
+<li>可以通过 insert-&gt;program listing 来插入源码，不过此时源码是没有高亮的。<br/>
+</li>
+<li>可以通过 insert-&gt;file-&gt;child document来选择源码所在的文件，include type选择program listing，可选标题，more parameters中可以输入language=C++可以通过？来查看更多可用语言。<br/>
+</li>
+</ol>
+
+<p>  默认源码标题类似 Listing 1:标题，可以通过 <code>\renewcommand{\lstlistingname}{源码}</code> 变成 源码1：标题<br/>
 </p></div>
+
+</div>
+
+<div id="outline-container-6" class="outline-2">
+<h2 id="sec-6"><span class="section-number-2">6</span> 日期</h2>
+<div class="outline-text-2" id="text-6">
+
+<p>  如果不想要日期可以用 <code>\date{}</code><br/>
+</p></div>
+
+</div>
+
+<div id="outline-container-7" class="outline-2">
+<h2 id="sec-7"><span class="section-number-2">7</span> 参考文献</h2>
+<div class="outline-text-2" id="text-7">
+
+<p>  默认是Reference，可以修改 <code>\renewcommand\refname{参考文献}</code><br/>
+</p></div>
+
+</div>
+
+<div id="outline-container-8" class="outline-2">
+<h2 id="sec-8"><span class="section-number-2">8</span> 分栏</h2>
+<div class="outline-text-2" id="text-8">
+
+<p>  可以用宏包multicol来实现。<br/>
+</p>
+
+
+<pre class="example">\uspackage{multicol}
+\columnseprule=0.2pt %分隔线，默认没有
+\begin{multicols}{2}
+内容
+\end{multicols}
+</pre>
+
+</div>
+
+</div>
+
+<div id="outline-container-9" class="outline-2">
+<h2 id="sec-9"><span class="section-number-2">9</span> 设置页边距</h2>
+<div class="outline-text-2" id="text-9">
+
+<p>  A4默认使用的边距为上下2.54cm,左右3.18cm，可以使用geometry包来更改其默认设置：<br/>
+</p>
+
+
+<pre class="example">\usepackage{geometry}
+\geometry{left=2.5cm,right=2.5cm,top=2.5cm,bottom=2.5cm}
+</pre>
+
 </div>
 </div>
 </div>

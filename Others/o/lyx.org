@@ -105,14 +105,18 @@ Your abstract goes here...
   如果不想要日期可以用 =\date{}=
 * 参考文献
   默认是Reference，可以修改 =\renewcommand\refname{参考文献}=
-  
 * 分栏
   可以用宏包multicol来实现。
 #+begin_example
 \uspackage{multicol}
-
 \columnseprule=0.2pt %分隔线，默认没有
 \begin{multicols}{2}
 内容
 \end{multicols}
+#+end_example
+* 设置页边距
+  A4默认使用的边距为上下2.54cm,左右3.18cm，可以使用geometry包来更改其默认设置：
+#+begin_example
+\usepackage{geometry}
+\geometry{left=2.5cm,right=2.5cm,top=2.5cm,bottom=2.5cm}
 #+end_example

@@ -1,0 +1,3236 @@
+\documentclass{article}
+\usepackage{fontspec,xunicode,xltxtra}
+\usepackage{listings}
+\usepackage{geometry}
+\usepackage{xcolor}
+\usepackage{color}
+\usepackage{float}
+\usepackage{multicol}
+\usepackage{indentfirst} %for pargraph indent
+\setmainfont[BoldFont=Adobe Heiti Std]{Adobe Song Std}
+\setsansfont[BoldFont=Adobe Heiti Std]{Adobe Kaiti Std}
+\setmonofont{Bitstream Vera Sans Mono}
+\XeTeXlinebreaklocale "zh" %
+\XeTeXlinebreakskip = 0pt plus 1pt minus 0.1pt
+\newcommand\li{\fontspec{LiSu}}
+\newcommand\hei{\fontspec{SimHei}}
+\newcommand\you{\fontspec{YouYuan}}
+\newcommand\sun{\fontspec{SimSun}}
+\newcommand\fangsong{\fontspec{仿宋_GB2312}}
+\newcommand\kai{\fontspec{KaiTi_GB2312}}
+\usepackage{titlesec}
+\titleformat{\chapter}{\centering\huge}{第\thechapter{}章}{1em}{\textbf}
+\titleformat{\part}{\centering\huge}{第\thepart{}部分}{1em}{\textbf}
+\renewcommand{\contentsname}{目~录}
+\renewcommand{\listfigurename}{插图目录}
+\renewcommand{\listtablename}{表格目录}
+\renewcommand{\indexname}{索引}
+\renewcommand{\tablename}{表}
+\renewcommand{\figurename}{图}
+\renewcommand\refname{参考文献}
+\lstset{
+  basicstyle=\scriptsize,
+  numbers=left,
+  keywordstyle=\color{blue},
+  numberstyle={\tiny\color{lightgray}},
+  stepnumber=1, %行号会逐行往上递增
+  numbersep=5pt,
+  commentstyle=\small\color{red},
+  %backgroundcolor=\color[rgb]{0.95,1.0,1.0},
+  showspaces=false,
+  showtabs=false,
+  frame=shadowbox, framexleftmargin=5mm, rulesepcolor=\color{red!20!green!20!blue!20!},
+  % frame=single,
+  % TABframe=single,
+  tabsize=4,
+  breaklines=tr,
+  extendedchars=false %这一条命令可以解决代码跨页时，章节标题，页眉等汉字不显示的问题
+}
+\geometry{left=2.5cm,right=2.5cm,top=2cm,bottom=2.5cm}
+\date{}
+
+
+\begin{document}
+\title{The Social Network}
+\maketitle
+\columnseprule=0.2pt
+\begin{multicols}{3}
+\noindent
+You know there are more people\\
+with genius IQ living in China\\
+than they're people of any\\
+kind living in United States.\\
+That can't be possible be true.\\
+That is.\\
+What would account for that?\\
+First, awful lot people living in China.\\
+But, here's my question.\\
+How do you distinguish yourself than\\
+population of people who\\
+all got 1600 under SAT's?\\
+- I didn't know they take SAT's in China.\\
+- They don't.\\
+I wasn't talkin' about China anymore.\\
+I was talkin' about me.\\
+You got 1600?\\
+Yes. I can sing in a Capella group,\\
+but I can't sing.\\
+Does that mean you\\
+actually got nothing wrong?\\
+I could row crew or invent a 25 dollar PC.\\
+- Or you get into the "Final Club"?\\
+- Or I get into the "Final Club".\\
+You know, from a woman's perspective...\\
+Sometimes, not singing in\\
+a Capella group is a good thing.\\
+This is serious.\\
+On the other hand,\\
+I do like guys who row crew.\\
+Well, I can't do that.\\
+I was kidding.\\
+Yes, I got nothing wrong in test.\\
+Have you ever tried?\\
+I'm trying right now.\\
+To row crew?\\
+Gettin' into "Final Club". To row crew? No!\\
+Are you like... whatever, delusional?\\
+Maybe, sometimes you said 2 things at once,\\
+I'm not sure which one I\\
+suppose to be aiming at...\\
+But you seen guys who row crew, right?\\
+No.\\
+Ok, well, they bigger than me.\\
+They world class athlete.\\
+Like a second ago you said\\
+you like guys who row crew.\\
+So I assumed you've met one.\\
+I guess, I just meant like the idea of it,\\
+you know the way a girl likes cowboys.\\
+Ok.\\
+Should we get something to eat?\\
+Would you like to talk about something else?\\
+No, it just that since the beginning of\\
+the conversation about the "Finals Club"\\
+I think I may have miss a birthday.\\
+There are really more people in\\
+China with genius IQ's than entire...\\
+"Phoenix" is the most diverse.\\
+The "Fry Club", Roosevelt punched the porc.\\
+Which one?\\
+"The Porcellian, the Porc,\\
+it's the best of the best"\\
+Which Roosevelt?\\
+Theodore\\
+Is it true they send a bus\\
+around to pick up the girls?\\
+Who wanna party with next phoenix chairman.\\
+So you can see why it's\\
+so important to get in.\\
+Well, which is the easiest to get into?\\
+Why would you ask me that?\\
+I was just asking.\\
+None of them.\\
+That's the point.\\
+My friend, Eduardo made \$300.000\\
+betting oil futures one summer.\\
+And Eduardo won't comes close to get in. The ability\\
+to make money doesn't impress anybody around here.\\
+Must be nice.\\
+He made \$300.000 in a summer.\\
+He likes meteorology.\\
+You said it was oil futures.\\
+You can read the weather, you can\\
+predict the price of heating oil.\\
+I think you ask me that because you think\\
+the "Final Club" that's easiest to get into\\
+Is the one, where I'll have the best chance...\\
+What?\\
+You ask me which one is the easiest to get into\\
+Because you think that the one,\\
+where I have the best chance.\\
+The one that the easiest is to get into,\\
+Would be the one where\\
+anybody has the best chance.\\
+You didn't ask me which\\
+one was the best one.\\
+You ask me which one was the easiest one.\\
+I was honestly just asking, ok...\\
+I was just asking to ask...\\
+Mark, I'm not speaking in code.\\
+Erika,\\
+You obsesses with "Finals Clubs"\\
+You have "Finals Clubs"- OCD\\
+You need to see someone about it.\\
+who'll prescribe you some sort of medication\\
+You don't care if the side\\
+effect may include blindness.\\
+"Final Clubs" not "Finals Clubs"\\
+And there's a difference between\\
+being obsessed than being motivated.\\
+Yes, there is.\\
+Well, you do that, it's was cryptic,\\
+so you do speaking code.\\
+I didn't mean to be cryptic.\\
+I'm just saying I need to do something substantial\\
+in order to get the attention of the club.\\
+Why?\\
+Because they're exclusive and fun.\\
+And they lead to the better life.\\
+Teddy Roosevelt didn't get\\
+elected for the president\\
+because he was member from "Phoenix" Club?\\
+He was a member of The\\
+Porcellian, and yes he did.\\
+Why don't you just concentrate\\
+on being the best you, you can be.\\
+Did you really just said that?\\
+I was kidding.\\
+I wanna try to be straight forward\\
+You might wanna be a little more supportive.\\
+If I get in I will be taking you to the events\\
+and the gatherings and will be meeting a\\
+lot of people you won't normally get to meet.\\
+You would do that for me?\\
+We're dating.\\
+Ok, well I wanna try and be straight forward\\
+even let you know that we're not anymore.\\
+What you mean?\\
+We're not dating anymore.\\
+I'm sorry.\\
+This is a joke?\\
+No, it's not.\\
+You're breaking up with me?\\
+You gonna introduce me the people I\\
+wouldn't normally have the chance to meet.\\
+What the f...\\
+- What is that supposed to mean?\\
+- Wait, settle down.\\
+What is it supposed to mean?\\
+Erica, the reason we're able\\
+to sit and drink right now,\\
+because you used to\\
+sleep with the door guy.\\
+"The door guy" his name is Bobby.\\
+I have not slept with "the door guy".\\
+"The door guy" is a friend of mine.\\
+And he's the perfectly good class of people.\\
+And what part of Long Island you from?\\
+Wimbledon?\\
+- Wait\\
+- I'm going back to my dormy.\\
+- Wait, wait is this real?\\
+- Yes.\\
+Ok, than wait, I apologize, ok...\\
+- I have to go study.\\
+- Erika...\\
+- Yes?\\
+- I'm sorry, I meant it.\\
+I appreciate that but\\
+I have to go study.\\
+Come on.\\
+You don't have to study.\\
+You don't have to study.\\
+Let just talk.\\
+- I can't\\
+- Why?\\
+Because it is exhausting.\\
+Dating you is like dating a stairmaster.\\
+All I meant is that you not likely to...\\
+Currently, I wasn't making\\
+a comment on you're parents.\\
+I was saying that you go to B.U. *Boston University*\\
+I was studying a fact.\\
+That's all.\\
+If it's seem rude,\\
+than of course I've to apologize.\\
+I have to go study.\\
+You don't have to study.\\
+Why you keep saying that\\
+I don't need to study.\\
+Because you go to B.U.\\
+Wanna get some food?\\
+I'm sorry you're not sufficiently\\
+impressed with my educations.\\
+I'm sorry, I don't have a row boat.\\
+- So we're even.\\
+- I think we should just be friend.\\
+I don't want friends.\\
+I was just being polite. I have no\\
+intention of being friends with you...\\
+I'm under some pressure\\
+right now from my OS class.\\
+If could just order some food.\\
+I think we should...\\
+Look, you will probably going to\\
+be very successful computer person.\\
+You gonna go thru life thinking\\
+that girls don't like you,\\
+Because you're a nerd...\\
+I want you know, from the bottom\\
+of my heart that won't be true.\\
+It would be because you are an asshole.\\
+<i>Harvard University, Fall 2003</i>\\
+Kirkland House\\
+Erika Albright's a bitch\\
+You think that's because her family\\
+changed their name from Albrecht?\\
+Or do you think because\\
+all B.U. girls are bitches?\\
+For the record, she may look like a 34C.\\
+But she's getting all kind of help\\
+from our friends at "Victoria's Secret"\\
+She's a 34B, as in\\
+barely anything there.\\
+False Advertising.\\
+The truth is she has a nice face. I need\\
+to do something to take my mind of her.\\
+Easy enough, except I need an idea.\\
+I'm a little intoxicated.\\
+I'm not gonna lie.\\
+So, what if it's not even 10pm\\
+and it's a Tuesday night?\\
+The Kirkland's facebook\\
+is open on my desktop\\
+And somebody of these people with\\
+pretty horrendous facebook pics.\\
+Billy Olsen's sitting here had the idea,\\
+putting some of the picture\\
+next to picture of farm animal,\\
+and have people vote who's hotter.\\
+Good call, Mr. Olsen!\\
+Yeah, it's on.\\
+I'm not gonna do the farm animal but I\\
+like the idea of comparing two people together.\\
+It gives the whole thing a very "Turing" feel since\\
+people's rating of the picture is more implicit...\\
+Than say, choosing a number to represent each\\
+person's hotness like they do on hotornot. com\\
+The first thing we're going\\
+to need is a lot of picture\\
+Unfortunately, Harvard doesn't\\
+keep a public centralized facebook,\\
+So I'm going to get all the images from\\
+the individual houses that people are in,\\
+Let the hacking begin!\\
+First up is Kirkland, they keep everything open\\
+and allow indexes in their Apache configuration,\\
+So a little wget magic is all that's necessary\\
+to download the entire Kirkland facebook.\\
+Kid's stuff.\\
+Next is Eliot. They're also open,\\
+but with no indexes in Apache.\\
+I can run an empty search and it returns all\\
+of the images in the database in a single page.\\
+Then I can save the page and Mozilla will save all\\
+the images for me. Excellent. Moving right along.\\
+Excellent.\\
+Moving right along.\\
+Excuse me, everybody...\\
+You're in one of the oldest, one of the most\\
+exclusive club, not just Harvard but in the world.\\
+Now, I wanna welcome you all, The Phoenix\\
+Club First Party of the fall semester.\\
+Lowell has some security they require\\
+username/password combo.\\
+I'm gonna go ahead and says the don't have an access to main fas user database\\
+So they have no worry detecting an intrusion.\\
+Adams has no security but limit\\
+the number of result to 20 of pages,\\
+All I need to do is to break up some\\
+script I use on Lowell and reset.\\
+Quincy has no online facebook,\\
+what a shame!\\
+Nothing I can do about that.\\
+Dunster is intense not only there's no public\\
+directory but there's no directory at all.\\
+You have to do searches. And if you're search\\
+return more than 20 matches, nothing's get return.\\
+Once you do get result, they\\
+don't link directly to images.\\
+They link to PHP that\\
+redirect to something.\\
+Weird! That's maybe difficult,\\
+I'll come back later.\\
+- Hei, Mark!\\
+- What?\\
+Great one.\\
+Beautiful fish.\\
+Leverett is a little better.\\
+They still make you search.\\
+But you can do an empty search and get\\
+links to pages with every students pictures\\
+I slightly obnoxious that they only\\
+let you view one picture at a time...\\
+There's no way I'm gonna go to 500\\
+pages to download pics one at a time\\
+So it's definitely necessary to break\\
+out emacs and modify that Perl script.\\
+Done.\\
+Hey, what's goin' on?\\
+Perfect timing.\\
+Eduardo is here and he is going\\
+to have the key ingredients\\
+- Hey Mark,\\
+- Eduardo...\\
+You and Erica split up?\\
+How did you know that?\\
+It's on your blog.\\
+Yeah.\\
+Are you alright?\\
+- I need you.\\
+- I'm here for you.\\
+No, I need the algorithm you\\
+use to rank chess players.\\
+Are you ok?\\
+We're ranking girls.\\
+- You mean others student.\\
+- Yup.\\
+You think this such a good idea?\\
+I need the algorithm, alright.\\
+I need the algorithm.\\
+Each girl base rating 1400.\\
+At any given time "Girl A" has a rating\\
+R-a and "Girl B" has a rating R-b.\\
+When any 2 girls are matched up,\\
+there's an expectation of which will\\
+win based on their current rating, right?\\
+And all those expectations\\
+are express this way.\\
+Let's write it.\\
+The one on the left.\\
+The right.\\
+It works.\\
+Who should we send it first?\\
+- Dwyer\\
+- Neal\\
+Who will you send it to?\\
+Just to couple of people.\\
+Question is: who are they gonna send it to?\\
+Hey, guys check this out.\\
+Right or left.\\
+Look this hot.\\
+She's my room mate.\\
+This is pathetic.\\
+Albright?\\
+He blog about you.\\
+You don't wanna read it.\\
+Erika, is this yours?\\
+Awful lot of traffic.\\
+You think maybe we should shut\\
+it down before get into trouble.\\
+Hello?\\
+Wa-wait... what?\\
+At 4 in the morning?\\
+Well, this very an usual amount of\\
+traffic to the switch of Kirkland.\\
+You're saying it's unusual\\
+for 4 in the morning?\\
+No, this should be unusual\\
+for half time at the superbowl.\\
+Alright.\\
+I'm gonna go in.\\
+What's goin' on?\\
+Harvard network is about to crash.\\
+You don't think...\\
+I do...\\
+Go to see if it's everybody...\\
+I can't comin'\\
+The network's down.\\
+Unless, it's coincidence,\\
+I think this is us.\\
+It's not a coincidence.\\
+Holy shit...\\
+So you were called in front of the Ad Board.\\
+That's not what happen.\\
+You weren't called in front\\
+of the Administrator Board?\\
+No, back, I mean... that's,\\
+back at the bar with Erica Albright.\\
+She said all that?\\
+That I said that stuff to her.\\
+I was reading from the\\
+transcript for the deposition.\\
+Why we do even need to depose her?\\
+That really for us to decide.\\
+Miss, You think if I know she\\
+can make me look like a jerk.\\
+- I'll be more likely to settle.\\
+- Mark...\\
+Why don't we stretch our legs for\\
+a minute, can we do that?\\
+It's been almost 3 hours.\\
+And frankly you did spend\\
+awful lot of the time...\\
+Embarrassing Mr. Zuckerberg with\\
+the girl's testimony from the bar.\\
+I'm not embarrassed.\\
+She just made a lot that up.\\
+She was under oath.\\
+I guess there would be the first\\
+time somebody's lies under oath.\\
+You got 22 hundred hits within 2 hours?\\
+- Thousands.\\
+- What?\\
+Twenty-two *thousands*.\\
+WOW...\\
+These guys are pretty fast.\\
+Sure anybody make this a fair fight?\\
+Jump up and swim.\\
+I think we'd have to jump up and drowned.\\
+Or you could row forward,\\
+I could row backward.\\
+We're genetically identical, science\\
+says we'd stay in the one place.\\
+Just row the damn boat.\\
+- You guys here about this?\\
+- What?\\
+Two nights ago, a sophomore shut\\
+the network from laptop at Kirkland.\\
+- At 4AM.\\
+- How?\\
+He set up a website, where you vote\\
+on the hotness female undergrads.\\
+What were we doing that none\\
+of us heard about this?\\
+I do not know, 3 hour\\
+technical row before breakfast\\
+Full course load, studying.\\
+Another 3 hours in\\
+the tank then studying.\\
+I'm not sure how we missed it.\\
+How much activity was on those thing?\\
+Twenty two thousands pages request.\\
+This guy hack the facebook from 7 houses.\\
+He set up the whole site in 1 night.\\
+And he did it while he was drunk.\\
+Twenty two thousands?\\
+How do you know his drunk?\\
+He was blogging simultaneously,\\
+- You know what I think?\\
+- I'm way ahead of you\\
+This is our guy.\\
+Cameron Winklevoss, W-i-n-k-I-e-v-o-s-s,\\
+Cameron spell the usual way.\\
+Tyler Winklevoss, Tyler spell the usual way.\\
+And my last name the same as my brother's.\\
+Mr. Zuckerberg, This in an\\
+Administration board hearing.\\
+You're being accused of intentionally\\
+breaching security, violating copyrights,\\
+Violating individual privacy by\\
+creating the website www.facemash.com.\\
+You're also charge with being in violation university\\
+policy on distribution of digitized imaging.\\
+Before we begin with our questioning you're allowed\\
+to make a statement, would you like to do so?\\
+I've, You know, I've already apologize\\
+to the Crimson, to the ABHW...\\
+To Fuerza Latina, and to any women in Harvard may\\
+have been insulted as I take it that they were.\\
+As for any charges stemming from\\
+the breach from the security,\\
+I believe I deserve some\\
+recognition from this board.\\
+I'm sorry?\\
+Yes.\\
+I don't understand...\\
+Which part?\\
+You deserve recognition?\\
+I believe, I pointed out some\\
+pretty gaping holes on your system...\\
+- Excuse me, May I?\\
+- Yes\\
+Mr. Zuckerberg. I'm in charge of security\\
+for all computer on the Harvard network.\\
+And I can assure you of its sophistication.\\
+In fact it was that level of sophistification\\
+that led us to you in for less than 4 hours.\\
+- Four hours?\\
+- Yes, sir.\\
+That would be impressive except if\\
+you had know what you lookin' for,\\
+You would've seen it written\\
+on my dorm room window.\\
+- So?\\
+- Six month academic probation.\\
+Well, they making an example out of you.\\
+They have my blog.\\
+I shouldn't have write nothing about\\
+the farm animals. That was stupid.\\
+But, I was kidding, for god sake.\\
+Doesn't anybody have some sense of humour?\\
+- But I tried to stop you.\\
+- I know\\
+How do you do these thing,\\
+How you manage to get\\
+all girls to hate us.\\
+- Why do I let you...\\
+- I know.\\
+- Can't do that...\\
+- Eduardo, I said enough.\\
+Ok, let's look at a sample problem...\\
+Suppose we're given a computer with a 16-bit\\
+virtual address and a page size of 256 bytes.\\
+The system uses one-level page\\
+tables, which start at address 0x400.\\
+Maybe you want to have DMA on\\
+your 16-bit system, who knows?\\
+The first few pages are\\
+reserved for hardware flags, etc.\\
+Assume page table entries\\
+have eight status bits.\\
+The eight status bits would then be...\\
+Anybody?\\
+And I see we have our first surrender.\\
+Don't worry, Mr. Zuckerberg, brighter men\\
+than you have tried and failed at this class.\\
+One valid bit, 1 modify bit,\\
+That is correct.\\
+Does everybody see how he got there?\\
+Mark?\\
+Are you Mark Zuckerberg?\\
+Yeah.\\
+- Cameron Winklevoss.\\
+- Hi...\\
+Tyler Winklevoss.\\
+Are you guys related?\\
+- It's good.\\
+- Funny.\\
+We never heard that before.\\
+So what can I do for you?\\
+Did I insult your girlfriends?\\
+No, we didn't,\\
+Actually... I don't know.\\
+We never asked.\\
+Maybe we should do that...\\
+Now, we have an idea we want to talk\\
+you about.\\
+You got a minute?\\
+You guys look like\\
+you spend some time at a gym.\\
+We have to.\\
+- Why?\\
+- We row crew.\\
+- Yeah, I've got a minute.\\
+- Great.\\
+- So you ever been inside The Porcellian?\\
+- No\\
+Alright we gonna stay, we can't take you\\
+past the bike room 'cause you're not a member.\\
+I've heard.\\
+Wanna sandwich or something?\\
+Ok, Mark, right?\\
+- Mark, this is Divya Narendra, our partner.\\
+- Hi.\\
+We were really impressed with facemash.\\
+And then we checked you out\\
+and you also built CourseMatch.\\
+I don't know CourseMatch.\\
+You go online and you see what\\
+courses your friend are takings...\\
+You are really smart, man.\\
+- Mark...\\
+- Yeah.\\
+We were talking about "CourseMatch"\\
+It was kind of a no brainer.\\
+And you invented something\\
+in high school too, right?\\
+An app for an MP3 player that\\
+recognizes your taste in music.\\
+Anybody try to buy it?\\
+Microsoft.\\
+How much?\\
+I didn't sell it.\\
+I uploaded for free.\\
+- For free?\\
+- Yeah.\\
+Why?\\
+Ok, well. We have something that we've been\\
+working for a while. We think it's great.\\
+It's called HarvardConnection.\\
+You create your own page.\\
+Interests, bio, friends, pics.\\
+And then people could go\\
+online, see your bio, request...\\
+Yeah, how this different\\
+from MySpace or Friendster?\\
+Harvard-dot-E-D-U.\\
+Harvard.edu is the most prestigious\\
+e-mail address in the country.\\
+And the whole site kinda\\
+base on the idea with girls...\\
+- Not to putting anything in delicate.\\
+- Girls wanna go with guys who go to Harvard.\\
+Divya and my brother don't have\\
+trouble putting things in delicate.\\
+Many different between\\
+what we're talkin' about\\
+and MySpace or Friendster any\\
+others social networks inside...\\
+Is that exclusivity...\\
+Right?\\
+Right.\\
+Yeah, we'd love you\\
+to work with this Mark.\\
+We need a gifted programmer\\
+and you're creative.\\
+And we know you would\\
+take this serious...\\
+Womens group already declare a war...\\
+You know, this could help\\
+rehabilitate you image.\\
+Wow, you would do that for me?\\
+We'd like to work with you.\\
+Our first programmer graduated\\
+and went to work at Google.\\
+Our second programmer just got\\
+overwhelmed with school work.\\
+We will need you to build the site,\\
+write the code and we'll provide...\\
+I'm in...\\
+- What?\\
+- I'm in.\\
+Awesome!\\
+That's what you said?\\
+It was 3 or 4 years ago...\\
+I don't know what I said.\\
+When did you come to Eduardo?\\
+I don't understand the question.\\
+Do you remember\\
+answering an affirmative?\\
+The affirmative...\\
+When did you come to Eduardo\\
+with the idea for facebook?\\
+It was called "TheFacebook" then.\\
+It doesn't need to be that difficult.\\
+I'm35\\
+Did you answer affirmatively,\\
+When Tyler and Cameron Winklevoss, Divya\\
+Narendra ask you to build Harvard Connection,\\
+Did you say, yes?\\
+I sa currently in the middle\\
+of 2 different law suits.\\
+When did you approached Mr. Saverin\\
+with the idea for the facebook?\\
+I wouldn't say I approached him.\\
+Sy?\\
+You can answer the question.\\
+At a party at Alpha Epsilon Pi\\
+What's that?\\
+The jewish fraternity.\\
+It was Caribbean night.\\
+It's not that guys like me are\\
+generally attracted to Asian girls.\\
+It's that Asian girls are\\
+generally attracted to guys like me.\\
+I'm developing an algorithm to define the\\
+connection between Jewish guys and Asian girls.\\
+I don't think it's that complicated.\\
+They're hot, they're smart, they're\\
+not Jewish and they can't dance.\\
+- Hey, Mark's here.\\
+- Mark.\\
+I think I've come up with something.\\
+Hang on, I've gotta tell you\\
+something you're not going to believe.\\
+- What?\\
+- I got punched by the Phoenix.\\
+- Are You kidding?\\
+- No.\\
+I mean it's just the\\
+first of the 4 step process,\\
+But they slipped the invitation\\
+under my door tonight.\\
+I go to the first punch party tomorrow.\\
+You got punch by The Phoenix.\\
+Yeah, probably, it was\\
+just a diversity thing.\\
+It was just a diversity thing.\\
+I'll just ride that horse until...\\
+What did you want to talk about?\\
+- Mark?\\
+- Yeah.\\
+You said you've come up with something.\\
+Yeah, I think I've come up\\
+with something. Come outside.\\
+It's 20 degrees outside.\\
+I can't stare to that loop of Niagara falls which\\
+has absolutely nothing to do with the Caribbean.\\
+People came to Facemash\\
+in a stampede, right?\\
+Yeah.\\
+But it wasn't because the\\
+saw pictures of hot girls.\\
+You can go any around on the internet\\
+and see pictures of hot girls.\\
+Yeah.\\
+That was because they saw\\
+pictures of girls that they knew.\\
+People wanna go on the internet\\
+and check out their friends,\\
+So why not build the\\
+website that offers that?\\
+Friends, pictures, profiles,\\
+whatever you can visit, browse around.\\
+Maybe its someone you just met at a party.\\
+But I'm not talkin' about a dating site.\\
+I'm talkin' about taking the entire social\\
+experience of college and putting it online.\\
+I can't feel my legs\\
+I know, I'm totally psyched about this too.\\
+But Wardo...\\
+Yeah...\\
+It would be exclusive.\\
+You would've to know the people on\\
+the site to get pass thru on page.\\
+Like getting punched.\\
+That's good\\
+Wardo, it's like a Final Clubs\\
+except we're the president.\\
+I told him I thought it sounded great.\\
+It was a great idea.\\
+There's nothing to hack.\\
+People were gonna provide their own\\
+pictures, their own information.\\
+And people had the ability to invite\\
+or not invite their friends to join.\\
+See, in the world were the\\
+social structure was everything.\\
+Puff...\\
+That was the "THING".\\
+It was a big project.\\
+And he was going to have to write\\
+ten of thousands of lines of code.\\
+So I wonder, why he was coming\\
+to me and not to his room mate.\\
+Dustin Moskowitz and Chris\\
+Hughes they're programmers.\\
+We're gonna need a little start-up cash\\
+to rent the servers and get it online.\\
+So that was why.\\
+- Did he offers terms?\\
+- Yes.\\
+We'll split it.\\
+Seventy for me, Thirty for you for\\
+you, putting up a thousands dollar.\\
+And for handling everything on the business end.\\
+You're CFO\\
+- And you said?\\
+- I said "Let's do it"\\
+- Ok, did he add anything else?\\
+- Yes.\\
+It probably was\\
+a diversity thing but so what?\\
+Why do you think he said that?\\
+Gretchen, excuse me for interrupting,\\
+But whose discovery it is?\\
+- Sy, if you let me continue with my line of question...\\
+- What do you suggesting?\\
+They're suggesting I was jealous of\\
+Eduardo for getting punched by Phoenix.\\
+And began a plan to screw him out of\\
+the company I haven't even invented yet.\\
+- Were you?\\
+- Gretchen...\\
+Jealous of Eduardo?\\
+Oh, stop typing,\\
+we're off the record.\\
+Maam, I know you've\\
+done your home work.\\
+And so you know that money\\
+isn't a big part of my life,\\
+But at the moment I could buy\\
+Mt. Auburn Street,\\
+Take the Phoenix Club and\\
+turn it into my pingpong room.\\
+I'll let you know how the party is,\\
+We recognize that you're a plaintiff in one\\
+suit involving Facebook and a witness in another.\\
+- Yes, Sir.\\
+- At any time In the weeks,\\
+Prior to Mark telling you his idea,\\
+Did he mention Tyler Winklevoss, Cameron\\
+Winklevoss, Divya Narendra or HarvardConnection?\\
+Yes. He said they'd asked\\
+him to work on their site.\\
+But that he'd looked at what they had\\
+and decided it wasn't worth his time.\\
+He said even his most pathetic friends knew more about\\
+getting people interested in a website than these guys.\\
+"These guys" meaning my clients.\\
+Yes. He resented, Mark\\
+resented that they,\\
+That your clients thought that he need to\\
+rehabilitate his image after the Facemash.\\
+But Mark didn't want to\\
+rehabilitate anything.\\
+With Facemash he'd hacked\\
+into The Harvard computers,\\
+He dumps his nose at the Ad Board.\\
+He got a lot of honorarity.\\
+Facemash did exactly\\
+what he wanted it to do.\\
+Were you aware that while Mr.\\
+Zuckerberg was building the Facebook,\\
+He was also communicating\\
+with the plaintiffs?\\
+Not at the time I wasn't.\\
+But...\\
+It really didn't have much to do\\
+with The Winkelvoss dating site.\\
+H- How would you know?\\
+You' weren't even there...\\
+Were you aware that while Mr.\\
+Zuckerberg was building TheFacebook,\\
+He was leading the plaintiffs to believe\\
+he was building HarvardConnection?\\
+You're offering a conclusion\\
+not found an evidence.\\
+We are about to finding new evidence...\\
+From Mark Zuckerberg to Tyler Winklevoss\\
+November 30, 2003\\
+I read over all the stuff you\\
+sent me re-HarvardConnection,\\
+and it seems like it shouldn't\\
+take too long to implement,\\
+so we can talk about it after I get all\\
+the basic functionality up tomorrow night.\\
+From Mark Zuckerberg to Cameron Winklevoss.\\
+December 1, 2003.\\
+"Sorry I was unreachable tonight. I just\\
+got about three of your missed calls.\\
+I was working on a problem\\
+set for my sytems class"\\
+From Mark Zuckerberg to Tyler \& Cameron Winklevoss.\\
+December 10, 2003.\\
+"This week has been pretty busy\\
+thus far with classes and work"\\
+"So I think it's probably best\\
+to postpone the meeting."\\
+"I'm also really busy tomorrow"\\
+Ok, anybody else feel like there\\
+is somethin' up with this guy?\\
+Tell him ok.\\
+But we do have to make sure that we\\
+meet up before we all head off for break.\\
+- Hi Mark,\\
+- Hi,\\
+I need a dedicated Linux box running\\
+Apache with a mySQL back-end.\\
+It's gonna cost a little more money.\\
+- How much more?\\
+- About 200 more.\\
+- Do we need it?\\
+- Gotta handle the traffic.\\
+- Do it.\\
+- I already did.\\
+Hey guess what...\\
+I'm in the 2nd cut.\\
+That's good. You should\\
+be proud of that right there,\\
+Don't worry if you\\
+don't make it any further.\\
+I'll get out of here.\\
+From Mark Zuckerberg to Tyler and\\
+Cameron Winklevoss and Divya Narendra.\\
+December 15, 2003.\\
+I have a cs problem set that\\
+I'm just getting started with,\\
+And It should be about 15 hours of\\
+coding so I'll be busy tomorrow night,\\
+I won't really be free to meet\\
+until next Wednesday afternoon.\\
+I have to cancel Wednesday afternoon.\\
+I've basically been in the\\
+lab this whole time and also...\\
+Won't be able to do it Saturday as\\
+I have to meet up with my parents...\\
+As the plaque reads, this is John Harvard,\\
+founder of Harvard University in 1638.\\
+It's also called The Statue of Three Lies.\\
+What are the three lies?\\
+Mr. Dowd.\\
+The three lies,\\
+First...\\
+Shit!\\
+- Take your pants off.\\
+- I know.\\
+Mr. Saverin.\\
+and 3) That's not John Harvard.\\
+Who is it?\\
+F- friend of the sculptor,\\
+Daniel... Chester.\\
+Keep you jacket on.\\
+initial meeting with my clients\\
+And he still hadn't completed\\
+work on HarvardConnection.\\
+But On January 11, 2004\\
+Mr. Zuckerberg registered the domain\\
+name theFacebook by Network Solution.\\
+To the best of your knowledge, had he\\
+even begun work on HarvardConnection?\\
+Not to my knowledge.\\
+No.\\
+Hi Cameron, "I'm still\\
+a little skeptical,\\
+We have enough functionality in\\
+the site to really draw the attention,\\
+And gain the critical mass necessary\\
+to get a site like this to run"\\
+We'll speak soon?\\
+This is the first time\\
+he mentioned any problem?\\
+Yes, he was\\
+You'd sent 36 e-mails to Mr. Zuckerberg\\
+and received 16 e-mails in return,\\
+And this was the first time he\\
+indicated that he was not happy.\\
+That's correct!\\
+He had 42 days to study our\\
+system and get out ahead...\\
+Do you see any of your code on Facebook?\\
+Did I use any of your code?\\
+You stole our whole god damn idea.\\
+Fellas,\\
+What a match-dot-com for Harvard guys!\\
+Can I continue with my deposition\\
+You know you really don't need a\\
+forensic team to get to bottom of this\\
+If you guys were the inventors of\\
+Facebook you'd have invented Facebook.\\
+I can't wait to stand over your\\
+shoulder while you write us a check.\\
+No shit.\\
+Let's continue.\\
+February 4, 2004\\
+Mark...\\
+Mark...\\
+There is a girl in your art\\
+history class name Stephanie Attis.\\
+Do you happen to know\\
+if she has a boyfriend?\\
+Have you ever seen her with anyone.\\
+And if not, do you happen to know if\\
+she's looking to go out with anyone?\\
+Dustin...\\
+People don't walk around with\\
+a sign on them that says some...\\
+We were supposed to meet at nine.\\
+- Have you slept yet?\\
+- I've to add something.\\
+What?\\
+Shit that's look good,\\
+That's look really good.\\
+It's clean and simple,\\
+no disneyland...\\
+But watch...\\
+What'd you write?\\
+Relationship status, Interested in,\\
+This is what drives live in college.\\
+Are you having sex or aren't you\\
+It's why people take certain classes.\\
+And sit where they sit.\\
+And do what they do, and\\
+it's um, centre, you know,\\
+That what's thefacebook\\
+is gonna be about...\\
+People gonna log on...\\
+Because after all the cake and watermelon,\\
+there's a chance they're actually gonna...\\
+- Get laid...\\
+- Meet a girl. Yes.\\
+- This is really good.\\
+- And that was it.\\
+What d'you mean?\\
+- It's ready.\\
+- It's ready?\\
+That was it, and here's the masthead.\\
+- You made a masthead.\\
+- Yeah.\\
+Eduardo Saverin, Co-Founder and CFO.\\
+You have no idea how what\\
+that's gonna mean for my father.\\
+Sure I do...\\
+- When's it go on live?\\
+- Right now, take your laptop out.\\
+Why we do need my laptop.\\
+Because you've got e-mails\\
+for everybody at Phoenix.\\
+I'm not sure it's gonna be cool\\
+with them that I spam their...\\
+It's not spam.\\
+I know it's not spam\\
+If we send it to our friends it'll\\
+just bounce around the computer lab.\\
+I haven't gotten in yet.\\
+These guys know people\\
+and I need their e-mails.\\
+- Sure\\
+- Good.\\
+Give me the mailing list.\\
+jabberwock12@harvard E-D-U.\\
+These guys.\\
+They're literary geniuses 'cause the world's\\
+most obvious Lewis Caroll reference is in their...\\
+They're not so bad\\
+I'm just saying.\\
+Yeah, you're right.\\
+The site's live.\\
+You know, Let's go get\\
+a drink and celebrate.\\
+I'm buying.\\
+Mark,\\
+Mark, are you praying?\\
+What ever happened to Cole\\
+Porter and Irving Berlin?\\
+It's a Valentine's theme.\\
+They playing love songs.\\
+Good point, 'cause Cole Porter and\\
+Irving Berlin never wrote any love songs.\\
+Honey, just put your laptop away...\\
+Seventy four people\\
+spam me the same link.\\
+Casey...\\
+- What is it?\\
+- I don't know\\
+But I'm really hoping it's cat look like a\\
+hitler 'cause I can never get enough of that.\\
+No, it's not.\\
+Div?\\
+What?\\
+Div, w-what is wrong?\\
+- Hey!\\
+- Not now!\\
+- We need 20 mins.\\
+- Ok.\\
+I just want to let you know that\\
+Zuckerberg stole our website.\\
+- Mark Zuckerberg?\\
+- He stole our website.\\
+It's been alive for more than 36 hours.\\
+Mr. Hotchkiss\\
+Ty, the lawyer's on the phone with dad.\\
+Yes, Sir. I'm here with my brother\\
+Tyler, our business partner, Divya.\\
+Welcome to theFacebook. theFacebook is an online directory\\
+that connects people through different social networks.\\
+You must have a Harvard.edu\\
+address to register.\\
+That's right.\\
+Yes, Sir.\\
+I called earlier, I'm\\
+looking for Mark Zuckerberg\\
+Yes, Sir. He's quoted a couple of times.\\
+I can read it to you.\\
+"Everyone's been talking a lot about\\
+a universal facebook within Harvard"\\
+I think it's kind of silly that it would take the\\
+University a couple of years to get around to it.\\
+I can do it in class jobs than\\
+they can't and I did it in a week.\\
+- Tell him, Divya Narendra called, I appreciate it.\\
+- That's how we talks.\\
+As of yesterday evening, Zuckerberg set over\\
+He said that he anticipated 900 students\\
+would've join the site by this morning.\\
+Divya was just reading that 650\\
+students signed up on the first day\\
+If I was I drug dealer I could give\\
+free drugs to 650 people in one day.\\
+This guy doesn't have 3 friends to rob...\\
+Guys, please, come on...\\
+Alright that's what we'll do, Mr. Hotchkiss\\
+Then we e-mail it to you.\\
+You won't be able to get\\
+on the website yourself.\\
+Because you don't have a harvard... uhm..\\
+you know what it would be easy\\
+for us to e-mail it to you.\\
+I'm sure you right... He's a good guy,\\
+And he's very bright and I'm sure he\\
+didn't mean to... do what he did.\\
+Alright,\\
+thank you very much...\\
+And Dad,\\
+Love you too.\\
+He good guy?\\
+We don't know that he's not a good guy.\\
+We know he Stole our idea\\
+We know that he lied to our\\
+faces for a month and half\\
+He never lie to our face\\
+He never saw our faces!\\
+Fine, he lied to our e-mail accounts.\\
+So he got himself 42-days head start\\
+He knows what apparently you don't which\\
+is that getting there first is everything.\\
+I'm a competitive racer, Div,\\
+I don't think you need to school me on the\\
+importance of getting there first. Thank you.\\
+Alright, that's was your father's lawyer?\\
+Yeah, well his in-house counsel.\\
+He's gonna look at all this if he thinks it's\\
+appropriate he'll send a cease and desist letter.\\
+What, do you wanna hire\\
+an IP lawyer and sue him?\\
+No, I wanna hire the Sopranos to beat\\
+the shit out of him with a hammer!\\
+- We don't have to do that.\\
+- That's right.\\
+We can do that ourself.\\
+I'm six-five, 220lbs, and there's two of me.\\
+I'm with this guy.\\
+Whatever, I'm saying let's calm down\\
+until we know what we're talking about.\\
+how much more information\\
+are you waiting for.\\
+We met with Mark 3 times, exchanged 52 e-mails,\\
+we can prove that he looked at the code...\\
+what is that on the bottom of page\\
+It's "A Mark Zuckerberg production"\\
+On the homepage?\\
+On every pages.\\
+Shit. I need to let the\\
+classiness waft over me.\\
+Ok, look...\\
+They wrote, "Zuckerberg said that\\
+he hoped the privacy options...\\
+...would help to restore his reputation\\
+following student outrage over Facemash.com"\\
+That's exactly what we said to him.\\
+He's giving us "the finger" in the Crimson\\
+While we're waiting for dad's\\
+lawyer to look this stuff over, we can at least...\\
+No...\\
+We're not starting a knife fight in\\
+the Crimson and we're not suing anybody.\\
+Why not?\\
+He's gonna say it's stupid.\\
+What, who?\\
+Me?\\
+Say it why not?\\
+Because we're gentlemen of Harvard.\\
+This is Harvard. Where you don't plant\\
+stories and you don't sue people.\\
+You thought he was going to be the\\
+only one who thought that was stupid?\\
+During the time when you say you had this idea,\\
+Did you know Tyler and Cameron\\
+came from a family of means?\\
+A family of means?\\
+Did you know that his father was wealthy.\\
+I'm not sure why you're asking me that.\\
+It's not important that you\\
+be sure why I'm asking you.\\
+It's not important to you.\\
+Sy...\\
+Did you know that they came from money?\\
+I had no idea whether they\\
+came from money or not.\\
+In one of your e-mails to Mr. Narendra you\\
+reference Tate Winklevoss consulting firm.\\
+If you say so.\\
+Howard Winklevoss founded the firm and its\\
+assets are in the hundreds of millions.\\
+You also knew that Tyler and Cameron were members\\
+of a Harvard Final club called the Porcellian.\\
+They pointed that out?\\
+Excuse us for inviting you in.\\
+To the bike room...\\
+So it's safe to say you were\\
+aware that my clients had money?\\
+Yes.\\
+Let me tell you why I'm asking.\\
+I'm wondering why...\\
+If you needed a \$1000 for an internet\\
+venture you didn't ask my clients for it.\\
+They'd demonstrated to you an\\
+interest in this kind of thing...\\
+I went to my friend for the money because\\
+that he's who I wanted to be partners with...\\
+Eduardo was presidents of the Harvard Inverstors\\
+Association and he was also my best friend.\\
+Your best friend is suing\\
+you for 600 million dollars.\\
+I didn't know that.\\
+tell me more!\\
+Eduardo, what happen\\
+after the initial lunch?\\
+Sy would you mind addressing as Mr. Saverin\\
+Gretchen, they're best friend\\
+Not anymore\\
+I already went through this on the...\\
+Nevermind, Mr. Saverin...\\
+It's exploded, everybody\\
+on campus was using it\\
+"Facebook-me" was the common\\
+expression after two weeks.\\
+and Mark...\\
+And Mark was biggest thing on a campus\\
+that included 19 Nobel Laureates,\\
+two future Olympians\\
+and a movie star.\\
+Who's the movie star?\\
+Does it matter?\\
+No.\\
+Beautiful day. And I was up in my Radcliffe dorm.\\
+He brought that magazine up and he saw it to me.\\
+And he said, "Look, it's gonna happen\\
+without us. We've got to start now."\\
+And I said... "Okay."\\
+Let's get basic hardware.\\
+Now, most of you think you know the\\
+rest of story that you may not.\\
+The beginning of the\\
+industry were very humble...\\
+That kit computer on the cover of that\\
+magazine, had an 8080 processor in it.\\
+Unless you paid extra for 1K\\
+memory board, you got 256bits,\\
+So the challenges,\\
+when I write the basic...\\
+Wasn't just, uh... running 4Kbits\\
+But I also have to leave room for\\
+users to run the programs in 4Kbits\\
+Hi... your friend,\\
+Isn't that Mark Zuckerberg?\\
+Yeah\\
+- He made facebook?\\
+- Yeah.\\
+I mean both of us.\\
+Yeah, we... yes.\\
+Cool. I'm Christy Lee.\\
+This is Alice.\\
+V- Very nice to meet you.\\
+Facebook-me when you get home\\
+We can all go out and grab a drink.\\
+Certainly, absolutely will do that.\\
+She said "Facebook-me" and we\\
+can all go for a drink later.\\
+Which is stunningly great for two reasons.\\
+One she said "Facebook-me". Right?\\
+And the other...\\
+- They wanna have drinks later.\\
+- Yes\\
+Have you ever heard so many different good\\
+things packed into one regular-sized sentence?\\
+Excuse me. Mark?\\
+Yeah\\
+I'm Stuart Singer. I'm in your O.S. lab.\\
+Sure.\\
+- Awesome job with theFacebook.\\
+- Awesome Job.\\
+Thanks.\\
+- I'm Bob.\\
+- How are you doin'.\\
+You know, I could swear he\\
+was looking at you when he said\\
+The next Bill Gates could\\
+be right in this room.\\
+I doubt it\\
+I showed up late, I don't\\
+even know who the speaker was.\\
+It was Bill Gates.\\
+Shit... that's make sense.\\
+Alright, thanks guys.\\
+Are you moron? Are you medically stupid?\\
+You can't recognize Bill Gates\\
+in front of you for an hour?\\
+Mark Zuckerberg now thinks we got into Harvard\\
+on a dimwit scholarship. I'm gonna get a Glock...\\
+It's time to monetize the thing.\\
+What are their natives?\\
+- Did you heard what I just said?\\
+- When?\\
+I said it's times to monetize the site\\
+What is that mean?\\
+It means, it's time for the website\\
+to start generating revenue.\\
+No, I know what the word means.\\
+I'm asking how do you want to do it?\\
+Advertising.\\
+No.\\
+We've got 4000 members.\\
+'Cause theFacebook is cool.\\
+And if we start selling pop-ups\\
+for Mountain Dew it's not gonna be cool.\\
+Well I wasn't thinking it would\\
+be Mountain Dew but at some point,\\
+And I'm talkin' as the business\\
+end of the company, the site...\\
+We don't even know what it\\
+is yet, we don't what it is...\\
+We don't know what it can be.\\
+We don't know what it will be.\\
+We know that it's cool,\\
+That's a priceless asset\\
+and I'm not giving it up.\\
+- So it won't be finish?\\
+- It won't be finish.\\
+That's the point, the way fashion never finish\\
+- What?\\
+- Fashion, fashion is never finish.\\
+You talkin' about fashion, really you?\\
+I'm talkin' about the idea\\
+I'm sayin' that never finish\\
+Ok, but they manage to\\
+make money, sellin' pants\\
+Mark what is this?\\
+What?\\
+It's called the cease and desist letter.\\
+What were their names?\\
+- Who?\\
+- The girls.\\
+When did you get this?\\
+About ten days ago.\\
+Right after we launched the site\\
+Hey, the girls what were their names?\\
+They're sayin'... the Winklevoss twins\\
+are sayin' that you stole their idea.\\
+I find that to be mildly annoying.\\
+They find it to be\\
+Intelectual Property Theft.\\
+- Look...\\
+- Why don't you show it to me?\\
+It was addressed to me\\
+They're sayin' that we stole theFacebook\\
+from Divya Narendra and the Winklevoss...\\
+I know what it says.\\
+Did we?\\
+Did we what?\\
+Don't screw around with me now.\\
+Look at me\\
+The letter says we could face legal action.\\
+No, it says I could face legal action\\
+This is from lawyer, Mark.\\
+They must feel they have some grounds for...\\
+The lawyer is their father's house counsel.\\
+Do they have grounds?\\
+The grounds are our thing is cool and\\
+popular and HarvardConnection is lame.\\
+Wardo, I didn't use any of their code,\\
+I promise, I didn't use anything.\\
+Look, a guy who builds a really nice chair doesn't\\
+owe money to everyone who's ever built a chair.\\
+Ok, they came to me with\\
+an idea. I had a better one.\\
+Why didn't you show me this letter\\
+I didn't think it was a big deal\\
+If there's something wrong,\\
+if there's ever anything wrong,\\
+You can tell me.\\
+I'm the guy that wants to help.\\
+This is our thing.\\
+Now, is there anything\\
+that you need to tell me\\
+No.\\
+What are we doing about this?\\
+I went to a 3-L at Student Legal Services\\
+and he told me to write them back.\\
+And what did you say?\\
+When we met in January, I\\
+express my doubts about the site,\\
+where it stood with graphic, how much\\
+programming was left that I had not anticipated...\\
+...the lack of hardware we\\
+had to deal with the site use,\\
+the lack of promotion that we go on\\
+to successfully launch the website...\\
+This was the first time you\\
+raised any of those concern, right?\\
+I'd raised concerns before.\\
+Bullshit\\
+Not to us\\
+Gentlemen.\\
+I'm talkin about at the meeting in\\
+January to which this letter is referring.\\
+Yeah.\\
+Let me re-phrase this.\\
+You sent my client 16 e-mails. In the\\
+first 15, you did't raise any concerns\\
+Is that a question?\\
+In the 16th e-mail you raised\\
+concerns about the site functionality.\\
+Were you leading them on for six weeks?\\
+No.\\
+Why didn't you raise any\\
+of these concern before?\\
+It's raining.\\
+I'm sorry?\\
+It's just started raining.\\
+Mr. Zuckerberg, do I have your full attention?\\
+No.\\
+Do you think I deserve it?\\
+What?\\
+Do you think I deserve your full attention?\\
+I had to swear an oath before we began this\\
+deposition, and I don't want to perjure myself,\\
+So I have a legal obligation to say no.\\
+Okay - no.\\
+You don't think I deserve your attention.\\
+I think if your clients want to sit on\\
+my shoulders and call themselves tall,\\
+They have the right to give it a try,\\
+But there's no requirement that I enjoy\\
+sitting here listening to people lie.\\
+You have part of my attention -\\
+you have the minimum amount.\\
+The rest of my attention is back\\
+at the offices of theFacebook,\\
+Where my colleagues and I are doing\\
+things that no one in this room,\\
+Including and especially your clients, are\\
+intellectually or creatively capable of doing.\\
+Did I adequately answer\\
+your condescending question?\\
+I have 12:45, why don't we say that's lunch.\\
+Back at 02:30.\\
+So what were their names?\\
+Their names are Christy and Alice.\\
+And They wanna have drinks tonight\\
+I don't care.\\
+Hey man, sorry, uhmm, couple of\\
+girls refreshing up in there.\\
+Sweet...\\
+We have groupies.\\
+I'll be right back\\
+Hey, where you goin'?\\
+Mark...\\
+Erica\\
+Hey\\
+I saw you from over there\\
+- I don't know you came to this club a lot.\\
+- First time.\\
+Mine too.\\
+Can I talk you alone for a second?\\
+I think I'm good right here\\
+I just... I'd love to talk you alone\\
+Right here is fine\\
+I don't know if you heard about\\
+this new website I launched.\\
+- No\\
+- TheFacebook?\\
+You called me a bitch on internet, Mark.\\
+That's why, I wanna talk to you...\\
+- On the internet...\\
+- If you could just...\\
+That's why I came over\\
+Comparing women to farm animals?\\
+I didn't end up doing that.\\
+It didn't stop you from writing it.\\
+As if every thought that tumbles through your head is\\
+so clever, it would be a crime for it not to be share.\\
+The internet's not written in pencil, Mark,\\
+it's written in ink,\\
+And you published that\\
+Erica Albright was a bitch.\\
+Right before you made some ignorant\\
+crack about my family's name, my bra size...\\
+And then rated women\\
+based on their hotness.\\
+- Erica, is there a problem?\\
+- No, there's no problem.\\
+You write your snide bullshit from a dark room\\
+because that's what the angry do nowadays.\\
+I was nice to you\\
+don't torture me for it.\\
+If we could just go\\
+somewhere for a minute...\\
+I don't want to be rude to my friends,\\
+- Okay.\\
+- Okay.\\
+Good luck with your video game.\\
+Dude, that's was great...\\
+That was right thing to do,\\
+you apologize, right?\\
+We have to expand.\\
+Is he mad about something?\\
+Okay, we're expanding\\
+to Yale and Columbia.\\
+Dustin, I want you to share\\
+the coding work with me.\\
+Chris, you're gonna be in\\
+charge of publicity and outreach.\\
+You can start by gettin' a story in\\
+B.U student newspaper. It's the bridge.\\
+They hate doing stories about Harvard.\\
+Somebody at the newspaper will\\
+be a computer science major.\\
+Tell 'em Mark Zuckerberg will do 10\\
+hours of free programming for them.\\
+Why do you want a story\\
+in the B.U. newspaper...\\
+Because I do.\\
+Now, here's the arrangement.\\
+Eduardo's CFO and owns 30% of the company.\\
+Dustin's Vice President and Head of Programming\\
+and his 5% of the company will come from my end.\\
+Chris is Director of Publicity and his compensation will\\
+depend on the amount of work he ends up doing.\\
+- Any questions?\\
+- Who the girls?\\
+Sorry, uhmm...\\
+they are Christy and Alice.\\
+- Hi...\\
+- Hi. Hello.\\
+- Is there anything we can do?\\
+- No, that's it.\\
+Yale and Columbia, let's go.\\
+- And Stanford...\\
+- What?\\
+Standford. It's time for\\
+them to see this in Palo Alto.\\
+- You don't want any lunch?\\
+- No.\\
+You're welcome to some salad.\\
+No, thank you.\\
+This must be hard.\\
+Who are you?\\
+I'm Marylin Delpy,\\
+I introduced myself this morning.\\
+I mean, what do you do?\\
+I'm a second year associate at the firm.\\
+My boss wanted me to sit in on the deposition phase.\\
+What are you doin'?\\
+Checking in to see how it's going in Bosnia.\\
+Bosnia?\\
+They don't have roads\\
+but they have Facebook.\\
+You must really hate the Winklevoss.\\
+I don't hate anybody.\\
+The Winklevii aren't suing me\\
+for intellectual property theft.\\
+They're suing me because for\\
+the first time in their lives,\\
+Things didn't work at the way\\
+they were supposed to for them.\\
+- He's expanding.\\
+- What?\\
+He's expanding to Yale, Columbia and Stanford,\\
+it's gonna be in the Crimson tomorrow.\\
+Really?\\
+Yeah.\\
+Well, it's look like that Cease and desist letter\\
+really scared the shit out of him, huh?\\
+I want to hire a lawyer to file for injunctive relief\\
+and get this website taken down now!\\
+Look...\\
+Every minute, the site's up, Harvard\\
+Connection become less valuable.\\
+I want an injunction, I want damages,\\
+punitive relief and I want him dead.\\
+I want those things too!\\
+Then why aren't we doing anything about it?!\\
+Because we're gentlemen of Harvard?!\\
+Because you're not thinking\\
+about how it's gonna look.\\
+How's it gonna look?\\
+Like my brother and I are in skeleton costumes\\
+chasing the Karate Kid around a high school gym.\\
+Cam, he violated Massachusetts state law.\\
+When he goes to Connecticut, New York and\\
+California he'll have violated federal law.\\
+And by the way, he's in violation of Harvard law.\\
+There's no such thing as Harvard law.\\
+Wait, Yes, there is.\\
+Harvard student handbook.\\
+Every freshman is issued one of this.\\
+Somewhere in this book says...\\
+You can't steal from another student.\\
+This is what we needed.\\
+You can't get a meeting\\
+with Larry Summers.\\
+My brother and I pay tuition at this\\
+school, we carry a 3.9 GPA at this school,\\
+We've won trophies for this school and\\
+We'll be rowing in the Olympics for this school.\\
+I want a meeting with the\\
+goddamn president of this school.\\
+Why Stanford?\\
+W- Why do you think?\\
+I'm sorry, I'm late for Bio Chem..\\
+Okay.\\
+You don't know my name, do you?\\
+Is it Stanford?\\
+I should just kick your ass.\\
+How you go to party\\
+and you meet somebody...\\
+Amelia Ritter, but you prefer Amy.\\
+You're from Orinda\\
+Your father in commercial real estate\\
+and your mother is 10 years sober.\\
+What's my major?\\
+Trombone.\\
+Really?\\
+I remember something about a trombone.\\
+"Tu fais l'amour à la jolie fille et la mets de côté"\\
+*You make love to the pretty girl and put it aside*\\
+- French...\\
+- Oui\\
+Your major is French.\\
+And yours?\\
+Mine?\\
+I don't have one.\\
+You haven't declared?\\
+I don't go to school.\\
+- You kidding?\\
+- No.\\
+Where did you go to school?\\
+William Elementary for a little while,\\
+Seriously, you're not like 15\\
+years old or anything are you?\\
+No.\\
+But you're not like 15, are you?\\
+No.\\
+So what do you do?\\
+I'm an entrepreneur.\\
+You're unemployed.\\
+I wouldn't say that.\\
+What would you say?\\
+That I'm an entrepreneur.\\
+Well then, what was your latest preneur?\\
+Well, I founded an internet company that\\
+let folks download and share music for free.\\
+Kinda like Napster?\\
+Exactly like Napster.\\
+What do you mean?\\
+I founded Napster.\\
+Sean Parker founded Napster.\\
+Nice to meet you.\\
+You're Sean Parker.\\
+Ah, you see, the shoe's on the other,\\
+uh, table which has turned.\\
+I just slept with Sean Parker?\\
+You just slept on Sean Parker.\\
+You're zillionaire.\\
+Not technically\\
+What are you?\\
+Broke. There's not a lot of money in free music.\\
+Even less when you're being sued by\\
+everyone who's ever been to the Grammys.\\
+This is blowing my mind.\\
+I appreciate that\\
+I gotta hop in the shower\\
+and get ready for class.\\
+Biochem, even know you are in French major,\\
+whose name is Amy.\\
+You passed.\\
+I'm a hard worker.\\
+There's juice or anything else\\
+you can find. Help yourself.\\
+You mind if I check my e-mail?\\
+Yeah. go ahead.\\
+Amy...\\
+Amy?\\
+Yeah!\\
+Can you come out here?\\
+Just a second!\\
+There's a snake in here, Amy.\\
+What?\\
+Where?\\
+Ok, there isn't snake but I need to ask you something.\\
+Are you kidding me?\\
+I could've been killed!\\
+How?\\
+By running to you fast and gettin' twisted...\\
+What do you need to ask me?\\
+I went to check my e-mail\\
+and there's a website open on your computer.\\
+Yeah. After you passed out last night,\\
+I went on theFacebook for 'lil bit.\\
+What's that?\\
+TheFacebook? Standford had it for,\\
+like two weeks now.\\
+It's really awesome except\\
+it's freakishly addictive.\\
+Seriously, I'm on the thing like five times a day.\\
+You mind if I set myself an e-mail.\\
+Yes, everything okay?\\
+Everything's great.\\
+I just need to find...\\
+You,\\
+Mark Zuckerberg.\\
+I've never been in this building before.\\
+This building is a hundred years\\
+older than the country it's in.\\
+So do be careful.\\
+We're sitting in the chairs.\\
+Yes. Very good.\\
+You can go in now.\\
+That's just their own stupidity,\\
+I should have been there.\\
+Darkness is the absence of light and stupidity\\
+in that instance was the absence of me.\\
+Catherine, I've got students in my office now.\\
+Students. Undergrads.\\
+I don't know, from the looks of it, they want\\
+to sell me Brooks Brothers Franchise. Alright.\\
+Good morning.\\
+Good morning, Sir.\\
+I'm Cameron Winklevoss and\\
+this is my brother, Tyler.\\
+And you here, because...\\
+Either of you can answer.\\
+I thought you were reading the letter.\\
+I've read the letter.\\
+Well, we came up with an idea for\\
+a website called HarvardConnection...\\
+That we've since changed\\
+the name to ConnectU,\\
+And Mark Zuckerberg stole that idea...\\
+I'm understand. I'm asking\\
+what you want me to do about it?\\
+Well Sir, in The Harvard Student Handbook,\\
+which is distributed to each freshman...\\
+Under the heading "Standards of Conduct in the Harvard Community"\\
+It says, The College expects\\
+that all students to be honest...\\
+And forthcoming in their dealings\\
+with members in this community.\\
+Students are required to respect\\
+public and private ownership.\\
+Instances of theft, misappropriation or...\\
+- Ann...\\
+- Yes Sir.\\
+Punch me in the face...\\
+Go ahead.\\
+Or unauthorized use will\\
+result in disciplinary action,\\
+Including the requirement\\
+to withdraw from the College.\\
+You memorize that instead of doing, what?\\
+What my brother and I come, here today,\\
+to ask you, respectfully of course...\\
+Sir, it's against University rules to steal\\
+from another student, plain and simple.\\
+You've spoken to your House-master.\\
+Yes Sir, and the House-master made\\
+a recommendation to the Ad Board\\
+But the Ad Board won't hear us.\\
+Have you tried dealing with\\
+the other student directly?\\
+Mr. Zuckerberg hasn't been responding to any of\\
+our e-mails or phone calls for the last two weeks.\\
+He doesn't answer when we\\
+knock on his door at Kirkland.\\
+And the closest I've come to dealing with\\
+him face to face is when I saw him on the quad,\\
+And I chased him through Harvard Square.\\
+You chased him?\\
+I- I saw him and I know he saw me\\
+and after a minutes he disappeared.\\
+I don't see this as the university issue.\\
+Of course this is a university issue.\\
+There's a code of ethics and an\\
+honor code and he violated them both.\\
+You entered into a code of ethics with\\
+the university, not with each other.\\
+I'm sorry President Summers, but\\
+what you just said makes no sense to me at all.\\
+I'm devastated by that.\\
+What my brother means is if Mark\\
+Zuckerberg breaking into our dorm room\\
+And stole our computer, that\\
+would be university issue.\\
+I don't know this office\\
+doesn't handle petty larceny.\\
+This isn't petty larceny. This idea\\
+potentially worth millions of dollars.\\
+- Millions?\\
+- Yes.\\
+You might just be letting your\\
+imaginations run away with you.\\
+Sir, I actually don't think you're in\\
+any position to make that call.\\
+I was the U.S. Treasury Secretary,\\
+I'm in some position to make that call\\
+Letting our imaginations run away with us is exactly\\
+what we were told us to do in your freshmen address.\\
+I would suggest that you let your imaginations\\
+run away with you on a new project.\\
+- You would?\\
+- Yes, everyone at Harvard is eventing something.\\
+Harvard Undergraduates believe that\\
+inventing a job is better than finding a job.\\
+So I suggest again that the two of you\\
+come up with a new, new project.\\
+I'm sorry, but that's not the point, Sir.\\
+Please what's the point.\\
+You don't have to be an intellectual property expert\\
+to understand the difference between right and wrong.\\
+And you're saying that I don't.\\
+Of course I'm not saying that.\\
+I'm saying that.\\
+- Really?\\
+- Sir...\\
+Ann... How do they get this appointment?\\
+Colleagues of their father...\\
+Let me tell you something Mr. Winklevoss,\\
+Mr. Winklevoss, since you under subject of right and wrong.\\
+This action, this meeting,\\
+the two of you being here is wrong.\\
+Is not worthy of Harvard,\\
+Is not what Harvard saw in you...\\
+You don't get special treatment!\\
+We never ask for it...\\
+Just start another project?\\
+Like we're making a diorama for the science fair?\\
+If you have problems with that Mr. Winklevoss\\
+We never ask for special treatment.\\
+The court are always at your disposal...\\
+Is there anything else, I could do for you?\\
+Thank you very much for your time, Sir.\\
+Ups, broke 335 years old your door knob.\\
+Eduardo, spring break, you and Mr.\\
+Zuckerberg took a trip to New York.\\
+What was the purpose of the trip?\\
+Well, as CFO, I'd set up some\\
+meetings with potential advertisers.\\
+Who paid for the trip?\\
+It was paid for out of the thousand dollar\\
+account I'd set up a few months earlier.\\
+At this point your thousand dollars was the\\
+only money that had been put into the company.\\
+Yes.\\
+How did you feel the meetings went?\\
+It went terribly.\\
+Why?\\
+Mark was asleep.\\
+I was not asleep.\\
+Can I re-phrase my answer?\\
+I wish he'd been asleep.\\
+So we're at 29 schools now\\
+with over 75.000 members.\\
+People who go on theFacebook tend to stay\\
+on longer than almost any other website.\\
+Now here's the most impressive statistic,\\
+Now if you'll allow me...\\
+Excuse me, one second...\\
+What sound that he's making?\\
+Is that like a tsk...\\
+It wasn't tsk...\\
+It was...\\
+Like throttle sound\\
+Almost a gag reflex\\
+Guys, what is this?\\
+There was one more meeting\\
+scheduled for the New York trip.\\
+Yes, it was a dinner.\\
+It was set up through my\\
+girlfriend at the time.\\
+Would you say that Mark was\\
+excited about this meeting?\\
+Yes, very.\\
+- Look, they're not gonna card us...\\
+- They might.\\
+I mean look around.\\
+It'll be embarrassing.\\
+Tell him they're not gonna card us.\\
+They're not gonna card us.\\
+Mark...\\
+Are you gonna talk about ads again?\\
+Unless you're the Ballet Theatre of Hartford,\\
+the purpose of a business is to make a profit.\\
+This isn't a business, yet.\\
+That's tough for me because my job...\\
+Nevermind.\\
+He's 25 mins late.\\
+He founded Napster when\\
+he was 19, he can be late.\\
+He's not a God.\\
+Then what is he?\\
+He's 25 minutes late.\\
+I think Wardo's jealous.\\
+I honestly wasn't jealous.\\
+I was nervous.\\
+Why?\\
+I didn't know him at all but I\\
+had done a search and asked around...\\
+He struck me as kind of a wild card.\\
+Why?\\
+He crashed out of two pretty big\\
+internet companies in spectacular fashion,\\
+He's had a reputation with drugs.\\
+He also founded the companies.\\
+We don't need him.\\
+He's here.\\
+No, no, take your time.\\
+And he does own a watch.\\
+Stop it.\\
+I'm Sean Parker.\\
+How do you do.\\
+You must be Eduardo and Christy\\
+and Mark, great to meet you.\\
+You guys don't have\\
+anything in front of you.\\
+Tori...\\
+We were waiting...\\
+Hey baby boy.\\
+Could you bring out some things?\\
+The lacquered pork with that ginger confit, tuna\\
+tartar, and the lobster claws, that'll get us started.\\
+Christy what do you like to drink?\\
+An appletini\\
+Great. Four of those.\\
+From that point on it was a Sean-a-thon.\\
+The question was what did you talk about?\\
+He took us through his episode with Napster.\\
+I didn't want to spend my twenty\\
+as a professional defendant\\
+Who knew the music industry\\
+doesn't have a sense of humor.\\
+We tried to sell the company to pay the\\
+But I guess to them that was a little like\\
+selling a stolen card to pay for the stolen gas.\\
+So we said, screw it,\\
+we declare bankruptcy.\\
+You made a name for yourself.\\
+And you are dry.\\
+- Tory...\\
+- No, no, I'm good.\\
+And then he went to his second business\\
+venture which was an online rolodex.\\
+Says he got thrown off by Chase Equity.\\
+And I want to do it nice this time,\\
+I put on a tie, I shine my shoes.\\
+But nobody want to take orders from a kid.\\
+So let me tell you what happen...\\
+to twenty-old to -- dot.com\\
+I'm not psychiatrist, but\\
+I'm glad with got that on record.\\
+You're not a psychiatrist, but what...\\
+A psychiatrist would\\
+say that he was paranoid.\\
+They hire private detectives,\\
+who follow you day and night.\\
+You are target for hi press-escort.\\
+I can't prove it but I\\
+know they tap my phone.\\
+Whatever it is that's gonna\\
+trip you up, you're done already.\\
+Private behaviour is\\
+rally cover time gone by...\\
+And then somehow and someway you've\\
+manage to live your life like a Dalai Lama\\
+Don't mixed it up.\\
+Because they don't want you,\\
+they want your idea.\\
+And they want you to\\
+say thank you while you,\\
+Excuse me... wipe your\\
+chin and walk away.\\
+That's what happen to you?\\
+And delusional.\\
+Yes,\\
+But... they'll be pay back.\\
+In case I brought down the record company with\\
+Napster and I left the company since then too.\\
+Sorry, you didn't bring down\\
+the record companies. They won.\\
+In court.\\
+Yeah.\\
+You wanna buy a Tower record, Eduardo?\\
+And he told story after story\\
+about life in Silicon Valley,\\
+Parties at Stanford and down in LA,\\
+friends who'd become millionaires,\\
+But mostly how Mark had to,\\
+he had to come to California.\\
+And then he cut around to TheFacebook.\\
+So tell me about your progress.\\
+Well, we're in 29 schools now,\\
+we got over 75 thousands members...\\
+Tell me about the strategy.\\
+Ok, for instance, we wanted Baylor in Texas but\\
+Baylor already had a social network on campus\\
+So instead of going right after them, we made\\
+a list of every school within a hundred miles\\
+And put TheFacebook on those campuses first.\\
+Pretty soon all the Baylor kids were\\
+seeing their friends on our site.\\
+- We were in.\\
+- Its called a little bait for a big one.\\
+That's smart, Mark.\\
+Thanks that's was mine.\\
+Easy.\\
+Hey you know what,\\
+settle an argument for us,\\
+I say it's time to start\\
+making money from TheFacebook,\\
+But Mark doesn't want advertising.\\
+Who's right?\\
+Neither of you yet.\\
+TheFacebook is cool,\\
+- That's what it's got going for it.\\
+- Yeah.\\
+You don't want to ruin it with ads\\
+- Because ads aren't cool.\\
+- Exactly.\\
+It's like you're throwing\\
+the greatest party on campus.\\
+And someone's saying,\\
+it's gotta be over by 11:00.\\
+That's exactly right.\\
+You don't even know what the thing is yet.\\
+How big it can get and how far it can go.\\
+This is no time to take your chips down.\\
+A million dollars isn't cool.\\
+You know what's cool?\\
+You?\\
+A billion dollars.\\
+And that shut everybody up.\\
+And that's where you're headed.\\
+A billion dollar-valuation.\\
+Unless you take bad advice,\\
+In which case you might as well come up\\
+with a chain of very successful yogurt shop.\\
+When you go fishing you can catch\\
+a lot of fish or you can catch a big fish.\\
+You ever walk into a guy's den and see a\\
+picture of him standing next to fourteen trout?\\
+No he's holding an 3000 pound marlin.\\
+- Yup.\\
+- That's a good announce.\\
+But we all know, that marlin\\
+won't weight 3000 pounds, right?\\
+- I've seen a big one at close\\
+- No, I haven't.\\
+But I don't think the guy holdings\\
+a marlin at size of a range rover.\\
+That would really big fish\\
+or a very strong guy.\\
+You think you might be\\
+getting away from the point?\\
+I don't have a dog in this fight.\\
+I'm just a fan who came to say hi.\\
+He owned Mark after that dinner.\\
+He picked up the check, he told Mark\\
+they'd talk again soon and he was gone.\\
+But not before he made his biggest\\
+contribution to the company.\\
+Drop the "the".\\
+Just Facebook. It's cleaner.\\
+Shit.\\
+That's gotta be some kind of\\
+land speed record for talking.\\
+You want to end the party at eleven?\\
+I'm trying to pay for the party.\\
+There won't be a party unless it's cool.\\
+What'd you think?\\
+Yes, sure, let's drop the "the"\\
+I meant catching the marlin instead of the 14 trouts.\\
+Doesn't that sound good?\\
+If you're a trout.\\
+I'm going to enter this into the record.\\
+Incorporation papers for Facebook,\\
+and LLC registered in Florida,\\
+- Why Florida?\\
+- That's where my family lives.\\
+And ask the respondent to stipulate that articles\\
+of incorporation state the ownership as follows,\\
+Sixty-five percent for Mark Zuckerberg,\\
+ 30% for Eduardo Saverin and 5% for Dustin Moskowitz.\\
+We stipulate\\
+And that was April 13th 2004\\
+You can mark it.\\
+Do you have anything here?\\
+Yes, thank you.\\
+Mr. Saverin,\\
+Have you ever done anything that might be\\
+considered legitimate ground for termination?\\
+No.\\
+You never did anything to embarrass the\\
+company or even seriously jeopardize it?\\
+No.\\
+No?\\
+No.\\
+You were accused of animal cruelty.\\
+Wait.\\
+You weren't?\\
+T- this not happening.\\
+I have here an article from The Crimson...\\
+Jesus Christ...\\
+I can't have this, Wardo.\\
+Come on, man this is bullshit, this is\\
+another clubs playing a prank.\\
+I'd gotten into the Phoenix. I'd been\\
+accepted and as part of my initiation,\\
+I had to, for one week, carry with me\\
+all the times and take care of a chicken.\\
+They identify you as one of the founders\\
+of TheFacebook, "Junior Eduardo Saverin,"\\
+I'm not the expert but being connected to\\
+torturing animals is probably bad for business.\\
+I did not torture the chicken,\\
+I don't torture chickens, are you crazy?\\
+No, and settle down, please.\\
+I have here, an article from The Crimson...\\
+This is scathing.\\
+Nine-hundred-fifty-six.\\
+I was having dinner in the\\
+Kirkland Dining Hall with Mark,\\
+And I had the chicken with me,\\
+Because I had to have the chicken\\
+with me at all times. This was college.\\
+Somebody gonna have to answer for this.\\
+Nine-hundred-sixty-nine.\\
+Dining hall was serving chicken for dinner\\
+and I had to feed my chicken.\\
+So I took... Little pieces of\\
+chicken and gave it to the chicken.\\
+Someone must have seen me\\
+because the next thing I knew,\\
+I was being accused\\
+of forced cannibalism.\\
+I didn't know you could't do that. I dealt\\
+with the various animal rights groups,\\
+I dealt with the Associate Dean of\\
+the College, this was all resolved.\\
+Nine-hundred-eighty-eight.\\
+Someone from the Porc or\\
+the Fly must have reported it.\\
+For all I know it was the Winklevoss...\\
+Alright, let's just forget about it.\\
+This is absurd, I'm being\\
+accused of animal cruelty.\\
+Better to be accused of Necrophilia.\\
+It is better to be accused of Necrophilia.\\
+I have to explain this to my father,\\
+I'm gonna explain this to everybody, I'm\\
+gonna... what is happening on that?\\
+I have my final coming up for\\
+"Postwar and Contemporary Art".\\
+And I haven't been to class. I'm supposed\\
+to write about those four paintings.\\
+Is that a facebook page?\\
+Yeah, I opened it under an alias. I posted\\
+the paintings and asked people to comment.\\
+Every once in a while, I hop on and\\
+stir the pot to get a good debate going.\\
+Mr. Zuckerberg was cheating on his final exam?\\
+I'd rather not answer that, Gretchen.\\
+Then why not?\\
+Because I'm not suing him for cheating on his\\
+final exam and so that's not what friends do.\\
+Well you just told us he was cheating.\\
+Oops.\\
+You told your lawyers I was torturing animals?!\\
+No, he didn't tell us about it at all.\\
+Our litigators are capable\\
+of finding Crimson article.\\
+In fact when we raised the\\
+subject with him he defended you.\\
+Oops.\\
+Nine-ninety-three, we are so close.\\
+Oh yeah, that reminds me,\\
+We're gonna need more money, Wardo.\\
+I agree. More servers, more apps...\\
+I'm interviewing two interns to come to Palo Alto\\
+and we're gonna have to pay them something.\\
+Sorry what?\\
+I already found a house for rent on a\\
+street two blocks from the Stanford campus.\\
+It is perfect and it's got a pool.\\
+When did you decide to go\\
+to California for the summer?\\
+You mean when did I actually decide?\\
+Somewhere in the middle of\\
+The Sean Parker Variety Hour?\\
+He was right.\\
+California's the place we've gotta be.\\
+Is you Jed Clampett?\\
+You guys got The Beverly Hillbillies in Brazil...\\
+Yes, we got the show in Brazil,\\
+it was genius.\\
+What is your problem with Sean?\\
+He doesn't bring anything to the table.\\
+He doesn't have money,\\
+Dustin's a better programmer...\\
+He's got connections to the VCs.\\
+We don't need VCs, we need advertisers\\
+and I've got connections to the VCs.\\
+- The real players and...\\
+- Look.\\
+As someone who's really embarrassed\\
+the company in a bad way...\\
+It was the Winklevosses, Mark!\\
+Hang on.\\
+Hit refresh.\\
+Congratulations, dude.\\
+Congratulations.\\
+You don't think it was strange?\\
+That he was followed by private detectives?\\
+Who came up with nothing.\\
+Enough to get him out of the company.\\
+The drugs, the girls...\\
+We don't know any of that's true.\\
+You can read about it.\\
+I can read about your torturing birds.\\
+Since when reading something about...\\
+Don't fish eat other fish?!\\
+The marlins and the trout?!\\
+What's he talkin' about?\\
+I'm interviewing interns at 10\\
+tomorrow night in the CS lab.\\
+Get on board with this man, you know...\\
+I don't really know what else to say.\\
+What's goin' on?\\
+They have 10 mins to get root\\
+access to a Python web server,\\
+Expose its SSL encryption and then\\
+intercept all traffic over its secure port.\\
+They're hacking.\\
+All behind a Pix Firewall Emulator.\\
+But here's the beauty.\\
+You know I didn't understand\\
+anything you just said, right?\\
+- I do know that.\\
+- So what's the beauty?\\
+Every 10th line of code written,\\
+they have to take a shot.\\
+And hacking's supposed to be stealth,\\
+So anytime the server detects an intrusion,\\
+the candidate responsible has to take a shot.\\
+I also have a program running that has a pop-up\\
+window appear simultaneously on all five computers...\\
+The last candidate to hit\\
+the window has to take a shot.\\
+Plus every three minutes\\
+they all have to take a shot.\\
+Three minutes.\\
+Can I ask, what part of the interns jobs\\
+will they need to be able to do drunk?\\
+You're right. A more relevant test would be\\
+seeing if they can keep a chicken alive for a week.\\
+That was mean.\\
+Here...\\
+What is this.\\
+I opened a new account\\
+and put \$18.000 in it.\\
+Will that get you through the summer?\\
+Welcome to Facebook.\\
+- \$18.000\\
+- Yes.\\
+- In addition to the \$1000 you'd already put up.\\
+- Yes.\\
+A total of \$19.000 now.\\
+- Yes.\\
+- Hang on.\\
+I'm just checking your math on that.\\
+Yes, I got the same thing.\\
+May I continue?\\
+After expressing misgivings about Mr. Zuckerberg taking\\
+the company and moving it to California for the summer,\\
+Why did you turn around and put\\
+\$18.000 in an account for his use?\\
+I figured we were partners.\\
+I wanted to be a team player.\\
+I figured Mark, Dustin and the\\
+new interns could work on the site.\\
+While I was on generating\\
+advertiser interest in New York.\\
+But mostly I figured, how much could\\
+possibly go wrong in three months?\\
+Go, go, go, go, go...\\
+Aaargh...\\
+- I didn't die.\\
+- I know.\\
+- I made it.\\
+- You did.\\
+Ok, ready?\\
+That was like an eight.\\
+That was like a two.\\
+- It was better than that.\\
+- Yeah.\\
+- I'm ok.\\
+- You sure?\\
+Yeah.\\
+Yikes.\\
+That's the doorbell.\\
+I didn't know we had a door bell.\\
+Andrew get the door.\\
+No, he's wired in.\\
+That's gonna cut into the security deposit.\\
+Andrew...\\
+Not now.\\
+Good boy\\
+- Sean\\
+- Mark.\\
+- Do you live here?\\
+- Yeah. Do you?\\
+We were right across the\\
+street, we saw the chimney...\\
+Yeah.\\
+Is anybody hurt?\\
+No. You live across the street.\\
+I'm Sharon.\\
+This is my... Sharon. She lives across the street\\
+and I was helping her move out, we saw the chimney...\\
+Yeah, we had a zip line to the pool.\\
+You came to California.\\
+Yeah.\\
+You made the right choice.\\
+Here you go.\\
+Sharon.\\
+- I'm so sorry.\\
+- No problem\\
+I don't know you're gonna...\\
+- Here you go.\\
+- No, no, wait...\\
+This house and this team are great.\\
+It's exactly what it should be.\\
+I'm Sean Parker.\\
+Oh, he's wired in.\\
+That's what I'm talkin' about.\\
+Where's Eduardo?\\
+He got an internship in New York.\\
+Eduardo didn't come out?\\
+I was crashing there for a little bit\\
+while I'm taking care of some things.\\
+But she's done for the summer\\
+so she's back at her parents place.\\
+Homeless rockstar of Palo Alto.\\
+Alright.\\
+What your plan for the summer?\\
+Mark.\\
+I'm sorry, I was looking\\
+at the architecture.\\
+I asked, "what's your plan for the summer?"\\
+I hit school by the end of the summer.\\
+- I'm going to the rest room\\
+- Okay.\\
+I'll go with you.\\
+Your date looks so familiar to me.\\
+She looks familiar to a lot of people.\\
+What do you mean?\\
+A Stanford MBA named Roy Raymond\\
+wants to buy his wife some lingerie.\\
+But he's too embarrassed to shop\\
+for it at a department store.\\
+He comes up with an idea for a high end place\\
+that doesn't make you feel like a pervert.\\
+He gets a \$40,000 bank loan, borrows\\
+another \$40,000 from his in-laws,\\
+Opens a store, and calls it Victoria's Secret.\\
+Makes a half million dollars his first year.\\
+He starts a catalog, opens three more stores\\
+And after five years he sells the company to Leslie\\
+Wexner and the Limited for four million dollars.\\
+Happy ending, right?\\
+Except two years later,\\
+the company's worth 500 million dollars.\\
+And Roy Raymond jumps off\\
+the Golden Gate Bridge.\\
+Poor guy just wanted to buy\\
+his wife a pair of thigh highs.\\
+W- Was that a parable?\\
+My date is a Victoria Secret model.\\
+That's why she looks familiar to you.\\
+Don't be impressed by all of this.\\
+I read your blog.\\
+Oh, oh you don't know.\\
+Thats for webprints.\\
+You know how I started Napster.\\
+Girl I love in high school.\\
+Was with the co-captain of\\
+The Varsity Lacrosse team\\
+And I wanted to take her from him\\
+So I decided to come up to next big things.\\
+I didn't know that.\\
+Napster wasn't the faillure...\\
+I changed the music industry\\
+for better and for always.\\
+They might not have been a good\\
+business but it piss a lot of people off.\\
+And this now what your facemash was about,\\
+they scare of me pal,\\
+And they're gonna be scare to you.\\
+What the VCs wanna to say, good idea kid,\\
+grown up so we could take it from here.\\
+But not this time, this is our time.\\
+This time...\\
+You gonna hand them a business card\\
+that says,\\
+I'm a CEO... bitch.\\
+That's what I want from you.\\
+Where the hell was Eduardo?\\
+He's in New York.\\
+Suckin' up...\\
+- He's got...\\
+- An internship.\\
+The company's here.\\
+A billion dollar company is here.\\
+- Do you live and breathe Facebook?\\
+- Yes.\\
+I know you do.\\
+Eduardo want to be a businessman\\
+for all I know he's gonna be a good one,\\
+But he shouldn't be in New York.\\
+Kissing Madison Avenue's ass.\\
+This isn't once of a generation holy shit idea.\\
+And the water under\\
+the golden gate is freezing cold.\\
+Look at me face, tell me\\
+I don't know what I talkin' about.\\
+Do you ever thinkin' about that girl...\\
+What girl?\\
+The girl from high school\\
+with the Lacrosse team.\\
+No.\\
+Hundred of schools by the end of the summer?\\
+Yup.\\
+I tell you what, gesture of a good faith.\\
+While you're getting into a hundred schools,\\
+I put you on two continents.\\
+Two continents.\\
+If you don't get a place to crash,\\
+I think you should definitely\\
+come in live with us.\\
+Let's line-up some shots.\\
+Excuse me...\\
+- Yes, Sir.\\
+- You can take this away and bring back the 1942.\\
+Absolutely, Mr. Parker.\\
+- Mr. Winklevoss.\\
+- Tyler.\\
+- Tremendous race.\\
+- Thank you.\\
+And this is my brother, Cameron.\\
+Excellence.\\
+His Royal Highness, Prince Albert.\\
+Sir, this is Cameron and Tyler Winklevoss.\\
+Of course. Brilliant race.\\
+I've never seen a race that close.\\
+Yes, Sir.\\
+Of course.\\
+My grandfather, Jack Kelly, was one\\
+of the premiere rowers of his day.\\
+I've been coming to Henley for 30 years.\\
+And I've never seen the race that close.\\
+Have you seen a race that close?\\
+No, your Highness.\\
+Mile and a half races are more\\
+commonly won by a boat length or two.\\
+Yes, that's absolutely right.\\
+Brutally close.\\
+May I introduce my team mates...\\
+I'm sorry you have to excuse us...\\
+Until the Beijing.\\
+So you flew out here to see that?\\
+Wouldn't miss you brother.\\
+How was the royalty?\\
+I just want him to tell\\
+me couple more times,\\
+How close the race was just brutal,\\
+brutally-brutally- excruciating.\\
+Cam. The guy's the prince of a country the\\
+size of East Hampton. Relax. Its fine...\\
+- Boys.\\
+- Dad\\
+Mr. Winklevoss.\\
+That was a tough beat.\\
+I'm sorry You and Mom flew\\
+all over here to see that.\\
+Don't ever apologize to me for losing a race like that.\\
+Don't ever apologize to anyone for losing a race like that.\\
+Boys.\\
+Mr. Kenwright.\\
+Dad, this is Mr. Kenwright,\\
+head of the host family this week.\\
+Pleasure to meet you.\\
+Good to meet you.\\
+I just had a phone chat with my daughter.\\
+She told me that she and her friends\\
+are all talking about the race,\\
+Which they just seen by the computer.\\
+A new website called Facebook.\\
+Do you have this in America?\\
+I'm going to find your mother...\\
+is it something wrong?\\
+Your daughter doesn't go to school in States?\\
+No, no. Cambridge. Majoring in French Literature,\\
+though I wasn't aware these was such a thing.\\
+They have Facebook at Cambridge?\\
+And apparently Oxford and the London School of\\
+Economics because that's where her friends are.\\
+It's awesome.\\
+Good race, boys.\\
+I'm gonna go to rest room.\\
+This is online.\\
+I want to see it.\\
+Stop it.\\
+Stop it, Cam.\\
+Knock it off.\\
+I don't mind that we loss by\\
+the Dutch today by less than a second.\\
+That was a good race,\\
+and that was a fair race.\\
+And they'll see us again.\\
+What I mind and what you should mind,\\
+is showing up on Monday for\\
+race which run on Sunday.\\
+We tried talking to him ourselves,\\
+we tried writing a letter,\\
+We tried the Ad Board, and we tried\\
+talking to the president of the University.\\
+Now I'm asking you.\\
+For the last time.\\
+Let's take the considerable resources at\\
+our disposal and sue him in a federal court.\\
+Come on...\\
+I need a real drink.\\
+Screw it,\\
+Let gut that friggin nerd.\\
+That's what I'm talking about.\\
+But check it out, I saw him today\\
+Manningham, Mitchel Manningham,\\
+my Chase Equity...\\
+Are you guys using spike or ghost, miss?\\
+We don't know, we're just\\
+shooting at each other.\\
+Use sweet kamikaze.\\
+Like we know what that is.\\
+I saw him getting into his Turbo Carrera,\\
+and he saw me too,\\
+I know he did.\\
+Don't sweat it...\\
+Bong hit.\\
+Is anybody hear that banging?\\
+You don't hear anything,\\
+you are writing code.\\
+Dude, somebody's at the door.\\
+It's not a dish best serves cold.\\
+It's best serves immediately and\\
+I'm gonna call you back.\\
+- What's up\\
+- What's up?\\
+Mark was supposed to pick me\\
+up at the airport an hour ago,\\
+I've been calling his cell.\\
+He was on a 36 hour coding tear\\
+so he took a nap for a couple of hours.\\
+What happened here?\\
+Not happened... happening.\\
+The next big thing.\\
+Wardo!\\
+Hey man.\\
+- Back to work.\\
+- Ok.\\
+How old are they, Sean?\\
+It's not polite to ask.\\
+Sean, how old are they?\\
+You think you know me, right?\\
+I've read enough.\\
+You know how much I've read about you?\\
+Nothing.\\
+Wardo.\\
+I waited an hour for you at the airport.\\
+What time is it?\\
+It's midnight. Or 3AM in New\\
+York where I just came from.\\
+You've gotta see some of\\
+the new stuff we've got.\\
+Hey, Dustin, show him the wall.\\
+I'm just calling it the wall.\\
+Forget the wall, tell him about\\
+the meeting I've got set up.\\
+- You know Peter Thiel?\\
+- No.\\
+No reason you should.\\
+He just run a two billion dollar\\
+hedge fund called Clarium Capital.\\
+Why's he setting up meetings?\\
+Thiel may want to make an angel investment.\\
+I don't care if he's an actual angel,\\
+why's he setting up business meetings?\\
+You've had a long flight.\\
+No, I've had long wait\\
+on the Tarmac at JFK,\\
+Then a long wait at the passenger\\
+loading and unloading zone at SFO,\\
+And in between there was a long flight.\\
+I'm the business end of this company,\\
+He's a house guest living here rent-free.\\
+On a very generous grant from\\
+Eduardo Saverin Foundation.\\
+I heard about you big ticket advice,\\
+Gerry's tuxedos, Harvard Bartending Course.\\
+You're just one small step away from\\
+bagging Snookies Cookies, I can feel it.\\
+Can I talk to you alone for a minute?\\
+Sure.\\
+Bong hit!\\
+How's it going? How's the internship?\\
+How's Christy?\\
+How's the internship?\\
+Yeah.\\
+Mark, Jesus, I quit the internship.\\
+We've talked about this on the\\
+phone, we... I quit on my first day.\\
+I do remember you saying that.\\
+So, how's Christy?\\
+She's crazy.\\
+Is that fun?\\
+No. She's actually psychotic.\\
+She's insanely jealous,\\
+She's irrational and\\
+I'm frightening of her.\\
+Still, it's nice to have a girlfriend.\\
+I do not want that guy representing\\
+himself as part of this company.\\
+You gotta move out here, Wardo,\\
+this is where it's all happening.\\
+- Did you hear what I just said?\\
+- The connections, the energy...\\
+Mark...\\
+I'm afraid if you not come out here.\\
+You gonna left behind.\\
+I want, I want, I need you.\\
+Out here, please don't tell me...\\
+What you just say?\\
+Its moving faster than\\
+any of us ever imagine...\\
+It's moving fast then Sean think...\\
+Sean is not part of this company.\\
+We've got over 300.000 members,\\
+we're in 160 schools...\\
+I'm aware of that.\\
+Including five in Europe...\\
+- I'm aware of that, Mark, I'm the CFO.\\
+- We need more servers than I ever imagined...\\
+We need more programmers.\\
+And we need more money.\\
+He set up the Thiel meeting.\\
+He's set up meetings all over town.\\
+He's set up other meetings?\\
+Yes.\\
+Without me knowing anything about it?!\\
+You're in New York!\\
+I'm in New York riding subways\\
+ 14 hours a day try to find our...\\
+And how's it going so far?!\\
+What did you mean get left behind?\\
+Can I help you?\\
+I'd like to freeze this bank account and\\
+cancel all existing checks and lines of credit.\\
+May I see some ID please.\\
+- Sean they will be right with you...\\
+- No problem.\\
+You know this is where they\\
+filmed Towering Inferno.\\
+That's comforting.\\
+Guys... come at my back.\\
+- She offer you some waters?\\
+- Oh, yeah we're cool.\\
+Come on in... You must be Mark.\\
+Hi.\\
+We took a look everything\\
+and congratulations.\\
+We're gonna start you off\\
+with a \$500.000 investment.\\
+Maurice is gonna talk to you\\
+about some corporate restructuring.\\
+We'll file as a Corporation\\
+in Delaware and come up...\\
+With a stock structure\\
+to allow for new investors in.\\
+Now lemme ask you something.\\
+Who's Eduardo Saverin?\\
+Jesus chris...\\
+When did you get back?\\
+You scared me. I need you to knock.\\
+When-did-you-get-back?\\
+I got back this afternoon.\\
+And when you gonna call me?\\
+Chris... it was kind of a rough trip\\
+and I was tired and...\\
+Or answer one of my 47 texts?\\
+Did you know I sent 47 texts?\\
+I did and I thought that was\\
+incredibly normal behavior.\\
+Are you mocking me?\\
+I brought you a present.\\
+Why does your status say\\
+"single" on your Facebook page?\\
+What?\\
+Why does your relationship status\\
+say "single" on your Facebook page?\\
+I was single when I set up the page.\\
+And you just never\\
+bothered to change it?\\
+I...\\
+What?!\\
+I don't know how.\\
+Do I look stupid to you?\\
+No. Calm down.\\
+You're asking me to believe\\
+that the CFO of Facebook,\\
+Doesn't know how to change his\\
+relationship status on Facebook?\\
+It's a little embarrassing so you should take it\\
+as as sign of trust that I would tell you that.\\
+Go to hell.\\
+Take it easy.\\
+You didn't change it so you could screw those\\
+Silicon Valley slut every time you go out to see Mark.\\
+That is not ever remotely\\
+true and I can promise you...\\
+That the Silicon Valley Slut don't care what\\
+anyone's relationship status is on Facebook.\\
+Please open your present.\\
+Your phone does work.\\
+It's Mark.\\
+Okay, this is gonna be tricky.\\
+Open your present. It's a silk scarf.\\
+Have you ever seen me wear a scarf?\\
+This'll be your first.\\
+You froze our account?\\
+I did.\\
+You froze the account.\\
+I had to get your attention, Mark.\\
+Do you realize that you\\
+jeopardized the entire company?\\
+Do you realize that your actions could've permanently\\
+destroyed everything I've been working on?\\
+WE've been working on.\\
+Without money, the site can't function.\\
+Ok let me tell you the different between\\
+Facebook and everybody else, we don't crash ever.\\
+If the servers are down for even a day,\\
+our entire reputation is irreversibly destroy.\\
+Look...\\
+Seriously, I think Friendster prove that!\\
+Even a few people leaving would\\
+reverberate through the entire user base.\\
+The users are interconnected,\\
+that's the whole point!\\
+College kids are online because\\
+their friends are online.\\
+And if one domino goes,\\
+the other dominoes go!\\
+I'm not going back\\
+to the Carribean Night at A-E-Pi.\\
+Holy shit...!\\
+What's wrong with you!\\
+Did you like being nobody?!\\
+Did you like being a joke?\\
+Do you wanna go back to that?!\\
+Hang on, hang on...\\
+That was the act of a child, not a decent man.\\
+And it truly wasn't the act of a friend.\\
+You know how embarrassed I was\\
+when I tried to cash a check today?\\
+I'm not going back to that life.\\
+Maybe you were frustrated.\\
+- Maybe you were angry,\\
+- I was.\\
+But I'm willing to let bygones be\\
+bygones because I've got a good news.\\
+Look, I'm sorry.\\
+I was angry and maybe it was childish.\\
+But I had to get your attention.\\
+Eduardo, I said I've got some good news.\\
+What is it?\\
+Peter Thiel just made an angel\\
+investment of a half million dollars.\\
+What?\\
+half million dollars\\
+And he's setting us up in an office.\\
+They want to re-incorporate the company,\\
+They want to meet you and they need\\
+your signature on some documents.\\
+So get your ass on the first flight\\
+back to San Fransisco. I need my CFO.\\
+I'm on my way.\\
+Wardo.\\
+Yeah.\\
+We did it.\\
+Wardo,\\
+You're going back there already?\\
+Yes.\\
+And also I'm breaking up with you.\\
+Four documents. These first two are\\
+common stock purchase agreements,\\
+Allowing you to buy stock in the\\
+newly re-incorporated Facebook\\
+as supposed the old share\\
+which is now worthless.\\
+The third is the exchange agreement,\\
+Allowing you to exchanges\\
+the old shares for new shares,\\
+and then finally voter\\
+holding agreement.\\
+How many shares of stock will I own?\\
+Jesus Christ.\\
+That's a 34,4% ownership share.\\
+Why they increase from the original 30%?\\
+Because you may need to dilute it\\
+to award shares to new investors.\\
+I love working with business majors.\\
+Economics.\\
+You should know that Mark's already\\
+taken his percentage from 60 down to 51.\\
+Well, Mark doesn't care about\\
+money and he needs to be protected.\\
+Dustin Moskowitz owns 6,81%,\\
+Sean Parker 6,47%\\
+I can live with that.\\
+And Peter Theil 7%\\
+Would you like to use my pen?\\
+Eduardo?\\
+Can you please repeat the question?\\
+No. It was an outrageously\\
+leading question, the first time.\\
+Now you want to hear it twice?\\
+Would you re-read that please?\\
+Go ahead.\\
+And when you signed these documents,\\
+Were you aware that you were\\
+signing your own death certificate?\\
+No.\\
+It was insanely stupid of me not to have\\
+my own lawyer look over all the... uh,\\
+In all honesty I thought\\
+they were my lawyers.\\
+I was your only friend.\\
+You had one friend.\\
+My father won't even look at me.\\
+Okay. Eduardo. Did Mr. Zuckerberg saying\\
+anything to you after you signed the papers?\\
+There was a lot of handshaking\\
+and a lot of congratulations.\\
+He'd already told me he wouldn't be coming\\
+back to school for at least a semester.\\
+So we were saying goodbye for a while.\\
+And then before I left,\\
+he said...\\
+But you gotta come back.\\
+Somewhere around the end\\
+of November or early December.\\
+Peter wanna throw us an amazing\\
+party when we hit a million members,\\
+It's gonna be out of control.\\
+You gotta come back for it.\\
+A million members.\\
+Yeah.\\
+The algorithm on the window at Kirkland?\\
+Yeah.\\
+Yeah, I'll be here.\\
+- You sure about this?\\
+- You're 20 mins late.\\
+You're gonna walk in there and say you overslept\\
+and you didn't have time to get dressed.\\
+They're gonna pitch you.\\
+Chase equity is going to pitch you.\\
+They're gonna beg you to take their money.\\
+You're gonna nod, you're gonna nod, you're gonna nod\\
+and then you're gonna say, "Which one of you is Ralph"\\
+No, not Ralph... No Manningham.\\
+Which one of you, Mitchel Manningham?\\
+And he'll say I am.\\
+Then you'll say, Sean Parker says "F*ck You."\\
+Walk out.\\
+Okay.\\
+In late November I got the e-mail from Mark\\
+telling me to come out for the millionth member party.\\
+What else did e-mail say?\\
+It said that we had to\\
+have a business meeting.\\
+That Mark and Sean had playing some\\
+kind of revenge stunt to Chase Equity.\\
+Manningham was so impressed that he was makin'\\
+an investment offer that was hard to turn down.\\
+I went out to California and I\\
+went straight to the New Offices.\\
+I didn't know whether to dress for the party or\\
+the business meeting so I kinda dressed for both.\\
+But it didn't matter.\\
+Why not?\\
+Because I wasn't called\\
+out there for either one...\\
+What were you called out there for?\\
+An ambush.\\
+Mr. Saverin. Hi...\\
+At first I thought he was joking,\\
+giving me more contracts to sign.\\
+But then I started reading.\\
+What is this?\\
+Well, as you know we had\\
+some new investor that...\\
+What is this?\\
+Mark...\\
+MARK...!\\
+- He's wired in.\\
+- Sorry\\
+He's wired in.\\
+- Is he?\\
+- Yes.\\
+How about now, you still wired in?\\
+Call security!\\
+You issued over 24-million\\
+new shares of stock.\\
+You were told that if new\\
+investors came along...\\
+How much your shares are diluted?\\
+How much are his?!\\
+What was Mr. Zuckerberg's\\
+ownership share diluted down to?\\
+It wasn't.\\
+What was Mr. Moskowitz's\\
+ownership share diluted down to?\\
+It wasn't.\\
+What was Sean Parker's\\
+ownership share diluted down to?\\
+It wasn't.\\
+What was Peter Thiels's\\
+ownership share diluted down to?\\
+It wasn't.\\
+What was your ownership\\
+share diluted down to?\\
+Point-zero-three-percent.\\
+You signed the papers.\\
+You set me up.\\
+You blame me because you were\\
+the business head of the company,\\
+And you made a bad business\\
+deal with your own company?!\\
+It's gonna be like I'm not part of Facebook.\\
+It won't be like you're not a part of Facebook,\\
+You're not part of Facebook.\\
+My name's on the masthead.\\
+You may wanna check again.\\
+This is because I froze the account?\\
+You think we were gonna let you\\
+parade around in your ridiculous suits,\\
+Pretending you were running this company?\\
+Sorry, my Prada is at the cleaners,\\
+Along with my hoodie and my 'F*ck You' Flip-Flops,\\
+you pretentious douche bag!\\
+Security is here.\\
+You'll be leaving now.\\
+I'm not signing those papers.\\
+We will get your signature.\\
+Tell me this isn't about me\\
+getting into the Phoenix.\\
+You... you did it. I knew you did it.\\
+You planted the story about the chicken.\\
+I didn't planted the\\
+story about the chicken.\\
+What he talking about?\\
+Seriously, what the hell with the chicken?\\
+And I'll bet what you hated the most,\\
+They said they identified me\\
+as a co-founder of Facebook.\\
+Which I am!\\
+You better lawyer-up, asshole,\\
+'Cause I'm not comin' back for 30%\\
+I'm comin' back for everything!\\
+Get him outta here.\\
+It's okay. I'm going.\\
+Hang on...\\
+Almost forgot.\\
+Here's your \$19.000.\\
+I wouldn't cash it though.\\
+I drew it on the account you froze.\\
+I like standing next to you, Sean.\\
+It makes me look so tough.\\
+That's it. That's our\\
+show for tonight, people.\\
+Look, I want to see everybody here\\
+get geared up for a party.\\
+We're gonna walk down to the\\
+club like it's the Macy's Parade.\\
+Mackey, put it up on the big\\
+screen, we've gotta almost be there.\\
+- You alright?\\
+- Yeah.\\
+You were kinda rough on him.\\
+That's life in the NFL.\\
+No. You didn't have to be that rough on him.\\
+Sean...\\
+You didn't have to be that rough on him.\\
+He almost killed it!\\
+I'll send flowers.\\
+Speaking of flowers, I'm putting together\\
+a party after party at Kappa Eta Sigma.\\
+Ashleigh there's a sister.\\
+Ashleigh.\\
+The Intern.\\
+I know who she is.\\
+Are you guys?\\
+Ashleigh and me... no...\\
+A little bit.\\
+Why?\\
+Excuse me, Mark.\\
+We were just talkin' about you,\\
+You're doing a really good job.\\
+Thanks. I appreciate that.\\
+This came in for you.\\
+Put on my desk.\\
+What's the package.\\
+Nothing.\\
+Mackey...\\
+Yes, Sir.\\
+Refresh!\\
+And you need a hugger, I know.\\
+The next transformative development\\
+of picture sharing application.\\
+A place that you view picture\\
+and go share with your social life.\\
+It is the true digitalization of your life.\\
+You don't just go to a party anymore,\\
+you go to a party with your digital camera,\\
+And then your friends re-live the\\
+party online. And tagging. The idea...\\
+Would this be easier without the bra?\\
+It's worth finding out.\\
+Stop the music, now!\\
+I've spent hours...\\
+watching what people do when they log on\\
+They check friends status update,\\
+That's weird, why the music off...\\
+Checked to see which of their\\
+friends had changed their profiles,\\
+Changed their photos and mostly...\\
+Seriously, what happen with the music?\\
+We lived on farms, and\\
+then we lived in cities\\
+and now we're going to\\
+live on the internet.\\
+Sean. Stop, I think\\
+something's goin' on downstairs.\\
+Please... Time to go home!\\
+Party is over.\\
+It's the cops!\\
+Shit.\\
+Good to see you officer...\\
+What can I do for you.\\
+What's goin' on?\\
+Was the music too loud?\\
+We were havin' celebration.\\
+Miss, I need you to button your blouse.\\
+I can tell them to turn the music down...\\
+That's not mine.\\
+Ok, we gonna need identification,\\
+keep your hand where we can see 'em.\\
+Anything else in your pocket,\\
+I should know about?\\
+No, Sir.\\
+No.\\
+- Don't be stupid now.\\
+- I don't, I...\\
+What this?\\
+That's an Epipen.\\
+- And this?\\
+- That's my inhaler.\\
+How old are you?\\
+I'm 21\\
+Lying only would make it worst!\\
+I'm sorry, I shouldn't have lied.\\
+- Hello?\\
+- Listen, something's happen...\\
+Shit.\\
+It's alright, it's gonna be alright.\\
+I've posted bond.\\
+I wasn't doing anything.\\
+I mean, I've got allergies...\\
+- Interns...\\
+- It was just a party\\
+This gonna be news, Sean.\\
+It's gonna be online, any second.\\
+I know.\\
+You know with an intern...\\
+It's cool, I have it under control\\
+I will get it under control.\\
+I will call someone\\
+and see what the next move is.\\
+But this gonna be news now.\\
+You don't think Eduardo was involve, do you?\\
+- Do you think?\\
+- No.\\
+Or Manningham, one of them, somebody,\\
+somebody sent the cocain there, 'cause it got in there.\\
+You believe me, it's gonna be fine...\\
+Right?\\
+Go home Sean.\\
+Mark...\\
+Mark...\\
+We're done for the day\\
+Yeah, I was just sittin'...\\
+What happened to Sean?\\
+He still owns 7% of the company.\\
+All you had all day only was that salad,\\
+you wanna get something to eat?\\
+I can't.\\
+I'm not a bad guy.\\
+I know that.\\
+Under emotional testimony,\\
+I assume 85% of it is exaggeration.\\
+- And the other 15?\\
+- Purgery\\
+Creations myth needs a devil.\\
+What happens now?\\
+Sy and the others are having\\
+a steak on University Avenue.\\
+Then they'll come back up to the office...\\
+And start working on a settlement\\
+agreement to present to you.\\
+They're gonna settle?\\
+Oh yeah... and you're gonna\\
+have to pay a little extra.\\
+Why?\\
+So that these guy sign an\\
+non-disclosure agreement.\\
+They say one unflattering word about you\\
+in public, you own their wife and kids.\\
+I invented Facebook\\
+I'm talking about what a jury.\\
+I specialize in voir dire...\\
+Jury selection.\\
+What a jury sees when\\
+they look at the defendant.\\
+Clothes, hair, speaking style, likability...\\
+Like-ability?\\
+I've been licensed to practice\\
+law for all of 20 months.\\
+And I can get the jury to believe...\\
+That you planted the story\\
+about Eduardo and the chicken.\\
+Watch, what else?\\
+Why weren't you at Sean's\\
+sorority party that night?\\
+You think I'm the one\\
+that called the police?\\
+Doesn't matter, I ask the question,\\
+now everybody's think about it\\
+You've lost your jury\\
+in the first 10 mins.\\
+- Farm animals?\\
+- Yeah.\\
+I was drunk, and angry and stupid.\\
+- And blogging...\\
+- and blogging.\\
+Pay them, on the scheme of things.\\
+It's a speeding ticket.\\
+That what Sy will tell you tomorrow.\\
+Do you think anybody would mind if I\\
+stay and use the computer for a minute...\\
+I can't imagine that would be a problem.\\
+Thanks.\\
+I appreciate your help today.\\
+You're not an asshole Mark...\\
+You're just trying so hard to be...\\
+Cameroon and Tyler Winklevoss received a settlement of\\
+ 65 million dollars and signed a non-disclosure agreement.\\
+They rowed for the U.S. Olympic Team\\
+in Beijing and placed sixth.\\
+Eduardo Saverin received an unknown settlement. His name\\
+has been restored to the Facebook masthead as a Co-Founder.\\
+Facebook has 500 million members in 207 countries.\\
+It's currently valued at 25 billion dollars.\\
+Mark Zuckerberg is the youngest\\
+billionaire in the world.\\
+
+\end{multicols}
+\end{document}
+
