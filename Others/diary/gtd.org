@@ -74,4 +74,11 @@
 * DONE 编译原理视频语法制导翻译听完
   并没有些部分视频
   CLOSED: [2013-03-02 Sat 00:44]
+* DONE 安装极点五笔
+  CLOSED: [2013-03-04 一 22:20]
+  http://www.jzxue.com/fuwuqi/linux/201106/22-7891.html
 * TODO 学会 lambda calculus
+* TODO things to do after upgrade to 12.04
+  - [ ] myUnity: resize launcher icon size
+  - [ ] change theme http://blog.csdn.net/pfanaya/article/details/7668826
+* TODO ubuntu包管理系统文章

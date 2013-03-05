@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+               "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-CN" xml:lang="zh-CN">
+<head>
+<title>Ubuntu包管理系统</title>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
+<meta name="title" content="Ubuntu包管理系统"/>
+<meta name="generator" content="Org-mode"/>
+<meta name="generated" content="2013-03-06 03:51:20 CST"/>
+<meta name="author" content="visayafan"/>
+<meta name="description" content=""/>
+<meta name="keywords" content=""/>
+
+
+
+</head>
+<body>
+
+
+<div id="content">
+<h1 class="title">Ubuntu包管理系统</h1>
+
+
+<!-- <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"> </script> -->
+<link rel="stylesheet" type="text/css" href="../../Layout/CSS/bootstrap_old.css" />
+<link rel="stylesheet" type="text/css" href="../../Layout/CSS/style.css" />
+<script src="../../Layout/JS/jquery_1.7.1.js"></script>
+<script src="../../Layout/JS/bootstrap_old.js"></script>
+
+
+<div id="table-of-contents">
+<h2>目录</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#sec-1">1 dpkg &ndash;get-selections</a></li>
+<li><a href="#sec-2">2 dpkg update-alternatives</a></li>
+<li><a href="#sec-3">3 apt-cache search</a></li>
+<li><a href="#sec-4">4 apt-cache pkgnames</a></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-1" class="outline-2">
+<h2 id="sec-1"><span class="section-number-2">1</span> dpkg &ndash;get-selections</h2>
+<div class="outline-text-2" id="text-1">
+
+<p>  列出现在所有安装的包<br/>
+  将当前系统安装包保存到文件中 <code>sudo dpkg --get-selections &gt; list.txt</code> ,在新系统上可以用 <code>sudo dpkg --set-selections &lt; list.txt</code> 来安装。<br/>
+</p></div>
+
+</div>
+
+<div id="outline-container-2" class="outline-2">
+<h2 id="sec-2"><span class="section-number-2">2</span> dpkg update-alternatives</h2>
+<div class="outline-text-2" id="text-2">
+
+<p>  <a href="http://charette.no-ip.com:81/programming/2011-12-24_GCCv47/">http://charette.no-ip.com:81/programming/2011-12-24_GCCv47/</a><br/>
+  <a href="http://paddy-w.iteye.com/blog/958062">http://paddy-w.iteye.com/blog/958062</a><br/>
+  ubuntu12.04上默认安装的是4.6版本的GCC，通过源安装4.7版本GCC时并没有删除4.6版本，/usr/bin下的gcc仍是指向gcc-4.6的链接。<br/>
+  <code>lrwxrwxrwx 1 root root 7  3月  6 01:02 /usr/bin/gcc -&gt; gcc-4.6*</code><br/>
+  这种情况下可以使用udpate-alternatives命令来进行管理。<br/>
+  通过 <code>--install</code> 来进行添加一个命令的可用值：<br/>
+  <code>--install link name path priority [--slave link name path]</code><br/>
+  前一个link叫master link,后一个slave link.<br/>
+</p>
+
+
+<pre class="example">sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-4.6 60 --slave /usr/bin/g++ g++ /usr/bin/g++-4.6
+sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-4.7 40 --slave /usr/bin/g++ g++ /usr/bin/g++-4.7
+</pre>
+
+<p>
+  此时再查看gcc：<br/>
+</p>
+
+
+<pre class="example">lrwxrwxrwx 1 root root 21  3月  6 03:39 /usr/bin/gcc -&gt; /etc/alternatives/gcc*
+</pre>
+
+<p>
+  查看/etc/alternatives目录下的gcc：<br/>
+</p>
+
+
+<pre class="example">lrwxrwxrwx 1 root root 16  3月  6 03:39 gcc -&gt; /usr/bin/gcc-4.6*
+</pre>
+
+<p>
+  即添加了一个间接链接。<br/>
+  此时通过 <code>--config name</code> 来进行切换：<br/>
+</p>
+
+
+<pre class="example">sudo udpate-alternatives --config gcc
+</pre>
+
+<p>
+  此时再查看alternatives目录下的gcc：<br/>
+</p>
+
+
+<pre class="example">lrwxrwxrwx 1 root root 16  3月  6 03:43 gcc -&gt; /usr/bin/gcc-4.7*
+</pre>
+
+<p>
+  即此时gcc是4.7版本的gcc。<br/>
+  同时g++作为gcc的slave也发生变化：<br/>
+</p>
+
+
+<pre class="example">lrwxrwxrwx 1 root root 16  3月  6 03:43 g++ -&gt; /usr/bin/g++-4.7*
+</pre>
+
+<p>
+  通过 <code>--display name</code> 来查看一个命令的所有可选值。<br/>
+  通过 <code>--remove name path</code> 删除一个命令（包括其slave）<br/>
+</p></div>
+
+</div>
+
+<div id="outline-container-3" class="outline-2">
+<h2 id="sec-3"><span class="section-number-2">3</span> apt-cache search</h2>
+<div class="outline-text-2" id="text-3">
+
+<p>  在所有可用的包里进行查找。<br/>
+  <code>--names-only</code> 只在包名中进行匹配，而不在描述中匹配。<br/>
+</p></div>
+
+</div>
+
+<div id="outline-container-4" class="outline-2">
+<h2 id="sec-4"><span class="section-number-2">4</span> apt-cache pkgnames</h2>
+<div class="outline-text-2" id="text-4">
+
+<p>  列出所有包名。<br/>
+</p></div>
+</div>
+</div>
+
+</body>
+</html>

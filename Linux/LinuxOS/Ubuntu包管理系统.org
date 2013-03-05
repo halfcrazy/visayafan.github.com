@@ -1,0 +1,49 @@
+#+OPTIONS: ^:{} _:{} num:t toc:t \n:t
+#+INCLUDE "../../template.org"
+#+SETUPFILE: "../../extension.org"
+#+title:Ubuntu包管理系统
+* dpkg --get-selections
+  列出现在所有安装的包
+  将当前系统安装包保存到文件中 =sudo dpkg --get-selections > list.txt= ,在新系统上可以用 =sudo dpkg --set-selections < list.txt= 来安装。
+* dpkg update-alternatives
+  http://charette.no-ip.com:81/programming/2011-12-24_GCCv47/
+  http://paddy-w.iteye.com/blog/958062
+  ubuntu12.04上默认安装的是4.6版本的GCC，通过源安装4.7版本GCC时并没有删除4.6版本，/usr/bin下的gcc仍是指向gcc-4.6的链接。
+  =lrwxrwxrwx 1 root root 7  3月  6 01:02 /usr/bin/gcc -> gcc-4.6*=
+  这种情况下可以使用udpate-alternatives命令来进行管理。
+  通过 =--install= 来进行添加一个命令的可用值：
+  =--install link name path priority [--slave link name path]=
+  前一个link叫master link,后一个slave link.
+  #+begin_example
+  sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-4.6 60 --slave /usr/bin/g++ g++ /usr/bin/g++-4.6
+  sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-4.7 40 --slave /usr/bin/g++ g++ /usr/bin/g++-4.7
+  #+end_example
+  此时再查看gcc：
+  #+begin_example
+  lrwxrwxrwx 1 root root 21  3月  6 03:39 /usr/bin/gcc -> /etc/alternatives/gcc*
+  #+end_example
+  查看/etc/alternatives目录下的gcc：
+  #+begin_example
+  lrwxrwxrwx 1 root root 16  3月  6 03:39 gcc -> /usr/bin/gcc-4.6*
+  #+end_example
+  即添加了一个间接链接。
+  此时通过 =--config name= 来进行切换：
+  #+begin_example
+  sudo udpate-alternatives --config gcc
+  #+end_example
+  此时再查看alternatives目录下的gcc：
+  #+begin_example
+  lrwxrwxrwx 1 root root 16  3月  6 03:43 gcc -> /usr/bin/gcc-4.7*
+  #+end_example
+  即此时gcc是4.7版本的gcc。
+  同时g++作为gcc的slave也发生变化：
+  #+begin_example
+  lrwxrwxrwx 1 root root 16  3月  6 03:43 g++ -> /usr/bin/g++-4.7*
+  #+end_example
+  通过 =--display name= 来查看一个命令的所有可选值。
+  通过 =--remove name path= 删除一个命令（包括其slave）
+* apt-cache search
+  在所有可用的包里进行查找。
+  =--names-only= 只在包名中进行匹配，而不在描述中匹配。
+* apt-cache pkgnames
+  列出所有包名。
