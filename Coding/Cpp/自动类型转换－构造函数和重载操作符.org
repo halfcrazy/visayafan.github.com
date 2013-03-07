@@ -1,0 +1,79 @@
+#+OPTIONS: ^:{} _:{} num:t toc:t \n:t
+#+INCLUDE "../../template.org"
+#+SETUPFILE: "../../extension.org"
+#+title:自动类型转换－构造函数和重载操作符
+
+* 构造函数自动类型转换
+#+begin_src c
+class A{
+     int i;
+public:
+     A(int ii):i(ii){}
+};
+
+void f(A a){
+     cout<<"f"<<endl;
+}
+
+int main(int argc, char *argv[])
+{
+     f(10);
+     return 0;
+}
+#+end_src
+  int类型的参数10传递给函数f时，编译器发现f需要的参数为A类型，非int类型。
+  但由于A类有一个参数为int的构造函数，便启用自动类型：将10转为A类型。
+  [[file:explicit.html][explicit可以阻止这种行为]]
+* 操作符重载自动类型转换
+  模式为： =operator new-type() {code which returns new-type}=
+#+begin_src c++
+#include <iostream>
+using namespace std;
+
+class A{
+     int a;
+public:
+     A(int aa):a(aa){}
+};
+class B{
+     int b;
+public:
+     B(int bb):b(bb){}
+     operator A(){return A(b);}
+};
+void f(A a){cout<<"f"<<endl;}
+
+int main(int argc, char *argv[])
+{
+     B b(1);
+     f(b);
+     return 0;
+}
+#+end_src
+  f函数的参数为A类型但传递的是B类型的b，由于B类中有 operator A()，故将b根据 =operator A()= 中的代码自动类型转换为A类型。
+* 陷阱
+  不要让程序有歧义：
+#+begin_src c++
+#include <iostream>
+using namespace std;
+
+class A{};
+class B{};
+
+class C{
+public:
+     operator A(){}
+     operator B(){}
+};
+
+void f(A a){}
+void f(B b){}
+
+int main(int argc, char *argv[])
+{
+     C c;
+     f(c);
+     return 0;
+}
+#+end_src
+  f(c)执行时由于不知道是将c转化为A从而调用f(A a)版本的f还是将c转化为B从而调用f(B b)版本的f，从而引发歧义，导致程序编译失败。

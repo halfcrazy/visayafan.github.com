@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+               "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-CN" xml:lang="zh-CN">
+<head>
+<title>自动类型转换－构造函数和重载操作符</title>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
+<meta name="title" content="自动类型转换－构造函数和重载操作符"/>
+<meta name="generator" content="Org-mode"/>
+<meta name="generated" content="2013-03-08 01:51:30 CST"/>
+<meta name="author" content="visayafan"/>
+<meta name="description" content=""/>
+<meta name="keywords" content=""/>
+
+
+
+</head>
+<body>
+
+
+<div id="content">
+<h1 class="title">自动类型转换－构造函数和重载操作符</h1>
+
+
+<!-- <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"> </script> -->
+<link rel="stylesheet" type="text/css" href="../../Layout/CSS/bootstrap_old.css" />
+<link rel="stylesheet" type="text/css" href="../../Layout/CSS/style.css" />
+<script src="../../Layout/JS/jquery_1.7.1.js"></script>
+<script src="../../Layout/JS/bootstrap_old.js"></script>
+
+
+
+<div id="table-of-contents">
+<h2>目录</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#sec-1">1 构造函数自动类型转换</a></li>
+<li><a href="#sec-2">2 操作符重载自动类型转换</a></li>
+<li><a href="#sec-3">3 陷阱</a></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-1" class="outline-2">
+<h2 id="sec-1"><span class="section-number-2">1</span> 构造函数自动类型转换</h2>
+<div class="outline-text-2" id="text-1">
+
+
+
+
+<pre class="src src-c"><span style="color: #228b22;">class</span> <span style="color: #a0522d;">A</span>{
+     <span style="color: #228b22;">int</span> <span style="color: #a0522d;">i</span>;
+public:
+     A(<span style="color: #228b22;">int</span> <span style="color: #a0522d;">ii</span>):i(ii){}
+};
+
+<span style="color: #228b22;">void</span> <span style="color: #0000ff;">f</span>(<span style="color: #228b22;">A</span> <span style="color: #a0522d;">a</span>){
+     cout&lt;&lt;<span style="color: #8b2252;">"f"</span>&lt;&lt;endl;
+}
+
+<span style="color: #228b22;">int</span> <span style="color: #0000ff;">main</span>(<span style="color: #228b22;">int</span> <span style="color: #a0522d;">argc</span>, <span style="color: #228b22;">char</span> *<span style="color: #a0522d;">argv</span>[])
+{
+     f(10);
+     <span style="color: #a020f0;">return</span> 0;
+}
+</pre>
+
+<p>
+  int类型的参数10传递给函数f时，编译器发现f需要的参数为A类型，非int类型。<br/>
+  但由于A类有一个参数为int的构造函数，便启用自动类型：将10转为A类型。<br/>
+  <a href="explicit.html">explicit可以阻止这种行为</a><br/>
+</p></div>
+
+</div>
+
+<div id="outline-container-2" class="outline-2">
+<h2 id="sec-2"><span class="section-number-2">2</span> 操作符重载自动类型转换</h2>
+<div class="outline-text-2" id="text-2">
+
+<p>  模式为： <code>operator new-type() {code which returns new-type}</code><br/>
+</p>
+
+
+<pre class="src src-c++"><span style="color: #483d8b;">#include</span> <span style="color: #8b2252;">&lt;iostream&gt;</span>
+<span style="color: #a020f0;">using</span> <span style="color: #a020f0;">namespace</span> <span style="color: #008b8b;">std</span>;
+
+<span style="color: #a020f0;">class</span> <span style="color: #228b22;">A</span>{
+     <span style="color: #228b22;">int</span> <span style="color: #a0522d;">a</span>;
+<span style="color: #a020f0;">public</span>:
+     <span style="color: #0000ff;">A</span>(<span style="color: #228b22;">int</span> <span style="color: #a0522d;">aa</span>):a(aa){}
+};
+<span style="color: #a020f0;">class</span> <span style="color: #228b22;">B</span>{
+     <span style="color: #228b22;">int</span> <span style="color: #a0522d;">b</span>;
+<span style="color: #a020f0;">public</span>:
+     <span style="color: #0000ff;">B</span>(<span style="color: #228b22;">int</span> <span style="color: #a0522d;">bb</span>):b(bb){}
+     <span style="color: #a020f0;">operator</span> <span style="color: #228b22;">A</span>(){<span style="color: #a020f0;">return</span> A(b);}
+};
+<span style="color: #228b22;">void</span> <span style="color: #0000ff;">f</span>(<span style="color: #228b22;">A</span> <span style="color: #a0522d;">a</span>){cout&lt;&lt;<span style="color: #8b2252;">"f"</span>&lt;&lt;endl;}
+
+<span style="color: #228b22;">int</span> <span style="color: #0000ff;">main</span>(<span style="color: #228b22;">int</span> <span style="color: #a0522d;">argc</span>, <span style="color: #228b22;">char</span> *<span style="color: #a0522d;">argv</span>[])
+{
+     <span style="color: #228b22;">B</span> <span style="color: #a0522d;">b</span>(1);
+     f(b);
+     <span style="color: #a020f0;">return</span> 0;
+}
+</pre>
+
+<p>
+  f函数的参数为A类型但传递的是B类型的b，由于B类中有 operator A()，故将b根据 <code>operator A()</code> 中的代码自动类型转换为A类型。<br/>
+</p></div>
+
+</div>
+
+<div id="outline-container-3" class="outline-2">
+<h2 id="sec-3"><span class="section-number-2">3</span> 陷阱</h2>
+<div class="outline-text-2" id="text-3">
+
+<p>  不要让程序有歧义：<br/>
+</p>
+
+
+<pre class="src src-c++"><span style="color: #483d8b;">#include</span> <span style="color: #8b2252;">&lt;iostream&gt;</span>
+<span style="color: #a020f0;">using</span> <span style="color: #a020f0;">namespace</span> <span style="color: #008b8b;">std</span>;
+
+<span style="color: #a020f0;">class</span> <span style="color: #228b22;">A</span>{};
+<span style="color: #a020f0;">class</span> <span style="color: #228b22;">B</span>{};
+
+<span style="color: #a020f0;">class</span> <span style="color: #228b22;">C</span>{
+<span style="color: #a020f0;">public</span>:
+     <span style="color: #a020f0;">operator</span> <span style="color: #228b22;">A</span>(){}
+     <span style="color: #a020f0;">operator</span> <span style="color: #228b22;">B</span>(){}
+};
+
+<span style="color: #228b22;">void</span> <span style="color: #0000ff;">f</span>(<span style="color: #228b22;">A</span> <span style="color: #a0522d;">a</span>){}
+<span style="color: #228b22;">void</span> <span style="color: #0000ff;">f</span>(<span style="color: #228b22;">B</span> <span style="color: #a0522d;">b</span>){}
+
+<span style="color: #228b22;">int</span> <span style="color: #0000ff;">main</span>(<span style="color: #228b22;">int</span> <span style="color: #a0522d;">argc</span>, <span style="color: #228b22;">char</span> *<span style="color: #a0522d;">argv</span>[])
+{
+     <span style="color: #228b22;">C</span> <span style="color: #a0522d;">c</span>;
+     f(c);
+     <span style="color: #a020f0;">return</span> 0;
+}
+</pre>
+
+<p>
+  f(c)执行时由于不知道是将c转化为A从而调用f(A a)版本的f还是将c转化为B从而调用f(B b)版本的f，从而引发歧义，导致程序编译失败。<br/>
+</p></div>
+</div>
+</div>
+
+</body>
+</html>
