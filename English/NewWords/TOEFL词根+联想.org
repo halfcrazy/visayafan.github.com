@@ -1,0 +1,201 @@
+#+OPTIONS: ^:{} _:{} num:t toc:t \n:t
+#+INCLUDE "../../template.org"
+#+SETUPFILE: "../../extension.org"
+#+INFOJS_OPT: view:info toc:nil path:../../Layout/JS/org-info.js
+#+title:TOEFL词根+联想
+
+* List1
+** accessory
+   n 附件／配件
+   adj 附属的／副的
+   联想：
+   adjunct 附属物／附属的
+   additional 附加的／额外的
+   additive 添加的／添加剂
+** acoustic
+   adj 听觉相关的／声学的
+** acute
+   severe/intense 极度的／激烈的
+   acute sorrow/pain
+   an acute shortage of oil
+** adhere
+   粘贴
+   adhesive 带粘性的／胶合剂
+   adhesion 粘连
+** adobe
+   泥砖
+   adobe reader
+** adolescence
+   青春期
+   adolescent
+** adorn
+   decorate 装饰
+** aer-
+   前缀表和空气相关的
+   aerial 空中的
+   aerobic 有氧运动／好氧的
+   aerobic bacteria 好氧细菌
+   aerobic sport 有氧运行
+   aerobic fermentation 有氧发酵 
+** aesthetic
+   artistic 美学的
+   审美的
+** commodity
+   商品
+   commerce 商业
+   commodities
+** afflict
+   tortue 折磨／使痛苦
+* List2
+** alga
+   藻类／水藻
+** alkali
+   n 碱
+   adj 碱性的
+   acid 酸
+** allay
+   1. calm 使平静
+   2. relieve, alleviate 减轻痛苦
+   联想：
+   1. alloy 合金
+   2. alley 小路
+   3. ally  伙伴／助手
+** allegory
+   寓言故事
+   寓意／象征
+** aluminum
+   铝
+   联想：
+   magnesium 镁
+** amino
+   氨基的
+   amino acid 氨基酸
+** amnesia
+   失忆症／健忘症
+** ample
+   充足的／丰富的
+   plentiful/sufficient/abundant/abound/adequate
+** amplify
+   加强 make larger/stronger/greater or enlarge or extend
+   提高音量
+   amplifier 扩音器／放大器
+   amplification  放大
+** anatomy
+   解剖学
+** anthropology
+   人类学
+   anthropologist 人类学家
+   anthropological 人类学的
+** antibiotic
+   抗生素
+   biotic 生物相关的
+** anticipate
+   预期／预见 foresee/look forward to
+   anticipated 预期的
+** applicant
+   申请者
+   apply for 申请
+   application 应用程序／应用／申请
+** apprentice
+   学徒
+** appropriate
+   v 拨款／占用
+   adj 合适的
+** aqua-
+   做为前缀表与水有关的
+   aquatic 水生动植物／水生的／水上的 marine
+   aquarium 养鱼池／水族馆
+   联想：
+   natatorium 游泳馆
+** archaeology
+   考古学
+   archaeologist 考古学家
+   archaeological 考古学的
+   archaeological site 考古遗址
+** arbitrary
+   任意的／专制的，武断的
+** articulate
+   adj 表达清晰的／关节相关的
+   v 清晰地表达 
+#+begin_example
+Be careful to articulate your words so that everyone in the room can understand you.
+#+end_example
+   articulation 关节
+   articulation point 关节点／连接点
+** artifact
+   人工制品
+   artifactitious 人工现象的／人工制品的
+   artificial 人造的／合成的
+   artificiality 人工／不自然
+   synthetic 合成的 -> n synthesis 综合
+** arid
+   droughty 干旱的
+   arid climate 干旱气候
+   n drought 干旱
+** ascribe
+   ascribe sth to sb/sth 归因于
+* List3
+** premise
+   n 前提假设
+   v 作出前提
+   assume/suppose
+   on the premise
+** asteroid
+   小行星
+   minor planet
+** attain
+   reach/accomplish/obtain/achieve/gain 获得，达到
+** auction
+   public sale 拍卖
+** auditorium
+   礼堂
+   orium/arium后缀结尾的一般表“地方”
+   natatorium 游泳馆
+   aquarium 水族馆
+** augment
+   增加／增强
+   augmentation
+   augmented
+   augmenting
+   编译原理LR语法分析时 augmented grammer 增广文法
+** avalanche
+   n 雪崩/山崩 snowslide/landslide
+** avert
+   avoid 避开／避免
+   n aversion
+   avert the eyes from sth
+   avert dangers
+** aviation
+   飞行学／航空行
+   aviator 飞行家／飞行员
+** bald
+   光秃
+   联想：
+   bold 大胆的
+** barge
+   驳船／游艇
+** barren
+   infertile/unproductive 贫瘠的
+   sterile 不育的
+** barter
+   trade／deal 实物交换
+** bead
+   n 珠子／水珠
+   v 形成珠状
+** benign
+   gentle/mild 温和的／气候良好的／性情温和的
+** besiege
+   surround so as to force to give up 围攻
+   被困扰／使烦恼
+** bias
+   n inclination 偏见
+   v 存在偏见
+** bland
+   nonirritating 无刺激的／平淡的／无味的
+** bleach
+   v 漂白／使变白 to make whiter or lighter in color
+** blend
+   mix 混合
+   blend the ingredients
+** blip
+   雷达上的尖峰

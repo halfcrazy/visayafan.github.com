@@ -1,8 +1,8 @@
 #+OPTIONS: ^:{} _:{} num:t toc:t \n:t
 #+INCLUDE "../../template.org"
 #+SETUPFILE: "../../extension.org"
+#+INFOJS_OPT: view:overview toc:nil path:../../Layout/JS/org-info.js
 #+title:The Dark Knight Rises
-#+html: <center><iframe width="560" height="315" src="http://www.youtube.com/embed/g8evyE9TuYk" frameborder="0" allowfullscreen></iframe></center>
 * mercenary
   n 雇佣兵
   adj 唯利是图的 ->adv mercenarily
