@@ -19,7 +19,7 @@ tree --dirsfirst -a -T "Sitemap for www.fanhan.tk" -P "*html" -I "\.git|index_sw
 
 生成结果类似图片：
 #+BEGIN_CENTER
-[[./image/Screenshot.png]]
+[[./images/Screenshot.png]]
 #+END_CENTER
 #+BEGIN_HTML
 <script src="../../Layout/JS/disqus-comment.js"></script>

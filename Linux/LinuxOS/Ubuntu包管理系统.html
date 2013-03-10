@@ -7,7 +7,7 @@
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
 <meta name="title" content="Ubuntu包管理系统"/>
 <meta name="generator" content="Org-mode"/>
-<meta name="generated" content="2013-03-06 03:51:20 CST"/>
+<meta name="generated" content="2013-03-11 04:33:50 CST"/>
 <meta name="author" content="visayafan"/>
 <meta name="description" content=""/>
 <meta name="keywords" content=""/>
@@ -34,9 +34,10 @@
 <div id="text-table-of-contents">
 <ul>
 <li><a href="#sec-1">1 dpkg &ndash;get-selections</a></li>
-<li><a href="#sec-2">2 dpkg update-alternatives</a></li>
+<li><a href="#sec-2">2 update-alternatives</a></li>
 <li><a href="#sec-3">3 apt-cache search</a></li>
 <li><a href="#sec-4">4 apt-cache pkgnames</a></li>
+<li><a href="#sec-5">5 apt-get purge packagename</a></li>
 </ul>
 </div>
 </div>
@@ -52,7 +53,7 @@
 </div>
 
 <div id="outline-container-2" class="outline-2">
-<h2 id="sec-2"><span class="section-number-2">2</span> dpkg update-alternatives</h2>
+<h2 id="sec-2"><span class="section-number-2">2</span> update-alternatives</h2>
 <div class="outline-text-2" id="text-2">
 
 <p>  <a href="http://charette.no-ip.com:81/programming/2011-12-24_GCCv47/">http://charette.no-ip.com:81/programming/2011-12-24_GCCv47/</a><br/>
@@ -134,6 +135,16 @@ sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-4.7 40 --slave 
 <div class="outline-text-2" id="text-4">
 
 <p>  列出所有包名。<br/>
+</p></div>
+
+</div>
+
+<div id="outline-container-5" class="outline-2">
+<h2 id="sec-5"><span class="section-number-2">5</span> apt-get purge packagename</h2>
+<div class="outline-text-2" id="text-5">
+
+<p>  purge 选项与remove不同之处在于前者不仅删除包而且删除配置文件。<br/>
+  purge 单词有净化的意思<br/>
 </p></div>
 </div>
 </div>

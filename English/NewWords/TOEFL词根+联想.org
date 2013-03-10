@@ -1,9 +1,8 @@
 #+OPTIONS: ^:{} _:{} num:t toc:t \n:t
-#+INCLUDE "../../template.org"
+#+INCLUDE "../../template-toc.org"
 #+SETUPFILE: "../../extension.org"
-#+INFOJS_OPT: view:info toc:nil path:../../Layout/JS/org-info.js
+#+INFOJS_OPT: view:showall
 #+title:TOEFL词根+联想
-
 * List1
 ** accessory
    n 附件／配件

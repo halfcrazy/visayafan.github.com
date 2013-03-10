@@ -1,7 +1,6 @@
 #+OPTIONS: ^:{} _:{} num:t toc:t \n:t
-#+INCLUDE "../../template.org"
+#+INCLUDE "../../template-toc.org"
 #+SETUPFILE: "../../extension.org"
-#+INFOJS_OPT: view:overview toc:nil path:../../Layout/JS/org-info.js
 #+title:The Dark Knight Rises
 * mercenary
   n 雇佣兵

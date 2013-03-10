@@ -5,7 +5,7 @@
 * dpkg --get-selections
   列出现在所有安装的包
   将当前系统安装包保存到文件中 =sudo dpkg --get-selections > list.txt= ,在新系统上可以用 =sudo dpkg --set-selections < list.txt= 来安装。
-* dpkg update-alternatives
+* update-alternatives
   http://charette.no-ip.com:81/programming/2011-12-24_GCCv47/
   http://paddy-w.iteye.com/blog/958062
   ubuntu12.04上默认安装的是4.6版本的GCC，通过源安装4.7版本GCC时并没有删除4.6版本，/usr/bin下的gcc仍是指向gcc-4.6的链接。
@@ -47,3 +47,6 @@
   =--names-only= 只在包名中进行匹配，而不在描述中匹配。
 * apt-cache pkgnames
   列出所有包名。
+* apt-get purge packagename
+  purge 选项与remove不同之处在于前者不仅删除包而且删除配置文件。
+  purge 单词有净化的意思

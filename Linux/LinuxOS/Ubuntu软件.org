@@ -1,0 +1,18 @@
+#+OPTIONS: ^:{} _:{} num:t toc:t \n:t
+#+INCLUDE "../../template.org"
+#+SETUPFILE: "../../extension.org"
+#+title:Ubuntu软件
+
+* kdirstat
+  可以以树形方式显示所有文件的硬盘使用情况，甚至可以显示出其在硬盘上的分布。
+  =sudo apt-get install kdirstat= 命令行调用 =k4dirstat= 。
+  {{{lightbox(images/kdirstat.png,400)}}}   
+* notify-send
+  notify-send是个实用的小工具，可以在桌面的右上角向用户发送提醒，此工具再配合 crontab 命令便可实现定时向用户发送提醒。
+  安装：sudo apt-get install libnotify-bin
+  使用：notify-send -i icon目录 -t 提示显示的时长 "提醒内容"
+  可以写在脚本中再配合 crontab 命令来定时发送提醒。
+  crontab 参考：http://blog.csdn.net/tianlesoftware/article/details/5315039
+* ubuntu-tweak
+  安装软件+清道夫
+

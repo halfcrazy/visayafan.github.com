@@ -1,5 +1,5 @@
 #+OPTIONS: ^:{} _:{} num:t toc:t \n:t
-#+include "../../template.org"
+#+include "../../template-toc.org"
 #+title: Lex使用
 
 Manual: http://flex.sourceforge.net/manual
@@ -21,15 +21,74 @@ Manual: http://flex.sourceforge.net/manual
 #+begin_example
 {fuword}      {printf ("%s%s",yytext, "ay");}
 #+end_example
+* 开始状态(start sate)
+  默认总有一个名为 =INITIAL= 的开始状态。
+  开始状态有两种， =%x= 声明的exclusive和 =%s= 声明的inclusive开始状态. 
+  声明区声明一个开始状态，当使用 =BEGIN= 宏进入到某开始状态后，若是%x声明的开始状态则只有此开始状态之后的模式才会进行匹配，而%s声明的开始状态则既匹配此开始状态之后的模式也匹配其它的。
+#+begin_example
+%x XXX
+%%
+/\*                     BEGIN(COMMENT)
+<COMMENT>\*/            BEGIN(INITIAL)
+<COMMENT>([^*]|\n)+|.
+<COMMENT><<EOF>>        {printf("error"); return 0;}
+[a-z]                   ECHO;
+%%
+#+end_example
+  上面代码用来忽略C源码中的注释。
+  扫描遇到 =/*= 时执行 =BEGIN COMMENT= 进入到COMMENT开始状态，由于COMMENT由%x声明，所以之后只执行<COMMENT>之后的模式，当遇到 =*/= 时便返回到原来的INITIAL开始状态，对于/*和*/之间的字符不进行处理，如果在文件结束前没有遇到*/则输入错误信息。
+
+  模式前的开始状态可以有多个： =<INITIAL, STRING>pattern {actions}=。
+* <<EOF>>
+  End Of File，此时 =yywrap= 返回非0值（表没有其它文件处理）。
+  之后必须进行以下几件事之一：
+  1. 调用 =yyterminate()= 结束。
+  2. 将 =yyin= 指向新的FILE。
+  3. 执行一个return语句。
+  4. 调用 =yy_switch_to_buffer= 切换到一个新的buffer。
+* 输入管理
+  flex有一个结构体 =struct yy_buffer_state= 可用来管理输入， =YY_BUFFER_STATE= 是其指针类型（应该是宏定义 #define struct yy_buffer_state* YY_BUFFER_STATE）。
+  为提高处理速度，可以先将待扫描内容预存到某指定buffer中，然后从此buffer中读取处理。
+  =YY_BUFFER_SIZE= 为默认buffer大小（一般为16k）。
+  =YY_BUFFER_STATE yy_create_buffer(FILE* file, int size)= 创建大小为size的buffer并与文件指针file相关联，返回 =YY_BUFFER_STATE=。 =yy_new_buffer= 是其c++版本（调用new/delete）。
+  需扫描的文件可能不止一个，有时需要在几个文件中切换， =void yy_switch_to_buffer(YY_BUFFER_STATE new_buffer)= 可以实现此功能。
+  =void yypush_buffer_state(YY_BUFFER_STATE buffer)= 将当前的 buffer 压栈，栈顶为状态为最新的状态，同理 =void yypop_buffer_state()= 弹出栈顶状态并调用 =yy_delete_buffer= 删除之，此时栈顶上的状态为最新的状态。(此两个函数有缺陷：不能保存环境相关的内容，例如变量等。不过可以通过自己实现类似的函数)
+  =void yy_delete_buffer(YY_BUFFER_STATE buffer)= 来回收buffer指向的空间。
+  =YY_CURRENT_BUFFER= 用来返回当前正在使用的 =YY_BUFFER_STATE= 。
+  =YY_BUFFER_STATE yy_scan_buffer(char* base, yy_size_t size)= 扫描指定位置base开始的大小size的buffer。
+  下面是来自flex手册的例子（Multiple Input Buffers）：
+#+begin_src c
+%x incl
+%%
+include         BEGIN(incl);
+[a-z]+          ECHO;
+[^a-z\n]*\n?    ECHO;
+<incl>[ \t]*            /* eat the whitespace */
+<incl>[^ \t\n]+         { /* got the include file name */
+                        yyin = fopen( yytext, "r" );
+                        if ( ! yyin )
+                             error( ... );
+                        yypush_buffer_state(yy_create_buffer( yyin, YY_BUF_SIZE ));
+                        BEGIN(INITIAL);
+                        }
+<<EOF>>                 {
+                        yypop_buffer_state();
+                        if ( !YY_CURRENT_BUFFER ) {yyterminate();}
+                        }
+#+end_src
+* option
+** nodefault
+** yylineo
+** noyywrap
+** case-insensitive
 * 内置变量和函数
 ** 变量
-#+begin_example
-yytext   char *  当前匹配的字符串
-yyleng   int     当前匹配的字符串长度
-yyin     FILE *  lex当前的解析文件，默认为标准输入
-yyout    FILE *  lex解析后的输出文件，默认为标准输出
-yylineno int     当前的行数信息
-#+end_example
+*** yytext
+    char* yytext  当前匹配的字符串
+*** yyleng
+    int yyleng 当前匹配的字符串长度
+*** yyin
+    FILE* yyin  lex当前的解析文件，默认为标准输入
 #+begin_example
 如果命令行参数指定读取来源则打开该文件将FILE指针传递给yyin，否则为标准输入：
 int main(int argc, char *argv[])
@@ -42,15 +101,17 @@ int main(int argc, char *argv[])
     return 0;
 }
 #+end_example
-
-#+begin_example
-ECHO     #define ECHO fwrite(yytext, yyleng, 1, yyout)  也是未匹配字符的
-         默认动作
-#+end_example
+*** yyout
+    FILE* yyout  lex解析后的输出文件，默认为标准输出
+*** yylineo
+    int yylineno     当前的行数信息
+*** ECHO
+    =#define ECHO fwrite(yytext, yyleng, 1, yyout)=  也是未匹配字符的默认动作
 ** 函数
-** yylex
-int yylex(void)    调用Lex进行词法分析
-** yywrap
+*** yylex
+    int yylex(void)
+    调用Lex进行词法分析，每次返回一个token.
+*** yywrap
 #+begin_example
 int yywrap(void)   在文件(或输入)的末尾调用。如果函数的返回值是1，就停止解
                    析。 因此它可以用来解析多个文件。代码可以写在第三段，这
@@ -58,7 +119,7 @@ int yywrap(void)   在文件(或输入)的末尾调用。如果函数的返回�
                    文件，直到所有的文件都被解析。最后，yywrap() 可以返回1
                    来表示解析的结束。
 #+end_example   
-** yymore
+*** yymore
    yymore()           告诉扫描器下次扫描结果连接在当前yytext后而非覆盖当前yytext
 #+begin_example
  \"[^"]*        {
@@ -69,9 +130,13 @@ int yywrap(void)   在文件(或输入)的末尾调用。如果函数的返回�
                 }
 对于"abc\"def"情况，第一次扫描得yytex为abc\，判断最后一个字符为\后调用yymore()，则继续扫描得"def并将结果连接到上次结果中得：abc\"def
 #+end_example   
-** yyless
-   yyless()     回退字符，例如 yyless(yyleng-1)将最后一个字符回退，yyless(yyleng-2)回退两个字符。
-** REJECT
+*** yyless
+    yyless()     回退字符，例如 yyless(yyleng-1)将最后一个字符回退，yyless(yyleng-2)回退两个字符。
+*** yyrestart
+    =void yyresart(FILE* new_file)=
+    常见情况：将yyin指向新的文件，然后调用 yyrestart(yyin)，此时会丢弃之前进行的扫描，重新开始对新文件进行扫描。
+    如果不对yyin赋新值，直接 yyrestart(yyin) 则会丢弃对现在文件的扫描重新扫描同一个文件。
+*** REJECT
    REJECT使用后会进行次好匹配，
 #+begin_example
 %{
@@ -167,8 +232,3 @@ int main(int argc, char *argv[])
     return 0;
 }
 #+end_example
-#+BEGIN_HTML
-<script src="../../Layout/JS/disqus-comment.js"></script>
-<div id="disqus_thread">
-</div>
-#+END_HTML

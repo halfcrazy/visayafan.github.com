@@ -7,7 +7,7 @@
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
 <meta name="title" content="Lyx 笔记 "/>
 <meta name="generator" content="Org-mode"/>
-<meta name="generated" content="2013-02-26 23:56:13 CST"/>
+<meta name="generated" content="2013-03-11 05:06:11 CST"/>
 <meta name="author" content="visayafan"/>
 <meta name="description" content=""/>
 <meta name="keywords" content=""/>
@@ -24,10 +24,9 @@
 
 <!-- <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"> </script> -->
 <link rel="stylesheet" type="text/css" href="../../Layout/CSS/bootstrap_old.css" />
-<link rel="stylesheet" type="text/css" href="../../Layout/CSS/style.css" />
+<link rel="stylesheet" type="text/css" href="../../Layout/CSS/too_many_toc.css" />
 <script src="../../Layout/JS/jquery_1.7.1.js"></script>
 <script src="../../Layout/JS/bootstrap_old.js"></script>
-
 
 
 <div id="table-of-contents">
@@ -49,6 +48,7 @@
 <li><a href="#sec-7">7 参考文献</a></li>
 <li><a href="#sec-8">8 分栏</a></li>
 <li><a href="#sec-9">9 设置页边距</a></li>
+<li><a href="#sec-10">10 源码高亮包</a></li>
 </ul>
 </div>
 </div>
@@ -275,6 +275,50 @@ Your abstract goes here...
 </pre>
 
 </div>
+
+</div>
+
+<div id="outline-container-10" class="outline-2">
+<h2 id="sec-10"><span class="section-number-2">10</span> 源码高亮包</h2>
+<div class="outline-text-2" id="text-10">
+
+<p>  lstlisting可以实现源码高亮但颜色单调，可替代之的是minted。<br/>
+  具体参考：<a href="http://www.latexstudio.net/?p=596">http://www.latexstudio.net/?p=596</a><br/>
+<div class="row-fluid"> <div class="span5">
+
+<pre class="src src-tex"><span style="color: #a020f0;">\documentclass</span>{<span style="color: #483d8b;">article</span>}
+<span style="color: #a020f0;">\usepackage</span>{<span style="color: #483d8b;">minted</span>}
+<span style="color: #a020f0;">\begin</span>{<span style="color: #0000ff;">document</span>}
+<span style="color: #a020f0;">\begin</span>{<span style="color: #0000ff;">minted</span>}[linenos=true]{c++}
+#include&lt;iostream&gt;
+using namespace std;
+
+class A{};
+class B{};
+
+class C{
+public:
+     operator A(){}
+     operator B(){}
+};
+
+void f(A a){}
+void f(B b){}
+
+int main(int argc, char *argv[])
+{
+     C c;
+     f(c);
+     return 0;
+}
+<span style="color: #a020f0;">\end</span>{<span style="color: #0000ff;">minted</span>}
+<span style="color: #a020f0;">\end</span>{<span style="color: #0000ff;">document</span>}
+</pre>
+
+</div> <div class="span5">
+<link rel="stylesheet" href="../../Layout/CSS/jquery.lightbox-0.5.css" type="text/css" media="screen" /> <script type="text/javascript" src="../../Layout/JS/jquery.lightbox-0.5.js"></script> <center> <a class="lightbox" href="images/minted.png"> <img class="lightbox " title="点击查看大图" src="images/minted.png" width="450"> </a> </center> <script type="text/javascript"> $(function() {$('a.lightbox').lightBox();}); </script> 
+</div></div>
+</p></div>
 </div>
 </div>
 

@@ -7,11 +7,11 @@
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
 <meta name="title" content="Lex使用"/>
 <meta name="generator" content="Org-mode"/>
-<meta name="generated" content="2012-12-14 09:05:38 CST"/>
+<meta name="generated" content="2013-03-11 02:16:17 CST"/>
 <meta name="author" content="visayafan"/>
 <meta name="description" content=""/>
 <meta name="keywords" content=""/>
-<div id="org-div-comments"><a href="../../index.html#compiler">主页</a></div>
+
 
 
 </head>
@@ -24,7 +24,7 @@
 
 <!-- <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"> </script> -->
 <link rel="stylesheet" type="text/css" href="../../Layout/CSS/bootstrap_old.css" />
-<link rel="stylesheet" type="text/css" href="../../Layout/CSS/style.css" />
+<link rel="stylesheet" type="text/css" href="../../Layout/CSS/too_many_toc.css" />
 <script src="../../Layout/JS/jquery_1.7.1.js"></script>
 <script src="../../Layout/JS/bootstrap_old.js"></script>
 
@@ -42,19 +42,42 @@ Manual: <a href="http://flex.sourceforge.net/manual">http://flex.sourceforge.net
 <li><a href="#sec-1-2">1.2 转换规则</a></li>
 </ul>
 </li>
-<li><a href="#sec-2">2 内置变量和函数</a>
+<li><a href="#sec-2">2 开始状态(start sate)</a></li>
+<li><a href="#sec-3">3 EOF</a></li>
+<li><a href="#sec-4">4 输入管理</a></li>
+<li><a href="#sec-5">5 option</a>
 <ul>
-<li><a href="#sec-2-1">2.1 变量</a></li>
-<li><a href="#sec-2-2">2.2 函数</a></li>
-<li><a href="#sec-2-3">2.3 yylex</a></li>
-<li><a href="#sec-2-4">2.4 yywrap</a></li>
-<li><a href="#sec-2-5">2.5 yymore</a></li>
-<li><a href="#sec-2-6">2.6 yyless</a></li>
-<li><a href="#sec-2-7">2.7 REJECT</a></li>
+<li><a href="#sec-5-1">5.1 nodefault</a></li>
+<li><a href="#sec-5-2">5.2 yylineo</a></li>
+<li><a href="#sec-5-3">5.3 noyywrap</a></li>
+<li><a href="#sec-5-4">5.4 case-insensitive</a></li>
 </ul>
 </li>
-<li><a href="#sec-3">3 编译</a></li>
-<li><a href="#sec-4">4 例子</a></li>
+<li><a href="#sec-6">6 内置变量和函数</a>
+<ul>
+<li><a href="#sec-6-1">6.1 变量</a>
+<ul>
+<li><a href="#sec-6-1-1">6.1.1 yytext</a></li>
+<li><a href="#sec-6-1-2">6.1.2 yyleng</a></li>
+<li><a href="#sec-6-1-3">6.1.3 yyin</a></li>
+<li><a href="#sec-6-1-4">6.1.4 yyout</a></li>
+<li><a href="#sec-6-1-5">6.1.5 yylineo</a></li>
+<li><a href="#sec-6-1-6">6.1.6 ECHO</a></li>
+</ul>
+</li>
+<li><a href="#sec-6-2">6.2 函数</a>
+<ul>
+<li><a href="#sec-6-2-1">6.2.1 yylex</a></li>
+<li><a href="#sec-6-2-2">6.2.2 yywrap</a></li>
+<li><a href="#sec-6-2-3">6.2.3 yymore</a></li>
+<li><a href="#sec-6-2-4">6.2.4 yyless</a></li>
+<li><a href="#sec-6-2-5">6.2.5 yyrestart</a></li>
+<li><a href="#sec-6-2-6">6.2.6 REJECT</a></li>
+</ul></li>
+</ul>
+</li>
+<li><a href="#sec-7">7 编译</a></li>
+<li><a href="#sec-8">8 例子</a></li>
 </ul>
 </div>
 </div>
@@ -105,25 +128,174 @@ Manual: <a href="http://flex.sourceforge.net/manual">http://flex.sourceforge.net
 </div>
 
 <div id="outline-container-2" class="outline-2">
-<h2 id="sec-2"><span class="section-number-2">2</span> 内置变量和函数</h2>
+<h2 id="sec-2"><span class="section-number-2">2</span> 开始状态(start sate)</h2>
 <div class="outline-text-2" id="text-2">
+
+<p>  默认总有一个名为 <code>INITIAL</code> 的开始状态。<br/>
+  开始状态有两种， <code>%x</code> 声明的exclusive和 <code>%s</code> 声明的inclusive开始状态. <br/>
+  声明区声明一个开始状态，当使用 <code>BEGIN</code> 宏进入到某开始状态后，若是%x声明的开始状态则只有此开始状态之后的模式才会进行匹配，而%s声明的开始状态则既匹配此开始状态之后的模式也匹配其它的。<br/>
+</p>
+
+
+<pre class="example">%x XXX
+%%
+/\*                     BEGIN(COMMENT)
+&lt;COMMENT&gt;\*/            BEGIN(INITIAL)
+&lt;COMMENT&gt;([^*]|\n)+|.
+&lt;COMMENT&gt;&lt;&lt;EOF&gt;&gt;        {printf("error"); return 0;}
+[a-z]                   ECHO;
+%%
+</pre>
+
+<p>
+  上面代码用来忽略C源码中的注释。<br/>
+  扫描遇到 <code>/*</code> 时执行 <code>BEGIN COMMENT</code> 进入到COMMENT开始状态，由于COMMENT由%x声明，所以之后只执行&lt;COMMENT&gt;之后的模式，当遇到 <code>*/</code> 时便返回到原来的INITIAL开始状态，对于/*和*/之间的字符不进行处理，如果在文件结束前没有遇到*/则输入错误信息。<br/>
+</p>
+<p>
+  模式前的开始状态可以有多个： <code>&lt;INITIAL, STRING&gt;pattern {actions}</code>。<br/>
+</p></div>
+
+</div>
+
+<div id="outline-container-3" class="outline-2">
+<h2 id="sec-3"><span class="section-number-2">3</span> <span class="target">EOF</span></h2>
+<div class="outline-text-2" id="text-3">
+
+<p>  End Of File，此时 <code>yywrap</code> 返回非0值（表没有其它文件处理）。<br/>
+  之后必须进行以下几件事之一：<br/>
+</p><ol>
+<li>调用 <code>yyterminate()</code> 结束。<br/>
+</li>
+<li>将 <code>yyin</code> 指向新的FILE。<br/>
+</li>
+<li>执行一个return语句。<br/>
+</li>
+<li>调用 <code>yy_switch_to_buffer</code> 切换到一个新的buffer。<br/>
+</li>
+</ol>
+
+</div>
+
+</div>
+
+<div id="outline-container-4" class="outline-2">
+<h2 id="sec-4"><span class="section-number-2">4</span> 输入管理</h2>
+<div class="outline-text-2" id="text-4">
+
+<p>  flex有一个结构体 <code>struct yy_buffer_state</code> 可用来管理输入， <code>YY_BUFFER_STATE</code> 是其指针类型（应该是宏定义 #define struct yy_buffer_state* YY_BUFFER_STATE）。<br/>
+  为提高处理速度，可以先将待扫描内容预存到某指定buffer中，然后从此buffer中读取处理。<br/>
+  <code>YY_BUFFER_SIZE</code> 为默认buffer大小（一般为16k）。<br/>
+  <code>YY_BUFFER_STATE yy_create_buffer(FILE* file, int size)</code> 创建大小为size的buffer并与文件指针file相关联，返回 <code>YY_BUFFER_STATE</code>。 <code>yy_new_buffer</code> 是其c++版本（调用new/delete）。<br/>
+  需扫描的文件可能不止一个，有时需要在几个文件中切换， <code>void yy_switch_to_buffer(YY_BUFFER_STATE new_buffer)</code> 可以实现此功能。<br/>
+  <code>void yypush_buffer_state(YY_BUFFER_STATE buffer)</code> 将当前的 buffer 压栈，栈顶为状态为最新的状态，同理 <code>void yypop_buffer_state()</code> 弹出栈顶状态并调用 <code>yy_delete_buffer</code> 删除之，此时栈顶上的状态为最新的状态。(此两个函数有缺陷：不能保存环境相关的内容，例如变量等。不过可以通过自己实现类似的函数)<br/>
+  <code>void yy_delete_buffer(YY_BUFFER_STATE buffer)</code> 来回收buffer指向的空间。<br/>
+  <code>YY_CURRENT_BUFFER</code> 用来返回当前正在使用的 <code>YY_BUFFER_STATE</code> 。<br/>
+  <code>YY_BUFFER_STATE yy_scan_buffer(char* base, yy_size_t size)</code> 扫描指定位置base开始的大小size的buffer。<br/>
+  下面是来自flex手册的例子（Multiple Input Buffers）：<br/>
+</p>
+
+
+<pre class="src src-c">%x incl
+%%
+include         BEGIN(incl);
+[a-z]+          ECHO;
+[^a-z\n]*\n?    ECHO;
+&lt;incl&gt;[ \t]*            <span style="color: #b22222;">/* </span><span style="color: #b22222;">eat the whitespace </span><span style="color: #b22222;">*/</span>
+&lt;incl&gt;[^ \t\n]+         { <span style="color: #b22222;">/* </span><span style="color: #b22222;">got the include file name </span><span style="color: #b22222;">*/</span>
+                        yyin = fopen( yytext, <span style="color: #8b2252;">"r"</span> );
+                        <span style="color: #a020f0;">if</span> ( ! yyin )
+                             error( ... );
+                        yypush_buffer_state(yy_create_buffer( yyin, YY_BUF_SIZE ));
+                        BEGIN(INITIAL);
+                        }
+&lt;&lt;EOF&gt;&gt;                 {
+                        yypop_buffer_state();
+                        <span style="color: #a020f0;">if</span> ( !YY_CURRENT_BUFFER ) {yyterminate();}
+                        }
+</pre>
+
+</div>
+
+</div>
+
+<div id="outline-container-5" class="outline-2">
+<h2 id="sec-5"><span class="section-number-2">5</span> option</h2>
+<div class="outline-text-2" id="text-5">
 
 
 </div>
 
-<div id="outline-container-2-1" class="outline-3">
-<h3 id="sec-2-1"><span class="section-number-3">2.1</span> 变量</h3>
-<div class="outline-text-3" id="text-2-1">
+<div id="outline-container-5-1" class="outline-3">
+<h3 id="sec-5-1"><span class="section-number-3">5.1</span> nodefault</h3>
+<div class="outline-text-3" id="text-5-1">
+
+</div>
+
+</div>
+
+<div id="outline-container-5-2" class="outline-3">
+<h3 id="sec-5-2"><span class="section-number-3">5.2</span> yylineo</h3>
+<div class="outline-text-3" id="text-5-2">
+
+</div>
+
+</div>
+
+<div id="outline-container-5-3" class="outline-3">
+<h3 id="sec-5-3"><span class="section-number-3">5.3</span> noyywrap</h3>
+<div class="outline-text-3" id="text-5-3">
+
+</div>
+
+</div>
+
+<div id="outline-container-5-4" class="outline-3">
+<h3 id="sec-5-4"><span class="section-number-3">5.4</span> case-insensitive</h3>
+<div class="outline-text-3" id="text-5-4">
+
+</div>
+</div>
+
+</div>
+
+<div id="outline-container-6" class="outline-2">
+<h2 id="sec-6"><span class="section-number-2">6</span> 内置变量和函数</h2>
+<div class="outline-text-2" id="text-6">
 
 
+</div>
+
+<div id="outline-container-6-1" class="outline-3">
+<h3 id="sec-6-1"><span class="section-number-3">6.1</span> 变量</h3>
+<div class="outline-text-3" id="text-6-1">
 
 
-<pre class="example">yytext   char *  当前匹配的字符串
-yyleng   int     当前匹配的字符串长度
-yyin     FILE *  lex当前的解析文件，默认为标准输入
-yyout    FILE *  lex解析后的输出文件，默认为标准输出
-yylineno int     当前的行数信息
-</pre>
+</div>
+
+<div id="outline-container-6-1-1" class="outline-4">
+<h4 id="sec-6-1-1"><span class="section-number-4">6.1.1</span> yytext</h4>
+<div class="outline-text-4" id="text-6-1-1">
+
+<p>    char* yytext  当前匹配的字符串<br/>
+</p></div>
+
+</div>
+
+<div id="outline-container-6-1-2" class="outline-4">
+<h4 id="sec-6-1-2"><span class="section-number-4">6.1.2</span> yyleng</h4>
+<div class="outline-text-4" id="text-6-1-2">
+
+<p>    int yyleng 当前匹配的字符串长度<br/>
+</p></div>
+
+</div>
+
+<div id="outline-container-6-1-3" class="outline-4">
+<h4 id="sec-6-1-3"><span class="section-number-4">6.1.3</span> yyin</h4>
+<div class="outline-text-4" id="text-6-1-3">
+
+<p>    FILE* yyin  lex当前的解析文件，默认为标准输入<br/>
+</p>
 
 
 <pre class="example">如果命令行参数指定读取来源则打开该文件将FILE指针传递给yyin，否则为标准输入：
@@ -138,36 +310,58 @@ int main(int argc, char *argv[])
 }
 </pre>
 
-
-
-<pre class="example">ECHO     #define ECHO fwrite(yytext, yyleng, 1, yyout)  也是未匹配字符的
-         默认动作
-</pre>
-
 </div>
 
 </div>
 
-<div id="outline-container-2-2" class="outline-3">
-<h3 id="sec-2-2"><span class="section-number-3">2.2</span> 函数</h3>
-<div class="outline-text-3" id="text-2-2">
+<div id="outline-container-6-1-4" class="outline-4">
+<h4 id="sec-6-1-4"><span class="section-number-4">6.1.4</span> yyout</h4>
+<div class="outline-text-4" id="text-6-1-4">
 
-</div>
-
-</div>
-
-<div id="outline-container-2-3" class="outline-3">
-<h3 id="sec-2-3"><span class="section-number-3">2.3</span> yylex</h3>
-<div class="outline-text-3" id="text-2-3">
-
-<p>int yylex(void)    调用Lex进行词法分析<br/>
+<p>    FILE* yyout  lex解析后的输出文件，默认为标准输出<br/>
 </p></div>
 
 </div>
 
-<div id="outline-container-2-4" class="outline-3">
-<h3 id="sec-2-4"><span class="section-number-3">2.4</span> yywrap</h3>
-<div class="outline-text-3" id="text-2-4">
+<div id="outline-container-6-1-5" class="outline-4">
+<h4 id="sec-6-1-5"><span class="section-number-4">6.1.5</span> yylineo</h4>
+<div class="outline-text-4" id="text-6-1-5">
+
+<p>    int yylineno     当前的行数信息<br/>
+</p></div>
+
+</div>
+
+<div id="outline-container-6-1-6" class="outline-4">
+<h4 id="sec-6-1-6"><span class="section-number-4">6.1.6</span> ECHO</h4>
+<div class="outline-text-4" id="text-6-1-6">
+
+<p>    <code>#define ECHO fwrite(yytext, yyleng, 1, yyout)</code>  也是未匹配字符的默认动作<br/>
+</p></div>
+</div>
+
+</div>
+
+<div id="outline-container-6-2" class="outline-3">
+<h3 id="sec-6-2"><span class="section-number-3">6.2</span> 函数</h3>
+<div class="outline-text-3" id="text-6-2">
+
+
+</div>
+
+<div id="outline-container-6-2-1" class="outline-4">
+<h4 id="sec-6-2-1"><span class="section-number-4">6.2.1</span> yylex</h4>
+<div class="outline-text-4" id="text-6-2-1">
+
+<p>    int yylex(void)<br/>
+    调用Lex进行词法分析，每次返回一个token.<br/>
+</p></div>
+
+</div>
+
+<div id="outline-container-6-2-2" class="outline-4">
+<h4 id="sec-6-2-2"><span class="section-number-4">6.2.2</span> yywrap</h4>
+<div class="outline-text-4" id="text-6-2-2">
 
 
 
@@ -183,9 +377,9 @@ int main(int argc, char *argv[])
 
 </div>
 
-<div id="outline-container-2-5" class="outline-3">
-<h3 id="sec-2-5"><span class="section-number-3">2.5</span> yymore</h3>
-<div class="outline-text-3" id="text-2-5">
+<div id="outline-container-6-2-3" class="outline-4">
+<h4 id="sec-6-2-3"><span class="section-number-4">6.2.3</span> yymore</h4>
+<div class="outline-text-4" id="text-6-2-3">
 
 <p>   yymore()           告诉扫描器下次扫描结果连接在当前yytext后而非覆盖当前yytext<br/>
 </p>
@@ -204,18 +398,29 @@ int main(int argc, char *argv[])
 
 </div>
 
-<div id="outline-container-2-6" class="outline-3">
-<h3 id="sec-2-6"><span class="section-number-3">2.6</span> yyless</h3>
-<div class="outline-text-3" id="text-2-6">
+<div id="outline-container-6-2-4" class="outline-4">
+<h4 id="sec-6-2-4"><span class="section-number-4">6.2.4</span> yyless</h4>
+<div class="outline-text-4" id="text-6-2-4">
 
-<p>   yyless()     回退字符，例如 yyless(yyleng-1)将最后一个字符回退，yyless(yyleng-2)回退两个字符。<br/>
+<p>    yyless()     回退字符，例如 yyless(yyleng-1)将最后一个字符回退，yyless(yyleng-2)回退两个字符。<br/>
 </p></div>
 
 </div>
 
-<div id="outline-container-2-7" class="outline-3">
-<h3 id="sec-2-7"><span class="section-number-3">2.7</span> REJECT</h3>
-<div class="outline-text-3" id="text-2-7">
+<div id="outline-container-6-2-5" class="outline-4">
+<h4 id="sec-6-2-5"><span class="section-number-4">6.2.5</span> yyrestart</h4>
+<div class="outline-text-4" id="text-6-2-5">
+
+<p>    <code>void yyresart(FILE* new_file)</code><br/>
+    常见情况：将yyin指向新的文件，然后调用 yyrestart(yyin)，此时会丢弃之前进行的扫描，重新开始对新文件进行扫描。<br/>
+    如果不对yyin赋新值，直接 yyrestart(yyin) 则会丢弃对现在文件的扫描重新扫描同一个文件。<br/>
+</p></div>
+
+</div>
+
+<div id="outline-container-6-2-6" class="outline-4">
+<h4 id="sec-6-2-6"><span class="section-number-4">6.2.6</span> REJECT</h4>
+<div class="outline-text-4" id="text-6-2-6">
 
 <p>   REJECT使用后会进行次好匹配，<br/>
 </p>
@@ -262,21 +467,22 @@ b
    与上面一样，最后a[cd]+匹配到acc之后由于没有REJECT，forward指针指向b，b没有匹配，默认输出，<br/>
 </p></div>
 </div>
+</div>
 
 </div>
 
-<div id="outline-container-3" class="outline-2">
-<h2 id="sec-3"><span class="section-number-2">3</span> 编译</h2>
-<div class="outline-text-2" id="text-3">
+<div id="outline-container-7" class="outline-2">
+<h2 id="sec-7"><span class="section-number-2">7</span> 编译</h2>
+<div class="outline-text-2" id="text-7">
 
 <p>  lex文件以l结尾，lex test.l生成lex.yy.c，之后 cc lex.yy.c -ll生成a.out，再执行./a.out即可。<br/>
 </p></div>
 
 </div>
 
-<div id="outline-container-4" class="outline-2">
-<h2 id="sec-4"><span class="section-number-2">4</span> 例子</h2>
-<div class="outline-text-2" id="text-4">
+<div id="outline-container-8" class="outline-2">
+<h2 id="sec-8"><span class="section-number-2">8</span> 例子</h2>
+<div class="outline-text-2" id="text-8">
 
 <ul>
 <li>单词序列，如果一个单词第一个字母为元音则将它移动到单词尾并加上ay，否则只在单词后加ay<br/>

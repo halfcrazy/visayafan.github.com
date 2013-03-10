@@ -1,8 +1,7 @@
 #+OPTIONS: ^:{} _:{} num:t toc:t \n:t
-#+INCLUDE "../../template.org"
+#+INCLUDE "../../template-toc.org"
 #+SETUPFILE: "../../extension.org"
 #+title:Lyx 笔记 
-
 * Preamble
 {{{srcbegin(200)}}}
 #+begin_example
@@ -120,3 +119,39 @@ Your abstract goes here...
 \usepackage{geometry}
 \geometry{left=2.5cm,right=2.5cm,top=2.5cm,bottom=2.5cm}
 #+end_example
+* 源码高亮包
+  lstlisting可以实现源码高亮但颜色单调，可替代之的是minted。
+  具体参考：http://www.latexstudio.net/?p=596
+{{{left(5)}}}
+#+begin_src tex
+\documentclass{article}
+\usepackage{minted}
+\begin{document}
+\begin{minted}[linenos=true]{c++}
+#include<iostream>
+using namespace std;
+
+class A{};
+class B{};
+
+class C{
+public:
+     operator A(){}
+     operator B(){}
+};
+
+void f(A a){}
+void f(B b){}
+
+int main(int argc, char *argv[])
+{
+     C c;
+     f(c);
+     return 0;
+}
+\end{minted}
+\end{document}
+#+end_src
+{{{middle(5)}}}
+{{{lightbox(images/minted.png,450)}}} 
+{{{right}}}

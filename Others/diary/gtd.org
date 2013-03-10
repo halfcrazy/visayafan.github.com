@@ -82,3 +82,9 @@
   - [ ] myUnity: resize launcher icon size
   - [ ] change theme http://blog.csdn.net/pfanaya/article/details/7668826
 * TODO ubuntu包管理系统文章
+* DONE gnome-shell
+  CLOSED: [2013-03-09 六 07:44]
+  http://blog.ubuntusoft.com/ubuntu-12-04-%E6%94%B9%E9%80%A0%E6%8C%87%E5%8D%97.html
+  http://www.youtube.com/watch?v=_jdG6nUDawA
+
+* TODO Mac主题怎么进行窗口最大/小化快捷键

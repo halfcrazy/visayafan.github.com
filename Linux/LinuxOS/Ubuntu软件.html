@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+               "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-CN" xml:lang="zh-CN">
+<head>
+<title>Ubuntu软件</title>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
+<meta name="title" content="Ubuntu软件"/>
+<meta name="generator" content="Org-mode"/>
+<meta name="generated" content="2013-03-11 03:54:06 CST"/>
+<meta name="author" content="visayafan"/>
+<meta name="description" content=""/>
+<meta name="keywords" content=""/>
+
+
+
+</head>
+<body>
+
+
+<div id="content">
+<h1 class="title">Ubuntu软件</h1>
+
+
+<!-- <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"> </script> -->
+<link rel="stylesheet" type="text/css" href="../../Layout/CSS/bootstrap_old.css" />
+<link rel="stylesheet" type="text/css" href="../../Layout/CSS/style.css" />
+<script src="../../Layout/JS/jquery_1.7.1.js"></script>
+<script src="../../Layout/JS/bootstrap_old.js"></script>
+
+
+
+<div id="table-of-contents">
+<h2>目录</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#sec-1">1 kdirstat</a></li>
+<li><a href="#sec-2">2 温馨提示notify-send</a></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-1" class="outline-2">
+<h2 id="sec-1"><span class="section-number-2">1</span> kdirstat</h2>
+<div class="outline-text-2" id="text-1">
+
+<p>  可以以树形方式显示所有文件的硬盘使用情况，甚至可以显示出其在硬盘上的分布。<br/>
+  <code>sudo apt-get install kdirstat</code> 命令行调用 <code>k4dirstat</code> 。<br/>
+<link rel="stylesheet" href="../../Layout/CSS/jquery.lightbox-0.5.css" type="text/css" media="screen" /> <script type="text/javascript" src="../../Layout/JS/jquery.lightbox-0.5.js"></script> <center> <a class="lightbox" href="images/kdirstat.png"> <img class="lightbox " title="点击查看大图" src="images/kdirstat.png" width="400"> </a> </center> <script type="text/javascript"> $(function() {$('a.lightbox').lightBox();}); </script>   
+</p></div>
+
+</div>
+
+<div id="outline-container-2" class="outline-2">
+<h2 id="sec-2"><span class="section-number-2">2</span> 温馨提示notify-send</h2>
+<div class="outline-text-2" id="text-2">
+
+<p>notify-send是个实用的小工具，可以在桌面的右上角向用户发送提醒，此工具再配合 crontab 命令便可实现定时向用户发送提醒。<br/>
+安装：sudo apt-get install libnotify-bin<br/>
+使用：notify-send -i icon目录 -t 提示显示的时长 "提醒内容"<br/>
+可以写在脚本中再配合 crontab 命令来定时发送提醒。<br/>
+crontab 参考：<a href="http://blog.csdn.net/tianlesoftware/article/details/5315039">http://blog.csdn.net/tianlesoftware/article/details/5315039</a><br/>
+</p>
+</div>
+</div>
+</div>
+
+</body>
+</html>
