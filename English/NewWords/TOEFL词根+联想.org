@@ -198,3 +198,68 @@ Be careful to articulate your words so that everyone in the room can understand 
    blend the ingredients
 ** blip
    雷达上的尖峰
+* List4
+** blizzard
+   a storm with dry, driving snow, strong wind and intense cold. 暴风雪
+   联想：bazaar
+   <<The Cathedral And The Bazaar>> 大教堂和集市
+** blossom
+   v 开花/兴旺
+   n 花/开花期
+   同义词：bloom 
+** bog
+   n 沼泽
+   v 陷于沼泽
+** bony
+   very thin 瘦骨嶙峋的
+** boulder
+   a large smooth mass of rock 大石头
+** brittle
+   fragile 易碎的
+   loacking warmth and generosity of spirit 冷漠的
+** brochure
+   pamphlet, booklet 小册子
+** buckle
+   n 皮带扣
+   v 扣住
+** bulk
+   n majority 大部分/体积/容量
+   v 增大体积/使显得重要
+** bureau
+   局/署, 官僚
+   bureaucrat 官僚主义者
+   bureaucratic 官僚主义的
+   bureaucracy 官僚主义
+** burgeon
+   bloom flourish 迅速增长
+   发芽
+** cactus
+   仙人掌
+** calibration
+   calibrate 测量口径/调整
+   calibration 标度/刻度
+** camouflage
+   disguise hide 掩饰/伪装
+** canvas
+   帆布/画布
+** canopy
+   遮篷
+** canyon
+   峡谷
+** capillary
+   毛细血管
+   vessel 血管
+** cardiac
+   心脏的/心脏病的
+   cardiac rhythm 心律
+   cardiac failure 心力衰竭
+** cardinal
+   adj main essential 主要的/基本的
+       vivid red 深红色的
+   n 红衣主教
+   cardinal number 基数
+** carnivore
+   食肉动物
+   同义词：predator 捕食者/食肉动物
+** carp
+   鲤鱼

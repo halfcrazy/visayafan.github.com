@@ -1,0 +1,35 @@
+#+OPTIONS: ^:{} _:{} num:t toc:t \n:t
+#+INCLUDE "../../template.org"
+#+SETUPFILE: "../../extension.org"
+#+title:GCC源码剖析[1]
+
+* trailing array idiom
+  也叫struct hack，是一种比较老的结构体技巧，利用一个包含长度和开始指针的结构休来实现变长数组。
+#+begin_example
+#include <stdio.h>
+
+typedef struct Vector
+{
+     int len;
+     int elems[];
+}Vector, *pVector;
+
+int main(int argc, char *argv[])
+{
+     pVector pv=(pVector)malloc(sizeof(Vector)+100*sizeof(int));
+     int i=0;
+     for(i=0; i<10; i++)
+          pv->elems[i]=i;       //访问起来比较方便
+     pv->len=10;
+     
+}
+#+end_example
+  C99里有flexible array，由于在C99里可以声明数组长度为0的数组，所以没有必要在结构体的数组中声明大小为1.
+#+begin_src c
+typedef struct Vector
+{
+     int len;
+     char elems[];
+}Vector, *pVector;
+#+end_src
+  
