@@ -16,3 +16,5 @@
 * ubuntu-tweak
   安装软件+清道夫
 
+* goldendict
+  Ubuntu下非常好用的一款字典，不过需要自己找离线字典。

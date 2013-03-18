@@ -1,0 +1,46 @@
+#+OPTIONS: ^:{} _:{} num:t toc:t \n:t
+#+INCLUDE "../../template.org"
+#+SETUPFILE: "../../extension.org"
+#+title:GCC源码剖析[0]
+
+* trailing array idiom
+  也叫struct hack，是一种比较老的结构体技巧，利用一个包含长度和开始指针的结构休来实现变长数组。
+#+begin_example
+#include <stdio.h>
+
+typedef struct Vector
+{
+     int len;
+     int elems[];
+}Vector, *pVector;
+
+int main(int argc, char *argv[])
+{
+     pVector pv=(pVector)malloc(sizeof(Vector)+100*sizeof(int));
+     int i=0;
+     for(i=0; i<10; i++)
+          pv->elems[i]=i;       //访问起来比较方便
+     pv->len=10;
+     
+}
+#+end_example
+  C99里有flexible array，由于在C99里可以声明数组长度为0的数组，所以没有必要在结构体的数组中声明大小为1.
+#+begin_src c
+typedef struct Vector
+{
+     int len;
+     char elems[];
+}Vector, *pVector;
+#+end_src
+  
+* alloca
+  同malloc一样，都可以动态分配内在，唯一不同的是alloca是在栈上分配，当离开其作用域的时候由于栈指针恢复故其空间马上会释放，而malloc是在堆上分配，如果没有手动用free来释放，即使离开作用域空间也照样存在。
+* xmalloc
+  与malloc的区别在于：内在分配失败时malloc返回值为NULL的指针，而xmalloc会调用abort结束程序。
+  xmalloc非标准函数。
+* strdup
+  内部调用malloc分配内存并拷贝参数中的字符串到新分配内存中，当拷贝的字符串不需要时必须用free释放否则造成内存泄露。
+* 链接收藏
+  1. GCC-3.4.6源代码学习笔记 http://blog.csdn.net/wuhui_gdnt/article/details/5314634
+  2. GNU C Compiler Internals (Wikibook) http://en.wikibooks.org/wiki/GNU_C_Compiler_Internals/GCC_4.1
+  3. Collected Papers/Sites on Standards, Compilers, Optimization, Etc. http://gcc.gnu.org/readings.html

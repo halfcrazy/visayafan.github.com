@@ -1,0 +1,57 @@
+#+OPTIONS: ^:{} num:t toc:t \n:t
+#+INCLUDE "../../template.org"
+#+SETUPFILE: "../../extension.org"
+#+MATHJAX: align:"center" mathml:t path:"../../Layout/JS/MathJax/MathJax.js"
+#+title:Kruskal算法
+
+Kruskal算法是最有效的最小生成树算法之一。
+
+*其基本思想是：* 从权最小的边开始逐渐搭建生成树，设某一时刻已经选择的 $n-1$ 条边为 $e_k (k=1,2...n-1)$ 接下来选择的边 $e_n$ 是使 $e_1...e_n$ 无圈的权值最小的边。
+
+*下面证明此算法生成的生成树是最小的：*
+——反证：设由上面算法生成的生成树 $T_0=\left\{e_1...e_n\right\}$ 不是最小的， $T$ 是任意给定的一个最小生成树，设 $f(T)$ 是 ${e_1...e_n}$ 中不在 $T$ 中的最小下标，即：
+$$f\left(T\right)=\min_{i}\left\{ e_{i}|e_{i}\in\left\{ e_{1}..e_{n}\right\}\ and\ e_i\notin T\right\} $$
+设 $T_1$ 是一个最小生成树， $f(T_1)=k$ ，即 $e_1...e_{k-1} \in T_1, e_k \notin T_1$ ，将 $e_k$ 加入到 $T_1$ 中则 $T_1$ 必存在圈（因为 $T_1$ 是最小生成树，由定义可知不能再加入任何边否则会出现圈），设此圈中不同于 $e_k$ 的另一边 $e_k'$ ， $e_1...e_{k-1}, e_k'$ 不存在圈，但 $e_k$ 是使 $e_1...e_{k-1}$ 不存在圈的权值最小的边，所以 $e_k$ 的权值比 $e_k'$ 小，在 $T_1$ 中把 $e_k'$ 替换成 $e_k$ 形成一个比 $T_1$ 总权值小的生成树，与 $T_1$ 是最小生成树矛盾，故 $T_0$ 是最小生成树. $\blacksquare$ 
+
+具体实现中判断无圈用的是 *不相交集合（并查集）* ，若两个点的祖先是同一个结点则表明如果这两点之间的边加进去肯定会形成圈，所以要将它舍去，继续查找下一个权值最小的边。
+
+
+*并查集的实现*
+用数组father来记录结点的父结点，数组rank表示结点的高度和规模（注意并不只是表示高度，之后在find_set函数里看到虽然改变了某个结点的高度但并没有更新其rank值）。
+每个集合都有一个代表结点（祖宗结点），find_set返回指定结点的祖宗结点，如果find_set(i)=find_set(j)则表示i和j在同一个集合里。当集合变成一条链时，此时时间复杂度为 $O(n)$ ，为了避免这种情况下的时间耗费，可以采用路径压缩方法，即递归查找过程中，将查找结点到祖宗结点间的结点的father值全部修改为祖宗结点。这里的实现很有技巧性。
+{{{lightbox(find_set.png,600)}}} 
+
+合并集合时将rank值小的合并到rank值大的，如果rank值相同则将合并后的集合的祖宗rank值加1.
+--------
+下图中的蓝线构成最小生成树。
+{{{lightbox(kruskal.png,600)}}} 
+--------
+参考：http://www.slyar.com/blog/kruskal-disjoint-sets-c.html
+#+begin_src c++
+#+include "kruskal.cc"
+#+end_src
+输入:
+#+begin_example
+11
+A B 7
+A D 5
+B C 8
+B D 9
+B E 7
+C E 5
+D E 15
+D F 6
+E F 8
+E G 9
+F G 11
+#+end_example
+输出：
+#+begin_example
+A-D 5
+C-E 5
+D-F 6
+A-B 7
+B-E 7
+E-G 9
+39
+#+end_example

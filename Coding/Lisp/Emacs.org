@@ -299,3 +299,5 @@ d<script type="text/javascript"> $(function() {$('a.lightbox').lightBox();}); </
   自动生成的图片感觉有些问题，可以安装 graphviz-dot-mode，在生成的dot文件上 C-c c编译 C-c p生成对应的图片。
 * 颜色
   =M-x list-color-display= 查看颜色及对应的RGB值
+* find-name-dired
+  在指定目录下递归查找指定名文件。

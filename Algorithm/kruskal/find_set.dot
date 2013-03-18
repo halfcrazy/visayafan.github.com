@@ -1,0 +1,35 @@
+digraph G{
+    subgraph clusterA{
+        rankdir=TB
+        edge[dir=back];
+        D->C->B->A->AA;
+        B->BB;
+        C->CC;
+        D->DD;
+        DD[label="Others D"]
+        CC[label="Others C"]
+        BB[label="Others B"]
+        AA[label="Others A"]
+        label="查找A前"
+    }
+    subgraph clusterB{
+        rankdir=TB
+        edge[dir=back];
+        d->{a b c};
+        a->aa;
+        b->bb;
+        c->cc;
+        d->dd;
+        a[label=A]
+        b[label=B]
+        c[label=C]
+        d[label=D]
+        dd[label="Others D"]
+        cc[label="Others C"]
+        bb[label="Others B"]
+        aa[label="Others A"]
+        label="查找A后"
+    }
+}
+
+

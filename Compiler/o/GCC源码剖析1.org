@@ -2,34 +2,215 @@
 #+INCLUDE "../../template.org"
 #+SETUPFILE: "../../extension.org"
 #+title:GCC源码剖析[1]
+* tree
+  每个tree结点都有一个code字段定义了此tree结点代表的类型，所有的类型在gcc/type.def文件中定义。
+  宏TREE_CODE(node)返回指定结点对应code。
+  拥有不同code的tree被分成类。
 
-* trailing array idiom
-  也叫struct hack，是一种比较老的结构体技巧，利用一个包含长度和开始指针的结构休来实现变长数组。
-#+begin_example
-#include <stdio.h>
-
-typedef struct Vector
-{
-     int len;
-     int elems[];
-}Vector, *pVector;
-
-int main(int argc, char *argv[])
-{
-     pVector pv=(pVector)malloc(sizeof(Vector)+100*sizeof(int));
-     int i=0;
-     for(i=0; i<10; i++)
-          pv->elems[i]=i;       //访问起来比较方便
-     pv->len=10;
-     
-}
-#+end_example
-  C99里有flexible array，由于在C99里可以声明数组长度为0的数组，所以没有必要在结构体的数组中声明大小为1.
+  首先看tree结点分类：
 #+begin_src c
-typedef struct Vector
-{
-     int len;
-     char elems[];
-}Vector, *pVector;
+enum tree_code_class {
+  tcc_exceptional, /* An exceptional code (fits no category).  */
+  tcc_constant,    /* A constant.  */
+  /* Order of tcc_type and tcc_declaration is important.  */
+  tcc_type,        /* A type object code.  */
+  tcc_declaration, /* A declaration (also serving as variable refs).  */
+  tcc_reference,   /* A reference to storage.  */
+  tcc_comparison,  /* A comparison expression.  */
+  tcc_unary,       /* A unary arithmetic expression.  */
+  tcc_binary,      /* A binary arithmetic expression.  */
+  tcc_statement,   /* A statement expression, which have side effects
+		      but usually no interesting value.  */
+  tcc_vl_exp,      /* A function call or other expression with a
+		      variable-length operand vector.  */
+  tcc_expression   /* Any other expression.  */
+};
 #+end_src
-  
+
+  tree.def 中定义tree的code值：
+#+begin_src c
+DEFTREECODE (IDENTIFIER_NODE, "identifier_node", tcc_exceptional, 0)
+#+end_src
+  其中DEFTREECODE宏：
+#+begin_src c
+#define DEFTREECODE(SYM, STRING, TYPE, NARGS)   			    \
+  (unsigned char)							    \
+  ((TYPE) == tcc_unary ? GIMPLE_UNARY_RHS				    \
+   : ((TYPE) == tcc_binary						    \
+      || (TYPE) == tcc_comparison) ? GIMPLE_BINARY_RHS   		    \
+   : ((TYPE) == tcc_constant						    \
+      || (TYPE) == tcc_declaration					    \
+      || (TYPE) == tcc_reference) ? GIMPLE_SINGLE_RHS			    \
+   : ((SYM) == TRUTH_AND_EXPR						    \
+      || (SYM) == TRUTH_OR_EXPR						    \
+      || (SYM) == TRUTH_XOR_EXPR) ? GIMPLE_BINARY_RHS			    \
+   : (SYM) == TRUTH_NOT_EXPR ? GIMPLE_UNARY_RHS				    \
+   : ((SYM) == COND_EXPR						    \
+      || (SYM) == WIDEN_MULT_PLUS_EXPR					    \
+      || (SYM) == WIDEN_MULT_MINUS_EXPR					    \
+      || (SYM) == DOT_PROD_EXPR						    \
+      || (SYM) == REALIGN_LOAD_EXPR					    \
+      || (SYM) == VEC_COND_EXPR						    \
+      || (SYM) == VEC_PERM_EXPR                                             \
+      || (SYM) == FMA_EXPR) ? GIMPLE_TERNARY_RHS			    \
+   : ((SYM) == CONSTRUCTOR						    \
+      || (SYM) == OBJ_TYPE_REF						    \
+      || (SYM) == ASSERT_EXPR						    \
+      || (SYM) == ADDR_EXPR						    \
+      || (SYM) == WITH_SIZE_EXPR					    \
+      || (SYM) == SSA_NAME) ? GIMPLE_SINGLE_RHS				    \
+   : GIMPLE_INVALID_RHS),
+#+end_src
+  分别将TYPE与/SYM与tree_code_class中的值比较。
+#+begin_src c
+enum gimple_rhs_class
+{
+  GIMPLE_INVALID_RHS,	/* The expression cannot be used on the RHS.  */
+  GIMPLE_TERNARY_RHS,	/* The expression is a ternary operation.  */
+  GIMPLE_BINARY_RHS,	/* The expression is a binary operation.  */
+  GIMPLE_UNARY_RHS,	/* The expression is a unary operation.  */
+  GIMPLE_SINGLE_RHS	/* The expression is a single object (an SSA
+			   name, a _DECL, a _REF, etc.  */
+};
+#+end_src
+
+  gcc/treee.h
+  tree_base, tree_typed, tree_common 
+#+begin_src c
+struct GTY(()) tree_base {
+  ENUM_BITFIELD(tree_code) code : 16;
+
+  unsigned side_effects_flag : 1;
+  unsigned constant_flag : 1;
+  unsigned addressable_flag : 1;
+  unsigned volatile_flag : 1;
+  unsigned readonly_flag : 1;
+  unsigned unsigned_flag : 1;
+  unsigned asm_written_flag: 1;
+  unsigned nowarning_flag : 1;
+
+  unsigned used_flag : 1;
+  unsigned nothrow_flag : 1;
+  unsigned static_flag : 1;
+  unsigned public_flag : 1;
+  unsigned private_flag : 1;
+  unsigned protected_flag : 1;
+  unsigned deprecated_flag : 1;
+  unsigned saturating_flag : 1;
+
+  unsigned default_def_flag : 1;
+  unsigned lang_flag_0 : 1;
+  unsigned lang_flag_1 : 1;
+  unsigned lang_flag_2 : 1;
+  unsigned lang_flag_3 : 1;
+  unsigned lang_flag_4 : 1;
+  unsigned lang_flag_5 : 1;
+  unsigned lang_flag_6 : 1;
+
+  unsigned visited : 1;
+  unsigned packed_flag : 1;
+  unsigned user_align : 1;
+  unsigned nameless_flag : 1;
+
+  unsigned spare : 12;
+
+  /* This field is only used with type nodes; the only reason it is present
+     in tree_base instead of tree_type is to save space.  The size of the
+     field must be large enough to hold addr_space_t values.  */
+  unsigned address_space : 8;
+};
+
+struct GTY(()) tree_typed {
+  struct tree_base base;
+  tree type;
+};
+
+struct GTY(()) tree_common {
+  struct tree_typed typed;
+  tree chain;
+};
+#+end_src
+* gcc初始化
+  初始化包括：命令行选项的解析、初始化后端、创建全局作用域、初始化内置数据类型和函数。
+
+  gcc/toplev.c 包含 toplev_main函数及定义编译器状态的全局变量。
+#+begin_example
+  toplev_main用来处理命令行选项、初始化编译器、编译文件、释放已分配资源。
+  首先调用了decode_options函数：解析命令行选项并设置编译器内部相应变量。
+  之后调用了do_compile函数：初始化编译器并编译输入文件。
+          do_compile调用了backend_init函数：初始化编译器后端。
+                backend_init调用了init_emit_once函数：创建一些被所有函数共享的RTL对象。
+          之后调用了lang_dependent_init函数：用来做语言依赖的初始化工作。
+                比如C会调用c_objc_common_init来进行C语言的内置数据类型、全局作用域和其它任务的初始化，
+                        它会调用c_common_nodes_and_builtins来建立tree结点的内置函数(在gcc/builtin-types.def中定义)。
+          之后调用了compile_file：编译整个翻译单元，输出汇编文件和各种调试dumps。
+                compile_file又调用了parse_file，对C来说是c_common_parse_file
+                        调用了c_finish_options来处理-D, -U, -A（分别对应#define, #undef, #assert）, -i宏和第1个-include。
+#+end_example
+
+* preprocessor
+  预处理用来处理类似#include/#ifdef/#undef之类的关键字。
+  这些函数在libcp/directive.c中，以do_开头的函数，例如：
+  =do_include/do_include_next/do_undef/do_define/do_import/do_warning/do_pragma/do_ifdef/do_ifndef/do_if/do_else/do_endif/do_assert/do_unassert=
+** cpp_get_token
+   =const cpp_token * cpp_get_token (cpp_reader *pfile)=
+   cpp_get_token用来处理预处理关键字
+*** cpp_token
+#+begin_src c
+struct cpp_token {
+  __extension__ enum cpp_ttype type : 8;
+};
+#+end_src
+  结构体cpp_token中只一个大小为8bit的成员type，其类型为enum cpp_ttype.
+#+begin_src c
+enum cpp_ttype
+{
+  TTYPE_TABLE
+  N_TTYPES,
+
+  /* Positions in the table.  */
+  CPP_LAST_EQ        = CPP_LSHIFT,
+  CPP_FIRST_DIGRAPH  = CPP_HASH,
+  CPP_LAST_PUNCTUATOR= CPP_ATSIGN,
+  CPP_LAST_CPP_OP    = CPP_LESS_EQ
+};
+#+end_src
+  宏TTYPE_TABLE宏类似：
+#+begin_src c
+#define TTYPE_TABLE							\
+  OP(EQ,		"=")						\
+  OP(NOT,		"!")						\
+  OP(GREATER,		">")	/* compare */				\
+  OP(LESS,		"<")						\
+  OP(PLUS,		"+")	/* math */				\
+#+end_src
+  OP宏为
+#+begin_example
+ #define OP(e, s) CPP_ ## e,
+#+end_example
+  其实OP(EQ, "=")中的"="是个注释，因为没有被用到，其作用就是表明EQ代表着什么。
+  cpp_ttype展开就是：
+#+begin_src c
+enum cpp_ttype{
+  CPP_EQ,
+  CPP_NOT,
+  CPP_GREATER,
+  ......
+  N_TTYPES,
+  /* Positions in the table.  */
+  CPP_LAST_EQ        = CPP_LSHIFT,
+  CPP_FIRST_DIGRAPH  = CPP_HASH,
+  CPP_LAST_PUNCTUATOR= CPP_ATSIGN,
+  CPP_LAST_CPP_OP    = CPP_LESS_EQ
+};
+#+end_src
+  其中的N_TTYPES表示记法单元token的个数。
+*** cpp_reader
+** do_include_common
+  =static void do_include_common (cpp_reader *, enum include_type);=
+  遇到#include/#include_next/#import关键字.
+#+begin_src c
+enum include_type {IT_INCLUDE, IT_INCLUDE_NEXT, IT_IMPORT, IT_CMDLINE};
+#+end_src
+** do_define
+   处理#define指令

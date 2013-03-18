@@ -11,3 +11,6 @@
 <div id="disqus_thread">
 </div>
 #+END_HTML
+
+** @filename
+   可以把选项放到文件中，GCC会将文件中的内容展开加到选项中。比如:filename中内容为：-o test test.c，此时执行:gcc @filename等价于执行gcc -o test test.c

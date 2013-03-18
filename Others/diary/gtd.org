@@ -89,3 +89,5 @@
 
 * TODO continue reading
   http://en.wikibooks.org/wiki/GNU_C_Compiler_Internals/GNU_C_Compiler_Architecture_4_1#GCC_Initialization
+* TODO 并查集/Kruskal算法实现
+  解决POJ上一道Kruskal题目。

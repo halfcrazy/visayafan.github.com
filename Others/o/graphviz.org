@@ -28,6 +28,7 @@
   14. label 对象上的文字,如果shape=record则label[[http://www.graphviz.org/content/node-shapes#record][另有含义]].
   15. nodesep 指定两个结点的最小间距
   16. splines 表[[http://www.graphviz.org/content/attrs#dsplines][图连线方式]]
+  17. lhead, ltail 可以连接两个子图
 * 例子
 [[http://www.graphviz.org/Gallery.php][官网例子]]（点击图片查看代码）
 --------
@@ -170,4 +171,30 @@ digraph finite_state_machine {
 {{{middle(8)}}}
 {{{lightbox(images/finite.png,650)}}} 
 {{{right}}}
+--------
+{{{left(4)}}}
+#+begin_example
+digraph G {
+    compound=true;
+    subgraph cluster0 {
+        a -> b;
+        a -> c;
+        b -> d;
+        c -> d;
+    }
+    subgraph cluster1 {
+        e -> g;
+        e -> f;
+    }
+    b -> f [lhead=cluster1];
+    d -> e;
+    c -> g [ltail=cluster0,
+            lhead=cluster1];
+    c -> e [ltail=cluster0];
+    d -> h;
+}
+#+end_example
+{{{middle(2)}}}
+{{{middle(4)}}}
+{{{lightbox(images/lheadltail.png,250)}}} 
 --------

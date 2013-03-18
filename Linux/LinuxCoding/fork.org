@@ -1,14 +1,11 @@
-#+OPTIONS: num:t toc:t \n:nil
-#+include "../../template.org"
+#+OPTIONS: ^:{} _:{} num:t toc:t \n:t
+#+INCLUDE "../../template.org"
+#+SETUPFILE: "../../extension.org"
 #+title:一道关于fork的面试题
 此博文参考[[http://coolshell.cn/articles/7965.html][ CoolShell]] ，通过对增加循环次数来更加深入理解fork并利用推算总结一般规律。
 
   问下面程序一共输出多少个"-"?
 
-
-
-
-  
 #+begin_src c 
 #include <stdio.h>
 #include <sys/types.h>

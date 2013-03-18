@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+               "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-CN" xml:lang="zh-CN">
+<head>
+<title>Kruskal算法</title>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
+<meta name="title" content="Kruskal算法"/>
+<meta name="generator" content="Org-mode"/>
+<meta name="generated" content="2013-03-19 03:54:45 CST"/>
+<meta name="author" content="visayafan"/>
+<meta name="description" content=""/>
+<meta name="keywords" content=""/>
+
+
+<script type="text/javascript" src="../../Layout/JS/MathJax/MathJax.js">
+<!--/*--><![CDATA[/*><!--*/
+    MathJax.Hub.Config({
+        // Only one of the two following lines, depending on user settings
+        // First allows browser-native MathML display, second forces HTML/CSS
+            config: ["MMLorHTML.js"], jax: ["input/TeX"],
+        //  jax: ["input/TeX", "output/HTML-CSS"],
+        extensions: ["tex2jax.js","TeX/AMSmath.js","TeX/AMSsymbols.js",
+                     "TeX/noUndefined.js"],
+        tex2jax: {
+            inlineMath: [ ["\\(","\\)"] ],
+            displayMath: [ ['$$','$$'], ["\\[","\\]"], ["\\begin{displaymath}","\\end{displaymath}"] ],
+            skipTags: ["script","noscript","style","textarea","pre","code"],
+            ignoreClass: "tex2jax_ignore",
+            processEscapes: false,
+            processEnvironments: true,
+            preview: "TeX"
+        },
+        showProcessingMessages: true,
+        displayAlign: "center",
+        displayIndent: "2em",
+
+        "HTML-CSS": {
+             scale: 100,
+             availableFonts: ["STIX","TeX"],
+             preferredFont: "TeX",
+             webFont: "TeX",
+             imageFont: "TeX",
+             showMathMenu: true,
+        },
+        MMLorHTML: {
+             prefer: {
+                 MSIE:    "MML",
+                 Firefox: "MML",
+                 Opera:   "HTML",
+                 other:   "HTML"
+             }
+        }
+    });
+/*]]>*///-->
+</script>
+</head>
+<body>
+
+
+<div id="content">
+<h1 class="title">Kruskal算法</h1>
+
+
+<!-- <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"> </script> -->
+<link rel="stylesheet" type="text/css" href="../../Layout/CSS/bootstrap_old.css" />
+<link rel="stylesheet" type="text/css" href="../../Layout/CSS/style.css" />
+<script src="../../Layout/JS/jquery_1.7.1.js"></script>
+<script src="../../Layout/JS/bootstrap_old.js"></script>
+
+
+<p>
+Kruskal算法是最有效的最小生成树算法之一。<br/>
+</p>
+<p>
+<b>其基本思想是：</b> 从权最小的边开始逐渐搭建生成树，设某一时刻已经选择的 \(n-1\) 条边为 \(e_k (k=1,2...n-1)\) 接下来选择的边 \(e_n\) 是使 \(e_1...e_n\) 无圈的权值最小的边。<br/>
+</p>
+<p>
+<b>下面证明此算法生成的生成树是最小的：</b><br/>
+——反证：设由上面算法生成的生成树 \(T_0=\left\{e_1...e_n\right\}\) 不是最小的， \(T\) 是任意给定的一个最小生成树，设 \(f(T)\) 是 \({e_1...e_n}\) 中不在 \(T\) 中的最小下标，即：<br/>
+$$f\left(T\right)=\min_{i}\left\{ e_{i}|e_{i}\in\left\{ e_{1}..e_{n}\right\}\ and\ e_i\notin T\right\} $$
+设 \(T_1\) 是一个最小生成树， \(f(T_1)=k\) ，即 \(e_1...e_{k-1} \in T_1, e_k \notin T_1\) ，将 \(e_k\) 加入到 \(T_1\) 中则 \(T_1\) 必存在圈（因为 \(T_1\) 是最小生成树，由定义可知不能再加入任何边否则会出现圈），设此圈中不同于 \(e_k\) 的另一边 \(e_k'\) ， \(e_1...e_{k-1}, e_k'\) 不存在圈，但 \(e_k\) 是使 \(e_1...e_{k-1}\) 不存在圈的权值最小的边，所以 \(e_k\) 的权值比 \(e_k'\) 小，在 \(T_1\) 中把 \(e_k'\) 替换成 \(e_k\) 形成一个比 \(T_1\) 总权值小的生成树，与 \(T_1\) 是最小生成树矛盾，故 \(T_0\) 是最小生成树. \(\blacksquare\) <br/>
+</p>
+<p>
+具体实现中判断无圈用的是 <b>不相交集合（并查集）</b> ，若两个点的祖先是同一个结点则表明如果这两点之间的边加进去肯定会形成圈，所以要将它舍去，继续查找下一个权值最小的边。<br/>
+</p>
+
+<p>
+<b>并查集的实现</b><br/>
+用数组father来记录结点的父结点，数组rank表示结点的高度和规模（注意并不只是表示高度，之后在find_set函数里看到虽然改变了某个结点的高度但并没有更新其rank值）。<br/>
+每个集合都有一个代表结点（祖宗结点），find_set返回指定结点的祖宗结点，如果find_set(i)=find_set(j)则表示i和j在同一个集合里。当集合变成一条链时，此时时间复杂度为 \(O(n)\) ，为了避免这种情况下的时间耗费，可以采用路径压缩方法，即递归查找过程中，将查找结点到祖宗结点间的结点的father值全部修改为祖宗结点。这里的实现很有技巧性。<br/>
+<link rel="stylesheet" href="../../Layout/CSS/jquery.lightbox-0.5.css" type="text/css" media="screen" /> <script type="text/javascript" src="../../Layout/JS/jquery.lightbox-0.5.js"></script> <center> <a class="lightbox" href="find_set.png"> <img class="lightbox " title="点击查看大图" src="find_set.png" width="600"> </a> </center> <script type="text/javascript"> $(function() {$('a.lightbox').lightBox();}); </script> 
+
+合并集合时将rank值小的合并到rank值大的，如果rank值相同则将合并后的集合的祖宗rank值加1.<br/>
+
+</p>
+<hr/>
+<p>
+下图中的蓝线构成最小生成树。<br/>
+<link rel="stylesheet" href="../../Layout/CSS/jquery.lightbox-0.5.css" type="text/css" media="screen" /> <script type="text/javascript" src="../../Layout/JS/jquery.lightbox-0.5.js"></script> <center> <a class="lightbox" href="kruskal.png"> <img class="lightbox " title="点击查看大图" src="kruskal.png" width="600"> </a> </center> <script type="text/javascript"> $(function() {$('a.lightbox').lightBox();}); </script> 
+
+</p>
+<hr/>
+<p>
+参考：<a href="http://www.slyar.com/blog/kruskal-disjoint-sets-c.html">http://www.slyar.com/blog/kruskal-disjoint-sets-c.html</a><br/>
+</p>
+
+
+<pre class="src src-c++"><span style="color: #483d8b;">#include</span> <span style="color: #8b2252;">&lt;iostream&gt;</span>
+<span style="color: #a020f0;">using</span> <span style="color: #a020f0;">namespace</span> <span style="color: #008b8b;">std</span>;
+
+<span style="color: #a020f0;">typedef</span> <span style="color: #a020f0;">struct</span>
+{
+     <span style="color: #228b22;">int</span> <span style="color: #a0522d;">x</span>,<span style="color: #a0522d;">y</span>;                   <span style="color: #b22222;">// </span><span style="color: #b22222;">vertex</span>
+     <span style="color: #228b22;">int</span> <span style="color: #a0522d;">w</span>;                     <span style="color: #b22222;">// </span><span style="color: #b22222;">weight</span>
+}<span style="color: #228b22;">edge</span>;
+
+<span style="color: #a020f0;">const</span> <span style="color: #228b22;">int</span> <span style="color: #a0522d;">MAX</span>=100;
+<span style="color: #228b22;">int</span> <span style="color: #a0522d;">Father</span>[MAX];
+<span style="color: #228b22;">int</span> <span style="color: #a0522d;">Rank</span>[MAX];
+
+<span style="color: #228b22;">void</span> <span style="color: #0000ff;">Make_Set</span>(<span style="color: #228b22;">int</span> <span style="color: #a0522d;">x</span>){
+     Father[x]=x;
+     Rank[x]=0;
+}
+<span style="color: #228b22;">int</span> <span style="color: #0000ff;">Find_Set</span>(<span style="color: #228b22;">int</span> <span style="color: #a0522d;">x</span>){
+     <span style="color: #a020f0;">if</span>(x!=Father[x])
+          Father[x]=Find_Set(Father[x]);
+     <span style="color: #a020f0;">return</span> Father[x];
+}
+<span style="color: #228b22;">void</span> <span style="color: #0000ff;">Union_Set</span>(<span style="color: #228b22;">int</span> <span style="color: #a0522d;">x</span>, <span style="color: #228b22;">int</span> <span style="color: #a0522d;">y</span>){
+     <span style="color: #228b22;">int</span> <span style="color: #a0522d;">xroot</span>=Find_Set(x);
+     <span style="color: #228b22;">int</span> <span style="color: #a0522d;">yroot</span>=Find_Set(y);
+     <span style="color: #a020f0;">if</span>(xroot==yroot)
+          <span style="color: #a020f0;">return</span>;
+     <span style="color: #a020f0;">if</span>(Rank[xroot]&lt;Rank[yroot])
+          Father[xroot]=yroot;
+     <span style="color: #a020f0;">else</span>{
+          <span style="color: #a020f0;">if</span>(Rank[xroot]==Rank[yroot])
+               ++Rank[xroot];
+          Father[yroot]=xroot;
+     }
+}
+
+<span style="color: #228b22;">int</span> <span style="color: #0000ff;">cmp</span>(<span style="color: #a020f0;">const</span> <span style="color: #228b22;">void</span>* <span style="color: #a0522d;">a</span>, <span style="color: #a020f0;">const</span> <span style="color: #228b22;">void</span>* <span style="color: #a0522d;">b</span>){
+     <span style="color: #a020f0;">return</span> ((<span style="color: #228b22;">edge</span>*)a)-&gt;w-((<span style="color: #228b22;">edge</span>*)b)-&gt;w;
+}
+
+<span style="color: #228b22;">int</span> <span style="color: #0000ff;">main</span>(<span style="color: #228b22;">int</span> <span style="color: #a0522d;">argc</span>, <span style="color: #228b22;">char</span> *<span style="color: #a0522d;">argv</span>[])
+{
+     <span style="color: #228b22;">edge</span> <span style="color: #a0522d;">e</span>[MAX];
+     <span style="color: #228b22;">int</span> <span style="color: #a0522d;">num</span>,<span style="color: #a0522d;">weight</span>,<span style="color: #a0522d;">sum</span>=0;
+     <span style="color: #228b22;">char</span> <span style="color: #a0522d;">cx</span>,<span style="color: #a0522d;">cy</span>;
+     cin&gt;&gt;num;
+     <span style="color: #a020f0;">for</span> (<span style="color: #228b22;">int</span> <span style="color: #a0522d;">i</span>=0; i&lt;num; ++i){
+          cin&gt;&gt;cx&gt;&gt;cy&gt;&gt;weight;
+          e[i].x=cx-<span style="color: #8b2252;">'A'</span>;
+          e[i].y=cy-<span style="color: #8b2252;">'A'</span>;
+          e[i].w=weight;
+          Make_Set(i);
+     }
+     qsort(e, num, <span style="color: #a020f0;">sizeof</span>(edge), cmp);
+     <span style="color: #a020f0;">for</span> (<span style="color: #228b22;">int</span> <span style="color: #a0522d;">i</span> = 0; i&lt;num; ++i){
+          <span style="color: #228b22;">int</span> <span style="color: #a0522d;">x</span>=Find_Set(e[i].x);
+          <span style="color: #228b22;">int</span> <span style="color: #a0522d;">y</span>=Find_Set(e[i].y);
+          <span style="color: #a020f0;">if</span>(x!=y){
+               Union_Set(x,y);
+               sum+=e[i].w;
+               cout&lt;&lt;(<span style="color: #228b22;">char</span>)(e[i].x+<span style="color: #8b2252;">'A'</span>)&lt;&lt;<span style="color: #8b2252;">"-"</span>&lt;&lt;(<span style="color: #228b22;">char</span>)(e[i].y+<span style="color: #8b2252;">'A'</span>)&lt;&lt;<span style="color: #8b2252;">" "</span>&lt;&lt;e[i].w&lt;&lt;endl;
+          }
+     }
+     cout&lt;&lt;sum&lt;&lt;endl;
+     <span style="color: #a020f0;">return</span> 0;
+}
+
+</pre>
+
+<p>
+输入:<br/>
+</p>
+
+
+<pre class="example">11
+A B 7
+A D 5
+B C 8
+B D 9
+B E 7
+C E 5
+D E 15
+D F 6
+E F 8
+E G 9
+F G 11
+</pre>
+
+<p>
+输出：<br/>
+</p>
+
+
+<pre class="example">A-D 5
+C-E 5
+D-F 6
+A-B 7
+B-E 7
+E-G 9
+39
+</pre>
+
+</div>
+
+</body>
+</html>

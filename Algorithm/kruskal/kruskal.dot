@@ -1,0 +1,16 @@
+graph G{
+    rankdir=LR;
+    size="6,6";
+    A--B[label=7 color=blue style=bold];
+    A--D[label=5 color=blue style=bold];
+    B--C[label=8];
+    B--E[label=7 color=blue style=bold];
+    C--E[label=5 color=blue style=bold];
+    D--E[label=15];
+    D--F[label=6 color=blue style=bold];
+    E--F[label=8];
+    E--G[label=9 color=blue style=bold];
+    F--G[label=11];
+}
+
+
