@@ -266,3 +266,11 @@ Comment=
      #+end_example
   2. 原先自定义的快捷键失效，需重新定义。
   3. 快捷键Ctrl+F10浏览和查找最近的event.
+* 禁止Ubuntu开机网络配置
+  http://www.codewhirl.com/2011/10/ubuntu-11-10-waiting-up-to-60-more-seconds-for-network-configuration/
+  
+  Ubuntu12.04在开机时会检查网络，如果网络不通则会进行配置，在此期间会等待2分钟。
+
+  如果用户确信不需要进行网络配置则可以通过修改配置文件的方法禁止这2分钟的检查从而加快开机速度。
+  
+  修改/etc/init/failsafe.conf，注释掉 sleep 40和 sleep 59两条语句。

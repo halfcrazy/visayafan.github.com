@@ -18,3 +18,13 @@
 
 * goldendict
   Ubuntu下非常好用的一款字典，不过需要自己找离线字典。
+  官网还提供一个wordnet用来提供查词时联想。
+* bootchart
+  可以查看开机启动过程中各个进程占用的时间及CPU使用情况，对于诊断开机速度慢进程有帮助。
+* bum
+  Boot-Up Manager 可以查看/关闭开机启动设备（不要轻易动）。
+* mindomo desktop
+  mindomo是一款非常不错的思维软件，类似于Win下的亿图。它有在线版本，可以通过注册帐户来实现本地与远程的同步，但免费版本最多只能保存3个Map。
+  需要事先安装Adobe Air，下载地址http://airdownload.adobe.com/air/lin/download/2.6/adobeair.deb
+* graphviz
+  画图工具，画某些图，例如二叉树等非常方便。

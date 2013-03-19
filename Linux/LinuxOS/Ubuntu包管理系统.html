@@ -7,7 +7,7 @@
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
 <meta name="title" content="Ubuntu包管理系统"/>
 <meta name="generator" content="Org-mode"/>
-<meta name="generated" content="2013-03-11 04:33:50 CST"/>
+<meta name="generated" content="2013-03-19 23:37:01 CST"/>
 <meta name="author" content="visayafan"/>
 <meta name="description" content=""/>
 <meta name="keywords" content=""/>
@@ -24,27 +24,107 @@
 
 <!-- <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"> </script> -->
 <link rel="stylesheet" type="text/css" href="../../Layout/CSS/bootstrap_old.css" />
-<link rel="stylesheet" type="text/css" href="../../Layout/CSS/style.css" />
+<link rel="stylesheet" type="text/css" href="../../Layout/CSS/too_many_toc.css" />
 <script src="../../Layout/JS/jquery_1.7.1.js"></script>
 <script src="../../Layout/JS/bootstrap_old.js"></script>
+
 
 
 <div id="table-of-contents">
 <h2>目录</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#sec-1">1 dpkg &ndash;get-selections</a></li>
-<li><a href="#sec-2">2 update-alternatives</a></li>
-<li><a href="#sec-3">3 apt-cache search</a></li>
-<li><a href="#sec-4">4 apt-cache pkgnames</a></li>
-<li><a href="#sec-5">5 apt-get purge packagename</a></li>
+<li><a href="#sec-1">1 简介</a></li>
+<li><a href="#sec-2">2 dpkg &ndash;get-selections</a></li>
+<li><a href="#sec-3">3 dpkg -l pattern</a></li>
+<li><a href="#sec-4">4 dpkg -L package-name</a></li>
+<li><a href="#sec-5">5 dpkg -s package-name</a></li>
+<li><a href="#sec-6">6 dpkg -S pattern</a></li>
+<li><a href="#sec-7">7 dpkg -p package-name</a></li>
+<li><a href="#sec-8">8 dpkg &ndash;info name.deb</a></li>
+<li><a href="#sec-9">9 apt-cache search regexp</a></li>
+<li><a href="#sec-10">10 apt-cache pkgnames</a></li>
+<li><a href="#sec-11">11 apt-get purge packagename</a></li>
+<li><a href="#sec-12">12 apt-get source packagename</a></li>
+<li><a href="#sec-13">13 update-alternatives</a></li>
+<li><a href="#sec-14">14 Ubuntu 12.04 源备份</a></li>
 </ul>
 </div>
 </div>
 
 <div id="outline-container-1" class="outline-2">
-<h2 id="sec-1"><span class="section-number-2">1</span> dpkg &ndash;get-selections</h2>
+<h2 id="sec-1"><span class="section-number-2">1</span> 简介</h2>
 <div class="outline-text-2" id="text-1">
+
+<p>现在的系统为何要用软件包管理系统呢？<br/>
+</p>
+<p>
+要回答这些问题，需要了解现在的软件开发都非常讲究可重用性，也就是说一个人写的功能代码可能会以库函数的形式发布供别人使用。最常用的就是glic函数库，它提供了常见的C语言标准库函数。由于这种代码的共享性，就造成成了软件之间的依赖关系即安装本软件前需要安装，为其提供部分功能代码的其它软件。对于现在的很多软件这种依赖关系非常复杂，因为这种关系存在递归性和版本差别。为了解决这种复杂的依赖关系，现代的linux系统都提供了各种软件包管理机制,如REDHAT系列的基于RPM包管理，Debian的deb包管理等。<br/>
+</p>
+<p>
+<b>dpkg</b> 主要处理已经安装或已经下载到本地的包。<br/>
+<b>apt</b> 主要用于在线包的下载和信息更新和解决依赖关系，下载下来后安装工作是由dpkg完成的。<br/>
+</p>
+<p>
+<code>/var/lib/dpkg/available</code> 包含软件包信息，即使软件包卸载后该软件包的信息仍旧保存在此文件中。<br/>
+<code>/var/lib/dpkg/status</code> 只包含已安装的包的信息<br/>
+</p>
+<p>
+ubuntu的 <b>软件源类型</b> 有4种分别为：<br/>
+</p><table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+<caption></caption>
+<colgroup><col class="left" /><col class="left" />
+</colgroup>
+<tbody>
+<tr><td class="left">main</td><td class="left">canoniacl公司支持的开源软件</td></tr>
+<tr><td class="left">multiverse</td><td class="left">各开源社区支持的开源软件</td></tr>
+<tr><td class="left">restricted</td><td class="left">有专利限制的设备驱动软件(主要是显卡驱动)</td></tr>
+<tr><td class="left">universe</td><td class="left">有版权限制的软件(但个人在一定条件下可以自由使用)</td></tr>
+</tbody>
+</table>
+
+
+<p>
+ubuntu <b>用于更新的软件源类型</b> 有4种分别为：<br/>
+</p><table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+<caption></caption>
+<colgroup><col class="left" /><col class="left" />
+</colgroup>
+<tbody>
+<tr><td class="left">security</td><td class="left">重要的安全更新</td></tr>
+<tr><td class="left">updates</td><td class="left">建议的更新</td></tr>
+<tr><td class="left">proposed</td><td class="left">pre-release/updates</td></tr>
+<tr><td class="left">backports</td><td class="left">unsupported/updates</td></tr>
+</tbody>
+</table>
+
+source.list中 <b>源的格式</b> ：  <br/>
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+<caption></caption>
+<colgroup><col class="left" /><col class="left" /><col class="left" /><col class="left" />
+</colgroup>
+<tbody>
+<tr><td class="left">deb/deb-src</td><td class="left"><a href="http://path/to/ubuntu/">http://path/to/ubuntu/</a></td><td class="left">ubuntu发行版名称/发行版名称-更新的类型</td><td class="left">软件源类型</td></tr>
+</tbody>
+</table>
+
+如：<br/>
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+<caption></caption>
+<colgroup><col class="left" /><col class="left" /><col class="left" /><col class="left" />
+</colgroup>
+<tbody>
+<tr><td class="left">deb</td><td class="left"><a href="http://debian.ustc.edu.cn/ubuntu/">http://debian.ustc.edu.cn/ubuntu/</a></td><td class="left">lucid-backports</td><td class="left">main multiverse restricted universe</td></tr>
+</tbody>
+</table>
+
+</div>
+
+</div>
+
+<div id="outline-container-2" class="outline-2">
+<h2 id="sec-2"><span class="section-number-2">2</span> dpkg &ndash;get-selections</h2>
+<div class="outline-text-2" id="text-2">
 
 <p>  列出现在所有安装的包<br/>
   将当前系统安装包保存到文件中 <code>sudo dpkg --get-selections &gt; list.txt</code> ,在新系统上可以用 <code>sudo dpkg --set-selections &lt; list.txt</code> 来安装。<br/>
@@ -52,9 +132,108 @@
 
 </div>
 
-<div id="outline-container-2" class="outline-2">
-<h2 id="sec-2"><span class="section-number-2">2</span> update-alternatives</h2>
-<div class="outline-text-2" id="text-2">
+<div id="outline-container-3" class="outline-2">
+<h2 id="sec-3"><span class="section-number-2">3</span> dpkg -l pattern</h2>
+<div class="outline-text-2" id="text-3">
+
+<p>  查找pattern匹配的包。<br/>
+</p></div>
+
+</div>
+
+<div id="outline-container-4" class="outline-2">
+<h2 id="sec-4"><span class="section-number-2">4</span> dpkg -L package-name</h2>
+<div class="outline-text-2" id="text-4">
+
+<p>  Listfiles<br/>
+  查看package-name软件包的安装目录<br/>
+</p></div>
+
+</div>
+
+<div id="outline-container-5" class="outline-2">
+<h2 id="sec-5"><span class="section-number-2">5</span> dpkg -s package-name</h2>
+<div class="outline-text-2" id="text-5">
+
+<p>  Status<br/>
+  查看package-name软件包的状态信息<br/>
+</p></div>
+
+</div>
+
+<div id="outline-container-6" class="outline-2">
+<h2 id="sec-6"><span class="section-number-2">6</span> dpkg -S pattern</h2>
+<div class="outline-text-2" id="text-6">
+
+<p>  Search<br/>
+  从已安装的包中正则查找与pattern匹配的包<br/>
+</p></div>
+
+</div>
+
+<div id="outline-container-7" class="outline-2">
+<h2 id="sec-7"><span class="section-number-2">7</span> dpkg -p package-name</h2>
+<div class="outline-text-2" id="text-7">
+
+<p>  Print<br/>
+  显示包的详细信息，此信息来自于本地文件 /var/lib/dpkg/available<br/>
+  <code>apt-cache show package-name</code> 与上命令类似<br/>
+</p></div>
+
+</div>
+
+<div id="outline-container-8" class="outline-2">
+<h2 id="sec-8"><span class="section-number-2">8</span> dpkg &ndash;info name.deb</h2>
+<div class="outline-text-2" id="text-8">
+
+<p>  查看已打包好的debian包的详细信息。<br/>
+</p></div>
+
+</div>
+
+<div id="outline-container-9" class="outline-2">
+<h2 id="sec-9"><span class="section-number-2">9</span> apt-cache search regexp</h2>
+<div class="outline-text-2" id="text-9">
+
+<p>  在所有可用的包里进行查找。<br/>
+  <code>--names-only</code> 只在包名中进行匹配，而不在描述中匹配。<br/>
+  <code>--full</code> 显示详细的信息。<br/>
+</p></div>
+
+</div>
+
+<div id="outline-container-10" class="outline-2">
+<h2 id="sec-10"><span class="section-number-2">10</span> apt-cache pkgnames</h2>
+<div class="outline-text-2" id="text-10">
+
+<p>  列出所有包名。<br/>
+</p></div>
+
+</div>
+
+<div id="outline-container-11" class="outline-2">
+<h2 id="sec-11"><span class="section-number-2">11</span> apt-get purge packagename</h2>
+<div class="outline-text-2" id="text-11">
+
+<p>  purge 选项与remove不同之处在于前者不仅删除包而且删除配置文件。<br/>
+  purge 单词有净化的意思<br/>
+</p>
+</div>
+
+</div>
+
+<div id="outline-container-12" class="outline-2">
+<h2 id="sec-12"><span class="section-number-2">12</span> apt-get source packagename</h2>
+<div class="outline-text-2" id="text-12">
+
+<p>  只下载包的源码，前提是/etc/apt/source.list中有deb-src开头的源。<br/>
+</p></div>
+
+</div>
+
+<div id="outline-container-13" class="outline-2">
+<h2 id="sec-13"><span class="section-number-2">13</span> update-alternatives</h2>
+<div class="outline-text-2" id="text-13">
 
 <p>  <a href="http://charette.no-ip.com:81/programming/2011-12-24_GCCv47/">http://charette.no-ip.com:81/programming/2011-12-24_GCCv47/</a><br/>
   <a href="http://paddy-w.iteye.com/blog/958062">http://paddy-w.iteye.com/blog/958062</a><br/>
@@ -120,32 +299,44 @@ sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-4.7 40 --slave 
 
 </div>
 
-<div id="outline-container-3" class="outline-2">
-<h2 id="sec-3"><span class="section-number-2">3</span> apt-cache search</h2>
-<div class="outline-text-2" id="text-3">
+<div id="outline-container-14" class="outline-2">
+<h2 id="sec-14"><span class="section-number-2">14</span> Ubuntu 12.04 源备份</h2>
+<div class="outline-text-2" id="text-14">
 
-<p>  在所有可用的包里进行查找。<br/>
-  <code>--names-only</code> 只在包名中进行匹配，而不在描述中匹配。<br/>
-</p></div>
+
+<div style="height:200px;overflow:auto;border-style:solid;border-width:1px;border-color:#DDD">
+
+<pre class="src src-c++"><span style="color: #483d8b;">#&#32593;&#26131;</span> Ubuntu 12.04 &#28304;&#65288;&#36895;&#24230;&#24456;&#24555;&#65289; 
+<span style="color: #228b22;">deb</span> <span style="color: #a0522d;">http</span>:<span style="color: #b22222;">//</span><span style="color: #b22222;">mirrors.163.com/ubuntu/ precise main universe restricted multiverse</span>
+deb-src http:<span style="color: #b22222;">//</span><span style="color: #b22222;">mirrors.163.com/ubuntu/ precise main universe restricted multiverse</span>
+deb http:<span style="color: #b22222;">//</span><span style="color: #b22222;">mirrors.163.com/ubuntu/ precise-security universe main multiverse restricted</span>
+deb-src http:<span style="color: #b22222;">//</span><span style="color: #b22222;">mirrors.163.com/ubuntu/ precise-security universe main multiverse restricted</span>
+deb http:<span style="color: #b22222;">//</span><span style="color: #b22222;">mirrors.163.com/ubuntu/ precise-updates universe main multiverse restricted</span>
+deb http:<span style="color: #b22222;">//</span><span style="color: #b22222;">mirrors.163.com/ubuntu/ precise-proposed universe main multiverse restricted</span>
+deb-src http:<span style="color: #b22222;">//</span><span style="color: #b22222;">mirrors.163.com/ubuntu/ precise-proposed universe main multiverse restricted</span>
+deb http:<span style="color: #b22222;">//</span><span style="color: #b22222;">mirrors.163.com/ubuntu/ precise-backports universe main multiverse restricted</span>
+deb-src http:<span style="color: #b22222;">//</span><span style="color: #b22222;">mirrors.163.com/ubuntu/ precise-backports universe main multiverse restricted</span>
+deb-src http:<span style="color: #b22222;">//</span><span style="color: #b22222;">mirrors.163.com/ubuntu/ precise-updates universe main multiverse restricted</span>
+
+<span style="color: #483d8b;">#&#19978;&#28023;&#20132;&#36890;&#22823;&#23398;</span> 
+deb http:<span style="color: #b22222;">//</span><span style="color: #b22222;">ftp.sjtu.edu.cn/ubuntu/ precise main multiverse restricted universe</span>
+deb http:<span style="color: #b22222;">//</span><span style="color: #b22222;">ftp.sjtu.edu.cn/ubuntu/ precise-backports main multiverse restricted universe</span>
+deb http:<span style="color: #b22222;">//</span><span style="color: #b22222;">ftp.sjtu.edu.cn/ubuntu/ precise-proposed main multiverse restricted universe</span>
+deb http:<span style="color: #b22222;">//</span><span style="color: #b22222;">ftp.sjtu.edu.cn/ubuntu/ precise-security main multiverse restricted universe</span>
+deb http:<span style="color: #b22222;">//</span><span style="color: #b22222;">ftp.sjtu.edu.cn/ubuntu/ precise-updates main multiverse restricted universe</span>
+deb http:<span style="color: #b22222;">//</span><span style="color: #b22222;">ftp.sjtu.edu.cn/ubuntu-cn/ precise main multiverse restricted universe</span>
+deb-src http:<span style="color: #b22222;">//</span><span style="color: #b22222;">ftp.sjtu.edu.cn/ubuntu/ precise main multiverse restricted universe</span>
+deb-src http:<span style="color: #b22222;">//</span><span style="color: #b22222;">ftp.sjtu.edu.cn/ubuntu/ precise-backports main multiverse restricted universe</span>
+deb-src http:<span style="color: #b22222;">//</span><span style="color: #b22222;">ftp.sjtu.edu.cn/ubuntu/ precise-proposed main multiverse restricted universe</span>
+deb-src http:<span style="color: #b22222;">//</span><span style="color: #b22222;">ftp.sjtu.edu.cn/ubuntu/ precise-security main multiverse restricted universe</span>
+deb-src http:<span style="color: #b22222;">//</span><span style="color: #b22222;">ftp.sjtu.edu.cn/ubuntu/ precise-updates main multiverse restricted universe</span>
+deb http:<span style="color: #b22222;">//</span><span style="color: #b22222;">archive.canonical.com/ precise partner</span>
+deb-src http:<span style="color: #b22222;">//</span><span style="color: #b22222;">archive.canonical.com/ precise partner</span>
+
+</pre>
 
 </div>
-
-<div id="outline-container-4" class="outline-2">
-<h2 id="sec-4"><span class="section-number-2">4</span> apt-cache pkgnames</h2>
-<div class="outline-text-2" id="text-4">
-
-<p>  列出所有包名。<br/>
-</p></div>
-
 </div>
-
-<div id="outline-container-5" class="outline-2">
-<h2 id="sec-5"><span class="section-number-2">5</span> apt-get purge packagename</h2>
-<div class="outline-text-2" id="text-5">
-
-<p>  purge 选项与remove不同之处在于前者不仅删除包而且删除配置文件。<br/>
-  purge 单词有净化的意思<br/>
-</p></div>
 </div>
 </div>
 

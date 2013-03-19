@@ -77,8 +77,6 @@
 * DONE 安装极点五笔
   CLOSED: [2013-03-04 一 22:20]
   http://www.jzxue.com/fuwuqi/linux/201106/22-7891.html
-* TODO 学会 lambda calculus
-* TODO ubuntu包管理系统文章
 * DONE gnome-shell
   CLOSED: [2013-03-09 六 07:44]
   http://blog.ubuntusoft.com/ubuntu-12-04-%E6%94%B9%E9%80%A0%E6%8C%87%E5%8D%97.html
@@ -87,7 +85,12 @@
 * DONE Mac主题怎么进行窗口最大/小化快捷键
   CLOSED: [2013-03-11 一 22:35]
 
+* DONE 并查集/Kruskal算法实现
+  CLOSED: [2013-03-19 二 04:12]
+* TODO 学会 lambda calculus
+* DONE ubuntu包管理系统文章
+  CLOSED: [2013-03-19 二 23:38]
 * TODO continue reading
   http://en.wikibooks.org/wiki/GNU_C_Compiler_Internals/GNU_C_Compiler_Architecture_4_1#GCC_Initialization
-* TODO 并查集/Kruskal算法实现
-  解决POJ上一道Kruskal题目。
+* TODO  解决POJ上一道Kruskal题目。
+

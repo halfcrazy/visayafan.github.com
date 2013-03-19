@@ -1,10 +1,66 @@
 #+OPTIONS: ^:{} _:{} num:t toc:t \n:t
-#+INCLUDE "../../template.org"
+#+INCLUDE "../../template-toc.org"
 #+SETUPFILE: "../../extension.org"
 #+title:Ubuntu包管理系统
+
+* 简介
+现在的系统为何要用软件包管理系统呢？
+
+要回答这些问题，需要了解现在的软件开发都非常讲究可重用性，也就是说一个人写的功能代码可能会以库函数的形式发布供别人使用。最常用的就是glic函数库，它提供了常见的C语言标准库函数。由于这种代码的共享性，就造成成了软件之间的依赖关系即安装本软件前需要安装，为其提供部分功能代码的其它软件。对于现在的很多软件这种依赖关系非常复杂，因为这种关系存在递归性和版本差别。为了解决这种复杂的依赖关系，现代的linux系统都提供了各种软件包管理机制,如REDHAT系列的基于RPM包管理，Debian的deb包管理等。
+
+*dpkg* 主要处理已经安装或已经下载到本地的包。
+*apt* 主要用于在线包的下载和信息更新和解决依赖关系，下载下来后安装工作是由dpkg完成的。
+
+=/var/lib/dpkg/available= 包含软件包信息，即使软件包卸载后该软件包的信息仍旧保存在此文件中。
+=/var/lib/dpkg/status= 只包含已安装的包的信息
+
+ubuntu的 *软件源类型* 有4种分别为：
+| main       | canoniacl公司支持的开源软件                      |
+| multiverse | 各开源社区支持的开源软件                         |
+| restricted | 有专利限制的设备驱动软件(主要是显卡驱动)         |
+| universe   | 有版权限制的软件(但个人在一定条件下可以自由使用) | 
+
+ubuntu *用于更新的软件源类型* 有4种分别为：
+| security  | 重要的安全更新      |
+| updates   | 建议的更新          |
+| proposed  | pre-release/updates |
+| backports | unsupported/updates |
+source.list中 *源的格式* ：  
+| deb/deb-src   | http://path/to/ubuntu/ | ubuntu发行版名称/发行版名称-更新的类型  | 软件源类型 |
+如：
+| deb | http://debian.ustc.edu.cn/ubuntu/ | lucid-backports | main multiverse restricted universe |
 * dpkg --get-selections
   列出现在所有安装的包
   将当前系统安装包保存到文件中 =sudo dpkg --get-selections > list.txt= ,在新系统上可以用 =sudo dpkg --set-selections < list.txt= 来安装。
+* dpkg -l pattern
+  查找pattern匹配的包。
+* dpkg -L package-name
+  Listfiles
+  查看package-name软件包的安装目录
+* dpkg -s package-name
+  Status
+  查看package-name软件包的状态信息
+* dpkg -S pattern
+  Search
+  从已安装的包中正则查找与pattern匹配的包
+* dpkg -p package-name
+  Print
+  显示包的详细信息，此信息来自于本地文件 /var/lib/dpkg/available
+  =apt-cache show package-name= 与上命令类似
+* dpkg --info name.deb
+  查看已打包好的debian包的详细信息。
+* apt-cache search regexp
+  在所有可用的包里进行查找。
+  =--names-only= 只在包名中进行匹配，而不在描述中匹配。
+  =--full= 显示详细的信息。
+* apt-cache pkgnames
+  列出所有包名。
+* apt-get purge packagename
+  purge 选项与remove不同之处在于前者不仅删除包而且删除配置文件。
+  purge 单词有净化的意思
+
+* apt-get source packagename
+  只下载包的源码，前提是/etc/apt/source.list中有deb-src开头的源。
 * update-alternatives
   http://charette.no-ip.com:81/programming/2011-12-24_GCCv47/
   http://paddy-w.iteye.com/blog/958062
@@ -42,11 +98,9 @@
   #+end_example
   通过 =--display name= 来查看一个命令的所有可选值。
   通过 =--remove name path= 删除一个命令（包括其slave）
-* apt-cache search
-  在所有可用的包里进行查找。
-  =--names-only= 只在包名中进行匹配，而不在描述中匹配。
-* apt-cache pkgnames
-  列出所有包名。
-* apt-get purge packagename
-  purge 选项与remove不同之处在于前者不仅删除包而且删除配置文件。
-  purge 单词有净化的意思
+* Ubuntu 12.04 源备份
+{{{srcbegin(200)}}}
+#+begin_src c++
+#+include "/etc/apt/sources.list"
+#+end_src
+{{{srcend}}}

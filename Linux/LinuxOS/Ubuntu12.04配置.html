@@ -7,7 +7,7 @@
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
 <meta name="title" content="Ubuntu12.04配置"/>
 <meta name="generator" content="Org-mode"/>
-<meta name="generated" content="2013-03-09 08:08:42 CST"/>
+<meta name="generated" content="2013-03-19 21:01:21 CST"/>
 <meta name="author" content="visayafan"/>
 <meta name="description" content=""/>
 <meta name="keywords" content=""/>
@@ -49,6 +49,7 @@
 <li><a href="#sec-13">13 Alt+鼠标托动窗口</a></li>
 <li><a href="#sec-14">14 登陆自动启动应用程序</a></li>
 <li><a href="#sec-15">15 安装Mac主题</a></li>
+<li><a href="#sec-16">16 禁止Ubuntu开机网络配置</a></li>
 </ul>
 </div>
 </div>
@@ -496,6 +497,24 @@ Comment=
 </ol>
 
 </div>
+
+</div>
+
+<div id="outline-container-16" class="outline-2">
+<h2 id="sec-16"><span class="section-number-2">16</span> 禁止Ubuntu开机网络配置</h2>
+<div class="outline-text-2" id="text-16">
+
+<p>  <a href="http://www.codewhirl.com/2011/10/ubuntu-11-10-waiting-up-to-60-more-seconds-for-network-configuration/">http://www.codewhirl.com/2011/10/ubuntu-11-10-waiting-up-to-60-more-seconds-for-network-configuration/</a><br/>
+</p>
+<p>  <br/>
+  Ubuntu12.04在开机时会检查网络，如果网络不通则会进行配置，在此期间会等待2分钟。<br/>
+</p>
+<p>
+  如果用户确信不需要进行网络配置则可以通过修改配置文件的方法禁止这2分钟的检查从而加快开机速度。<br/>
+</p>
+<p>  <br/>
+  修改/etc/init/failsafe.conf，注释掉 sleep 40和 sleep 59两条语句。<br/>
+</p></div>
 </div>
 </div>
 
