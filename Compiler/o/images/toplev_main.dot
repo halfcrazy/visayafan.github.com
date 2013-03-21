@@ -1,0 +1,6 @@
+graph G{
+    node[shape=record];
+    rankdir=LR;
+    main[label="toplev_main"];
+    main -- {stack_limit_increase expandargv};
+}

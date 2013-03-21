@@ -27,12 +27,13 @@ $$f\left(T\right)=\min_{i}\left\{ e_{i}|e_{i}\in\left\{ e_{1}..e_{n}\right\}\ an
 {{{lightbox(kruskal.png,600)}}} 
 --------
 参考：http://www.slyar.com/blog/kruskal-disjoint-sets-c.html
+{{{singletop(Kruskal算法CC实现)}}}
 #+begin_src c++
 #+include "kruskal.cc"
 #+end_src
 输入:
 #+begin_example
-11
+7 11
 A B 7
 A D 5
 B C 8
@@ -55,3 +56,4 @@ B-E 7
 E-G 9
 39
 #+end_example
+{{{singleend}}}

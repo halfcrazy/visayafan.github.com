@@ -1,0 +1,16 @@
+#+OPTIONS: ^:{} _:{} num:t toc:t \n:t
+#+INCLUDE "../../template-toc.org"
+#+SETUPFILE: "../../extension.org"
+#+title:Ubuntu Trick
+* 备份源
+  通过命令 =add-apt-repository= 添加的源都保存在 =/etc/apt/source.list.d/= 中的list结尾的文件中，可以将它们备份起来然后在新系统上恢复从而节省时间。
+  =cat /etc/apt/sources.list /etc/apt/sources.list.d/*.list > ~/sources.list=
+* 备份包
+  将当前系统安装包保存到文件中 =sudo dpkg --get-selections > list.txt= ,在新系统上可以用 =sudo dpkg --set-selections < list.txt= 来安装。
+* 命令行批量安装字体
+  将当前目录下所有字体拷贝到 /usr/share/font/myfont 中.
+#+begin_example
+  find . -name "*.ttf" -exec sudo cp {} /usr/share/fonts/myfont/ \;
+#+end_example
+  然后执行 =sudo mkfontscale && sudo mkfontdir && sudo fc-cache -fv= 。
+  这样字体便安装好了，可以通过 =fc-list|grep font-name= 来验证。

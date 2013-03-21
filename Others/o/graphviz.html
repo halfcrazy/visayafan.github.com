@@ -7,7 +7,7 @@
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
 <meta name="title" content="Graphviz 笔记"/>
 <meta name="generator" content="Org-mode"/>
-<meta name="generated" content="2013-03-19 03:37:17 CST"/>
+<meta name="generated" content="2013-03-22 06:35:00 CST"/>
 <meta name="author" content="visayafan"/>
 <meta name="description" content=""/>
 <meta name="keywords" content=""/>
@@ -35,7 +35,8 @@
 <ul>
 <li><a href="#sec-1">1 语法</a></li>
 <li><a href="#sec-2">2 属性</a></li>
-<li><a href="#sec-3">3 例子</a></li>
+<li><a href="#sec-3">3 Trick</a></li>
+<li><a href="#sec-4">4 例子</a></li>
 </ul>
 </div>
 </div>
@@ -45,7 +46,7 @@
 <div class="outline-text-2" id="text-1">
 
 <ol>
-<li>digraph表direction graph即有向图，边用-&gt;表示。graph表无向图，边用&ndash;表示<br/>
+<li>digraph表direction graph即有向图，边用-&gt;表示。graph表无向图，边用 <code>--</code> 表示<br/>
 </li>
 <li>subgraph表子图，功能有3个：1.表示图结构，表明某些结点和边应该画在一起。2.方便为某些结点设置统一的属性。3.设置布局。<br/>
 </li>
@@ -57,7 +58,7 @@
 </li>
 <li>关键字：node, edge, graph, digraph, subgraph, and strict<br/>
 </li>
-<li>a-&gt;b; a-&gt;c;可以简写为：a-&gt;{b,c};<br/>
+<li>a-&gt;b; a-&gt;c;可以简写为：a-&gt;{b c};<br/>
 </li>
 </ol>
 
@@ -97,13 +98,22 @@
 </li>
 <li>height 设置结点的高度<br/>
 </li>
-<li>label 对象上的文字,如果shape=record则label<a href="http://www.graphviz.org/content/node-shapes#record">另有含义</a>.<br/>
+<li>label 对象上的文字.<br/>
+<ul>
+<li>如果shape=record或Mrecord(与record的区别在于后者圆角))则label<a href="http://www.graphviz.org/content/node-shapes#record">另有含义</a>.( label="a|b|c" 分隔线方向和rankdir方向一致，label="{a|b|c}" 每用{}包围一次分隔线就和之前的相反一次)<br/>
+</li>
+<li>可以用HTML来控制显示<br/>
+</li>
+</ul>
+
 </li>
 <li>nodesep 指定两个结点的最小间距<br/>
 </li>
 <li>splines 表<a href="http://www.graphviz.org/content/attrs#dsplines">图连线方式</a><br/>
 </li>
 <li>lhead, ltail 可以连接两个子图<br/>
+</li>
+<li>penwidth 用来设置线宽（不会影响字体）<br/>
 </li>
 </ol>
 
@@ -112,8 +122,21 @@
 </div>
 
 <div id="outline-container-3" class="outline-2">
-<h2 id="sec-3"><span class="section-number-2">3</span> 例子</h2>
+<h2 id="sec-3"><span class="section-number-2">3</span> Trick</h2>
 <div class="outline-text-2" id="text-3">
+
+<ul>
+<li>可以通过设置node的color属性为white来隐藏noder边框。<br/>
+</li>
+</ul>
+
+</div>
+
+</div>
+
+<div id="outline-container-4" class="outline-2">
+<h2 id="sec-4"><span class="section-number-2">4</span> 例子</h2>
+<div class="outline-text-2" id="text-4">
 
 <p><a href="http://www.graphviz.org/Gallery.php">官网例子</a>（点击图片查看代码）<br/>
 
@@ -310,8 +333,52 @@
 
 </div> <div class="span2">
 </div> <div class="span4">
-<link rel="stylesheet" href="../../Layout/CSS/jquery.lightbox-0.5.css" type="text/css" media="screen" /> <script type="text/javascript" src="../../Layout/JS/jquery.lightbox-0.5.js"></script> <center> <a class="lightbox" href="images/lheadltail.png"> <img class="lightbox " title="点击查看大图" src="images/lheadltail.png" width="250"> </a> </center> <script type="text/javascript"> $(function() {$('a.lightbox').lightBox();}); </script> 
+<link rel="stylesheet" href="../../Layout/CSS/jquery.lightbox-0.5.css" type="text/css" media="screen" /> <script type="text/javascript" src="../../Layout/JS/jquery.lightbox-0.5.js"></script> <center> <a class="lightbox" href="images/lheadltail.png"> <img class="lightbox " title="点击查看大图" src="images/lheadltail.png" width="250"> </a> </center> <script type="text/javascript"> $(function() {$('a.lightbox').lightBox();}); </script>
+</div></div>
 
+<hr/>
+
+
+<div style="height:200px;overflow:auto;border-style:solid;border-width:1px;border-color:#DDD">
+
+<pre class="example"># http://blog.lab49.com/archives/2471
+digraph g {
+    graph [fontsize=30 labelloc="t" label="" splines=true overlap=false rankdir = "LR"];
+    ratio = auto;
+    "state0" [ style = "filled, bold" penwidth = 5 fillcolor = "white" fontname = "Courier New" shape = "Mrecord" label =&lt;&lt;table border="0" cellborder="0" cellpadding="3" bgcolor="white"&gt;&lt;tr&gt;&lt;td bgcolor="black" align="center" colspan="2"&gt;&lt;font color="white"&gt;State #0&lt;/font&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td align="left" port="r0"&gt;&amp;#40;0&amp;#41; s -&amp;gt; &amp;bull;e $ &lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td align="left" port="r1"&gt;&amp;#40;1&amp;#41; e -&amp;gt; &amp;bull;l '=' r &lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td align="left" port="r2"&gt;&amp;#40;2&amp;#41; e -&amp;gt; &amp;bull;r &lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td align="left" port="r3"&gt;&amp;#40;3&amp;#41; l -&amp;gt; &amp;bull;'*' r &lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td align="left" port="r4"&gt;&amp;#40;4&amp;#41; l -&amp;gt; &amp;bull;'n' &lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td align="left" port="r5"&gt;&amp;#40;5&amp;#41; r -&amp;gt; &amp;bull;l &lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&gt; ];
+    "state1" [ style = "filled" penwidth = 1 fillcolor = "white" fontname = "Courier New" shape = "Mrecord" label =&lt;&lt;table border="0" cellborder="0" cellpadding="3" bgcolor="white"&gt;&lt;tr&gt;&lt;td bgcolor="black" align="center" colspan="2"&gt;&lt;font color="white"&gt;State #1&lt;/font&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td align="left" port="r3"&gt;&amp;#40;3&amp;#41; l -&amp;gt; &amp;bull;'*' r &lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td align="left" port="r3"&gt;&amp;#40;3&amp;#41; l -&amp;gt; '*' &amp;bull;r &lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td align="left" port="r4"&gt;&amp;#40;4&amp;#41; l -&amp;gt; &amp;bull;'n' &lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td align="left" port="r5"&gt;&amp;#40;5&amp;#41; r -&amp;gt; &amp;bull;l &lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&gt; ];
+    "state2" [ style = "filled" penwidth = 1 fillcolor = "white" fontname = "Courier New" shape = "Mrecord" label =&lt;&lt;table border="0" cellborder="0" cellpadding="3" bgcolor="white"&gt;&lt;tr&gt;&lt;td bgcolor="black" align="center" colspan="2"&gt;&lt;font color="white"&gt;State #2&lt;/font&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td align="left" port="r4"&gt;&amp;#40;4&amp;#41; l -&amp;gt; 'n' &amp;bull;&lt;/td&gt;&lt;td bgcolor="grey" align="right"&gt;=$&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&gt; ];
+    "state3" [ style = "filled" penwidth = 1 fillcolor = "white" fontname = "Courier New" shape = "Mrecord" label =&lt;&lt;table border="0" cellborder="0" cellpadding="3" bgcolor="white"&gt;&lt;tr&gt;&lt;td bgcolor="black" align="center" colspan="2"&gt;&lt;font color="white"&gt;State #3&lt;/font&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td align="left" port="r5"&gt;&amp;#40;5&amp;#41; r -&amp;gt; l &amp;bull;&lt;/td&gt;&lt;td bgcolor="grey" align="right"&gt;=$&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&gt; ];
+    "state4" [ style = "filled" penwidth = 1 fillcolor = "white" fontname = "Courier New" shape = "Mrecord" label =&lt;&lt;table border="0" cellborder="0" cellpadding="3" bgcolor="white"&gt;&lt;tr&gt;&lt;td bgcolor="black" align="center" colspan="2"&gt;&lt;font color="white"&gt;State #4&lt;/font&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td align="left" port="r3"&gt;&amp;#40;3&amp;#41; l -&amp;gt; '*' r &amp;bull;&lt;/td&gt;&lt;td bgcolor="grey" align="right"&gt;=$&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&gt; ];
+    "state5" [ style = "filled" penwidth = 1 fillcolor = "black" fontname = "Courier New" shape = "Mrecord" label =&lt;&lt;table border="0" cellborder="0" cellpadding="3" bgcolor="black"&gt;&lt;tr&gt;&lt;td bgcolor="black" align="center" colspan="2"&gt;&lt;font color="white"&gt;State #5&lt;/font&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td align="left" port="r0"&gt;&lt;font color="white"&gt;&amp;#40;0&amp;#41; s -&amp;gt; e &amp;bull;$ &lt;/font&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&gt; ];
+    "state6" [ style = "filled" penwidth = 1 fillcolor = "white" fontname = "Courier New" shape = "Mrecord" label =&lt;&lt;table border="0" cellborder="0" cellpadding="3" bgcolor="white"&gt;&lt;tr&gt;&lt;td bgcolor="black" align="center" colspan="2"&gt;&lt;font color="white"&gt;State #6&lt;/font&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td align="left" port="r1"&gt;&amp;#40;1&amp;#41; e -&amp;gt; l &amp;bull;'=' r &lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td align="left" port="r5"&gt;&amp;#40;5&amp;#41; r -&amp;gt; l &amp;bull;&lt;/td&gt;&lt;td bgcolor="grey" align="right"&gt;$&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&gt; ];
+    "state7" [ style = "filled" penwidth = 1 fillcolor = "white" fontname = "Courier New" shape = "Mrecord" label =&lt;&lt;table border="0" cellborder="0" cellpadding="3" bgcolor="white"&gt;&lt;tr&gt;&lt;td bgcolor="black" align="center" colspan="2"&gt;&lt;font color="white"&gt;State #7&lt;/font&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td align="left" port="r1"&gt;&amp;#40;1&amp;#41; e -&amp;gt; l '=' &amp;bull;r &lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td align="left" port="r3"&gt;&amp;#40;3&amp;#41; l -&amp;gt; &amp;bull;'*' r &lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td align="left" port="r4"&gt;&amp;#40;4&amp;#41; l -&amp;gt; &amp;bull;'n' &lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td align="left" port="r5"&gt;&amp;#40;5&amp;#41; r -&amp;gt; &amp;bull;l &lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&gt; ];
+    "state8" [ style = "filled" penwidth = 1 fillcolor = "white" fontname = "Courier New" shape = "Mrecord" label =&lt;&lt;table border="0" cellborder="0" cellpadding="3" bgcolor="white"&gt;&lt;tr&gt;&lt;td bgcolor="black" align="center" colspan="2"&gt;&lt;font color="white"&gt;State #8&lt;/font&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td align="left" port="r1"&gt;&amp;#40;1&amp;#41; e -&amp;gt; l '=' r &amp;bull;&lt;/td&gt;&lt;td bgcolor="grey" align="right"&gt;$&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&gt; ];
+    "state9" [ style = "filled" penwidth = 1 fillcolor = "white" fontname = "Courier New" shape = "Mrecord" label =&lt;&lt;table border="0" cellborder="0" cellpadding="3" bgcolor="white"&gt;&lt;tr&gt;&lt;td bgcolor="black" align="center" colspan="2"&gt;&lt;font color="white"&gt;State #9&lt;/font&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td align="left" port="r2"&gt;&amp;#40;2&amp;#41; e -&amp;gt; r &amp;bull;&lt;/td&gt;&lt;td bgcolor="grey" align="right"&gt;$&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&gt; ];
+    state0 -&gt; state5 [ penwidth = 5 fontsize = 28 fontcolor = "black" label = "e" ];
+    state0 -&gt; state6 [ penwidth = 5 fontsize = 28 fontcolor = "black" label = "l" ];
+    state0 -&gt; state9 [ penwidth = 5 fontsize = 28 fontcolor = "black" label = "r" ];
+    state0 -&gt; state1 [ penwidth = 1 fontsize = 14 fontcolor = "grey28" label = "'*'" ];
+    state0 -&gt; state2 [ penwidth = 1 fontsize = 14 fontcolor = "grey28" label = "'n'" ];
+    state1 -&gt; state1 [ penwidth = 1 fontsize = 14 fontcolor = "grey28" label = "'*'" ];
+    state1 -&gt; state4 [ penwidth = 5 fontsize = 28 fontcolor = "black" label = "r" ];
+    state1 -&gt; state2 [ penwidth = 1 fontsize = 14 fontcolor = "grey28" label = "'n'" ];
+    state1 -&gt; state3 [ penwidth = 5 fontsize = 28 fontcolor = "black" label = "l" ];
+    state6 -&gt; state7 [ penwidth = 1 fontsize = 14 fontcolor = "grey28" label = "'='" ];
+    state7 -&gt; state8 [ penwidth = 5 fontsize = 28 fontcolor = "black" label = "r" ];
+    state7 -&gt; state1 [ penwidth = 1 fontsize = 14 fontcolor = "grey28" label = "'*'" ];
+    state7 -&gt; state2 [ penwidth = 1 fontsize = 14 fontcolor = "grey28" label = "'n'" ];
+    state7 -&gt; state3 [ penwidth = 5 fontsize = 28 fontcolor = "black" label = "l" ];
+}
+</pre>
+
+</div>
+<link rel="stylesheet" href="../../Layout/CSS/jquery.lightbox-0.5.css" type="text/css" media="screen" /> <script type="text/javascript" src="../../Layout/JS/jquery.lightbox-0.5.js"></script> <center> <a class="lightbox" href="images/lalr.png"> <img class="lightbox " title="点击查看大图" src="images/lalr.png" width="800"> </a> </center> <script type="text/javascript"> $(function() {$('a.lightbox').lightBox();}); </script> 
+<p>
+上面这个图看起来很复杂，其实只需要稍微了解一些HTML知识和用<a href="http://www.graphviz.org/content/node-shapes">HTML来控制显示Label的规则</a> 完全可以看懂，做这样的图完全靠的是耐心，佩服作者的毅力。原文中好像还有2张。<br/>
+PS:输入HTML特殊字符可以用HTML模式下的命令sgml-name-char <code>C-c C-n</code> 。<br/>
+
+</p>
 <hr/>
 </div>
 </div>

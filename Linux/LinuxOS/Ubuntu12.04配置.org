@@ -274,3 +274,6 @@ Comment=
   如果用户确信不需要进行网络配置则可以通过修改配置文件的方法禁止这2分钟的检查从而加快开机速度。
   
   修改/etc/init/failsafe.conf，注释掉 sleep 40和 sleep 59两条语句。
+* 禁止HUD的Alt快捷键
+  Head-Up Display 默认按下Alt可输入菜单命令。对中文来说几乎没什么用。可以禁止掉。
+  system-setting->keyboard->shortcut->launchers->key to show launcher

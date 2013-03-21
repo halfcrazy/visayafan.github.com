@@ -3,13 +3,13 @@
 #+SETUPFILE: "../../extension.org"
 #+title:Graphviz 笔记
 * 语法
-  1. digraph表direction graph即有向图，边用->表示。graph表无向图，边用--表示
+  1. digraph表direction graph即有向图，边用->表示。graph表无向图，边用 =--= 表示
   2. subgraph表子图，功能有3个：1.表示图结构，表明某些结点和边应该画在一起。2.方便为某些结点设置统一的属性。3.设置布局。
   3. 注释和C++相同。以#开头的行将会被摒弃。行尾的分号可有可无。
   4. 可以用charset设置字符集。
   5. 真用true,yes或正数表示，假用false,no或0表示。
   6. 关键字：node, edge, graph, digraph, subgraph, and strict
-  7. a->b; a->c;可以简写为：a->{b,c};
+  7. a->b; a->c;可以简写为：a->{b c};
 * 属性
   1. color 默认为黑色，可以用RGB: color="#ff0000"，也可以用[[http://www.graphviz.org/content/color-names][事先定义好的一些]]: color=red
   2. dir arrowhead arrowtail: dir=forward|back|both|none 表几个箭头及方向，arrowhead前箭头，arrowtail尾箭头，
@@ -25,10 +25,15 @@
   11. fontsize 字体大小
   12. size 图大小
   13. height 设置结点的高度
-  14. label 对象上的文字,如果shape=record则label[[http://www.graphviz.org/content/node-shapes#record][另有含义]].
+  14. label 对象上的文字.
+      * 如果shape=record或Mrecord(与record的区别在于后者圆角))则label[[http://www.graphviz.org/content/node-shapes#record][另有含义]].( label="a|b|c" 分隔线方向和rankdir方向一致，label="{a|b|c}" 每用{}包围一次分隔线就和之前的相反一次)
+      * 可以用HTML来控制显示
   15. nodesep 指定两个结点的最小间距
   16. splines 表[[http://www.graphviz.org/content/attrs#dsplines][图连线方式]]
   17. lhead, ltail 可以连接两个子图
+  18. penwidth 用来设置线宽（不会影响字体）
+* Trick
+  * 可以通过设置node的color属性为white来隐藏noder边框。
 * 例子
 [[http://www.graphviz.org/Gallery.php][官网例子]]（点击图片查看代码）
 --------
@@ -196,5 +201,43 @@ digraph G {
 #+end_example
 {{{middle(2)}}}
 {{{middle(4)}}}
-{{{lightbox(images/lheadltail.png,250)}}} 
+{{{lightbox(images/lheadltail.png,250)}}}
+{{{right}}}
+--------
+{{{srcbegin(200)}}}
+#+begin_example
+# http://blog.lab49.com/archives/2471
+digraph g {
+    graph [fontsize=30 labelloc="t" label="" splines=true overlap=false rankdir = "LR"];
+    ratio = auto;
+    "state0" [ style = "filled, bold" penwidth = 5 fillcolor = "white" fontname = "Courier New" shape = "Mrecord" label =<<table border="0" cellborder="0" cellpadding="3" bgcolor="white"><tr><td bgcolor="black" align="center" colspan="2"><font color="white">State #0</font></td></tr><tr><td align="left" port="r0">&#40;0&#41; s -&gt; &bull;e $ </td></tr><tr><td align="left" port="r1">&#40;1&#41; e -&gt; &bull;l '=' r </td></tr><tr><td align="left" port="r2">&#40;2&#41; e -&gt; &bull;r </td></tr><tr><td align="left" port="r3">&#40;3&#41; l -&gt; &bull;'*' r </td></tr><tr><td align="left" port="r4">&#40;4&#41; l -&gt; &bull;'n' </td></tr><tr><td align="left" port="r5">&#40;5&#41; r -&gt; &bull;l </td></tr></table>> ];
+    "state1" [ style = "filled" penwidth = 1 fillcolor = "white" fontname = "Courier New" shape = "Mrecord" label =<<table border="0" cellborder="0" cellpadding="3" bgcolor="white"><tr><td bgcolor="black" align="center" colspan="2"><font color="white">State #1</font></td></tr><tr><td align="left" port="r3">&#40;3&#41; l -&gt; &bull;'*' r </td></tr><tr><td align="left" port="r3">&#40;3&#41; l -&gt; '*' &bull;r </td></tr><tr><td align="left" port="r4">&#40;4&#41; l -&gt; &bull;'n' </td></tr><tr><td align="left" port="r5">&#40;5&#41; r -&gt; &bull;l </td></tr></table>> ];
+    "state2" [ style = "filled" penwidth = 1 fillcolor = "white" fontname = "Courier New" shape = "Mrecord" label =<<table border="0" cellborder="0" cellpadding="3" bgcolor="white"><tr><td bgcolor="black" align="center" colspan="2"><font color="white">State #2</font></td></tr><tr><td align="left" port="r4">&#40;4&#41; l -&gt; 'n' &bull;</td><td bgcolor="grey" align="right">=$</td></tr></table>> ];
+    "state3" [ style = "filled" penwidth = 1 fillcolor = "white" fontname = "Courier New" shape = "Mrecord" label =<<table border="0" cellborder="0" cellpadding="3" bgcolor="white"><tr><td bgcolor="black" align="center" colspan="2"><font color="white">State #3</font></td></tr><tr><td align="left" port="r5">&#40;5&#41; r -&gt; l &bull;</td><td bgcolor="grey" align="right">=$</td></tr></table>> ];
+    "state4" [ style = "filled" penwidth = 1 fillcolor = "white" fontname = "Courier New" shape = "Mrecord" label =<<table border="0" cellborder="0" cellpadding="3" bgcolor="white"><tr><td bgcolor="black" align="center" colspan="2"><font color="white">State #4</font></td></tr><tr><td align="left" port="r3">&#40;3&#41; l -&gt; '*' r &bull;</td><td bgcolor="grey" align="right">=$</td></tr></table>> ];
+    "state5" [ style = "filled" penwidth = 1 fillcolor = "black" fontname = "Courier New" shape = "Mrecord" label =<<table border="0" cellborder="0" cellpadding="3" bgcolor="black"><tr><td bgcolor="black" align="center" colspan="2"><font color="white">State #5</font></td></tr><tr><td align="left" port="r0"><font color="white">&#40;0&#41; s -&gt; e &bull;$ </font></td></tr></table>> ];
+    "state6" [ style = "filled" penwidth = 1 fillcolor = "white" fontname = "Courier New" shape = "Mrecord" label =<<table border="0" cellborder="0" cellpadding="3" bgcolor="white"><tr><td bgcolor="black" align="center" colspan="2"><font color="white">State #6</font></td></tr><tr><td align="left" port="r1">&#40;1&#41; e -&gt; l &bull;'=' r </td></tr><tr><td align="left" port="r5">&#40;5&#41; r -&gt; l &bull;</td><td bgcolor="grey" align="right">$</td></tr></table>> ];
+    "state7" [ style = "filled" penwidth = 1 fillcolor = "white" fontname = "Courier New" shape = "Mrecord" label =<<table border="0" cellborder="0" cellpadding="3" bgcolor="white"><tr><td bgcolor="black" align="center" colspan="2"><font color="white">State #7</font></td></tr><tr><td align="left" port="r1">&#40;1&#41; e -&gt; l '=' &bull;r </td></tr><tr><td align="left" port="r3">&#40;3&#41; l -&gt; &bull;'*' r </td></tr><tr><td align="left" port="r4">&#40;4&#41; l -&gt; &bull;'n' </td></tr><tr><td align="left" port="r5">&#40;5&#41; r -&gt; &bull;l </td></tr></table>> ];
+    "state8" [ style = "filled" penwidth = 1 fillcolor = "white" fontname = "Courier New" shape = "Mrecord" label =<<table border="0" cellborder="0" cellpadding="3" bgcolor="white"><tr><td bgcolor="black" align="center" colspan="2"><font color="white">State #8</font></td></tr><tr><td align="left" port="r1">&#40;1&#41; e -&gt; l '=' r &bull;</td><td bgcolor="grey" align="right">$</td></tr></table>> ];
+    "state9" [ style = "filled" penwidth = 1 fillcolor = "white" fontname = "Courier New" shape = "Mrecord" label =<<table border="0" cellborder="0" cellpadding="3" bgcolor="white"><tr><td bgcolor="black" align="center" colspan="2"><font color="white">State #9</font></td></tr><tr><td align="left" port="r2">&#40;2&#41; e -&gt; r &bull;</td><td bgcolor="grey" align="right">$</td></tr></table>> ];
+    state0 -> state5 [ penwidth = 5 fontsize = 28 fontcolor = "black" label = "e" ];
+    state0 -> state6 [ penwidth = 5 fontsize = 28 fontcolor = "black" label = "l" ];
+    state0 -> state9 [ penwidth = 5 fontsize = 28 fontcolor = "black" label = "r" ];
+    state0 -> state1 [ penwidth = 1 fontsize = 14 fontcolor = "grey28" label = "'*'" ];
+    state0 -> state2 [ penwidth = 1 fontsize = 14 fontcolor = "grey28" label = "'n'" ];
+    state1 -> state1 [ penwidth = 1 fontsize = 14 fontcolor = "grey28" label = "'*'" ];
+    state1 -> state4 [ penwidth = 5 fontsize = 28 fontcolor = "black" label = "r" ];
+    state1 -> state2 [ penwidth = 1 fontsize = 14 fontcolor = "grey28" label = "'n'" ];
+    state1 -> state3 [ penwidth = 5 fontsize = 28 fontcolor = "black" label = "l" ];
+    state6 -> state7 [ penwidth = 1 fontsize = 14 fontcolor = "grey28" label = "'='" ];
+    state7 -> state8 [ penwidth = 5 fontsize = 28 fontcolor = "black" label = "r" ];
+    state7 -> state1 [ penwidth = 1 fontsize = 14 fontcolor = "grey28" label = "'*'" ];
+    state7 -> state2 [ penwidth = 1 fontsize = 14 fontcolor = "grey28" label = "'n'" ];
+    state7 -> state3 [ penwidth = 5 fontsize = 28 fontcolor = "black" label = "l" ];
+}
+#+end_example
+{{{srcend}}}
+{{{lightbox(images/lalr.png,800)}}} 
+上面这个图看起来很复杂，其实只需要稍微了解一些HTML知识和用[[http://www.graphviz.org/content/node-shapes][HTML来控制显示Label的规则]] 完全可以看懂，做这样的图完全靠的是耐心，佩服作者的毅力。原文中好像还有2张。
+PS:输入HTML特殊字符可以用HTML模式下的命令sgml-name-char =C-c C-n= 。
 --------

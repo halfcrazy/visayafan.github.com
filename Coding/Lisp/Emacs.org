@@ -301,3 +301,82 @@ d<script type="text/javascript"> $(function() {$('a.lightbox').lightBox();}); </
   =M-x list-color-display= 查看颜色及对应的RGB值
 * find-name-dired
   在指定目录下递归查找指定名文件。
+* ECB
+** 自定义ECB窗口宽度
+  设置 =ecb-windows-width= 变量。
+#+begin_src lisp
+(setq ecb-windows-width 0.25)
+#+end_src
+** 自定义ECB布局
+   ECB我最常用的窗口是method窗口，其它的像history/directories基本没用过.
+   =M-x ecb-create-new-layout= 打开新的frame，按照提示创建新的只有method的布局。然后 =C-c . l c= 切换到新建的布局，此时只有method窗口，无法切换到其它窗口。
+   （预定义布局中的left9实现同样的功能）
+
+   如果想要打开ECB时就只显示method窗口，可以添加一个hook：
+#+begin_src lisp
+(add-hook 'ecb-activate-hook 'vf-show-method-window-only)
+(defun vf-show-method-window-only ()
+  (ecb-maximize-window-methods))
+#+end_src
+* 为新mode实现auto complete
+  =auto-complete= 维护一个变量 =ac-modes= 保存所有那些进入后应该自动打开 =auto-complete-mode= 的mode，所以应该先将在此变量中注册一下，以graphviz-dot-mode为例：
+#+begin_src lisp
+(add-to-list 'ac-modes 'graphviz-dot-mode)
+#+end_src
+  =ac-sources= 是一个buffer-local变量，即每个buffer值都不一样，该变量中保存着此buffer中自动补全词汇来源，例如 =auto-complete-config.el= 中的一段代码：
+#+begin_src lisp
+(defun ac-emacs-lisp-mode-setup ()
+  (setq ac-sources (append '(ac-source-features ac-source-functions ac-source-yasnippet ac-source-variables ac-source-symbols) ac-sources)))
+
+(defun ac-cc-mode-setup ()
+  (setq ac-sources (append '(ac-source-yasnippet ac-source-gtags) ac-sources)))
+
+(defun ac-ruby-mode-setup ())
+
+(defun ac-css-mode-setup ()
+  (setq ac-sources (append '(ac-source-css-property) ac-sources)))
+
+(defun ac-config-default ()
+  (setq-default ac-sources '(ac-source-abbrev ac-source-dictionary ac-source-words-in-same-mode-buffers))
+  (add-hook 'emacs-lisp-mode-hook 'ac-emacs-lisp-mode-setup)
+  (add-hook 'c-mode-common-hook 'ac-cc-mode-setup)
+  (add-hook 'ruby-mode-hook 'ac-ruby-mode-setup)
+  (add-hook 'css-mode-hook 'ac-css-mode-setup)
+  (add-hook 'auto-complete-mode-hook 'ac-common-setup)
+  (global-auto-complete-mode t))
+#+end_src
+  可见默认情况下lisp-mode的补全来源有 ac-source-features ac-source-functions ac-source-yasnippet ac-source-variables ac-source-symbols，由于写emacs lisp程序是经常需要补全emacs各个mode下的函数和变量所以ac-source-functions ac-source-variables被加入到ac-sources中，其它mode下一般用不到这两个来源，一般 =ac-source-yasnippet ac-source-dictionary ac-source-words-in-buffer= 即可满足要求。
+#+begin_src lisp
+(defun graphviz-dot-mode-setup ()
+  (setq ac-sources '(
+                     ac-source-yasnippet
+                     ac-source-dictionary
+                     ac-source-words-in-buffer)))
+(add-hook 'graphviz-dot-mode-hook 'graphviz-dot-mode-setup)
+#+end_src
+  字典保存目录：
+#+begin_src lisp
+(add-to-list 'ac-dictionary-directories "~/.emacs.d/auto-complete/auto-complete/dict")
+#+end_src
+#+begin_example
+~ $ tree ~/.emacs.d/auto-complete/auto-complete/dict
+/home/visayafan/.emacs.d/auto-complete/auto-complete/dict
+|-- ada-mode
+|-- haskell-mode
+|-- java-mode
+|-- graphviz-dot-mode
+#+end_example  
+  进入graphviz-dot-mode后自动选择由变量ac-dictionary-directories保存的目录下的graphviz-dot-mode文件，可以在此文件中加入自己想要补全的词汇，例如：
+#+begin_example
+graph
+digraph
+subgraph
+node
+edge
+#+end_example
+  之后再打开dot后缀的文件后会自动进入auto-complete-mode。
+* sgml-pretty-print格式化html文件
+  用来处理杂乱的HTML代码。
+  与indent-region不同的是它会在适当的地方加上换行符。如果代码模式没有问题只是缩进有问题可以用 =C-M-\= 。
+* HTML中输入特殊字符
+  HTML模式下， =C-c C-n= 再输入对应的字符即可。

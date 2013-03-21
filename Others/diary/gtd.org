@@ -92,5 +92,8 @@
   CLOSED: [2013-03-19 二 23:38]
 * TODO continue reading
   http://en.wikibooks.org/wiki/GNU_C_Compiler_Internals/GNU_C_Compiler_Architecture_4_1#GCC_Initialization
-* TODO  解决POJ上一道Kruskal题目。
+* TODO  解决POJ上一道Kruskal题目
+  kruskal stl set再写一遍
 
+* TODO 看一道LR博文
+  http://blog.lab49.com/archives/2471

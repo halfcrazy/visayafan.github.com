@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+               "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-CN" xml:lang="zh-CN">
+<head>
+<title>Ubuntu Trick</title>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
+<meta name="title" content="Ubuntu Trick"/>
+<meta name="generator" content="Org-mode"/>
+<meta name="generated" content="2013-03-21 02:45:10 CST"/>
+<meta name="author" content="visayafan"/>
+<meta name="description" content=""/>
+<meta name="keywords" content=""/>
+
+
+
+</head>
+<body>
+
+
+<div id="content">
+<h1 class="title">Ubuntu Trick</h1>
+
+
+<!-- <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"> </script> -->
+<link rel="stylesheet" type="text/css" href="../../Layout/CSS/bootstrap_old.css" />
+<link rel="stylesheet" type="text/css" href="../../Layout/CSS/too_many_toc.css" />
+<script src="../../Layout/JS/jquery_1.7.1.js"></script>
+<script src="../../Layout/JS/bootstrap_old.js"></script>
+
+
+<div id="table-of-contents">
+<h2>目录</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#sec-1">1 备份源</a></li>
+<li><a href="#sec-2">2 备份包</a></li>
+<li><a href="#sec-3">3 命令行批量安装字体</a></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-1" class="outline-2">
+<h2 id="sec-1"><span class="section-number-2">1</span> 备份源</h2>
+<div class="outline-text-2" id="text-1">
+
+<p>  通过命令 <code>add-apt-repository</code> 添加的源都保存在 <code>/etc/apt/source.list.d/</code> 中的list结尾的文件中，可以将它们备份起来然后在新系统上恢复从而节省时间。<br/>
+  <code>cat /etc/apt/sources.list /etc/apt/sources.list.d/*.list &gt; ~/sources.list</code><br/>
+</p></div>
+
+</div>
+
+<div id="outline-container-2" class="outline-2">
+<h2 id="sec-2"><span class="section-number-2">2</span> 备份包</h2>
+<div class="outline-text-2" id="text-2">
+
+<p>  将当前系统安装包保存到文件中 <code>sudo dpkg --get-selections &gt; list.txt</code> ,在新系统上可以用 <code>sudo dpkg --set-selections &lt; list.txt</code> 来安装。<br/>
+</p></div>
+
+</div>
+
+<div id="outline-container-3" class="outline-2">
+<h2 id="sec-3"><span class="section-number-2">3</span> 命令行批量安装字体</h2>
+<div class="outline-text-2" id="text-3">
+
+<p>  将当前目录下所有字体拷贝到 /usr/share/font/myfont 中.<br/>
+</p>
+
+
+<pre class="example">find . -name "*.ttf" -exec sudo cp {} /usr/share/fonts/myfont/ \;
+</pre>
+
+<p>
+  然后执行 <code>sudo mkfontscale &amp;&amp; sudo mkfontdir &amp;&amp; sudo fc-cache -fv</code> 。<br/>
+  这样字体便安装好了，可以通过 <code>fc-list|grep font-name</code> 来验证。<br/>
+</p>
+<p>  <br/>
+</p></div>
+</div>
+</div>
+
+</body>
+</html>

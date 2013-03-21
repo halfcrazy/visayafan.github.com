@@ -11,10 +11,6 @@ const int MAX=100;
 int Father[MAX];
 int Rank[MAX];
 
-void Make_Set(int x){
-     Father[x]=x;
-     Rank[x]=0;
-}
 int Find_Set(int x){
      if(x!=Father[x])
           Father[x]=Find_Set(Father[x]);
@@ -41,18 +37,21 @@ int cmp(const void* a, const void* b){
 int main(int argc, char *argv[])
 {
      edge e[MAX];
-     int num,weight,sum=0;
+     int NumOfEdge, NumOfVertex,weight,sum=0;
      char cx,cy;
-     cin>>num;
-     for (int i=0; i<num; ++i){
+     cin>>NumOfVertex>>NumOfEdge;
+     for (int i = 0; i<NumOfVertex; ++i){
+          Father[i]=i;
+          Rank[i]=0;
+     }
+     for (int i=0; i<NumOfEdge; ++i){
           cin>>cx>>cy>>weight;
           e[i].x=cx-'A';
           e[i].y=cy-'A';
           e[i].w=weight;
-          Make_Set(i);
      }
-     qsort(e, num, sizeof(edge), cmp);
-     for (int i = 0; i<num; ++i){
+     qsort(e, NumOfEdge, sizeof(edge), cmp);
+     for (int i = 0; i<NumOfEdge; ++i){
           int x=Find_Set(e[i].x);
           int y=Find_Set(e[i].y);
           if(x!=y){

@@ -7,7 +7,7 @@
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
 <meta name="title" content="Kruskal算法"/>
 <meta name="generator" content="Org-mode"/>
-<meta name="generated" content="2013-03-19 03:54:45 CST"/>
+<meta name="generated" content="2013-03-22 01:01:58 CST"/>
 <meta name="author" content="visayafan"/>
 <meta name="description" content=""/>
 <meta name="keywords" content=""/>
@@ -103,8 +103,7 @@ $$f\left(T\right)=\min_{i}\left\{ e_{i}|e_{i}\in\left\{ e_{1}..e_{n}\right\}\ an
 <hr/>
 <p>
 参考：<a href="http://www.slyar.com/blog/kruskal-disjoint-sets-c.html">http://www.slyar.com/blog/kruskal-disjoint-sets-c.html</a><br/>
-</p>
-
+<div class="accordion-group"> <div class="accordion-heading"> <a href="#CollapseIDKruskal算法CC实现" data-toggle="collapse" class="accordion-toggle">Kruskal算法CC实现</a> </div> <div class="accordion-body collapse" style="height: 0px" id="CollapseIDKruskal算法CC实现"> <div class="accordion-inner">
 
 <pre class="src src-c++"><span style="color: #483d8b;">#include</span> <span style="color: #8b2252;">&lt;iostream&gt;</span>
 <span style="color: #a020f0;">using</span> <span style="color: #a020f0;">namespace</span> <span style="color: #008b8b;">std</span>;
@@ -119,10 +118,6 @@ $$f\left(T\right)=\min_{i}\left\{ e_{i}|e_{i}\in\left\{ e_{1}..e_{n}\right\}\ an
 <span style="color: #228b22;">int</span> <span style="color: #a0522d;">Father</span>[MAX];
 <span style="color: #228b22;">int</span> <span style="color: #a0522d;">Rank</span>[MAX];
 
-<span style="color: #228b22;">void</span> <span style="color: #0000ff;">Make_Set</span>(<span style="color: #228b22;">int</span> <span style="color: #a0522d;">x</span>){
-     Father[x]=x;
-     Rank[x]=0;
-}
 <span style="color: #228b22;">int</span> <span style="color: #0000ff;">Find_Set</span>(<span style="color: #228b22;">int</span> <span style="color: #a0522d;">x</span>){
      <span style="color: #a020f0;">if</span>(x!=Father[x])
           Father[x]=Find_Set(Father[x]);
@@ -149,18 +144,21 @@ $$f\left(T\right)=\min_{i}\left\{ e_{i}|e_{i}\in\left\{ e_{1}..e_{n}\right\}\ an
 <span style="color: #228b22;">int</span> <span style="color: #0000ff;">main</span>(<span style="color: #228b22;">int</span> <span style="color: #a0522d;">argc</span>, <span style="color: #228b22;">char</span> *<span style="color: #a0522d;">argv</span>[])
 {
      <span style="color: #228b22;">edge</span> <span style="color: #a0522d;">e</span>[MAX];
-     <span style="color: #228b22;">int</span> <span style="color: #a0522d;">num</span>,<span style="color: #a0522d;">weight</span>,<span style="color: #a0522d;">sum</span>=0;
+     <span style="color: #228b22;">int</span> <span style="color: #a0522d;">NumOfEdge</span>, <span style="color: #a0522d;">NumOfVertex</span>,<span style="color: #a0522d;">weight</span>,<span style="color: #a0522d;">sum</span>=0;
      <span style="color: #228b22;">char</span> <span style="color: #a0522d;">cx</span>,<span style="color: #a0522d;">cy</span>;
-     cin&gt;&gt;num;
-     <span style="color: #a020f0;">for</span> (<span style="color: #228b22;">int</span> <span style="color: #a0522d;">i</span>=0; i&lt;num; ++i){
+     cin&gt;&gt;NumOfVertex&gt;&gt;NumOfEdge;
+     <span style="color: #a020f0;">for</span> (<span style="color: #228b22;">int</span> <span style="color: #a0522d;">i</span> = 0; i&lt;NumOfVertex; ++i){
+          Father[i]=i;
+          Rank[i]=0;
+     }
+     <span style="color: #a020f0;">for</span> (<span style="color: #228b22;">int</span> <span style="color: #a0522d;">i</span>=0; i&lt;NumOfEdge; ++i){
           cin&gt;&gt;cx&gt;&gt;cy&gt;&gt;weight;
           e[i].x=cx-<span style="color: #8b2252;">'A'</span>;
           e[i].y=cy-<span style="color: #8b2252;">'A'</span>;
           e[i].w=weight;
-          Make_Set(i);
      }
-     qsort(e, num, <span style="color: #a020f0;">sizeof</span>(edge), cmp);
-     <span style="color: #a020f0;">for</span> (<span style="color: #228b22;">int</span> <span style="color: #a0522d;">i</span> = 0; i&lt;num; ++i){
+     qsort(e, NumOfEdge, <span style="color: #a020f0;">sizeof</span>(edge), cmp);
+     <span style="color: #a020f0;">for</span> (<span style="color: #228b22;">int</span> <span style="color: #a0522d;">i</span> = 0; i&lt;NumOfEdge; ++i){
           <span style="color: #228b22;">int</span> <span style="color: #a0522d;">x</span>=Find_Set(e[i].x);
           <span style="color: #228b22;">int</span> <span style="color: #a0522d;">y</span>=Find_Set(e[i].y);
           <span style="color: #a020f0;">if</span>(x!=y){
@@ -175,12 +173,11 @@ $$f\left(T\right)=\min_{i}\left\{ e_{i}|e_{i}\in\left\{ e_{1}..e_{n}\right\}\ an
 
 </pre>
 
-<p>
 输入:<br/>
 </p>
 
 
-<pre class="example">11
+<pre class="example">7 11
 A B 7
 A D 5
 B C 8
@@ -208,6 +205,9 @@ E-G 9
 39
 </pre>
 
+
+
+</div> </div> </div> 
 </div>
 
 </body>

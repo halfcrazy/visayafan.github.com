@@ -7,7 +7,7 @@
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
 <meta name="title" content="Emacs Trick"/>
 <meta name="generator" content="Org-mode"/>
-<meta name="generated" content="2013-02-18 14:16:04 CST"/>
+<meta name="generated" content="2013-03-22 06:35:09 CST"/>
 <meta name="author" content="visayafan"/>
 <meta name="description" content=""/>
 <meta name="keywords" content=""/>
@@ -117,6 +117,16 @@
 <li><a href="#sec-31">31 查看当前buffer所有mode帮助信息</a></li>
 <li><a href="#sec-32">32 利用CEDET生成UML</a></li>
 <li><a href="#sec-33">33 颜色</a></li>
+<li><a href="#sec-34">34 find-name-dired</a></li>
+<li><a href="#sec-35">35 ECB</a>
+<ul>
+<li><a href="#sec-35-1">35.1 自定义ECB窗口宽度</a></li>
+<li><a href="#sec-35-2">35.2 自定义ECB布局</a></li>
+</ul>
+</li>
+<li><a href="#sec-36">36 为新mode实现auto complete</a></li>
+<li><a href="#sec-37">37 sgml-pretty-print格式化html文件</a></li>
+<li><a href="#sec-38">38 HTML中输入特殊字符</a></li>
 </ul>
 </div>
 </div>
@@ -773,6 +783,164 @@ d<script type="text/javascript"> $(function() {$('a.lightbox').lightBox();}); </
 <div class="outline-text-2" id="text-33">
 
 <p>  <code>M-x list-color-display</code> 查看颜色及对应的RGB值<br/>
+</p></div>
+
+</div>
+
+<div id="outline-container-34" class="outline-2">
+<h2 id="sec-34"><span class="section-number-2">34</span> find-name-dired</h2>
+<div class="outline-text-2" id="text-34">
+
+<p>  在指定目录下递归查找指定名文件。<br/>
+</p></div>
+
+</div>
+
+<div id="outline-container-35" class="outline-2">
+<h2 id="sec-35"><span class="section-number-2">35</span> ECB</h2>
+<div class="outline-text-2" id="text-35">
+
+
+</div>
+
+<div id="outline-container-35-1" class="outline-3">
+<h3 id="sec-35-1"><span class="section-number-3">35.1</span> 自定义ECB窗口宽度</h3>
+<div class="outline-text-3" id="text-35-1">
+
+<p>  设置 <code>ecb-windows-width</code> 变量。<br/>
+</p>
+
+
+<pre class="src src-lisp">(setq ecb-windows-width 0.25)
+</pre>
+
+</div>
+
+</div>
+
+<div id="outline-container-35-2" class="outline-3">
+<h3 id="sec-35-2"><span class="section-number-3">35.2</span> 自定义ECB布局</h3>
+<div class="outline-text-3" id="text-35-2">
+
+<p>   ECB我最常用的窗口是method窗口，其它的像history/directories基本没用过.<br/>
+   <code>M-x ecb-create-new-layout</code> 打开新的frame，按照提示创建新的只有method的布局。然后 <code>C-c . l c</code> 切换到新建的布局，此时只有method窗口，无法切换到其它窗口。<br/>
+   （预定义布局中的left9实现同样的功能）<br/>
+</p>
+<p>
+   如果想要打开ECB时就只显示method窗口，可以添加一个hook：<br/>
+</p>
+
+
+<pre class="src src-lisp">(add-hook 'ecb-activate-hook 'vf-show-method-window-only)
+(<span style="color: #a020f0;">defun</span> <span style="color: #0000ff;">vf-show-method-window-only</span> ()
+  (ecb-maximize-window-methods))
+</pre>
+
+</div>
+</div>
+
+</div>
+
+<div id="outline-container-36" class="outline-2">
+<h2 id="sec-36"><span class="section-number-2">36</span> 为新mode实现auto complete</h2>
+<div class="outline-text-2" id="text-36">
+
+<p>  <code>auto-complete</code> 维护一个变量 <code>ac-modes</code> 保存所有那些进入后应该自动打开 <code>auto-complete-mode</code> 的mode，所以应该先将在此变量中注册一下，以graphviz-dot-mode为例：<br/>
+</p>
+
+
+<pre class="src src-lisp">(add-to-list 'ac-modes 'graphviz-dot-mode)
+</pre>
+
+<p>
+  <code>ac-sources</code> 是一个buffer-local变量，即每个buffer值都不一样，该变量中保存着此buffer中自动补全词汇来源，例如 <code>auto-complete-config.el</code> 中的一段代码：<br/>
+</p>
+
+
+<pre class="src src-lisp">(<span style="color: #a020f0;">defun</span> <span style="color: #0000ff;">ac-emacs-lisp-mode-setup</span> ()
+  (setq ac-sources (append '(ac-source-features ac-source-functions ac-source-yasnippet ac-source-variables ac-source-symbols) ac-sources)))
+
+(<span style="color: #a020f0;">defun</span> <span style="color: #0000ff;">ac-cc-mode-setup</span> ()
+  (setq ac-sources (append '(ac-source-yasnippet ac-source-gtags) ac-sources)))
+
+(<span style="color: #a020f0;">defun</span> <span style="color: #0000ff;">ac-ruby-mode-setup</span> ())
+
+(<span style="color: #a020f0;">defun</span> <span style="color: #0000ff;">ac-css-mode-setup</span> ()
+  (setq ac-sources (append '(ac-source-css-property) ac-sources)))
+
+(<span style="color: #a020f0;">defun</span> <span style="color: #0000ff;">ac-config-default</span> ()
+  (setq-default ac-sources '(ac-source-abbrev ac-source-dictionary ac-source-words-in-same-mode-buffers))
+  (add-hook 'emacs-lisp-mode-hook 'ac-emacs-lisp-mode-setup)
+  (add-hook 'c-mode-common-hook 'ac-cc-mode-setup)
+  (add-hook 'ruby-mode-hook 'ac-ruby-mode-setup)
+  (add-hook 'css-mode-hook 'ac-css-mode-setup)
+  (add-hook 'auto-complete-mode-hook 'ac-common-setup)
+  (global-auto-complete-mode t))
+</pre>
+
+<p>
+  可见默认情况下lisp-mode的补全来源有 ac-source-features ac-source-functions ac-source-yasnippet ac-source-variables ac-source-symbols，由于写emacs lisp程序是经常需要补全emacs各个mode下的函数和变量所以ac-source-functions ac-source-variables被加入到ac-sources中，其它mode下一般用不到这两个来源，一般 <code>ac-source-yasnippet ac-source-dictionary ac-source-words-in-buffer</code> 即可满足要求。<br/>
+</p>
+
+
+<pre class="src src-lisp">(<span style="color: #a020f0;">defun</span> <span style="color: #0000ff;">graphviz-dot-mode-setup</span> ()
+  (setq ac-sources '(
+                     ac-source-yasnippet
+                     ac-source-dictionary
+                     ac-source-words-in-buffer)))
+(add-hook 'graphviz-dot-mode-hook 'graphviz-dot-mode-setup)
+</pre>
+
+<p>
+  字典保存目录：<br/>
+</p>
+
+
+<pre class="src src-lisp">(add-to-list 'ac-dictionary-directories <span style="color: #8b2252;">"~/.emacs.d/auto-complete/auto-complete/dict"</span>)
+</pre>
+
+
+<pre class="example">~ $ tree ~/.emacs.d/auto-complete/auto-complete/dict
+/home/visayafan/.emacs.d/auto-complete/auto-complete/dict
+|-- ada-mode
+|-- haskell-mode
+|-- java-mode
+|-- graphviz-dot-mode
+</pre>
+
+<p>
+  进入graphviz-dot-mode后自动选择由变量ac-dictionary-directories保存的目录下的graphviz-dot-mode文件，可以在此文件中加入自己想要补全的词汇，例如：<br/>
+</p>
+
+
+<pre class="example">graph
+digraph
+subgraph
+node
+edge
+</pre>
+
+<p>
+  之后再打开dot后缀的文件后会自动进入auto-complete-mode。<br/>
+</p></div>
+
+</div>
+
+<div id="outline-container-37" class="outline-2">
+<h2 id="sec-37"><span class="section-number-2">37</span> sgml-pretty-print格式化html文件</h2>
+<div class="outline-text-2" id="text-37">
+
+<p>  用来处理杂乱的HTML代码。<br/>
+  与indent-region不同的是它会在适当的地方加上换行符。如果代码模式没有问题只是缩进有问题可以用 <code>C-M-\</code> 。<br/>
+</p></div>
+
+</div>
+
+<div id="outline-container-38" class="outline-2">
+<h2 id="sec-38"><span class="section-number-2">38</span> HTML中输入特殊字符</h2>
+<div class="outline-text-2" id="text-38">
+
+<p>  HTML模式下， <code>C-c C-n</code> 再输入对应的字符即可。<br/>
 </p></div>
 </div>
 </div>
