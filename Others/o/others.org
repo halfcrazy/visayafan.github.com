@@ -1,0 +1,11 @@
+
+*  为精简xp系统添加德语输入法
+   下载kbdgr.dll后放到c:/windows/system32中，将下面保存到xx.reg中运行即可：
+#+begin_example
+Windows Registry Editor Version 5.00
+
+[HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Keyboard Layouts\00000407]
+"Layout Text"="German"
+"Layout Display Name"="@%SystemRoot%\\system32\\input.dll,-5011"
+"Layout File"="KBDGR.DLL"
+#+end_example

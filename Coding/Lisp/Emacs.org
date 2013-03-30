@@ -38,8 +38,20 @@ grep -nH -e "pattern" filename
 #+end_src
   ace-jump-mode共有3个子模式，char, word和line,默认是word，加上前缀C-u是char,两个前缀C-u C-u是line.
   word模式只匹配以输入字符开头的单词，line模式在非空行行首显示字符以便跳转到想要到的行。
-* align-regexp
+* align/align-regexp
   满足指定正则表达式的对齐，有时对整理注释比较有用。
+  比较有用的是变量声明的对齐：
+  #+begin_src c
+  int a;
+  char c;
+  string str;
+  #+end_src
+  选中后 =M-x align= 效果：
+  #+begin_src c++
+  int    a;
+  char   c;
+  string str;
+  #+end_src
   其它用法：[[http://emacswiki.org/emacs/AlignCommands][EmacsWiki]]
 * occur, re-builder, multi-occur, multi-occur-in-matching-buffers
   list-matching-lines是occur的别名，列出当前buffer中所有满足指定正则表达式的行。
@@ -380,3 +392,32 @@ edge
   与indent-region不同的是它会在适当的地方加上换行符。如果代码模式没有问题只是缩进有问题可以用 =C-M-\= 。
 * HTML中输入特殊字符
   HTML模式下， =C-c C-n= 再输入对应的字符即可。
+* cscope
+  =cscope -bR= 其中b表只build数据库，执行完后退出不显示Cscope GUI，R表递归；默认情况下只分析.c, .h, .y, or .l 后缀的文件。
+  如果想要分析其它后缀的文件，例如.java，.cpp，就需要将要分析的文件名及路径放在cscope.files文件中（可以用find命令），然后再执行cscope -b。
+  #+begin_example
+  find . -name "*.[chSs]" -o -name "*.cpp" >cscope.files
+  cscope -b
+  #+end_example
+  上面命令查找以c,h,s,S,cpp结尾的文件并保存到cscope.files中并生成相应数据库文件cscope.out.
+
+  *note* 默认情况下cscope会索引工程中#include包含的文件(位于/usr/include下)以便定位系统函数；对于内核这样的工程，其#include包含的文件完全在自己的工程中，不需要使用/usr/include下的头文件，生成cscope.out时需要加上-k选项。
+
+  *find技巧*
+  1. 正则查找 -regex.
+     -name只支持globs，不是真正的regexp，上面的命令可以重写：
+     #+begin_example
+     find . -regex ".*\(c\|h\|s\|S\|cpp\)" > cscope.files
+     #+end_example
+  2. 如果想忽略查找文件下的某个文件可以用 -path PATH -prune -o
+     #+begin_example
+     find . -path "./document/*" -prune -o -name "*.c" -print > cscope.files
+     #+end_example
+     上面命令会忽略当前目录下的document子目录
+  3. 忽略某子目录下除某个目录外的所有目录：
+     #+begin_example
+     find . -path "./document/*" ! -path "./document/man*" -prune -o -name "*.c" -print > cscope.files
+     #+end_example
+     对于document目录只查看其下以man开头的目录。
+     -path支持逻辑运算 AND OR !.
+     对于上面的命令 "./document/man*" 包含在 "./document/*"中，用!即表示二者差集，不可以写成"./document"或"./document/man"

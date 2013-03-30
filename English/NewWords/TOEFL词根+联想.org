@@ -263,3 +263,126 @@ Be careful to articulate your words so that everyone in the room can understand 
    同义词：predator 捕食者/食肉动物
 ** carp
    鲤鱼
+* List5
+** cascara
+   缓泻剂（治疗便秘）
+** catalyst
+   [化学]催化剂
+   刺激因素
+** caterpillar
+   毛虫（蝴蝶的幼虫）
+** cavity
+   cave 洞
+   [解剖anatomy]腔
+** celestial
+   adj 天空的
+   n 神仙
+** census
+   人口普查
+** centennial
+   百年纪念
+   centenary 百年的
+   millennium 千年的/千禧年
+** ceramic
+   陶瓷的
+   ceram 陶瓷
+** chafe
+   abrade rub 擦伤/摩擦
+   激怒 irritate
+** chamber
+   n 房间/私人会所
+   adj 私人的/室内的
+** chapel
+   小教堂
+   cathedral 大教堂
+   bazaar 集市
+** charter
+   n 宪章/执照
+   v 特许
+** charcoal
+   木炭
+** checked
+   格子花纹的
+** baboon
+   狒狒
+   chimpanzee 黑猩猩
+   gorilla 大猩猩
+   orangutan 猩猩
+** chlorine
+   [化学]氯
+   aluminum 铝
+   magnesium 镁
+** cholesterol
+   胆固醇
+   chole 胆/胆汁
+   sterol 固醇
+** choreograph
+   编排舞蹈
+   choreographer 编舞者
+   choreography 编舞/舞蹈艺术
+** choir
+   唱诗班
+   chorus 合唱队
+** chronic
+   慢性的
+   chronical 慢性的
+   chron-时间相关的
+   chronicle 编年史
+   chrono-时间长的
+   chronology 年代学
+** circumference
+   周长/圆周
+   periphery 周边 peripheral equipment 外围设备
+   perimeter 圆周
+** clam
+   蛤
+   oyster 牡蛎
+   abalone 鲍鱼
+   coral 珊瑚
+   crab 螃蟹
+** clamor
+   n/v 吵闹/喧嚷
+   proclaim 声明/宣告
+   proclamation
+   reclaim 回收利用/开拓
+   reclamation
+   exclaim 感叹
+   exclamation 感叹 exclamation mark感叹号 exclamatory 感叹的
+   变名词时去掉i
+** clipper
+   快速帆船/大剪刀/理发剪刀
+   clip n/v修剪
+** cluster
+   簇
+** clump
+   n 土块/丛
+   v 形成丛
+** clutch
+   n 离合器
+   v 抓住
+** coarse
+   粗糙的/粗俗的/下流的
+   hoarse 嘶哑的
+** coax
+   哄/哄骗/慢慢弄好，细心处理
+   Coax
+   coaxial/coxal 同轴的（having a common axis）
+** cognition
+   认知/感知 perception
+   cognitive 认知的
+** coil
+   n 卷/线圈
+   v 盘绕
+** ellipsis
+   省略(号)
+   ellipse 椭圆
+** apostrophe
+   省略号/撇号
+** despicable
+   卑鄙的
+** myriad
+   大量的
+   一万
+** mnemonic
+   记忆的/助记的
+   

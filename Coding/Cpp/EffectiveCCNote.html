@@ -1,0 +1,339 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+               "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-CN" xml:lang="zh-CN">
+<head>
+<title>Effective C++ 笔记</title>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
+<meta name="title" content="Effective C++ 笔记"/>
+<meta name="generator" content="Org-mode"/>
+<meta name="generated" content="2013-03-27 02:23:08 CST"/>
+<meta name="author" content="visayafan"/>
+<meta name="description" content=""/>
+<meta name="keywords" content=""/>
+
+
+
+</head>
+<body>
+
+
+<div id="content">
+<h1 class="title">Effective C++ 笔记</h1>
+
+
+<!-- <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"> </script> -->
+<link rel="stylesheet" type="text/css" href="../../Layout/CSS/bootstrap_old.css" />
+<link rel="stylesheet" type="text/css" href="../../Layout/CSS/too_many_toc.css" />
+<script src="../../Layout/JS/jquery_1.7.1.js"></script>
+<script src="../../Layout/JS/bootstrap_old.js"></script>
+
+
+<div id="table-of-contents">
+<h2>目录</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#sec-1">条款5：C++隐含生成和调用的函数</a></li>
+<li><a href="#sec-2">条款6：显示禁止使用编译器生成的函数</a></li>
+<li><a href="#sec-3">条款7：多态类中将析构函数声明为虚的</a></li>
+<li><a href="#sec-4">条款8：阻止析构函数里的异常逃出</a></li>
+<li><a href="#sec-5">条款9：不要在构造和析构函数中调用虚成员函数</a></li>
+<li><a href="#sec-6">拷贝赋值操作符返回*this的引用</a></li>
+<li><a href="#sec-7">条款11：处理自我赋值</a></li>
+<li><a href="#sec-8">条款12：拷贝对象的所有成分</a></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-1" class="outline-2">
+<h2 id="sec-1">条款5：C++隐含生成和调用的函数</h2>
+<div class="outline-text-2" id="text-1">
+
+<p>  必须条件下类会自动生成构造/析构/拷贝/拷贝赋值函数。<br/>
+  自动生成构造/析构函数条件：1.其父类中有ctor/dtor。2.成员变量中类对象有ctor/dtor。<br/>
+  自动生成拷贝/拷贝赋值函数条件：存在其调用，例如 <code>A a(a1); A a=a1;</code><br/>
+</p></div>
+
+</div>
+
+<div id="outline-container-2" class="outline-2">
+<h2 id="sec-2">条款6：显示禁止使用编译器生成的函数</h2>
+<div class="outline-text-2" id="text-2">
+
+<p>  可以将拷贝/拷贝赋值函数声明为没有定义的私有函数，从而禁止对象赋值。<br/>
+  但这种作法有种缺陷——成员函数和友元函数仍然可以调用拷贝函数和拷贝赋值函数，并且编译的时候不会出错，链接的时候会出错。<br/>
+  解决方案是使用不可拷贝的基类：<br/>
+  <div class="row-fluid"> <div class="span4">
+
+<pre class="src src-c"><span style="color: #228b22;">class</span> <span style="color: #a0522d;">Derived</span> {
+<span style="color: #008b8b;">private</span>:
+     <span style="color: #a0522d;">Derived</span>(<span style="color: #a020f0;">const</span> <span style="color: #228b22;">Derived</span>&amp; rhs){}
+     Derived&amp; operator= (<span style="color: #a020f0;">const</span> <span style="color: #228b22;">Derived</span>&amp; rhs){}
+public:
+     Derived(){}
+     <span style="color: #228b22;">int</span> <span style="color: #a0522d;">i</span>;
+     friend <span style="color: #228b22;">void</span> <span style="color: #a0522d;">frifun</span>(<span style="color: #a020f0;">const</span> <span style="color: #228b22;">Derived</span>&amp; rhs);
+};
+<span style="color: #228b22;">void</span> <span style="color: #0000ff;">frifun</span>(<span style="color: #a020f0;">const</span> <span style="color: #228b22;">Derived</span>&amp; rhs){
+     <span style="color: #228b22;">Derived</span> <span style="color: #a0522d;">tmp</span>(rhs);
+     cout&lt;&lt;tmp.i&lt;&lt;endl;
+}
+<span style="color: #228b22;">int</span> <span style="color: #0000ff;">main</span>(<span style="color: #228b22;">int</span> <span style="color: #a0522d;">argc</span>, <span style="color: #228b22;">char</span> *<span style="color: #a0522d;">argv</span>[])
+{
+     <span style="color: #228b22;">Derived</span> <span style="color: #a0522d;">d</span>;
+     d.i=100;
+     frifun(d);
+     <span style="color: #a020f0;">return</span> 0;
+}  
+</pre>
+
+  </div> <div class="span2">
+  </div> <div class="span4">
+
+<pre class="src src-c++"><span style="color: #a020f0;">class</span> <span style="color: #228b22;">Uncopyable</span> {
+<span style="color: #a020f0;">protected</span>:
+     <span style="color: #0000ff;">Uncopyable</span>(){}
+     ~<span style="color: #0000ff;">Uncopyable</span>(){}
+<span style="color: #a020f0;">private</span>:
+     <span style="color: #0000ff;">Uncopyable</span>(<span style="color: #a020f0;">const</span> <span style="color: #228b22;">Uncopyable</span>&amp;);
+     <span style="color: #228b22;">Uncopyable</span>&amp; <span style="color: #a020f0;">operator</span><span style="color: #0000ff;">=</span> (<span style="color: #a020f0;">const</span> <span style="color: #228b22;">Uncopyable</span>&amp;);
+};
+<span style="color: #a020f0;">class</span> <span style="color: #228b22;">Derived</span> : <span style="color: #a020f0;">private</span> <span style="color: #228b22;">Uncopyable</span>{
+<span style="color: #a020f0;">public</span>:
+     <span style="color: #0000ff;">Derived</span>(){}
+     <span style="color: #228b22;">int</span> <span style="color: #a0522d;">i</span>;
+     <span style="color: #a020f0;">friend</span> <span style="color: #228b22;">void</span> <span style="color: #0000ff;">frifun</span>(<span style="color: #a020f0;">const</span> <span style="color: #228b22;">Derived</span>&amp; <span style="color: #a0522d;">rhs</span>);
+};
+<span style="color: #228b22;">void</span> <span style="color: #0000ff;">frifun</span>(<span style="color: #a020f0;">const</span> <span style="color: #228b22;">Derived</span>&amp; <span style="color: #a0522d;">rhs</span>){
+     <span style="color: #228b22;">Derived</span> <span style="color: #a0522d;">tmp</span>(rhs);
+     cout&lt;&lt;tmp.i&lt;&lt;endl;
+}
+<span style="color: #228b22;">int</span> <span style="color: #0000ff;">main</span>(<span style="color: #228b22;">int</span> <span style="color: #a0522d;">argc</span>, <span style="color: #228b22;">char</span> *<span style="color: #a0522d;">argv</span>[])
+{
+     <span style="color: #228b22;">Derived</span> <span style="color: #a0522d;">d</span>;
+     d.i=100;
+     frifun(d);
+     <span style="color: #a020f0;">return</span> 0;
+}
+</pre>
+
+  </div></div>
+  左边程序可以编译运行但结果是不确定的（输出的i是随机数）。<br/>
+  右边的程序由于Derived没有显示拷贝函数且其基类有拷贝函数，所以编译器会自动生成Derived的拷贝函数，该拷贝函数的唯一用途就是调用基类的拷贝函数，但其基类的拷贝函数为私有的，禁止被Derived调用，所以根本编译不过。<br/>
+  boost的noncopyable类就是做这个事的：<br/>
+</p>
+
+
+<pre class="src src-c++"><span style="color: #483d8b;">#include</span> <span style="color: #8b2252;">&lt;boost/noncopyable.hpp&gt;</span>  
+<span style="color: #483d8b;">#include</span> <span style="color: #8b2252;">&lt;stdio.h&gt;</span>  
+<span style="color: #483d8b;">#include</span> <span style="color: #8b2252;">&lt;string&gt;</span>  
+<span style="color: #483d8b;">#include</span> <span style="color: #8b2252;">&lt;iostream&gt;</span>  
+<span style="color: #a020f0;">class</span> <span style="color: #228b22;">Test</span> : <span style="color: #008b8b;">boost</span>::<span style="color: #228b22;">noncopyable</span>  
+{  
+<span style="color: #a020f0;">public</span>:  
+     <span style="color: #0000ff;">Test</span>() {  
+          printf(<span style="color: #8b2252;">"constructing \n"</span>);  
+     }  
+     ~<span style="color: #0000ff;">Test</span>() {  
+          printf(<span style="color: #8b2252;">"destructing\n"</span>);  
+     }  
+     <span style="color: #a020f0;">const</span> <span style="color: #008b8b;">std</span>::<span style="color: #228b22;">string</span>&amp; <span style="color: #0000ff;">name</span>() <span style="color: #a020f0;">const</span> { <span style="color: #a020f0;">return</span> name_; }  
+     <span style="color: #228b22;">void</span> <span style="color: #0000ff;">setName</span>(<span style="color: #a020f0;">const</span> <span style="color: #008b8b;">std</span>::<span style="color: #228b22;">string</span>&amp; <span style="color: #a0522d;">n</span>) { name_ = n; }  
+<span style="color: #a020f0;">private</span>:  
+     <span style="color: #008b8b;">std</span>::<span style="color: #228b22;">string</span> <span style="color: #a0522d;">name_</span>;  
+};  
+<span style="color: #228b22;">int</span> <span style="color: #0000ff;">main</span>()  
+{  
+     <span style="color: #228b22;">Test</span> <span style="color: #a0522d;">lTest</span>;  
+     <span style="color: #228b22;">Test</span> <span style="color: #a0522d;">lTest2</span>(lTest);  
+     <span style="color: #b22222;">// </span><span style="color: #b22222;">error C2248: &#8220;boost::noncopyable_::noncopyable::noncopyable&#8221;  </span>
+     <span style="color: #b22222;">//</span><span style="color: #b22222;">: &#26080;&#27861;&#35775;&#38382; private &#25104;&#21592;(&#22312;&#8220;boost::noncopyable_::noncopyable&#8221;&#31867;&#20013;&#22768;&#26126;)  </span>
+} 
+</pre>
+
+<p>
+  <b>note</b> 可以将Derived的拷贝函数只声明而不实现，编译时也通不过: undefined reference to `Derived::Derived(Derived const&amp;)'<br/>
+</p></div>
+
+</div>
+
+<div id="outline-container-3" class="outline-2">
+<h2 id="sec-3">条款7：多态类中将析构函数声明为虚的</h2>
+<div class="outline-text-2" id="text-3">
+
+<p>  当试图用父类指针删除子类对象时，如果父类的析构函数不是虚的将会调用父类的析构函数而非子类的，从而有可能导致子类的部分变量没有被删除，从而造成内存泄露。<br/>
+</p>
+
+
+<pre class="src src-c++"><span style="color: #a020f0;">class</span> <span style="color: #228b22;">Base</span>{
+<span style="color: #a020f0;">public</span>:
+     ~<span style="color: #0000ff;">Base</span>(){
+          cout&lt;&lt;<span style="color: #8b2252;">"base dtor"</span>&lt;&lt;endl;
+     }
+};
+<span style="color: #a020f0;">class</span> <span style="color: #228b22;">Derived</span>: <span style="color: #a020f0;">public</span> <span style="color: #228b22;">Base</span>{
+<span style="color: #a020f0;">private</span>:
+     <span style="color: #228b22;">int</span> *<span style="color: #a0522d;">pi</span>;
+<span style="color: #a020f0;">public</span>:
+     <span style="color: #0000ff;">Derived</span>(){
+          pi = <span style="color: #a020f0;">new</span> <span style="color: #228b22;">int</span>;
+     }
+     ~<span style="color: #0000ff;">Derived</span>(){
+          <span style="color: #a020f0;">delete</span> pi;
+          cout&lt;&lt;<span style="color: #8b2252;">"derived dtor"</span>&lt;&lt;endl;
+     }
+};
+
+<span style="color: #228b22;">int</span> <span style="color: #0000ff;">main</span>(<span style="color: #228b22;">int</span> <span style="color: #a0522d;">argc</span>, <span style="color: #228b22;">char</span> *<span style="color: #a0522d;">argv</span>[])
+{
+     <span style="color: #228b22;">Base</span> *<span style="color: #a0522d;">pb</span> = <span style="color: #a020f0;">new</span> <span style="color: #228b22;">Derived</span>;
+     <span style="color: #a020f0;">delete</span> pb;
+     <span style="color: #a020f0;">return</span> 0;
+}
+</pre>
+
+<p>
+  输出结果为：base dtor<br/>
+  表明并没有调用Derived的dtor，没有执行 <code>delete pi;</code> 从而造成内存泄露。<br/>
+</p>
+<p>
+  但将不具有多态性的类的dtor声明为虚的没有任何好处，只会让类生成只有一个析构函数指针的virtual table并为对象增加4B的vptr指针空间。<br/>
+</p>
+<p>
+  一般来说只要类里有成员函数是虚的（表明此类有可能具有多态性）就把析构函数声明为虚的（不会浪费空间，因为前面已经有虚成员函数了，vptr指针的生成不可避免）。<br/>
+</p></div>
+
+</div>
+
+<div id="outline-container-4" class="outline-2">
+<h2 id="sec-4">条款8：阻止析构函数里的异常逃出</h2>
+<div class="outline-text-2" id="text-4">
+
+<p>  析构函数是用来进行扫尾工作的（例如释放内存等），如果在析构函数里抛出异常有可能导致扫尾工作中断，从而造成内存泄露等。<br/>
+</p>
+<p>
+  一种极端的解决办法是若出现异常则中止整个程序，从而避免不可定义的行为。<br/>
+  另一种方法是进行出错记录。<br/>
+</p></div>
+
+</div>
+
+<div id="outline-container-5" class="outline-2">
+<h2 id="sec-5">条款9：不要在构造和析构函数中调用虚成员函数</h2>
+<div class="outline-text-2" id="text-5">
+
+<p>  在ctor和dtor中调用的虚函数的版本是ctor和dtor所在类的虚函数。<br/>
+</p>
+
+
+<pre class="src src-c++"><span style="color: #a020f0;">class</span> <span style="color: #228b22;">A</span>{
+<span style="color: #a020f0;">public</span>:
+     <span style="color: #0000ff;">A</span>(){test();}
+     ~<span style="color: #0000ff;">A</span>(){test();}
+     <span style="color: #a020f0;">virtual</span> <span style="color: #228b22;">void</span> <span style="color: #0000ff;">test</span>(){cout&lt;&lt;<span style="color: #8b2252;">"A test"</span>&lt;&lt;endl;}
+};
+
+<span style="color: #a020f0;">class</span> <span style="color: #228b22;">B</span>: <span style="color: #a020f0;">public</span> <span style="color: #228b22;">A</span>{
+<span style="color: #a020f0;">public</span>:
+     <span style="color: #0000ff;">B</span>(){test();}
+     ~<span style="color: #0000ff;">B</span>(){test();}
+     <span style="color: #228b22;">void</span> <span style="color: #0000ff;">test</span>(){cout&lt;&lt;<span style="color: #8b2252;">"B test"</span>&lt;&lt;endl;}
+
+};
+<span style="color: #228b22;">int</span> <span style="color: #0000ff;">main</span>(<span style="color: #228b22;">int</span> <span style="color: #a0522d;">argc</span>, <span style="color: #228b22;">char</span> *<span style="color: #a0522d;">argv</span>[])
+{
+     <span style="color: #228b22;">B</span> <span style="color: #a0522d;">b</span>;
+     <span style="color: #a020f0;">return</span> 0;
+}
+</pre>
+
+<p>
+  B构造函数调用A的构造函数时，B的vtable还没有构造好，所以A构造函数里调用的test函数不可能是B里实现的test函数。<br/>
+  同理B析构函数调用A的析函数时，B对象已经蜕化成了A对象（B特有的部分已经被清空了），所以A析构里调用的test函数是A的而非B的。<br/>
+</p></div>
+
+</div>
+
+<div id="outline-container-6" class="outline-2">
+<h2 id="sec-6">拷贝赋值操作符返回*this的引用</h2>
+<div class="outline-text-2" id="text-6">
+
+
+
+
+<pre class="src src-c++"><span style="color: #228b22;">A</span>&amp; <span style="color: #a020f0;">operator</span><span style="color: #0000ff;">=</span> (<span style="color: #a020f0;">const</span> <span style="color: #228b22;">A</span>&amp; <span style="color: #a0522d;">rhs</span>){
+     <span style="color: #b22222;">//</span><span style="color: #b22222;">xxx</span>
+     <span style="color: #a020f0;">return</span> *<span style="color: #a020f0;">this</span>;
+}
+</pre>
+
+<p>
+  是为了可以连续赋值： a=b=c;<br/>
+</p></div>
+
+</div>
+
+<div id="outline-container-7" class="outline-2">
+<h2 id="sec-7">条款11：处理自我赋值</h2>
+<div class="outline-text-2" id="text-7">
+
+<p>  处理赋值情况时如果左值和右值是同一个变量可能会出现问题：<br/>
+</p>
+
+
+<pre class="src src-c++"><span style="color: #a020f0;">class</span> <span style="color: #228b22;">T</span>{
+<span style="color: #a020f0;">public</span>:
+     <span style="color: #228b22;">int</span> <span style="color: #a0522d;">t</span>;
+};
+<span style="color: #a020f0;">class</span> <span style="color: #228b22;">A</span>{
+<span style="color: #a020f0;">public</span>:
+     <span style="color: #228b22;">T</span>* <span style="color: #a0522d;">pt</span>;
+     <span style="color: #0000ff;">A</span>(){
+          pt=<span style="color: #a020f0;">new</span> <span style="color: #228b22;">T</span>;
+          pt-&gt;t=10;
+     }
+     <span style="color: #228b22;">A</span>&amp; <span style="color: #a020f0;">operator</span><span style="color: #0000ff;">=</span> (<span style="color: #a020f0;">const</span> <span style="color: #228b22;">A</span>&amp; <span style="color: #a0522d;">rhs</span>){
+          <span style="color: #a020f0;">delete</span> pt;
+          pt = <span style="color: #a020f0;">new</span> <span style="color: #228b22;">T</span>(*rhs.pt);
+          <span style="color: #a020f0;">return</span> *<span style="color: #a020f0;">this</span>;
+     }
+};
+<span style="color: #228b22;">int</span> <span style="color: #0000ff;">main</span>(<span style="color: #228b22;">int</span> <span style="color: #a0522d;">argc</span>, <span style="color: #228b22;">char</span> *<span style="color: #a0522d;">argv</span>[])
+{
+     <span style="color: #228b22;">A</span> <span style="color: #a0522d;">a</span>;
+     cout&lt;&lt;a.pt-&gt;t&lt;&lt;endl;
+     a=a;
+     cout&lt;&lt;a.pt-&gt;t&lt;&lt;endl;
+     <span style="color: #a020f0;">return</span> 0;
+}
+</pre>
+
+<p>
+  输出结果为：10,0<br/>
+  出现问题原因在于调用拷贝赋值函数时先delete pt，再利用 rhs的pt新new一个T。但左值右值是同一个变量时会使 <code>new T(*ths.pt)</code> 中的pt指向未定义区域。<br/>
+</p>
+<p>
+  解决办法是在拷贝赋值前先检查左值和右值是否是同一个值，若是同一个值则直接返回。<br/>
+</p>
+<p>
+  另外解决办法是延迟pt的删除到new后，或者先创建rhs的副本然后所有操作都要副本上操作。<br/>
+</p></div>
+
+</div>
+
+<div id="outline-container-8" class="outline-2">
+<h2 id="sec-8">条款12：拷贝对象的所有成分</h2>
+<div class="outline-text-2" id="text-8">
+
+<p>  自己实现拷贝函数时不光注意当前类的成员还要考虑父类的继承而来的成员。<br/>
+</p>
+<p>
+  两个拷贝函数里如果相同代码较多可以将公有部分放在一个私有函数里然后两个拷贝函数都调用此函数。<br/>
+</p>
+<p>  <br/>
+</p></div>
+</div>
+</div>
+
+</body>
+</html>

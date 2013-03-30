@@ -1,0 +1,209 @@
+#+OPTIONS: ^:{} _:{} num:nil toc:t \n:t
+#+INCLUDE "../../template-toc.org"
+#+SETUPFILE: "../../extension.org"
+#+title:Effective C++ 笔记
+* 条款5：C++隐含生成和调用的函数
+  必须条件下类会自动生成构造/析构/拷贝/拷贝赋值函数。
+  自动生成构造/析构函数条件：1.其父类中有ctor/dtor。2.成员变量中类对象有ctor/dtor。
+  自动生成拷贝/拷贝赋值函数条件：存在其调用，例如 =A a(a1); A a=a1;=
+* 条款6：显示禁止使用编译器生成的函数
+  可以将拷贝/拷贝赋值函数声明为没有定义的私有函数，从而禁止对象赋值。
+  但这种作法有种缺陷——成员函数和友元函数仍然可以调用拷贝函数和拷贝赋值函数，并且编译的时候不会出错，链接的时候会出错。
+  解决方案是使用不可拷贝的基类：
+  {{{left(4)}}}
+  #+begin_src c
+  class Derived {
+  private:
+       Derived(const Derived& rhs){}
+       Derived& operator= (const Derived& rhs){}
+  public:
+       Derived(){}
+       int i;
+       friend void frifun(const Derived& rhs);
+  };
+  void frifun(const Derived& rhs){
+       Derived tmp(rhs);
+       cout<<tmp.i<<endl;
+  }
+  int main(int argc, char *argv[])
+  {
+       Derived d;
+       d.i=100;
+       frifun(d);
+       return 0;
+  }  
+  #+end_src
+  {{{middle(2)}}}
+  {{{middle(4)}}}
+  #+begin_src c++
+  class Uncopyable {
+  protected:
+       Uncopyable(){}
+       ~Uncopyable(){}
+  private:
+       Uncopyable(const Uncopyable&);
+       Uncopyable& operator= (const Uncopyable&);
+  };
+  class Derived : private Uncopyable{
+  public:
+       Derived(){}
+       int i;
+       friend void frifun(const Derived& rhs);
+  };
+  void frifun(const Derived& rhs){
+       Derived tmp(rhs);
+       cout<<tmp.i<<endl;
+  }
+  int main(int argc, char *argv[])
+  {
+       Derived d;
+       d.i=100;
+       frifun(d);
+       return 0;
+  }
+  #+end_src
+  {{{right}}}
+  左边程序可以编译运行但结果是不确定的（输出的i是随机数）。
+  右边的程序由于Derived没有显示拷贝函数且其基类有拷贝函数，所以编译器会自动生成Derived的拷贝函数，该拷贝函数的唯一用途就是调用基类的拷贝函数，但其基类的拷贝函数为私有的，禁止被Derived调用，所以根本编译不过。
+  boost的noncopyable类就是做这个事的：
+  #+begin_src c++
+  #include <boost/noncopyable.hpp>  
+  #include <stdio.h>  
+  #include <string>  
+  #include <iostream>  
+  class Test : boost::noncopyable  
+  {  
+  public:  
+       Test() {  
+            printf("constructing \n");  
+       }  
+       ~Test() {  
+            printf("destructing\n");  
+       }  
+       const std::string& name() const { return name_; }  
+       void setName(const std::string& n) { name_ = n; }  
+  private:  
+       std::string name_;  
+  };  
+  int main()  
+  {  
+       Test lTest;  
+       Test lTest2(lTest);  
+       // error C2248: “boost::noncopyable_::noncopyable::noncopyable”  
+       //: 无法访问 private 成员(在“boost::noncopyable_::noncopyable”类中声明)  
+  } 
+  #+end_src
+  *note* 可以将Derived的拷贝函数只声明而不实现，编译时也通不过: undefined reference to `Derived::Derived(Derived const&)'
+* 条款7：多态类中将析构函数声明为虚的
+  当试图用父类指针删除子类对象时，如果父类的析构函数不是虚的将会调用父类的析构函数而非子类的，从而有可能导致子类的部分变量没有被删除，从而造成内存泄露。
+  #+begin_src c++
+  class Base{
+  public:
+       ~Base(){
+            cout<<"base dtor"<<endl;
+       }
+  };
+  class Derived: public Base{
+  private:
+       int *pi;
+  public:
+       Derived(){
+            pi = new int;
+       }
+       ~Derived(){
+            delete pi;
+            cout<<"derived dtor"<<endl;
+       }
+  };
+  
+  int main(int argc, char *argv[])
+  {
+       Base *pb = new Derived;
+       delete pb;
+       return 0;
+  }
+  #+end_src
+  输出结果为：base dtor
+  表明并没有调用Derived的dtor，没有执行 =delete pi;= 从而造成内存泄露。
+
+  但将不具有多态性的类的dtor声明为虚的没有任何好处，只会让类生成只有一个析构函数指针的virtual table并为对象增加4B的vptr指针空间。
+
+  一般来说只要类里有成员函数是虚的（表明此类有可能具有多态性）就把析构函数声明为虚的（不会浪费空间，因为前面已经有虚成员函数了，vptr指针的生成不可避免）。
+* 条款8：阻止析构函数里的异常逃出
+  析构函数是用来进行扫尾工作的（例如释放内存等），如果在析构函数里抛出异常有可能导致扫尾工作中断，从而造成内存泄露等。
+
+  一种极端的解决办法是若出现异常则中止整个程序，从而避免不可定义的行为。
+  另一种方法是进行出错记录。
+* 条款9：不要在构造和析构函数中调用虚成员函数
+  在ctor和dtor中调用的虚函数的版本是ctor和dtor所在类的虚函数。
+  #+begin_src c++
+  class A{
+  public:
+       A(){test();}
+       ~A(){test();}
+       virtual void test(){cout<<"A test"<<endl;}
+  };
+  
+  class B: public A{
+  public:
+       B(){test();}
+       ~B(){test();}
+       void test(){cout<<"B test"<<endl;}
+       
+  };
+  int main(int argc, char *argv[])
+  {
+       B b;
+       return 0;
+  }
+  #+end_src
+  B构造函数调用A的构造函数时，B的vtable还没有构造好，所以A构造函数里调用的test函数不可能是B里实现的test函数。
+  同理B析构函数调用A的析函数时，B对象已经蜕化成了A对象（B特有的部分已经被清空了），所以A析构里调用的test函数是A的而非B的。
+* 拷贝赋值操作符返回*this的引用
+  #+begin_src c++
+  A& operator= (const A& rhs){
+       //xxx
+       return *this;
+  }
+  #+end_src
+  是为了可以连续赋值： a=b=c;
+* 条款11：处理自我赋值
+  处理赋值情况时如果左值和右值是同一个变量可能会出现问题：
+#+begin_src c++
+class T{
+public:
+     int t;
+};
+class A{
+public:
+     T* pt;
+     A(){
+          pt=new T;
+          pt->t=10;
+     }
+     A& operator= (const A& rhs){
+          delete pt;
+          pt = new T(*rhs.pt);
+          return *this;
+     }
+};
+int main(int argc, char *argv[])
+{
+     A a;
+     cout<<a.pt->t<<endl;
+     a=a;
+     cout<<a.pt->t<<endl;
+     return 0;
+}
+#+end_src
+  输出结果为：10,0
+  出现问题原因在于调用拷贝赋值函数时先delete pt，再利用 rhs的pt新new一个T。但左值右值是同一个变量时会使 =new T(*ths.pt)= 中的pt指向未定义区域。
+
+  解决办法是在拷贝赋值前先检查左值和右值是否是同一个值，若是同一个值则直接返回。
+
+  另外解决办法是延迟pt的删除到new后，或者先创建rhs的副本然后所有操作都要副本上操作。
+* 条款12：拷贝对象的所有成分
+  自己实现拷贝函数时不光注意当前类的成员还要考虑父类的继承而来的成员。
+
+  两个拷贝函数里如果相同代码较多可以将公有部分放在一个私有函数里然后两个拷贝函数都调用此函数。
+  
