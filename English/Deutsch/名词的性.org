@@ -1,0 +1,45 @@
+#+OPTIONS: ^:{} _:{} num:t toc:t \n:t
+#+INCLUDE "../../template-toc.org"
+#+SETUPFILE: "../../extension.org"
+#+title:名词性规律总结
+
+* 阳性 Maskulinum
+** 以 -ling -ig -ich结尾的名词
+   | König | 国王 |
+** 男性词
+   | Mann  | 男人   |
+   | Vater | 父亲   |
+   | Sohn  | 儿子   |
+   | Herr  | 先生   |
+   | Neffe | 侄子/外甥 |
+   | Arzt  | 男医生 |
+** 表日，月，四季，星期的时间名词
+** 大部分山名
+** 岩石土壤
+** 天气现象
+** 方向
+** 货币
+** 汽车
+* 阴性 Femininum
+** -schaft -heit -heit -ung -in -ei
+** 大多数以e结尾的名词
+** 由动词转化来的以de/e结尾的名词
+** 大多数以 -tion -tät -tur结尾的词
+** 表女性的名词
+   | Mutter  | 母亲        |
+   | Frau    | 女士        |
+   | Tochter | 女儿        |
+   | Nichte  | 侄女/外甥女 |
+   | Ärztin  | 女医生      |
+** 表花草树木水果的名词
+** 大部分河流名
+* 中性 Neutrum
+** 以Ge开关的集合名词
+   | Getränk | 饮料 |
+** 以-chen -lein结尾的小称名词
+   | Fräuchen | 小姐，少女 |
+** 以 -um 结尾的外来词
+   | Museum | 博物馆 |
+** 幼小生物
+   | Kind | 小孩 |
+** 化学元素

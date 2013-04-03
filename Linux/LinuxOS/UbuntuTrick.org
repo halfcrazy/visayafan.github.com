@@ -14,3 +14,6 @@
 #+end_example
   然后执行 =sudo mkfontscale && sudo mkfontdir && sudo fc-cache -fv= 。
   这样字体便安装好了，可以通过 =fc-list|grep font-name= 来验证。
+* 切换键盘布局
+  System-Preferences-Keyboard Layouts 新添加一个layout
+  设置切换layout的快捷键：Options-Keys 

@@ -386,3 +386,166 @@ Be careful to articulate your words so that everyone in the room can understand 
 ** mnemonic
    记忆的/助记的
    
+* List6
+** collapse
+   倒塌/折叠（bootstrap中有一个控件叫collapse）
+** combustible
+   flammable 易燃的
+   combust v燃烧
+   combustion n
+** commemorate
+   v 纪念 honor/celebrate
+   commemoration
+** commodity
+   日用品
+   merchandise 商品
+   merchant 商人/商业的
+** communal
+   公共的/社区的 for public use
+   community 社区
+** advertent
+   留意的
+   inadvertent 不注意的
+   advert v注意/广告
+   advertise v做广告
+   advertisement n广告
+** compensate
+   偿还/赔偿
+   compensation n赔偿金
+   compensatory n赔偿
+** competence
+   n 胜任/有能力
+   compete 竞争
+   competent capable有能力的
+** comprise
+   be composed of 由...构成
+   #+begin_example
+   The earth comprised three principal layers.
+   #+end_example
+** concede
+   confess 承认
+   yield 让步
+** conceive
+   设想/想象
+   怀孕 become pregnant
+   conceive of 想象
+   #+begin_example
+   It's hard to conceive of living on the moon.
+   I can't conceive where he came up with that idea.
+   #+end_example
+** concert
+   音乐会
+   consistency/conherence 一致
+
+   concerted 一致的/商定好的
+** condensation
+   压缩/凝聚/液化
+   condense v浓缩
+   condenser 冷凝器/聚光器
+** confederacy
+   联盟
+   confederate n同盟国 a同盟的 united/federal
+   confederative a同盟的/联邦的
+** confer
+   conference 会议
+   conferee 与会者
+   conferment n商议/颁给
+   confer v商议
+   授予/给予 award/give
+   #+begin_example
+   The invention will confer a benefit on all invalids(残疾人).
+   #+end_example
+* List7
+** conform
+   conform to
+   comply with
+   obey 遵守
+   一致/符合
+** malady
+   疾病
+** congenial
+   意气相投的/相宜的/同性质的
+   congeniality 同性质
+   congener 同类的（人或物）
+** kindred
+   n家族，亲戚关系
+   a同族的，血缘的，同类的
+** consent
+   v/n赞同，同意
+   #+begin_example
+   He threw me a smile that telegraphed consent.
+   #+end_example
+** constellation
+   星座
+** consort
+   v 结交 make friends
+   n 伙伴 partner, buddy, companion
+** consonant
+   辅音 consotantal 辅音的
+   一致的，相符的
+   consonance 和音chord/调和
+   consonant with = in agreement with
+   be consonant with
+   #+begin_example
+   behaving with a dignity consonant with his rank. 举止带有与其地位相符的气质
+   #+end_example
+** volatile
+   易挥发的，不稳定的
+** electorate
+   选民
+   elector 选民
+   electoral a和选举相关的
+** contagious
+   传染的
+   infectious 传染的
+   contagion n传染（病）
+   inflammation 发炎/炎症
+   influenza 流行性感冒
+   区别：contiguous 相邻的
+** contaminate
+   污染 pollute
+   contamination 污染
+   contaminator 污染者
+   contaminated 污染的
+   pollution 污染
+   pollutent 污染物
+** contour
+   外形 shape/figure/appearance
+   轮廓 outline
+   Contour Integral 康托尔积分
+** controversy
+   n争论
+   controversial a有争议的
+   controvert v争论/议论/辩论
+** convect
+   空气对流
+   the converting layer 对流层
+   convection 对流
+** converge
+   收敛/聚合/汇聚 aggregate
+   convergence 收敛（数学上）
+** intervene
+   interfere 干涉/介入
+   intervention
+   interference
+** convict
+   v定罪/判罪
+   n囚犯 prisoner
+   convicted 被判有罪的 proven/declared guilty
+** cosmic
+   宇宙的
+   cosmos 宇宙
+   celestial 天空的/天国的
+   Celestial Empire 天朝
+** correspond
+   v符合/通信
+   correspond to 和..符合/通信
+   correspond with 符合/和...通信
+   correspondent 通信者/记者reporter/journalist
+   corresponding 一致的
+** counteract
+   抵消/消除/中和neutralize
+** counterpart
+   相似的人/物
+** coupon
+   优惠券/票据

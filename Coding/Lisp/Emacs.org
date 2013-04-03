@@ -6,22 +6,22 @@
 * 用grep在文件中查找
   可以直接在grep buffer中修改文件。
 ** lgrep
-#+begin_quote
+#+begin_example
 (lgrep REGEXP &optional FILES DIR CONFIRM)
-#+end_quote
+#+end_example
    查找指定目录DIR下指定模式文件FILES内容中符合REGEXP的文件，GREP buffer中n/p上下选择。
 ** grep
    指定文件中查找
-#+begin_quote
+#+begin_example
 grep -nH -e "pattern" filename
-#+end_quote
+#+end_example
    其中H表输出中包含文件名，n表输出中包含行号，e表紧跟模式
 * 执行shell命令
   M-! 执行shell命令
   加前缀C-u执行命令的结果作用在buffer上。
   类似C-u M-|结果作用在region上
 * multiple-cursors
-#+begin_quote
+#+begin_example
 (global-set-key (kbd "C-S-c C-S-c") 'mc/edit-lines)
 (global-set-key (kbd "C-S-c C-e") 'mc/edit-ends-of-lines)
 (global-set-key (kbd "C-S-c C-a") 'mc/edit-beginnings-of-lines)
@@ -29,7 +29,7 @@ grep -nH -e "pattern" filename
 (global-set-key (kbd "C-<") 'mc/mark-previous-like-this)
 (global-set-key (kbd "C-S-c C-<") 'mc/mark-all-like-this)
 (global-set-key (kbd "C-S-c C->") 'mc/mark-all-in-region)
-#+end_quote
+#+end_example
   先选中一个region，mc/edit-lines则对该region每行都有一个光标。mc/mark-next-like-this在与region内容相同的下一处加一光标。其它函数同理。
 * ace-jump-mode
 #+begin_src lisp
@@ -68,9 +68,9 @@ grep -nH -e "pattern" filename
   编辑非文本文件。
 * backup-by-copying-when-linked
   当文件存在硬链接时默认的备份会破坏这种链接（新建一个文件在新文件中修改，与原来链接文件的inode不同，故与原来链接文件存在链接关系的文件不会同步更新），可以修改当存在链接的时候,通过拷贝来备份，而不是写进一个新文件，故链接关系不会被破坏。
-#+begin_quote
+#+begin_example
 (setq backup-by-copying-when-linked t)
-#+end_quote
+#+end_example
   如果你在使用dropbox这种方法就非常有用，把想要保存在dropbox中的文件硬链接到dropbox目录下，既不占空间又能保持同步更新。
 
 * zap-to-char
@@ -93,13 +93,13 @@ grep -nH -e "pattern" filename
 [:xdigit:] an hexadecimal digit
 [:cntrl:]  a control character
 [:ascii:]  an ascii character
-\s-   whitespace character        \s/   character quote character
+\s-   whitespace character        \s/   character example character
 \sw   word constituent            \s$   paired delimiter         
 \s_   symbol constituent          \s'   expression prefix        
 \s.   punctuation character       \s<   comment starter          
 \s(   open delimiter character    \s>   comment ender            
 \s)   close delimiter character   \s!   generic comment delimiter
-\s"   string quote character      \s|   generic string delimiter 
+\s"   string example character      \s|   generic string delimiter 
 \s\   escape character            
 #+end_example
   用re-builder查询时要又重转义即转义字符要转义，即上面的要写成\\(\\), \\{3,6\\}，即要匹配一个字面上的\需要4个\，即\\\\
@@ -421,3 +421,8 @@ edge
      对于document目录只查看其下以man开头的目录。
      -path支持逻辑运算 AND OR !.
      对于上面的命令 "./document/man*" 包含在 "./document/*"中，用!即表示二者差集，不可以写成"./document"或"./document/man"
+* 退出时session mode提示select-coding-system
+  session-mode是用来保存最近访问修改文件的非常有用的mode，有时由于输入了非正常字符会导致退出时由于无法正常识别于是提示select-coding-system等待用户输入字符集才能退出，解决办法是设置 =session-save-file-coding-system= 变量（此变量被session-save-file调用，设置default-coding-system没用）。
+  #+begin_example
+  (setq session-save-file-coding-system 'utf-8)
+  #+end_example
