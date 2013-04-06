@@ -160,3 +160,47 @@ Das ist sehr nett von Ihnen. = That's very nice of you.
   =quality
   Universität
   =university
+* You're Welcome
+  1. Bitte schön
+  2. Bitte sehr
+  3. Gern geschehen
+  4. Mit Vergnügen
+  5. Bitte
+  6. Keine Ursache
+* I'm hungry
+  1. Ich bin hungrig.
+  2. Ich habe Hunger.
+  3. Ich hab Kohldampf.
+  4. Ich muss was essen.
+  5. Ich bin am Verhungern.
+  6. Mir knurrt der Magen.
+* bleiben
+  v stay/remain
+  #+begin_example
+  Bleiben Sie bitte am Apparat. 请您不要挂电话
+  = Am Apparat bleiben
+  #+end_example
+  am Apparat = speaking
+  #+begin_example
+  Wer ist am Apparat? （电话）谁啊？
+  #+end_example
+  #+begin_example
+  Bleib auf deinem Platz. 呆在原地 Stay where you are.
+  #+end_example
+* denken
+  denkt, dachte, hat gedacht
+  v think/assume/imagine
+* nehmen
+  nimmt, nahm, hat genomme
+  v take/possess
+* tun
+  tut, tat, hat getan
+  v do
+  #+begin_example
+  Was tust du da? 你在做什么？
+  #+end_example
+* bringen
+  bringt, brachte, hat gebracht
+  v bring/carry with
+* glauben
+  v believe
