@@ -1,0 +1,162 @@
+#+OPTIONS: ^:{} _:{} num:t toc:t \n:t
+#+INCLUDE "../../template-toc.org"
+#+SETUPFILE: "../../extension.org"
+#+title:Neue Wort 01
+
+* schön
+  adj beautiful/pretty/very well
+  #+begin_example
+  Danke schön. 非常感谢
+  Schönen Dank. 非常感谢
+  Bitte schön. 快请
+  #+end_example
+* Gott
+  God 神/上帝
+  Göttin 女神
+  #+begin_example
+  Grüß Gott. 您好
+  #+end_example
+* Gruß
+  m 问候 问好
+  = Grüß 
+  Grüßen v问候，打招呼 How are you.
+  begrüßen v向...问候 welcome greet
+* sehr
+  very, a lot
+  #+begin_example
+  -Wie geht es Ihnen?
+  -Danke, sehr gut. Und Ihnen?
+  -Danke, auch sehr gut.
+  #+end_example
+* Abschied
+  m goodbye, farewell
+* bald
+  同义词：nachher
+  adv later/hereafter
+  #+begin_example
+  Bis bald. 一会儿见
+  #+end_example
+* alles
+  pron. all/everything
+  #+begin_example
+  Alles gute. 祝你一切顺利
+  Kommen Sie gut nach Hause. 您慢走
+  #+end_example
+* wünschen
+  v wish
+* Reise
+  f journey trip
+  #+begin_example
+  Ich wünsche Ihnen eine gute Reise. 祝您旅途愉快
+  #+end_example
+* folgen
+  v follow
+  #+begin_example
+  Bitte, folgen Sie mir. 请跟我来
+  #+end_example
+* herein
+  adv in/into
+  #+begin_example
+  Bitte, kommen Sie herein. 请进来吧
+  #+end_example
+* rufen
+  v call sb/shout
+  #+begin_example
+  Rufen Sie mich, bitte, morgen an. 请您明天给我打电话。
+  #+end_example
+* wiederholen
+  v repeat/say again
+  #+begin_example
+  Wiederholen Sie bitte. 请您再说一遍吧
+  #+end_example
+* helfen
+  v help
+  n hilfe
+  #+begin_example
+  Helfen Sie mir bitte. 请您帮帮我
+  #+end_example
+* warten
+  v wait
+  #+begin_example
+  Warten Sie, bitte, einen Moment. 请您稍等一下吧
+  #+end_example
+* setzen
+  v place/put/take a seat/sit down/settle
+  #+begin_example
+  Setzen Sie sich bitte.  请坐
+  #+end_example
+* viel
+  adj a lot of
+  比较级 mehr
+  最高级 meist
+  #+begin_example
+  Vielen Dank.
+  Schönen Dank.
+  Vielen dank für Ihre hilfe. 多谢你的帮忙
+  #+end_example
+* nichts
+  pron. nothing/worthlessness/triviality
+  是etwas的否定形式
+  etwas
+  pron. anything/something
+  #+begin_example
+  Bitte, nichts zu danken. 不用谢。
+  #+end_example
+* nett
+  adj. nice/pretty/lovely/kind
+#+begin_example
+Das ist sehr nett von Ihnen. = That's very nice of you.
+#+end_example
+* zusagen
+  v confirm/promise/approve/accept
+* 四季
+  春 Frühling
+  夏 Sommer
+  秋 Herbst
+  冬 Winter
+* Taschentuch
+  手帕
+  pl. Taschentücher
+* socken
+  袜子
+  Paar 对
+  #+begin_example
+  Zwei Paar socken.
+  #+end_example
+* Kuchen
+  蛋糕
+* Stück
+  块
+  #+begin_example
+  Zwei Stück Kuchen.
+  #+end_example
+* Dutzend
+  =dozen
+  #+begin_example
+  Drei Dutzend Taschentücher.
+  #+end_example
+* Milch
+  =milk
+* Klassenzimmer
+  classroom
+  Klasse die
+  pl. Klassen
+  = class 班级/类别
+  Zimmer das
+  = room
+* Kosmos
+  der
+  =cosmos 宇宙
+* Himmel
+  der
+  =sky/heaven
+* Leben
+  =life 生命 das
+  =live 生活/居住 v
+  Leben in = live in
+* Jahr
+  =year das
+* Qualität
+  =quality
+  Universität
+  =university
