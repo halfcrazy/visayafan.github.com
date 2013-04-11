@@ -426,3 +426,5 @@ edge
   #+begin_example
   (setq session-save-file-coding-system 'utf-8)
   #+end_example
+* Emacs下德语引号
+  至今没发现怎么打出德语中的第一个双引号 =„=，不过幸好有其它符号代替 =C-x 8 <= and =C-x 8 >= 。

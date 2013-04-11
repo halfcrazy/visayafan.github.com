@@ -1,0 +1,58 @@
+#+OPTIONS: ^:{} _:{} num:t toc:t \n:t
+#+INCLUDE "../../template.org"
+#+SETUPFILE: "../../extension.org"
+#+title:Neue Wort 02
+
+* Vokabel
+  die 词汇
+  pl. Vokabeln
+* jemanden
+  pron. somebody/someone
+  缩写jmd/jnd
+* vorstellen
+  put/move forward; introduce; imagine
+  #+begin_example
+  Jemanden Jemanden vorstellen. = introduce sb. to sb.
+  Darf ich Ihnen Herrn Braun vorstellen? = May I introduce you to Mr. Braun.
+  #+end_example
+* Wirtschaftswissenschaft
+  1. Wirt 
+     der host/landlord主人/房东
+  2. Wirtschaft
+     die economy/trade/industry 经济/贸易/工业
+     Wirtschaften v经营管理
+  3. Wissen 
+     das knowledge
+  4. Wissenschaft
+     die science/specific field of systematic knowledge 科学/学术
+  5. Wirtschaftswissenschaft
+     die economics 经济学
+  6. Wirtschaftswissenschaftler
+     经济学者
+     -in 女经济学者
+  7. wirtschaftswissenschaftlich
+     adj 经济学的
+* Brief
+  der letter 信
+  pl Briefe
+  #+begin_example
+  ein Brief
+  einen Brief schreiben.
+  #+end_example
+* Satz
+  der sentence/theorem/sediment/record 句子/定理/沉积物/[电脑]记录
+  pl. Sätze
+* Zuerst
+  adv first
+* Dann
+  adv then
+* Burg
+  die castle
+  #+begin_example
+  Sandburg 用沙子做的城堡
+  #+end_example
+* Kiste
+  die box/wooden box盒子
+  #+begin_example
+  Sandkiste 沙箱
+  #+end_example

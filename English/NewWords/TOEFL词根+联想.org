@@ -549,3 +549,168 @@ Be careful to articulate your words so that everyone in the room can understand 
    相似的人/物
 ** coupon
    优惠券/票据
+* List8
+** craft
+   工艺/手艺/手工艺品
+** crater
+   火山口/陨石坑
+** credential
+   diploma/certificate/qualification 文凭/证书/资格
+   diplomat 外交官
+** crest
+   （山）顶
+** crisscross
+   十字形/十字记号/矛盾
+** critique
+   criticism/comment 批评/评论
+** cramped
+   limited 狭窄的
+   cramp v抽筋
+** crude
+   unrefined 天然的/未经提炼的
+   refine 精炼/提纯
+** crusade
+   n 十字军/圣战
+   v 从事改革运动
+** crust
+   面包皮/外壳
+   #+begin_example
+   the earth's crust 地壳
+   #+end_example
+** crustacean
+   甲壳动物
+** cue
+   n clue 提示，线索
+   v 提示
+** cumbersome
+   笨重的/麻烦的
+   cumber v阻碍/防碍/阻塞
+** cultivated
+   耕种的/有修养的(educated/sophiscated)
+** metabolic
+   新陈代谢物
+   metabolism n新陈代谢
+   metabolize v新陈代谢
+   metabolite n（生物）代谢物
+** damp
+   adj slightly wet 潮湿的
+   n 潮湿
+   v 打湿
+** diminish
+   make/become less 减少
+** demolish
+   destroy 摧毁
+   knock down a building 拆毁建筑
+** devour
+   eat food hungrily and quickly 狼吞虎咽地吃
+   read quickly and eagerly 贪婪地读
+** dazzling
+   耀眼的/眼花缭乱的
+   #+begin_example
+   The sunlight is dazzling.
+   #+end_example
+   dazzle v晃眼
+** deteriorate
+   变质/变坏
+   #+begin_example
+   The relationship between the two countries had deteriorated sharply.
+   #+end_example
+   1. erode 风化/侵蚀
+      erosion
+   2. rot 腐烂
+   3. decay 腐坏/腐烂
+   4. corrode 腐蚀/侵蚀
+      corrosion
+   5. mold n霉
+      moldy 发霉的
+** defect
+   a shortcoming/imperfection 缺点/缺乏
+   #+begin_example
+   generic defect
+   #+end_example
+** delicate
+   fragile/subtle/exquisite 易碎的/微妙的/精巧的
+** deform
+   v变形
+   deformed
+   deformation
+   misshape v损毁形状使成畸形
+   misshapen adj变形的
+** deliberate
+   adj 故意的/谨慎的，深思熟虑的
+   v 仔细考虑
+   deliberately 故意地/谨慎地
+** denture
+   一副假牙
+   dentist 牙医
+   dentisty 牙科
+* List9
+** deplete
+   diminish/reduce the number/qunatity of sth 减少
+   exhaust 精疲力竭
+   depletion n用尽/消耗完
+** deprive
+   剥夺某人对某物的使用/拥有权
+   deprive sb/sth of sth
+   sb/sth be deprived of sth
+   #+begin_example
+   Plant stems die when deprived of water.
+   #+end_example
+   deprivation
+** portray
+   depict/describe （文学作品/艺术中）描述/刻画；（电影/戏剧）扮演
+   portray sb as sth 将某人描述成
+** designate
+   denominate 任命/指派
+   name 命名
+   designate sb as sth 任命某人为
+** deter
+   discourage sb from doing sth 打消某人的念头/阻止做(因害怕后果而不敢去做)
+** detest
+   hate
+** devise
+   v plan or invent by careful thought 策划/发明（经过精心思考）
+   n 遗赠
+** devoid
+   v entirely lacking 完全缺乏
+** diagonal
+   n 对角线
+   adj 对角线的/斜线的
+** diffuse
+   v spread/propogate 传播/渗入，弥漫
+   adj 分散的/扩散的
+** dilute
+   v 稀释
+   #+begin_example
+   bleach can be diluted by cold water.
+   #+end_example
+   削弱力量/降低价值
+   #+begin_example
+   the reform has been diluted.
+   #+end_example
+   adj 稀释的/冲淡的
+   dilutor 稀释剂
+** dim
+   adj 黯淡的/模糊的/昏暗的/悲观的
+** discern
+   v distinguish/perceive/recognize/discriminate 识别/辨别/察觉
+   #+begin_example
+   I can discern no difference between the two politics.
+   #+end_example
+   discernment 洞察力/识别
+** discharge
+   1. 放电/漏电
+   2. 释放（液/气体）
+** dilemma
+   n 进退两难的境地
+   联想记忆：地雷嘛
+** deposit
+   v 沉积/存款/
+   n 沉淀物/存款/保证金/押金
+   deposition 沉积物
+   depositor 存款人
+   bank deposit 银行存款
+   同义词：
+   sediment n沉积物
+   precipitate v使物质沉积/n[化学]沉淀物
+   
