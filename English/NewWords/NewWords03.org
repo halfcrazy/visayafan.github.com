@@ -69,3 +69,20 @@ In general, Tommy is a very shy orangutan. But since the iPad has been introduce
 #+begin_example
 But he would watch from the back of his enclosure as the zoo keepers worked with the other orangutans.
 #+end_example
+* attest
+  provide or serve as a clear evidence 证明/表明
+  attest (to) sth 证明了某件事
+  #+begin_example
+  His numerous drawings of babies attest to his fascination with them.
+  His handling of the crisis attested to his strength of character.
+  Her outstanding abilities were attested by her rapid promotion. 
+  #+end_example
+* penisula
+  半岛
+  #+begin_example
+  Many are looking forward to calmer days on the Korean peninsula. 
+  #+end_example
+* -logue
+  表谈话
+  dialogue 对话（两个人）
+  monologue 独白（一个人）

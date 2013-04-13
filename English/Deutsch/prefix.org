@@ -1,0 +1,11 @@
+#+OPTIONS: ^:{} _:{} num:t toc:t \n:t
+#+INCLUDE "../../template.org"
+#+SETUPFILE: "../../extension.org"
+#+title:德语中的前缀
+to be done
+http://german.about.com/library/verbs/blverb_pre01.htm
+http://german.about.com/library/verbs/blverb_pre02.htm
+http://german.about.com/library/verbs/blverb_pre03.htm
+http://german.about.com/library/verbs/blverb_pre04.htm
+http://german.about.com/library/verbs/blverb_preSPELL.htm
+http://en.wiktionary.org/wiki/Category:German_prefixes

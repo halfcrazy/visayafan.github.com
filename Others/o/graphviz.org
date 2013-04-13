@@ -67,7 +67,7 @@ digraph G{
 #+end_example
 {{{middle(2)}}}
 {{{middle(4)}}}
-{{{lightbox(images/test.png,250)}}} 
+{{{lightbox(images/chinese.png,250)}}} 
 {{{right}}}
 --------
 {{{left(5)}}}

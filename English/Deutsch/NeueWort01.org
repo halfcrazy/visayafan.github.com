@@ -19,7 +19,7 @@
 * Gruß
   m 问候 问好
   = Grüß 
-  Grüßen v问候，打招呼 How are you.
+  grüßen v问候，打招呼 How are you.
   begrüßen v向...问候 welcome greet
 * sehr
   very, a lot
@@ -76,15 +76,20 @@
   Helfen Sie mir bitte. 请您帮帮我
   #+end_example
 * warten
-  v wait
+  v wait/look after/serve 等待/看守，看护/服务
   #+begin_example
   Warten Sie, bitte, einen Moment. 请您稍等一下吧
   #+end_example
+  | Wart   | der | guard看守/保护 |
+  | Wärter | der | keeper看守人/监护人 |
 * setzen
   v place/put/take a seat/sit down/settle
+  等价于英语中的seat,可以跟宾语 seat yourself
   #+begin_example
   Setzen Sie sich bitte.  请坐
   #+end_example
+* sitzen
+  v 等价于英文中的sit,主语为人
 * viel
   adj a lot of
   比较级 mehr
@@ -141,6 +146,7 @@ Das ist sehr nett von Ihnen. = That's very nice of you.
   classroom
   Klasse die
   pl. Klassen
+  口语 Klass
   = class 班级/类别
   Zimmer das
   = room

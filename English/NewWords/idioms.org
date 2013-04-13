@@ -1,0 +1,17 @@
+#+OPTIONS: ^:{} _:{} num:t toc:t \n:t
+#+INCLUDE "../../template.org"
+#+SETUPFILE: "../../extension.org"
+#+title:Idioms
+
+* easier said than done
+  说容易做难
+* get the best/better of you
+  defeat/triumph over
+  #+begin_example
+  If you want to be the best, don't let fear get the best of you.
+  Try your best not to let the situation get the best of you.
+  #+end_example
+* You can't teach an old dog new tricks
+  1. 老人学新东西很难
+  2. 人很难改变旧的想法
+  
