@@ -15,3 +15,10 @@
   1. 老人学新东西很难
   2. 人很难改变旧的想法
   
+* with a grain of salt
+  "(With) a grain of salt," (or "a pinch of salt") in modern English, is an idiom which means to view something with skepticism, or to not take it literally.
+  持保留/怀疑的态度地看待。
+  #+begin_example
+  This is why you should take the advice of one person with a grain of salt. 
+  这就是为什么你要带着怀疑的态度去接受一个人的意见的原因。
+  #+end_example

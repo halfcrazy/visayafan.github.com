@@ -171,22 +171,12 @@ either $$ a=+\sqrt{2} $$ or \[ a=-\sqrt{2} \].
   1. =\vert{}= 使用 $\LaTeX$
   2. 快捷键 =C-c C-x \=
 
-* Org Mode HTML导出时内部链接
-  在一篇文章中建立内部链接很简单，添加anchor，
-#+begin_example
-#<<anchor>>
-#+end_example
-  在想要链接到上面的地主添加链接即可:
-#+begin_example
-[[anchor]]
-#+end_example  
-
 * Emacs Org配置简单快捷键
   =M-x custoize-varialbe RET org-structure-template-alist=
   
-* org-mode 外部链接
+* org-mode 链接
 #+begin_example
-    http://www.astro.uva.nl/~dominik          on the web
+     http://www.astro.uva.nl/~dominik          on the web
      doi:10.1000/182                           DOI for an electronic resource
      file:/home/dominik/images/jupiter.jpg     file, absolute path
      /home/dominik/images/jupiter.jpg          same as above
@@ -226,6 +216,32 @@ either $$ a=+\sqrt{2} $$ or \[ a=-\sqrt{2} \].
 : [[mailto:visayafan@gmail.com][Send Me a mail]]
   在下面语句上 =C-c C-o= =y= 即可查看 elisp 语句执行结果：
 : [[elisp:(buffer-name)]]
+* org-mode 导出HTML时创建内部文件链接
+  在一篇文章中建立内部链接很简单
+** 添加anchor，
+#+begin_example
+#<<anchor>>
+#+end_example
+  在想要链接到上面的地主添加链接即可:
+#+begin_example
+[[anchor]]
+#+end_example  
+** store-link, insert-link
+   在跳转目的地 =org-store-link= 在跳转处 =org-insert-link= 。
+* org-mode 导出HTML时创建外部文件链接
+  可以利用 CUSTOM_ID 属性。
+  --------
+  file1.org中:
+:  * heading-x
+:    :properties:
+:    :CUSTOM_ID: id_name
+:    :end:
+  --------
+  file2.org中：
+:  [[file:file1.org::id_name][test_to_show]]
+  --------
+  即可在file2.html创建指向file1.html中的指定位置链接。
+  可以使用快捷键 =C-c C-x p=。
 * org-mode M-RET插入多余的空白行
   [[http://orgmode.org/worg/org-faq.html#blank-line-after-headlines-and-list-items][为什么要插入空白行]]
   解决办法： =customzie-variable RET org-blank-before-new-entry= 将两个Choice都选为Never即可。  

@@ -1,0 +1,8 @@
+#+OPTIONS: ^:{} _:{} num:nil toc:nil \n:t
+#+INCLUDE "../../template.org"
+#+SETUPFILE: "../../extension.org"
+#+title:
+
+* [[file:NewWords01.org][New Word 01]]
+* [[file:NewWords02.org][New Word 02]]
+* [[file:NewWords03.org][New Word 03]]

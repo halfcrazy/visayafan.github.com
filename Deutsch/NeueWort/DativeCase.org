@@ -1,0 +1,63 @@
+#+OPTIONS: ^:{} _:{} num:nil toc:nil \n:t
+#+INCLUDE "../../template.org"
+#+SETUPFILE: "../../extension.org"
+#+title:第三格情况
+参考:
+http://www.vistawide.com/german/grammar/german_cases_dative.htm
+http://german.about.com/library/verbs/blverb_dativ.htm
+http://german.about.com/library/verbs/blverb_dativ2.htm
+--------
+第三格动词表后跟间接宾语的动词，此时间接宾语为第3格，直接宾语为第4格。
+#+begin_example
+Antworten Sie mir. 请您回答我。我mir为第3格，而非第4格的mich。
+Antworten Sie auf die Frage. 回答一个问题。Frage
+#+end_example
+--------
+#+begin_example
+Wir backen euch einen Kuchen. 
+We're baking you a cake.
+We're baking a cake for you. 
+#+end_example
+you是间接宾语，为第3格。Kuchen是直接宾语，为第4格。
+--------
+这类动词有：
+  * antworten
+  * danken
+  * folgen
+  * gehören
+  * glauben
+  * helfen
+  * schaden
+  * widersprechen
+  * fehlen
+    lack
+  * drohen
+    thread
+--------
+有些形容词和习语后也跟第3格：
+  * ähnlich
+    similiar
+--------
+有些介词后跟第3格：
+  * aus
+    from/out of
+  * außer
+   except for
+  * mit
+   with
+  * nach
+   to, after
+  * von
+   by from
+  * zu
+   to
+  * seit
+   since
+  * bei
+   at with
+  * gegenüber
+   opposite
+#+begin_example
+Wir fahren mit der Bahn. =We're traveling by train.
+mit后跟第3格，所以die->der
+#+end_example

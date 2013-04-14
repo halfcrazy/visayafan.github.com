@@ -1,0 +1,156 @@
+#+OPTIONS: ^:{} _:{} num:t toc:t \n:t
+#+INCLUDE "../../template-toc.org"
+#+SETUPFILE: "../../extension.org"
+#+title:Neue Wort 04
+
+* [[file:NeueWort02.org::Wirtschaftswissenschaft][wissen]]
+  weiss, wusste, hat gewusst
+  #+begin_example
+  Ich weiss nicht. 我不知道
+  #+end_example
+* verstehen
+  v understand
+  #+begin_example
+  Ich verstehe nicht, was du sagst. 我不明白你说什么。
+  #+end_example
+* Tasse
+  die cup
+  #+begin_example
+  eine Tasse Tee.
+  #+end_example
+  Sie [[file:NeueWort01.org::nehmen][nahm]] eine Tasse aus dem Schrank.
+* Schrank
+  der cupboard/closet/cabinet
+  | Küchenschrank | der | kitchen cabinet |
+  | Bücherschrank | der | bookcase        |
+* Küche
+  die kitchen
+* Zigarette
+  die cigarette
+  pl. -n
+  | Zigarre | die | cigar | pl. | Zigerren |
+* Zug
+  der train
+  pl. Züge
+  | Schnellzug | der | fast train/express train快车 |
+* Geräusch
+  das noise/sound
+* Industrieanlagen
+  die industry facility
+  Industrie =industry
+  Anlagen =facility/device/asset设备/资产
+* brauchen
+  v need/want/require/desire
+  | gebrauchen     | v   | use/utilize/make use of                           |
+  | Gebrauch       | der | use/utilization/practice/custom利用/使用/风俗习惯 |
+  | Gebräuche      |     | pl. von Gebrauch                                  |
+  | gebraucht      | adj | used/second-hand/required旧的/使用过的/需要的     |
+  | gebrauchtwagen | der | second-hand car                              |
+* Leder
+  das leather
+  | Lederjacke | die | leather jacket |
+* Herd
+  der oven/stove炉子
+  |Elektroherd|der|electric oven|
+* Waschmaschine
+  die washing machine
+  waschen =wash
+  maschine =machine
+* Öffner
+  der opener起子
+  | Dosenöffner    | der | 罐头起子 |
+  | Flaschenöffner | der | 开瓶起子 |
+** Dose
+   das 罐头
+** Flasche
+   die bottle
+* Briefumschlag
+  der envelope信封
+  | umschlag | der | envelop/cover | pl. | umschläge |
+  #+begin_example
+  -Ich brauche Briefumschläge. -Die Briefumschläge sind im Schreibtisch.
+  -我需要信封。-信封在书桌上。
+  #+end_example
+* Briefmarke
+  v stamp
+  pl. Briefmarken
+* Werkzeugkasten
+  :PROPERTIES:
+  :CUSTOM_ID: Werkzeugkasten
+  :END:
+  der toolbox
+  | Werk     | das | work                   | pl. | Werke     |
+  | Werkzeug | das | tool/device/instrument | pl. | Werkzeuge |
+  | Kasten   | der | box/case               | pl. | Kästen    |
+  [[file:suffix.org::-zeug][zeug后缀]]
+* Kugelschreiber
+  der 圆珠笔
+  | Kugel     | die | ball/sphere |
+  | Schreiber | der | writer/author |
+* [[file:suffix.org::-zeug][Feuerzeug]]
+  das 打火机
+  | Feuer | das | fire |
+* Kopfschmerztablette
+  die 头痛片
+  | Kopf      | der | head        |
+  | schmerzen | v   | hurt/pain   |
+  | Schmerz   | der | hurt/pain   |
+  | Tablette  | die | tablet/pill |
+* Hausapotheke
+  die 家用药箱
+  | Apotheke    | die | pharmacy药房 |
+  | Apotheker   | der | chemist药剂师 |
+  | Apothekerin | die |              |
+* schenken
+  v give/donate
+* immer
+  adv always/constantly
+* abends/nachts
+  abend 傍晚
+  nacht 夜晚
+  加上s构成副词，表在傍晚/在晚上
+* hinlegen
+  v lay/lay down/put down放下
+  | hin   | adv | to/toward         |
+  | legen | v   | lay/put/set/place |
+* jeden
+  pron. each/every
+  jeden Tag/Abend/Moment 每天/每晚/每时
+* Firma
+  die firm/company/corporation
+* vermieten
+  :PROPERTIES:
+  :CUSTOM_ID: vermieten
+  :END:
+  v rent
+  | mieten | v   | rent |
+  | [[file:NeueWort02.org::Mieter][Mieter]] | der | 租客   |
+* Brillant
+  der diamond钻石
+  adj brilliant光辉/灿烂/辉煌
+* geben
+  v give
+  gibt, gab, hat gegeben
+* Roman
+  der novel
+  pl. Romane
+  Liebesroman =love story
+  #+begin_example
+  Sie liest Liebesromane. 她阅读爱情小说。
+  #+end_example
+** lesen
+   v read
+   liest, las, hat gelesen
+* füttern
+  v feed
+  #+begin_example
+  Sie füttert das Tier. 她喂动物
+  #+end_example
+* leihen
+  v lend
+* sammeln
+  v collect/accumulate/gather/assemble
+  n collecting/gathering
+  #+begin_example
+  sammeln von Briefmarken 集邮
+  #+end_example
