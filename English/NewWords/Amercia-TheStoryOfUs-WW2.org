@@ -41,6 +41,9 @@ A pack of cutting-edge killing machines are on a mission.
 When Pearl Harbor was attacked, it was one of the most stunning moments in Amercian history. 
 #+end_example
 * tactical
+  :PROPERTIES:
+  :CUSTOM_ID: tactical
+  :END:
   战术上的，战略上的
   n: tactic
 #+begin_example
