@@ -154,3 +154,133 @@
   #+begin_example
   sammeln von Briefmarken 集邮
   #+end_example
+  | gesammelt | adj | collected/assembled |
+  sammel- 前缀，表和"聚"相关的
+  | Sammelglas | das | 聚光镜，凸透镜 |
+* krieg
+  der war
+* zwanziger
+  几十后跟er表 1. der 几十多岁的人。 2. adj 几十年代的
+  zwanziger dreißiger ...
+* Brot
+  das bread
+* öl
+  das oil
+* Benzin
+  das fuel/petrol
+  英语中benzin和德语一样
+* Holz
+  das wood/lumber木材
+* Kohle
+  die coal
+* Stahl
+  der steel
+* Beton
+  der concrete水泥/具体（事物）
+* Kalk
+  der chalkstone石灰石/石灰
+* Kupfer
+  das copper铜
+* Mut
+  der courage勇气
+* Kraft
+  die power/force力量/势力/权力
+  | Wasserkraft | die | 水力 |
+  | Windkraft   | die | 风力 |
+* Freundlichkeit
+  die 友好
+  | Freundlich | adj | friendly友好的 |
+* Ehrgeiz
+  der ambition
+* Nachsicht
+  die patience/tolerance耐性
+* Freude
+  die joy/pleasure
+  | Freuen     | v                | joy/be pleased |
+  | Frent mich | nice to meet you |                |
+* Trauer
+  die grief/deep sorrow悲伤/哀悼
+* Hoffnung
+  die hope
+  | hoffen | v | hope |
+* Verzweiflung
+  die despair/desperation/hopelessness
+  | verzweifeln | v | despair |
+* fühlen
+  v feel
+* bekannt
+  adj well-known/acknowledged
+  | kennen | v | know |
+  kennt, kannte, hat gekannt
+* Pfund
+  |Kilogramm|das|kilogram|
+  das pound = 0.5 Kilogramm
+* Fläche
+  die surface/area/region/domain 表面/平面/区域/领土
+* Wald
+  der woods/forest木/树林/森林
+  ein große Fläche Wald
+* Zukunft
+  die future
+* Weihnachten
+  das Christmas
+  weihnacht- 前缀，表与圣诞节相关的
+* Feiertag
+  der holiday/public holiday
+* Weihnachtsfeiertag
+  Christmas Holiday
+* Feierabend
+  der end of work下班/收工
+* Feier
+  die celebration/festival/feast庆祝/节日/纪念活动
+* Ostern
+  das Easter复活节
+* Silvester
+  das New Year's Eve 除夕
+* Boden
+  der earth/ground/floor 地/土地/地板
+* Medizin
+  die medicine
+  | Mediziner   | der | doctor/medical student |
+  | Medizinerin |     |                        |
+* Natur
+  die nature自然/性质/性格
+  | Natürlich | adj/adv | natural/crude |
+* Hauptstadt
+  die capital city
+** Haupt
+   das head/leader/chief头/领导/主要的
+** Stadt
+   die city
+* liegen
+  v lie/lie down/be located 1.人/动物躺下/平放；2.地方位于；3.lie in原因在
+* mal
+  das 次
+  | einmal   | adv     | once/one time |
+  | manchmal | adj/adv | occasionally/sometimes/from time to time |
+  #+begin_example
+  Einmal im Jahr. =once a year
+  noch einmal = once more/again
+  #+end_example
+* geboren
+  adj born/give birth 出生的/先天的
+* Frankreich
+  法国
+  | Französisch | adj | 法国的 |
+* Offizier
+  der officer
+  | offiziell | adj/adv | official/officially/formal/formally |
+* genug
+  adj/adv enough/sufficient/adequately/sufficiently
+* Treffen
+  das appointment/date/meeting/encounter约会/会见/遇到
+  | treffen | v | 遇见/碰到 |
+* Archäologe
+  der archaeologist考古学
+  | Archäologin | die |             |
+  | Archäologie | die | archaeology |
+* Feuerwehr
+  die fire brigade/department消防队
+** wehren
+   v defend/protect/fight against
+   | Wehr | die | defence/protection |

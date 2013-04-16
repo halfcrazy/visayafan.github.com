@@ -1,8 +1,11 @@
 #+OPTIONS: ^:{} _:{} num:t toc:t \n:t
-#+INCLUDE "../../template.org"
+#+INCLUDE "../../template-toc.org"
 #+SETUPFILE: "../../extension.org"
 #+title:德语中的后缀
-参考 [[http://en.wiktionary.org/wiki/Category:German_suffixes][Wiktionary-Category:German suffixes]]
+参考
+[[http://en.wiktionary.org/wiki/Category:German_suffixes][Wiktionary-Category:German suffixes]]
+[[http://www.dartmouth.edu/~german/Grammatik/Wortbildung/Suffixes.html][dartmouth suffixes]]
+
 * -ig
   形容词后缀，名词/动词词干/副词+ig
   | sand 沙子        | sandig 含沙的        |
@@ -13,8 +16,12 @@
   | sagen 说 |sagenhaft 传说的/惊人的/传奇的|
 * -los
   表without
-  | arbeits 前缀表工作相关的 |arbeitslos 失业的|
+  | arbeits 前缀表工作相关的 | arbeitslos 失业的    |
+  | sprach 表语言相关的      | sprachlos 说不出话的 |
 * -arm
+  :PROPERTIES:
+  :CUSTOM_ID: arm
+  :END:
   adj后缀，表缺少的
   | fantasie die想象力/幻想 | fantasiearm 缺乏想象力 |
   | sorge die关心/担心      | sorgearm 不担心的          |
@@ -81,3 +88,13 @@
   | langsam           | Langsamkeit =slowness |
   | persönlich 个人的 | persönlichkeit 个性 |
   | wirklich 实际上   | Wirklichkeit die现实  |
+* -zeug
+  :PROPERTIES:
+  :CUSTOM_ID: -zeug
+  :END:
+  Zeug本身意思是stuff，用在动词后面表实现此动作的工具。
+  | [[file:NeueWort02.org::Flugzeug][Flugzeug]]       | airplane        |
+  | Spielzeug                                         | toy             |
+  | [[file:NeueWort04.org::Werkzeugkasten][Werkzeug]] | tool/instrument |
+  | Schreibzeug                                       | writing utensil |
+  | [[file:NeueWort02.org::Fahrer][Fahrzeug]]         | vehicle         |

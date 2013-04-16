@@ -177,8 +177,9 @@
      | Hausbewohner   | der房客   |
      | Hausbewohnerin | die女房客 |
   2. besitzer =holder/owner/possessor
-     | Hausbesitzer   | der房主   |
-     | Hausbesitzerin | die女房主 |
+     | besitzen       | v own/possess |
+     | Hausbesitzer   | der房主       |
+     | Hausbesitzerin | die女房主     |
 * Enkel
   der grandchild孙子/外孙
   Enkelin 孙女/外孙女

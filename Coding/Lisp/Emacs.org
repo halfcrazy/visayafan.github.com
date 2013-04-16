@@ -1,8 +1,7 @@
 #+OPTIONS: ^:{} _:{} num:t toc:t \n:t
 #+include: ../../template-toc.org
-#+LaTeX_CLASS: cn-article
+#+SETUPFILE: "../../extension.org"
 #+title:Emacs Trick
-
 * 用grep在文件中查找
   可以直接在grep buffer中修改文件。
 ** lgrep
@@ -164,12 +163,7 @@ sudo apt-get install libncurses5-dev
    之后在ecb-2.4目录下 make CEDET=../cedet-1.1
 * dired-mode下批量修改文件名
   C-x d打开一个目录后， =M-x wdired-change-to-wdired-mode= 进入可编辑模式，这样可以批量给文件改名。
-#+begin_html
-<link rel="stylesheet" href="../../Layout/CSS/jquery.lightbox-0.5.css" type="text/css" media="screen" />
-<script type="text/javascript" src="../../Layout/JS/jquery.lightbox-0.5.js"></script>
-<center> <a class="lightbox" href="./image/emacs-dired.png"> <img class="lightbox " title="jQuery.lightbox" src="./image/emacs-dired.png" width="400"> </a> </center>
-d<script type="text/javascript"> $(function() {$('a.lightbox').lightBox();}); </script>
-#+end_html
+  {{{lightbox(images/emacs-dired.png,400)}}} 
 * Emacs中使用输入法
   可以 =M-x customize-variable RET default-input-method= 来指定默认的输入法，例如 =chinese-pinyin= 。
   默认是 =C-\= 来调用。

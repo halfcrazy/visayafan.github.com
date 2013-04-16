@@ -49,7 +49,7 @@
   #+begin_example
   Der Kaufmann bedient den Kunden. 售货员为顾客服务
   #+end_example
-** [[file:NeueWort02.org::*Verkauf][Kaufmann]]
+** [[file:NeueWort02.org::Verkauf][Kaufmann]]
 ** bedienen
    serve
 * Laie
@@ -73,7 +73,7 @@
   #+end_example
 ** Kapitän
    captain
-** [[file:NeueWort01.org::*rufen][rufen]]
+** [[file:NeueWort01.org::rufen][rufen]]
 * Löwe
   lion狮子
 * Mensch
@@ -92,6 +92,9 @@
   #+end_example
 ** besiegen
    defeat
+   | sieger | der | winner              |
+   | sieg   | der | win/victory/triumph |
+   | siegen | v   | win                 |
 * Sklave
   slave
 * Zeuge
@@ -102,7 +105,7 @@
   第3格，所以der->dem，Zeuge为特殊变化，除单数第1格外其它所有格均以en结尾。
 ** Richter
    judge法官
-** [[file:NeueWort01.org::*glauben][glauben]]
+** [[file:NeueWort01.org::glauben][glauben]]
    believe
 * Doktorand
   doctoral student博士生
@@ -120,6 +123,9 @@
 ** beschimpfen
    blame/abuse/insuleb/scold指责/骂人
 ** Bundes
+   :PROPERTIES:
+   :CUSTOM_ID: Bundes
+   :END:
    federal 联邦
    | BRD | der Bundesrepublik Deutschland | 德意志联邦共和国 |
 * Lieferant
@@ -131,7 +137,7 @@
   #+end_example
 ** Parlament
    parliament议会/国会
-** [[file:NeueWort01.org::*Gru%C3%9F][begrüßen]]
+** [[file:NeueWort01.org::Gru%C3%9F][begrüßen]]
 * Produzent
   producer/manufacturer生产者
 * Idealist
