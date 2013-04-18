@@ -1,0 +1,174 @@
+#+OPTIONS: ^:{} _:{} num:t toc:t \n:t
+#+INCLUDE "../../template-toc.org"
+#+SETUPFILE: "../../extension.org"
+#+title:德语中的后缀
+参考
+[[http://en.wiktionary.org/wiki/Category:German_suffixes][Wiktionary-Category:German suffixes]]
+[[http://www.dartmouth.edu/~german/Grammatik/Wortbildung/Suffixes.html][dartmouth suffixes]]
+
+* -ig
+  形容词后缀，名词/动词词干/副词+ig
+  | sand 沙子        | sandig 含沙的        |
+  | richt v对准/校准 | richtig =right正确的 |
+  | schlaf der睡觉 | schläfig 困的      |
+* -haft
+  形容词后缀表：像...样的，...似的
+  | sagen 说 |sagenhaft 传说的/惊人的/传奇的|
+* -los
+  表without
+  | arbeits 前缀表工作相关的 | arbeitslos 失业的    |
+  | sprach 表语言相关的 | sprachlos 说不出话的 |
+  | hoffnungslos        | hopeless             |
+* -arm
+  :PROPERTIES:
+  :CUSTOM_ID: arm
+  :END:
+  adj后缀，表缺少的
+  | fantasie die想象力/幻想 | fantasiearm 缺乏想象力 |
+  | sorge die关心/担心      | sorgearm 不担心的          |
+  | regen der雨             | regenarm 无雨的        |
+* -frei
+  表 free from .../non-...
+    | arbeits | arbeitsfrei =free from work 没事干 |
+* -leer
+  without
+  | luft =air | airleer =airless真空 |
+* -reich
+  reich =rich
+  后缀时表多的
+  | vitamin | vitaminreich |
+* -fest
+  fest =stable
+  后缀表稳固的
+  | wasser | wasserfest =watertight防水的 |
+* -isch
+  可以用来表示国家/民族的
+  | China           | chinesisch |
+  | Russland 俄罗斯 | russisch   |
+  | Latein 拉丁     | lateinisch |
+* -chen
+  表小的
+  | Hund der狗 | Hündchen 小狗  |
+  | Lamp 灯    | Lämpchen 小灯   |
+  | Mädel 女孩 | Mädchen 小女孩  |
+  | Mann       | Männchen 小男人 |
+  | Kind       | Kindchen        |
+* -lein
+  表小的
+  | Frau  | Fräulein 少女  |
+  | Buch  | Büchlein 小书 |
+  | Vogel | Vöglein 小鸟   |
+  | Haus  | Häuslein       |
+  | Tisch | Tischlein      |
+  | Kind  | Kindlein       |
+  | Mann  | Männlein       |
+* -schaft
+  相当于-ship/-hood
+  | Freund  | Freundschaft           |
+  | Mann    | Mannschaft 全体成员/组 |
+  | Partner | Partnerschaft 伙伴关系 |
+  | Wissen  | Wissenschaft           |
+  | Wirt    | Wirtschaft             |
+
+* -lich
+  相当于英语中的-ly
+  | person | persönlich 个人的          |
+  | Kind   | Kindlich 儿童的            |
+  | gut    | gütlich 友好的/心平气和的 |
+  | Frau   | fraulich 女性的            |
+  | Mann   | männlich 男性的            |
+  | Freund | freundlich 友好的          |
+* -heit
+  将形容词转换成名词，相当于英语中的-ness，-hood
+  | Kind              | Kindheit =childhood |
+  | schön             | Schönheit =beauty   |
+  | Frei              | Freiheit 特权       |
+  | Ein 不定冠词 一个 | Einheit 一个单位/单元     |
+* -keit
+  与heit后缀意思一样，但用在以 -ig, -bar, -lich, -sam结尾的词后面。
+  | langsam           | Langsamkeit =slowness |
+  | persönlich 个人的 | persönlichkeit 个性 |
+  | wirklich 实际上   | Wirklichkeit die现实  |
+* -zeug
+  :PROPERTIES:
+  :CUSTOM_ID: -zeug
+  :END:
+  Zeug本身意思是stuff，用在动词后面表实现此动作的工具。
+  | [[file:NeueWort02.org::Flugzeug][Flugzeug]]       | airplane        |
+  | Spielzeug                                         | toy             |
+  | [[file:NeueWort04.org::Werkzeugkasten][Werkzeug]] | tool/instrument |
+  | Schreibzeug                                       | writing utensil |
+  | [[file:NeueWort02.org::Fahrer][Fahrzeug]]         | vehicle         |
+* -kunde
+  用在复合词中表..科学/学科
+  | Literaturkunde | 文学   |
+  | Naturkunde     | 生物学 |
+  | Pflanzenkunde  | 植物学 |
+  | Baumkunde      | 树木学 |
+  | Charakterkunde | 性格学 |
+  | Namenkunde     | 姓名学 |
+  | Vogelkunde     | 鸟类学    |
+
+* -loge
+  相当于英语中的-logist，表职业
+  | [[file:NeuWort03.org::Biologe][Biologe]] |
+  | [[file:NeuWort03.org::Soziologe][Soziologe]] |
+  | [[file:NeuWort04.org::Archäologe][Archäologe]] |
+* -mal
+  表次数
+  | einmal   |                 |
+  | zweimal  |                 |
+  | manchmal | many times      |
+  | xmal     | very many times |
+* -ling
+  人/物弱小的(和英语中此后缀意思相同)
+  | Jährling    | yearling一岁的孩子        | Jahr                              |
+  | Erdling     | earthling地球人           | Erd                               |
+  | Jüngling   | youngling少年（10岁左右） | Junge                             |
+  | Liebling    | darling宝贝               | Lieben                            |
+  | Frühling   | Spring春天                | Früh                             |
+  | Feigling    | coward胆小鬼              | Feig =fearful胆小的               |
+  | Findling    | foundling弃婴             |                                   |
+  | Flüchtling | fugitive/refugee难民      | fluchte die escape/running away逃 | 
+  | Schwächling | weakling弱者                | Schwäche die weakness虚弱         |
+  | Säugling    | suckling哺乳期的婴儿      | saugen =suck                      |
+  | Fäustling   | 手套                      | Faust拳头                         |
+* -ung
+  用于构成名词，相当于英语中的-ing or -tion，用于动词后表此动作结果的名词
+  | öffnen      | v open                    | Öffnung                                 |
+  | wohnen      | v reside/inhabit          | Wohnung                                 |
+  | hoffen      | v hope                    | Hoffnung                                |
+  | entdeck     | v find/discover           | Entdeckung                              |
+  | kleiden     | v dress                   | Kleidung                                |
+  | ordnen      | v order/arrange/organize  | Ordnung                                 |
+  | bilden      | v build/form              | Bildung =education/learning/instruction |
+  |             |                           | Wortbildung =word-formation构词法       |
+  | regieren    | v dominate/control/govern | Regierung =government                   |
+  | erziehen    | v educate/bring up        | Erziehung =education                    |
+  | behandeln   | v handle/deal in          | Behandlung =therapy/treatment待遇/治疗  |
+  | [[file:NeuWort04.org::Verzweiflung][verzweifeln]] | v despair                 | Verzweiflung =despair                   |
+  
+* -bar
+  相当于英语中的 -able
+  | brauchbar | adj useable            | brauchen | v use      |
+  | essbar    | adj eatable/edible     | essen    | v eat      |
+  | machbar   | adj doable/feasible    | machen   | v do       |
+  | denkbar   | adj thinkable/possible | denken   | v think    |
+  | waschbar  | adj washable           | waschen  | v wash     |
+  | trennbar  | adj separable          | trenn    | v separate |
+* -haft
+  形容词/名词后缀相当-ous -ic -able
+  | heldenhaft | adj heroic英雄的 | Held der hero pl. helden |
+  | lebhaft    | adj lively活泼的 | Leben das life           |
+  | ehrhaft    | adj honorable    | Ehre das honor pl. Ehren |
+  |            |                  | ehren v respect          |
+  |            |                  | geehrt adj 受人尊敬的    |
+* -ig
+  相当于英语中的-y
+  | haarig  | adj hairy多毛的 | Haar das hair |
+  | staubig | adj dusty       | Staub der dust |
+* -sam
+  用于形容词或副词后缀
+  | langsam | adj/advslowly        | lang adj long          |
+  | biegsam | adj/adv flexible     | bieg das curve/flexion |
+  | sparsam | adj economical节约的 | spar v save/economize节约 |

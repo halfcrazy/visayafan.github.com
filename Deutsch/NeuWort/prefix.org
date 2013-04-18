@@ -1,0 +1,81 @@
+#+OPTIONS: ^:{} _:{} num:t toc:t \n:t
+#+INCLUDE "../../template.org"
+#+SETUPFILE: "../../extension.org"
+#+title:德语中的前缀
+to be done
+http://german.about.com/library/verbs/blverb_pre01.htm
+http://german.about.com/library/verbs/blverb_pre02.htm
+http://german.about.com/library/verbs/blverb_pre03.htm
+http://german.about.com/library/verbs/blverb_pre04.htm
+http://german.about.com/library/verbs/blverb_preSPELL.htm
+http://en.wiktionary.org/wiki/Category:German_prefixes
+
+* ver-
+  :PROPERTIES:
+  :CUSTOM_ID: ver-
+  :END:
+  1. 不可分割的动词前缀表for-
+     geben =give
+     vergeben =forgive
+  2. 不可分割的动词前缀表状态转移
+     lieben =love
+     verlieben =fall in love
+  3. 表与词干意思相反的动作
+     laufen =run/walk
+     verlaufen =lost
+  | [[file:NeueWort04.org::vermieten][vermieten]] |
+  | [[file:NeueWort02.org::Verkauf][verkaufen]] |
+* be-
+  经常将3格动词变成4格动词（将可以跟间接宾语的动词变成可以直接跟直接宾语的动词），例如：
+  #+begin_example
+  Ich danke dir. 其中dir为3格
+  Ich bedanke dich. 其中dich为4格
+  #+end_example
+  将不及物动词变成及物动词。
+  #+begin_example
+  In einem Haus wohnen 住在房子里
+  ein Haus bewohnen
+  #+end_example
+  --------
+  #+begin_example
+  auf eine Frage antworten
+  eine Frage beantworten
+  #+end_example
+* un-
+  表相反的/缺少的
+  | möglich  | adj possible  | unmöglich  | adj impossible  |
+  | treu     | adj true      | untreu     | adj untrue      |
+  | trennbar | adj separable | untrennbar | adj inseparable |
+  |          |               |            |                 |
+* ur-
+  表原始的/最早的
+  | Urkraft | die ancient power原始力量 |
+  | Urwald  | der jungle原始森林            |
+* haupt-
+  Haupt表主要的，做前缀表主要的
+  | Hauptstadt   | captial city             |                         |
+  | Hauppmann    | leader/captain/commander |                         |
+  | Hauptgrund   | main reason              | Grund der ground/reason |
+  | Hauptartikel | leading article          |                         |
+  | Hauptsatz    | main clause主句/基本定理 |                         |
+* grund-
+  Grund =ground 做前缀表基本的
+  | Grundgesetz | basic law德国宪法 | gesetz das law |
+  | Grundsatz   | axiom 前提/公理   | satz der setence/theorem句子/定理，原理 |
+* riesen-
+  Riese巨人，做前缀表巨大的
+  | Riesenschlange | giant snake | Schlange  die snake |
+  | Riesenerfolg   | big success |                     |
+* miss-
+  也可写作miß-
+  相当于英语中的mis-，表意思与原词相反
+  | missverstehen | misunderstand              |                        |
+  | missachten    | ignore/overlook不尊重/轻视 | achten v respect/honor |
+  | Misserfolg    | der failure                | erfolg der success/prosperity/triumph |
+* mit-
+  相当于英语中的co-
+  |mitarbeiten|collaborate合作|
+* rück-
+  相当于英语中的back
+  | Rückfahrkarte | die return ticket | Fahrkarte die ticket | Karte die card |
+  | Rückzug       | der retreat/pullback/withdrawal撤退/退 |                      |                |

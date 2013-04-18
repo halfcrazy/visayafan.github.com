@@ -1,0 +1,303 @@
+#+OPTIONS: ^:{} _:{} num:t toc:t \n:t
+#+INCLUDE "../../template-toc.org"
+#+SETUPFILE: "../../extension.org"
+#+title:Neue Wort 02
+
+* Vokabel
+  die 词汇
+  pl. Vokabeln
+* jemand
+  pron. somebody/someone
+  缩写jd
+  jemandem abbr. jdm
+  jemanden abbr. jdn
+* vorstellen
+  put/move forward; introduce; imagine
+  #+begin_example
+  Jemandem Jemanden vorstellen. = introduce sb. to sb. Jemandem为Dativ, jemanden为Akkusativ.
+  Darf ich Ihnen Herrn Braun vorstellen? = May I introduce you to Mr. Braun.
+  #+end_example
+* Wirtschaftswissenschaft
+  :PROPERTIES:
+  :CUSTOM_ID: Wirtschaftswissenschaft
+  :END:
+  1. Wirt
+    | Wirt         | der | host/landlord主人/房东                 |
+    | Wirtschaft   | die | economy/trade/industry  经济/贸易/工业 |
+    | Wirtschaften | v   | 经营管理                               |
+  2. Wissen
+    | Wissen                      | das | knowledge                                                |
+    | Wissenschaft                | die | science/specific field of systematic knowledge 科学/学术 | 
+  3. Wirtschaftswissenschaft  
+    | Wirtschaftswissenschaft      | die | economics 经济学 |
+    | Wirtschaftswissenschaftler   | der | 经济学者         |
+    | Wirtschaftswissenschaftlerin | die | 女经济学者       |
+    | wirtschaftswissenschaftlich  | adj | 经济学的         |
+* Brief
+  der letter 信
+  pl Briefe
+  #+begin_example
+  ein Brief
+  einen Brief schreiben.
+  #+end_example
+** [[file:NeuWort04.org::Briefmarke][Briefmarke]]
+** [[file:NeuWort04.org::Briefumschlag][Briefumschlag]]
+** Briefträger
+   der postman邮递员
+   | Brief  | der | letter信                               |
+   | tragen | v   | carry/transport/endure/suffer/tolerate |
+   | Trage  | die | 担架                                   |
+   | Träger | der | carrier搬运工                          |
+   | [[file:NeuWort03.org::Bote][Bote]]   |     |                                        |
+* Satz
+  der sentence/theorem/sediment/record 句子/定理/沉积物/[电脑]记录
+  pl. Sätze
+* Wort
+  das 单词
+  pl. Wörter
+* zuerst
+  adv first
+* dann
+  adv then
+* Burg
+  die castle
+  #+begin_example
+  Sandburg 用沙子做的城堡
+  #+end_example
+* Kiste
+  die box/wooden box盒子
+  #+begin_example
+  Sandkiste 沙箱
+  #+end_example
+** [[file:NeuWort04.org::Werkzeugkasten][Kasten]]
+* Koffer
+  der bag/box/suitcase
+* Nachricht
+  die message/news/reporting
+  pl. Nachrichten
+* Verkauf
+  :PROPERTIES:
+  :CUSTOM_ID: Verkauf
+  :END:
+  pl. Verkäufe
+  der sale 卖/销售/销售部/营业部
+  | verkaufen   | v   | sell出售                     |
+  | Verkäufer   | der | salesman/vendor/seller售货员 |
+  | Verkäuferin | die | saleswoman女售货员           | 
+  --------
+  Kauf与Verkauf意思相反，参考[[file:prefix.org::ver-][前缀ver]]
+  | Kauf     | der                | buy/purchase                  |
+  | kaufen   | v                  | buy/purchase                  |
+  | Kaufmann | der销售员/商人     | pl. Kaufleute oder Kaufmänner |
+  | Kauffrau | die女销售员/女商人 | pl. -nen                      |
+  --------
+  Mann 男人
+  pl. Männer oder Leute
+* Lastwagen
+  der trunk/lorry 货车
+  pl. Lastwagens
+  | Wagen | der | car/wagon | pl. Wagens |
+  缩写词
+  | PKW | PersonenkraftWagen客车/汽车 |
+  | VW  | VolkWagen大众汽车           |
+  | LKW | LastkraftWagen货车          |
+  | BMW | Bayerische Motoren Werke AG巴伐利亚发动机制造股份公司=宝马 |
+  --------
+  | Rad   | das | wheel/bicycle | pl. Räde |
+  合成词：fahren(v drive/sail)+Rad(wheel) = fahrrad(bicycle)
+  Motor(motor)+Rad = Motorrad(motorbike)
+  | Motorrad | das | motorbike/motorcycle 摩托车 | pl. Motorräder |
+  | Autobus  | der | bus                         | pl. Autobusse  |
+  | Bus      | der | bus                         | pl. Busse      |
+* Flugzeug
+  :PROPERTIES:
+  :CUSTOM_ID: Flugzeug
+  :END:
+  das airplane/aeroplane/aircraft
+  =Flug der
+  [[file:suffix.org::-zeug][zeug suffix]]
+* Sekretär
+  der secretary秘书
+  Sekretärin女秘书
+* Minister
+  der minister部长
+  Ministerin 女部长
+* Suppe
+  die soup汤
+* servieren
+  v serve服务/上菜
+* Gast
+  der guest
+  #+begin_example
+  Der Wirt serviert dem Gast die Suppe. 店主为客人上菜。
+  #+end_example
+* zeigen
+  v show/display/point/indicate 指出/展示/指明
+  #+begin_example
+  Der Ingenieur zeigt dem Arbeiter den Plan. 工程师向工人展示工程图。
+  #+end_example
+  Ingenieur der engineer工程师 pl. Ingenieure
+  Ingenieurin die
+  | Arbeiter | der | worker                                          |
+  | Plan     | der | blueprint/draft/plan/outline蓝图/草稿/计划/大纲 |
+* Päckchen
+  das package
+  #+begin_example
+  Der Briefträger bringt der Frau das Päckchen.
+  #+end_example
+* Regel
+  die regulation/rule规矩；period月经
+* diktieren
+  v dictate口述/听写
+  Diktieren das dictation
+* Tür
+  die door
+* Foto
+  das photo
+* Schule
+  die school/faculty/academic department学校/全体师生/学院
+  | Schüler    | der中小学生     |
+  | Schülerin  | die女中小学生   |
+  | Schulklasse | die学校教室     |
+  | Schulbuch   | das教科书       |
+  | Schulbus    | der送学生的校车 |
+  | Schulleiter | der校长         |
+* Wohnung
+  wohnen v live/inhaibt/reside
+  | wohnheim          | das | dormitory/dorm                    |
+  | Studentenwohnheim | das |                                   |
+  | Wohnung           | die | flat/department/accommodation住所 |
+* prüfen
+  v prove/examine/supervise 检查/考察/测试
+  Prüfung die考试/测试
+* Ergebnis
+  das result/outcome结果/成果/成绩
+* Bürger
+  der citizen/resident公民/市民
+  pl. Bürger
+* Arzt
+  der doctor
+  pl. Ärzte
+  Ärztin die woman-doctor
+  pl. Ärztinnen
+* Krankenschwester
+  n 护士
+  pl. -n
+  1.
+    | krank     | adj     | 有病的          |
+    | Kranke    | der/die | 病人            |
+    | kranken   | v       | hurt/injure受伤 |
+  2.
+    | schwester | die     | sister姐妹      |
+* Mieter
+  :PROPERTIES:
+  :CUSTOM_ID: Mieter
+  :END:
+  der tenant/renter房客
+  参考[[file:NeuWort04.org::vermieten][vermieten]]
+  1. bewhoner =dweller/resident/inhabitant
+     | Hausbewohner   | der房客   |
+     | Hausbewohnerin | die女房客 |
+  2. besitzer =holder/owner/possessor
+     | besitzen       | v own/possess |
+     | Hausbesitzer   | der房主       |
+     | Hausbesitzerin | die女房主     |
+* Enkel
+  der grandchild孙子/外孙
+  Enkelin 孙女/外孙女
+* Großvater
+  pl. Großväter
+  der grandfather
+  Vater =father
+  pl. Väter
+
+  Großmutter die（外）祖母
+  pl. Großmütter
+  Oma 口语 granny
+* Onkel
+  uncle
+* Tante
+  dir aunt
+  pl. Tanten
+* Neffe
+  nephew
+* Dieb
+  der thief/burglar
+  pl. -e
+  Diebin die woman-thief
+
+  Apfeldieb 偷苹果的小偷
+* stehlen
+  v steal
+  stiehlt, stahl, hat gestohlen
+  stehlen jemandem etwas =steal sth from sb
+* Rauch
+  der smoke
+  pl. Rauchs
+  | rauchen| v| smoke |
+* Pflanze
+  die plant/vegestable
+  pl. Pflanzen
+  | pflanzen| v| plant种植 |
+* schaden
+  v damage/harm
+  | Schaden | der | damage/injury/harm |
+  #+begin_example
+  Der Rauch schadet der Pflanze.
+  #+end_example
+* Gesundheit
+  die healthiness
+  pl -en
+  | gesund| adj| healthy |
+  #+begin_example
+  Rauchen schadet der Gesundheit.
+  #+end_example
+* gehören
+  v belong/be a part of
+* Artikel
+  der =article 文章/冠词/（法律）条款/（字典）词条/商品,物品
+  | Zeitungsartikel    | der | 报纸文章      |
+  | Artikelnumemer     | die | 商品编号      |
+  | Artikelbezeichnung | die | 商品描述/名称 |
+* Weib
+  woman/wife/broad
+* Kellner
+  酒吧服务员
+  Kellnerin
+* Fahrer
+  :PROPERTIES:
+  :CUSTOM_ID: Fahrer
+  :END:
+  | fahren   | v   | drive        |
+  | Fahrer   | der | driver       |
+  | Fahrerin | die | woman driver | 
+  类似地
+  | lehren   | v   | teach         |
+  | Lehrer   | der | teacher       |
+  | Lehrerin | die | woman teacher |
+** Führer
+   der commander/leader/dictator/title used by Hilter/driver领导/指挥官/独裁者（希特勒的头衔）/司机
+   | Marktführer | der | market leader |
+* Bad
+  das bath洗澡
+  | baden | v | take a shower |
+  不要认为Bad为“坏“的意思。
+  德语中arg表英语中的bad
+* arg
+  adj bad
+  adv very much/badly/severely
+* Hose
+  die pants/trousers
+  Badhose 泳裤
+* Schlüssel
+  der key/cipher/password钥匙/密码
+  可以作前缀：
+  | Schlüsselwort | das     | password/keyword    |
+  | Schlüsselring | der     | key ring            |
+  | [[file:NeueWort03.org::Bundes][Schlüsselbund]]  | der/das | bunch of keys钥匙串 |
+* Baum
+  der tree
+* Bild
+  das image/photo/painting
+* Kette
+  die necklace

@@ -1,0 +1,304 @@
+#+OPTIONS: ^:{} _:{} num:t toc:t \n:t
+#+INCLUDE "../../template-toc.org"
+#+SETUPFILE: "../../extension.org"
+#+title:Neue Wort 04
+
+* [[file:NeueWort02.org::Wirtschaftswissenschaft][wissen]]
+  weiss, wusste, hat gewusst
+  #+begin_example
+  Ich weiss nicht. 我不知道
+  #+end_example
+* verstehen
+  v understand
+  #+begin_example
+  Ich verstehe nicht, was du sagst. 我不明白你说什么。
+  #+end_example
+* Tasse
+  die cup
+  #+begin_example
+  eine Tasse Tee.
+  #+end_example
+  Sie [[file:NeueWort01.org::nehmen][nahm]] eine Tasse aus dem Schrank.
+* Schrank
+  :PROPERTIES:
+  :CUSTOM_ID: Schrank
+  :END:
+  der cupboard/closet/cabinet
+  | Küchenschrank | der | kitchen cabinet |
+  | Bücherschrank | der | bookcase        |
+* Küche
+  die kitchen
+* Zigarette
+  die cigarette
+  pl. -n
+  | Zigarre | die | cigar | pl. | Zigerren |
+* Zug
+  der train
+  pl. Züge
+  | Schnellzug | der | fast train/express train快车 |
+* Geräusch
+  das noise/sound
+* Industrieanlagen
+  die industry facility
+  Industrie =industry
+  Anlagen =facility/device/asset设备/资产
+* brauchen
+  v need/want/require/desire
+  | gebrauchen     | v   | use/utilize/make use of                           |
+  | Gebrauch       | der | use/utilization/practice/custom利用/使用/风俗习惯 |
+  | Gebräuche      |     | pl. von Gebrauch                                  |
+  | gebraucht      | adj | used/second-hand/required旧的/使用过的/需要的     |
+  | Gebrauchtwagen | der | second-hand car                              |
+* Leder
+  das leather
+  | Lederjacke | die | leather jacket |
+* Herd
+  der oven/stove炉子
+  |Elektroherd|der|electric oven|
+* Waschmaschine
+  die washing machine
+  waschen =wash
+  maschine =machine
+* Öffner
+  der opener起子
+  | Dosenöffner    | der | 罐头起子 |
+  | Flaschenöffner | der | 开瓶起子 |
+** Dose
+   das 罐头
+** Flasche
+   die bottle
+* Briefumschlag
+  der envelope信封
+  | umschlag | der | envelop/cover | pl. | umschläge |
+  #+begin_example
+  -Ich brauche Briefumschläge. -Die Briefumschläge sind im Schreibtisch.
+  -我需要信封。-信封在书桌上。
+  #+end_example
+* Briefmarke
+  :PROPERTIES:
+  :CUSTOM_ID: Briefmarke
+  :END:
+  v stamp
+  pl. Briefmarken
+* Werkzeugkasten
+  :PROPERTIES:
+  :CUSTOM_ID: Werkzeugkasten
+  :END:
+  der toolbox
+  | Werk     | das | work                   | pl. | Werke     |
+  | Werkzeug | das | tool/device/instrument | pl. | Werkzeuge |
+  | Kasten   | der | box/case               | pl. | Kästen    |
+  [[file:suffix.org::-zeug][zeug后缀]]
+* Kugelschreiber
+  der 圆珠笔
+  | Kugel     | die | ball/sphere |
+  | Schreiber | der | writer/author |
+* [[file:suffix.org::-zeug][Feuerzeug]]
+  das 打火机
+  | Feuer | das | fire |
+* Kopfschmerztablette
+  die 头痛片
+  | Kopf      | der | head        |
+  | schmerzen | v   | hurt/pain   |
+  | Schmerz   | der | hurt/pain   |
+  | Tablette  | die | tablet/pill |
+* Hausapotheke
+  die 家用药箱
+  | Apotheke    | die | pharmacy药房 |
+  | Apotheker   | der | chemist药剂师 |
+  | Apothekerin | die |              |
+* schenken
+  v give/donate
+* immer
+  adv always/constantly
+* abends/nachts
+  abend 傍晚
+  nacht 夜晚
+  加上s构成副词，表在傍晚/在晚上
+* hinlegen
+  v lay/lay down/put down放下
+  | hin   | adv | to/toward         |
+  | legen | v   | lay/put/set/place |
+* jeden
+  pron. each/every
+  jeden Tag/Abend/Moment 每天/每晚/每时
+** Täglich
+   jeden Tag
+* Firma
+  die firm/company/corporation
+* vermieten
+  :PROPERTIES:
+  :CUSTOM_ID: vermieten
+  :END:
+  v rent
+  | mieten | v   | rent |
+  | [[file:NeueWort02.org::Mieter][Mieter]] | der | 租客   |
+* Brillant
+  der diamond钻石
+  adj brilliant光辉/灿烂/辉煌
+* geben
+  v give
+  gibt, gab, hat gegeben
+* Roman
+  der novel
+  pl. Romane
+  Liebesroman =love story
+  #+begin_example
+  Sie liest Liebesromane. 她阅读爱情小说。
+  #+end_example
+** lesen
+   v read
+   liest, las, hat gelesen
+* füttern
+  v feed
+  #+begin_example
+  Sie füttert das Tier. 她喂动物
+  #+end_example
+* leihen
+  v lend
+* sammeln
+  v collect/accumulate/gather/assemble
+  n collecting/gathering
+  #+begin_example
+  sammeln von Briefmarken 集邮
+  #+end_example
+  | gesammelt | adj | collected/assembled |
+  sammel- 前缀，表和"聚"相关的
+  | Sammelglas | das | 聚光镜，凸透镜 |
+* krieg
+  der war
+* zwanziger
+  几十后跟er表 1. der 几十多岁的人。 2. adj 几十年代的
+  zwanziger dreißiger ...
+* Brot
+  das bread
+* öl
+  das oil
+* Benzin
+  das fuel/petrol
+  英语中benzin和德语一样
+* Holz
+  das wood/lumber木材
+* Kohle
+  die coal
+* Stahl
+  der steel
+* Beton
+  der concrete水泥/具体（事物）
+* Kalk
+  der chalkstone石灰石/石灰
+* Kupfer
+  das copper铜
+* Mut
+  der courage勇气
+* Kraft
+  die power/force力量/势力/权力
+  | Wasserkraft | die | 水力 |
+  | Windkraft   | die | 风力 |
+* Freundlichkeit
+  die 友好
+  | Freundlich | adj | friendly友好的 |
+* Ehrgeiz
+  der ambition
+* Nachsicht
+  die patience/tolerance耐性
+* Freude
+  die joy/pleasure
+  | freuen     | v                | joy/be pleased |
+  | frent mich | nice to meet you |                |
+* Trauer
+  die grief/deep sorrow悲伤/哀悼
+* Hoffnung
+  die hope
+  | hoffen | v | hope |
+* Verzweiflung
+  :PROPERTIES:
+  :CUSTOM_ID: Verzweiflung
+  :END:
+  die despair/desperation/hopelessness
+  | verzweifeln | v | despair |
+* fühlen
+  v feel
+* bekannt
+  adj well-known/acknowledged
+  | kennen | v | know |
+  kennt, kannte, hat gekannt
+* Pfund
+  |Kilogramm|das|kilogram|
+  das pound = 0.5 Kilogramm
+* Fläche
+  die surface/area/region/domain 表面/平面/区域/领土
+* Wald
+  der woods/forest木/树林/森林
+  ein große Fläche Wald
+* Zukunft
+  :PROPERTIES:
+  :CUSTOM_ID: zukunft
+  :END:
+  die future
+  |künftig|adj/adv|in the future未来的|
+* Weihnachten
+  das Christmas
+  weihnacht- 前缀，表与圣诞节相关的
+* Feiertag
+  der holiday/public holiday
+* Weihnachtsfeiertag
+  Christmas Holiday
+* Feierabend
+  der end of work下班/收工
+* Feier
+  die celebration/festival/feast庆祝/节日/纪念活动
+* Ostern
+  das Easter复活节
+* Silvester
+  das New Year's Eve 除夕
+* Boden
+  der earth/ground/floor 地/土地/地板
+* Medizin
+  die medicine
+  | Mediziner   | der | doctor/medical student |
+  | Medizinerin |     |                        |
+* Natur
+  die nature自然/性质/性格
+  | Natürlich | adj/adv | natural/crude |
+* Hauptstadt
+  die capital city
+** Haupt
+   das head/leader/chief头/领导/主要的
+** Stadt
+   die city
+* liegen
+  v lie/lie down/be located 1.人/动物躺下/平放；2.地方位于；3.lie in原因在
+* mal
+  das 次
+  | einmal   | adv     | once/one time |
+  | manchmal | adj/adv | occasionally/sometimes/from time to time |
+  #+begin_example
+  Einmal im Jahr. =once a year
+  noch einmal = once more/again
+  #+end_example
+* geboren
+  adj born/give birth 出生的/先天的
+* Frankreich
+  法国
+  | Französisch | adj | 法国的 |
+* Offizier
+  der officer
+  | offiziell | adj/adv | official/officially/formal/formally |
+* genug
+  adj/adv enough/sufficient/adequately/sufficiently
+* Treffen
+  das appointment/date/meeting/encounter约会/会见/遇到
+  | treffen | v | 遇见/碰到 |
+* Archäologe
+  :PROPERTIES:
+  :CUSTOM_ID: Archäologe
+  :END:
+  der archaeologist考古学
+  | Archäologin | die |             |
+  | Archäologie | die | archaeology |
+* Feuerwehr
+  die fire brigade/department消防队
+** wehren
+   v defend/protect/fight against
+   | Wehr | die | defence/protection |

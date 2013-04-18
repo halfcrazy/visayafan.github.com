@@ -115,3 +115,38 @@ But he would watch from the back of his enclosure as the zoo keepers worked with
   n 变态
 * brunette
   深色发肤的人
+* arrogant
+  傲慢的
+* resort to
+  make use of sth for help采取某种行动作为紧急措施
+  #+begin_example
+  If negotiations fail we shall have to resort to strike action. 假若谈判失败, 我们就采取罢工行动.
+  #+end_example
+* derail
+  使火车/电车出轨；使事情偏离原来的方向
+  #+begin_example
+  derailing the conversation into flaming matches
+  #+end_example
+* persecute
+  ~ sb for sth因为信仰不同而对其加以迫害
+  #+begin_example
+  the phrasing here is persecuting.
+  #+end_example
+* refute
+  反驳 prove to be wrong
+  #+begin_example
+  refute a claim, a theory, an argument 驳斥某要求、理论、论点
+  #+end_example
+* rebuke
+  指责 express sharp or severe disapproval to sb, esp officially
+  rebuke sb for sth
+  #+begin_example
+  My boss rebuked me for coming to work late. 我的上司指摘我上班迟到.
+  #+end_example
+* crackpot
+  crazy,nut,weirdo疯子/怪人
+* elaborate
+  v Add more details concerning what has already been said 更详细地描述
+  adj 详细的/复杂的
+* pedestrian
+  someone who travels on foot徒步旅行者

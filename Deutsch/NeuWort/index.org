@@ -1,0 +1,10 @@
+#+OPTIONS: ^:{} _:{} num:nil toc:nil \n:t
+#+INCLUDE "../../template.org"
+#+SETUPFILE: "../../extension.org"
+#+title:
+
+* [[file:NeuWort01.org][Neu Wort 01]]
+* [[file:NeuWort02.org][Neu Wort 02]]
+* [[file:NeuWort03.org][Neu Wort 03]]
+* [[file:NeuWort04.org][Neu Wort 04]]
+* [[file:NeuWort05.org][Neu Wort 05]]
