@@ -1,0 +1,61 @@
+\usepackage{fontspec,xunicode,xltxtra,listings,xcolor,color,float,multicol,hyperref,indentfirst,titlesec}
+
+%% 中文字体设置
+\setmainfont[BoldFont=Adobe Heiti Std]{Adobe Song Std}
+\setsansfont[BoldFont=Adobe Heiti Std]{Adobe Kaiti Std}
+\setmonofont{Bitstream Vera Sans Mono}
+\XeTeXlinebreaklocale "zh" %
+\XeTeXlinebreakskip = 0pt plus 1pt minus 0.1pt
+\newcommand\li{\fontspec{LiSu}}
+\newcommand\hei{\fontspec{SimHei}}
+\newcommand\you{\fontspec{YouYuan}}
+\newcommand\sun{\fontspec{SimSun}}
+\newcommand\fangsong{\fontspec{仿宋_GB2312}}
+\newcommand\kai{\fontspec{KaiTi_GB2312}}
+
+%% 中文显示
+\titleformat{\chapter}{\centering\huge}{第\thechapter{}章}{1em}{\textbf}
+\titleformat{\part}{\centering\huge}{第\thepart{}部分}{1em}{\textbf}
+\renewcommand{\contentsname}{\centerline{目~录}}
+\renewcommand{\listfigurename}{插图目录}
+\renewcommand{\listtablename}{表格目录}
+\renewcommand{\indexname}{索引}
+\renewcommand{\tablename}{表}
+\renewcommand{\figurename}{图}
+\lstset{
+  basicstyle=\small,
+  keywordstyle=\color{blue},
+  commentstyle=\small\color{red},
+  showspaces=false,
+  showtabs=false,
+  tabsize=4,
+  breaklines=true,
+  extendedchars=false           %这一条命令可以解决代码跨页时，章节标题，页眉等汉字不显示的问题
+  %numbers=left,
+  %numberstyle={\tiny\color{lightgray}},
+  %stepnumber=1, %行号会逐行往上递增
+  %numbersep=5pt,
+  %frame=shadowbox, 
+  %framexleftmargin=5mm, 
+  %rulesepcolor=\color{red!20!green!20!blue!20!},
+}
+
+%重新定义theorem编号，节号+顺序编号
+%\newtheorem{theo}{定理}[section]
+%\renewenvironment{thm}{\begin{theo}}{\end{theo}}
+\renewcommand\refname{参考文献}
+
+
+%% 设置大小布局
+\usepackage{geometry}
+\geometry{left=2.5cm,right=2.5cm,top=2.5cm,bottom=2.5cm}
+
+%% 目录超链接需要
+\usepackage[colorlinks, linkcolor=black, anchorcolor=black, citecolor=black]{hyperref}
+
+%% 用来设置图片和表格的标题将默认的冒号改成空格
+\usepackage{caption}
+\captionsetup[figure]{labelsep=space}
+\captionsetup[table]{labelsep=space}
+
+\date{}

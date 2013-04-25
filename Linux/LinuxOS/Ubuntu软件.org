@@ -28,3 +28,5 @@
   需要事先安装Adobe Air，下载地址http://airdownload.adobe.com/air/lin/download/2.6/adobeair.deb
 * graphviz
   画图工具，画某些图，例如二叉树等非常方便。
+* swftools
+  可以将多种其它格式的文件转变成swf格式，例如png，pdf……

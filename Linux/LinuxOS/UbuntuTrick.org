@@ -17,3 +17,29 @@
 * 切换键盘布局
   System-Preferences-Keyboard Layouts 新添加一个layout
   设置切换layout的快捷键：Options-Keys 
+* 将gif转换成avi
+  :PROPERTIES:
+  :CUSTOM_ID: giftoavi
+  :END:
+  首先安装imagemagick，之后
+  #+begin_example
+  convert logo.gif logo%02d.jpg   
+  #+end_example
+  生成好多jpg文件，其中%02d和C语言中意思相同，表logo后跟两位数，如果gif的帧数超过两位数则应该考虑log%03d.jpg.
+  之后安装ffmpeg
+  #+begin_example
+  ffmpeg -r 25 -i logo%02d.jpg -y -an new.avi
+  #+end_example
+  1. -r表帧速率，默认是25.值越小生成avi时间越长（播放速度越慢）。
+  2. -i表输入文件，同理logo%02d.jpg 表logo后跟2位数再后跟.jpg
+  3. -y表输出文件如果与当前文件重名则选择覆盖掉
+  4. -an表不使用录音
+
+  另外
+  #+begin_example
+  convert -strip test.gif test.jpg  
+  #+end_example
+  可以将gif每帧生成一个jpg文件。
+* 解决evince中文乱码
+  1. 安装poppler-data: =sudo apt-get install poppler-data=
+  2. =rm /etc/fonts/conf.d/49-sansserif.conf=

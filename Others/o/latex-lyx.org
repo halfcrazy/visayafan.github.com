@@ -3,54 +3,25 @@
 #+SETUPFILE: "../../extension.org"
 #+title:Lyx 笔记 
 * Preamble
+** article
 {{{srcbegin(200)}}}
-#+begin_example
-\usepackage{fontspec,xunicode,xltxtra}
-\usepackage{listings}
-\usepackage{xcolor}
-\usepackage{color}
-\usepackage{float}
-\usepackage{multicol}
-\setmainfont[BoldFont=Adobe Heiti Std]{Adobe Song Std}
-\setsansfont[BoldFont=Adobe Heiti Std]{AR PL UKai CN}
-\setmonofont{Bitstream Vera Sans Mono}
-\XeTeXlinebreaklocale "zh" %
-\XeTeXlinebreakskip = 0pt plus 1pt minus 0.1pt
-\newcommand\li{\fontspec{LiSu}}
-\newcommand\hei{\fontspec{SimHei}}
-\newcommand\you{\fontspec{YouYuan}}
-\newcommand\sun{\fontspec{SimSun}}
-\newcommand\fangsong{\fontspec{仿宋_GB2312}}
-\newcommand\kai{\fontspec{KaiTi_GB2312}}
-\usepackage{titlesec}
-\titleformat{\chapter}{\centering\huge}{第\thechapter{}章}{1em}{\textbf}
-\titleformat{\part}{\centering\huge}{第\thepart{}部分}{1em}{\textbf}
-\renewcommand{\contentsname}{目~录}
-\renewcommand{\listfigurename}{插图目录}
-\renewcommand{\listtablename}{表格目录}
-\renewcommand{\indexname}{索引}
-\renewcommand{\tablename}{表}
-\renewcommand{\figurename}{图}
-\lstset{
-basicstyle=\scriptsize,
-numbers=left,
-keywordstyle=\color{blue},
-numberstyle={\tiny\color{lightgray}},
-stepnumber=1, %行号会逐行往上递增
-numbersep=5pt,
-commentstyle=\small\color{red},
-%backgroundcolor=\color[rgb]{0.95,1.0,1.0},
-showspaces=false,
-showtabs=false,
-frame=shadowbox, framexleftmargin=5mm, rulesepcolor=\color{red!20!green!20!blue!20!},
-% frame=single,
-% TABframe=single,
-tabsize=4,
-breaklines=tr,
-extendedchars=false %这一条命令可以解决代码跨页时，章节标题，页眉等汉字不显示的问题
-}
-#+end_example
+#+begin_src tex
+#+include "lyx-article-preamble.tex"
+#+end_src
 {{{srcend}}}
+** beamer
+   {{{srcbegin(200)}}}
+   #+begin_src tex
+#+include "lyx-beamer-preamble.tex"
+   #+end_src
+   {{{srcend}}}
+   其它可选的主题和色彩
+   #+begin_src tex
+   \usetheme{Warsaw}              
+   AnnArbor, Antibes,Bergen, Berkeley, Berlin, Boadilla, CambridgeUS, Copenhagen, Darmstadt, default, Dresden, Frankfurt, Goettingen, Hannover, Ilmenau, JuanLesPins, Luebeck, Madrid, Malmoe, Marburg, Montpellier, PaloAlto, Pittsburgh, Rochester, Singapore, Szeged, Stockton, boxes, Warsaw…
+   \usecolortheme{beaver} 
+   albatross, orchid, beaver, rose, beetle, seagull, crane. seahorse, default, sidebartab, dolphin , structure dove, whale, fly, wolverine, lily
+   #+end_src
 * 中文段落缩进
   Preamble中添加\usepackage{indentfirst}
 * 摘要
@@ -120,7 +91,13 @@ Your abstract goes here...
 \geometry{left=2.5cm,right=2.5cm,top=2.5cm,bottom=2.5cm}
 #+end_example
 * 源码高亮包
-  lstlisting可以实现源码高亮但颜色单调，可替代之的是minted。
+  lstlisting可以实现源码高亮但颜色单调
+  #+begin_src tex
+  \begin{lstlisting}[language=matlab]
+  test
+  \end{lstlisting}
+  #+end_src
+  可替代之的是minted。
   具体参考：http://www.latexstudio.net/?p=596
 {{{left(5)}}}
 #+begin_src tex
@@ -155,3 +132,83 @@ int main(int argc, char *argv[])
 {{{middle(5)}}}
 {{{lightbox(images/minted.png,450)}}} 
 {{{right}}}
+* 插入gif动画文件
+  可以[[file:../../Linux/LinuxOS/UbuntuTrick.org::giftoavi][将gif转换成avi]] 后再用movie15宏包插入。
+* Beamer中为插入frame设置快捷键
+  Tools->Preferences->Editing->Shortcuts中New对话框中Function栏写 =layout BeginFrame= 并为其添加快捷键，同理可为 =layout EndFrame= 添加快捷键.
+  查看一个功能对应的函数：在菜单上执行一次此功能后会出现在状态栏上。
+  默认文件保存到了~/.lyx/bind/user.bind，可以备份此文件以便日后使用。
+
+* lyx解决Beamer中插入代码问题
+  直接insert->program listing插入代码这种方法行不通( *用这种方法插入代码可以在边框上右键setting来进行lstset设置)
+  目前最好的解决办法是把待插入的代码保存到一个文件中，通过 insert->file->child document来插入文件，在include type下选择program listing，此时可在More Parameters中设置相应的参数：
+  1. basicstyle={\tiny} 设置字体 \tiny \scriptsize \footnotesize \small \normalsize \large \Large \LARGE \huge \Huge
+  2. breaklines=true 适当时候断行显示
+  3. commentstyle={\color{black}} 注释颜色为黑色（否则如果不设置中文为黑色，英文为红色）
+  4. language=Matlab 设置代码所用的语言
+  5. numbers=left 显示行号，可选在显示左边还是右边
+  6. numberstyle={\tiny\color{lightgray}} 设置行号大小及颜色
+  7. frame=shadowbox 显示边框，可选 leftline, topline等
+  8. rulesepcolor={\color{red!20!green!20!blue!20!}} 若边框为shadow则设置阴影的颜色
+  模板：
+  #+begin_example
+  basicstyle={\tiny}
+  breaklines=true
+  commentstyle={\color{black}}
+  language=Matlab
+  numbers=left
+  numberstyle={\tiny\color{lightgray}}
+  #+end_example
+     
+  *注意：* 如果注释中存在中英文混排情况则夹在中文之间的英文前后必须有空格，否则排版出错.
+* lyx的Beamer Overlay控制
+** columns
+   首先从下拉菜单下选择columns，在新行中选择column，输入宽度，后快捷键 =M-S-right= 将其提升了columns的child。
+** block
+   菜单下选择block后 =C-l= 输入 ={标题}= ，注意不可省略 ={}= 。
+** itemize/enumerate
+   =M-p e= 创建enumerate，可以在行首 =C-l= 输入：
+   1. =<n1-n2>内容= 表示在n1至n2个幻灯片上显示
+   2. =<only@n>= 表示只在第n个幻灯片上显示
+   {{{left(4)}}}
+   {{{lightbox(./images/beamer_overlay_columns_block_item.png,400)}}}
+   {{{middle(1)}}}
+   #+html:<br/><br/><br/><br/><br/><br/><br/><br/>
+   $$\underrightarrow{\ \ result\ \ }$$
+   {{{middle(7)}}}
+   #+html:<br/><br/><br/><br/><br/>
+   {{{lightbox(images/beamer_overlay_columns_block_item_result.png,700)}}} 
+   {{{right}}}
+   右图中列表是动态出现的。
+** overprint
+   如果一部分内容在某些不连续的幻灯片上出现可以用overprint，然后添加tex代码 =\onslide<n1,n2,..>= n1,n2……表示在哪些幻灯片上显示
+** alt
+   =\alt<n>{before}{after}= n帧前为before，n帧后为after。
+** temporal
+   =\temporal<n>{before}{on}{after}= 在n帧之前一直是before，n帧时是on，之后是after
+** 创建链接
+   创建target: =\hypertarget{targetname}{text-to-show}= 。
+   创建link: =\hyperlink{targetname}{\beamergotobutton{text-to-show-on-button}}=。
+   其它有用的button： \beamerreturnbutton，\beamerbutton
+** 整个frame的内容动态出现
+   可以在菜单选择BeginFrame后 =C-l= 输入 =<+->= 再输入标题。这样如果此frame此都是列表则列表逐一出现。
+* 打印Beamer制作的幻灯片
+** 修改源码实现
+   Beamer做的幻灯片的pause之类的Overlay都是通过额外的PDF页来实现的，打印时会造成浪费，解决方法是：
+   #+begin_example
+   \documentclass[handout]{beamer}
+   #+end_example
+   这样生成的PDF不再具有Overlay的特效，但适合打印。(前提是你有此Beamer制作幻灯片的源码)
+   lyx设置：document->setting->document class->class options->custom中添加handout
+** 利用pdfpages包实现
+   大部分情况下我们手上只有一份pdf版的幻灯片，没有源码，此时上面的方法就行不通了，可以利用如下方法实现：
+   #+begin_src tex
+   \documentclass{article} %
+   \usepackage{pdfpages}
+   \begin{document}
+   \includepdf[nup=2x2,landscape,delta=5mm 5mm, scale=0.95,pages={1-18}]{trans.pdf}
+   \end{document}   
+   #+end_src
+   其中1-18指定了想要合并trans.pdf的页码范围，2x2指定了每页上个数。
+* 快捷键
+  参考lyx的帮助文档 [[./lyx_shortcuts/Shortcuts.html][LY X Keyboard Shortcuts]]

@@ -7,13 +7,53 @@
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
 <meta name="title" content="Lyx 笔记 "/>
 <meta name="generator" content="Org-mode"/>
-<meta name="generated" content="2013-03-11 05:06:11 CST"/>
+<meta name="generated" content="2013-04-26 02:33:42 CST"/>
 <meta name="author" content="visayafan"/>
 <meta name="description" content=""/>
 <meta name="keywords" content=""/>
 
 
+<script type="text/javascript" src="http://orgmode.org/mathjax/MathJax.js">
+<!--/*--><![CDATA[/*><!--*/
+    MathJax.Hub.Config({
+        // Only one of the two following lines, depending on user settings
+        // First allows browser-native MathML display, second forces HTML/CSS
+        //  config: ["MMLorHTML.js"], jax: ["input/TeX"],
+            jax: ["input/TeX", "output/HTML-CSS"],
+        extensions: ["tex2jax.js","TeX/AMSmath.js","TeX/AMSsymbols.js",
+                     "TeX/noUndefined.js"],
+        tex2jax: {
+            inlineMath: [ ["\\(","\\)"] ],
+            displayMath: [ ['$$','$$'], ["\\[","\\]"], ["\\begin{displaymath}","\\end{displaymath}"] ],
+            skipTags: ["script","noscript","style","textarea","pre","code"],
+            ignoreClass: "tex2jax_ignore",
+            processEscapes: false,
+            processEnvironments: true,
+            preview: "TeX"
+        },
+        showProcessingMessages: true,
+        displayAlign: "center",
+        displayIndent: "2em",
 
+        "HTML-CSS": {
+             scale: 100,
+             availableFonts: ["STIX","TeX"],
+             preferredFont: "TeX",
+             webFont: "TeX",
+             imageFont: "TeX",
+             showMathMenu: true,
+        },
+        MMLorHTML: {
+             prefer: {
+                 MSIE:    "MML",
+                 Firefox: "MML",
+                 Opera:   "HTML",
+                 other:   "HTML"
+             }
+        }
+    });
+/*]]>*///-->
+</script>
 </head>
 <body>
 
@@ -33,7 +73,12 @@
 <h2>目录</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#sec-1">1 Preamble</a></li>
+<li><a href="#sec-1">1 Preamble</a>
+<ul>
+<li><a href="#sec-1-1">1.1 article</a></li>
+<li><a href="#sec-1-2">1.2 beamer</a></li>
+</ul>
+</li>
 <li><a href="#sec-2">2 中文段落缩进</a></li>
 <li><a href="#sec-3">3 摘要</a></li>
 <li><a href="#sec-4">4 公式</a>
@@ -49,6 +94,28 @@
 <li><a href="#sec-8">8 分栏</a></li>
 <li><a href="#sec-9">9 设置页边距</a></li>
 <li><a href="#sec-10">10 源码高亮包</a></li>
+<li><a href="#sec-11">11 插入gif动画文件</a></li>
+<li><a href="#sec-12">12 Beamer中为插入frame设置快捷键</a></li>
+<li><a href="#sec-13">13 lyx解决Beamer中插入代码问题</a></li>
+<li><a href="#sec-14">14 lyx的Beamer Overlay控制</a>
+<ul>
+<li><a href="#sec-14-1">14.1 columns</a></li>
+<li><a href="#sec-14-2">14.2 block</a></li>
+<li><a href="#sec-14-3">14.3 itemize/enumerate</a></li>
+<li><a href="#sec-14-4">14.4 overprint</a></li>
+<li><a href="#sec-14-5">14.5 alt</a></li>
+<li><a href="#sec-14-6">14.6 temporal</a></li>
+<li><a href="#sec-14-7">14.7 创建链接</a></li>
+<li><a href="#sec-14-8">14.8 整个frame的内容动态出现</a></li>
+</ul>
+</li>
+<li><a href="#sec-15">15 打印Beamer制作的幻灯片</a>
+<ul>
+<li><a href="#sec-15-1">15.1 修改源码实现</a></li>
+<li><a href="#sec-15-2">15.2 利用pdfpages包实现</a></li>
+</ul>
+</li>
+<li><a href="#sec-16">16 快捷键</a></li>
 </ul>
 </div>
 </div>
@@ -58,52 +125,139 @@
 <div class="outline-text-2" id="text-1">
 
 
+</div>
+
+<div id="outline-container-1-1" class="outline-3">
+<h3 id="sec-1-1"><span class="section-number-3">1.1</span> article</h3>
+<div class="outline-text-3" id="text-1-1">
+
+
 <div style="height:200px;overflow:auto;border-style:solid;border-width:1px;border-color:#DDD">
 
-<pre class="example">\usepackage{fontspec,xunicode,xltxtra}
-\usepackage{listings}
-\usepackage{xcolor}
-\usepackage{color}
-\usepackage{float}
-\usepackage{multicol}
-\setmainfont[BoldFont=Adobe Heiti Std]{Adobe Song Std}
-\setsansfont[BoldFont=Adobe Heiti Std]{AR PL UKai CN}
-\setmonofont{Bitstream Vera Sans Mono}
-\XeTeXlinebreaklocale "zh" %
-\XeTeXlinebreakskip = 0pt plus 1pt minus 0.1pt
-\newcommand\li{\fontspec{LiSu}}
-\newcommand\hei{\fontspec{SimHei}}
-\newcommand\you{\fontspec{YouYuan}}
-\newcommand\sun{\fontspec{SimSun}}
-\newcommand\fangsong{\fontspec{仿宋_GB2312}}
-\newcommand\kai{\fontspec{KaiTi_GB2312}}
-\usepackage{titlesec}
-\titleformat{\chapter}{\centering\huge}{第\thechapter{}章}{1em}{\textbf}
-\titleformat{\part}{\centering\huge}{第\thepart{}部分}{1em}{\textbf}
-\renewcommand{\contentsname}{目~录}
-\renewcommand{\listfigurename}{插图目录}
-\renewcommand{\listtablename}{表格目录}
-\renewcommand{\indexname}{索引}
-\renewcommand{\tablename}{表}
-\renewcommand{\figurename}{图}
-\lstset{
-basicstyle=\scriptsize,
-numbers=left,
-keywordstyle=\color{blue},
-numberstyle={\tiny\color{lightgray}},
-stepnumber=1, %行号会逐行往上递增
-numbersep=5pt,
-commentstyle=\small\color{red},
-%backgroundcolor=\color[rgb]{0.95,1.0,1.0},
-showspaces=false,
-showtabs=false,
-frame=shadowbox, framexleftmargin=5mm, rulesepcolor=\color{red!20!green!20!blue!20!},
-% frame=single,
-% TABframe=single,
-tabsize=4,
-breaklines=tr,
-extendedchars=false %这一条命令可以解决代码跨页时，章节标题，页眉等汉字不显示的问题
+<pre class="src src-tex"><span style="color: #a020f0;">\usepackage</span>{<span style="color: #483d8b;">fontspec,xunicode,xltxtra,listings,xcolor,color,float,multicol,hyperref,indentfirst,titlesec</span>}
+
+<span style="color: #b22222;">%% </span><span style="color: #b22222;">&#20013;&#25991;&#23383;&#20307;&#35774;&#32622;</span>
+<span style="color: #a020f0;">\setmainfont</span>[BoldFont=Adobe Heiti Std]{Adobe Song Std}
+<span style="color: #a020f0;">\setsansfont</span>[BoldFont=Adobe Heiti Std]{Adobe Kaiti Std}
+<span style="color: #a020f0;">\setmonofont</span>{Bitstream Vera Sans Mono}
+<span style="color: #a020f0;">\XeTeXlinebreaklocale</span> "zh" <span style="color: #b22222;">%</span>
+<span style="color: #a020f0;">\XeTeXlinebreakskip</span> = 0pt plus 1pt minus 0.1pt
+<span style="color: #a020f0;">\newcommand</span><span style="color: #0000ff;">\li</span>{<span style="color: #a020f0;">\fontspec</span>{LiSu}}
+<span style="color: #a020f0;">\newcommand</span><span style="color: #0000ff;">\hei</span>{<span style="color: #a020f0;">\fontspec</span>{SimHei}}
+<span style="color: #a020f0;">\newcommand</span><span style="color: #0000ff;">\you</span>{<span style="color: #a020f0;">\fontspec</span>{YouYuan}}
+<span style="color: #a020f0;">\newcommand</span><span style="color: #0000ff;">\sun</span>{<span style="color: #a020f0;">\fontspec</span>{SimSun}}
+<span style="color: #a020f0;">\newcommand</span><span style="color: #0000ff;">\fangsong</span>{<span style="color: #a020f0;">\fontspec</span>{&#20223;&#23435;_GB2312}}
+<span style="color: #a020f0;">\newcommand</span><span style="color: #0000ff;">\kai</span>{<span style="color: #a020f0;">\fontspec</span>{KaiTi_GB2312}}
+
+<span style="color: #b22222;">%% </span><span style="color: #b22222;">&#20013;&#25991;&#26174;&#31034;</span>
+<span style="color: #a020f0;">\titleformat</span>{<span style="color: #a020f0;">\chapter</span>}{<span style="color: #a020f0;">\centering\huge</span>}{&#31532;<span style="color: #a020f0;">\thechapter</span>{}&#31456;}{1em}{<span style="color: #a020f0;">\textbf</span>}
+<span style="color: #a020f0;">\titleformat</span>{<span style="color: #a020f0;">\part</span>}{<span style="color: #a020f0;">\centering\huge</span>}{&#31532;<span style="color: #a020f0;">\thepart</span>{}&#37096;&#20998;}{1em}{<span style="color: #a020f0;">\textbf</span>}
+<span style="color: #a020f0;">\renewcommand</span>{<span style="color: #0000ff;">\contentsname</span>}{<span style="color: #a020f0;">\centerline</span>{&#30446;~&#24405;}}
+<span style="color: #a020f0;">\renewcommand</span>{<span style="color: #0000ff;">\listfigurename</span>}{&#25554;&#22270;&#30446;&#24405;}
+<span style="color: #a020f0;">\renewcommand</span>{<span style="color: #0000ff;">\listtablename</span>}{&#34920;&#26684;&#30446;&#24405;}
+<span style="color: #a020f0;">\renewcommand</span>{<span style="color: #0000ff;">\indexname</span>}{&#32034;&#24341;}
+<span style="color: #a020f0;">\renewcommand</span>{<span style="color: #0000ff;">\tablename</span>}{&#34920;}
+<span style="color: #a020f0;">\renewcommand</span>{<span style="color: #0000ff;">\figurename</span>}{&#22270;}
+<span style="color: #a020f0;">\lstset</span>{
+  basicstyle=<span style="color: #a020f0;">\small</span>,
+  keywordstyle=<span style="color: #a020f0;">\color</span>{blue},
+  commentstyle=<span style="color: #a020f0;">\small\color</span>{red},
+  showspaces=false,
+  showtabs=false,
+  tabsize=4,
+  breaklines=true,
+  extendedchars=false           <span style="color: #b22222;">%&#36825;&#19968;&#26465;&#21629;&#20196;&#21487;&#20197;&#35299;&#20915;&#20195;&#30721;&#36328;&#39029;&#26102;&#65292;&#31456;&#33410;&#26631;&#39064;&#65292;&#39029;&#30473;&#31561;&#27721;&#23383;&#19981;&#26174;&#31034;&#30340;&#38382;&#39064;</span>
+  <span style="color: #b22222;">%numbers=left,</span>
+  <span style="color: #b22222;">%numberstyle={\tiny\color{lightgray}},</span>
+  <span style="color: #b22222;">%stepnumber=1, %&#34892;&#21495;&#20250;&#36880;&#34892;&#24448;&#19978;&#36882;&#22686;</span>
+  <span style="color: #b22222;">%numbersep=5pt,</span>
+  <span style="color: #b22222;">%frame=shadowbox, </span>
+  <span style="color: #b22222;">%framexleftmargin=5mm, </span>
+  <span style="color: #b22222;">%rulesepcolor=\color{red!20!green!20!blue!20!},</span>
 }
+
+<span style="color: #b22222;">%</span><span style="color: #b22222;">&#37325;&#26032;&#23450;&#20041;theorem&#32534;&#21495;&#65292;&#33410;&#21495;+&#39034;&#24207;&#32534;&#21495;</span>
+<span style="color: #b22222;">%</span><span style="color: #b22222;">\newtheorem{theo}{&#23450;&#29702;}[section]</span>
+<span style="color: #b22222;">%</span><span style="color: #b22222;">\renewenvironment{thm}{\begin{theo}}{\end{theo}}</span>
+<span style="color: #a020f0;">\renewcommand</span><span style="color: #0000ff;">\refname</span>{&#21442;&#32771;&#25991;&#29486;}
+
+
+<span style="color: #b22222;">%% </span><span style="color: #b22222;">&#35774;&#32622;&#22823;&#23567;&#24067;&#23616;</span>
+<span style="color: #a020f0;">\usepackage</span>{<span style="color: #483d8b;">geometry</span>}
+<span style="color: #a020f0;">\geometry</span>{left=2.5cm,right=2.5cm,top=2.5cm,bottom=2.5cm}
+
+<span style="color: #b22222;">%% </span><span style="color: #b22222;">&#30446;&#24405;&#36229;&#38142;&#25509;&#38656;&#35201;</span>
+<span style="color: #a020f0;">\usepackage</span>[colorlinks, linkcolor=black, anchorcolor=black, citecolor=black]{<span style="color: #483d8b;">hyperref</span>}
+
+<span style="color: #b22222;">%% </span><span style="color: #b22222;">&#29992;&#26469;&#35774;&#32622;&#22270;&#29255;&#21644;&#34920;&#26684;&#30340;&#26631;&#39064;&#23558;&#40664;&#35748;&#30340;&#20882;&#21495;&#25913;&#25104;&#31354;&#26684;</span>
+<span style="color: #a020f0;">\usepackage</span>{<span style="color: #483d8b;">caption</span>}
+<span style="color: #a020f0;">\captionsetup</span>[figure]{labelsep=space}
+<span style="color: #a020f0;">\captionsetup</span>[table]{labelsep=space}
+
+<span style="color: #a020f0;">\date</span>{}
+
+</pre>
+
+</div>
+</div>
+
+</div>
+
+<div id="outline-container-1-2" class="outline-3">
+<h3 id="sec-1-2"><span class="section-number-3">1.2</span> beamer</h3>
+<div class="outline-text-3" id="text-1-2">
+
+
+   <div style="height:200px;overflow:auto;border-style:solid;border-width:1px;border-color:#DDD">
+
+<pre class="src src-tex"><span style="color: #a020f0;">\usepackage</span>{<span style="color: #483d8b;">fontspec,xunicode,xltxtra,listings,xcolor,color,float,multicol,hyperref,indentfirst,titlesec</span>}
+
+<span style="color: #b22222;">%% </span><span style="color: #b22222;">&#20013;&#25991;&#23383;&#20307;&#35774;&#32622;</span>
+<span style="color: #a020f0;">\setmainfont</span>[BoldFont=Adobe Heiti Std]{Adobe Song Std}
+<span style="color: #a020f0;">\setsansfont</span>[BoldFont=Adobe Heiti Std]{Adobe Kaiti Std}
+<span style="color: #a020f0;">\setmonofont</span>{Bitstream Vera Sans Mono}
+<span style="color: #a020f0;">\XeTeXlinebreaklocale</span> "zh" <span style="color: #b22222;">%</span>
+<span style="color: #a020f0;">\XeTeXlinebreakskip</span> = 0pt plus 1pt minus 0.1pt
+<span style="color: #a020f0;">\newcommand</span><span style="color: #0000ff;">\li</span>{<span style="color: #a020f0;">\fontspec</span>{LiSu}}
+<span style="color: #a020f0;">\newcommand</span><span style="color: #0000ff;">\hei</span>{<span style="color: #a020f0;">\fontspec</span>{SimHei}}
+<span style="color: #a020f0;">\newcommand</span><span style="color: #0000ff;">\you</span>{<span style="color: #a020f0;">\fontspec</span>{YouYuan}}
+<span style="color: #a020f0;">\newcommand</span><span style="color: #0000ff;">\sun</span>{<span style="color: #a020f0;">\fontspec</span>{SimSun}}
+<span style="color: #a020f0;">\newcommand</span><span style="color: #0000ff;">\fangsong</span>{<span style="color: #a020f0;">\fontspec</span>{&#20223;&#23435;_GB2312}}
+<span style="color: #a020f0;">\newcommand</span><span style="color: #0000ff;">\kai</span>{<span style="color: #a020f0;">\fontspec</span>{KaiTi_GB2312}}
+<span style="color: #a020f0;">\lstset</span>{
+  basicstyle=<span style="color: #a020f0;">\small</span>,
+  keywordstyle=<span style="color: #a020f0;">\color</span>{blue},
+  commentstyle=<span style="color: #a020f0;">\small\color</span>{red},
+  showspaces=false,
+  showtabs=false,
+  tabsize=4,
+  breaklines=true,
+  extendedchars=false           <span style="color: #b22222;">%&#36825;&#19968;&#26465;&#21629;&#20196;&#21487;&#20197;&#35299;&#20915;&#20195;&#30721;&#36328;&#39029;&#26102;&#65292;&#31456;&#33410;&#26631;&#39064;&#65292;&#39029;&#30473;&#31561;&#27721;&#23383;&#19981;&#26174;&#31034;&#30340;&#38382;&#39064;</span>
+  <span style="color: #b22222;">%numbers=left,</span>
+  <span style="color: #b22222;">%numberstyle={\tiny\color{lightgray}},</span>
+  <span style="color: #b22222;">%stepnumber=1, %&#34892;&#21495;&#20250;&#36880;&#34892;&#24448;&#19978;&#36882;&#22686;</span>
+  <span style="color: #b22222;">%numbersep=5pt,</span>
+  <span style="color: #b22222;">%frame=shadowbox, </span>
+  <span style="color: #b22222;">%framexleftmargin=5mm, </span>
+  <span style="color: #b22222;">%rulesepcolor=\color{red!20!green!20!blue!20!},</span>
+}
+
+<span style="color: #a020f0;">\usetheme</span>{Warsaw}               
+
+<span style="color: #a020f0;">\date</span>{}                         <span style="color: #b22222;">%&#20851;&#38381;&#33258;&#21160;&#29983;&#25104;&#26085;&#26399;</span>
+
+</pre>
+
+   </div>
+<p>
+   其它可选的主题和色彩<br/>
+</p>
+
+
+<pre class="src src-tex"><span style="color: #a020f0;">\usetheme</span>{Warsaw}              
+AnnArbor, Antibes,Bergen, Berkeley, Berlin, Boadilla, CambridgeUS, Copenhagen, Darmstadt, default, Dresden, Frankfurt, Goettingen, Hannover, Ilmenau, JuanLesPins, Luebeck, Madrid, Malmoe, Marburg, Montpellier, PaloAlto, Pittsburgh, Rochester, Singapore, Szeged, Stockton, boxes, Warsaw&#8230;
+<span style="color: #a020f0;">\usecolortheme</span>{beaver} 
+albatross, orchid, beaver, rose, beetle, seagull, crane. seahorse, default, sidebartab, dolphin , structure dove, whale, fly, wolverine, lily
 </pre>
 
 </div>
@@ -282,7 +436,17 @@ Your abstract goes here...
 <h2 id="sec-10"><span class="section-number-2">10</span> 源码高亮包</h2>
 <div class="outline-text-2" id="text-10">
 
-<p>  lstlisting可以实现源码高亮但颜色单调，可替代之的是minted。<br/>
+<p>  lstlisting可以实现源码高亮但颜色单调<br/>
+</p>
+
+
+<pre class="src src-tex"><span style="color: #a020f0;">\begin</span>{<span style="color: #0000ff;">lstlisting</span>}[language=matlab]
+test
+<span style="color: #a020f0;">\end</span>{<span style="color: #0000ff;">lstlisting</span>}
+</pre>
+
+<p>
+  可替代之的是minted。<br/>
   具体参考：<a href="http://www.latexstudio.net/?p=596">http://www.latexstudio.net/?p=596</a><br/>
 <div class="row-fluid"> <div class="span5">
 
@@ -318,6 +482,228 @@ int main(int argc, char *argv[])
 </div> <div class="span5">
 <link rel="stylesheet" href="../../Layout/CSS/jquery.lightbox-0.5.css" type="text/css" media="screen" /> <script type="text/javascript" src="../../Layout/JS/jquery.lightbox-0.5.js"></script> <center> <a class="lightbox" href="images/minted.png"> <img class="lightbox " title="点击查看大图" src="images/minted.png" width="450"> </a> </center> <script type="text/javascript"> $(function() {$('a.lightbox').lightBox();}); </script> 
 </div></div>
+</p></div>
+
+</div>
+
+<div id="outline-container-11" class="outline-2">
+<h2 id="sec-11"><span class="section-number-2">11</span> 插入gif动画文件</h2>
+<div class="outline-text-2" id="text-11">
+
+<p>  可以<a href="../../Linux/LinuxOS/UbuntuTrick.html#giftoavi">将gif转换成avi</a> 后再用movie15宏包插入。<br/>
+</p></div>
+
+</div>
+
+<div id="outline-container-12" class="outline-2">
+<h2 id="sec-12"><span class="section-number-2">12</span> Beamer中为插入frame设置快捷键</h2>
+<div class="outline-text-2" id="text-12">
+
+<p>  Tools-&gt;Preferences-&gt;Editing-&gt;Shortcuts中New对话框中Function栏写 <code>layout BeginFrame</code> 并为其添加快捷键，同理可为 <code>layout EndFrame</code> 添加快捷键.<br/>
+  查看一个功能对应的函数：在菜单上执行一次此功能后会出现在状态栏上。<br/>
+  默认文件保存到了~/.lyx/bind/user.bind，可以备份此文件以便日后使用。<br/>
+</p>
+</div>
+
+</div>
+
+<div id="outline-container-13" class="outline-2">
+<h2 id="sec-13"><span class="section-number-2">13</span> lyx解决Beamer中插入代码问题</h2>
+<div class="outline-text-2" id="text-13">
+
+<p>  直接insert-&gt;program listing插入代码这种方法行不通( *用这种方法插入代码可以在边框上右键setting来进行lstset设置)<br/>
+  目前最好的解决办法是把待插入的代码保存到一个文件中，通过 insert-&gt;file-&gt;child document来插入文件，在include type下选择program listing，此时可在More Parameters中设置相应的参数：<br/>
+</p><ol>
+<li>basicstyle={\tiny} 设置字体 \tiny \scriptsize \footnotesize \small \normalsize \large \Large \LARGE \huge \Huge<br/>
+</li>
+<li>breaklines=true 适当时候断行显示<br/>
+</li>
+<li>commentstyle={\color{black}} 注释颜色为黑色（否则如果不设置中文为黑色，英文为红色）<br/>
+</li>
+<li>language=Matlab 设置代码所用的语言<br/>
+</li>
+<li>numbers=left 显示行号，可选在显示左边还是右边<br/>
+</li>
+<li>numberstyle={\tiny\color{lightgray}} 设置行号大小及颜色<br/>
+</li>
+<li>frame=shadowbox 显示边框，可选 leftline, topline等<br/>
+</li>
+<li>rulesepcolor={\color{red!20!green!20!blue!20!}} 若边框为shadow则设置阴影的颜色<br/>
+</li>
+</ol>
+
+<p>  模板：<br/>
+</p>
+
+
+<pre class="example">basicstyle={\tiny}
+breaklines=true
+commentstyle={\color{black}}
+language=Matlab
+numbers=left
+numberstyle={\tiny\color{lightgray}}
+</pre>
+
+
+<p>     <br/>
+  <b>注意：</b> 如果注释中存在中英文混排情况则夹在中文之间的英文前后必须有空格，否则排版出错.<br/>
+</p></div>
+
+</div>
+
+<div id="outline-container-14" class="outline-2">
+<h2 id="sec-14"><span class="section-number-2">14</span> lyx的Beamer Overlay控制</h2>
+<div class="outline-text-2" id="text-14">
+
+
+</div>
+
+<div id="outline-container-14-1" class="outline-3">
+<h3 id="sec-14-1"><span class="section-number-3">14.1</span> columns</h3>
+<div class="outline-text-3" id="text-14-1">
+
+<p>   首先从下拉菜单下选择columns，在新行中选择column，输入宽度，后快捷键 <code>M-S-right</code> 将其提升了columns的child。<br/>
+</p></div>
+
+</div>
+
+<div id="outline-container-14-2" class="outline-3">
+<h3 id="sec-14-2"><span class="section-number-3">14.2</span> block</h3>
+<div class="outline-text-3" id="text-14-2">
+
+<p>   菜单下选择block后 <code>C-l</code> 输入 <code>{标题}</code> ，注意不可省略 <code>{}</code> 。<br/>
+</p></div>
+
+</div>
+
+<div id="outline-container-14-3" class="outline-3">
+<h3 id="sec-14-3"><span class="section-number-3">14.3</span> itemize/enumerate</h3>
+<div class="outline-text-3" id="text-14-3">
+
+<p>   <code>M-p e</code> 创建enumerate，可以在行首 <code>C-l</code> 输入：<br/>
+</p><ol>
+<li><code>&lt;n1-n2&gt;内容</code> 表示在n1至n2个幻灯片上显示<br/>
+</li>
+<li><code>&lt;only@n&gt;</code> 表示只在第n个幻灯片上显示<br/>
+</li>
+</ol>
+
+
+   <div class="row-fluid"> <div class="span4">
+   <link rel="stylesheet" href="../../Layout/CSS/jquery.lightbox-0.5.css" type="text/css" media="screen" /> <script type="text/javascript" src="../../Layout/JS/jquery.lightbox-0.5.js"></script> <center> <a class="lightbox" href="./images/beamer_overlay_columns_block_item.png"> <img class="lightbox " title="点击查看大图" src="./images/beamer_overlay_columns_block_item.png" width="400"> </a> </center> <script type="text/javascript"> $(function() {$('a.lightbox').lightBox();}); </script>
+   </div> <div class="span1">
+   <br/><br/><br/><br/><br/><br/><br/><br/>
+<p>
+   $$\underrightarrow{\ \ result\ \ }$$<br/>
+   </div> <div class="span7">
+   <br/><br/><br/><br/><br/>
+   <link rel="stylesheet" href="../../Layout/CSS/jquery.lightbox-0.5.css" type="text/css" media="screen" /> <script type="text/javascript" src="../../Layout/JS/jquery.lightbox-0.5.js"></script> <center> <a class="lightbox" href="images/beamer_overlay_columns_block_item_result.png"> <img class="lightbox " title="点击查看大图" src="images/beamer_overlay_columns_block_item_result.png" width="700"> </a> </center> <script type="text/javascript"> $(function() {$('a.lightbox').lightBox();}); </script> 
+   </div></div>
+   右图中列表是动态出现的。<br/>
+</p></div>
+
+</div>
+
+<div id="outline-container-14-4" class="outline-3">
+<h3 id="sec-14-4"><span class="section-number-3">14.4</span> overprint</h3>
+<div class="outline-text-3" id="text-14-4">
+
+<p>   如果一部分内容在某些不连续的幻灯片上出现可以用overprint，然后添加tex代码 <code>\onslide&lt;n1,n2,..&gt;</code> n1,n2……表示在哪些幻灯片上显示<br/>
+</p></div>
+
+</div>
+
+<div id="outline-container-14-5" class="outline-3">
+<h3 id="sec-14-5"><span class="section-number-3">14.5</span> alt</h3>
+<div class="outline-text-3" id="text-14-5">
+
+<p>   <code>\alt&lt;n&gt;{before}{after}</code> n帧前为before，n帧后为after。<br/>
+</p></div>
+
+</div>
+
+<div id="outline-container-14-6" class="outline-3">
+<h3 id="sec-14-6"><span class="section-number-3">14.6</span> temporal</h3>
+<div class="outline-text-3" id="text-14-6">
+
+<p>   <code>\temporal&lt;n&gt;{before}{on}{after}</code> 在n帧之前一直是before，n帧时是on，之后是after<br/>
+</p></div>
+
+</div>
+
+<div id="outline-container-14-7" class="outline-3">
+<h3 id="sec-14-7"><span class="section-number-3">14.7</span> 创建链接</h3>
+<div class="outline-text-3" id="text-14-7">
+
+<p>   创建target: <code>\hypertarget{targetname}{text-to-show}</code> 。<br/>
+   创建link: <code>\hyperlink{targetname}{\beamergotobutton{text-to-show-on-button}}</code>。<br/>
+   其它有用的button： \beamerreturnbutton，\beamerbutton<br/>
+</p></div>
+
+</div>
+
+<div id="outline-container-14-8" class="outline-3">
+<h3 id="sec-14-8"><span class="section-number-3">14.8</span> 整个frame的内容动态出现</h3>
+<div class="outline-text-3" id="text-14-8">
+
+<p>   可以在菜单选择BeginFrame后 <code>C-l</code> 输入 <code>&lt;+-&gt;</code> 再输入标题。这样如果此frame此都是列表则列表逐一出现。<br/>
+</p></div>
+</div>
+
+</div>
+
+<div id="outline-container-15" class="outline-2">
+<h2 id="sec-15"><span class="section-number-2">15</span> 打印Beamer制作的幻灯片</h2>
+<div class="outline-text-2" id="text-15">
+
+
+</div>
+
+<div id="outline-container-15-1" class="outline-3">
+<h3 id="sec-15-1"><span class="section-number-3">15.1</span> 修改源码实现</h3>
+<div class="outline-text-3" id="text-15-1">
+
+<p>   Beamer做的幻灯片的pause之类的Overlay都是通过额外的PDF页来实现的，打印时会造成浪费，解决方法是：<br/>
+</p>
+
+
+<pre class="example">\documentclass[handout]{beamer}
+</pre>
+
+<p>
+   这样生成的PDF不再具有Overlay的特效，但适合打印。(前提是你有此Beamer制作幻灯片的源码)<br/>
+   lyx设置：document-&gt;setting-&gt;document class-&gt;class options-&gt;custom中添加handout<br/>
+</p></div>
+
+</div>
+
+<div id="outline-container-15-2" class="outline-3">
+<h3 id="sec-15-2"><span class="section-number-3">15.2</span> 利用pdfpages包实现</h3>
+<div class="outline-text-3" id="text-15-2">
+
+<p>   大部分情况下我们手上只有一份pdf版的幻灯片，没有源码，此时上面的方法就行不通了，可以利用如下方法实现：<br/>
+</p>
+
+
+<pre class="src src-tex"><span style="color: #a020f0;">\documentclass</span>{<span style="color: #483d8b;">article</span>} <span style="color: #b22222;">%</span>
+<span style="color: #a020f0;">\usepackage</span>{<span style="color: #483d8b;">pdfpages</span>}
+<span style="color: #a020f0;">\begin</span>{<span style="color: #0000ff;">document</span>}
+<span style="color: #a020f0;">\includepdf</span>[nup=2x2,landscape,delta=5mm 5mm, scale=0.95,pages={1-18}]{trans.pdf}
+<span style="color: #a020f0;">\end</span>{<span style="color: #0000ff;">document</span>}   
+</pre>
+
+<p>
+   其中1-18指定了想要合并trans.pdf的页码范围，2x2指定了每页上个数。<br/>
+</p></div>
+</div>
+
+</div>
+
+<div id="outline-container-16" class="outline-2">
+<h2 id="sec-16"><span class="section-number-2">16</span> 快捷键</h2>
+<div class="outline-text-2" id="text-16">
+
+<p>  参考lyx的帮助文档 <a href="./lyx_shortcuts/Shortcuts.html">LY X Keyboard Shortcuts</a><br/>
 </p></div>
 </div>
 </div>

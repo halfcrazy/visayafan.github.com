@@ -7,7 +7,7 @@
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
 <meta name="title" content="Ubuntu Trick"/>
 <meta name="generator" content="Org-mode"/>
-<meta name="generated" content="2013-04-02 03:25:05 CST"/>
+<meta name="generated" content="2013-04-25 20:32:30 CST"/>
 <meta name="author" content="visayafan"/>
 <meta name="description" content=""/>
 <meta name="keywords" content=""/>
@@ -37,6 +37,8 @@
 <li><a href="#sec-2">2 备份包</a></li>
 <li><a href="#sec-3">3 命令行批量安装字体</a></li>
 <li><a href="#sec-4">4 切换键盘布局</a></li>
+<li><a href="#giftoavi">5 将gif转换成avi</a></li>
+<li><a href="#sec-6">6 解决evince中文乱码</a></li>
 </ul>
 </div>
 </div>
@@ -85,6 +87,67 @@
 <p>  System-Preferences-Keyboard Layouts 新添加一个layout<br/>
   设置切换layout的快捷键：Options-Keys <br/>
 </p></div>
+
+</div>
+
+<div id="outline-container-giftoavi" class="outline-2">
+<h2 id="giftoavi"><a name="sec-5" id="sec-5"></a><span class="section-number-2">5</span> 将gif转换成avi</h2>
+<div class="outline-text-2" id="text-giftoavi">
+
+<p>  首先安装imagemagick，之后<br/>
+</p>
+
+
+<pre class="example">convert logo.gif logo%02d.jpg   
+</pre>
+
+<p>
+  生成好多jpg文件，其中%02d和C语言中意思相同，表logo后跟两位数，如果gif的帧数超过两位数则应该考虑log%03d.jpg.<br/>
+  之后安装ffmpeg<br/>
+</p>
+
+
+<pre class="example">ffmpeg -r 25 -i logo%02d.jpg -y -an new.avi
+</pre>
+
+<ol>
+<li>-r表帧速率，默认是25.值越小生成avi时间越长（播放速度越慢）。<br/>
+</li>
+<li>-i表输入文件，同理logo%02d.jpg 表logo后跟2位数再后跟.jpg<br/>
+</li>
+<li>-y表输出文件如果与当前文件重名则选择覆盖掉<br/>
+</li>
+<li>-an表不使用录音<br/>
+</li>
+</ol>
+
+
+<p>
+  另外<br/>
+</p>
+
+
+<pre class="example">convert -strip test.gif test.jpg  
+</pre>
+
+<p>
+  可以将gif每帧生成一个jpg文件。<br/>
+</p></div>
+
+</div>
+
+<div id="outline-container-6" class="outline-2">
+<h2 id="sec-6"><span class="section-number-2">6</span> 解决evince中文乱码</h2>
+<div class="outline-text-2" id="text-6">
+
+<ol>
+<li>安装poppler-data: <code>sudo apt-get install poppler-data</code><br/>
+</li>
+<li><code>rm /etc/fonts/conf.d/49-sansserif.conf</code><br/>
+</li>
+</ol>
+
+</div>
 </div>
 </div>
 
