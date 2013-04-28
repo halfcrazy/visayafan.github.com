@@ -1,6 +1,6 @@
 #+OPTIONS: ^:{} _:{} num:t toc:t \n:t
+#+INCLUDE: "../../template-toc.org"
 #+SETUPFILE: "../../extension.org"
-#+INCLUDE: ../../template-toc.org
 #+title:Neu Wort 05
 * Schublade
   die drawer抽屉

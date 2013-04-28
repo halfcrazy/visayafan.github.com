@@ -1,5 +1,5 @@
 #+OPTIONS: ^:{} _:{} num:t toc:t \n:t
-#+INCLUDE "../../template-toc.org"
+#+INCLUDE: "../../template-toc.org"
 #+SETUPFILE: "../../extension.org"
 #+title:Emacs Gnus
 新闻组类似现在的BBS或论坛，使用人数越来越少，但仍旧坚持使用的人中有很多大牛，可以从中学到很多东西，并且里面的技术氛围很深厚，说废话的人很少，这是我选择使用新闻组的原因。

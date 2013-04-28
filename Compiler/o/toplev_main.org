@@ -1,5 +1,5 @@
 #+OPTIONS: ^:{} _:{} num:nil toc:nil \n:t
-#+INCLUDE "../../template.org"
+#+INCLUDE: "../../template.org"
 #+SETUPFILE: "../../extension.org"
 #+title:
 {{{lightbox(images/toplev_main.png,600)}}} 

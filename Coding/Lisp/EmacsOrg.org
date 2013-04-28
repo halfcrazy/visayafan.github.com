@@ -1,9 +1,10 @@
 #+OPTIONS: ^:{} _:{} num:t toc:t \n:t
-#+INCLUDE "../../template-toc.org"
+#+INCLUDE: "../../template-toc.org"
 #+SETUPFILE: "../../extension.org"
 #+title:Emacs Org-Mode
 
-* 解决org-mode example/src/quote上面多一行问题
+* 解决org-mode example/src/quote上面多一行问题                     :noexport:
+  这个问题在org8x版本中已经解决了。
   不知道是不是org-mode的bug？如下所示的代码
 #+begin_src org
 abc
@@ -139,6 +140,9 @@ $$ \(\)表行内，$$ $$ \[ \] 表行间
 If $a^2=b$ and \( b=2 \), then the solution must be
 either $$ a=+\sqrt{2} $$ or \[ a=-\sqrt{2} \].
 #+end_example  
+  效果如下：
+If $a^2=b$ and \( b=2 \), then the solution must be
+either $$ a=+\sqrt{2} $$ or \[ a=-\sqrt{2} \].
 * org-mode 中block中嵌入#+begin_example
 : #+begin_example
 : #+begin_example
@@ -163,7 +167,12 @@ either $$ a=+\sqrt{2} $$ or \[ a=-\sqrt{2} \].
 #+html:<center>
 [[./images/中文目录.png]]  
 #+html:</center>
-  再 =M-x customize-variable ENTER org-export-default-language= 改成 zh-CN
+  再 =M-x customize-variable ENTER org-export-default-language= 改成 zh-CN。
+  也可以使用下面语句：
+  #+begin_src lisp
+(setq org-export-language-setup (append org-export-language-setup '(("zh-CN" "作者" "日期" "目录" "脚注"))))
+(setq org-export-default-language "zh-CN")
+  #+end_src
 * org-mode导出PDF目录显示“目录”而非默认的Contents
   在 =org-export-latex-classes= 中加上 =\\renewcommand\\contentsname{目录}=
 * org-mode的表格中输入|
@@ -256,3 +265,96 @@ either $$ a=+\sqrt{2} $$ or \[ a=-\sqrt{2} \].
 | C-c >   | calendar                       |
 | C-c <   | 把光标所在处的时间插入到文件中 |
 | C-c C-t | todo/done                      |
+* include外部文件
+  =#+include "filename" options= 其中options可以是：
+  1. src/example/quote 如果是src的话可以指定源码语言
+     =#+INCLUDE: "~/.emacs" src emacs-lisp=
+  2. =:minlevel n= 如果导入的文件为org文件，则默认情况下导入文件整体结构的级别和当前所在级别相同，可以通过minlevel来使其成为子结构或父结构(负数)。
+  3. :lines "n1-n2" 只敢n1-n2行（左闭右开），可以省略n1或n2表开头至n2或n1到结尾
+  =C-c `= 来访问导入的外部文件
+* 源码显示行号和进行引用
+  用 =-n= 来指定显示行号和 =-r= 来启动引用选项。
+: #+BEGIN_SRC emacs-lisp -n -r
+: (save-excursion                  (ref:sc)
+:    (goto-char (point-min))       (ref:jump)
+: #+END_SRC
+: In line [[(sc)]] we remember the current position.  [[(jump)][Line (jump)]] jumps to point-min.
+  生成效果：
+  #+BEGIN_SRC emacs-lisp -n -r
+    (save-excursion                  (ref:sc)
+       (goto-char (point-min))       (ref:jump)
+  #+END_SRC
+  In line [[(sc)]] we remember the current position.  [[(jump)][Line (jump)]] jumps to point-min.
+  --------
+  在源码上 C-c '会打开临时buffer以便编辑（会打开源码的对应的major mode），可以调用 =org-store-link= 来添加一个引用。
+* 不export出指定heading
+  可以为不想导出的标题添加 =noexport= tag:
+  =C-c C-q TAB noexport=
+  另一种解决办法是在不想导出的部分 =C-c ;= 可以将这部分heading标记为注释
+* 替换Emacs自带的手册
+  Emacs自带的org手册总是滞后于org最新的手册，在Emacs中 =C-h i= 查看的是自带的而非当前正在使用的最新的，可以用下面的方法将自带的帮助替换掉。
+  下载org的源码后 =make install= 后会在 =/usr/share/info= 目录下生成org文件，此文件即为帮助文件。（如果不想安装也可以 =make doc= 来生成）
+  Emacs中 =C-h i= 后进入org的帮助，此时 =C-x C-f= 后显示Emacs自带的org帮助的位置，用刚才生成的org替换掉自带的即可。
+* 块内执行代码
+  首先配置变量 =org-babel-load-languages=
+  #+BEGIN_EXAMPLE
+(org-babel-do-load-languages
+ 'org-babel-load-languages '(
+   (sh . t)
+   (emacs-lisp . t)))  
+(setq org-confirm-babel-evaluate nil) ;禁止每次都提示是否调用外部程序
+  #+END_EXAMPLE
+  1. :file 后跟输入文件名
+  2. :exports后可跟4个选项code/results/both/none分别对应只显示代码/结果，代码和结果都显示，都不显示
+  3. :dir 后跟代码执行路径，默认是当前文件路径
+  4. :var varname=value 代码中可用的变量
+
+: #+BEGIN_SRC sh :exports both :var filename=(buffer-file-name)
+: wc -l $filename
+: ls -l     
+: #+END_SRC
+
+   在块中的可执行代码上 =C-c C-c= 执行代码并显示结果； =C-c C-o= 在另一个buffer中显示结果。
+* 行内执行代码
+  =prefix src_emacs-lisp[:exports results]{(let (value) (dotimes (n 10 value) (setq value (cons n value))))} suffix=
+  结果如下：
+  prefix src_emacs-lisp[:exports results]{(let (value) (dotimes (n 10 value) (setq value (cons n value))))} suffix
+* 强调
+  可以用 ~=代码=~ 或 =~代码~= 。
+  其它：
+  : /italic/ *bold* _underline_ +strike-through+
+  效果
+  /italic/ *bold* _underline_ +strike-through+
+* 行内颜色
+  *注意* 只对7.x版本的org适用，8.x版本待解决。
+  =org-export-html-final-hook= 里的函数是对导出生成HTML的最后阶段的buffer进行操作，可以进行一些替换，例如将 =AAAAA= 替换成HTML的左TAG =<= ，将 =BBBBB= 替换成右TAG =>= ，这样 ~AAAAAfont color="red"BBBBBthis is redAAAAA/fontBBBBB~ 会被替换成 ~<font color="red">this is red</font>~ 被浏览器解析后便形成红色文本。
+  替换函数如下：
+  #+begin_src lisp
+(add-hook 'org-export-html-final-hook 'org-delete-!!!)
+(defun org-delete-!!! ()
+  (interactive)
+  (goto-char (point-min))
+  (while (re-search-forward "AAAAA" nil t)
+    (replace-match "<"))
+  (goto-char (point-min))
+  (while (re-search-forward "BBBBB" nil t)
+    (replace-match ">")))  
+  #+end_src
+
+: #+macro: clr AAAAAfont color="$1"BBBBB$2AAAAA/fontBBBBB
+: hello {{{clr(red, this is red)}}} world
+: hello {{{clr(blue, this is blue)}}} world
+: hello {{{clr(yellow, this is yellow)}}} world
+: hello {{{clr(green, this is green)}}} world
+  生成效果如下：
+hello {{{color(red, this is red)}}} world
+hello {{{color(blue, this is blue)}}} world
+hello {{{color(yellow, this is yellow)}}} world
+hello {{{color(green, this is green)}}} world
+  可以写一个名为color的yasnippet来方便输入：
+  #+begin_example
+# -*- mode: snippet -*-
+# name: clr
+# --
+{{{clr(${1:red},${2:文本})}}}$0  
+  #+end_example

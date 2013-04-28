@@ -1,5 +1,5 @@
 #+OPTIONS: ^:{} _:{} num:nil toc:nil \n:t
-#+INCLUDE "../../template.org"
+#+INCLUDE: "../../template.org"
 #+SETUPFILE: "../../extension.org"
 #+title:第三格情况
 参考:

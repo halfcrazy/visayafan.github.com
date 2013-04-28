@@ -7,7 +7,7 @@
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
 <meta name="title" content="Emacs Org-Mode"/>
 <meta name="generator" content="Org-mode"/>
-<meta name="generated" content="2013-04-15 03:46:43 CST"/>
+<meta name="generated" content="2013-04-28 13:38:12 CST"/>
 <meta name="author" content="visayafan"/>
 <meta name="description" content=""/>
 <meta name="keywords" content=""/>
@@ -74,111 +74,40 @@
 <h2>目录</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#sec-1">1 解决org-mode example/src/quote上面多一行问题</a></li>
-<li><a href="#sec-2">2 org-mode example/src过大</a></li>
-<li><a href="#sec-3">3 org-mode中使用宏</a></li>
-<li><a href="#sec-4">4 org-mode 中嵌入latex公式</a></li>
-<li><a href="#sec-5">5 org-mode 中block中嵌入#+begin_example</a></li>
-<li><a href="#sec-6">6 org-mode导出HTML目录显示“目录”而非默认的Table Of Content</a></li>
-<li><a href="#sec-7">7 org-mode导出PDF目录显示“目录”而非默认的Contents</a></li>
-<li><a href="#sec-8">8 org-mode的表格中输入|</a></li>
-<li><a href="#sec-9">9 Emacs Org配置简单快捷键</a></li>
-<li><a href="#sec-10">10 org-mode 链接</a></li>
-<li><a href="#sec-11">11 org-mode 导出HTML时创建内部文件链接</a>
+<li><a href="#sec-1">1 org-mode example/src过大</a></li>
+<li><a href="#sec-2">2 org-mode中使用宏</a></li>
+<li><a href="#sec-3">3 org-mode 中嵌入latex公式</a></li>
+<li><a href="#sec-4">4 org-mode 中block中嵌入#+begin_example</a></li>
+<li><a href="#sec-5">5 org-mode导出HTML目录显示“目录”而非默认的Table Of Content</a></li>
+<li><a href="#sec-6">6 org-mode导出PDF目录显示“目录”而非默认的Contents</a></li>
+<li><a href="#sec-7">7 org-mode的表格中输入|</a></li>
+<li><a href="#sec-8">8 Emacs Org配置简单快捷键</a></li>
+<li><a href="#sec-9">9 org-mode 链接</a></li>
+<li><a href="#sec-10">10 org-mode 导出HTML时创建内部文件链接</a>
 <ul>
-<li><a href="#sec-11-1">11.1 添加anchor，</a></li>
-<li><a href="#sec-11-2">11.2 store-link, insert-link</a></li>
+<li><a href="#sec-10-1">10.1 添加anchor，</a></li>
+<li><a href="#sec-10-2">10.2 store-link, insert-link</a></li>
 </ul>
 </li>
-<li><a href="#sec-12">12 org-mode 导出HTML时创建外部文件链接</a></li>
-<li><a href="#sec-13">13 org-mode M-RET插入多余的空白行</a></li>
-<li><a href="#sec-14">14 org-sync</a></li>
-<li><a href="#sec-15">15 GTD</a></li>
+<li><a href="#sec-11">11 org-mode 导出HTML时创建外部文件链接</a></li>
+<li><a href="#sec-12">12 org-mode M-RET插入多余的空白行</a></li>
+<li><a href="#sec-13">13 org-sync</a></li>
+<li><a href="#sec-14">14 GTD</a></li>
+<li><a href="#sec-15">15 include外部文件</a></li>
+<li><a href="#sec-16">16 源码显示行号和进行引用</a></li>
+<li><a href="#sec-17">17 不export出指定heading</a></li>
+<li><a href="#sec-18">18 替换Emacs自带的手册</a></li>
+<li><a href="#sec-19">19 块内执行代码</a></li>
+<li><a href="#sec-20">20 行内执行代码</a></li>
+<li><a href="#sec-21">21 强调</a></li>
+<li><a href="#sec-22">22 行内颜色</a></li>
 </ul>
 </div>
 </div>
 
 <div id="outline-container-1" class="outline-2">
-<h2 id="sec-1"><span class="section-number-2">1</span> 解决org-mode example/src/quote上面多一行问题</h2>
+<h2 id="sec-1"><span class="section-number-2">1</span> org-mode example/src过大</h2>
 <div class="outline-text-2" id="text-1">
-
-<p>  不知道是不是org-mode的bug？如下所示的代码<br/>
-</p>
-
-
-<pre class="src src-org">abc
-cef
-<span style="color: #b22222;">#+begin_example</span>
-<span style="color: #7f7f7f;">hello</span>
-<span style="color: #b22222;">#+end_example  </span>
-</pre>
-
-<p>
-  经编译后生成：<br/>
-</p>
-
-
-<pre class="example">&lt;p&gt;  abc&lt;br/&gt;
-  cef&lt;br/&gt;
-&lt;/p&gt;
-&lt;p&gt;&lt;br&gt;
-&lt;pre class="example"&gt;hello
-&lt;/pre&gt;
-&lt;/p&gt;
-</pre>
-
-<p>
-  但浏览器解析是这样解析的：<br/>
-</p>
-
-
-<pre class="example">&lt;p&gt;  abc&lt;br/&gt;
-  cef&lt;br/&gt;
-&lt;/p&gt;
-&lt;p&gt;&lt;br&gt;&lt;/p&gt;
-&lt;pre class="example"&gt;hello
-&lt;/pre&gt;
-</pre>
-
-<p>
-  这样就会在cef和hello之间多出一行。<br/>
-  分析lisp/org-html.el代码发现原因在:<br/>
-</p>
-
-
-<pre class="src src-lisp"><span style="color: #b22222;">;; </span><span style="color: #b22222;">Check if the line break needs to be conserved</span>
-(<span style="color: #a020f0;">cond</span>
- ((string-match <span style="color: #8b2252;">"\\\\\\\\[ \t]*$"</span> line)
-  (setq line (replace-match <span style="color: #8b2252;">"&lt;br/&gt;"</span> t t line)))
- (org-export-preserve-breaks
-  (setq line (concat line <span style="color: #8b2252;">"&lt;br/&gt;"</span>))
-  ))
-</pre>
-
-<p>
-  不管line是否为空都会给line后面加上&lt;br/&gt;，而实际上当Line为空时没有必要加上&lt;br/&gt;，于是可以修改:<br/>
-</p>
-
-
-<pre class="src src-lisp"><span style="color: #b22222;">;; </span><span style="color: #b22222;">Check if the line break needs to be conserved</span>
-(<span style="color: #a020f0;">cond</span>
- ((string-match <span style="color: #8b2252;">"\\\\\\\\[ \t]*$"</span> line)
-  (setq line (replace-match <span style="color: #8b2252;">"&lt;br/&gt;"</span> t t line)))
- (org-export-preserve-breaks
-  (<span style="color: #a020f0;">if</span> (not (string= line <span style="color: #8b2252;">""</span>))
-      (setq line (concat line <span style="color: #8b2252;">"&lt;br/&gt;"</span>)))
-  ))
-</pre>
-
-<p>
-  这样便解决了多一行的问题。<br/>
-</p></div>
-
-</div>
-
-<div id="outline-container-2" class="outline-2">
-<h2 id="sec-2"><span class="section-number-2">2</span> org-mode example/src过大</h2>
-<div class="outline-text-2" id="text-2">
 
 <p>  当在#+begin_example #+end_example或者#+begin_src #+end_src环境中内容过多时会占用大量空间，一个解决办法是加上 <code>-t</code> 选项并配合 <code>-h height -w width</code> 选项来指定高宽，使它成为有滚动条的区域。但好像无法使用语法高亮并且此区域内容是可编辑的。<br/>
 </p>
@@ -241,9 +170,9 @@ private:
 
 </div>
 
-<div id="outline-container-3" class="outline-2">
-<h2 id="sec-3"><span class="section-number-2">3</span> org-mode中使用宏</h2>
-<div class="outline-text-2" id="text-3">
+<div id="outline-container-2" class="outline-2">
+<h2 id="sec-2"><span class="section-number-2">2</span> org-mode中使用宏</h2>
+<div class="outline-text-2" id="text-2">
 
 <p>  在文章的开始定义宏，格式为 #+macro: macro_name macro_content_with_$1_arg1_$2_arg2_&hellip;<br/>
   宏中\n表示换行。<br/>
@@ -286,9 +215,9 @@ format 其中format格式必须可以被函数 =format-time-string= 识别，常
 
 </div>
 
-<div id="outline-container-4" class="outline-2">
-<h2 id="sec-4"><span class="section-number-2">4</span> org-mode 中嵌入latex公式</h2>
-<div class="outline-text-2" id="text-4">
+<div id="outline-container-3" class="outline-2">
+<h2 id="sec-3"><span class="section-number-2">3</span> org-mode 中嵌入latex公式</h2>
+<div class="outline-text-2" id="text-3">
 
 
 
@@ -301,13 +230,17 @@ format 其中format格式必须可以被函数 =format-time-string= 识别，常
 either $$ a=+\sqrt{2} $$ or \[ a=-\sqrt{2} \].
 </pre>
 
-</div>
+<p>
+  效果如下：<br/>
+If \(a^2=b\) and \( b=2 \), then the solution must be<br/>
+either $$ a=+\sqrt{2} $$ or \[ a=-\sqrt{2} \].<br/>
+</p></div>
 
 </div>
 
-<div id="outline-container-5" class="outline-2">
-<h2 id="sec-5"><span class="section-number-2">5</span> org-mode 中block中嵌入#+begin_example</h2>
-<div class="outline-text-2" id="text-5">
+<div id="outline-container-4" class="outline-2">
+<h2 id="sec-4"><span class="section-number-2">4</span> org-mode 中block中嵌入#+begin_example</h2>
+<div class="outline-text-2" id="text-4">
 
 <pre class="example">
 #+begin_example
@@ -340,31 +273,39 @@ either $$ a=+\sqrt{2} $$ or \[ a=-\sqrt{2} \].
 
 </div>
 
-<div id="outline-container-6" class="outline-2">
-<h2 id="sec-6"><span class="section-number-2">6</span> org-mode导出HTML目录显示“目录”而非默认的Table Of Content</h2>
-<div class="outline-text-2" id="text-6">
+<div id="outline-container-5" class="outline-2">
+<h2 id="sec-5"><span class="section-number-2">5</span> org-mode导出HTML目录显示“目录”而非默认的Table Of Content</h2>
+<div class="outline-text-2" id="text-5">
 
 <p>  <code>M-x customize-variable ENTER org-export-language-setup</code> 在最后ins插入新的List:<br/>
 <center>
 <img src="./images/中文目录.png"  alt="./images/中文目录.png" />  <br/>
 </center>
-  再 <code>M-x customize-variable ENTER org-export-default-language</code> 改成 zh-CN<br/>
-</p></div>
+  再 <code>M-x customize-variable ENTER org-export-default-language</code> 改成 zh-CN。<br/>
+  也可以使用下面语句：<br/>
+</p>
+
+
+<pre class="src src-lisp">(setq org-export-language-setup (append org-export-language-setup '((<span style="color: #8b2252;">"zh-CN"</span> <span style="color: #8b2252;">"&#20316;&#32773;"</span> <span style="color: #8b2252;">"&#26085;&#26399;"</span> <span style="color: #8b2252;">"&#30446;&#24405;"</span> <span style="color: #8b2252;">"&#33050;&#27880;"</span>))))
+(setq org-export-default-language <span style="color: #8b2252;">"zh-CN"</span>)
+</pre>
 
 </div>
 
-<div id="outline-container-7" class="outline-2">
-<h2 id="sec-7"><span class="section-number-2">7</span> org-mode导出PDF目录显示“目录”而非默认的Contents</h2>
-<div class="outline-text-2" id="text-7">
+</div>
+
+<div id="outline-container-6" class="outline-2">
+<h2 id="sec-6"><span class="section-number-2">6</span> org-mode导出PDF目录显示“目录”而非默认的Contents</h2>
+<div class="outline-text-2" id="text-6">
 
 <p>  在 <code>org-export-latex-classes</code> 中加上 <code>\\renewcommand\\contentsname{目录}</code><br/>
 </p></div>
 
 </div>
 
-<div id="outline-container-8" class="outline-2">
-<h2 id="sec-8"><span class="section-number-2">8</span> org-mode的表格中输入|</h2>
-<div class="outline-text-2" id="text-8">
+<div id="outline-container-7" class="outline-2">
+<h2 id="sec-7"><span class="section-number-2">7</span> org-mode的表格中输入|</h2>
+<div class="outline-text-2" id="text-7">
 
 <p>  两种办法：<br/>
 </p><ol>
@@ -379,9 +320,9 @@ either $$ a=+\sqrt{2} $$ or \[ a=-\sqrt{2} \].
 
 </div>
 
-<div id="outline-container-9" class="outline-2">
-<h2 id="sec-9"><span class="section-number-2">9</span> Emacs Org配置简单快捷键</h2>
-<div class="outline-text-2" id="text-9">
+<div id="outline-container-8" class="outline-2">
+<h2 id="sec-8"><span class="section-number-2">8</span> Emacs Org配置简单快捷键</h2>
+<div class="outline-text-2" id="text-8">
 
 <p>  <code>M-x custoize-varialbe RET org-structure-template-alist</code><br/>
 </p>
@@ -390,9 +331,9 @@ either $$ a=+\sqrt{2} $$ or \[ a=-\sqrt{2} \].
 
 </div>
 
-<div id="outline-container-10" class="outline-2">
-<h2 id="sec-10"><span class="section-number-2">10</span> org-mode 链接</h2>
-<div class="outline-text-2" id="text-10">
+<div id="outline-container-9" class="outline-2">
+<h2 id="sec-9"><span class="section-number-2">9</span> org-mode 链接</h2>
+<div class="outline-text-2" id="text-9">
 
 
 
@@ -449,17 +390,17 @@ elisp:(find-file-other-frame "Elisp.org") Elisp form to evaluate
 
 </div>
 
-<div id="outline-container-11" class="outline-2">
-<h2 id="sec-11"><span class="section-number-2">11</span> org-mode 导出HTML时创建内部文件链接</h2>
-<div class="outline-text-2" id="text-11">
+<div id="outline-container-10" class="outline-2">
+<h2 id="sec-10"><span class="section-number-2">10</span> org-mode 导出HTML时创建内部文件链接</h2>
+<div class="outline-text-2" id="text-10">
 
 <p>  在一篇文章中建立内部链接很简单<br/>
 </p>
 </div>
 
-<div id="outline-container-11-1" class="outline-3">
-<h3 id="sec-11-1"><span class="section-number-3">11.1</span> 添加anchor，</h3>
-<div class="outline-text-3" id="text-11-1">
+<div id="outline-container-10-1" class="outline-3">
+<h3 id="sec-10-1"><span class="section-number-3">10.1</span> 添加anchor，</h3>
+<div class="outline-text-3" id="text-10-1">
 
 
 
@@ -479,9 +420,9 @@ elisp:(find-file-other-frame "Elisp.org") Elisp form to evaluate
 
 </div>
 
-<div id="outline-container-11-2" class="outline-3">
-<h3 id="sec-11-2"><span class="section-number-3">11.2</span> store-link, insert-link</h3>
-<div class="outline-text-3" id="text-11-2">
+<div id="outline-container-10-2" class="outline-3">
+<h3 id="sec-10-2"><span class="section-number-3">10.2</span> store-link, insert-link</h3>
+<div class="outline-text-3" id="text-10-2">
 
 <p>   在跳转目的地 <code>org-store-link</code> 在跳转处 <code>org-insert-link</code> 。<br/>
 </p></div>
@@ -489,9 +430,9 @@ elisp:(find-file-other-frame "Elisp.org") Elisp form to evaluate
 
 </div>
 
-<div id="outline-container-12" class="outline-2">
-<h2 id="sec-12"><span class="section-number-2">12</span> org-mode 导出HTML时创建外部文件链接</h2>
-<div class="outline-text-2" id="text-12">
+<div id="outline-container-11" class="outline-2">
+<h2 id="sec-11"><span class="section-number-2">11</span> org-mode 导出HTML时创建外部文件链接</h2>
+<div class="outline-text-2" id="text-11">
 
 <p>  可以利用 CUSTOM_ID 属性。<br/>
 
@@ -523,9 +464,9 @@ elisp:(find-file-other-frame "Elisp.org") Elisp form to evaluate
 
 </div>
 
-<div id="outline-container-13" class="outline-2">
-<h2 id="sec-13"><span class="section-number-2">13</span> org-mode M-RET插入多余的空白行</h2>
-<div class="outline-text-2" id="text-13">
+<div id="outline-container-12" class="outline-2">
+<h2 id="sec-12"><span class="section-number-2">12</span> org-mode M-RET插入多余的空白行</h2>
+<div class="outline-text-2" id="text-12">
 
 <p>  <a href="http://orgmode.org/worg/org-faq.html#blank-line-after-headlines-and-list-items">为什么要插入空白行</a><br/>
   解决办法： <code>customzie-variable RET org-blank-before-new-entry</code> 将两个Choice都选为Never即可。  <br/>
@@ -533,9 +474,9 @@ elisp:(find-file-other-frame "Elisp.org") Elisp form to evaluate
 
 </div>
 
-<div id="outline-container-14" class="outline-2">
-<h2 id="sec-14"><span class="section-number-2">14</span> org-sync</h2>
-<div class="outline-text-2" id="text-14">
+<div id="outline-container-13" class="outline-2">
+<h2 id="sec-13"><span class="section-number-2">13</span> org-sync</h2>
+<div class="outline-text-2" id="text-13">
 
 <p>  用Org文档来同步Bug跟踪，暂用不到。<br/>
   <a href="http://orgmode.org/worg/org-contrib/gsoc2012/student-projects/org-sync/">官网</a>， <a href="https://www.youtube.com/watch?v=kbj6-j0teCY">视频</a> <br/>
@@ -543,9 +484,9 @@ elisp:(find-file-other-frame "Elisp.org") Elisp form to evaluate
 
 </div>
 
-<div id="outline-container-15" class="outline-2">
-<h2 id="sec-15"><span class="section-number-2">15</span> GTD</h2>
-<div class="outline-text-2" id="text-15">
+<div id="outline-container-14" class="outline-2">
+<h2 id="sec-14"><span class="section-number-2">14</span> GTD</h2>
+<div class="outline-text-2" id="text-14">
 
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
 <caption></caption>
@@ -561,6 +502,198 @@ elisp:(find-file-other-frame "Elisp.org") Elisp form to evaluate
 <tr><td class="left">C-c C-t</td><td class="left">todo/done</td></tr>
 </tbody>
 </table>
+
+</div>
+
+</div>
+
+<div id="outline-container-15" class="outline-2">
+<h2 id="sec-15"><span class="section-number-2">15</span> include外部文件</h2>
+<div class="outline-text-2" id="text-15">
+
+<p>  <code>#+include "filename" options</code> 其中options可以是：<br/>
+</p><ol>
+<li>src/example/quote 如果是src的话可以指定源码语言<br/>
+     <code>#+INCLUDE: "~/.emacs" src emacs-lisp</code><br/>
+</li>
+<li><code>:minlevel n</code> 如果导入的文件为org文件，则默认情况下导入文件整体结构的级别和当前所在级别相同，可以通过minlevel来使其成为子结构或父结构(负数)。<br/>
+</li>
+<li>:lines "n1-n2" 只敢n1-n2行（左闭右开），可以省略n1或n2表开头至n2或n1到结尾<br/>
+</li>
+</ol>
+
+<p>  <code>C-c `</code> 来访问导入的外部文件<br/>
+</p></div>
+
+</div>
+
+<div id="outline-container-16" class="outline-2">
+<h2 id="sec-16"><span class="section-number-2">16</span> 源码显示行号和进行引用</h2>
+<div class="outline-text-2" id="text-16">
+
+<p>  用 <code>-n</code> 来指定显示行号和 <code>-r</code> 来启动引用选项。<br/>
+</p><pre class="example">
+#+BEGIN_SRC emacs-lisp -n -r
+(save-excursion                  (ref:sc)
+   (goto-char (point-min))       (ref:jump)
+#+END_SRC
+In line [[(sc)]] we remember the current position.  [[(jump)][Line (jump)]] jumps to point-min.
+</pre>
+
+<p>  生成效果：<br/>
+</p>
+
+
+<pre class="src src-emacs-lisp"><span id="coderef-sc" class="coderef-off"><span class="linenr">1:  </span>(<span style="color: #a020f0;">save-excursion</span></span>
+<span id="coderef-jump" class="coderef-off"><span class="linenr">2:  </span>   (goto-char (point-min))</span>
+</pre>
+
+<p>
+  In line <a href="#coderef-sc" class="coderef" onmouseover="CodeHighlightOn(this, 'coderef-sc');" onmouseout="CodeHighlightOff(this, 'coderef-sc');">1</a> we remember the current position.  <a href="#coderef-jump" class="coderef" onmouseover="CodeHighlightOn(this, 'coderef-jump');" onmouseout="CodeHighlightOff(this, 'coderef-jump');">Line 2</a> jumps to point-min.<br/>
+
+</p>
+<hr/>
+<p>
+  在源码上 C-c '会打开临时buffer以便编辑（会打开源码的对应的major mode），可以调用 <code>org-store-link</code> 来添加一个引用。<br/>
+</p></div>
+
+</div>
+
+<div id="outline-container-17" class="outline-2">
+<h2 id="sec-17"><span class="section-number-2">17</span> 不export出指定heading</h2>
+<div class="outline-text-2" id="text-17">
+
+<p>  可以为不想导出的标题添加 <code>noexport</code> tag:<br/>
+  <code>C-c C-q TAB noexport</code><br/>
+  另一种解决办法是在不想导出的部分 <code>C-c ;</code> 可以将这部分heading标记为注释<br/>
+</p></div>
+
+</div>
+
+<div id="outline-container-18" class="outline-2">
+<h2 id="sec-18"><span class="section-number-2">18</span> 替换Emacs自带的手册</h2>
+<div class="outline-text-2" id="text-18">
+
+<p>  Emacs自带的org手册总是滞后于org最新的手册，在Emacs中 <code>C-h i</code> 查看的是自带的而非当前正在使用的最新的，可以用下面的方法将自带的帮助替换掉。<br/>
+  下载org的源码后 <code>make install</code> 后会在 <code>/usr/share/info</code> 目录下生成org文件，此文件即为帮助文件。（如果不想安装也可以 <code>make doc</code> 来生成）<br/>
+  Emacs中 <code>C-h i</code> 后进入org的帮助，此时 <code>C-x C-f</code> 后显示Emacs自带的org帮助的位置，用刚才生成的org替换掉自带的即可。<br/>
+</p></div>
+
+</div>
+
+<div id="outline-container-19" class="outline-2">
+<h2 id="sec-19"><span class="section-number-2">19</span> 块内执行代码</h2>
+<div class="outline-text-2" id="text-19">
+
+<p>  首先配置变量 <code>org-babel-load-languages</code><br/>
+</p>
+
+
+<pre class="example">(org-babel-do-load-languages
+ 'org-babel-load-languages '(
+   (sh . t)
+   (emacs-lisp . t)))  
+(setq org-confirm-babel-evaluate nil) ;禁止每次都提示是否调用外部程序
+</pre>
+
+<ol>
+<li>:file 后跟输入文件名<br/>
+</li>
+<li>:exports后可跟4个选项code/results/both/none分别对应只显示代码/结果，代码和结果都显示，都不显示<br/>
+</li>
+<li>:dir 后跟代码执行路径，默认是当前文件路径<br/>
+</li>
+<li>:var varname=value 代码中可用的变量<br/>
+</li>
+</ol>
+
+
+<pre class="example">
+#+BEGIN_SRC sh :exports both :var filename=(buffer-file-name)
+wc -l $filename
+ls -l     
+#+END_SRC
+</pre>
+
+
+<p>
+   在块中的可执行代码上 <code>C-c C-c</code> 执行代码并显示结果； <code>C-c C-o</code> 在另一个buffer中显示结果。<br/>
+</p></div>
+
+</div>
+
+<div id="outline-container-20" class="outline-2">
+<h2 id="sec-20"><span class="section-number-2">20</span> 行内执行代码</h2>
+<div class="outline-text-2" id="text-20">
+
+<p>  <code>prefix src_emacs-lisp[:exports results]{(let (value) (dotimes (n 10 value) (setq value (cons n value))))} suffix</code><br/>
+  结果如下：<br/>
+  prefix | 9 | 8 | 7 | 6 | 5 | 4 | 3 | 2 | 1 | 0 |<br/>
+ suffix<br/>
+</p></div>
+
+</div>
+
+<div id="outline-container-21" class="outline-2">
+<h2 id="sec-21"><span class="section-number-2">21</span> 强调</h2>
+<div class="outline-text-2" id="text-21">
+
+<p>  可以用 <code>=代码=</code> 或 <code>~代码~</code> 。<br/>
+  其它：<br/>
+</p><pre class="example">
+/italic/ *bold* _underline_ +strike-through+
+</pre>
+
+<p>  效果<br/>
+  <i>italic</i> <b>bold</b> <span style="text-decoration:underline;">underline</span> <del>strike-through</del><br/>
+</p></div>
+
+</div>
+
+<div id="outline-container-22" class="outline-2">
+<h2 id="sec-22"><span class="section-number-2">22</span> 行内颜色</h2>
+<div class="outline-text-2" id="text-22">
+
+<p>  <b>注意</b> 只对7.x版本的org适用，8.x版本待解决。<br/>
+  <code>org-export-html-final-hook</code> 里的函数是对导出生成HTML的最后阶段的buffer进行操作，可以进行一些替换，例如将 <code>AAAAA</code> 替换成HTML的左TAG <code>&lt;</code> ，将 <code>BBBBB</code> 替换成右TAG <code>&gt;</code> ，这样 <code>AAAAAfont color="red"BBBBBthis is redAAAAA/fontBBBBB</code> 会被替换成 <code>&lt;font color="red"&gt;this is red&lt;/font&gt;</code> 被浏览器解析后便形成红色文本。<br/>
+  替换函数如下：<br/>
+</p>
+
+
+<pre class="src src-lisp">(add-hook 'org-export-html-final-hook 'org-delete-!!!)
+(<span style="color: #a020f0;">defun</span> <span style="color: #0000ff;">org-delete-</span> ()
+  (interactive)
+  (goto-char (point-min))
+  (<span style="color: #a020f0;">while</span> (re-search-forward <span style="color: #8b2252;">"AAAAA"</span> nil t)
+    (replace-match <span style="color: #8b2252;">"&lt;"</span>))
+  (goto-char (point-min))
+  (<span style="color: #a020f0;">while</span> (re-search-forward <span style="color: #8b2252;">"BBBBB"</span> nil t)
+    (replace-match <span style="color: #8b2252;">"&gt;"</span>)))  
+</pre>
+
+
+<pre class="example">
+#+macro: clr AAAAAfont color="$1"BBBBB$2AAAAA/fontBBBBB
+hello {{{clr(red, this is red)}}} world
+hello {{{clr(blue, this is blue)}}} world
+hello {{{clr(yellow, this is yellow)}}} world
+hello {{{clr(green, this is green)}}} world
+</pre>
+
+<p>  生成效果如下：<br/>
+hello <font color="red">this is red</font> world<br/>
+hello <font color="blue">this is blue</font> world<br/>
+hello <font color="yellow">this is yellow</font> world<br/>
+hello <font color="green">this is green</font> world<br/>
+  可以写一个名为color的yasnippet来方便输入：<br/>
+</p>
+
+
+<pre class="example"># -*- mode: snippet -*-
+# name: clr
+# --
+{{{clr(${1:red},${2:文本})}}}$0  
+</pre>
 
 </div>
 </div>

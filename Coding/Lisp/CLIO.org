@@ -1,5 +1,5 @@
 #+OPTIONS: ^:{} _:{} num:t toc:t \n:t
-#+INCLUDE "../../template.org"
+#+INCLUDE: "../../template.org"
 #+SETUPFILE: "../../extension.org"
 #+title:CL IO
 

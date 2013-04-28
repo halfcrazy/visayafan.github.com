@@ -1,5 +1,5 @@
 #+OPTIONS: ^:{} num:t toc:t \n:t
-#+INCLUDE "../../template.org"
+#+INCLUDE: "../../template.org"
 #+SETUPFILE: "../../extension.org"
 #+MATHJAX: align:"center" mathml:t path:"../../Layout/JS/MathJax/MathJax.js"
 #+title:Kruskal算法

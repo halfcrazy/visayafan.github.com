@@ -17,3 +17,8 @@
 
 #+macro: singletop #+html:<div class="accordion-group"> <div class="accordion-heading"> <a href="#CollapseID$1" data-toggle="collapse" class="accordion-toggle">$1</a> </div> <div class="accordion-body collapse" style="height: 0px" id="CollapseID$1"> <div class="accordion-inner">
 #+macro: singleend #+html:    </div> </div> </div> 
+
+#+macro: color !!!!!font color="$1"@@@@@$2!!!!!/font@@@@@
+#+macro: span !!!!!span style="$1"@@@@@$2!!!!!/span@@@@@
+#+macro: spanl !!!!!span style="$1"@@@@@
+#+macro: spanr !!!!!/span@@@@@

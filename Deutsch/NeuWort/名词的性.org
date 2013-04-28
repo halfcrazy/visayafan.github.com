@@ -1,5 +1,5 @@
 #+OPTIONS: ^:{} _:{} num:t toc:t \n:t
-#+INCLUDE "../../template-toc.org"
+#+INCLUDE: "../../template-toc.org"
 #+SETUPFILE: "../../extension.org"
 #+title:名词性规律总结
 39%阳性；35%阴性；24%中性。

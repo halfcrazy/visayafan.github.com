@@ -1,5 +1,5 @@
 #+OPTIONS: ^:{} _:{} num:t toc:t \n:t
-#+INCLUDE "../../template-toc.org"
+#+INCLUDE: "../../template-toc.org"
 #+SETUPFILE: "../../extension.org"
 #+title:Neue Wort 03
 此文中所有名词均为阳性名词，变格时除单数第一格外其它所有格均以-(e)n结尾。

@@ -1,5 +1,5 @@
 #+OPTIONS: ^:{} _:{} num:t toc:t \n:t
-#+INCLUDE "../../template-toc.org"
+#+INCLUDE: "../../template-toc.org"
 #+SETUPFILE: "../../extension.org"
 #+title:Ubuntu包管理系统
 

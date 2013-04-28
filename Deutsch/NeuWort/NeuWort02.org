@@ -1,5 +1,5 @@
 #+OPTIONS: ^:{} _:{} num:t toc:t \n:t
-#+INCLUDE "../../template-toc.org"
+#+INCLUDE: "../../template-toc.org"
 #+SETUPFILE: "../../extension.org"
 #+title:Neue Wort 02
 
@@ -294,7 +294,7 @@
   可以作前缀：
   | Schlüsselwort | das     | password/keyword    |
   | Schlüsselring | der     | key ring            |
-  | [[file:NeueWort03.org::Bundes][Schlüsselbund]]  | der/das | bunch of keys钥匙串 |
+  | [[file:NeuWort03.org::Bundes][Schlüsselbund]]  | der/das | bunch of keys钥匙串 |
 * Baum
   der tree
 * Bild

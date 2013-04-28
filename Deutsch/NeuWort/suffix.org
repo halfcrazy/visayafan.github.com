@@ -1,5 +1,5 @@
 #+OPTIONS: ^:{} _:{} num:t toc:t \n:t
-#+INCLUDE "../../template-toc.org"
+#+INCLUDE: "../../template-toc.org"
 #+SETUPFILE: "../../extension.org"
 #+title:德语中的后缀
 参考
@@ -115,6 +115,9 @@
   | [[file:NeuWort03.org::Soziologe][Soziologe]] |
   | [[file:NeuWort04.org::Archäologe][Archäologe]] |
 * -mal
+  :PROPERTIES:
+  :CUSTOM_ID: mal
+  :END:
   表次数
   | einmal   |                 |
   | zweimal  |                 |

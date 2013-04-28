@@ -1,5 +1,5 @@
 #+OPTIONS: ^:{} _:{} num:nil toc:t \n:t
-#+INCLUDE "../../template-toc.org"
+#+INCLUDE: "../../template-toc.org"
 #+SETUPFILE: "../../extension.org"
 #+title:Effective C++ 笔记
 * 条款5：C++隐含生成和调用的函数
