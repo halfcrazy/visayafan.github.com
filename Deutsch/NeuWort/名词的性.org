@@ -29,6 +29,9 @@
    | Schnee | Wind | Regen | Sonnenschein |
    | snow   | wind | rain  | sunshine     |
 ** 方向
+   :PROPERTIES:
+   :CUSTOM_ID: direction
+   :END:
    | Ost | West | Süd | Nord |
 ** 大部分山名
 ** 岩石土壤

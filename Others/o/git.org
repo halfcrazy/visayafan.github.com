@@ -213,11 +213,9 @@ $ git commit --amend
 * git submodule
   从别处clone下来的repo中如果有submodule则需要用 clone --recursive 或 git submodule init 后git submodule update 参考 [[gitclone][git clone]]
   此处切进子模块所在的目录，git branch可看到并没有在任何分支上：
-#+begin_example
-minimap$ git branch 
-* (no branch)
-  master
-#+end_example
+: minimap$ git branch 
+: * (no branch)
+:   master
   如果需要进行修改操作需要切换分支：git checkout master.
   如果没有切换分支而进行add commit 操作会得到 =detached HEAD= 错误提示：
 #+begin_example
@@ -235,7 +233,7 @@ Previous HEAD position was 310819a... add hello
 Switched to branch 'master
 minimap$ git merge 310819a
 #+end_example
-  git pull 不会更新repo下的submodule repo，要想使当前repo与远程仓库完全一致，需要pull之后再使用git submodule update使
+  =git pull 不会更新repo下的submodule repo，要想使当前repo与远程仓库完全一致，需要pull之后再使用git submodule update.=
 * tricks
 ** git中永久删除一个文件
   git rm filename可以从repo中删除一个文件，但仍旧可以其库存历史将其恢复

@@ -122,9 +122,15 @@
   v lay/lay down/put down放下
   | hin   | adv | to/toward         |
   | legen | v   | lay/put/set/place |
-* jeden
+* jeder
+  jeder/jede/jedes分别用于m/f/n性名词，变化同定冠词
+|   | m     | f     | n     |
+| 1 | jeder | jede  | jedes |
+| 2 | jedes | jeder | jedes |
+| 3 | jedem | jeder | jedem |
+| 4 | jeden | jede  | jedes |
   pron. each/every
-  jeden Tag/Abend/Moment 每天/每晚/每时
+  jeden Tag/Abend/Moment 每天/每晚/每时 *阳性名词*
 ** Täglich
    jeden Tag
 * Firma
@@ -168,7 +174,7 @@
   | gesammelt | adj | collected/assembled |
   sammel- 前缀，表和"聚"相关的
   | Sammelglas | das | 聚光镜，凸透镜 |
-* krieg
+* Krieg
   der war
 * zwanziger
   几十后跟er表 1. der 几十多岁的人。 2. adj 几十年代的
@@ -285,6 +291,9 @@
   #+end_example
 * geboren
   adj born/give birth 出生的/先天的
+  | gebären    | v   | give birth to |
+  | Geburt     | die | birth         |
+  | Geburtstag | der | birthday      | 
 * Frankreich
   法国
   | Französisch | adj | 法国的 |
@@ -296,6 +305,9 @@
 * Treffen
   das appointment/date/meeting/encounter约会/会见/遇到
   | treffen | v | 遇见/碰到 |
+** verabreden
+   v 约会/约定
+   |Verabredung|die|约会/约定|
 * Archäologe
   :PROPERTIES:
   :CUSTOM_ID: Archäologe

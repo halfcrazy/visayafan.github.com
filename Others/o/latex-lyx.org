@@ -107,6 +107,7 @@ Your abstract goes here...
       language=Matlab
       numbers=left
       numberstyle={\tiny\color{lightgray}}
+      frame=lines
       #+end_example
   *注意：* 如果注释中存在中英文混排情况则夹在中文之间的英文前后必须有空格，否则排版出错.
   2.此包支持中文注释（虽然要求中文和英文之间必须用空格分隔），而minted则不支持。

@@ -31,3 +31,79 @@
    pl. Arme
    |arm|adj|needy/poor|
    [[file:suffix.org::arm][可以做后缀表缺少的]]
+* Geschwister
+  brother or sister兄弟姐妹
+** Bruder
+   brother
+   pl. Brüder
+** Schwester
+   sister
+   pl. -n
+* Schwieger-
+  in law
+  | Schwiegersohn    | son-in-law女婿  |
+  | Schwiegertochter | daughter-in-law |
+  | Schwiegervater   |                 |
+  | Schwiegermutter  |                 |
+  | Schwiegereltern  | parents-in-law  |
+* abmahnen
+  v warn 正式的警告某人使其停止某种侵害行为/警告，预警
+  |abmahnung|die|warning|
+* wahr
+  adj true
+  Nicht wahr?是吗？
+** wahren
+   v maintain/preserve维护、保护
+* wirklich
+  adj/adv real/really, actually/actually
+  #+begin_example
+  Wirklich? = really?
+  #+end_example
+* ergänzen
+  v complement/supplement/complete补充
+  #+begin_example
+  Ergänzen Sie bitte. =请您补充完整。
+  #+end_example
+* aber
+  konj. =but
+  adv （用于加强语气）真是
+  #+begin_example
+  Das is aber lieb. 这真是太好了
+  #+end_example
+  konj. = Konjunktion连词
+* 七洲
+  都是中性名
+** Asien
+   Asia
+   | Asiat | der | Asian | pl. Asiaten |
+** Europa
+   Europe
+   | Europäer   | der | European |
+   | Europäerin | die |          |
+** Afrika
+   Africa
+   | Afrikaner | der | African |
+** [[file:%E5%90%8D%E8%AF%8D%E7%9A%84%E6%80%A7.org::direction][Südamerika]]
+   South Amercia
+   | Südamerikaner | der | South Amercian |
+** [[file:%E5%90%8D%E8%AF%8D%E7%9A%84%E6%80%A7.org::direction][Nordamerika]]
+   North Amercia
+   | Nordamerikaner | der | North Amercian |
+** Australien
+   Australia
+   | Australisch | adj | 澳洲的 |
+** Antaktis
+   Antarctica
+* 四洋
+** Pazifik 
+   Pacific Ocean
+** Atlantische Ozean
+   Atlantic Ocean
+** Indische Ozean
+   Indian Ocean
+   indisch =indian
+** Nordpolarmeer
+   Arctic Ocean
+   Nord =north
+   polar adj = polar
+   Meer das = sea

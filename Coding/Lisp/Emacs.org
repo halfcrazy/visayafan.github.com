@@ -422,3 +422,99 @@ edge
   #+end_example
 * Emacs下德语引号
   至今没发现怎么打出德语中的第一个双引号 =„=，不过幸好有其它符号代替 =C-x 8 <= and =C-x 8 >= 。
+* 设置face
+  可以通过 =customize-faces= 来设置，比如想改变选中区域时区域的颜色，可以设置变量region，选择适当前景色或背景色，我在win下使用的颜色：
+  #+begin_src lisp
+(custom-set-faces
+ '(region ((t (:background "yellow" :foreground "blue")))))  
+  #+end_src
+  可以通过 =customize-themes= 来设置主题。
+* 添加环境变量
+  可以通过设置环境变量PATH和执行路径exec-path：
+  #+begin_src lisp
+(defun vf-add-to-exec-path (path)
+  " 参考：http://blog.csdn.net/winterttr/article/details/7273283"
+  (setenv "PATH" (concat (expand-file-name path)
+                         path-separator
+                         (getenv "PATH")))
+  (setq exec-path
+        (cons (expand-file-name path)
+              exec-path)))
+(mapc #'vf-add-to-exec-path
+      (reverse
+       '("C:/Program Files/Git/bin"
+         "D:/VFInstall/SBCL"
+         )))
+  #+end_src
+* 编译指定目录下所有el文件为elc
+  可以加快启动速度
+  在Emacs中 =C-u 0 M-x byte-compile-directory= =C-u 0= 表示不必每次都进行提示是否编译
+  另一种方法将 =(byte-recompile-directory (expand-file-name "~/.emacs.d") 0)= 写入.emacs中每次启动emacs的时候都会进行编译那些elc日期比el文件早的文件。
+  还有一种命令行方式
+#+begin_src lisp
+  emacs --batch --eval '(byte-recompile-directory "~/.emacs.d")'
+#+end_src
+  可以为其定义别名，有时间的时候再编译重新编译。
+* 查看当前buffer所有mode
+  =describe-mode= or =C-h m=
+* autoload
+  http://emacswiki.org/emacs/AutoLoad
+  =(autoload function file &optional docstring interactive type)=
+  告诉Emacs function在file文件中。
+  这个函数不会真正执行(可以用来加快Emacs启动速度的原因)，只是告诉Emacs这个函数的路径，当需要的时候Emacs知道加载哪个文件可以得到它。
+  应用：
+  #+begin_src lisp
+(autoload 'graphviz-dot-mode "graphviz-dot-mode" nil t)
+(add-to-list 'auto-mode-alist '("\\.dot\\'" . graphviz-dot-mode))
+  #+end_src
+  首先告诉Emacs graphviz-dot-mode函数在graphviz-dot-mode.el文件中（在load-path中寻找，可以通过如下语句向load-path添加目录 =(add-to-list 'load-path "~/.emacs.d/lisp/")= ）。
+  =auto-mode-alist= 中的元素类似 =(REGEXP . FUNCTION)= 。
+  之后告诉Emacs当打开dot后缀文件时执行函数graphviz-dot-mode，之后Emacs会加载文件graphviz-dot-mode以便得到该函数。
+* eval-after-load
+  http://emacser.com/eval-after-load.htm
+  =(eval-after-load file form)=
+  当加载文件file的时候执行语句form。
+  可以与autoload配合：
+  #+begin_example
+  (autoload 'A "B" nil t)
+  (add-to-list 'auto-mode-alist '("C" . A))
+  (eval-after-load B
+        D)
+  #+end_example
+  *打开C后缀文件时调用A函数，为了得到A函数Emacs会加载B文件，加载B文件时会执行D代码。*
+  --------
+  例如函数 =rgrep= 就是一个autoload类型的符号，可以通过： =(symbol-function 'rgrep)= 看到（执行该语句之前没有用过rgrep命令，否则会显示其定义）。
+  在grep buffer里定义快捷键N向下翻页，P向上翻页，可以用 =define-key= 实现，但由于没有加载过grep.el所以grep-mode-map变量是未定义的，这时可以用eval-after-load:
+  #+begin_src lisp
+(eval-after-load "grep"
+  '(progn
+     (define-key grep-mode-map "N" 'scroll-down)
+     (define-key grep-mode-map "P" 'scroll-up)))
+  #+end_src
+  调用rgrep时会加载grep.el，又加载grep.el时会执行两条define-key语句，由于grep-mode-map是在grep.el加载后才被Emacs看到的，而这时变量已经定义了。
+** eval-after-load和mode hook的区别
+   http://stackoverflow.com/questions/2736087/eval-after-load-vs-mode-hook
+   前者只会执行一次，对所有相同mode buffer适用。而mode hook只会对该mode的当前buffer适用。
+   因此mode hook里的语句会迟于eval-after-load。
+* 查看.emacs中各语句执行时间
+  使用profile-dotemacs.el， =emacs -Q -l ~/.emacs.d/others/profile-dotemacs.el -f profile-dotemacs=，它会将.emacs文件中各语句执行时间的百分比显示出来（前提是.emac不能有错）。
+  这对于排查哪个包占用时间最大非常有用。
+* electri-pair-mode
+  24版本中新的minor mode，相当于原来的auto-pair。
+  该mode根据major mode选择闭合符合(例如在HTML中<会自动闭合而其它mode中就不会)，可以配置 =electri-pair-pairs= 变量来使得在所有mode中指定括号问题自动闭合。
+  #+begin_src lisp
+(setq electric-pair-pairs '(
+                            (?\" . ?\")
+                            (?\{ . ?\})
+                            ))
+  #+end_src
+  
+  #+begin_src lisp
+;; 开启自动闭合括号minor mode
+(electric-pair-mode 1)
+;; 但在lisp mode中关掉它，因为写lisp代码时这个功能会成为阻碍
+(add-hook 'emacs-lisp-mode-hook
+          '(lambda ()
+             (set (make-local-variable 'electric-pair-mode) nil)))
+  #+end_src
+  通过 =(local-variable-p 'electric-pair-mode)= 可以看到 =electric-pair-mode= 并非一个local变量，所以直接 =(electric-pair-mode -1)= 的话会使其它buffer也关闭此minor mode，所以要先用 =make-local-variable= 将其变成local变量。

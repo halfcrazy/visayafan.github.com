@@ -175,3 +175,15 @@
   | langsam | adj/advslowly        | lang adj long          |
   | biegsam | adj/adv flexible     | bieg das curve/flexion |
   | sparsam | adj economical节约的 | spar v save/economize节约 |
+* -fach
+  本身的是中性名词，表”学科，专业，技能，主题“，例如 Facehochschule 高等专科学校
+  做后缀表几倍，相当于英语中的-fold.
+  | einfach  | 单一的，简单的   |
+  | zweifach | twofold/double   |
+  | dreifach | threefold/triple |
+  | vierfach | fourfold         |
+* -schatz
+  | Schatz | der | treasure/funds/natural resources/sweetheart |
+  本身意思就是财富，做后缀表和财富相关的：
+  | Piratenschatz | pirate's treasure |
+  | Wortschatz    | vacabulary        |

@@ -22,8 +22,11 @@
   inher继承人
 * Experte
   expert
+* Gefahr
+  die danger
 * Gefährte
   fellow/friend同伴/伴侣
+  | Lebensgefährte | der | 终身伴侣/丈夫 |
 * Genosse
   comrade同志
 * Hase

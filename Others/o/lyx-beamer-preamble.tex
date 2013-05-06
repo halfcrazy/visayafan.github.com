@@ -29,7 +29,19 @@
   %framexleftmargin=5mm, 
   %rulesepcolor=\color{red!20!green!20!blue!20!},
 }
-
+%% 用来设置图片和表格的标题将默认的冒号改成空格
+\usepackage{caption}
+\captionsetup[figure]{labelsep=space}
+\captionsetup[table]{labelsep=space}
+%% 使数学公式中的字体和article中的一样
+\usefonttheme{professionalfonts}
+%% 表和图的标题中不含“表1.1”之类的文字
+\renewcommand{\tablename}{}
+\renewcommand{\figurename}{}
 \usetheme{Warsaw}               
-
+%% 生成pdf默认全屏打开
+\hypersetup{pdfpagemode=FullScreen}
 \date{}                         %关闭自动生成日期
+\author{}
+\institute{}
+\date{日}

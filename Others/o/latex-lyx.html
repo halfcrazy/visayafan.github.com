@@ -7,7 +7,7 @@
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
 <meta name="title" content="Lyx 笔记 "/>
 <meta name="generator" content="Org-mode"/>
-<meta name="generated" content="2013-04-27 04:03:47 CST"/>
+<meta name="generated" content="2013-05-01 19:46:51 中国标准时间"/>
 <meta name="author" content="visayafan"/>
 <meta name="description" content=""/>
 <meta name="keywords" content=""/>
@@ -250,10 +250,22 @@
   <span style="color: #b22222;">%framexleftmargin=5mm, </span>
   <span style="color: #b22222;">%rulesepcolor=\color{red!20!green!20!blue!20!},</span>
 }
-
+<span style="color: #b22222;">%% </span><span style="color: #b22222;">&#29992;&#26469;&#35774;&#32622;&#22270;&#29255;&#21644;&#34920;&#26684;&#30340;&#26631;&#39064;&#23558;&#40664;&#35748;&#30340;&#20882;&#21495;&#25913;&#25104;&#31354;&#26684;</span>
+<span style="color: #a020f0;">\usepackage</span>{<span style="color: #483d8b;">caption</span>}
+<span style="color: #a020f0;">\captionsetup</span>[figure]{labelsep=space}
+<span style="color: #a020f0;">\captionsetup</span>[table]{labelsep=space}
+<span style="color: #b22222;">%% </span><span style="color: #b22222;">&#20351;&#25968;&#23398;&#20844;&#24335;&#20013;&#30340;&#23383;&#20307;&#21644;article&#20013;&#30340;&#19968;&#26679;</span>
+<span style="color: #a020f0;">\usefonttheme</span>{professionalfonts}
+<span style="color: #b22222;">%% </span><span style="color: #b22222;">&#34920;&#21644;&#22270;&#30340;&#26631;&#39064;&#20013;&#19981;&#21547;&#8220;&#34920;1.1&#8221;&#20043;&#31867;&#30340;&#25991;&#23383;</span>
+<span style="color: #a020f0;">\renewcommand</span>{<span style="color: #0000ff;">\tablename</span>}{}
+<span style="color: #a020f0;">\renewcommand</span>{<span style="color: #0000ff;">\figurename</span>}{}
 <span style="color: #a020f0;">\usetheme</span>{Warsaw}               
-
+<span style="color: #b22222;">%% </span><span style="color: #b22222;">&#29983;&#25104;pdf&#40664;&#35748;&#20840;&#23631;&#25171;&#24320;</span>
+<span style="color: #a020f0;">\hypersetup</span>{pdfpagemode=FullScreen}
 <span style="color: #a020f0;">\date</span>{}                         <span style="color: #b22222;">%&#20851;&#38381;&#33258;&#21160;&#29983;&#25104;&#26085;&#26399;</span>
+<span style="color: #a020f0;">\author</span>{}
+<span style="color: #a020f0;">\institute</span>{}
+<span style="color: #a020f0;">\date</span>{&#26085;}
 
 </pre>
 
@@ -585,7 +597,7 @@ int main(int argc, char *argv[])
 </pre>
 
 </li>
-<li>如果列表环境中每个项逐一显示，为避免为每个项都写 <code>\item&lt;1-&gt;</code> 带来的麻烦，可以将 <code>\begin{itemize}</code> 写成 <code>\begin{itemize}[&lt;+-&gt;]</code> ，<code>\item</code> 不变。<br/>
+<li>如果列表环境中每个项逐一显示，为避免为每个项都写 <code>\item&lt;1-&gt;</code> 带来的麻烦，可以将 <code>\begin{itemize}</code> 写成 <code>\begin{itemize}[&lt;+-&gt;]</code> ，=\item= 不变。<br/>
 
 
 
@@ -815,7 +827,7 @@ henvironment contentsi
 <div class="outline-text-3" id="text-12-5">
 
 <p>   创建target: <code>\hypertarget{targetname}{text-to-show}</code> 。<br/>
-   创建link: <code>\hyperlink{targetname}{\beamergotobutton{text-to-show-on-button}}</code>。<br/>
+   创建link: =\hyperlink{targetname}{\beamergotobutton{text-to-show-on-button}}=。<br/>
    其它有用的button： \beamerreturnbutton，\beamerbutton<br/>
 </p></div>
 

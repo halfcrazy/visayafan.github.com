@@ -7,7 +7,7 @@
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
 <meta name="title" content="Emacs Trick"/>
 <meta name="generator" content="Org-mode"/>
-<meta name="generated" content="2013-04-15 22:58:03 CST"/>
+<meta name="generated" content="2013-04-30 14:08:48 中国标准时间"/>
 <meta name="author" content="visayafan"/>
 <meta name="description" content=""/>
 <meta name="keywords" content=""/>
@@ -129,6 +129,18 @@
 <li><a href="#sec-39">39 cscope</a></li>
 <li><a href="#sec-40">40 退出时session mode提示select-coding-system</a></li>
 <li><a href="#sec-41">41 Emacs下德语引号</a></li>
+<li><a href="#sec-42">42 设置face</a></li>
+<li><a href="#sec-43">43 添加环境变量</a></li>
+<li><a href="#sec-44">44 编译指定目录下所有el文件为elc</a></li>
+<li><a href="#sec-45">45 查看当前buffer所有mode</a></li>
+<li><a href="#sec-46">46 autoload</a></li>
+<li><a href="#sec-47">47 eval-after-load</a>
+<ul>
+<li><a href="#sec-47-1">47.1 eval-after-load和mode hook的区别</a></li>
+</ul>
+</li>
+<li><a href="#sec-48">48 查看.emacs中各语句执行时间</a></li>
+<li><a href="#sec-49">49 electri-pair-mode</a></li>
 </ul>
 </div>
 </div>
@@ -1038,7 +1050,200 @@ cscope -b
 <h2 id="sec-41"><span class="section-number-2">41</span> Emacs下德语引号</h2>
 <div class="outline-text-2" id="text-41">
 
-<p>  至今没发现怎么打出德语中的第一个双引号 <code>„</code>，不过幸好有其它符号代替 <code>C-x 8 &lt;</code> and <code>C-x 8 &gt;</code> 。<br/>
+<p>  至今没发现怎么打出德语中的第一个双引号 <code>„=，不过幸好有其它符号代替 =C-x 8 &lt;</code> and <code>C-x 8 &gt;</code> 。<br/>
+</p></div>
+
+</div>
+
+<div id="outline-container-42" class="outline-2">
+<h2 id="sec-42"><span class="section-number-2">42</span> 设置face</h2>
+<div class="outline-text-2" id="text-42">
+
+<p>  可以通过 <code>customize-faces</code> 来设置，比如想改变选中区域时区域的颜色，可以设置变量region，选择适当前景色或背景色，我在win下使用的颜色：<br/>
+</p>
+
+
+<pre class="src src-lisp">(custom-set-faces
+ '(region ((t (<span style="color: #483d8b;">:background</span> <span style="color: #8b2252;">"yellow"</span> <span style="color: #483d8b;">:foreground</span> <span style="color: #8b2252;">"blue"</span>)))))  
+</pre>
+
+<p>
+  可以通过 <code>customize-themes</code> 来设置主题。<br/>
+</p></div>
+
+</div>
+
+<div id="outline-container-43" class="outline-2">
+<h2 id="sec-43"><span class="section-number-2">43</span> 添加环境变量</h2>
+<div class="outline-text-2" id="text-43">
+
+<p>  可以通过设置环境变量PATH和执行路径exec-path：<br/>
+</p>
+
+
+<pre class="src src-lisp">(<span style="color: #a020f0;">defun</span> <span style="color: #0000ff;">vf-add-to-exec-path</span> (path)
+  <span style="color: #8b2252;">" &#21442;&#32771;&#65306;http://blog.csdn.net/winterttr/article/details/7273283"</span>
+  (setenv <span style="color: #8b2252;">"PATH"</span> (concat (expand-file-name path)
+                         path-separator
+                         (getenv <span style="color: #8b2252;">"PATH"</span>)))
+  (setq exec-path
+        (cons (expand-file-name path)
+              exec-path)))
+(mapc #'vf-add-to-exec-path
+      (reverse
+       '(<span style="color: #8b2252;">"C:/Program Files/Git/bin"</span>
+         <span style="color: #8b2252;">"D:/VFInstall/SBCL"</span>
+         )))
+</pre>
+
+</div>
+
+</div>
+
+<div id="outline-container-44" class="outline-2">
+<h2 id="sec-44"><span class="section-number-2">44</span> 编译指定目录下所有el文件为elc</h2>
+<div class="outline-text-2" id="text-44">
+
+<p>  可以加快启动速度<br/>
+  在Emacs中 <code>C-u 0 M-x byte-compile-directory</code> <code>C-u 0</code> 表示不必每次都进行提示是否编译<br/>
+  另一种方法将 <code>(byte-recompile-directory (expand-file-name "~/.emacs.d") 0)</code> 写入.emacs中每次启动emacs的时候都会进行编译那些elc日期比el文件早的文件。<br/>
+  还有一种命令行方式<br/>
+</p>
+
+
+<pre class="src src-lisp">emacs --batch --eval '(byte-recompile-directory <span style="color: #8b2252;">"~/.emacs.d"</span>)'
+</pre>
+
+<p>
+  可以为其定义别名，有时间的时候再编译重新编译。<br/>
+</p></div>
+
+</div>
+
+<div id="outline-container-45" class="outline-2">
+<h2 id="sec-45"><span class="section-number-2">45</span> 查看当前buffer所有mode</h2>
+<div class="outline-text-2" id="text-45">
+
+<p>  <code>describe-mode</code> or <code>C-h m</code><br/>
+</p></div>
+
+</div>
+
+<div id="outline-container-46" class="outline-2">
+<h2 id="sec-46"><span class="section-number-2">46</span> autoload</h2>
+<div class="outline-text-2" id="text-46">
+
+<p>  <a href="http://emacswiki.org/emacs/AutoLoad">http://emacswiki.org/emacs/AutoLoad</a><br/>
+  <code>(autoload function file &amp;optional docstring interactive type)</code><br/>
+  告诉Emacs function在file文件中。<br/>
+  这个函数不会真正执行(可以用来加快Emacs启动速度的原因)，只是告诉Emacs这个函数的路径，当需要的时候Emacs知道加载哪个文件可以得到它。<br/>
+  应用：<br/>
+</p>
+
+
+<pre class="src src-lisp">(autoload 'graphviz-dot-mode <span style="color: #8b2252;">"graphviz-dot-mode"</span> nil t)
+(add-to-list 'auto-mode-alist '(<span style="color: #8b2252;">"\\.dot\\'"</span> . graphviz-dot-mode))
+</pre>
+
+<p>
+  首先告诉Emacs graphviz-dot-mode函数在graphviz-dot-mode.el文件中（在load-path中寻找，可以通过如下语句向load-path添加目录 <code>(add-to-list 'load-path "~/.emacs.d/lisp/")</code> ）。<br/>
+  <code>auto-mode-alist</code> 中的元素类似 <code>(REGEXP . FUNCTION)</code> 。<br/>
+  之后告诉Emacs当打开dot后缀文件时执行函数graphviz-dot-mode，之后Emacs会加载文件graphviz-dot-mode以便得到该函数。<br/>
+</p></div>
+
+</div>
+
+<div id="outline-container-47" class="outline-2">
+<h2 id="sec-47"><span class="section-number-2">47</span> eval-after-load</h2>
+<div class="outline-text-2" id="text-47">
+
+<p>  <a href="http://emacser.com/eval-after-load.htm">http://emacser.com/eval-after-load.htm</a><br/>
+  <code>(eval-after-load file form)</code><br/>
+  当加载文件file的时候执行语句form。<br/>
+  可以与autoload配合：<br/>
+</p>
+
+
+<pre class="example">(autoload 'A "B" nil t)
+(add-to-list 'auto-mode-alist '("C" . A))
+(eval-after-load B
+      D)
+</pre>
+
+<p>
+  <b>打开C后缀文件时调用A函数，为了得到A函数Emacs会加载B文件，加载B文件时会执行D代码。</b><br/>
+
+</p>
+<hr/>
+<p>
+  例如函数 <code>rgrep</code> 就是一个autoload类型的符号，可以通过： <code>(symbol-function 'rgrep)</code> 看到（执行该语句之前没有用过rgrep命令，否则会显示其定义）。<br/>
+  在grep buffer里定义快捷键N向下翻页，P向上翻页，可以用 <code>define-key</code> 实现，但由于没有加载过grep.el所以grep-mode-map变量是未定义的，这时可以用eval-after-load:<br/>
+</p>
+
+
+<pre class="src src-lisp">(<span style="color: #a020f0;">eval-after-load</span> <span style="color: #8b2252;">"grep"</span>
+  '(<span style="color: #a020f0;">progn</span>
+     (<span style="color: #a020f0;">define-key</span> grep-mode-map <span style="color: #8b2252;">"N"</span> 'scroll-down)
+     (<span style="color: #a020f0;">define-key</span> grep-mode-map <span style="color: #8b2252;">"P"</span> 'scroll-up)))
+</pre>
+
+<p>
+  调用rgrep时会加载grep.el，又加载grep.el时会执行两条define-key语句，由于grep-mode-map是在grep.el加载后才被Emacs看到的，而这时变量已经定义了。<br/>
+</p>
+</div>
+
+<div id="outline-container-47-1" class="outline-3">
+<h3 id="sec-47-1"><span class="section-number-3">47.1</span> eval-after-load和mode hook的区别</h3>
+<div class="outline-text-3" id="text-47-1">
+
+<p>   <a href="http://stackoverflow.com/questions/2736087/eval-after-load-vs-mode-hook">http://stackoverflow.com/questions/2736087/eval-after-load-vs-mode-hook</a><br/>
+   前者只会执行一次，对所有相同mode buffer适用。而mode hook只会对该mode的当前buffer适用。<br/>
+   因此mode hook里的语句会迟于eval-after-load。<br/>
+</p></div>
+</div>
+
+</div>
+
+<div id="outline-container-48" class="outline-2">
+<h2 id="sec-48"><span class="section-number-2">48</span> 查看.emacs中各语句执行时间</h2>
+<div class="outline-text-2" id="text-48">
+
+<p>  使用profile-dotemacs.el， =emacs -Q -l ~/.emacs.d/others/profile-dotemacs.el -f profile-dotemacs=，它会将.emacs文件中各语句执行时间的百分比显示出来（前提是.emac不能有错）。<br/>
+  这对于排查哪个包占用时间最大非常有用。<br/>
+</p></div>
+
+</div>
+
+<div id="outline-container-49" class="outline-2">
+<h2 id="sec-49"><span class="section-number-2">49</span> electri-pair-mode</h2>
+<div class="outline-text-2" id="text-49">
+
+<p>  24版本中新的minor mode，相当于原来的auto-pair。<br/>
+  该mode根据major mode选择闭合符合(例如在HTML中&lt;会自动闭合而其它mode中就不会)，可以配置 <code>electri-pair-pairs</code> 变量来使得在所有mode中指定括号问题自动闭合。<br/>
+</p>
+
+
+<pre class="src src-lisp">(setq electric-pair-pairs '(
+                            (?\" . ?\")
+                            (?\{ . ?\})
+                            ))
+</pre>
+
+
+<p>  <br/>
+</p>
+
+
+<pre class="src src-lisp"><span style="color: #b22222;">;; </span><span style="color: #b22222;">&#24320;&#21551;&#33258;&#21160;&#38381;&#21512;&#25324;&#21495;minor mode</span>
+(electric-pair-mode 1)
+<span style="color: #b22222;">;; </span><span style="color: #b22222;">&#20294;&#22312;lisp mode&#20013;&#20851;&#25481;&#23427;&#65292;&#22240;&#20026;&#20889;lisp&#20195;&#30721;&#26102;&#36825;&#20010;&#21151;&#33021;&#20250;&#25104;&#20026;&#38459;&#30861;</span>
+(add-hook 'emacs-lisp-mode-hook
+          '(<span style="color: #a020f0;">lambda</span> ()
+             (set (make-local-variable 'electric-pair-mode) nil)))
+</pre>
+
+<p>
+  通过 <code>(local-variable-p 'electric-pair-mode)</code> 可以看到 <code>electric-pair-mode</code> 并非一个local变量，所以直接 <code>(electric-pair-mode -1)</code> 的话会使其它buffer也关闭此minor mode，所以要先用 <code>make-local-variable</code> 将其变成local变量。<br/>
 </p></div>
 </div>
 </div>
