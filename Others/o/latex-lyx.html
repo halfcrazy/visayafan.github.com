@@ -1,18 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-               "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-CN" xml:lang="zh-CN">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<title>Lyx 笔记 </title>
+<title>Lyx 笔记</title>
+<!-- 2013-05-14 二 16:38 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
-<meta name="title" content="Lyx 笔记 "/>
 <meta name="generator" content="Org-mode"/>
-<meta name="generated" content="2013-05-01 19:46:51 中国标准时间"/>
 <meta name="author" content="visayafan"/>
-<meta name="description" content=""/>
-<meta name="keywords" content=""/>
-
-
 <script type="text/javascript" src="http://orgmode.org/mathjax/MathJax.js">
 <!--/*--><![CDATA[/*><!--*/
     MathJax.Hub.Config({
@@ -56,92 +50,83 @@
 </script>
 </head>
 <body>
-
-
 <div id="content">
-<h1 class="title">Lyx 笔记 </h1>
-
-
+<h1 class="title">Lyx 笔记</h1>
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#sec-1">1. Preamble</a>
+<ul>
+<li><a href="#sec-1-1">1.1. article</a></li>
+<li><a href="#sec-1-2">1.2. beamer</a></li>
+</ul>
+</li>
+<li><a href="#sec-2">2. 中文段落缩进</a></li>
+<li><a href="#sec-3">3. 摘要</a></li>
+<li><a href="#sec-4">4. 公式</a>
+<ul>
+<li><a href="#sec-4-1">4.1. 自定义TAG</a></li>
+<li><a href="#sec-4-2">4.2. 长公式换行</a></li>
+<li><a href="#sec-4-3">4.3. theorem</a></li>
+<li><a href="#sec-4-4">4.4. 小写花写L</a></li>
+</ul>
+</li>
+<li><a href="#sec-5">5. 日期</a></li>
+<li><a href="#sec-6">6. 参考文献</a></li>
+<li><a href="#sec-7">7. 分栏</a></li>
+<li><a href="#sec-8">8. 设置页边距</a></li>
+<li><a href="#sec-9">9. 源码高亮</a></li>
+<li><a href="#sec-10">10. 算法排版</a></li>
+<li><a href="#sec-11">11. 插入gif动画文件</a></li>
+<li><a href="#sec-12">12. Beamer中为插入frame设置快捷键</a></li>
+<li><a href="#sec-13">13. lyx+latex+Beamer</a>
+<ul>
+<li><a href="#sec-13-1">13.1. columns</a></li>
+<li><a href="#sec-13-2">13.2. block</a></li>
+<li><a href="#sec-13-3">13.3. step-wise</a></li>
+<li><a href="#sec-13-4">13.4. replace</a>
+<ul>
+<li><a href="#sec-13-4-1">13.4.1. only</a></li>
+<li><a href="#sec-13-4-2">13.4.2. uncover</a></li>
+<li><a href="#sec-13-4-3">13.4.3. invisable</a></li>
+<li><a href="#sec-13-4-4">13.4.4. alter</a></li>
+<li><a href="#sec-13-4-5">13.4.5. alt</a></li>
+<li><a href="#sec-13-4-6">13.4.6. temporal</a></li>
+<li><a href="#sec-13-4-7">13.4.7. Overprint/Overlayarea</a></li>
+</ul>
+</li>
+<li><a href="#sec-13-5">13.5. 创建链接</a></li>
+<li><a href="#sec-13-6">13.6. 整个frame的内容动态出现</a></li>
+<li><a href="#sec-13-7">13.7. 改变Beamer的脚注</a></li>
+<li><a href="#sec-13-8">13.8. 打印Beamer制作的幻灯片</a>
+<ul>
+<li><a href="#sec-13-8-1">13.8.1. 修改源码实现</a></li>
+<li><a href="#sec-13-8-2">13.8.2. 利用pdfpages包实现</a></li>
+</ul>
+</li>
+<li><a href="#sec-13-9">13.9. lyx解决Beamer中插入代码问题</a></li>
+<li><a href="#sec-13-10">13.10. 生成的幻灯片默认以全屏方式打开</a></li>
+</ul>
+</li>
+<li><a href="#sec-14">14. 管理文献</a></li>
+<li><a href="#sec-15">15. 快捷键</a></li>
+</ul>
+</div>
+</div>
 <!-- <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"> </script> -->
 <link rel="stylesheet" type="text/css" href="../../Layout/CSS/bootstrap_old.css" />
 <link rel="stylesheet" type="text/css" href="../../Layout/CSS/too_many_toc.css" />
 <script src="../../Layout/JS/jquery_1.7.1.js"></script>
 <script src="../../Layout/JS/bootstrap_old.js"></script>
-
-
-<div id="table-of-contents">
-<h2>目录</h2>
-<div id="text-table-of-contents">
-<ul>
-<li><a href="#sec-1">1 Preamble</a>
-<ul>
-<li><a href="#sec-1-1">1.1 article</a></li>
-<li><a href="#sec-1-2">1.2 beamer</a></li>
-</ul>
-</li>
-<li><a href="#sec-2">2 中文段落缩进</a></li>
-<li><a href="#sec-3">3 摘要</a></li>
-<li><a href="#sec-4">4 公式</a>
-<ul>
-<li><a href="#sec-4-1">4.1 自定义TAG</a></li>
-<li><a href="#sec-4-2">4.2 长公式换行</a></li>
-<li><a href="#sec-4-3">4.3 theorem</a></li>
-</ul>
-</li>
-<li><a href="#sec-5">5 日期</a></li>
-<li><a href="#sec-6">6 参考文献</a></li>
-<li><a href="#sec-7">7 分栏</a></li>
-<li><a href="#sec-8">8 设置页边距</a></li>
-<li><a href="#sec-9">9 源码高亮</a></li>
-<li><a href="#sec-10">10 插入gif动画文件</a></li>
-<li><a href="#sec-11">11 Beamer中为插入frame设置快捷键</a></li>
-<li><a href="#sec-12">12 lyx+latex+Beamer</a>
-<ul>
-<li><a href="#sec-12-1">12.1 columns</a></li>
-<li><a href="#sec-12-2">12.2 block</a></li>
-<li><a href="#sec-12-3">12.3 step-wise</a></li>
-<li><a href="#sec-12-4">12.4 replace</a>
-<ul>
-<li><a href="#sec-12-4-1">12.4.1 only</a></li>
-<li><a href="#sec-12-4-2">12.4.2 uncover</a></li>
-<li><a href="#sec-12-4-3">12.4.3 invisable</a></li>
-<li><a href="#sec-12-4-4">12.4.4 alter</a></li>
-<li><a href="#sec-12-4-5">12.4.5 alt</a></li>
-<li><a href="#sec-12-4-6">12.4.6 temporal</a></li>
-<li><a href="#sec-12-4-7">12.4.7 Overprint/Overlayarea</a></li>
-</ul>
-</li>
-<li><a href="#sec-12-5">12.5 创建链接</a></li>
-<li><a href="#sec-12-6">12.6 整个frame的内容动态出现</a></li>
-<li><a href="#sec-12-7">12.7 改变Beamer的脚注</a></li>
-<li><a href="#sec-12-8">12.8 打印Beamer制作的幻灯片</a>
-<ul>
-<li><a href="#sec-12-8-1">12.8.1 修改源码实现</a></li>
-<li><a href="#sec-12-8-2">12.8.2 利用pdfpages包实现</a></li>
-</ul>
-</li>
-<li><a href="#sec-12-9">12.9 lyx解决Beamer中插入代码问题</a></li>
-<li><a href="#sec-12-10">12.10 生成的幻灯片默认以全屏方式打开</a></li>
-</ul>
-</li>
-<li><a href="#sec-13">13 快捷键</a></li>
-</ul>
-</div>
-</div>
-
-<div id="outline-container-1" class="outline-2">
+<div id="outline-container-sec-1" class="outline-2">
 <h2 id="sec-1"><span class="section-number-2">1</span> Preamble</h2>
 <div class="outline-text-2" id="text-1">
-
-
-</div>
-
-<div id="outline-container-1-1" class="outline-3">
+</div><div id="outline-container-sec-1-1" class="outline-3">
 <h3 id="sec-1-1"><span class="section-number-3">1.1</span> article</h3>
 <div class="outline-text-3" id="text-1-1">
-
-
 <div style="height:200px;overflow:auto;border-style:solid;border-width:1px;border-color:#DDD">
+<div class="org-src-container">
 
 <pre class="src src-tex"><span style="color: #a020f0;">\usepackage</span>{<span style="color: #483d8b;">fontspec,xunicode,xltxtra,listings,xcolor,color,float,multicol,hyperref,indentfirst,titlesec</span>}
 
@@ -159,6 +144,7 @@
 <span style="color: #a020f0;">\newcommand</span><span style="color: #0000ff;">\kai</span>{<span style="color: #a020f0;">\fontspec</span>{KaiTi_GB2312}}
 
 <span style="color: #b22222;">%% </span><span style="color: #b22222;">&#20013;&#25991;&#26174;&#31034;</span>
+<span style="color: #a020f0;">\renewcommand</span>{<span style="color: #0000ff;">\abstractname</span>}{&#25688;&#35201;}
 <span style="color: #a020f0;">\titleformat</span>{<span style="color: #a020f0;">\chapter</span>}{<span style="color: #a020f0;">\centering\huge</span>}{&#31532;<span style="color: #a020f0;">\thechapter</span>{}&#31456;}{1em}{<span style="color: #a020f0;">\textbf</span>}
 <span style="color: #a020f0;">\titleformat</span>{<span style="color: #a020f0;">\part</span>}{<span style="color: #a020f0;">\centering\huge</span>}{&#31532;<span style="color: #a020f0;">\thepart</span>{}&#37096;&#20998;}{1em}{<span style="color: #a020f0;">\textbf</span>}
 <span style="color: #a020f0;">\renewcommand</span>{<span style="color: #0000ff;">\contentsname</span>}{<span style="color: #a020f0;">\centerline</span>{&#30446;~&#24405;}}
@@ -204,20 +190,17 @@
 <span style="color: #a020f0;">\captionsetup</span>[table]{labelsep=space}
 
 <span style="color: #a020f0;">\date</span>{}
-
 </pre>
-
+</div>
+</div>
 </div>
 </div>
 
-</div>
-
-<div id="outline-container-1-2" class="outline-3">
+<div id="outline-container-sec-1-2" class="outline-3">
 <h3 id="sec-1-2"><span class="section-number-3">1.2</span> beamer</h3>
 <div class="outline-text-3" id="text-1-2">
-
-
-   <div style="height:200px;overflow:auto;border-style:solid;border-width:1px;border-color:#DDD">
+<div style="height:200px;overflow:auto;border-style:solid;border-width:1px;border-color:#DDD">
+<div class="org-src-container">
 
 <pre class="src src-tex"><span style="color: #a020f0;">\usepackage</span>{<span style="color: #483d8b;">fontspec,xunicode,xltxtra,listings,xcolor,color,float,multicol,hyperref,indentfirst,titlesec</span>}
 
@@ -266,88 +249,78 @@
 <span style="color: #a020f0;">\author</span>{}
 <span style="color: #a020f0;">\institute</span>{}
 <span style="color: #a020f0;">\date</span>{&#26085;}
-
 </pre>
-
-   </div>
+</div>
+</div>
 <p>
-   其它可选的主题和色彩<br/>
+其它可选的主题和色彩<br/>
 </p>
-
+<div class="org-src-container">
 
 <pre class="src src-tex"><span style="color: #a020f0;">\usetheme</span>{Warsaw}              
 AnnArbor, Antibes,Bergen, Berkeley, Berlin, Boadilla, CambridgeUS, Copenhagen, Darmstadt, default, Dresden, Frankfurt, Goettingen, Hannover, Ilmenau, JuanLesPins, Luebeck, Madrid, Malmoe, Marburg, Montpellier, PaloAlto, Pittsburgh, Rochester, Singapore, Szeged, Stockton, boxes, Warsaw&#8230;
 <span style="color: #a020f0;">\usecolortheme</span>{beaver} 
 albatross, orchid, beaver, rose, beetle, seagull, crane. seahorse, default, sidebartab, dolphin , structure dove, whale, fly, wolverine, lily
 </pre>
-
+</div>
+</div>
 </div>
 </div>
 
-</div>
-
-<div id="outline-container-2" class="outline-2">
+<div id="outline-container-sec-2" class="outline-2">
 <h2 id="sec-2"><span class="section-number-2">2</span> 中文段落缩进</h2>
 <div class="outline-text-2" id="text-2">
-
-<p>  Preamble中添加\usepackage{indentfirst}<br/>
-</p></div>
-
+<p>
+Preamble中添加\usepackage{indentfirst}<br/>
+</p>
+</div>
 </div>
 
-<div id="outline-container-3" class="outline-2">
+<div id="outline-container-sec-3" class="outline-2">
 <h2 id="sec-3"><span class="section-number-2">3</span> 摘要</h2>
 <div class="outline-text-2" id="text-3">
-
-
-
-
-<pre class="example">\begin{abstract}
+<pre class="example">
+\begin{abstract}
 Your abstract goes here...
 \end{abstract}
 </pre>
-
 <p>
 默认的摘要名称为 Abstract。要改变摘要名称: <code>\renewcommand{\abstractname}{Executive Summary}</code><br/>
-</p></div>
-
+</p>
+</div>
 </div>
 
-<div id="outline-container-4" class="outline-2">
+<div id="outline-container-sec-4" class="outline-2">
 <h2 id="sec-4"><span class="section-number-2">4</span> 公式</h2>
 <div class="outline-text-2" id="text-4">
-
-
-</div>
-
-<div id="outline-container-4-1" class="outline-3">
+</div><div id="outline-container-sec-4-1" class="outline-3">
 <h3 id="sec-4-1"><span class="section-number-3">4.1</span> 自定义TAG</h3>
 <div class="outline-text-3" id="text-4-1">
-
-<p>   可以用\tag命令来自定义TAG，但在lyx中要先将公式环境切换到ASM环境：Edit-&gt;Math-&gt;Chang Formula Type-&gt;ASM align environment。<br/>
-</p></div>
-
+<p>
+可以用\tag命令来自定义TAG，但在lyx中要先将公式环境切换到ASM环境：Edit-&gt;Math-&gt;Chang Formula Type-&gt;ASM align environment。<br/>
+</p>
+</div>
 </div>
 
-<div id="outline-container-4-2" class="outline-3">
+<div id="outline-container-sec-4-2" class="outline-3">
 <h3 id="sec-4-2"><span class="section-number-3">4.2</span> 长公式换行</h3>
 <div class="outline-text-3" id="text-4-2">
-
-<p>   <a href="http://comments.gmane.org/gmane.editors.lyx.general/67870">参考</a><br/>
-   在公式上右键 AMS enviroment-&gt;AMS multiline enviroment，开始输入公式，此公式是左对齐的，在需要换行的地方Ctrl-RET即可新建一行此行的公式是上一行公式的继续，是右对齐的。<br/>
-   注意：用 <code>Alt-m (</code> 类似命令生成的括号内的内容被lyx看成整体不可分割，所以不能在这种括号里面换行（实在没有办法只有用手工输入括号的办法了，这样输出结果括号会略小）。<br/>
-</p></div>
-
+<p>
+<a href="http://comments.gmane.org/gmane.editors.lyx.general/67870">参考</a><br/>
+在公式上右键 AMS enviroment-&gt;AMS multiline enviroment，开始输入公式，此公式是左对齐的，在需要换行的地方Ctrl-RET即可新建一行此行的公式是上一行公式的继续，是右对齐的。<br/>
+注意：用 <code>Alt-m (</code> 类似命令生成的括号内的内容被lyx看成整体不可分割，所以不能在这种括号里面换行（实在没有办法只有用手工输入括号的办法了，这样输出结果括号会略小）。<br/>
+</p>
+</div>
 </div>
 
-<div id="outline-container-4-3" class="outline-3">
+<div id="outline-container-sec-4-3" class="outline-3">
 <h3 id="sec-4-3"><span class="section-number-3">4.3</span> theorem</h3>
 <div class="outline-text-3" id="text-4-3">
-
-<p>   进入theorem环境： <code>M-x layout Theorem</code><br/>
-   非Lyx下改变theorem名称和编号：<br/>
+<p>
+进入theorem环境： <code>M-x layout Theorem</code><br/>
+非Lyx下改变theorem名称和编号：<br/>
 </p>
-
+<div class="org-src-container">
 
 <pre class="src src-tex"><span style="color: #a020f0;">\newtheoremstyle</span>{mythm}<span style="color: #b22222;">%&#21517;&#23383;</span>
         {1.5ex plus 1ex minus .2ex}<span style="color: #b22222;">%&#19978;&#26041;&#30340;&#31354;&#34892;</span>
@@ -368,86 +341,89 @@ Your abstract goes here...
 <span style="color: #a020f0;">\newtheorem</span>{<span style="color: #0000ff;">example</span>}{<span style="color: #a020f0;">\hspace</span>{2em}&#20363;}[section]
 <span style="color: #a020f0;">\newtheorem</span>{<span style="color: #0000ff;">exercise</span>}{<span style="color: #a020f0;">\hspace</span>{2em}&#20064;&#39064;}[section]
 </pre>
-
+</div>
 <p>
-   Lyx下改变theorem名称和编号:<br/>
-   见<a href="http://wiki.lyx.org/LyX/I18nLabels">lyx wiki</a><br/>
+Lyx下改变theorem名称和编号:<br/>
+见<a href="http://wiki.lyx.org/LyX/I18nLabels">lyx wiki</a><br/>
 </p>
-
+<div class="org-src-container">
 
 <pre class="src src-tex"><span style="color: #a020f0;">\newtheorem</span>{<span style="color: #0000ff;">theo</span>}{&#23450;&#29702;}[section]
 <span style="color: #a020f0;">\renewenvironment</span>{<span style="color: #0000ff;">thm</span>}{<span style="color: #a020f0;">\begin</span>{<span style="color: #0000ff;">theo</span>}}{<span style="color: #a020f0;">\end</span>{<span style="color: #0000ff;">theo</span>}}
 </pre>
-
 </div>
 </div>
-
 </div>
 
-<div id="outline-container-5" class="outline-2">
+<div id="outline-container-sec-4-4" class="outline-3">
+<h3 id="sec-4-4"><span class="section-number-3">4.4</span> 小写花写L</h3>
+<div class="outline-text-3" id="text-4-4">
+<p>
+为了和数字1区分，tex提供了花写的小写L，使用 <code>\ell</code> 效果 \(\ell\) 。<br/>
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-5" class="outline-2">
 <h2 id="sec-5"><span class="section-number-2">5</span> 日期</h2>
 <div class="outline-text-2" id="text-5">
-
-<p>  如果不想要日期可以用 <code>\date{}</code><br/>
-</p></div>
-
+<p>
+如果不想要日期可以用 <code>\date{}</code><br/>
+</p>
+</div>
 </div>
 
-<div id="outline-container-6" class="outline-2">
+<div id="outline-container-sec-6" class="outline-2">
 <h2 id="sec-6"><span class="section-number-2">6</span> 参考文献</h2>
 <div class="outline-text-2" id="text-6">
-
-<p>  默认是Reference，可以修改 <code>\renewcommand\refname{参考文献}</code><br/>
-</p></div>
-
+<p>
+默认是Reference，可以修改 <code>\renewcommand\refname{参考文献}</code><br/>
+</p>
+</div>
 </div>
 
-<div id="outline-container-7" class="outline-2">
+<div id="outline-container-sec-7" class="outline-2">
 <h2 id="sec-7"><span class="section-number-2">7</span> 分栏</h2>
 <div class="outline-text-2" id="text-7">
-
-<p>  可以用宏包multicol来实现。<br/>
+<p>
+可以用宏包multicol来实现。<br/>
 </p>
-
-
-<pre class="example">\uspackage{multicol}
+<pre class="example">
+\uspackage{multicol}
 \columnseprule=0.2pt %分隔线，默认没有
 \begin{multicols}{2}
 内容
 \end{multicols}
 </pre>
-
+</div>
 </div>
 
-</div>
-
-<div id="outline-container-8" class="outline-2">
+<div id="outline-container-sec-8" class="outline-2">
 <h2 id="sec-8"><span class="section-number-2">8</span> 设置页边距</h2>
 <div class="outline-text-2" id="text-8">
-
-<p>  A4默认使用的边距为上下2.54cm,左右3.18cm，可以使用geometry包来更改其默认设置：<br/>
+<p>
+A4默认使用的边距为上下2.54cm,左右3.18cm，可以使用geometry包来更改其默认设置：<br/>
 </p>
-
-
-<pre class="example">\usepackage{geometry}
+<pre class="example">
+\usepackage{geometry}
 \geometry{left=2.5cm,right=2.5cm,top=2.5cm,bottom=2.5cm}
 </pre>
-
+</div>
 </div>
 
-</div>
-
-<div id="outline-container-9" class="outline-2">
+<div id="outline-container-sec-9" class="outline-2">
 <h2 id="sec-9"><span class="section-number-2">9</span> 源码高亮</h2>
 <div class="outline-text-2" id="text-9">
-
-<p>  lstlisting可以实现源码高亮但颜色单调，不过还是建议使用此包，原因：<br/>
-  1.lyx对此包的支持非常好，在lyx中插入代码非常方便<br/>
-</p><ul>
+<p>
+lstlisting可以实现源码高亮但颜色单调，不过还是建议使用此包，原因：<br/>
+1.lyx对此包的支持非常好，在lyx中插入代码非常方便<br/>
+</p>
+<ul class="org-ul">
 <li>可以通过 insert-&gt;program listing 来插入源码，然后在边框上右键设置。<br/>
 </li>
 <li>可以通过 insert-&gt;file-&gt;child document来选择源码所在的文件，在include type下选择program listing，此时可在More Parameters中设置相应的参数：<br/>
-<ul>
+<ul class="org-ul">
 <li>basicstyle={\tiny} 设置字体 \tiny \scriptsize \footnotesize \small \normalsize \large \Large \LARGE \huge \Huge<br/>
 </li>
 <li>breaklines=true 适当时候断行显示<br/>
@@ -465,37 +441,38 @@ Your abstract goes here...
 <li>rulesepcolor={\color{red!20!green!20!blue!20!}} 若边框为shadow则设置阴影的颜色<br/>
 </li>
 </ul>
-
-<p>      模板：<br/>
+<p>
+模板：<br/>
 </p>
-
-
-<pre class="example">basicstyle={\tiny}
+<pre class="example">
+basicstyle={\tiny}
 breaklines=true
 commentstyle={\color{black}}
 language=Matlab
 numbers=left
 numberstyle={\tiny\color{lightgray}}
+frame=lines
 </pre>
-
 </li>
 </ul>
-
-<p>  <b>注意：</b> 如果注释中存在中英文混排情况则夹在中文之间的英文前后必须有空格，否则排版出错.<br/>
-  2.此包支持中文注释（虽然要求中文和英文之间必须用空格分隔），而minted则不支持。<br/>
-  基本使用方法：<br/>
+<p>
+<b>注意：</b> 如果注释中存在中英文混排情况则夹在中文之间的英文前后必须有空格，否则排版出错.<br/>
+2.此包支持中文注释（虽然要求中文和英文之间必须用空格分隔），而minted则不支持。<br/>
+基本使用方法：<br/>
 </p>
-
+<div class="org-src-container">
 
 <pre class="src src-tex"><span style="color: #a020f0;">\begin</span>{<span style="color: #0000ff;">lstlisting</span>}[language=matlab]
 test
 <span style="color: #a020f0;">\end</span>{<span style="color: #0000ff;">lstlisting</span>}
 </pre>
-
+</div>
 <p>
-  另一种是minted。<br/>
-  具体参考：<a href="http://www.latexstudio.net/?p=596">http://www.latexstudio.net/?p=596</a><br/>
+另一种是minted。<br/>
+具体参考：<a href="http://www.latexstudio.net/?p=596">http://www.latexstudio.net/?p=596</a><br/>
+</p>
 <div class="row-fluid"> <div class="span5">
+<div class="org-src-container">
 
 <pre class="src src-tex"><span style="color: #a020f0;">\documentclass</span>{<span style="color: #483d8b;">article</span>}
 <span style="color: #a020f0;">\usepackage</span>{<span style="color: #483d8b;">minted</span>}
@@ -525,285 +502,377 @@ int main(int argc, char *argv[])
 <span style="color: #a020f0;">\end</span>{<span style="color: #0000ff;">minted</span>}
 <span style="color: #a020f0;">\end</span>{<span style="color: #0000ff;">document</span>}
 </pre>
-
+</div>
 </div> <div class="span5">
-<link rel="stylesheet" href="../../Layout/CSS/jquery.lightbox-0.5.css" type="text/css" media="screen" /> <script type="text/javascript" src="../../Layout/JS/jquery.lightbox-0.5.js"></script> <center> <a class="lightbox" href="images/minted.png"> <img class="lightbox " title="点击查看大图" src="images/minted.png" width="450"> </a> </center> <script type="text/javascript"> $(function() {$('a.lightbox').lightBox();}); </script> 
+<link rel="stylesheet" href="../../Layout/CSS/jquery.lightbox-0.5.css" type="text/css" media="screen" /> <script type="text/javascript" src="../../Layout/JS/jquery.lightbox-0.5.js"></script> <center> <a class="lightbox" href="images/minted.png"> <img class="lightbox " title="点击查看大图" src="images/minted.png" width="450"> </a> </center> <script type="text/javascript"> $(function() {$('a.lightbox').lightBox();}); </script>
 </div></div>
-</p></div>
-
+</div>
 </div>
 
-<div id="outline-container-10" class="outline-2">
-<h2 id="sec-10"><span class="section-number-2">10</span> 插入gif动画文件</h2>
+<div id="outline-container-sec-10" class="outline-2">
+<h2 id="sec-10"><span class="section-number-2">10</span> 算法排版</h2>
 <div class="outline-text-2" id="text-10">
+<p>
+使用algorithm2e宏包。<a href="http://nckunoname.pixnet.net/blog/post/67368529-%E7%94%A8latex%E5%AF%ABalgorithm">參考</a><br/>
+在preamble中加入<br/>
+</p>
+<div class="org-src-container">
 
-<p>  可以<a href="../../Linux/LinuxOS/UbuntuTrick.html#giftoavi">将gif转换成avi</a> 后再用movie15宏包插入。<br/>
-</p></div>
+<pre class="src src-tex"><span style="color: #a020f0;">\usepackage</span>[ruled,vlined,linesnumbered]{<span style="color: #483d8b;">algorithm2e</span>}
+<span style="color: #a020f0;">\renewcommand</span>{<span style="color: #0000ff;">\algorithmcfname</span>}{&#31639;&#27861;}
+<span style="color: #a020f0;">\SetKwInput</span>{KwIn}{&#36755;&#20837;&#65306;}
+<span style="color: #a020f0;">\SetKwInput</span>{KwOut}{&#36755;&#20986;&#65306;}
+</pre>
+</div>
+<div class="org-src-container">
 
+<pre class="src src-tex"><span style="color: #a020f0;">\begin</span>{<span style="color: #0000ff;">algorithm</span>}
+<span style="color: #a020f0;">\caption</span>{&#21387;&#32553;&#36861;&#36394;}
+<span style="color: #a020f0;">\KwIn</span>{&#31532;<span style="color: #8b2252;">$t$</span>&#20010;&#35270;&#39057;&#24103;}
+<span style="color: #a020f0;">\KwOut</span>{&#36861;&#36394;&#20301;&#32622;<span style="color: #8b2252;">$\mathbf{l}_</span><span style="color: #8b2252;">t</span><span style="color: #8b2252;">$</span>&#21644;&#20998;&#31867;&#22120;&#21442;&#25968;}
+&#20013;&#38291;&#21152;&#20837;&#20839;&#23481;
+<span style="color: #a020f0;">\end</span>{<span style="color: #0000ff;">algorithm</span>}
+</pre>
+</div>
+<p>
+在lyx中<br/>
+</p>
+<div class="row-fluid"> <div class="span5">
+<link rel="stylesheet" href="../../Layout/CSS/jquery.lightbox-0.5.css" type="text/css" media="screen" /> <script type="text/javascript" src="../../Layout/JS/jquery.lightbox-0.5.js"></script> <center> <a class="lightbox" href="images/algorithm2e.png"> <img class="lightbox " title="点击查看大图" src="images/algorithm2e.png" width="400"> </a> </center> <script type="text/javascript"> $(function() {$('a.lightbox').lightBox();}); </script>
+</div> <div class="span2">
+<br/><br/><br/><br/><br/>
+<img src="images/result.jpg"></img>
+</div> <div class="span5">
+<br/><br/><br/><br/>
+<link rel="stylesheet" href="../../Layout/CSS/jquery.lightbox-0.5.css" type="text/css" media="screen" /> <script type="text/javascript" src="../../Layout/JS/jquery.lightbox-0.5.js"></script> <center> <a class="lightbox" href="images/algorithm2eresult.png"> <img class="lightbox " title="点击查看大图" src="images/algorithm2eresult.png" width="400"> </a> </center> <script type="text/javascript"> $(function() {$('a.lightbox').lightBox();}); </script>
+</div></div>
+<hr/>
+<p>
+下面是參考中的例子，preamble中的选项和刚才的不同：<br/>
+</p>
+<div class="org-src-container">
+
+<pre class="src src-tex"><span style="color: #a020f0;">\usepackage</span>[linesnumbered,boxed]{<span style="color: #483d8b;">algorithm2e</span>}
+</pre>
+</div>
+<div class="row-fluid"> <div class="span5">
+<div style="height:200px;overflow:auto;border-style:solid;border-width:1px;border-color:#DDD">
+<div class="org-src-container">
+
+<pre class="src src-tex"><span style="color: #a020f0;">\begin</span>{<span style="color: #0000ff;">algorithm</span>}
+  <span style="color: #a020f0;">\caption</span>{identifyRowContext}
+  <span style="color: #a020f0;">\KwIn</span>{<span style="color: #8b2252;">$r_</span><span style="color: #8b2252;">i</span><span style="color: #8b2252;">$</span>, <span style="color: #8b2252;">$Backgrd(T_</span><span style="color: #8b2252;">i</span><span style="color: #8b2252;">)$</span>=<span style="color: #8b2252;">${T_</span><span style="color: #8b2252;">1</span><span style="color: #8b2252;">,T_</span><span style="color: #8b2252;">2</span><span style="color: #8b2252;">,\ldots ,T_</span><span style="color: #8b2252;">n</span><span style="color: #8b2252;">}$</span> and similarity threshold <span style="color: #8b2252;">$\theta_</span><span style="color: #8b2252;">r</span><span style="color: #8b2252;">$</span>}
+  <span style="color: #a020f0;">\KwOut</span>{<span style="color: #8b2252;">$con(r_</span><span style="color: #8b2252;">i</span><span style="color: #8b2252;">)$</span>}
+  <span style="color: #8b2252;">$con(r_</span><span style="color: #8b2252;">i</span><span style="color: #8b2252;">)= \Phi$</span><span style="color: #a020f0;">\;</span>
+  <span style="color: #a020f0;">\For</span>{<span style="color: #8b2252;">$j=1;j \le n;j \ne i$</span>}
+  {
+    float <span style="color: #8b2252;">$maxSim=0$</span><span style="color: #a020f0;">\;</span>
+    <span style="color: #8b2252;">$r^</span><span style="color: #8b2252;">{maxSim}</span><span style="color: #8b2252;">=null$</span><span style="color: #a020f0;">\;</span>
+    <span style="color: #a020f0;">\While</span>{not end of <span style="color: #8b2252;">$T_</span><span style="color: #8b2252;">j</span><span style="color: #8b2252;">$</span>}
+    {
+      compute Jaro(<span style="color: #8b2252;">$r_</span><span style="color: #8b2252;">i</span><span style="color: #8b2252;">,r_</span><span style="color: #8b2252;">m</span><span style="color: #8b2252;">$</span>)(<span style="color: #8b2252;">$r_</span><span style="color: #8b2252;">m</span><span style="color: #8b2252;">\in T_</span><span style="color: #8b2252;">j</span><span style="color: #8b2252;">$</span>)<span style="color: #a020f0;">\;</span>
+      <span style="color: #a020f0;">\If</span>{<span style="color: #8b2252;">$(Jaro(r_</span><span style="color: #8b2252;">i</span><span style="color: #8b2252;">,r_</span><span style="color: #8b2252;">m</span><span style="color: #8b2252;">) \ge \theta_</span><span style="color: #8b2252;">r</span><span style="color: #8b2252;">)\wedge (Jaro(r_</span><span style="color: #8b2252;">i</span><span style="color: #8b2252;">,r_</span><span style="color: #8b2252;">m</span><span style="color: #8b2252;">)\ge r^</span><span style="color: #8b2252;">{maxSim}</span><span style="color: #8b2252;">)$</span>}
+      {
+        replace <span style="color: #8b2252;">$r^</span><span style="color: #8b2252;">{maxSim}</span><span style="color: #8b2252;">$</span> with <span style="color: #8b2252;">$r_</span><span style="color: #8b2252;">m</span><span style="color: #8b2252;">$</span><span style="color: #a020f0;">\;</span>
+      }
+    }
+    <span style="color: #8b2252;">$con(r_</span><span style="color: #8b2252;">i</span><span style="color: #8b2252;">)=con(r_</span><span style="color: #8b2252;">i</span><span style="color: #8b2252;">)\cup {r^</span><span style="color: #8b2252;">{maxSim}</span><span style="color: #8b2252;">}$</span><span style="color: #a020f0;">\;</span>
+  }
+  return <span style="color: #8b2252;">$con(r_</span><span style="color: #8b2252;">i</span><span style="color: #8b2252;">)$</span><span style="color: #a020f0;">\;</span>
+<span style="color: #a020f0;">\end</span>{<span style="color: #0000ff;">algorithm</span>}
+</pre>
+</div>
+</div>
+</div> <div class="span2">
+<br/><br/><br/><br/>
+<img src="images/result.jpg"></img>
+</div> <div class="span5">
+<link rel="stylesheet" href="../../Layout/CSS/jquery.lightbox-0.5.css" type="text/css" media="screen" /> <script type="text/javascript" src="../../Layout/JS/jquery.lightbox-0.5.js"></script> <center> <a class="lightbox" href="images/algorithm2eresult2.png"> <img class="lightbox " title="点击查看大图" src="images/algorithm2eresult2.png" width="400"> </a> </center> <script type="text/javascript"> $(function() {$('a.lightbox').lightBox();}); </script>
+</div></div>
+<hr/>
+</div>
 </div>
 
-<div id="outline-container-11" class="outline-2">
-<h2 id="sec-11"><span class="section-number-2">11</span> Beamer中为插入frame设置快捷键</h2>
+<div id="outline-container-sec-11" class="outline-2">
+<h2 id="sec-11"><span class="section-number-2">11</span> 插入gif动画文件</h2>
 <div class="outline-text-2" id="text-11">
-
-<p>  Tools-&gt;Preferences-&gt;Editing-&gt;Shortcuts中New对话框中Function栏写 <code>layout BeginFrame</code> 并为其添加快捷键，同理可为 <code>layout EndFrame</code> 添加快捷键.<br/>
-  查看一个功能对应的函数：在菜单上执行一次此功能后会出现在状态栏上。<br/>
-  默认文件保存到了~/.lyx/bind/user.bind，可以备份此文件以便日后使用。<br/>
+<p>
+可以<a href="../../Linux/LinuxOS/UbuntuTrick.html">将gif转换成avi</a> 后再用movie15宏包插入。<br/>
 </p>
 </div>
-
 </div>
 
-<div id="outline-container-12" class="outline-2">
-<h2 id="sec-12"><span class="section-number-2">12</span> lyx+latex+Beamer</h2>
+<div id="outline-container-sec-12" class="outline-2">
+<h2 id="sec-12"><span class="section-number-2">12</span> Beamer中为插入frame设置快捷键</h2>
 <div class="outline-text-2" id="text-12">
-
-
+<p>
+Tools-&gt;Preferences-&gt;Editing-&gt;Shortcuts中New对话框中Function栏写 <code>layout BeginFrame</code> 并为其添加快捷键，同理可为 <code>layout EndFrame</code> 添加快捷键.<br/>
+查看一个功能对应的函数：在菜单上执行一次此功能后会出现在状态栏上。<br/>
+默认文件保存到了~/.lyx/bind/user.bind，可以备份此文件以便日后使用。<br/>
+</p>
+</div>
+</div>
+<div id="outline-container-sec-13" class="outline-2">
+<h2 id="sec-13"><span class="section-number-2">13</span> lyx+latex+Beamer</h2>
+<div class="outline-text-2" id="text-13">
+</div><div id="outline-container-sec-13-1" class="outline-3">
+<h3 id="sec-13-1"><span class="section-number-3">13.1</span> columns</h3>
+<div class="outline-text-3" id="text-13-1">
+<p>
+首先从下拉菜单下选择columns，在新行中选择column，输入宽度，后快捷键 <code>M-S-right</code> 将其提升了columns的child。<br/>
+</p>
+</div>
 </div>
 
-<div id="outline-container-12-1" class="outline-3">
-<h3 id="sec-12-1"><span class="section-number-3">12.1</span> columns</h3>
-<div class="outline-text-3" id="text-12-1">
-
-<p>   首先从下拉菜单下选择columns，在新行中选择column，输入宽度，后快捷键 <code>M-S-right</code> 将其提升了columns的child。<br/>
-</p></div>
-
+<div id="outline-container-sec-13-2" class="outline-3">
+<h3 id="sec-13-2"><span class="section-number-3">13.2</span> block</h3>
+<div class="outline-text-3" id="text-13-2">
+<p>
+菜单下选择block后 <code>C-l</code> 输入 <code>{标题}</code> ，注意不可省略 <code>{}</code> 。<br/>
+</p>
+</div>
 </div>
 
-<div id="outline-container-12-2" class="outline-3">
-<h3 id="sec-12-2"><span class="section-number-3">12.2</span> block</h3>
-<div class="outline-text-3" id="text-12-2">
-
-<p>   菜单下选择block后 <code>C-l</code> 输入 <code>{标题}</code> ，注意不可省略 <code>{}</code> 。<br/>
-</p></div>
-
-</div>
-
-<div id="outline-container-12-3" class="outline-3">
-<h3 id="sec-12-3"><span class="section-number-3">12.3</span> step-wise</h3>
-<div class="outline-text-3" id="text-12-3">
-
-<ol>
+<div id="outline-container-sec-13-3" class="outline-3">
+<h3 id="sec-13-3"><span class="section-number-3">13.3</span> step-wise</h3>
+<div class="outline-text-3" id="text-13-3">
+<ol class="org-ol">
 <li>对于列表之类的 <code>\item&lt;n1-n2&gt;内容</code> 表示在n1至n2个幻灯片上显示，省略n2则表示自n1之后一直显示。<br/>
-
-
+<div class="org-src-container">
 
 <pre class="src src-tex"><span style="color: #a020f0;">\begin</span>{<span style="color: #0000ff;">itemize</span>}
 <span style="color: #a020f0;">\item</span>&lt;1-&gt; Every thing
 <span style="color: #a020f0;">\item</span>&lt;2-&gt; that has
 <span style="color: #a020f0;">\item</span>&lt;3-&gt; beginning
 <span style="color: #a020f0;">\item</span>&lt;4-&gt; has end.
-<span style="color: #a020f0;">\end</span>{<span style="color: #0000ff;">itemize</span>}      
+<span style="color: #a020f0;">\end</span>{<span style="color: #0000ff;">itemize</span>}
 </pre>
-
+</div>
 </li>
 <li>如果列表环境中每个项逐一显示，为避免为每个项都写 <code>\item&lt;1-&gt;</code> 带来的麻烦，可以将 <code>\begin{itemize}</code> 写成 <code>\begin{itemize}[&lt;+-&gt;]</code> ，=\item= 不变。<br/>
-
-
+<div class="org-src-container">
 
 <pre class="src src-tex"><span style="color: #a020f0;">\begin</span>{<span style="color: #0000ff;">itemize</span>}[&lt;+-&gt;]
 <span style="color: #a020f0;">\item</span> Every thing
 <span style="color: #a020f0;">\item</span> that has
 <span style="color: #a020f0;">\item</span> beginning
 <span style="color: #a020f0;">\item</span> has end.
-<span style="color: #a020f0;">\end</span>{<span style="color: #0000ff;">itemize</span>}      
+<span style="color: #a020f0;">\end</span>{<span style="color: #0000ff;">itemize</span>}
 </pre>
-
+</div>
 </li>
 </ol>
-
+</div>
 </div>
 
+<div id="outline-container-sec-13-4" class="outline-3">
+<h3 id="sec-13-4"><span class="section-number-3">13.4</span> replace</h3>
+<div class="outline-text-3" id="text-13-4">
+</div><div id="outline-container-sec-13-4-1" class="outline-4">
+<h4 id="sec-13-4-1"><span class="section-number-4">13.4.1</span> only</h4>
+<div class="outline-text-4" id="text-13-4-1">
+<p>
+<code>\only&lt;n&gt;{..}</code> 表示只在第n个幻灯片上显示，不保留空间<br/>
+</p>
+</div>
 </div>
 
-<div id="outline-container-12-4" class="outline-3">
-<h3 id="sec-12-4"><span class="section-number-3">12.4</span> replace</h3>
-<div class="outline-text-3" id="text-12-4">
-
-
-</div>
-
-<div id="outline-container-12-4-1" class="outline-4">
-<h4 id="sec-12-4-1"><span class="section-number-4">12.4.1</span> only</h4>
-<div class="outline-text-4" id="text-12-4-1">
-
-<p>    <code>\only&lt;n&gt;{..}</code> 表示只在第n个幻灯片上显示，不保留空间<br/>
-</p></div>
-
-</div>
-
-<div id="outline-container-12-4-2" class="outline-4">
-<h4 id="sec-12-4-2"><span class="section-number-4">12.4.2</span> uncover</h4>
-<div class="outline-text-4" id="text-12-4-2">
-
-<p>    <code>\uncover&lt;n&gt;{..}</code> 只在n张上显示，保留空间<br/>
-    与only的区别可以用下面的例子说明：<br/>
-
+<div id="outline-container-sec-13-4-2" class="outline-4">
+<h4 id="sec-13-4-2"><span class="section-number-4">13.4.2</span> uncover</h4>
+<div class="outline-text-4" id="text-13-4-2">
+<p>
+<code>\uncover&lt;n&gt;{..}</code> 只在n张上显示，保留空间<br/>
+与only的区别可以用下面的例子说明：<br/>
 </p>
 <hr/>
-
-
-    <div class="row-fluid"> <div class="span2">
+<div class="row-fluid"> <div class="span2">
 <p>
-    lyx代码：<br/>
-    <link rel="stylesheet" href="../../Layout/CSS/jquery.lightbox-0.5.css" type="text/css" media="screen" /> <script type="text/javascript" src="../../Layout/JS/jquery.lightbox-0.5.js"></script> <center> <a class="lightbox" href="images/Beamer_difference_between_only_and_uncover.png"> <img class="lightbox " title="点击查看大图" src="images/Beamer_difference_between_only_and_uncover.png" width="500"> </a> </center> <script type="text/javascript"> $(function() {$('a.lightbox').lightBox();}); </script> 
-    </div> <div class="span1">
-    <br/><br/><br/><br/><br/>
-    <img src="images/result.jpg"></img>
-    </div> <div class="span2">
-    第1张幻灯片：<br/>
-    <link rel="stylesheet" href="../../Layout/CSS/jquery.lightbox-0.5.css" type="text/css" media="screen" /> <script type="text/javascript" src="../../Layout/JS/jquery.lightbox-0.5.js"></script> <center> <a class="lightbox" href="images/Beamer_difference_between_only_and_uncover_result1.png"> <img class="lightbox " title="点击查看大图" src="images/Beamer_difference_between_only_and_uncover_result1.png" width="100"> </a> </center> <script type="text/javascript"> $(function() {$('a.lightbox').lightBox();}); </script> 
-    </div> <div class="span2">
-    第2张幻灯片：<br/>
-    <link rel="stylesheet" href="../../Layout/CSS/jquery.lightbox-0.5.css" type="text/css" media="screen" /> <script type="text/javascript" src="../../Layout/JS/jquery.lightbox-0.5.js"></script> <center> <a class="lightbox" href="images/Beamer_difference_between_only_and_uncover_result2.png"> <img class="lightbox " title="点击查看大图" src="images/Beamer_difference_between_only_and_uncover_result2.png" width="100"> </a> </center> <script type="text/javascript"> $(function() {$('a.lightbox').lightBox();}); </script> 
-    </div> <div class="span2">
-    第3张幻灯片：<br/>
-    <link rel="stylesheet" href="../../Layout/CSS/jquery.lightbox-0.5.css" type="text/css" media="screen" /> <script type="text/javascript" src="../../Layout/JS/jquery.lightbox-0.5.js"></script> <center> <a class="lightbox" href="images/Beamer_difference_between_only_and_uncover_result3.png"> <img class="lightbox " title="点击查看大图" src="images/Beamer_difference_between_only_and_uncover_result3.png" width="100"> </a> </center> <script type="text/javascript"> $(function() {$('a.lightbox').lightBox();}); </script> 
-    </div></div>
-
+lyx代码：<br/>
 </p>
+<link rel="stylesheet" href="../../Layout/CSS/jquery.lightbox-0.5.css" type="text/css" media="screen" /> <script type="text/javascript" src="../../Layout/JS/jquery.lightbox-0.5.js"></script> <center> <a class="lightbox" href="images/Beamer_difference_between_only_and_uncover.png"> <img class="lightbox " title="点击查看大图" src="images/Beamer_difference_between_only_and_uncover.png" width="500"> </a> </center> <script type="text/javascript"> $(function() {$('a.lightbox').lightBox();}); </script>
+</div> <div class="span1">
+<br/><br/><br/><br/><br/>
+<img src="images/result.jpg"></img>
+</div> <div class="span2">
+<p>
+第1张幻灯片：<br/>
+</p>
+<link rel="stylesheet" href="../../Layout/CSS/jquery.lightbox-0.5.css" type="text/css" media="screen" /> <script type="text/javascript" src="../../Layout/JS/jquery.lightbox-0.5.js"></script> <center> <a class="lightbox" href="images/Beamer_difference_between_only_and_uncover_result1.png"> <img class="lightbox " title="点击查看大图" src="images/Beamer_difference_between_only_and_uncover_result1.png" width="100"> </a> </center> <script type="text/javascript"> $(function() {$('a.lightbox').lightBox();}); </script>
+</div> <div class="span2">
+<p>
+第2张幻灯片：<br/>
+</p>
+<link rel="stylesheet" href="../../Layout/CSS/jquery.lightbox-0.5.css" type="text/css" media="screen" /> <script type="text/javascript" src="../../Layout/JS/jquery.lightbox-0.5.js"></script> <center> <a class="lightbox" href="images/Beamer_difference_between_only_and_uncover_result2.png"> <img class="lightbox " title="点击查看大图" src="images/Beamer_difference_between_only_and_uncover_result2.png" width="100"> </a> </center> <script type="text/javascript"> $(function() {$('a.lightbox').lightBox();}); </script>
+</div> <div class="span2">
+<p>
+第3张幻灯片：<br/>
+</p>
+<link rel="stylesheet" href="../../Layout/CSS/jquery.lightbox-0.5.css" type="text/css" media="screen" /> <script type="text/javascript" src="../../Layout/JS/jquery.lightbox-0.5.js"></script> <center> <a class="lightbox" href="images/Beamer_difference_between_only_and_uncover_result3.png"> <img class="lightbox " title="点击查看大图" src="images/Beamer_difference_between_only_and_uncover_result3.png" width="100"> </a> </center> <script type="text/javascript"> $(function() {$('a.lightbox').lightBox();}); </script>
+</div></div>
 <hr/>
 <p>
-    可见不管是哪张幻灯片都为uncover的内容c保留了空间，所以在第1张和第2张幻灯片中第2个test和第3个test之间一直是空的，然而没有为only的内容a和b保留空间，所以第1张中第1个test和第2个test之间没有空间。<br/>
-</p></div>
-
+可见不管是哪张幻灯片都为uncover的内容c保留了空间，所以在第1张和第2张幻灯片中第2个test和第3个test之间一直是空的，然而没有为only的内容a和b保留空间，所以第1张中第1个test和第2个test之间没有空间。<br/>
+</p>
+</div>
 </div>
 
-<div id="outline-container-12-4-3" class="outline-4">
-<h4 id="sec-12-4-3"><span class="section-number-4">12.4.3</span> invisable</h4>
-<div class="outline-text-4" id="text-12-4-3">
-
-<p>    <code>\invisible&lt;n&gt;{..}</code> 在第n张上消失，和 <code>\uncover&lt;n&gt;{..}</code> 相反。<br/>
-</p></div>
-
+<div id="outline-container-sec-13-4-3" class="outline-4">
+<h4 id="sec-13-4-3"><span class="section-number-4">13.4.3</span> invisable</h4>
+<div class="outline-text-4" id="text-13-4-3">
+<p>
+<code>\invisible&lt;n&gt;{..}</code> 在第n张上消失，和 <code>\uncover&lt;n&gt;{..}</code> 相反。<br/>
+</p>
+</div>
 </div>
 
-<div id="outline-container-12-4-4" class="outline-4">
-<h4 id="sec-12-4-4"><span class="section-number-4">12.4.4</span> alter</h4>
-<div class="outline-text-4" id="text-12-4-4">
-
-<p>    <code>\alter&lt;n&gt;{..}</code> 在第n张的时候显示为强调颜色<br/>
-    lyx中使用方法是 <code>&lt;alter@n&gt;</code><br/>
-</p></div>
-
+<div id="outline-container-sec-13-4-4" class="outline-4">
+<h4 id="sec-13-4-4"><span class="section-number-4">13.4.4</span> alter</h4>
+<div class="outline-text-4" id="text-13-4-4">
+<p>
+<code>\alter&lt;n&gt;{..}</code> 在第n张的时候显示为强调颜色<br/>
+lyx中使用方法是 <code>&lt;alter@n&gt;</code><br/>
+</p>
+</div>
 </div>
 
-<div id="outline-container-12-4-5" class="outline-4">
-<h4 id="sec-12-4-5"><span class="section-number-4">12.4.5</span> alt</h4>
-<div class="outline-text-4" id="text-12-4-5">
-
-<p>    <code>\alt&lt;n&gt;{before}{after}</code> n帧前为before，n帧后为after。<br/>
-</p></div>
-
+<div id="outline-container-sec-13-4-5" class="outline-4">
+<h4 id="sec-13-4-5"><span class="section-number-4">13.4.5</span> alt</h4>
+<div class="outline-text-4" id="text-13-4-5">
+<p>
+<code>\alt&lt;n&gt;{before}{after}</code> n帧前为before，n帧后为after。<br/>
+</p>
+</div>
 </div>
 
-<div id="outline-container-12-4-6" class="outline-4">
-<h4 id="sec-12-4-6"><span class="section-number-4">12.4.6</span> temporal</h4>
-<div class="outline-text-4" id="text-12-4-6">
-
-<p>    <code>\temporal&lt;n&gt;{before}{on}{after}</code> 在n帧之前一直是before，n帧时是on，之后是after<br/>
+<div id="outline-container-sec-13-4-6" class="outline-4">
+<h4 id="sec-13-4-6"><span class="section-number-4">13.4.6</span> temporal</h4>
+<div class="outline-text-4" id="text-13-4-6">
+<p>
+<code>\temporal&lt;n&gt;{before}{on}{after}</code> 在n帧之前一直是before，n帧时是on，之后是after<br/>
+</p>
 <div class="row-fluid"> <div class="span4">
 <link rel="stylesheet" href="../../Layout/CSS/jquery.lightbox-0.5.css" type="text/css" media="screen" /> <script type="text/javascript" src="../../Layout/JS/jquery.lightbox-0.5.js"></script> <center> <a class="lightbox" href="./images/beamer_overlay_columns_block_item.png"> <img class="lightbox " title="点击查看大图" src="./images/beamer_overlay_columns_block_item.png" width="400"> </a> </center> <script type="text/javascript"> $(function() {$('a.lightbox').lightBox();}); </script>
 </div> <div class="span1">
 <br/><br/><br/><br/><br/><br/><br/><br/>
-$$\underrightarrow{\ \ result\ \ }$$
+<p>
+$$\underrightarrow{\ \ result\ \ }$$<br/>
+</p>
 </div> <div class="span7">
 <br/><br/><br/><br/><br/>
-<link rel="stylesheet" href="../../Layout/CSS/jquery.lightbox-0.5.css" type="text/css" media="screen" /> <script type="text/javascript" src="../../Layout/JS/jquery.lightbox-0.5.js"></script> <center> <a class="lightbox" href="images/beamer_overlay_columns_block_item_result.png"> <img class="lightbox " title="点击查看大图" src="images/beamer_overlay_columns_block_item_result.png" width="700"> </a> </center> <script type="text/javascript"> $(function() {$('a.lightbox').lightBox();}); </script> 
+<link rel="stylesheet" href="../../Layout/CSS/jquery.lightbox-0.5.css" type="text/css" media="screen" /> <script type="text/javascript" src="../../Layout/JS/jquery.lightbox-0.5.js"></script> <center> <a class="lightbox" href="images/beamer_overlay_columns_block_item_result.png"> <img class="lightbox " title="点击查看大图" src="images/beamer_overlay_columns_block_item_result.png" width="700"> </a> </center> <script type="text/javascript"> $(function() {$('a.lightbox').lightBox();}); </script>
 </div></div>
-   右图中列表是动态出现的。<br/>
-</p></div>
-
+<p>
+右图中列表是动态出现的。<br/>
+</p>
+</div>
 </div>
 
-<div id="outline-container-12-4-7" class="outline-4">
-<h4 id="sec-12-4-7"><span class="section-number-4">12.4.7</span> Overprint/Overlayarea</h4>
-<div class="outline-text-4" id="text-12-4-7">
-
-<ul>
-<li id="sec-12-4-7-1">使用原因<br/>
-     下面代码由于only1和only2行数不同，所以两者之下的内容在切换时会发生移动现象，叫“whobble”：<br/>
-     <div class="row-fluid"> <div class="span4">
-     <br/><br/><br/><br/><br/><br/>
-     lyx代码：<br/>
-     <link rel="stylesheet" href="../../Layout/CSS/jquery.lightbox-0.5.css" type="text/css" media="screen" /> <script type="text/javascript" src="../../Layout/JS/jquery.lightbox-0.5.js"></script> <center> <a class="lightbox" href="images/Beamer_without_Overprint.png"> <img class="lightbox " title="点击查看大图" src="images/Beamer_without_Overprint.png" width="300"> </a> </center> <script type="text/javascript"> $(function() {$('a.lightbox').lightBox();}); </script> 
-     </div> <div class="span1">
-     <br/><br/><br/><br/><br/><br/><br/><br/><br/>
-     <img src="images/result.jpg"></img>
-     </div> <div class="span4">
-     第1张：<br/>
-     <link rel="stylesheet" href="../../Layout/CSS/jquery.lightbox-0.5.css" type="text/css" media="screen" /> <script type="text/javascript" src="../../Layout/JS/jquery.lightbox-0.5.js"></script> <center> <a class="lightbox" href="images/Beamer_without_Overprint_result.png"> <img class="lightbox " title="点击查看大图" src="images/Beamer_without_Overprint_result.png" width="300"> </a> </center> <script type="text/javascript"> $(function() {$('a.lightbox').lightBox();}); </script> 
-     第2张：<br/>
-     <link rel="stylesheet" href="../../Layout/CSS/jquery.lightbox-0.5.css" type="text/css" media="screen" /> <script type="text/javascript" src="../../Layout/JS/jquery.lightbox-0.5.js"></script> <center> <a class="lightbox" href="images/Beamer_without_Overprint_result2.png"> <img class="lightbox " title="点击查看大图" src="images/Beamer_without_Overprint_result2.png" width="300"> </a> </center> <script type="text/javascript"> $(function() {$('a.lightbox').lightBox();}); </script> 
-     </div></div>
-
+<div id="outline-container-sec-13-4-7" class="outline-4">
+<h4 id="sec-13-4-7"><span class="section-number-4">13.4.7</span> Overprint/Overlayarea</h4>
+<div class="outline-text-4" id="text-13-4-7">
+</div><ol class="org-ol"><li>使用原因<br/><div class="outline-text-5" id="text-13-4-7-1">
+<p>
+下面代码由于only1和only2行数不同，所以两者之下的内容在切换时会发生移动现象，叫“whobble”：<br/>
+</p>
+<div class="row-fluid"> <div class="span4">
+<br/><br/><br/><br/><br/><br/>
+<p>
+lyx代码：<br/>
+</p>
+<link rel="stylesheet" href="../../Layout/CSS/jquery.lightbox-0.5.css" type="text/css" media="screen" /> <script type="text/javascript" src="../../Layout/JS/jquery.lightbox-0.5.js"></script> <center> <a class="lightbox" href="images/Beamer_without_Overprint.png"> <img class="lightbox " title="点击查看大图" src="images/Beamer_without_Overprint.png" width="300"> </a> </center> <script type="text/javascript"> $(function() {$('a.lightbox').lightBox();}); </script>
+</div> <div class="span1">
+<br/><br/><br/><br/><br/><br/><br/><br/><br/>
+<img src="images/result.jpg"></img>
+</div> <div class="span4">
+<p>
+第1张：<br/>
+</p>
+<link rel="stylesheet" href="../../Layout/CSS/jquery.lightbox-0.5.css" type="text/css" media="screen" /> <script type="text/javascript" src="../../Layout/JS/jquery.lightbox-0.5.js"></script> <center> <a class="lightbox" href="images/Beamer_without_Overprint_result.png"> <img class="lightbox " title="点击查看大图" src="images/Beamer_without_Overprint_result.png" width="300"> </a> </center> <script type="text/javascript"> $(function() {$('a.lightbox').lightBox();}); </script>
+<p>
+第2张：<br/>
+</p>
+<link rel="stylesheet" href="../../Layout/CSS/jquery.lightbox-0.5.css" type="text/css" media="screen" /> <script type="text/javascript" src="../../Layout/JS/jquery.lightbox-0.5.js"></script> <center> <a class="lightbox" href="images/Beamer_without_Overprint_result2.png"> <img class="lightbox " title="点击查看大图" src="images/Beamer_without_Overprint_result2.png" width="300"> </a> </center> <script type="text/javascript"> $(function() {$('a.lightbox').lightBox();}); </script>
+</div></div>
 <hr/>
-     可以使用Overprint和Overlayarea来解决：<br/>
-     <div class="row-fluid"> <div class="span4">
-     lyx代码：<br/>
-     <link rel="stylesheet" href="../../Layout/CSS/jquery.lightbox-0.5.css" type="text/css" media="screen" /> <script type="text/javascript" src="../../Layout/JS/jquery.lightbox-0.5.js"></script> <center> <a class="lightbox" href="images/Beamer_with_Overprint.png"> <img class="lightbox " title="点击查看大图" src="images/Beamer_with_Overprint.png" width="250"> </a> </center> <script type="text/javascript"> $(function() {$('a.lightbox').lightBox();}); </script> 
-     </div> <div class="span1">
-     <br/><br/><br/><br/><br/><br/><br/><br/><br/>
-     <img src="images/result.jpg"></img>
-     </div> <div class="span7">
-     第1张幻灯片：<br/>
-     <link rel="stylesheet" href="../../Layout/CSS/jquery.lightbox-0.5.css" type="text/css" media="screen" /> <script type="text/javascript" src="../../Layout/JS/jquery.lightbox-0.5.js"></script> <center> <a class="lightbox" href="images/Beamer_with_Overprint_result.png"> <img class="lightbox " title="点击查看大图" src="images/Beamer_with_Overprint_result.png" width="600"> </a> </center> <script type="text/javascript"> $(function() {$('a.lightbox').lightBox();}); </script> 
-
+<p>
+可以使用Overprint和Overlayarea来解决：<br/>
+</p>
+<div class="row-fluid"> <div class="span4">
+<p>
+lyx代码：<br/>
+</p>
+<link rel="stylesheet" href="../../Layout/CSS/jquery.lightbox-0.5.css" type="text/css" media="screen" /> <script type="text/javascript" src="../../Layout/JS/jquery.lightbox-0.5.js"></script> <center> <a class="lightbox" href="images/Beamer_with_Overprint.png"> <img class="lightbox " title="点击查看大图" src="images/Beamer_with_Overprint.png" width="250"> </a> </center> <script type="text/javascript"> $(function() {$('a.lightbox').lightBox();}); </script>
+</div> <div class="span1">
+<br/><br/><br/><br/><br/><br/><br/><br/><br/>
+<img src="images/result.jpg"></img>
+</div> <div class="span7">
+<p>
+第1张幻灯片：<br/>
+</p>
+<link rel="stylesheet" href="../../Layout/CSS/jquery.lightbox-0.5.css" type="text/css" media="screen" /> <script type="text/javascript" src="../../Layout/JS/jquery.lightbox-0.5.js"></script> <center> <a class="lightbox" href="images/Beamer_with_Overprint_result.png"> <img class="lightbox " title="点击查看大图" src="images/Beamer_with_Overprint_result.png" width="600"> </a> </center> <script type="text/javascript"> $(function() {$('a.lightbox').lightBox();}); </script>
 <hr/>
-     第2张幻灯片：<br/>
-     <link rel="stylesheet" href="../../Layout/CSS/jquery.lightbox-0.5.css" type="text/css" media="screen" /> <script type="text/javascript" src="../../Layout/JS/jquery.lightbox-0.5.js"></script> <center> <a class="lightbox" href="images/Beamer_with_Overprint_result2.png"> <img class="lightbox " title="点击查看大图" src="images/Beamer_with_Overprint_result2.png" width="600"> </a> </center> <script type="text/javascript"> $(function() {$('a.lightbox').lightBox();}); </script> 
-     </div></div>
-
+<p>
+第2张幻灯片：<br/>
+</p>
+<link rel="stylesheet" href="../../Layout/CSS/jquery.lightbox-0.5.css" type="text/css" media="screen" /> <script type="text/javascript" src="../../Layout/JS/jquery.lightbox-0.5.js"></script> <center> <a class="lightbox" href="images/Beamer_with_Overprint_result2.png"> <img class="lightbox " title="点击查看大图" src="images/Beamer_with_Overprint_result2.png" width="600"> </a> </center> <script type="text/javascript"> $(function() {$('a.lightbox').lightBox();}); </script>
+</div></div>
 <hr/>
+</div>
 </li>
-</ul>
-<ul>
-<li id="sec-12-4-7-2">二者区别<br/>
-     二者的区别是Overlayarea必须要自定义显示矩阵的宽和高：<br/>
 
-
+<li>二者区别<br/><div class="outline-text-5" id="text-13-4-7-2">
+<p>
+二者的区别是Overlayarea必须要自定义显示矩阵的宽和高：<br/>
+</p>
+<div class="org-src-container">
 
 <pre class="src src-tex"><span style="color: #a020f0;">\begin</span>{<span style="color: #0000ff;">overlayarea</span>}{area widthi{area height}
 environment contents
 <span style="color: #a020f0;">\end</span>{<span style="color: #0000ff;">overlayarea</span>}
 </pre>
-
+</div>
 <p>
-     而overprint的高是自动生成的，不能自己定义（选择几个之间最高的那个），宽默认是文本宽度，也可以自己定义：<br/>
+而overprint的高是自动生成的，不能自己定义（选择几个之间最高的那个），宽默认是文本宽度，也可以自己定义：<br/>
 </p>
-
+<div class="org-src-container">
 
 <pre class="src src-tex"><span style="color: #a020f0;">\begin</span>{<span style="color: #0000ff;">overprint</span>}[harea widthi]
 henvironment contentsi
-<span style="color: #a020f0;">\end</span>{<span style="color: #0000ff;">overprint</span>}    
+<span style="color: #a020f0;">\end</span>{<span style="color: #0000ff;">overprint</span>}
 </pre>
-
+</div>
 <p>
-     一般情况只使用overprint即可满足要求。<br/>
-     <b>注意</b> 使用Overlayarea时需用only而非onslide，lyx下拉菜单下有only，所以不能自己用tex代码的方式来写only。两个only之间要用tex代码 <code>{}</code> 分隔（不然下一个onlyenv环境会进入上一个onlyenv环境内部，不知道是不是bug）：<br/>
-     <div class="row-fluid"> <div class="span3">
-     lyx代码：<br/>
-     <link rel="stylesheet" href="../../Layout/CSS/jquery.lightbox-0.5.css" type="text/css" media="screen" /> <script type="text/javascript" src="../../Layout/JS/jquery.lightbox-0.5.js"></script> <center> <a class="lightbox" href="images/Beamer_Overlayarea.png"> <img class="lightbox " title="点击查看大图" src="images/Beamer_Overlayarea.png" width="180"> </a> </center> <script type="text/javascript"> $(function() {$('a.lightbox').lightBox();}); </script> 
-     </div> <div class="span1">
-     <br/><br/><br/><br/><br/><br/><br/><br/>
-     <img src="images/result.jpg"></img>
-     </div> <div class="span3">
-     第1张幻灯片：<br/>
-     <link rel="stylesheet" href="../../Layout/CSS/jquery.lightbox-0.5.css" type="text/css" media="screen" /> <script type="text/javascript" src="../../Layout/JS/jquery.lightbox-0.5.js"></script> <center> <a class="lightbox" href="images/Beamer_Overlayarea_result1.png"> <img class="lightbox " title="点击查看大图" src="images/Beamer_Overlayarea_result1.png" width="270"> </a> </center> <script type="text/javascript"> $(function() {$('a.lightbox').lightBox();}); </script> 
-     </div> <div class="span3">
-     第2张幻灯片：<br/>
-     <link rel="stylesheet" href="../../Layout/CSS/jquery.lightbox-0.5.css" type="text/css" media="screen" /> <script type="text/javascript" src="../../Layout/JS/jquery.lightbox-0.5.js"></script> <center> <a class="lightbox" href="images/Beamer_Overlayarea_result2.png"> <img class="lightbox " title="点击查看大图" src="images/Beamer_Overlayarea_result2.png" width="400"> </a> </center> <script type="text/javascript"> $(function() {$('a.lightbox').lightBox();}); </script> 
-     </div></div>
-
+一般情况只使用overprint即可满足要求。<br/>
+<b>注意</b> 使用Overlayarea时需用only而非onslide，lyx下拉菜单下有only，所以不能自己用tex代码的方式来写only。两个only之间要用tex代码 <code>{}</code> 分隔（不然下一个onlyenv环境会进入上一个onlyenv环境内部，不知道是不是bug）：<br/>
 </p>
+<div class="row-fluid"> <div class="span3">
+<p>
+lyx代码：<br/>
+</p>
+<link rel="stylesheet" href="../../Layout/CSS/jquery.lightbox-0.5.css" type="text/css" media="screen" /> <script type="text/javascript" src="../../Layout/JS/jquery.lightbox-0.5.js"></script> <center> <a class="lightbox" href="images/Beamer_Overlayarea.png"> <img class="lightbox " title="点击查看大图" src="images/Beamer_Overlayarea.png" width="180"> </a> </center> <script type="text/javascript"> $(function() {$('a.lightbox').lightBox();}); </script>
+</div> <div class="span1">
+<br/><br/><br/><br/><br/><br/><br/><br/>
+<img src="images/result.jpg"></img>
+</div> <div class="span3">
+<p>
+第1张幻灯片：<br/>
+</p>
+<link rel="stylesheet" href="../../Layout/CSS/jquery.lightbox-0.5.css" type="text/css" media="screen" /> <script type="text/javascript" src="../../Layout/JS/jquery.lightbox-0.5.js"></script> <center> <a class="lightbox" href="images/Beamer_Overlayarea_result1.png"> <img class="lightbox " title="点击查看大图" src="images/Beamer_Overlayarea_result1.png" width="270"> </a> </center> <script type="text/javascript"> $(function() {$('a.lightbox').lightBox();}); </script>
+</div> <div class="span3">
+<p>
+第2张幻灯片：<br/>
+</p>
+<link rel="stylesheet" href="../../Layout/CSS/jquery.lightbox-0.5.css" type="text/css" media="screen" /> <script type="text/javascript" src="../../Layout/JS/jquery.lightbox-0.5.js"></script> <center> <a class="lightbox" href="images/Beamer_Overlayarea_result2.png"> <img class="lightbox " title="点击查看大图" src="images/Beamer_Overlayarea_result2.png" width="400"> </a> </center> <script type="text/javascript"> $(function() {$('a.lightbox').lightBox();}); </script>
+</div></div>
 <hr/>
+</div>
 </li>
-</ul>
-<ul>
-<li id="sec-12-4-7-3">打印设置<br/>
-     打印设置为<a href="#sec-12-8">handout</a>的时候会出错，因为tex不知道打印哪个，可以设置handout属性，所有默认值都为1,可以将不想被打印出来的设置为0：<br/>
 
-
+<li>打印设置<br/><div class="outline-text-5" id="text-13-4-7-3">
+<p>
+打印设置为<a href="#sec-13-8">handout</a>的时候会出错，因为tex不知道打印哪个，可以设置handout属性，所有默认值都为1,可以将不想被打印出来的设置为0：<br/>
+</p>
+<div class="org-src-container">
 
 <pre class="src src-tex"><span style="color: #a020f0;">\begin</span>{<span style="color: #0000ff;">overprint</span>}
 <span style="color: #a020f0;">\onslide</span>&lt;1| handout:1&gt;
@@ -812,127 +881,144 @@ henvironment contentsi
 &#19981;&#20250;&#26174;&#31034;&#22312;handout&#19978;
 <span style="color: #a020f0;">\onslide</span>&lt;3| handout:0&gt;
 &#19981;&#20250;&#26174;&#31034;&#22312;handout&#19978;
-<span style="color: #a020f0;">\end</span>{<span style="color: #0000ff;">overprint</span>}     
+<span style="color: #a020f0;">\end</span>{<span style="color: #0000ff;">overprint</span>}
 </pre>
-
-</li>
-</ul>
+</div>
+</div>
+</li></ol>
 </div>
 </div>
 
+<div id="outline-container-sec-13-5" class="outline-3">
+<h3 id="sec-13-5"><span class="section-number-3">13.5</span> 创建链接</h3>
+<div class="outline-text-3" id="text-13-5">
+<p>
+创建target: <code>\hypertarget{targetname}{text-to-show}</code> 。<br/>
+创建link: =\hyperlink{targetname}{\beamergotobutton{text-to-show-on-button}}=。<br/>
+其它有用的button： \beamerreturnbutton，\beamerbutton<br/>
+</p>
+</div>
 </div>
 
-<div id="outline-container-12-5" class="outline-3">
-<h3 id="sec-12-5"><span class="section-number-3">12.5</span> 创建链接</h3>
-<div class="outline-text-3" id="text-12-5">
-
-<p>   创建target: <code>\hypertarget{targetname}{text-to-show}</code> 。<br/>
-   创建link: =\hyperlink{targetname}{\beamergotobutton{text-to-show-on-button}}=。<br/>
-   其它有用的button： \beamerreturnbutton，\beamerbutton<br/>
-</p></div>
-
+<div id="outline-container-sec-13-6" class="outline-3">
+<h3 id="sec-13-6"><span class="section-number-3">13.6</span> 整个frame的内容动态出现</h3>
+<div class="outline-text-3" id="text-13-6">
+<p>
+可以在菜单选择BeginFrame后 <code>C-l</code> 输入 <code>&lt;+-&gt;</code> 再输入标题。这样如果此frame此都是列表则列表逐一出现。<br/>
+</p>
+</div>
 </div>
 
-<div id="outline-container-12-6" class="outline-3">
-<h3 id="sec-12-6"><span class="section-number-3">12.6</span> 整个frame的内容动态出现</h3>
-<div class="outline-text-3" id="text-12-6">
-
-<p>   可以在菜单选择BeginFrame后 <code>C-l</code> 输入 <code>&lt;+-&gt;</code> 再输入标题。这样如果此frame此都是列表则列表逐一出现。<br/>
-</p></div>
-
-</div>
-
-<div id="outline-container-12-7" class="outline-3">
-<h3 id="sec-12-7"><span class="section-number-3">12.7</span> 改变Beamer的脚注</h3>
-<div class="outline-text-3" id="text-12-7">
-
-<p>   默认情况下所有幻灯片脚注中使用的标题是整个幻灯片的标题。<br/>
-</p><ol>
+<div id="outline-container-sec-13-7" class="outline-3">
+<h3 id="sec-13-7"><span class="section-number-3">13.7</span> 改变Beamer的脚注</h3>
+<div class="outline-text-3" id="text-13-7">
+<p>
+默认情况下所有幻灯片脚注中使用的标题是整个幻灯片的标题。<br/>
+</p>
+<ol class="org-ol">
 <li>实现某个section的所有幻灯片中的脚注使用自己特有的标题，操作如下：在该section的标题上insert-&gt;short title中出现想要的内容即可<br/>
 </li>
 <li>同理要修改所有幻灯片的脚注中的标题则需要为整个幻灯片的大标题插入小标题<br/>
 </li>
 </ol>
-
+</div>
 </div>
 
-</div>
-
-<div id="outline-container-12-8" class="outline-3">
-<h3 id="sec-12-8"><span class="section-number-3">12.8</span> 打印Beamer制作的幻灯片</h3>
-<div class="outline-text-3" id="text-12-8">
-
-
-</div>
-
-<div id="outline-container-12-8-1" class="outline-4">
-<h4 id="sec-12-8-1"><span class="section-number-4">12.8.1</span> 修改源码实现</h4>
-<div class="outline-text-4" id="text-12-8-1">
-
-<p>    Beamer做的幻灯片的pause之类的Overlay都是通过额外的PDF页来实现的，打印时会造成浪费，解决方法是：<br/>
-</p>
-
-
-<pre class="example">\documentclass[handout]{beamer}
-</pre>
-
+<div id="outline-container-sec-13-8" class="outline-3">
+<h3 id="sec-13-8"><span class="section-number-3">13.8</span> 打印Beamer制作的幻灯片</h3>
+<div class="outline-text-3" id="text-13-8">
+</div><div id="outline-container-sec-13-8-1" class="outline-4">
+<h4 id="sec-13-8-1"><span class="section-number-4">13.8.1</span> 修改源码实现</h4>
+<div class="outline-text-4" id="text-13-8-1">
 <p>
-    这样生成的PDF不再具有Overlay的特效，但适合打印。(前提是你有此Beamer制作幻灯片的源码)<br/>
-    lyx设置：document-&gt;setting-&gt;document class-&gt;class options-&gt;custom中添加handout<br/>
-</p></div>
-
+Beamer做的幻灯片的pause之类的Overlay都是通过额外的PDF页来实现的，打印时会造成浪费，解决方法是：<br/>
+</p>
+<pre class="example">
+\documentclass[handout]{beamer}
+</pre>
+<p>
+这样生成的PDF不再具有Overlay的特效，但适合打印。(前提是你有此Beamer制作幻灯片的源码)<br/>
+lyx设置：document-&gt;setting-&gt;document class-&gt;class options-&gt;custom中添加handout<br/>
+</p>
+</div>
 </div>
 
-<div id="outline-container-12-8-2" class="outline-4">
-<h4 id="sec-12-8-2"><span class="section-number-4">12.8.2</span> 利用pdfpages包实现</h4>
-<div class="outline-text-4" id="text-12-8-2">
-
-<p>    大部分情况下我们手上只有一份pdf版的幻灯片，没有源码，此时上面的方法就行不通了，可以利用如下方法实现：<br/>
+<div id="outline-container-sec-13-8-2" class="outline-4">
+<h4 id="sec-13-8-2"><span class="section-number-4">13.8.2</span> 利用pdfpages包实现</h4>
+<div class="outline-text-4" id="text-13-8-2">
+<p>
+大部分情况下我们手上只有一份pdf版的幻灯片，没有源码，此时上面的方法就行不通了，可以利用如下方法实现：<br/>
 </p>
-
+<div class="org-src-container">
 
 <pre class="src src-tex"><span style="color: #a020f0;">\documentclass</span>{<span style="color: #483d8b;">article</span>} <span style="color: #b22222;">%</span>
 <span style="color: #a020f0;">\usepackage</span>{<span style="color: #483d8b;">pdfpages</span>}
 <span style="color: #a020f0;">\begin</span>{<span style="color: #0000ff;">document</span>}
 <span style="color: #a020f0;">\includepdf</span>[nup=2x2,landscape,delta=5mm 5mm, scale=0.95,pages={1-18}]{trans.pdf}
-<span style="color: #a020f0;">\end</span>{<span style="color: #0000ff;">document</span>}   
+<span style="color: #a020f0;">\end</span>{<span style="color: #0000ff;">document</span>}
 </pre>
-
+</div>
 <p>
-    其中1-18指定了想要合并trans.pdf的页码范围，2x2指定了每页上个数。<br/>
-</p></div>
+其中1-18指定了想要合并trans.pdf的页码范围，2x2指定了每页上个数。<br/>
+</p>
 </div>
-
-</div>
-
-<div id="outline-container-12-9" class="outline-3">
-<h3 id="sec-12-9"><span class="section-number-3">12.9</span> lyx解决Beamer中插入代码问题</h3>
-<div class="outline-text-3" id="text-12-9">
-
-<p>   直接insert-&gt;program listing插入代码这种方法行不通。<br/>
-   目前最好的解决办法是把待插入的代码保存到一个文件中，通过 insert-&gt;file-&gt;child document来插入文件，<br/>
-</p></div>
-
-</div>
-
-<div id="outline-container-12-10" class="outline-3">
-<h3 id="sec-12-10"><span class="section-number-3">12.10</span> 生成的幻灯片默认以全屏方式打开</h3>
-<div class="outline-text-3" id="text-12-10">
-
-<p>   添加 <code>\hypersetup{pdfpagemode=FullScreen}</code><br/>
-</p></div>
-</div>
-
-</div>
-
-<div id="outline-container-13" class="outline-2">
-<h2 id="sec-13"><span class="section-number-2">13</span> 快捷键</h2>
-<div class="outline-text-2" id="text-13">
-
-<p>  参考lyx的帮助文档 <a href="./lyx_shortcuts/Shortcuts.html">LY X Keyboard Shortcuts</a><br/>
-</p></div>
 </div>
 </div>
 
+<div id="outline-container-sec-13-9" class="outline-3">
+<h3 id="sec-13-9"><span class="section-number-3">13.9</span> lyx解决Beamer中插入代码问题</h3>
+<div class="outline-text-3" id="text-13-9">
+<p>
+直接insert-&gt;program listing插入代码这种方法行不通。<br/>
+目前最好的解决办法是把待插入的代码保存到一个文件中，通过 insert-&gt;file-&gt;child document来插入文件，<br/>
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-13-10" class="outline-3">
+<h3 id="sec-13-10"><span class="section-number-3">13.10</span> 生成的幻灯片默认以全屏方式打开</h3>
+<div class="outline-text-3" id="text-13-10">
+<p>
+添加 <code>\hypersetup{pdfpagemode=FullScreen}</code><br/>
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-14" class="outline-2">
+<h2 id="sec-14"><span class="section-number-2">14</span> 管理文献</h2>
+<div class="outline-text-2" id="text-14">
+<p>
+将文献写入bib后缀文件中，格式如下：<br/>
+</p>
+<div class="org-src-container">
+
+<pre class="src src-tex">@article{bandyopadhyay2004multiobjective,
+  title={Multiobjective GAs, quantitative indices, and pattern classification},
+  author={Bandyopadhyay, S. and Pal, S.K. and Aruna, B.},
+  journal={Systems, Man, and Cybernetics, Part B: Cybernetics, IEEE Transactions on},
+  volume={34},
+  number={5},
+  pages={2088--2099},
+  year={2004},
+  publisher={IEEE}
+};
+</pre>
+</div>
+<p>
+lyx中insert-&gt;list/toc-&gt;bibtex bibliography插入文件中，之后insert-&gt;citation选择要引用的文献，之后编译即可看见只有引用过的文献存在于参考文献一节中，没有引用过的不会显示。<br/>
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-15" class="outline-2">
+<h2 id="sec-15"><span class="section-number-2">15</span> 快捷键</h2>
+<div class="outline-text-2" id="text-15">
+<p>
+参考lyx的帮助文档 <a href="./lyx_shortcuts/Shortcuts.html">LY X Keyboard Shortcuts</a><br/>
+</p>
+</div>
+</div>
+</div>
 </body>
 </html>

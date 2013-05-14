@@ -1,7 +1,8 @@
 #+OPTIONS: ^:{} _:{} num:t toc:t \n:t
-#+include: ../../template-toc.org
+#+INCLUDE: "../../template-toc.org"
 #+SETUPFILE: "../../extension.org"
 #+title:Emacs Trick
+
 * 用grep在文件中查找
   可以直接在grep buffer中修改文件。
 ** lgrep
@@ -518,3 +519,7 @@ edge
              (set (make-local-variable 'electric-pair-mode) nil)))
   #+end_src
   通过 =(local-variable-p 'electric-pair-mode)= 可以看到 =electric-pair-mode= 并非一个local变量，所以直接 =(electric-pair-mode -1)= 的话会使其它buffer也关闭此minor mode，所以要先用 =make-local-variable= 将其变成local变量。
+* 替换某个区域内的字符串
+  选中某个区域后 =replace-string= 与 =query-replace= 的区别在于前者是非询问的。
+* 安装最新版本org mode
+  通过git clone方式下载安装的必须要 =make= 否则即使路径正确加载的也是自带的。

@@ -5,15 +5,11 @@
 * Preamble
 ** article
 {{{srcbegin(200)}}}
-#+begin_src tex
-#+include "lyx-article-preamble.tex"
-#+end_src
+#+INCLUDE: "lyx-article-preamble.tex" src tex
 {{{srcend}}}
 ** beamer
    {{{srcbegin(200)}}}
-   #+begin_src tex
-#+include "lyx-beamer-preamble.tex"
-   #+end_src
+#+INCLUDE: "lyx-beamer-preamble.tex" src tex
    {{{srcend}}}
    其它可选的主题和色彩
    #+begin_src tex
@@ -67,6 +63,8 @@ Your abstract goes here...
 \newtheorem{theo}{定理}[section]
 \renewenvironment{thm}{\begin{theo}}{\end{theo}}
 #+end_src
+** 小写花写L
+   为了和数字1区分，tex提供了花写的小写L，使用 =\ell= 效果 $\ell$ 。
 * 日期
   如果不想要日期可以用 =\date{}=
 * 参考文献
@@ -152,6 +150,71 @@ int main(int argc, char *argv[])
 {{{middle(5)}}}
 {{{lightbox(images/minted.png,450)}}} 
 {{{right}}}
+* 算法排版
+  使用algorithm2e宏包。[[http://nckunoname.pixnet.net/blog/post/67368529-%25E7%2594%25A8latex%25E5%25AF%25ABalgorithm][參考]]
+  在preamble中加入
+  #+BEGIN_SRC tex
+  \usepackage[ruled,vlined,linesnumbered]{algorithm2e}
+  \renewcommand{\algorithmcfname}{算法}
+  \SetKwInput{KwIn}{输入}
+  \SetKwInput{KwOut}{输出}
+  #+END_SRC
+  #+BEGIN_SRC tex
+\begin{algorithm}
+\caption{压缩追踪}
+\KwIn{第$t$个视频帧}
+\KwOut{追踪位置$\mathbf{l}_t$和分类器参数}
+中間加入內容
+\end{algorithm}
+  #+END_SRC
+  在lyx中
+  {{{left(5)}}}
+  {{{lightbox(images/algorithm2e.png,400)}}} 
+  {{{middle(2)}}}
+  #+html:<br/><br/><br/><br/><br/>
+  #+html:<img src="images/result.jpg"></img>
+  {{{middle(5)}}}
+  #+html:<br/><br/><br/><br/>
+  {{{lightbox(images/algorithm2eresult.png,400)}}} 
+  {{{right}}}
+  --------
+  下面是參考中的例子，preamble中的选项和刚才的不同：
+  #+BEGIN_SRC tex
+  \usepackage[linesnumbered,boxed]{algorithm2e}
+  #+END_SRC
+  {{{left(5)}}}
+  {{{srcbegin(200)}}}
+  #+BEGIN_SRC tex
+\begin{algorithm}
+  \caption{identifyRowContext}
+  \KwIn{$r_i$, $Backgrd(T_i)$=${T_1,T_2,\ldots ,T_n}$ and similarity threshold $\theta_r$}
+  \KwOut{$con(r_i)$}
+  $con(r_i)= \Phi$\;
+  \For{$j=1;j \le n;j \ne i$}
+  {
+    float $maxSim=0$\;
+    $r^{maxSim}=null$\;
+    \While{not end of $T_j$}
+    {
+      compute Jaro($r_i,r_m$)($r_m\in T_j$)\;
+      \If{$(Jaro(r_i,r_m) \ge \theta_r)\wedge (Jaro(r_i,r_m)\ge r^{maxSim})$}
+      {
+        replace $r^{maxSim}$ with $r_m$\;
+      }
+    }
+    $con(r_i)=con(r_i)\cup {r^{maxSim}}$\;
+  }
+  return $con(r_i)$\;
+\end{algorithm}
+  #+END_SRC
+  {{{srcend}}}
+  {{{middle(2)}}}
+  #+html:<br/><br/><br/><br/>
+  #+html:<img src="images/result.jpg"></img>
+  {{{middle(5)}}}
+  {{{lightbox(images/algorithm2eresult2.png,400)}}} 
+  {{{right}}}
+  --------
 * 插入gif动画文件
   可以[[file:../../Linux/LinuxOS/UbuntuTrick.org::giftoavi][将gif转换成avi]] 后再用movie15宏包插入。
 * Beamer中为插入frame设置快捷键
@@ -333,5 +396,20 @@ $$\underrightarrow{\ \ result\ \ }$$
    目前最好的解决办法是把待插入的代码保存到一个文件中，通过 insert->file->child document来插入文件，
 ** 生成的幻灯片默认以全屏方式打开
    添加 =\hypersetup{pdfpagemode=FullScreen}=
+* 管理文献
+  将文献写入bib后缀文件中，格式如下：
+  #+BEGIN_SRC tex
+@article{bandyopadhyay2004multiobjective,
+  title={Multiobjective GAs, quantitative indices, and pattern classification},
+  author={Bandyopadhyay, S. and Pal, S.K. and Aruna, B.},
+  journal={Systems, Man, and Cybernetics, Part B: Cybernetics, IEEE Transactions on},
+  volume={34},
+  number={5},
+  pages={2088--2099},
+  year={2004},
+  publisher={IEEE}
+};
+  #+END_SRC
+  lyx中insert->list/toc->bibtex bibliography插入文件中，之后insert->citation选择要引用的文献，之后编译即可看见只有引用过的文献存在于参考文献一节中，没有引用过的不会显示。
 * 快捷键
   参考lyx的帮助文档 [[./lyx_shortcuts/Shortcuts.html][LY X Keyboard Shortcuts]]

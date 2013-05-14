@@ -1,18 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-               "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-CN" xml:lang="zh-CN">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
 <title>Emacs Org-Mode</title>
+<!-- 2013-05-15 三 02:20 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
-<meta name="title" content="Emacs Org-Mode"/>
 <meta name="generator" content="Org-mode"/>
-<meta name="generated" content="2013-04-29 05:00:58 中国标准时间"/>
-<meta name="author" content="visayafan"/>
-<meta name="description" content=""/>
-<meta name="keywords" content=""/>
-
-
+<meta name="author" content="Han Fan"/>
 <script type="text/javascript" src="http://orgmode.org/mathjax/MathJax.js">
 <!--/*--><![CDATA[/*><!--*/
     MathJax.Hub.Config({
@@ -56,65 +50,71 @@
 </script>
 </head>
 <body>
-
-
 <div id="content">
 <h1 class="title">Emacs Org-Mode</h1>
-
-
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#sec-1">1. org-mode example/src过大</a></li>
+<li><a href="#sec-2">2. org-mode中使用宏</a></li>
+<li><a href="#sec-3">3. org-mode 中嵌入latex公式</a></li>
+<li><a href="#sec-4">4. org-mode 中block中嵌入#+begin_example</a></li>
+<li><a href="#sec-5">5. org-mode导出HTML目录显示“目录”而非默认的Table Of Content</a></li>
+<li><a href="#sec-6">6. org-mode导出PDF目录显示“目录”而非默认的Contents</a></li>
+<li><a href="#sec-7">7. org-mode的表格中输入|</a></li>
+<li><a href="#sec-8">8. Emacs Org配置简单快捷键</a></li>
+<li><a href="#sec-9">9. org-mode 链接</a></li>
+<li><a href="#sec-10">10. org-mode 导出HTML时创建内部文件链接</a>
+<ul>
+<li><a href="#sec-10-1">10.1. 添加anchor，</a></li>
+<li><a href="#sec-10-2">10.2. store-link, insert-link</a></li>
+</ul>
+</li>
+<li><a href="#sec-11">11. org-mode 导出HTML时创建外部文件链接</a></li>
+<li><a href="#sec-12">12. org-mode M-RET插入多余的空白行</a></li>
+<li><a href="#sec-13">13. org-sync</a></li>
+<li><a href="#sec-14">14. GTD</a></li>
+<li><a href="#sec-15">15. include外部文件</a></li>
+<li><a href="#sec-16">16. 源码显示行号和进行引用</a></li>
+<li><a href="#sec-17">17. 不export出指定heading</a></li>
+<li><a href="#sec-18">18. 替换Emacs自带的手册</a></li>
+<li><a href="#sec-19">19. 块内执行代码</a></li>
+<li><a href="#sec-20">20. 行内执行代码</a></li>
+<li><a href="#sec-21">21. 强调</a></li>
+<li><a href="#sec-22">22. 行内颜色</a>
+<ul>
+<li><a href="#sec-22-1">22.1. 7.x版本</a></li>
+<li><a href="#sec-22-2">22.2. 8.x版本</a></li>
+</ul>
+</li>
+<li><a href="#sec-23">23. M-RET添加前缀</a></li>
+<li><a href="#sec-24">24. M-S-RET和C-S-RET插入TODO</a></li>
+<li><a href="#sec-25">25. narrow/widen</a></li>
+<li><a href="#sec-26">26. M-h mark-element</a></li>
+<li><a href="#sec-27">27. M-up/down</a></li>
+<li><a href="#sec-28">28. C-c *</a></li>
+</ul>
+</div>
+</div>
 <!-- <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"> </script> -->
 <link rel="stylesheet" type="text/css" href="../../Layout/CSS/bootstrap_old.css" />
 <link rel="stylesheet" type="text/css" href="../../Layout/CSS/too_many_toc.css" />
 <script src="../../Layout/JS/jquery_1.7.1.js"></script>
 <script src="../../Layout/JS/bootstrap_old.js"></script>
 
-
-
-<div id="table-of-contents">
-<h2>目录</h2>
-<div id="text-table-of-contents">
-<ul>
-<li><a href="#sec-1">1 org-mode example/src过大</a></li>
-<li><a href="#sec-2">2 org-mode中使用宏</a></li>
-<li><a href="#sec-3">3 org-mode 中嵌入latex公式</a></li>
-<li><a href="#sec-4">4 org-mode 中block中嵌入#+begin_example</a></li>
-<li><a href="#sec-5">5 org-mode导出HTML目录显示“目录”而非默认的Table Of Content</a></li>
-<li><a href="#sec-6">6 org-mode导出PDF目录显示“目录”而非默认的Contents</a></li>
-<li><a href="#sec-7">7 org-mode的表格中输入|</a></li>
-<li><a href="#sec-8">8 Emacs Org配置简单快捷键</a></li>
-<li><a href="#sec-9">9 org-mode 链接</a></li>
-<li><a href="#sec-10">10 org-mode 导出HTML时创建内部文件链接</a>
-<ul>
-<li><a href="#sec-10-1">10.1 添加anchor，</a></li>
-<li><a href="#sec-10-2">10.2 store-link, insert-link</a></li>
-</ul>
-</li>
-<li><a href="#sec-11">11 org-mode 导出HTML时创建外部文件链接</a></li>
-<li><a href="#sec-12">12 org-mode M-RET插入多余的空白行</a></li>
-<li><a href="#sec-13">13 org-sync</a></li>
-<li><a href="#sec-14">14 GTD</a></li>
-<li><a href="#sec-15">15 include外部文件</a></li>
-<li><a href="#sec-16">16 源码显示行号和进行引用</a></li>
-<li><a href="#sec-17">17 不export出指定heading</a></li>
-<li><a href="#sec-18">18 替换Emacs自带的手册</a></li>
-<li><a href="#sec-19">19 块内执行代码</a></li>
-<li><a href="#sec-20">20 行内执行代码</a></li>
-<li><a href="#sec-21">21 强调</a></li>
-<li><a href="#sec-22">22 行内颜色</a></li>
-</ul>
-</div>
-</div>
-
-<div id="outline-container-1" class="outline-2">
+<div id="outline-container-sec-1" class="outline-2">
 <h2 id="sec-1"><span class="section-number-2">1</span> org-mode example/src过大</h2>
 <div class="outline-text-2" id="text-1">
-
-<p>  当在#+begin_example #+end_example或者#+begin_src #+end_src环境中内容过多时会占用大量空间，一个解决办法是加上 <code>-t</code> 选项并配合 <code>-h height -w width</code> 选项来指定高宽，使它成为有滚动条的区域。但好像无法使用语法高亮并且此区域内容是可编辑的。<br/>
+<p>
+当在#+begin_example #+end_example或者#+begin_src #+end_src环境中内容过多时会占用大量空间，一个解决办法是加上 <code>-t</code> 选项并配合 <code>-h height -w width</code> 选项来指定高宽，使它成为有滚动条的区域。但好像无法使用语法高亮并且此区域内容是可编辑的。<br/>
 </p>
+
 <p>
   另一个解决办法是加在src或example外围加上div:<br/>
 例如：<br/>
-</p><pre class="example">
+</p>
+<pre class="example">
 #+html: &lt;div style="height:100px;overflow:auto;border-style:solid;border-width:1px"&gt;
 #+begin_src c++
 typedef int HANDS;
@@ -134,9 +134,11 @@ private:
 #+end_src  
 #+html: &lt;/div&gt;
 </pre>
-
-<p>效果如下：<br/>
+<p>
+效果如下：<br/>
+</p>
 <div style="height:100px;overflow:auto;border-style:solid;border-width:1px">
+<div class="org-src-container">
 
 <pre class="src src-c++"><span style="color: #a020f0;">typedef</span> <span style="color: #228b22;">int</span> <span style="color: #228b22;">HANDS</span>;
 <span style="color: #a020f0;">enum</span> <span style="color: #228b22;">COLOR</span> { <span style="color: #a0522d;">Red</span>, <span style="color: #a0522d;">Green</span>, <span style="color: #a0522d;">Blue</span>, <span style="color: #a0522d;">Yellow</span>, <span style="color: #a0522d;">White</span>, <span style="color: #a0522d;">Black</span>, <span style="color: #a0522d;">Brown</span> } ;
@@ -153,38 +155,35 @@ private:
      <span style="color: #228b22;">int</span> <span style="color: #a0522d;">itsAge</span>;
 };
 </pre>
-
 </div>
-  可以定制yasnippet以方便以后使用：<br/>
+</div>
+<p>
+可以定制yasnippet以方便以后使用：<br/>
 </p>
-
-
-<pre class="example"># -*- mode: snippet -*-
+<pre class="example">
+# -*- mode: snippet -*-
 # name: longsrc
 # --
-&lt;div style="height:${1:200px};overflow:auto;border-style:solid;border-width:1px"&gt;
-&lt;/div&gt;
+#+html: &lt;div style="height:${1:200px};overflow:auto;border-style:solid;border-width:1px"&gt;
+#+html: &lt;/div&gt;
 </pre>
-
+</div>
 </div>
 
-</div>
-
-<div id="outline-container-2" class="outline-2">
+<div id="outline-container-sec-2" class="outline-2">
 <h2 id="sec-2"><span class="section-number-2">2</span> org-mode中使用宏</h2>
 <div class="outline-text-2" id="text-2">
-
-<p>  在文章的开始定义宏，格式为 #+macro: macro_name macro_content_with_$1_arg1_$2_arg2_&hellip;<br/>
-  宏中\n表示换行。<br/>
-  在文章中使用宏 {{{macro_name(args)}}}，多个参数用,隔开<br/>
-  宏定义时可以嵌套，但宏调用时不应该嵌套。<br/>
-  其中org-mode内置的宏包括<br/>
+<p>
+在文章的开始定义宏，格式为 #+macro: macro_name macro_content_with_$1_arg1_$2_arg2_&#x2026;<br/>
+宏中\n表示换行。<br/>
+在文章中使用宏 ，多个参数用,隔开<br/>
+宏定义时可以嵌套，但宏调用时不应该嵌套。<br/>
+其中org-mode内置的宏包括<br/>
 </p>
-
-
-<pre class="example">Emacs Org-Mode
-visayafan
-format 其中format格式必须可以被函数 =format-time-string= 识别，常用的包括 %Y-%m-%d-%H-%M-%S 年月日时分秒
+<pre class="example">
+{{{title}}}
+{{{author}}}
+{{{date(format)}}} 其中format格式必须可以被函数 =format-time-string= 识别，常用的包括 %Y-%m-%d-%H-%M-%S 年月日时分秒
 %x 格式为： 10/29/2012 
 %X 格式为： 11:46:33 AM 
 %c 格式为： Mon 29 Oct 2012 11:46:33 AM CST 
@@ -194,54 +193,50 @@ format 其中format格式必须可以被函数 =format-time-string= 识别，常
 %r 格式为： 11:46:33 AM
 还有其它的org中的关键字
 </pre>
-
 <p>
-  利用宏可以减少冗余文本使内容更清晰，比如我在extension.org里定义了如下宏：<br/>
-</p><pre class="example">
+利用宏可以减少冗余文本使内容更清晰，比如我在extension.org里定义了如下宏：<br/>
+</p>
+<pre class="example">
 #+macro:lightbox #+html:&lt;link rel="stylesheet" href="../../Layout/CSS/jquery.lightbox-0.5.css" type="text/css" media="screen" /&gt; &lt;script type="text/javascript" src="../../Layout/JS/jquery.lightbox-0.5.js"&gt;&lt;/script&gt; &lt;center&gt; &lt;a class="lightbox" href="$1"&gt; &lt;img class="lightbox " title="点击查看大图" src="$1" width="300"&gt; &lt;/a&gt; &lt;/center&gt; &lt;script type="text/javascript"&gt; $(function() {$('a.lightbox').lightBox();}); &lt;/script&gt;
 </pre>
-
-<p>  我在欲导出HTML的Org文件比如emacs_trick.org头部写上：<br/>
-</p><pre class="example">
+<p>
+我在欲导出HTML的Org文件比如emacs_trick.org头部写上：<br/>
+</p>
+<pre class="example">
 #+SETUPFILE: "extension.org" 
 </pre>
-
-<p>  则便可以在emacs_trick.org中使用此宏: <code>{{{</code> <code>lightbox(images/image_name.jpg)</code> <code>}}}</code><br/>
-  只需要一行就搞定了。<br/>
-</p>
 <p>
-  这样我就可以把所有的宏全部写在extension.org里，然后可以重复使用：只需要SETUPFILE指定就可以使用了。<br/>
-</p></div>
+则便可以在emacs_trick.org中使用此宏: <code>{{{</code> <code>lightbox(images/image_name.jpg)</code> <code>}}}</code><br/>
+只需要一行就搞定了。<br/>
+</p>
 
+<p>
+这样我就可以把所有的宏全部写在extension.org里，然后可以重复使用：只需要SETUPFILE指定就可以使用了。<br/>
+</p>
+</div>
 </div>
 
-<div id="outline-container-3" class="outline-2">
+<div id="outline-container-sec-3" class="outline-2">
 <h2 id="sec-3"><span class="section-number-2">3</span> org-mode 中嵌入latex公式</h2>
 <div class="outline-text-2" id="text-3">
-
-
-
-
-<pre class="example">$$ \(\)表行内，$$ $$ \[ \] 表行间
+<pre class="example">
+$$ \(\)表行内，$$ $$ \[ \] 表行间
 </pre>
-
-
-<pre class="example">If $a^2=b$ and \( b=2 \), then the solution must be
+<pre class="example">
+If $a^2=b$ and \( b=2 \), then the solution must be
 either $$ a=+\sqrt{2} $$ or \[ a=-\sqrt{2} \].
 </pre>
-
 <p>
   效果如下：<br/>
 If \(a^2=b\) and \( b=2 \), then the solution must be<br/>
 either $$ a=+\sqrt{2} $$ or \[ a=-\sqrt{2} \].<br/>
-</p></div>
-
+</p>
+</div>
 </div>
 
-<div id="outline-container-4" class="outline-2">
+<div id="outline-container-sec-4" class="outline-2">
 <h2 id="sec-4"><span class="section-number-2">4</span> org-mode 中block中嵌入#+begin_example</h2>
 <div class="outline-text-2" id="text-4">
-
 <pre class="example">
 #+begin_example
 #+begin_example
@@ -249,96 +244,90 @@ either $$ a=+\sqrt{2} $$ or \[ a=-\sqrt{2} \].<br/>
 #+end_example
 #+end_example
 </pre>
-
-<p>  应该这样写<br/>
-</p><pre class="example">
+<p>
+应该这样写<br/>
+</p>
+<pre class="example">
 #+begin_src org
 #+begin_example
 这样就对了,在这种情况下可以快捷键C-c ' 来进入源码编辑模式
 #+end_example
 #+end_src
 </pre>
-
-<p>  也可以在第行前面加上:空格 来表示字面解析：<br/>
+<p>
+也可以在第行前面加上:空格 来表示字面解析：<br/>
 </p>
-
+<div class="org-src-container">
 
 <pre class="src src-org"><span style="color: #7f7f7f;">: #+begin_example</span>
 <span style="color: #7f7f7f;">: &#36825;&#26679;&#23601;&#23545;&#20102;</span>
 <span style="color: #7f7f7f;">: #+end_example</span>
 </pre>
-
-
+</div>
+</div>
 </div>
 
-</div>
-
-<div id="outline-container-5" class="outline-2">
+<div id="outline-container-sec-5" class="outline-2">
 <h2 id="sec-5"><span class="section-number-2">5</span> org-mode导出HTML目录显示“目录”而非默认的Table Of Content</h2>
 <div class="outline-text-2" id="text-5">
-
-<p>  <code>M-x customize-variable ENTER org-export-language-setup</code> 在最后ins插入新的List:<br/>
-<center>
-<img src="./images/中文目录.png"  alt="./images/中文目录.png" />  <br/>
-</center>
-  再 <code>M-x customize-variable ENTER org-export-default-language</code> 改成 zh-CN。<br/>
-  也可以使用下面语句：<br/>
+<p>
+<code>M-x customize-variable ENTER org-export-language-setup</code> 在最后ins插入新的List:<br/>
 </p>
+<center>
 
+<div class="figure">
+<p><img src="./images/中文目录.png"  alt="中文目录.png"/></p>
+</div>  <br/>
+</center>
+<p>
+再 <code>M-x customize-variable ENTER org-export-default-language</code> 改成 zh-CN。<br/>
+也可以使用下面语句：<br/>
+</p>
+<div class="org-src-container">
 
 <pre class="src src-lisp">(setq org-export-language-setup (append org-export-language-setup '((<span style="color: #8b2252;">"zh-CN"</span> <span style="color: #8b2252;">"&#20316;&#32773;"</span> <span style="color: #8b2252;">"&#26085;&#26399;"</span> <span style="color: #8b2252;">"&#30446;&#24405;"</span> <span style="color: #8b2252;">"&#33050;&#27880;"</span>))))
 (setq org-export-default-language <span style="color: #8b2252;">"zh-CN"</span>)
 </pre>
-
+</div>
+</div>
 </div>
 
-</div>
-
-<div id="outline-container-6" class="outline-2">
+<div id="outline-container-sec-6" class="outline-2">
 <h2 id="sec-6"><span class="section-number-2">6</span> org-mode导出PDF目录显示“目录”而非默认的Contents</h2>
 <div class="outline-text-2" id="text-6">
-
-<p>  在 <code>org-export-latex-classes</code> 中加上 <code>\\renewcommand\\contentsname{目录}</code><br/>
-</p></div>
-
+<p>
+在 <code>org-export-latex-classes</code> 中加上 <code>\\renewcommand\\contentsname{目录}</code><br/>
+</p>
+</div>
 </div>
 
-<div id="outline-container-7" class="outline-2">
+<div id="outline-container-sec-7" class="outline-2">
 <h2 id="sec-7"><span class="section-number-2">7</span> org-mode的表格中输入|</h2>
 <div class="outline-text-2" id="text-7">
-
-<p>  两种办法：<br/>
-</p><ol>
+<p>
+两种办法：<br/>
+</p>
+<ol class="org-ol">
 <li><code>\vert{}</code> 使用 \(\LaTeX\)<br/>
 </li>
 <li>快捷键 <code>C-c C-x \</code><br/>
 </li>
 </ol>
-
-
 </div>
-
 </div>
-
-<div id="outline-container-8" class="outline-2">
+<div id="outline-container-sec-8" class="outline-2">
 <h2 id="sec-8"><span class="section-number-2">8</span> Emacs Org配置简单快捷键</h2>
 <div class="outline-text-2" id="text-8">
-
-<p>  <code>M-x custoize-varialbe RET org-structure-template-alist</code><br/>
+<p>
+<code>M-x custoize-varialbe RET org-structure-template-alist</code><br/>
 </p>
-<p>  <br/>
-</p></div>
-
 </div>
-
-<div id="outline-container-9" class="outline-2">
+</div>
+<div id="outline-container-sec-9" class="outline-2">
 <h2 id="sec-9"><span class="section-number-2">9</span> org-mode 链接</h2>
 <div class="outline-text-2" id="text-9">
-
-
-
-
-<pre class="example">http://www.astro.uva.nl/~dominik          on the web
+<pre class="example">
+http://www.astro.uva.nl/~dominik          on the web
 doi:10.1000/182                           DOI for an electronic resource
 file:/home/dominik/images/jupiter.jpg     file, absolute path
 /home/dominik/images/jupiter.jpg          same as above
@@ -374,145 +363,182 @@ shell:ls *.org                            A shell command
 elisp:org-agenda                          Interactive Elisp command
 elisp:(find-file-other-frame "Elisp.org") Elisp form to evaluate
 </pre>
-
 <p>
-  例如下面导b同HTML结果为： <a href="mailto:visayafan@gmail.com">Send Me a mail</a><br/>
-</p><pre class="example">
+例如下面导b同HTML结果为： <a href="mailto:visayafan@gmail.com">Send Me a mail</a><br/>
+</p>
+<pre class="example">
 [[mailto:visayafan@gmail.com][Send Me a mail]]
 </pre>
-
-<p>  在下面语句上 <code>C-c C-o</code> <code>y</code> 即可查看 elisp 语句执行结果：<br/>
-</p><pre class="example">
+<p>
+在下面语句上 <code>C-c C-o</code> <code>y</code> 即可查看 elisp 语句执行结果：<br/>
+</p>
+<pre class="example">
 [[elisp:(buffer-name)]]
 </pre>
-
+</div>
 </div>
 
-</div>
-
-<div id="outline-container-10" class="outline-2">
+<div id="outline-container-sec-10" class="outline-2">
 <h2 id="sec-10"><span class="section-number-2">10</span> org-mode 导出HTML时创建内部文件链接</h2>
 <div class="outline-text-2" id="text-10">
-
-<p>  在一篇文章中建立内部链接很简单<br/>
+<p>
+在一篇文章中建立内部链接很简单<br/>
 </p>
 </div>
-
-<div id="outline-container-10-1" class="outline-3">
+<div id="outline-container-sec-10-1" class="outline-3">
 <h3 id="sec-10-1"><span class="section-number-3">10.1</span> 添加anchor，</h3>
 <div class="outline-text-3" id="text-10-1">
-
-
-
-
-<pre class="example">#&lt;&lt;anchor&gt;&gt;
+<pre class="example">
+#&lt;&lt;anchor&gt;&gt;
 </pre>
-
 <p>
-  在想要链接到上面的地主添加链接即可:<br/>
+在想要链接到上面的地主添加链接即可:<br/>
 </p>
-
-
-<pre class="example">[[anchor]]
+<pre class="example">
+[[anchor]]
 </pre>
-
+</div>
 </div>
 
-</div>
-
-<div id="outline-container-10-2" class="outline-3">
+<div id="outline-container-sec-10-2" class="outline-3">
 <h3 id="sec-10-2"><span class="section-number-3">10.2</span> store-link, insert-link</h3>
 <div class="outline-text-3" id="text-10-2">
-
-<p>   在跳转目的地 <code>org-store-link</code> 在跳转处 <code>org-insert-link</code> 。<br/>
-</p></div>
+<p>
+在跳转目的地 <code>org-store-link</code> 在跳转处 <code>org-insert-link</code> 。<br/>
+</p>
+</div>
+</div>
 </div>
 
-</div>
-
-<div id="outline-container-11" class="outline-2">
+<div id="outline-container-sec-11" class="outline-2">
 <h2 id="sec-11"><span class="section-number-2">11</span> org-mode 导出HTML时创建外部文件链接</h2>
 <div class="outline-text-2" id="text-11">
-
-<p>  可以利用 CUSTOM_ID 属性。<br/>
-
+<p>
+可以利用 CUSTOM_ID 属性。<br/>
 </p>
 <hr/>
 <p>
-  file1.org中:<br/>
-</p><pre class="example">
- * heading-x
-   :properties:
-   :CUSTOM_ID: id_name
-   :end:
+file1.org中:<br/>
+</p>
+<pre class="example">
+* heading-x
+  :properties:
+  :CUSTOM_ID: id_name
+  :end:
 </pre>
-
-
 <hr/>
 <p>
-  file2.org中：<br/>
-</p><pre class="example">
- [[file:file1.org::id_name][test_to_show]]
+file2.org中：<br/>
+</p>
+<pre class="example">
+[[file:file1.org::id_name][test_to_show]]
 </pre>
-
-
 <hr/>
 <p>
-  即可在file2.html创建指向file1.html中的指定位置链接。<br/>
-  可以使用快捷键 <code>C-c C-x p</code>。<br/>
-</p></div>
-
+即可在file2.html创建指向file1.html中的指定位置链接。<br/>
+可以使用快捷键 =C-c C-x p=。<br/>
+</p>
+</div>
 </div>
 
-<div id="outline-container-12" class="outline-2">
+<div id="outline-container-sec-12" class="outline-2">
 <h2 id="sec-12"><span class="section-number-2">12</span> org-mode M-RET插入多余的空白行</h2>
 <div class="outline-text-2" id="text-12">
-
-<p>  <a href="http://orgmode.org/worg/org-faq.html#blank-line-after-headlines-and-list-items">为什么要插入空白行</a><br/>
-  解决办法： <code>customzie-variable RET org-blank-before-new-entry</code> 将两个Choice都选为Never即可。  <br/>
-</p></div>
-
+<p>
+<a href="http://orgmode.org/worg/org-faq.html#blank-line-after-headlines-and-list-items">为什么要插入空白行</a><br/>
+解决办法： <code>customzie-variable RET org-blank-before-new-entry</code> 将两个Choice都选为Never即可。<br/>
+</p>
+</div>
 </div>
 
-<div id="outline-container-13" class="outline-2">
+<div id="outline-container-sec-13" class="outline-2">
 <h2 id="sec-13"><span class="section-number-2">13</span> org-sync</h2>
 <div class="outline-text-2" id="text-13">
-
-<p>  用Org文档来同步Bug跟踪，暂用不到。<br/>
-  <a href="http://orgmode.org/worg/org-contrib/gsoc2012/student-projects/org-sync/">官网</a>， <a href="https://www.youtube.com/watch?v=kbj6-j0teCY">视频</a> <br/>
-</p></div>
-
+<p>
+用Org文档来同步Bug跟踪，暂用不到。<br/>
+<a href="http://orgmode.org/worg/org-contrib/gsoc2012/student-projects/org-sync/">官网</a>， <a href="https://www.youtube.com/watch?v=kbj6-j0teCY">视频</a> <br/>
+</p>
+</div>
 </div>
 
-<div id="outline-container-14" class="outline-2">
+<div id="outline-container-sec-14" class="outline-2">
 <h2 id="sec-14"><span class="section-number-2">14</span> GTD</h2>
 <div class="outline-text-2" id="text-14">
-
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-<caption></caption>
-<colgroup><col class="left" /><col class="left" />
+
+
+<colgroup>
+<col class="left"/>
+
+<col class="left"/>
 </colgroup>
 <tbody>
-<tr><td class="left">C-c C-q</td><td class="left">插入标签</td></tr>
-<tr><td class="left">C-c C-c</td><td class="left">同上</td></tr>
-<tr><td class="left">C-c \</td><td class="left">查找某个TAG下的所有项目</td></tr>
-<tr><td class="left">C-c / m</td><td class="left">建立符合某个TAG的tree</td></tr>
-<tr><td class="left">C-c &gt;</td><td class="left">calendar</td></tr>
-<tr><td class="left">C-c &lt;</td><td class="left">把光标所在处的时间插入到文件中</td></tr>
-<tr><td class="left">C-c C-t</td><td class="left">todo/done</td></tr>
+<tr>
+<td class="left">C-c C-q</td>
+<td class="left">插入标签</td>
+</tr>
+
+<tr>
+<td class="left">C-c C-c</td>
+<td class="left">同上</td>
+</tr>
+
+<tr>
+<td class="left">C-c \</td>
+<td class="left">查找某个TAG下的所有项目</td>
+</tr>
+
+<tr>
+<td class="left">C-c / m</td>
+<td class="left">建立符合某个TAG的tree</td>
+</tr>
+
+<tr>
+<td class="left">C-c &gt;</td>
+<td class="left">calendar</td>
+</tr>
+
+<tr>
+<td class="left">C-c &lt;</td>
+<td class="left">把光标所在处的时间插入到文件中</td>
+</tr>
+
+<tr>
+<td class="left">C-c C-t</td>
+<td class="left">todo/done</td>
+</tr>
+
+<tr>
+<td class="left">C-c C-d</td>
+<td class="left">插入deadline</td>
+</tr>
+
+<tr>
+<td class="left">C-c / b</td>
+<td class="left">查看deadline在指定时间前的任务</td>
+</tr>
+
+<tr>
+<td class="left">C-c / a</td>
+<td class="left">查看deadline在指定时间后的任务</td>
+</tr>
+
+<tr>
+<td class="left">C-c / d</td>
+<td class="left">查看所有deadline任务</td>
+</tr>
 </tbody>
 </table>
-
+</div>
 </div>
 
-</div>
-
-<div id="outline-container-15" class="outline-2">
+<div id="outline-container-sec-15" class="outline-2">
 <h2 id="sec-15"><span class="section-number-2">15</span> include外部文件</h2>
 <div class="outline-text-2" id="text-15">
-
-<p>  <code>#+include "filename" options</code> 其中options可以是：<br/>
-</p><ol>
+<p>
+<code>#+include "filename" options</code> 其中options可以是：<br/>
+</p>
+<ol class="org-ol">
 <li>src/example/quote 如果是src的话可以指定源码语言<br/>
      <code>#+INCLUDE: "~/.emacs" src emacs-lisp</code><br/>
 </li>
@@ -521,82 +547,80 @@ elisp:(find-file-other-frame "Elisp.org") Elisp form to evaluate
 <li>:lines "n1-n2" 只敢n1-n2行（左闭右开），可以省略n1或n2表开头至n2或n1到结尾<br/>
 </li>
 </ol>
-
-<p>  <code>C-c `</code> 来访问导入的外部文件<br/>
-</p></div>
-
+<p>
+<code>C-c `</code> 来访问导入的外部文件<br/>
+</p>
+</div>
 </div>
 
-<div id="outline-container-16" class="outline-2">
+<div id="outline-container-sec-16" class="outline-2">
 <h2 id="sec-16"><span class="section-number-2">16</span> 源码显示行号和进行引用</h2>
 <div class="outline-text-2" id="text-16">
-
-<p>  用 <code>-n</code> 来指定显示行号和 <code>-r</code> 来启动引用选项。<br/>
-</p><pre class="example">
+<p>
+用 <code>-n</code> 来指定显示行号和 <code>-r</code> 来启动引用选项。<br/>
+</p>
+<pre class="example">
 #+BEGIN_SRC emacs-lisp -n -r
 (save-excursion                  (ref:sc)
    (goto-char (point-min))       (ref:jump)
 #+END_SRC
 In line [[(sc)]] we remember the current position.  [[(jump)][Line (jump)]] jumps to point-min.
 </pre>
-
-<p>  生成效果：<br/>
-</p>
-
-
-<pre class="src src-emacs-lisp"><span id="coderef-sc" class="coderef-off"><span class="linenr">1:  </span>(<span style="color: #a020f0;">save-excursion</span></span>
-<span id="coderef-jump" class="coderef-off"><span class="linenr">2:  </span>   (goto-char (point-min))</span>
-</pre>
-
 <p>
-  In line <a href="#coderef-sc" class="coderef" onmouseover="CodeHighlightOn(this, 'coderef-sc');" onmouseout="CodeHighlightOff(this, 'coderef-sc');">1</a> we remember the current position.  <a href="#coderef-jump" class="coderef" onmouseover="CodeHighlightOn(this, 'coderef-jump');" onmouseout="CodeHighlightOff(this, 'coderef-jump');">Line 2</a> jumps to point-min.<br/>
+生成效果：<br/>
+</p>
+<div class="org-src-container">
 
+<pre class="src src-emacs-lisp"><span id="coderef-sc" class="coderef-off"><span class="linenr">1: </span>(<span style="color: #a020f0;">save-excursion</span></span>
+<span id="coderef-jump" class="coderef-off"><span class="linenr">2: </span>   (goto-char (point-min))</span>
+</pre>
+</div>
+<p>
+In line <a href="#coderef-sc"class="coderef" onmouseover="CodeHighlightOn(this, 'coderef-sc');" onmouseout="CodeHighlightOff(this, 'coderef-sc');">1</a> we remember the current position.  <a href="#coderef-jump"class="coderef" onmouseover="CodeHighlightOn(this, 'coderef-jump');" onmouseout="CodeHighlightOff(this, 'coderef-jump');">Line 2</a> jumps to point-min.<br/>
 </p>
 <hr/>
 <p>
-  在源码上 C-c '会打开临时buffer以便编辑（会打开源码的对应的major mode），可以调用 <code>org-store-link</code> 来添加一个引用。<br/>
-</p></div>
-
+在源码上 C-c '会打开临时buffer以便编辑（会打开源码的对应的major mode），可以调用 <code>org-store-link</code> 来添加一个引用。<br/>
+</p>
+</div>
 </div>
 
-<div id="outline-container-17" class="outline-2">
+<div id="outline-container-sec-17" class="outline-2">
 <h2 id="sec-17"><span class="section-number-2">17</span> 不export出指定heading</h2>
 <div class="outline-text-2" id="text-17">
-
-<p>  可以为不想导出的标题添加 <code>noexport</code> tag:<br/>
-  <code>C-c C-q TAB noexport</code><br/>
-  另一种解决办法是在不想导出的部分 <code>C-c ;</code> 可以将这部分heading标记为注释<br/>
-</p></div>
-
+<p>
+可以为不想导出的标题添加 <code>noexport</code> tag:<br/>
+<code>C-c C-q TAB noexport</code><br/>
+另一种解决办法是在不想导出的部分 <code>C-c ;</code> 可以将这部分heading标记为注释<br/>
+</p>
+</div>
 </div>
 
-<div id="outline-container-18" class="outline-2">
+<div id="outline-container-sec-18" class="outline-2">
 <h2 id="sec-18"><span class="section-number-2">18</span> 替换Emacs自带的手册</h2>
 <div class="outline-text-2" id="text-18">
-
-<p>  Emacs自带的org手册总是滞后于org最新的手册，在Emacs中 <code>C-h i</code> 查看的是自带的而非当前正在使用的最新的，可以用下面的方法将自带的帮助替换掉。<br/>
-  下载org的源码后 <code>make install</code> 后会在 <code>/usr/share/info</code> 目录下生成org文件，此文件即为帮助文件。（如果不想安装也可以 <code>make doc</code> 来生成）<br/>
-  Emacs中 <code>C-h i</code> 后进入org的帮助，此时 <code>C-x C-f</code> 后显示Emacs自带的org帮助的位置，用刚才生成的org替换掉自带的即可。<br/>
-</p></div>
-
+<p>
+Emacs自带的org手册总是滞后于org最新的手册，在Emacs中 <code>C-h i</code> 查看的是自带的而非当前正在使用的最新的，可以用下面的方法将自带的帮助替换掉。<br/>
+下载org的源码后 <code>make install</code> 后会在 <code>/usr/share/info</code> 目录下生成org文件，此文件即为帮助文件。（如果不想安装也可以 <code>make doc</code> 来生成）<br/>
+Emacs中 <code>C-h i</code> 后进入org的帮助，此时 <code>C-x C-f</code> 后显示Emacs自带的org帮助的位置，用刚才生成的org替换掉自带的即可。<br/>
+</p>
+</div>
 </div>
 
-<div id="outline-container-19" class="outline-2">
+<div id="outline-container-sec-19" class="outline-2">
 <h2 id="sec-19"><span class="section-number-2">19</span> 块内执行代码</h2>
 <div class="outline-text-2" id="text-19">
-
-<p>  首先配置变量 <code>org-babel-load-languages</code><br/>
+<p>
+首先配置变量 <code>org-babel-load-languages</code><br/>
 </p>
-
-
-<pre class="example">(org-babel-do-load-languages
+<pre class="example">
+(org-babel-do-load-languages
  'org-babel-load-languages '(
    (sh . t)
    (emacs-lisp . t)))  
 (setq org-confirm-babel-evaluate nil) ;禁止每次都提示是否调用外部程序
 </pre>
-
-<ol>
+<ol class="org-ol">
 <li>:file 后跟输入文件名<br/>
 </li>
 <li>:exports后可跟4个选项code/results/both/none分别对应只显示代码/结果，代码和结果都显示，都不显示<br/>
@@ -607,7 +631,6 @@ In line [[(sc)]] we remember the current position.  [[(jump)][Line (jump)]] jump
 </li>
 </ol>
 
-
 <pre class="example">
 #+BEGIN_SRC sh :exports both :var filename=(buffer-file-name)
 wc -l $filename
@@ -615,50 +638,52 @@ ls -l
 #+END_SRC
 </pre>
 
-
 <p>
-   在块中的可执行代码上 <code>C-c C-c</code> 执行代码并显示结果； <code>C-c C-o</code> 在另一个buffer中显示结果。<br/>
-</p></div>
-
+在块中的可执行代码上 <code>C-c C-c</code> 执行代码并显示结果； <code>C-c C-o</code> 在另一个buffer中显示结果。<br/>
+</p>
+</div>
 </div>
 
-<div id="outline-container-20" class="outline-2">
+<div id="outline-container-sec-20" class="outline-2">
 <h2 id="sec-20"><span class="section-number-2">20</span> 行内执行代码</h2>
 <div class="outline-text-2" id="text-20">
-
-<p>  <code>prefix src_emacs-lisp[:exports results]{(let (value) (dotimes (n 10 value) (setq value (cons n value))))} suffix</code><br/>
-  结果如下：<br/>
-  prefix | 9 | 8 | 7 | 6 | 5 | 4 | 3 | 2 | 1 | 0 |<br/>
- suffix<br/>
-</p></div>
-
+<p>
+ <code>prefix src_emacs-lisp[:exports results]{(let (value) (dotimes (n 10 value) (setq value (cons n value))))} suffix</code><br/>
+ 结果如下：<br/>
+ prefix | 9 | 8 | 7 | 6 | 5 | 4 | 3 | 2 | 1 | 0 |<br/>
+suffix<br/>
+</p>
+</div>
 </div>
 
-<div id="outline-container-21" class="outline-2">
+<div id="outline-container-sec-21" class="outline-2">
 <h2 id="sec-21"><span class="section-number-2">21</span> 强调</h2>
 <div class="outline-text-2" id="text-21">
-
-<p>  可以用 <code>=代码=</code> 或 <code>~代码~</code> 。<br/>
-  其它：<br/>
-</p><pre class="example">
+<p>
+可以用 <code>=代码=</code> 或 <code>~代码~</code> 。<br/>
+其它：<br/>
+</p>
+<pre class="example">
 /italic/ *bold* _underline_ +strike-through+
 </pre>
-
-<p>  效果<br/>
-  <i>italic</i> <b>bold</b> <span style="text-decoration:underline;">underline</span> <del>strike-through</del><br/>
-</p></div>
-
+<p>
+效果<br/>
+<i>italic</i> <b>bold</b> <span class="underline">underline</span> <del>strike-through</del><br/>
+</p>
+</div>
 </div>
 
-<div id="outline-container-22" class="outline-2">
+<div id="outline-container-sec-22" class="outline-2">
 <h2 id="sec-22"><span class="section-number-2">22</span> 行内颜色</h2>
 <div class="outline-text-2" id="text-22">
-
-<p>  <b>注意</b> 只对7.x版本的org适用，8.x版本待解决。<br/>
-  <code>org-export-html-final-hook</code> 里的函数是对导出生成HTML的最后阶段的buffer进行操作，可以进行一些替换，例如将 <code>AAAAA</code> 替换成HTML的左TAG <code>&lt;</code> ，将 <code>BBBBB</code> 替换成右TAG <code>&gt;</code> ，这样 <code>AAAAAfont color="red"BBBBBthis is redAAAAA/fontBBBBB</code> 会被替换成 <code>&lt;font color="red"&gt;this is red&lt;/font&gt;</code> 被浏览器解析后便形成红色文本。<br/>
-  替换函数如下：<br/>
+</div><div id="outline-container-sec-22-1" class="outline-3">
+<h3 id="sec-22-1"><span class="section-number-3">22.1</span> 7.x版本</h3>
+<div class="outline-text-3" id="text-22-1">
+<p>
+<code>org-export-html-final-hook</code> 里的函数是对导出生成HTML的最后阶段的buffer进行操作，可以进行一些替换，例如将 <code>AAAAA</code> 替换成HTML的左TAG <code>&lt;</code> ，将 <code>BBBBB</code> 替换成右TAG <code>&gt;</code> ，这样 <code>AAAAAfont color="red"BBBBBthis is redAAAAA/fontBBBBB</code> 会被替换成 <code>&lt;font color="red"&gt;this is red&lt;/font&gt;</code> 被浏览器解析后便形成红色文本。<br/>
+替换函数如下：<br/>
 </p>
-
+<div class="org-src-container">
 
 <pre class="src src-lisp">(add-hook 'org-export-html-final-hook 'org-delete-!!!)
 (<span style="color: #a020f0;">defun</span> <span style="color: #0000ff;">org-delete-!!!</span> ()
@@ -668,9 +693,9 @@ ls -l
     (replace-match <span style="color: #8b2252;">"&lt;"</span>))
   (goto-char (point-min))
   (<span style="color: #a020f0;">while</span> (re-search-forward <span style="color: #8b2252;">"BBBBB"</span> nil t)
-    (replace-match <span style="color: #8b2252;">"&gt;"</span>)))  
+    (replace-match <span style="color: #8b2252;">"&gt;"</span>)))
 </pre>
-
+</div>
 
 <pre class="example">
 #+macro: clr AAAAAfont color="$1"BBBBB$2AAAAA/fontBBBBB
@@ -679,25 +704,116 @@ hello {{{clr(blue, this is blue)}}} world
 hello {{{clr(yellow, this is yellow)}}} world
 hello {{{clr(green, this is green)}}} world
 </pre>
-
-<p>  生成效果如下：<br/>
-hello <font color="red">this is red</font> world<br/>
-hello <font color="blue">this is blue</font> world<br/>
-hello <font color="yellow">this is yellow</font> world<br/>
-hello <font color="green">this is green</font> world<br/>
+<p>
+  生成效果如下：<br/>
+hello <font color="red"> this is red</font> world<br/>
+hello <font color="blue"> this is blue</font> world<br/>
+hello <font color="yellow"> this is yellow</font> world<br/>
+hello <font color="green"> this is green</font> world<br/>
   可以写一个名为color的yasnippet来方便输入：<br/>
 </p>
-
-
-<pre class="example"># -*- mode: snippet -*-
+<pre class="example">
+# -*- mode: snippet -*-
 # name: clr
 # --
-{{{clr(${1:red},${2:文本})}}}$0  
+{{{clr(${1:red},${2:文本})}}}$0
 </pre>
-
-</div>
 </div>
 </div>
 
+<div id="outline-container-sec-22-2" class="outline-3">
+<h3 id="sec-22-2"><span class="section-number-3">22.2</span> 8.x版本</h3>
+<div class="outline-text-3" id="text-22-2">
+<div class="org-src-container">
+
+<pre class="src src-lisp">(<span style="color: #a020f0;">eval-after-load</span> 'ox-html
+  '(add-to-list 'org-export-filter-final-output-functions
+             'fan/org-html-produce-inline-html))
+(<span style="color: #a020f0;">defun</span> <span style="color: #0000ff;">fan/org-html-produce-inline-html</span> (string backend info)
+  <span style="color: #8b2252;">"replace < to &lt; and > to &gt;"</span>
+  (<span style="color: #a020f0;">when</span> (and (org-export-derived-backend-p backend 'html)
+             (string-match <span style="color: #8b2252;">"!!!!!"</span> string))
+    (replace-regexp-in-string (rx  (= 5 <span style="color: #8b2252;">"!"</span>)
+                                   (group (+? anything))
+                                   (= 5 <span style="color: #8b2252;">"@"</span>))
+                              <span style="color: #8b2252;">"&lt;\\1&gt;"</span>
+                              string)))
+</pre>
+</div>
+<p>
+另外8.x较7.x更新较大,新的hooks和commands在<a href="http://orgmode.org/worg/doc.html">http://orgmode.org/worg/doc.html</a><br/>
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-23" class="outline-2">
+<h2 id="sec-23"><span class="section-number-2">23</span> M-RET添加前缀</h2>
+<div class="outline-text-2" id="text-23">
+<p>
+org8中不管位于当前行何处，M-RET用当前行的内容生成一个新的等级headline或item(当位于一个headline上执行此命令时如果在行首时新headline在当前headilne之前，其余在之后)<br/>
+(org7中只有当位于行首时才用当前行内容生成新的headline，在行尾时插入新行生成新的headline，行中间时用光标后面的内容生成新的headline)<br/>
+</p>
+<ol class="org-ol">
+<li>加上前缀C-u不管现在位置在哪都会生成新的等级headline，此headline位于当前headline下面<br/>
+</li>
+<li>加前缀C-u C-u与C-u区别在于生成的headline位置为同级headline最后一个<br/>
+</li>
+</ol>
+</div>
+</div>
+
+<div id="outline-container-sec-24" class="outline-2">
+<h2 id="sec-24"><span class="section-number-2">24</span> M-S-RET和C-S-RET插入TODO</h2>
+<div class="outline-text-2" id="text-24">
+<p>
+区别在于前者把当前行作为新TODO item，后者不管光标在哪插入同级的headline。<br/>
+两个都可以添加C-u和C-u C-u前缀.<br/>
+C-u C-u M-S-RET好像和C-u C-u C-S-RET一样都是生成同级最后headline。<br/>
+加C-u好像没作用。<br/>
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-25" class="outline-2">
+<h2 id="sec-25"><span class="section-number-2">25</span> narrow/widen</h2>
+<div class="outline-text-2" id="text-25">
+<p>
+类似 <code>C-x n n</code> ， <code>C-x n s</code> 只显示一个子树， <code>C-x n b</code> 只显示当前块，都是 <code>C-x n w</code> 来恢复。<br/>
+此功能有利于精简当前buffer内容使注意力更加集中。<br/>
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-26" class="outline-2">
+<h2 id="sec-26"><span class="section-number-2">26</span> M-h mark-element</h2>
+<div class="outline-text-2" id="text-26">
+<p>
+当前在一个二级headline上，按下 <code>M-h</code> 则会mar中整个二级树，再按 <code>M-h</code> mark后来的二级树……<br/>
+同理在一个段落上M-h会不段地mark段落。<br/>
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-27" class="outline-2">
+<h2 id="sec-27"><span class="section-number-2">27</span> M-up/down</h2>
+<div class="outline-text-2" id="text-27">
+<p>
+<code>org-metaup</code> 根据环境不同调用 <code>org-move-subtree-up</code> or <code>org-table-move-row</code> or <code>org-move-item-up</code> .<br/>
+原来的M-S-up基于被M-up替换了，况且Ubuntu12.04中M-S-up被用于散开所有窗口。<br/>
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-28" class="outline-2">
+<h2 id="sec-28"><span class="section-number-2">28</span> C-c *</h2>
+<div class="outline-text-2" id="text-28">
+<p>
+将item或普通文本变成headline<br/>
+将headline变成普通文本<br/>
+</p>
+</div>
+</div>
+</div>
 </body>
 </html>

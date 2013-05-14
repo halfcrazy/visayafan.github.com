@@ -10,9 +10,7 @@
 * 配置
   将下面配置保存到 ~/.gnus.el中：
 {{{srcbegin(200)}}}
-#+begin_src lisp
-#+include "~/.emacs.d/gnus/.gnus.el"
-#+end_src
+#+INCLUDE: "~/.emacs.d/gnus/.gnus.el" src emacs-lisp
 {{{srcend}}}
 
   通过gnus-select-method和gnus-secondary-select-method变量设置了几个新闻组地址，连接失败的可以把它们删掉（我这儿都连上了）。
@@ -62,7 +60,7 @@
   | *Mark*                      | *含义*                                                                                             |
   |-----------------------------+----------------------------------------------------------------------------------------------------|
   | R                           | 读过一个帖子后默认会加上该标记，下次再进入的时候此帖子不会再显示，这些R标记的帖子都是真正读过的    |
-  | r                           | 用命令d即可添加一个r标记，下次不显示此帖，可能因为不喜欢没有读，想当于delete删除这个帖子           |
+  | r                           | 用命令 =d= 即可添加一个r标记，下次不显示此帖，可能因为不喜欢没有读，想当于delete删除这个帖子       |
   | O                           | 表明这个是old老帖，默认Gnus不会显示老帖的，除非使用命令/ o强制显示                                 |
   |-----------------------------+----------------------------------------------------------------------------------------------------|
   | ！                          | ticked 表示此帖很重要，你想每次进入新闻组的时候都显示它                                            |
@@ -249,12 +247,12 @@ From: C
     这对网络很差或是网络按时计费的情况会很有会。
     agent是个big cache, headers如果本地有会从本地读取，Gnus只下载一次headers但不会缓存articles，原因是太大（除非是[[cache][自己标记下载]]的），可以通过设置 gnus-agent-cache 为 t 从而既缓存headers又缓存 articles。
 *** 具体使用
-#<<agentize>>
+<<agentize>>
     * 要使用agent首先要把一个server agentized: 进入server buffer，在一个服务器名称前面 =J a= 即可，此时会在该服务器名称后面看到 agent 。
-    * 之后进入group buffer，可以选择查看帖子，也可以选择将这个group的帖子全部下载下来（也可以选择性下载 [[catetory][agent categories]]）, 在 agent菜单下。
-#<<cache>>
-       也可以下载某个帖子，先用 =#= 标记然后 =J s= 下载= *或* 用 =%= 标记（快捷键为 =@= ）然后 =J u= 下载。
-#<<category>>
+    * 之后进入group buffer，可以选择查看帖子，也可以选择将这个group的帖子全部下载下来（也可以选择性下载 [[category][agent categories]]）, 在 agent菜单下。
+<<cache>>
+      也可以下载某个帖子，先用 =#= 标记然后 =J s= 下载 *或* 用 =%= 标记（快捷键为 =@= ）然后 =J u= 下载。
+<<category>>
     * category构成包括：名字，几个组，条件。
       所有组都在默认default分类中，此分类条件为short(只下载行数少于100行的article)。
       可以自已新建组： =J C= 进入category buffer，菜单 categories下可以选择新建分类，为分类添加组，改变其条件。
@@ -273,9 +271,9 @@ From: C
    [[http://www.gnu.org/software/emacs/manual/html_node/gnus/Group-Line-Specification.html][参考手册]]
    默认是 =%M%S%5y:%B%(%g%)\n= 可以通过修改 =gnus-group-line-format= 变量来修改：
 #+begin_src lisp
-(setq gnus-group-line-format "%M%S%p%P%5y/%5t:%B%(%g%)")
+(setq gnus-group-line-format "%P%M%S%p%P%5y-|--%B%(%G%)
+")                                      ;此处换行不可移动到上行中
 #+end_src
-   添加了 /%5t 显示该新闻组总共多少articles。
 ** Group Buffer里新闻组进行分类
    分类是按topic进行分类的，先用 =t= 切换到topic视图，然后将光标放在Gnus上 =T n= 新建一个topic, =T m= 将光标所在处的新闻组移动到指定的topic里，可以通过 =T= =C-h= 查看其它命令。
 ** Group Buffer里对新闻组位置排序
@@ -367,3 +365,10 @@ From: C
    这样便用TAB键代替了上面两个键。
    使用byte-compile-file重新编译文件以加快加载速度。（Linux下需要root用户权限，可以用root权限打开emacs进行编译或用参考[[./Emacs.html#sudo][sudo]]）
    (自己写的第一个elisp函数，感觉不是很好又想不到其它好办法，如果今后有高手想到更好的办法记得一定要告诉我)
+** gnus-no-server
+   启动gnus时不进行与远程服务器的通信（适用于快速启动或明知远程服务器down了的情况）
+** gnus-large-newsgroup
+   默认值是200,当某个组未读帖子数目大于200时会提示用户输入取回帖子数。
+   如果用户输入一个负数-n，则n个旧帖子会被取回；如果是正数则最近的n个帖子被取回。
+** gnus-newsgroup-maximum-articles
+   默认值是nil表明gnus不会忽略旧帖子，可以自定义为值n，表明只能取回最近的n个帖子（有可能造成不能读取旧帖子的情况）

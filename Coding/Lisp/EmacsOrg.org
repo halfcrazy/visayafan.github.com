@@ -157,11 +157,10 @@ either $$ a=+\sqrt{2} $$ or \[ a=-\sqrt{2} \].
 : #+end_src
   也可以在第行前面加上:空格 来表示字面解析：
 #+begin_src org
-  ,: #+begin_example
-  ,: 这样就对了
-  ,: #+end_example
+: #+begin_example
+: 这样就对了
+: #+end_example
 #+end_src
-
 * org-mode导出HTML目录显示“目录”而非默认的Table Of Content
   =M-x customize-variable ENTER org-export-language-setup= 在最后ins插入新的List:
 #+html:<center>
@@ -228,6 +227,7 @@ either $$ a=+\sqrt{2} $$ or \[ a=-\sqrt{2} \].
 * org-mode 导出HTML时创建内部文件链接
   在一篇文章中建立内部链接很简单
 ** 添加anchor，
+*** 7.x
 #+begin_example
 #<<anchor>>
 #+end_example
@@ -235,6 +235,10 @@ either $$ a=+\sqrt{2} $$ or \[ a=-\sqrt{2} \].
 #+begin_example
 [[anchor]]
 #+end_example  
+*** 8.x
+#+BEGIN_EXAMPLE
+<<anchor>>
+#+END_EXAMPLE    
 ** store-link, insert-link
    在跳转目的地 =org-store-link= 在跳转处 =org-insert-link= 。
 * org-mode 导出HTML时创建外部文件链接
@@ -265,6 +269,10 @@ either $$ a=+\sqrt{2} $$ or \[ a=-\sqrt{2} \].
 | C-c >   | calendar                       |
 | C-c <   | 把光标所在处的时间插入到文件中 |
 | C-c C-t | todo/done                      |
+| C-c C-d | 插入deadline                   |
+| C-c / b | 查看deadline在指定时间前的任务 |
+| C-c / a | 查看deadline在指定时间后的任务 |
+| C-c / d | 查看所有deadline任务                 |
 * include外部文件
   =#+include "filename" options= 其中options可以是：
   1. src/example/quote 如果是src的话可以指定源码语言
@@ -326,7 +334,7 @@ either $$ a=+\sqrt{2} $$ or \[ a=-\sqrt{2} \].
   效果
   /italic/ *bold* _underline_ +strike-through+
 * 行内颜色
-  *注意* 只对7.x版本的org适用，8.x版本待解决。
+** 7.x版本
   =org-export-html-final-hook= 里的函数是对导出生成HTML的最后阶段的buffer进行操作，可以进行一些替换，例如将 =AAAAA= 替换成HTML的左TAG =<= ，将 =BBBBB= 替换成右TAG =>= ，这样 ~AAAAAfont color="red"BBBBBthis is redAAAAA/fontBBBBB~ 会被替换成 ~<font color="red">this is red</font>~ 被浏览器解析后便形成红色文本。
   替换函数如下：
   #+begin_src lisp
@@ -358,3 +366,41 @@ hello {{{color(green, this is green)}}} world
 # --
 {{{clr(${1:red},${2:文本})}}}$0  
   #+end_example
+** 8.x版本
+   #+begin_src lisp
+(eval-after-load 'ox-html
+  '(add-to-list 'org-export-filter-final-output-functions
+             'fan/org-html-produce-inline-html))
+(defun fan/org-html-produce-inline-html (string backend info)
+  "replace !!!!! to < and @@@@@ to >"
+  (when (and (org-export-derived-backend-p backend 'html)
+             (string-match "!!!!!" string))
+    (replace-regexp-in-string (rx  (= 5 "!")
+                                   (group (+? anything))
+                                   (= 5 "@"))
+                              "<\\1>"
+                              string)))
+   #+end_src
+   另外8.x较7.x更新较大,新的hooks和commands在http://orgmode.org/worg/doc.html
+* M-RET添加前缀
+  org8中不管位于当前行何处，M-RET用当前行的内容生成一个新的等级headline或item(当位于一个headline上执行此命令时如果在行首时新headline在当前headilne之前，其余在之后)
+  (org7中只有当位于行首时才用当前行内容生成新的headline，在行尾时插入新行生成新的headline，行中间时用光标后面的内容生成新的headline)
+  1. 加上前缀C-u不管现在位置在哪都会生成新的等级headline，此headline位于当前headline下面
+  2. 加前缀C-u C-u与C-u区别在于生成的headline位置为同级headline最后一个
+* M-S-RET和C-S-RET插入TODO
+  区别在于前者把当前行作为新TODO item，后者不管光标在哪插入同级的headline。
+  两个都可以添加C-u和C-u C-u前缀.
+  C-u C-u M-S-RET好像和C-u C-u C-S-RET一样都是生成同级最后headline。
+  加C-u好像没作用。
+* narrow/widen
+  类似 =C-x n n= ， =C-x n s= 只显示一个子树， =C-x n b= 只显示当前块，都是 =C-x n w= 来恢复。
+  此功能有利于精简当前buffer内容使注意力更加集中。
+* M-h mark-element
+  当前在一个二级headline上，按下 =M-h= 则会mar中整个二级树，再按 =M-h= mark后来的二级树……
+  同理在一个段落上M-h会不段地mark段落。
+* M-up/down
+  =org-metaup= 根据环境不同调用 =org-move-subtree-up= or =org-table-move-row= or =org-move-item-up= .
+  原来的M-S-up基于被M-up替换了，况且Ubuntu12.04中M-S-up被用于散开所有窗口。
+* C-c *
+  将item或普通文本变成headline
+  将headline变成普通文本

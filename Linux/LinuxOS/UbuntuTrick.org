@@ -44,4 +44,14 @@
   1. 安装poppler-data: =sudo apt-get install poppler-data=
   2. =rm /etc/fonts/conf.d/49-sansserif.conf=
 * 在线man帮助
-  http://manpages.ubuntu.com/
+  http://manpages.ubuntu.com/u
+* Alt+`在当前应用中切换
+  Alt+Tab切换时Ubuntu会把相同的应用用一个图标表示（例如当前用evince打开了2个pdf文件）
+  可以用 =Alt+`= 在当前应用的不同窗口中切换
+* Alt+Tab禁止合并相同程序
+  [[http://askubuntu.com/questions/68151/how-do-i-revert-alt-tab-behavior-to-switch-between-windows-on-the-current-worksp][参考]]
+  安装ccsm =sudo apt-get install compizconfig-settings-manager= 启动命令为ccsm.
+  CompizConfig Settings Manager ▸ Desktop ▸ Ubuntu Unity Plugin ▸ Switcher ▸ Key to start the switcher ▸ Enabled and Key to start the switcher in reverse ▸ Enabled
+  CompizConfig Settings Manager ▸ Window Management ▸ Static Application Switcher ▸ Enable Static Application Switcher
+  缺点就是把图标换成了应用程序的界面，当打开很多应用的时候就显得很不合适（这时可以用 Alt+w）。
+* Alt+中键可以改变窗口大小

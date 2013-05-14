@@ -1,116 +1,100 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-               "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-CN" xml:lang="zh-CN">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
 <title>Ubuntu Trick</title>
+<!-- 2013-05-15 三 02:20 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
-<meta name="title" content="Ubuntu Trick"/>
 <meta name="generator" content="Org-mode"/>
-<meta name="generated" content="2013-04-25 20:32:30 CST"/>
-<meta name="author" content="visayafan"/>
-<meta name="description" content=""/>
-<meta name="keywords" content=""/>
-
-
-
+<meta name="author" content="Han Fan"/>
 </head>
 <body>
-
-
 <div id="content">
 <h1 class="title">Ubuntu Trick</h1>
-
-
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#sec-1">1. 备份源</a></li>
+<li><a href="#sec-2">2. 备份包</a></li>
+<li><a href="#sec-3">3. 命令行批量安装字体</a></li>
+<li><a href="#sec-4">4. 切换键盘布局</a></li>
+<li><a href="#giftoavi">5. 将gif转换成avi</a></li>
+<li><a href="#sec-6">6. 解决evince中文乱码</a></li>
+<li><a href="#sec-7">7. 在线man帮助</a></li>
+<li><a href="#sec-8">8. Alt+`在当前应用中切换</a></li>
+<li><a href="#sec-9">9. Alt+Tab禁止合并相同程序</a></li>
+<li><a href="#sec-10">10. Alt+中键可以改变窗口大小</a></li>
+</ul>
+</div>
+</div>
 <!-- <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"> </script> -->
 <link rel="stylesheet" type="text/css" href="../../Layout/CSS/bootstrap_old.css" />
 <link rel="stylesheet" type="text/css" href="../../Layout/CSS/too_many_toc.css" />
 <script src="../../Layout/JS/jquery_1.7.1.js"></script>
 <script src="../../Layout/JS/bootstrap_old.js"></script>
-
-
-<div id="table-of-contents">
-<h2>目录</h2>
-<div id="text-table-of-contents">
-<ul>
-<li><a href="#sec-1">1 备份源</a></li>
-<li><a href="#sec-2">2 备份包</a></li>
-<li><a href="#sec-3">3 命令行批量安装字体</a></li>
-<li><a href="#sec-4">4 切换键盘布局</a></li>
-<li><a href="#giftoavi">5 将gif转换成avi</a></li>
-<li><a href="#sec-6">6 解决evince中文乱码</a></li>
-</ul>
-</div>
-</div>
-
-<div id="outline-container-1" class="outline-2">
+<div id="outline-container-sec-1" class="outline-2">
 <h2 id="sec-1"><span class="section-number-2">1</span> 备份源</h2>
 <div class="outline-text-2" id="text-1">
-
-<p>  通过命令 <code>add-apt-repository</code> 添加的源都保存在 <code>/etc/apt/source.list.d/</code> 中的list结尾的文件中，可以将它们备份起来然后在新系统上恢复从而节省时间。<br/>
-  <code>cat /etc/apt/sources.list /etc/apt/sources.list.d/*.list &gt; ~/sources.list</code><br/>
-</p></div>
-
+<p>
+通过命令 <code>add-apt-repository</code> 添加的源都保存在 <code>/etc/apt/source.list.d/</code> 中的list结尾的文件中，可以将它们备份起来然后在新系统上恢复从而节省时间。<br/>
+<code>cat /etc/apt/sources.list /etc/apt/sources.list.d/*.list &gt; ~/sources.list</code><br/>
+</p>
+</div>
 </div>
 
-<div id="outline-container-2" class="outline-2">
+<div id="outline-container-sec-2" class="outline-2">
 <h2 id="sec-2"><span class="section-number-2">2</span> 备份包</h2>
 <div class="outline-text-2" id="text-2">
-
-<p>  将当前系统安装包保存到文件中 <code>sudo dpkg --get-selections &gt; list.txt</code> ,在新系统上可以用 <code>sudo dpkg --set-selections &lt; list.txt</code> 来安装。<br/>
-</p></div>
-
+<p>
+将当前系统安装包保存到文件中 <code>sudo dpkg &#x2013;get-selections &gt; list.txt</code> ,在新系统上可以用 <code>sudo dpkg &#x2013;set-selections &lt; list.txt</code> 来安装。<br/>
+</p>
+</div>
 </div>
 
-<div id="outline-container-3" class="outline-2">
+<div id="outline-container-sec-3" class="outline-2">
 <h2 id="sec-3"><span class="section-number-2">3</span> 命令行批量安装字体</h2>
 <div class="outline-text-2" id="text-3">
-
-<p>  将当前目录下所有字体拷贝到 /usr/share/font/myfont 中.<br/>
-</p>
-
-
-<pre class="example">find . -name "*.ttf" -exec sudo cp {} /usr/share/fonts/myfont/ \;
-</pre>
-
 <p>
-  然后执行 <code>sudo mkfontscale &amp;&amp; sudo mkfontdir &amp;&amp; sudo fc-cache -fv</code> 。<br/>
-  这样字体便安装好了，可以通过 <code>fc-list|grep font-name</code> 来验证。<br/>
-</p></div>
-
+将当前目录下所有字体拷贝到 /usr/share/font/myfont 中.<br/>
+</p>
+<pre class="example">
+find . -name "*.ttf" -exec sudo cp {} /usr/share/fonts/myfont/ \;
+</pre>
+<p>
+然后执行 <code>sudo mkfontscale &amp;&amp; sudo mkfontdir &amp;&amp; sudo fc-cache -fv</code> 。<br/>
+这样字体便安装好了，可以通过 <code>fc-list|grep font-name</code> 来验证。<br/>
+</p>
+</div>
 </div>
 
-<div id="outline-container-4" class="outline-2">
+<div id="outline-container-sec-4" class="outline-2">
 <h2 id="sec-4"><span class="section-number-2">4</span> 切换键盘布局</h2>
 <div class="outline-text-2" id="text-4">
-
-<p>  System-Preferences-Keyboard Layouts 新添加一个layout<br/>
-  设置切换layout的快捷键：Options-Keys <br/>
-</p></div>
-
+<p>
+System-Preferences-Keyboard Layouts 新添加一个layout<br/>
+设置切换layout的快捷键：Options-Keys<br/>
+</p>
+</div>
 </div>
 
 <div id="outline-container-giftoavi" class="outline-2">
-<h2 id="giftoavi"><a name="sec-5" id="sec-5"></a><span class="section-number-2">5</span> 将gif转换成avi</h2>
+<h2 id="giftoavi"><a id="sec-5" name="sec-5"></a><span class="section-number-2">5</span> 将gif转换成avi</h2>
 <div class="outline-text-2" id="text-giftoavi">
-
-<p>  首先安装imagemagick，之后<br/>
-</p>
-
-
-<pre class="example">convert logo.gif logo%02d.jpg   
-</pre>
-
 <p>
-  生成好多jpg文件，其中%02d和C语言中意思相同，表logo后跟两位数，如果gif的帧数超过两位数则应该考虑log%03d.jpg.<br/>
-  之后安装ffmpeg<br/>
+首先安装imagemagick，之后<br/>
 </p>
-
-
-<pre class="example">ffmpeg -r 25 -i logo%02d.jpg -y -an new.avi
+<pre class="example">
+convert logo.gif logo%02d.jpg
 </pre>
-
-<ol>
+<p>
+生成好多jpg文件，其中%02d和C语言中意思相同，表logo后跟两位数，如果gif的帧数超过两位数则应该考虑log%03d.jpg.<br/>
+之后安装ffmpeg<br/>
+</p>
+<pre class="example">
+ffmpeg -r 25 -i logo%02d.jpg -y -an new.avi
+</pre>
+<ol class="org-ol">
 <li>-r表帧速率，默认是25.值越小生成avi时间越长（播放速度越慢）。<br/>
 </li>
 <li>-i表输入文件，同理logo%02d.jpg 表logo后跟2位数再后跟.jpg<br/>
@@ -121,35 +105,65 @@
 </li>
 </ol>
 
-
 <p>
-  另外<br/>
+另外<br/>
 </p>
-
-
-<pre class="example">convert -strip test.gif test.jpg  
+<pre class="example">
+convert -strip test.gif test.jpg
 </pre>
-
 <p>
-  可以将gif每帧生成一个jpg文件。<br/>
-</p></div>
-
+可以将gif每帧生成一个jpg文件。<br/>
+</p>
+</div>
 </div>
 
-<div id="outline-container-6" class="outline-2">
+<div id="outline-container-sec-6" class="outline-2">
 <h2 id="sec-6"><span class="section-number-2">6</span> 解决evince中文乱码</h2>
 <div class="outline-text-2" id="text-6">
-
-<ol>
+<ol class="org-ol">
 <li>安装poppler-data: <code>sudo apt-get install poppler-data</code><br/>
 </li>
 <li><code>rm /etc/fonts/conf.d/49-sansserif.conf</code><br/>
 </li>
 </ol>
-
-</div>
 </div>
 </div>
 
+<div id="outline-container-sec-7" class="outline-2">
+<h2 id="sec-7"><span class="section-number-2">7</span> 在线man帮助</h2>
+<div class="outline-text-2" id="text-7">
+<p>
+<a href="http://manpages.ubuntu.com/u">http://manpages.ubuntu.com/u</a><br/>
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-8" class="outline-2">
+<h2 id="sec-8"><span class="section-number-2">8</span> Alt+`在当前应用中切换</h2>
+<div class="outline-text-2" id="text-8">
+<p>
+Alt+Tab切换时Ubuntu会把相同的应用用一个图标表示（例如当前用evince打开了2个pdf文件）<br/>
+可以用 <code>Alt+`</code> 在当前应用的不同窗口中切换<br/>
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-9" class="outline-2">
+<h2 id="sec-9"><span class="section-number-2">9</span> Alt+Tab禁止合并相同程序</h2>
+<div class="outline-text-2" id="text-9">
+<p>
+<a href="http://askubuntu.com/questions/68151/how-do-i-revert-alt-tab-behavior-to-switch-between-windows-on-the-current-worksp">参考</a><br/>
+安装ccsm <code>sudo apt-get install compizconfig-settings-manager</code> 启动命令为ccsm.<br/>
+CompizConfig Settings Manager ▸ Desktop ▸ Ubuntu Unity Plugin ▸ Switcher ▸ Key to start the switcher ▸ Enabled and Key to start the switcher in reverse ▸ Enabled<br/>
+CompizConfig Settings Manager ▸ Window Management ▸ Static Application Switcher ▸ Enable Static Application Switcher<br/>
+缺点就是把图标换成了应用程序的界面，当打开很多应用的时候就显得很不合适（这时可以用 Alt+w）。<br/>
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-10" class="outline-2">
+<h2 id="sec-10"><span class="section-number-2">10</span> Alt+中键可以改变窗口大小</h2>
+</div>
+</div>
 </body>
 </html>

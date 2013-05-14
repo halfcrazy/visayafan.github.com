@@ -54,11 +54,6 @@ Today, I snuck out to go see my girlfriend. When I got to her house, I left my b
   dogmatic 教条的，武断的，傲慢专断的－>dogmatist教条主义者
 * I don't know you from Adam.
   我不认识你。
-#+BEGIN_HTML
-<script src="../../Layout/JS/disqus-comment.js"></script>
-<div id="disqus_thread">
-</div>
-#+END_HTML
 * mellow
   mellow 成熟的/圆润的/柔和的 | 使成熟
 #+begin_example

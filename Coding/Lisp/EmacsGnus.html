@@ -1,118 +1,112 @@
-<?xml version="1.0" encoding="gb18030"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-               "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-CN" xml:lang="zh-CN">
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
 <title>Emacs Gnus</title>
-<meta http-equiv="Content-Type" content="text/html;charset=gb18030"/>
-<meta name="title" content="Emacs Gnus"/>
+<!-- 2013-05-15 ä¸‰ 02:41 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
 <meta name="generator" content="Org-mode"/>
-<meta name="generated" content="2013-01-01 22:44:36 CST"/>
 <meta name="author" content="visayafan"/>
-<meta name="description" content=""/>
-<meta name="keywords" content=""/>
-
-
-
 </head>
 <body>
-
-
 <div id="content">
 <h1 class="title">Emacs Gnus</h1>
-
-
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#sec-1">1. é…ç½®</a></li>
+<li><a href="#sec-2">2. ä½¿ç”¨</a></li>
+<li><a href="#sec-3">3. å¿«æ·é”®</a></li>
+<li><a href="#sec-4">4. å†é…ç½®</a>
+<ul>
+<li><a href="#sec-4-1">4.1. èµ·åŠ¨æ—¶å³æŠ˜å æ‰€æœ‰thread</a></li>
+<li><a href="#sec-4-2">4.2. èµ·åŠ¨æ—¶å³éšè—æ‰€æœ‰ç­¾å</a></li>
+<li><a href="#sec-4-3">4.3. ç­¾å</a></li>
+<li><a href="#sec-4-4">4.4. ç¿»é¡µ</a></li>
+<li><a href="#sec-4-5">4.5. ç¼“å­˜</a></li>
+<li><a href="#sec-4-6">4.6. ä¿å­˜åˆ°æœ¬åœ°</a></li>
+</ul>
+</li>
+<li><a href="#sec-5">5. è§£å†³è¯»å–æ…¢çš„é—®é¢˜</a></li>
+<li><a href="#sec-6">6. ä½¿ç”¨ç»éªŒ</a>
+<ul>
+<li><a href="#sec-6-1">6.1. ä¸ç”¨é‡å¯æ·»åŠ æ–°çš„æ–°é—»ç»„æœåŠ¡å™¨</a></li>
+<li><a href="#sec-6-2">6.2. æŸ¥çœ‹æ•´ä¸ªthread</a></li>
+<li><a href="#sec-6-3">6.3. è‡ªåŠ¨å–å›žæ•´ä¸ªthread</a></li>
+<li><a href="#sec-6-4">6.4. æŸ¥çœ‹æ‰€æœ‰å¤´ä¿¡æ¯</a></li>
+<li><a href="#sec-6-5">6.5. è‡ªå®šä¹‰ç»„</a></li>
+<li><a href="#sec-6-6">6.6. ä½¿ç”¨agentæ¥ä¸‹è½½å¸–å­</a>
+<ul>
+<li><a href="#sec-6-6-1">6.6.1. agentå·¥ä½œæµç¨‹ï¼š</a></li>
+<li><a href="#sec-6-6-2">6.6.2. å…·ä½“ä½¿ç”¨</a></li>
+<li><a href="#sec-6-6-3">6.6.3. Gnus auto-save file exists. Do you want to read it?</a></li>
+</ul>
+</li>
+<li><a href="#sec-6-7">6.7. è‡ªå®šä¹‰group bufferé‡Œæ ¼å¼</a></li>
+<li><a href="#sec-6-8">6.8. Group Bufferé‡Œæ–°é—»ç»„è¿›è¡Œåˆ†ç±»</a></li>
+<li><a href="#sec-6-9">6.9. Group Bufferé‡Œå¯¹æ–°é—»ç»„ä½ç½®æŽ’åº</a></li>
+<li><a href="#sec-6-10">6.10. summary bufferé‡Œè¿”å›žä¸Šæ¬¡é˜…è¯»çš„å¸–å­</a></li>
+<li><a href="#sec-6-11">6.11. summary bufferé‡Œ <code>/ N</code> å–å›žæ–°å¸–å­</a></li>
+<li><a href="#sec-6-12">6.12. article ç¦æ­¢è‡ªåŠ¨æŠ˜è¡Œ</a></li>
+<li><a href="#sec-6-13">6.13. åªåˆ·æ–°å…‰æ ‡æ‰€åœ¨å¤„ç»„</a></li>
+<li><a href="#sec-6-14">6.14. é‡æ–°å¯åŠ¨Gnus</a></li>
+<li><a href="#sec-6-15">6.15. gnus parameters</a>
+<ul>
+<li><a href="#sec-6-15-1">6.15.1. displayæŽ§åˆ¶è¿›å…¥summaryæ—¶å¸–å­æ˜¾ç¤ºæ–¹å¼</a></li>
+<li><a href="#sec-6-15-2">6.15.2. posing-style è®¾ç½®å›žå¸–æ˜¾ç¤º</a></li>
+</ul>
+</li>
+<li><a href="#sec-6-16">6.16. å¿«é€Ÿæ‹·è´URL</a></li>
+<li><a href="#sec-6-17">6.17. ä»€ä¹ˆå«ä¸€ä¸ªthread</a></li>
+<li><a href="#sec-6-18">6.18. Article Washing</a>
+<ul>
+<li><a href="#sec-6-18-1">6.18.1. åŽ»æŽ‰Articleä¸­çš„ç©ºç™½è¡Œ</a></li>
+<li><a href="#sec-6-18-2">6.18.2. ä¸è¦æŠ˜è¡Œ</a></li>
+</ul>
+</li>
+<li><a href="#sec-6-19">6.19. æ•´åˆC-M-hå’ŒC-M-s</a></li>
+<li><a href="#sec-6-20">6.20. gnus-no-server</a></li>
+<li><a href="#sec-6-21">6.21. gnus-large-newsgroup</a></li>
+<li><a href="#sec-6-22">6.22. gnus-newsgroup-maximum-articles</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
 <!-- <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"> </script> -->
 <link rel="stylesheet" type="text/css" href="../../Layout/CSS/bootstrap_old.css" />
 <link rel="stylesheet" type="text/css" href="../../Layout/CSS/too_many_toc.css" />
 <script src="../../Layout/JS/jquery_1.7.1.js"></script>
 <script src="../../Layout/JS/bootstrap_old.js"></script>
+<p>
+æ–°é—»ç»„ç±»ä¼¼çŽ°åœ¨çš„BBSæˆ–è®ºå›ï¼Œä½¿ç”¨äººæ•°è¶Šæ¥è¶Šå°‘ï¼Œä½†ä»æ—§åšæŒä½¿ç”¨çš„äººä¸­æœ‰å¾ˆå¤šå¤§ç‰›ï¼Œå¯ä»¥ä»Žä¸­å­¦åˆ°å¾ˆå¤šä¸œè¥¿ï¼Œå¹¶ä¸”é‡Œé¢çš„æŠ€æœ¯æ°›å›´å¾ˆæ·±åŽšï¼Œè¯´åºŸè¯çš„äººå¾ˆå°‘ï¼Œè¿™æ˜¯æˆ‘é€‰æ‹©ä½¿ç”¨æ–°é—»ç»„çš„åŽŸå› ã€‚<br/>
+</p>
 
 <p>
-ÐÂÎÅ×éÀàËÆÏÖÔÚµÄBBS»òÂÛÌ³£¬Ê¹ÓÃÈËÊýÔ½À´Ô½ÉÙ£¬µ«ÈÔ¾É¼á³ÖÊ¹ÓÃµÄÈËÖÐÓÐºÜ¶à´óÅ££¬¿ÉÒÔ´ÓÖÐÑ§µ½ºÜ¶à¶«Î÷£¬²¢ÇÒÀïÃæµÄ¼¼Êõ·ÕÎ§ºÜÉîºñ£¬Ëµ·Ï»°µÄÈËºÜÉÙ£¬ÕâÊÇÎÒÑ¡ÔñÊ¹ÓÃÐÂÎÅ×éµÄÔ­Òò¡£<br/>
+è¦é˜…è¯»æ–°é—»ç»„ï¼ˆNewsGroup or Usenetï¼‰ä¸­çš„å†…å®¹é¦–å…ˆéœ€è¦ä¸€ä¸ªæœåŠ¡å™¨ï¼Œæ­¤æœåŠ¡å™¨ä¸­å­˜åœ¨æ‰€æœ‰æ–°é—»ç»„å†…å®¹ï¼Œå®¢æˆ·ç«¯è¿žæŽ¥ä¸ŠåŽå¯ä»¥ä»Žä¸Šé¢ä¸‹è½½æ‰€æœ‰å†…å®¹çš„åˆ—è¡¨ï¼Œç„¶åŽå†ä»Žä¸­è®¢é˜…è‡ªå·±å–œæ¬¢çš„å†…å®¹ã€‚Gnuså°±æ˜¯è¿™æ ·ä¸€ä¸ªå®¢æˆ·ç«¯ï¼ŒæœåŠ¡å™¨ä½ å¯ä»¥èŠ±é’±ä¹°ï¼ŒæœåŠ¡è‚¯å®šå¥½ï¼Œä½†å¯¹äºŽæˆ‘è¿™æ ·çš„ç©·äººæ¥è¯´è‡ªç„¶é€‰æ‹©å…è´¹çš„ã€‚<br/>
 </p>
-<p>
-ÒªÔÄ¶ÁÐÂÎÅ×é£¨NewsGroup or Usenet£©ÖÐµÄÄÚÈÝÊ×ÏÈÐèÒªÒ»¸ö·þÎñÆ÷£¬´Ë·þÎñÆ÷ÖÐ´æÔÚËùÓÐÐÂÎÅ×éÄÚÈÝ£¬¿Í»§¶ËÁ¬½ÓÉÏºó¿ÉÒÔ´ÓÉÏÃæÏÂÔØËùÓÐÄÚÈÝµÄÁÐ±í£¬È»ºóÔÙ´ÓÖÐ¶©ÔÄ×Ô¼ºÏ²»¶µÄÄÚÈÝ¡£Gnus¾ÍÊÇÕâÑùÒ»¸ö¿Í»§¶Ë£¬·þÎñÆ÷Äã¿ÉÒÔ»¨Ç®Âò£¬·þÎñ¿Ï¶¨ºÃ£¬µ«¶ÔÓÚÎÒÕâÑùµÄÇîÈËÀ´Ëµ×ÔÈ»Ñ¡ÔñÃâ·ÑµÄ¡£<br/>
-</p>
-<p>
-ÐÂÎÅ×é·þÎñÆ÷µØÖ·¸ñÊ½ÀàËÆ news.example.net£¬¹úÄÚµÄÓÐÐÂ·«£ºnews.newsfan.net£¬ÆäËü¿ÉÒÔ²Î¿¼<a href="http://www.williamlong.info/archives/176.html">ÔÂ¹â²©¿Í</a> ¡£¹úÍâµÄÃâ·ÑµÄ±È½Ï¿ìµÄÊÇnews.aioe.org. <br/>
-</p>
-<div id="table-of-contents">
-<h2>Ä¿Â¼</h2>
-<div id="text-table-of-contents">
-<ul>
-<li><a href="#sec-1">1 ÅäÖÃ</a></li>
-<li><a href="#sec-2">2 Ê¹ÓÃ</a></li>
-<li><a href="#sec-3">3 ¿ì½Ý¼ü</a></li>
-<li><a href="#sec-4">4 ÔÙÅäÖÃ</a>
-<ul>
-<li><a href="#sec-4-1">4.1 Æð¶¯Ê±¼´ÕÛµþËùÓÐthread</a></li>
-<li><a href="#sec-4-2">4.2 Æð¶¯Ê±¼´Òþ²ØËùÓÐÇ©Ãû</a></li>
-<li><a href="#sec-4-3">4.3 Ç©Ãû</a></li>
-<li><a href="#sec-4-4">4.4 ·­Ò³</a></li>
-<li><a href="#sec-4-5">4.5 »º´æ</a></li>
-<li><a href="#sec-4-6">4.6 ±£´æµ½±¾µØ</a></li>
-</ul>
-</li>
-<li><a href="#sec-5">5 ½â¾ö¶ÁÈ¡ÂýµÄÎÊÌâ</a></li>
-<li><a href="#sec-6">6 Ê¹ÓÃ¾­Ñé</a>
-<ul>
-<li><a href="#sec-6-1">6.1 ²»ÓÃÖØÆôÌí¼ÓÐÂµÄÐÂÎÅ×é·þÎñÆ÷</a></li>
-<li><a href="#sec-6-2">6.2 ²é¿´Õû¸öthread</a></li>
-<li><a href="#sec-6-3">6.3 ×Ô¶¯È¡»ØÕû¸öthread</a></li>
-<li><a href="#sec-6-4">6.4 ²é¿´ËùÓÐÍ·ÐÅÏ¢</a></li>
-<li><a href="#sec-6-5">6.5 ×Ô¶¨Òå×é</a></li>
-<li><a href="#sec-6-6">6.6 Ê¹ÓÃagentÀ´ÏÂÔØÌû×Ó</a>
-<ul>
-<li><a href="#sec-6-6-1">6.6.1 agent¹¤×÷Á÷³Ì£º</a></li>
-<li><a href="#sec-6-6-2">6.6.2 ¾ßÌåÊ¹ÓÃ</a></li>
-<li><a href="#sec-6-6-3">6.6.3 Gnus auto-save file exists. Do you want to read it?</a></li>
-</ul>
-</li>
-<li><a href="#sec-6-7">6.7 ×Ô¶¨Òågroup bufferÀï¸ñÊ½</a></li>
-<li><a href="#sec-6-8">6.8 Group BufferÀïÐÂÎÅ×é½øÐÐ·ÖÀà</a></li>
-<li><a href="#sec-6-9">6.9 Group BufferÀï¶ÔÐÂÎÅ×éÎ»ÖÃÅÅÐò</a></li>
-<li><a href="#sec-6-10">6.10 summary bufferÀï·µ»ØÉÏ´ÎÔÄ¶ÁµÄÌû×Ó</a></li>
-<li><a href="#sec-6-11">6.11 summary bufferÀï <code>/ N</code> È¡»ØÐÂÌû×Ó</a></li>
-<li><a href="#sec-6-12">6.12 article ½ûÖ¹×Ô¶¯ÕÛÐÐ</a></li>
-<li><a href="#sec-6-13">6.13 Ö»Ë¢ÐÂ¹â±êËùÔÚ´¦×é</a></li>
-<li><a href="#sec-6-14">6.14 ÖØÐÂÆô¶¯Gnus</a></li>
-<li><a href="#sec-6-15">6.15 gnus parameters</a>
-<ul>
-<li><a href="#sec-6-15-1">6.15.1 display¿ØÖÆ½øÈësummaryÊ±Ìû×ÓÏÔÊ¾·½Ê½</a></li>
-<li><a href="#sec-6-15-2">6.15.2 posing-style ÉèÖÃ»ØÌûÏÔÊ¾</a></li>
-</ul>
-</li>
-<li><a href="#sec-6-16">6.16 ¿ìËÙ¿½±´URL</a></li>
-<li><a href="#sec-6-17">6.17 Ê²Ã´½ÐÒ»¸öthread</a></li>
-<li><a href="#sec-6-18">6.18 Article Washing</a>
-<ul>
-<li><a href="#sec-6-18-1">6.18.1 È¥µôArticleÖÐµÄ¿Õ°×ÐÐ</a></li>
-<li><a href="#sec-6-18-2">6.18.2 ²»ÒªÕÛÐÐ</a></li>
-</ul>
-</li>
-<li><a href="#sec-6-19">6.19 ÕûºÏC-M-hºÍC-M-s</a></li>
-</ul>
-</li>
-</ul>
-</div>
-</div>
 
-<div id="outline-container-1" class="outline-2">
-<h2 id="sec-1"><span class="section-number-2">1</span> ÅäÖÃ</h2>
+<p>
+æ–°é—»ç»„æœåŠ¡å™¨åœ°å€æ ¼å¼ç±»ä¼¼ news.example.netï¼Œå›½å†…çš„æœ‰æ–°å¸†ï¼šnews.newsfan.netï¼Œå…¶å®ƒå¯ä»¥å‚è€ƒ<a href="http://www.williamlong.info/archives/176.html">æœˆå…‰åšå®¢</a> ã€‚å›½å¤–çš„å…è´¹çš„æ¯”è¾ƒå¿«çš„æ˜¯news.aioe.org.<br/>
+</p>
+<div id="outline-container-sec-1" class="outline-2">
+<h2 id="sec-1"><span class="section-number-2">1</span> é…ç½®</h2>
 <div class="outline-text-2" id="text-1">
-
-<p>  ½«ÏÂÃæÅäÖÃ±£´æµ½ ~/.gnus.elÖÐ£º<br/>
+<p>
+å°†ä¸‹é¢é…ç½®ä¿å­˜åˆ° ~/.gnus.elä¸­ï¼š<br/>
+</p>
 <div style="height:200px;overflow:auto;border-style:solid;border-width:1px;border-color:#DDD">
+<div class="org-src-container">
 
-<pre class="src src-lisp">(setq user-full-name <span style="color: #8b2252;">"visayafan"</span>)
+<pre class="src src-emacs-lisp">(setq user-full-name <span style="color: #8b2252;">"Han Fan"</span>)
 (setq user-mail-address <span style="color: #8b2252;">"visayafan@gmail.com"</span>)
 
 (setq gnus-select-method '(nntp <span style="color: #8b2252;">"news.aioe.org"</span>))
 <span style="color: #b22222;">;; </span><span style="color: #b22222;">(setq gnus-select-method '(nntp "localhost"))</span>
 (add-to-list 'gnus-secondary-select-methods '(nntp <span style="color: #8b2252;">"news.gnus.org"</span>))
 (add-to-list 'gnus-secondary-select-methods '(nntp  <span style="color: #8b2252;">"news.gmane.org"</span>))
-(add-to-list 'gnus-secondary-select-methods '(nntp  <span style="color: #8b2252;">"news.newsfan.net"</span>))
+<span style="color: #b22222;">;; </span><span style="color: #b22222;">(add-to-list 'gnus-secondary-select-methods '(nntp  "news.newsfan.net"))</span>
 
 <span style="color: #b22222;">;; </span><span style="color: #b22222;">&#28385;71&#23383;&#31526;&#33258;&#21160;&#25442;&#34892;</span>
 (add-hook 'message-mode-hook (<span style="color: #a020f0;">lambda</span> () (setq fill-column 72) (turn-on-auto-fill)))
@@ -120,7 +114,7 @@
 <span style="color: #b22222;">;; </span><span style="color: #b22222;">&#21457;&#36865;&#35774;&#32622;</span>
 (setq gnus-posting-styles '((<span style="color: #8b2252;">".*"</span>
                              (name <span style="color: #8b2252;">"visayafan"</span>)
-                             (body <span style="color: #8b2252;">"\n\nvisayafan\n--\n"</span>) 
+                             (body <span style="color: #8b2252;">"\n----"</span>) 
                              (address <span style="color: #8b2252;">"visayafan@gmail.com"</span>))))
 
 <span style="color: #b22222;">;; </span><span style="color: #b22222;">&#35821;&#35328;&#29615;&#22659;&#35774;&#23450;</span>
@@ -153,7 +147,6 @@
       <span style="color: #8b2252;">"^</span><span style="color: #8b2252; font-weight: bold;">\\</span><span style="color: #8b2252; font-weight: bold;">(</span><span style="color: #8b2252;">^From:</span><span style="color: #8b2252; font-weight: bold;">\\</span><span style="color: #8b2252; font-weight: bold;">|</span><span style="color: #8b2252;">^Subject:</span><span style="color: #8b2252; font-weight: bold;">\\</span><span style="color: #8b2252; font-weight: bold;">|</span><span style="color: #8b2252;">^Date:</span><span style="color: #8b2252; font-weight: bold;">\\</span><span style="color: #8b2252; font-weight: bold;">)</span><span style="color: #8b2252;">"</span>)
 
 <span style="color: #b22222;">;;</span><span style="color: #b22222;">&#35774;&#23450;&#23631;&#24149;&#30340;&#20998;&#21106;&#27604;&#20363;</span>
-<span style="color: #b22222;">;; </span><span style="color: #b22222;">(gnus-add-configuration '(article (vertical 1.0 (summary .382 point) (article 1.0))))</span>
 (gnus-add-configuration '(article (vertical 1.0 (summary .319 point) (article 1.0))))
 
 <span style="color: #b22222;">;;</span><span style="color: #b22222;">&#33258;&#21160;&#26174;&#31034;&#22270;&#29255;</span>
@@ -166,264 +159,483 @@
       message-kill-buffer-on-exit t
       message-elide-ellipsis <span style="color: #8b2252;">"[...]\n"</span>)
 
+(setq gnus-group-line-format <span style="color: #8b2252;">"%P%M%S%p%P%5y-|--%B%(%G%)</span>
+<span style="color: #8b2252;">"</span>)                                      <span style="color: #b22222;">;</span><span style="color: #b22222;">&#27492;&#22788;&#25442;&#34892;&#19981;&#21487;&#31227;&#21160;&#21040;&#19978;&#34892;&#20013;</span>
+
+(setq gnus-save-newsrc-file nil)
+(setq gnus-read-newsrc-file nil)
+(setq gnus-check-new-newsgroups nil)
+(setq gnus-check-new-newsgroups nil)
+(setq gnus-check-bogus-newsgroups nil)
+(setq gnus-newsgroup-maximum-articles nil)      <span style="color: #b22222;">;; </span><span style="color: #b22222;">&#26368;&#22810;&#35835;&#21462;&#24086;&#23376;&#25968;&#65292;&#40664;&#35748;&#20540;&#26159;nil</span>
+(setq gnus-large-newsgroup 200)
 </pre>
-
+</div>
 </div>
 
-  Í¨¹ýgnus-select-methodºÍgnus-secondary-select-method±äÁ¿ÉèÖÃÁË¼¸¸öÐÂÎÅ×éµØÖ·£¬Á¬½ÓÊ§°ÜµÄ¿ÉÒÔ°ÑËüÃÇÉ¾µô£¨ÎÒÕâ¶ù¶¼Á¬ÉÏÁË£©¡£<br/>
-</p></div>
-
-</div>
-
-<div id="outline-container-2" class="outline-2">
-<h2 id="sec-2"><span class="section-number-2">2</span> Ê¹ÓÃ</h2>
-<div class="outline-text-2" id="text-2">
-
-<p>  <code>M-x gnus</code> ±ã¿É½øÈëGnus¡£<br/>
-</p>
-<p>  <br/>
-  <code>gnus-group-enter-server-mode</code> ¿ì½Ý¼ü <code>^</code> ¿ÉÒÔ²é¿´ËùÓÐ·þÎñÆ÷µÄÁ¬½Ó×´Ì¬£¬ <code>opened</code> Õý³££¬ <code>denied</code> ±íÁ¬½ÓÊ§°Ü¡£<br/>
-</p>
 <p>
-  <code>RET</code> ¿É½øÈëÏàÓ¦µÄ·þÎñÆ÷¡£´ËÊ±»áÏÂÔØ´Ë·þÎñÆ÷ÉÏËùÓÐ×éÁÐ±í£¬Ö®ºó½øÈë <code>*Gnus Browse Server*</code> »º³åÇø¡£Ñ¡ÖÐ¸ÐÐËÈ¤µÄ×é»Ø³µ¼´¿É½øÈë <code>summary</code> »º³åÇø£¬ÔÚÌû×Ó±êÌâÉÏ¿Õ¸ñ¼´¿ÉÔÚÏÂÃæ´ò¿ªÒ»¸ö <code>Article</code> Ìû×ÓÈõ³åÇø.<br/>
+é€šè¿‡gnus-select-methodå’Œgnus-secondary-select-methodå˜é‡è®¾ç½®äº†å‡ ä¸ªæ–°é—»ç»„åœ°å€ï¼Œè¿žæŽ¥å¤±è´¥çš„å¯ä»¥æŠŠå®ƒä»¬åˆ æŽ‰ï¼ˆæˆ‘è¿™å„¿éƒ½è¿žä¸Šäº†ï¼‰ã€‚<br/>
 </p>
-<p>  <br/>
-</p></div>
-
+</div>
 </div>
 
-<div id="outline-container-3" class="outline-2">
-<h2 id="sec-3"><span class="section-number-2">3</span> ¿ì½Ý¼ü</h2>
-<div class="outline-text-2" id="text-3">
+<div id="outline-container-sec-2" class="outline-2">
+<h2 id="sec-2"><span class="section-number-2">2</span> ä½¿ç”¨</h2>
+<div class="outline-text-2" id="text-2">
+<p>
+<code>M-x gnus</code> ä¾¿å¯è¿›å…¥Gnusã€‚<br/>
+</p>
 
+<p>
+<code>gnus-group-enter-server-mode</code> å¿«æ·é”® <code>^</code> å¯ä»¥æŸ¥çœ‹æ‰€æœ‰æœåŠ¡å™¨çš„è¿žæŽ¥çŠ¶æ€ï¼Œ <code>opened</code> æ­£å¸¸ï¼Œ <code>denied</code> è¡¨è¿žæŽ¥å¤±è´¥ã€‚<br/>
+</p>
+
+<p>
+<code>RET</code> å¯è¿›å…¥ç›¸åº”çš„æœåŠ¡å™¨ã€‚æ­¤æ—¶ä¼šä¸‹è½½æ­¤æœåŠ¡å™¨ä¸Šæ‰€æœ‰ç»„åˆ—è¡¨ï¼Œä¹‹åŽè¿›å…¥ <code>*Gnus Browse Server*</code> ç¼“å†²åŒºã€‚é€‰ä¸­æ„Ÿå…´è¶£çš„ç»„å›žè½¦å³å¯è¿›å…¥ <code>summary</code> ç¼“å†²åŒºï¼Œåœ¨å¸–å­æ ‡é¢˜ä¸Šç©ºæ ¼å³å¯åœ¨ä¸‹é¢æ‰“å¼€ä¸€ä¸ª <code>Article</code> å¸–å­å¼±å†²åŒº.<br/>
+</p>
+</div>
+</div>
+<div id="outline-container-sec-3" class="outline-2">
+<h2 id="sec-3"><span class="section-number-2">3</span> å¿«æ·é”®</h2>
+<div class="outline-text-2" id="text-3">
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-<caption></caption>
-<colgroup><col class="left" /><col class="left" />
+
+
+<colgroup>
+<col class="left"/>
+
+<col class="left"/>
 </colgroup>
 <thead>
-<tr><th scope="col" class="left"><b>Summary Buffer</b></th><th scope="col" class="left"></th></tr>
+<tr>
+<th scope="col" class="left"><b>Summary Buffer</b></th>
+<th scope="col" class="left">&#xa0;</th>
+</tr>
 </thead>
 <tbody>
-<tr><td class="left">T H</td><td class="left">Thread Hide all</td></tr>
-<tr><td class="left">T S</td><td class="left">Thread Show all</td></tr>
-<tr><td class="left">C-M-s or T s</td><td class="left">show this thread</td></tr>
-<tr><td class="left">C-M-h or T h</td><td class="left">hide this thread</td></tr>
-<tr><td class="left">C-M-f</td><td class="left">forward a thread</td></tr>
-<tr><td class="left">C-M-b</td><td class="left">backward a thread</td></tr>
-<tr><td class="left">n/p</td><td class="left">next/previous unreaded thread</td></tr>
-<tr><td class="left">N/P</td><td class="left">next/previous thread</td></tr>
-<tr><td class="left">M-n/p</td><td class="left">next/previous unread subject</td></tr>
-<tr><td class="left">M-g</td><td class="left">Ë¢ÐÂ£¬ÔÚGroup»º³åÇøÀïÊÇg</td></tr>
-<tr><td class="left">SPACE</td><td class="left">view this thread</td></tr>
-<tr><td class="left">W W s</td><td class="left">article hide signature ÔÚ¶ÁÌûµÄÊ±ºòºÜ¶àÈË¸ãÐ©ÄªÃûÆäÃîµÄÇ©Ãû±È½Ï·³ÈË£¬¿ÉÒÔ½«ÆäÈ¥µô</td></tr>
-<tr><td class="left">W W a</td><td class="left">article hide all È¥µôËùÓÐµÄ£¬°üÀ¨ ±êÌâ£¬ÒýÓÃ£¬Ç©Ãû¡£¾ßÌå¿É²é¿´article²Ëµ¥</td></tr>
-<tr><td class="left">T d</td><td class="left">thread down ¿ÉÒÔ¼ÓÇ°×º£¬±íÏòÉÏ¼¸¼¶</td></tr>
-<tr><td class="left">T u</td><td class="left">thread up</td></tr>
-<tr><td class="left">T o</td><td class="left">thread top</td></tr>
-<tr><td class="left">C-M-k</td><td class="left">mark thread as read</td></tr>
-<tr><td class="left">T E</td><td class="left">mark thread as expired</td></tr>
-<tr><td class="left">a</td><td class="left">·¢Ìû</td></tr>
-<tr><td class="left">r</td><td class="left">reply email ÓëÓÊ¼þ×÷ÕßË½ÁÄ£¬²»»á¹«¿ªÔÚ×éÖÐ</td></tr>
-<tr><td class="left">R</td><td class="left">reply and yank »ØÐÅ²¢ÔÚÐÅÖÐÒýÓÃ±ðÈËµÄÌû×Ó</td></tr>
-<tr><td class="left">C-c C-c</td><td class="left">send</td></tr>
-<tr><td class="left">C-c C-k</td><td class="left">cancel send</td></tr>
-<tr><td class="left">C-c C-d</td><td class="left">don't send and save as draft</td></tr>
-<tr><td class="left">C-c C-m f or C-c RET f</td><td class="left">Ìí¼Ó¸½¼þ</td></tr>
-<tr><td class="left">f</td><td class="left">followup »ØÌû</td></tr>
-<tr><td class="left">F</td><td class="left">followup and yank »ØÌûµÄÊ±ºòÒýÓÃ±ðÈËµÄÌû×Ó</td></tr>
-<tr><td class="left">c</td><td class="left">±ê¼ÇËùÓÐÌû×ÓÎªÒÑ¶Á</td></tr>
-<tr><td class="left">C-c C-f</td><td class="left">forward this message to somebody others ×ª·¢¸øÁíÍâÒ»¸öÈË</td></tr>
-<tr><td class="left">S o p</td><td class="left">forward this message to another newsgroup ×ª·¢¸øÁíÒ»¸öÐÂÎÅ×é</td></tr>
-<tr><td class="left">A T</td><td class="left">´ËÊ±ÄãÔÚÒ»¸öthreadµÄÄ³¸öÌû×ÓÉÏ A T¼´¿É²é¿´Õû¸öthreadµÄËùÓÐÌû×Ó</td></tr>
+<tr>
+<td class="left">T H</td>
+<td class="left">Thread Hide all</td>
+</tr>
+
+<tr>
+<td class="left">T S</td>
+<td class="left">Thread Show all</td>
+</tr>
+
+<tr>
+<td class="left">C-M-s or T s</td>
+<td class="left">show this thread</td>
+</tr>
+
+<tr>
+<td class="left">C-M-h or T h</td>
+<td class="left">hide this thread</td>
+</tr>
+
+<tr>
+<td class="left">C-M-f</td>
+<td class="left">forward a thread</td>
+</tr>
+
+<tr>
+<td class="left">C-M-b</td>
+<td class="left">backward a thread</td>
+</tr>
+
+<tr>
+<td class="left">n/p</td>
+<td class="left">next/previous unreaded thread</td>
+</tr>
+
+<tr>
+<td class="left">N/P</td>
+<td class="left">next/previous thread</td>
+</tr>
+
+<tr>
+<td class="left">M-n/p</td>
+<td class="left">next/previous unread subject</td>
+</tr>
+
+<tr>
+<td class="left">M-g</td>
+<td class="left">åˆ·æ–°ï¼Œåœ¨Groupç¼“å†²åŒºé‡Œæ˜¯g</td>
+</tr>
+
+<tr>
+<td class="left">SPACE</td>
+<td class="left">view this thread</td>
+</tr>
+
+<tr>
+<td class="left">W W s</td>
+<td class="left">article hide signature åœ¨è¯»å¸–çš„æ—¶å€™å¾ˆå¤šäººæžäº›èŽ«åå…¶å¦™çš„ç­¾åæ¯”è¾ƒçƒ¦äººï¼Œå¯ä»¥å°†å…¶åŽ»æŽ‰</td>
+</tr>
+
+<tr>
+<td class="left">W W a</td>
+<td class="left">article hide all åŽ»æŽ‰æ‰€æœ‰çš„ï¼ŒåŒ…æ‹¬ æ ‡é¢˜ï¼Œå¼•ç”¨ï¼Œç­¾åã€‚å…·ä½“å¯æŸ¥çœ‹articleèœå•</td>
+</tr>
+
+<tr>
+<td class="left">T d</td>
+<td class="left">thread down å¯ä»¥åŠ å‰ç¼€ï¼Œè¡¨å‘ä¸Šå‡ çº§</td>
+</tr>
+
+<tr>
+<td class="left">T u</td>
+<td class="left">thread up</td>
+</tr>
+
+<tr>
+<td class="left">T o</td>
+<td class="left">thread top</td>
+</tr>
+
+<tr>
+<td class="left">C-M-k</td>
+<td class="left">mark thread as read</td>
+</tr>
+
+<tr>
+<td class="left">T E</td>
+<td class="left">mark thread as expired</td>
+</tr>
+
+<tr>
+<td class="left">a</td>
+<td class="left">å‘å¸–</td>
+</tr>
+
+<tr>
+<td class="left">r</td>
+<td class="left">reply email ä¸Žé‚®ä»¶ä½œè€…ç§èŠï¼Œä¸ä¼šå…¬å¼€åœ¨ç»„ä¸­</td>
+</tr>
+
+<tr>
+<td class="left">R</td>
+<td class="left">reply and yank å›žä¿¡å¹¶åœ¨ä¿¡ä¸­å¼•ç”¨åˆ«äººçš„å¸–å­</td>
+</tr>
+
+<tr>
+<td class="left">C-c C-c</td>
+<td class="left">send</td>
+</tr>
+
+<tr>
+<td class="left">C-c C-k</td>
+<td class="left">cancel send</td>
+</tr>
+
+<tr>
+<td class="left">C-c C-d</td>
+<td class="left">don't send and save as draft</td>
+</tr>
+
+<tr>
+<td class="left">C-c C-m f or C-c RET f</td>
+<td class="left">æ·»åŠ é™„ä»¶</td>
+</tr>
+
+<tr>
+<td class="left">f</td>
+<td class="left">followup å›žå¸–</td>
+</tr>
+
+<tr>
+<td class="left">F</td>
+<td class="left">followup and yank å›žå¸–çš„æ—¶å€™å¼•ç”¨åˆ«äººçš„å¸–å­</td>
+</tr>
+
+<tr>
+<td class="left">c</td>
+<td class="left">æ ‡è®°æ‰€æœ‰å¸–å­ä¸ºå·²è¯»</td>
+</tr>
+
+<tr>
+<td class="left">C-c C-f</td>
+<td class="left">forward this message to somebody others è½¬å‘ç»™å¦å¤–ä¸€ä¸ªäºº</td>
+</tr>
+
+<tr>
+<td class="left">S o p</td>
+<td class="left">forward this message to another newsgroup è½¬å‘ç»™å¦ä¸€ä¸ªæ–°é—»ç»„</td>
+</tr>
+
+<tr>
+<td class="left">A T</td>
+<td class="left">æ­¤æ—¶ä½ åœ¨ä¸€ä¸ªthreadçš„æŸä¸ªå¸–å­ä¸Š A Tå³å¯æŸ¥çœ‹æ•´ä¸ªthreadçš„æ‰€æœ‰å¸–å­</td>
+</tr>
 </tbody>
 <tbody>
-<tr><td class="left"><b>Mark</b></td><td class="left"><b>º¬Òå</b></td></tr>
+<tr>
+<td class="left"><b>Mark</b></td>
+<td class="left"><b>å«ä¹‰</b></td>
+</tr>
 </tbody>
 <tbody>
-<tr><td class="left">R</td><td class="left">¶Á¹ýÒ»¸öÌû×ÓºóÄ¬ÈÏ»á¼ÓÉÏ¸Ã±ê¼Ç£¬ÏÂ´ÎÔÙ½øÈëµÄÊ±ºò´ËÌû×Ó²»»áÔÙÏÔÊ¾£¬ÕâÐ©R±ê¼ÇµÄÌû×Ó¶¼ÊÇÕæÕý¶Á¹ýµÄ</td></tr>
-<tr><td class="left">r</td><td class="left">ÓÃÃüÁîd¼´¿ÉÌí¼ÓÒ»¸ör±ê¼Ç£¬ÏÂ´Î²»ÏÔÊ¾´ËÌû£¬¿ÉÄÜÒòÎª²»Ï²»¶Ã»ÓÐ¶Á£¬Ïëµ±ÓÚdeleteÉ¾³ýÕâ¸öÌû×Ó</td></tr>
-<tr><td class="left">O</td><td class="left">±íÃ÷Õâ¸öÊÇoldÀÏÌû£¬Ä¬ÈÏGnus²»»áÏÔÊ¾ÀÏÌûµÄ£¬³ý·ÇÊ¹ÓÃÃüÁî/ oÇ¿ÖÆÏÔÊ¾</td></tr>
+<tr>
+<td class="left">R</td>
+<td class="left">è¯»è¿‡ä¸€ä¸ªå¸–å­åŽé»˜è®¤ä¼šåŠ ä¸Šè¯¥æ ‡è®°ï¼Œä¸‹æ¬¡å†è¿›å…¥çš„æ—¶å€™æ­¤å¸–å­ä¸ä¼šå†æ˜¾ç¤ºï¼Œè¿™äº›Ræ ‡è®°çš„å¸–å­éƒ½æ˜¯çœŸæ­£è¯»è¿‡çš„</td>
+</tr>
+
+<tr>
+<td class="left">r</td>
+<td class="left">ç”¨å‘½ä»¤då³å¯æ·»åŠ ä¸€ä¸ªræ ‡è®°ï¼Œä¸‹æ¬¡ä¸æ˜¾ç¤ºæ­¤å¸–ï¼Œå¯èƒ½å› ä¸ºä¸å–œæ¬¢æ²¡æœ‰è¯»ï¼Œæƒ³å½“äºŽdeleteåˆ é™¤è¿™ä¸ªå¸–å­</td>
+</tr>
+
+<tr>
+<td class="left">O</td>
+<td class="left">è¡¨æ˜Žè¿™ä¸ªæ˜¯oldè€å¸–ï¼Œé»˜è®¤Gnusä¸ä¼šæ˜¾ç¤ºè€å¸–çš„ï¼Œé™¤éžä½¿ç”¨å‘½ä»¤/ oå¼ºåˆ¶æ˜¾ç¤º</td>
+</tr>
 </tbody>
 <tbody>
-<tr><td class="left">£¡</td><td class="left">ticked ±íÊ¾´ËÌûºÜÖØÒª£¬ÄãÏëÃ¿´Î½øÈëÐÂÎÅ×éµÄÊ±ºò¶¼ÏÔÊ¾Ëü</td></tr>
-<tr><td class="left"></td><td class="left">£¨Èç¹û´ËÌû±»·þÎñÆ÷¹ÜÀíÔ±Òò²»ºÏ¸ñ»ò¹ýÆÚÔ­ÒòÉ¾µôÁËÔò²»»áÔÙÏÔÊ¾£©ËùÒÔ×îºÃ½«ÈÏÎªÖØÒªµÄÌû×Ó±¸·ÝÔÚ±¾»úÉÏ</td></tr>
-<tr><td class="left">£¿</td><td class="left">dormant Èç¹û´ËÌû²»ÔÙÓÐÈË»ØÔò´Ë±ê¼ÇÓëRÒ»Ñù²»»áÔÙÏÔÊ¾£¬Èç¹ûÓÐÈË»ØÌûÔò´ËÌû»áÔÙ´ÎÏÖÉí</td></tr>
+<tr>
+<td class="left">ï¼</td>
+<td class="left">ticked è¡¨ç¤ºæ­¤å¸–å¾ˆé‡è¦ï¼Œä½ æƒ³æ¯æ¬¡è¿›å…¥æ–°é—»ç»„çš„æ—¶å€™éƒ½æ˜¾ç¤ºå®ƒ</td>
+</tr>
+
+<tr>
+<td class="left">&#xa0;</td>
+<td class="left">ï¼ˆå¦‚æžœæ­¤å¸–è¢«æœåŠ¡å™¨ç®¡ç†å‘˜å› ä¸åˆæ ¼æˆ–è¿‡æœŸåŽŸå› åˆ æŽ‰äº†åˆ™ä¸ä¼šå†æ˜¾ç¤ºï¼‰æ‰€ä»¥æœ€å¥½å°†è®¤ä¸ºé‡è¦çš„å¸–å­å¤‡ä»½åœ¨æœ¬æœºä¸Š</td>
+</tr>
+
+<tr>
+<td class="left">ï¼Ÿ</td>
+<td class="left">dormant å¦‚æžœæ­¤å¸–ä¸å†æœ‰äººå›žåˆ™æ­¤æ ‡è®°ä¸ŽRä¸€æ ·ä¸ä¼šå†æ˜¾ç¤ºï¼Œå¦‚æžœæœ‰äººå›žå¸–åˆ™æ­¤å¸–ä¼šå†æ¬¡çŽ°èº«</td>
+</tr>
 </tbody>
 <tbody>
-<tr><td class="left">¿Õ¸ñ</td><td class="left">Ìû×ÓÇ°ÃæÊ²Ã´Ò²Ã»ÓÐÔò±íÊ¾ÕâÊÇ¸öÎ´¶ÁµÄÌû×Ó</td></tr>
+<tr>
+<td class="left">ç©ºæ ¼</td>
+<td class="left">å¸–å­å‰é¢ä»€ä¹ˆä¹Ÿæ²¡æœ‰åˆ™è¡¨ç¤ºè¿™æ˜¯ä¸ªæœªè¯»çš„å¸–å­</td>
+</tr>
 </tbody>
 <tbody>
-<tr><td class="left">G H/h</td><td class="left">½«¹â±êÖ®ÉÏ/ÏÂµÄÄÚÈÝ¶¼±ê¼ÇÎªÒÑ¶Á</td></tr>
+<tr>
+<td class="left">G H/h</td>
+<td class="left">å°†å…‰æ ‡ä¹‹ä¸Š/ä¸‹çš„å†…å®¹éƒ½æ ‡è®°ä¸ºå·²è¯»</td>
+</tr>
 </tbody>
 <tbody>
-<tr><td class="left"><b>Gnus Broswe Server Buffer</b></td><td class="left"></td></tr>
+<tr>
+<td class="left"><b>Gnus Broswe Server Buffer</b></td>
+<td class="left">&#xa0;</td>
+</tr>
 </tbody>
 <tbody>
-<tr><td class="left">u</td><td class="left">subscribe this group</td></tr>
-<tr><td class="left">q</td><td class="left">exit</td></tr>
+<tr>
+<td class="left">u</td>
+<td class="left">subscribe this group</td>
+</tr>
+
+<tr>
+<td class="left">q</td>
+<td class="left">exit</td>
+</tr>
 </tbody>
 <tbody>
-<tr><td class="left"><b>Article Buffer</b></td><td class="left"></td></tr>
+<tr>
+<td class="left"><b>Article Buffer</b></td>
+<td class="left">&#xa0;</td>
+</tr>
 </tbody>
 <tbody>
-<tr><td class="left">s/h</td><td class="left">go to summary/article buffer</td></tr>
-<tr><td class="left">C-c RET</td><td class="left">Îª¹â±êÎ»ÖÃÏÂµÄÓÊ¼þµØÖ··¢ÓÊ¼þ</td></tr>
-<tr><td class="left">SPC</td><td class="left">ÏÂ¸ö»ØÌû</td></tr>
-<tr><td class="left">Del</td><td class="left">ÉÏ¸ö»ØÌù</td></tr>
+<tr>
+<td class="left">s/h</td>
+<td class="left">go to summary/article buffer</td>
+</tr>
+
+<tr>
+<td class="left">C-c RET</td>
+<td class="left">ä¸ºå…‰æ ‡ä½ç½®ä¸‹çš„é‚®ä»¶åœ°å€å‘é‚®ä»¶</td>
+</tr>
+
+<tr>
+<td class="left">SPC</td>
+<td class="left">ä¸‹ä¸ªå›žå¸–</td>
+</tr>
+
+<tr>
+<td class="left">Del</td>
+<td class="left">ä¸Šä¸ªå›žè´´</td>
+</tr>
 </tbody>
 <tbody>
-<tr><td class="left"><b>Group Buffer</b></td><td class="left"></td></tr>
+<tr>
+<td class="left"><b>Group Buffer</b></td>
+<td class="left">&#xa0;</td>
+</tr>
 </tbody>
 <tbody>
-<tr><td class="left">c</td><td class="left">±ê¼Ç¹â±êËùÔÚ×éµÄËùÓÐÎ´¶ÁÌû×ÓÎªÒÑ¶Á</td></tr>
-<tr><td class="left">C</td><td class="left">°ÑËùÓÐ×éËùÓÐÎ´¶ÁÌû×Ó¶¼±ê¼ÇÎªÒÑ¶Á</td></tr>
-<tr><td class="left">g</td><td class="left">Ë¢ÐÂ</td></tr>
-<tr><td class="left">l</td><td class="left">Ö»ÏÔÊ¾ÓÐÎ´¶ÁÏûÏ¢µÄ×é</td></tr>
-<tr><td class="left">L</td><td class="left">ÏÔÊ¾ËùÓÐ×é£¨²»¹ÜÓÐÃ»ÓÐÎ´¶ÁÏûÏ¢£©</td></tr>
-<tr><td class="left">a</td><td class="left">·¢Ìû£¨×Ô¼ºÊÖ¹¤ÊäÈëÐÂÎÅ×éÃû³Æ£©</td></tr>
-<tr><td class="left">u</td><td class="left">¶©ÔÄ»òÈ¡Ïû¶©ÔÄ¹â±êËùÔÚÐÂÎÅ×é</td></tr>
-<tr><td class="left">C-k</td><td class="left">´Ó¶©ÔÄÁÐ±íÀïÉ¾³ýÄ³¸öÐÂÎÅ×é</td></tr>
+<tr>
+<td class="left">c</td>
+<td class="left">æ ‡è®°å…‰æ ‡æ‰€åœ¨ç»„çš„æ‰€æœ‰æœªè¯»å¸–å­ä¸ºå·²è¯»</td>
+</tr>
+
+<tr>
+<td class="left">C</td>
+<td class="left">æŠŠæ‰€æœ‰ç»„æ‰€æœ‰æœªè¯»å¸–å­éƒ½æ ‡è®°ä¸ºå·²è¯»</td>
+</tr>
+
+<tr>
+<td class="left">g</td>
+<td class="left">åˆ·æ–°</td>
+</tr>
+
+<tr>
+<td class="left">l</td>
+<td class="left">åªæ˜¾ç¤ºæœ‰æœªè¯»æ¶ˆæ¯çš„ç»„</td>
+</tr>
+
+<tr>
+<td class="left">L</td>
+<td class="left">æ˜¾ç¤ºæ‰€æœ‰ç»„ï¼ˆä¸ç®¡æœ‰æ²¡æœ‰æœªè¯»æ¶ˆæ¯ï¼‰</td>
+</tr>
+
+<tr>
+<td class="left">a</td>
+<td class="left">å‘å¸–ï¼ˆè‡ªå·±æ‰‹å·¥è¾“å…¥æ–°é—»ç»„åç§°ï¼‰</td>
+</tr>
+
+<tr>
+<td class="left">u</td>
+<td class="left">è®¢é˜…æˆ–å–æ¶ˆè®¢é˜…å…‰æ ‡æ‰€åœ¨æ–°é—»ç»„</td>
+</tr>
+
+<tr>
+<td class="left">C-k</td>
+<td class="left">ä»Žè®¢é˜…åˆ—è¡¨é‡Œåˆ é™¤æŸä¸ªæ–°é—»ç»„</td>
+</tr>
 </tbody>
 <tbody>
-<tr><td class="left"><b>RSS</b></td><td class="left"></td></tr>
+<tr>
+<td class="left"><b>RSS</b></td>
+<td class="left">&#xa0;</td>
+</tr>
 </tbody>
 <tbody>
-<tr><td class="left">G R</td><td class="left">¶©ÔÄRSS</td></tr>
+<tr>
+<td class="left">G R</td>
+<td class="left">è®¢é˜…RSS</td>
+</tr>
 </tbody>
 </table>
-
-
 </div>
-
 </div>
-
-<div id="outline-container-4" class="outline-2">
-<h2 id="sec-4"><span class="section-number-2">4</span> ÔÙÅäÖÃ</h2>
+<div id="outline-container-sec-4" class="outline-2">
+<h2 id="sec-4"><span class="section-number-2">4</span> å†é…ç½®</h2>
 <div class="outline-text-2" id="text-4">
-
-
-</div>
-
-<div id="outline-container-4-1" class="outline-3">
-<h3 id="sec-4-1"><span class="section-number-3">4.1</span> Æð¶¯Ê±¼´ÕÛµþËùÓÐthread</h3>
+</div><div id="outline-container-sec-4-1" class="outline-3">
+<h3 id="sec-4-1"><span class="section-number-3">4.1</span> èµ·åŠ¨æ—¶å³æŠ˜å æ‰€æœ‰thread</h3>
 <div class="outline-text-3" id="text-4-1">
-
-
-
+<div class="org-src-container">
 
 <pre class="src src-lisp">(setq gnus-thread-hide-subtree t)
 </pre>
-
+</div>
+</div>
 </div>
 
-</div>
-
-<div id="outline-container-4-2" class="outline-3">
-<h3 id="sec-4-2"><span class="section-number-3">4.2</span> Æð¶¯Ê±¼´Òþ²ØËùÓÐÇ©Ãû</h3>
+<div id="outline-container-sec-4-2" class="outline-3">
+<h3 id="sec-4-2"><span class="section-number-3">4.2</span> èµ·åŠ¨æ—¶å³éšè—æ‰€æœ‰ç­¾å</h3>
 <div class="outline-text-3" id="text-4-2">
-
-
-
+<div class="org-src-container">
 
 <pre class="src src-lisp">(setq gnus-treat-hide-signature t)
 </pre>
-
+</div>
+</div>
 </div>
 
-</div>
-
-<div id="outline-container-4-3" class="outline-3">
-<h3 id="sec-4-3"><span class="section-number-3">4.3</span> Ç©Ãû</h3>
+<div id="outline-container-sec-4-3" class="outline-3">
+<h3 id="sec-4-3"><span class="section-number-3">4.3</span> ç­¾å</h3>
 <div class="outline-text-3" id="text-4-3">
-
-<p>   ¶¨ÖÆ±äÁ¿ <code>gnus-posting-style</code>.<br/>
+<p>
+å®šåˆ¶å˜é‡ <code>gnus-posting-style</code>.<br/>
 </p>
-
+<div class="org-src-container">
 
 <pre class="src src-lisp">(setq gnus-posting-styles 
       '((<span style="color: #8b2252;">".*"</span> (signature-file <span style="color: #8b2252;">"~/emacs/gnus/.signature_english"</span>)) 
-        (<span style="color: #8b2252;">"cn.*"</span> (signature-file <span style="color: #8b2252;">"~/emacs/gnus/.signature_chinese"</span>)))) 
+        (<span style="color: #8b2252;">"cn.*"</span> (signature-file <span style="color: #8b2252;">"~/emacs/gnus/.signature_chinese"</span>))))
 </pre>
-
+</div>
 <p>
-   Èç¹ûÊÇÒÔcn¿ªÍ·µÄÔòÓÃ.signature_chinese·ñÔòÓÃenglish.<br/>
-</p></div>
-
+å¦‚æžœæ˜¯ä»¥cnå¼€å¤´çš„åˆ™ç”¨.signature_chineseå¦åˆ™ç”¨english.<br/>
+</p>
+</div>
 </div>
 
-<div id="outline-container-4-4" class="outline-3">
-<h3 id="sec-4-4"><span class="section-number-3">4.4</span> ·­Ò³</h3>
+<div id="outline-container-sec-4-4" class="outline-3">
+<h3 id="sec-4-4"><span class="section-number-3">4.4</span> ç¿»é¡µ</h3>
 <div class="outline-text-3" id="text-4-4">
-
-<p>   Ò»°ãsummary»º³åÇøÔÚÉÏ£¬article»º³åÇøÔÚÏÂ£¬Èç¹ûarticle»º³åÇøÌû×Ó¹ý³¤£¬ÔÚsummary»º³åÇøÓÃ <b>¿Õ¸ñ</b> ºÍ <b>ÍË¸ñ</b> ÎªÆä·­Ò³¶ø²»ÐèÒªÀë¿ªsummary»º³åÇø£¬Èç¹ûÌû×Óµ½µ×ÁËÔòÔÙ°´¿Õ¸ñÔò»á·­µ½ÏÂ¸öÌû×Ó.<br/>
-</p></div>
-
+<p>
+ä¸€èˆ¬summaryç¼“å†²åŒºåœ¨ä¸Šï¼Œarticleç¼“å†²åŒºåœ¨ä¸‹ï¼Œå¦‚æžœarticleç¼“å†²åŒºå¸–å­è¿‡é•¿ï¼Œåœ¨summaryç¼“å†²åŒºç”¨ <b>ç©ºæ ¼</b> å’Œ <b>é€€æ ¼</b> ä¸ºå…¶ç¿»é¡µè€Œä¸éœ€è¦ç¦»å¼€summaryç¼“å†²åŒºï¼Œå¦‚æžœå¸–å­åˆ°åº•äº†åˆ™å†æŒ‰ç©ºæ ¼åˆ™ä¼šç¿»åˆ°ä¸‹ä¸ªå¸–å­.<br/>
+</p>
+</div>
 </div>
 
-<div id="outline-container-4-5" class="outline-3">
-<h3 id="sec-4-5"><span class="section-number-3">4.5</span> »º´æ</h3>
+<div id="outline-container-sec-4-5" class="outline-3">
+<h3 id="sec-4-5"><span class="section-number-3">4.5</span> ç¼“å­˜</h3>
 <div class="outline-text-3" id="text-4-5">
-
-
-
+<div class="org-src-container">
 
 <pre class="src src-lisp">(setq gnus-use-cache t)
 </pre>
-
+</div>
 <p>
-   ÔÚsummary»º³åÇøÖÐÌû×Ó±êÌâÉÏ¼ÓÉÏ <code>*</code> ¾Í¿ÉÒÔ±£´æµ½±¾µØÁË£¬Ä¬ÈÏÂ·¾¶ÊÇ ~/News/cache/YourGroupName¡£ <code>M *</code> ¼´¿ÉÉ¾³ý±¾µØ±£´æ¡£<br/>
-</p></div>
-
+åœ¨summaryç¼“å†²åŒºä¸­å¸–å­æ ‡é¢˜ä¸ŠåŠ ä¸Š <code>*</code> å°±å¯ä»¥ä¿å­˜åˆ°æœ¬åœ°äº†ï¼Œé»˜è®¤è·¯å¾„æ˜¯ ~/News/cache/YourGroupNameã€‚ <code>M *</code> å³å¯åˆ é™¤æœ¬åœ°ä¿å­˜ã€‚<br/>
+</p>
+</div>
 </div>
 
-<div id="outline-container-4-6" class="outline-3">
-<h3 id="sec-4-6"><span class="section-number-3">4.6</span> ±£´æµ½±¾µØ</h3>
+<div id="outline-container-sec-4-6" class="outline-3">
+<h3 id="sec-4-6"><span class="section-number-3">4.6</span> ä¿å­˜åˆ°æœ¬åœ°</h3>
 <div class="outline-text-3" id="text-4-6">
-
-<p>   ÉÏÃæÊÇ»º´æµ½±¾µØ£¬¼´ÔÙ´Î´ò¿ª´ËarticleÊ±ºòÊÇ´Ó»º´æ¶ÁÈ¡¶ø·ÇÔÙ´ÎÏÂÔØ¡£±£´æµÄÃû×ÖÊÇÊý×Ö²»ÊÊºÏÈË²éÕÒÔÙ´Î²é¿´¡£<br/>
-   ÒªÏëÕæÕý±£´æ¿ÉÒÔÔÚsummary»º³åÇøÖÐ <code>o</code> £¬ÊäÈë±£´æÂ·¾¶¼°Ãû³Æ¡£<br/>
-   ÆäËü±£´æ·½Ê½²Î¿¼<a href="http://www.gnu.org/software/emacs/manual/html_node/gnus/Saving-Articles.html">Gnus¹Ù·½ÊÖ²á</a>¡£<br/>
-</p></div>
+<p>
+ä¸Šé¢æ˜¯ç¼“å­˜åˆ°æœ¬åœ°ï¼Œå³å†æ¬¡æ‰“å¼€æ­¤articleæ—¶å€™æ˜¯ä»Žç¼“å­˜è¯»å–è€Œéžå†æ¬¡ä¸‹è½½ã€‚ä¿å­˜çš„åå­—æ˜¯æ•°å­—ä¸é€‚åˆäººæŸ¥æ‰¾å†æ¬¡æŸ¥çœ‹ã€‚<br/>
+è¦æƒ³çœŸæ­£ä¿å­˜å¯ä»¥åœ¨summaryç¼“å†²åŒºä¸­ <code>o</code> ï¼Œè¾“å…¥ä¿å­˜è·¯å¾„åŠåç§°ã€‚<br/>
+å…¶å®ƒä¿å­˜æ–¹å¼å‚è€ƒ<a href="http://www.gnu.org/software/emacs/manual/html_node/gnus/Saving-Articles.html">Gnuså®˜æ–¹æ‰‹å†Œ</a>ã€‚<br/>
+</p>
+</div>
+</div>
 </div>
 
-</div>
-
-<div id="outline-container-5" class="outline-2">
-<h2 id="sec-5"><span class="section-number-2">5</span> ½â¾ö¶ÁÈ¡ÂýµÄÎÊÌâ</h2>
+<div id="outline-container-sec-5" class="outline-2">
+<h2 id="sec-5"><span class="section-number-2">5</span> è§£å†³è¯»å–æ…¢çš„é—®é¢˜</h2>
 <div class="outline-text-2" id="text-5">
-
-<p>  ·½·¨£ºÀûÓÃleafnodeÔÚºóÌ¨½«Ô¶³Ì·þÎñÆ÷ÉÏµÄÌû×Ó¶Áµ½±¾»ú£¬È»ºóGnus´Ó±¾»úÉÏ¶ÁÈ¡Ìû×Ó¡£<br/>
-</p><ol>
-<li>Ubuntu°²×°leafnode: sudo apt-get install leafnode, ÆäËüOS¿ÉÒÔÔÚÆä<a href="http://leafnode.sourceforge.net/">¹ÙÍø</a> ÕÒµ½°²×°·½·¨¡£<br/>
-     Ubuntu°²×°¹ý³ÌÖÐ»áÓÐÊäÈëÐÂÎÅ×é·þÎñÆ÷µØÖ·¿ÉÒÔÊäÈë£ºnews.aioe.org£¬ÆäÊµÎÞËùÎ½£¬Ö®ºó»¹ÒªÊÖ¶¯ÅäÖÃ¡£<br/>
+<p>
+æ–¹æ³•ï¼šåˆ©ç”¨leafnodeåœ¨åŽå°å°†è¿œç¨‹æœåŠ¡å™¨ä¸Šçš„å¸–å­è¯»åˆ°æœ¬æœºï¼Œç„¶åŽGnusä»Žæœ¬æœºä¸Šè¯»å–å¸–å­ã€‚<br/>
+</p>
+<ol class="org-ol">
+<li>Ubuntuå®‰è£…leafnode: sudo apt-get install leafnode, å…¶å®ƒOSå¯ä»¥åœ¨å…¶<a href="http://leafnode.sourceforge.net/">å®˜ç½‘</a> æ‰¾åˆ°å®‰è£…æ–¹æ³•ã€‚<br/>
+Ubuntuå®‰è£…è¿‡ç¨‹ä¸­ä¼šæœ‰è¾“å…¥æ–°é—»ç»„æœåŠ¡å™¨åœ°å€å¯ä»¥è¾“å…¥ï¼šnews.aioe.orgï¼Œå…¶å®žæ— æ‰€è°“ï¼Œä¹‹åŽè¿˜è¦æ‰‹åŠ¨é…ç½®ã€‚<br/>
 </li>
-<li>Ê×ÏÈÅäÖÃhostname£¬Ô­Òò¿ÉÒÔ²Î¿¼<a href="http://www.leafnode.org/doc_en/README-FQDN.html">¹ÙÍøµÄFAQ</a>£¬ ´óÖÂÒâË¼ÊÇËµ£ºÒªÅäÖÃhostnameÊ¹ÆäÈ«ÇòÎ¨Ò»£¬·ñÔòÈç¹ûÓÐÁ½¸öÏàÍ¬hostnameµÄ»°·þÎñÆ÷²»ÖªµÀ¸Ã·¢¸øË­»á½«ÆäÅ×Æú£¬½á¹ûË­Ò²ÊÕ²»µ½¡£ÐÞ¸Ä /etc/hosts ÐÞ¸Ä <code>127.0.1.1 localhost(¿ÉÄÜ²»Ò»Ñù)</code> Îª <code>127.0.1.1 fan.visayafan.com localhost</code> ,ÆäÖÐÄãÓ¦¸Ã½« fan.visayafan.comÉèÖÃ³ÉÎ¨Ò»£¨Ëæ±ãÉèÖÃÖ»ÒªÎ¨Ò»¼´¿É£©£¬ <code>localhost</code> ÓëÇ°ÃæÐÞ¸ÄÇ°Ò»Ñù£¬½«Æä×÷Îª <code>fan.visayafan.com</code> µÄ±ðÃû£¬ÒÔ±ÜÃâÐÞ¸ÄÏµÍ³ÖÐÆäËüÓÃµ½Ô­À´hostnameµÄÓ¦ÓÃ³ÌÐò¡£<br/>
+<li>é¦–å…ˆé…ç½®hostnameï¼ŒåŽŸå› å¯ä»¥å‚è€ƒ<a href="http://www.leafnode.org/doc_en/README-FQDN.html">å®˜ç½‘çš„FAQ</a>ï¼Œ å¤§è‡´æ„æ€æ˜¯è¯´ï¼šè¦é…ç½®hostnameä½¿å…¶å…¨çƒå”¯ä¸€ï¼Œå¦åˆ™å¦‚æžœæœ‰ä¸¤ä¸ªç›¸åŒhostnameçš„è¯æœåŠ¡å™¨ä¸çŸ¥é“è¯¥å‘ç»™è°ä¼šå°†å…¶æŠ›å¼ƒï¼Œç»“æžœè°ä¹Ÿæ”¶ä¸åˆ°ã€‚ä¿®æ”¹ /etc/hosts ä¿®æ”¹ <code>127.0.1.1 localhost(å¯èƒ½ä¸ä¸€æ ·)</code> ä¸º <code>127.0.1.1 fan.visayafan.com localhost</code> ,å…¶ä¸­ä½ åº”è¯¥å°† fan.visayafan.comè®¾ç½®æˆå”¯ä¸€ï¼ˆéšä¾¿è®¾ç½®åªè¦å”¯ä¸€å³å¯ï¼‰ï¼Œ <code>localhost</code> ä¸Žå‰é¢ä¿®æ”¹å‰ä¸€æ ·ï¼Œå°†å…¶ä½œä¸º <code>fan.visayafan.com</code> çš„åˆ«åï¼Œä»¥é¿å…ä¿®æ”¹ç³»ç»Ÿä¸­å…¶å®ƒç”¨åˆ°åŽŸæ¥hostnameçš„åº”ç”¨ç¨‹åºã€‚<br/>
 </li>
-<li>±à¼­£º/etc/news/leafnode/configÎÄ¼þ£¬ÆäÖÐ´ó²¿·ÖÅäÖÃÓÃÄ¬ÈÏµÄ¾Í¿ÉÒÔÁË£¬ÐèÒªÐÞ¸ÄµÄÖ»ÓÐ¼¸¸ö£º<br/>
-<ul>
-<li>expire = 3000 ±íÊ¾3000Ö®ÄÚ²»¶ÁµÄÌû×Ó½«»á±»±ê¼ÇÎª¹ýÆÚÖ®ºó»á±»É¾³ý£¬ÎÒÃÇ¿ÉÒÔ½«ÆäÉè´óµã£¬3000ÒâÎ¶×Å8ÄêÄÚÏÂÔØ»ØÀ´µÄÌû×Ó²»»á±»×Ô¶¯É¾³ý¡£<br/>
+<li>ç¼–è¾‘ï¼š/etc/news/leafnode/configæ–‡ä»¶ï¼Œå…¶ä¸­å¤§éƒ¨åˆ†é…ç½®ç”¨é»˜è®¤çš„å°±å¯ä»¥äº†ï¼Œéœ€è¦ä¿®æ”¹çš„åªæœ‰å‡ ä¸ªï¼š<br/>
+<ul class="org-ul">
+<li>expire = 3000 è¡¨ç¤º3000ä¹‹å†…ä¸è¯»çš„å¸–å­å°†ä¼šè¢«æ ‡è®°ä¸ºè¿‡æœŸä¹‹åŽä¼šè¢«åˆ é™¤ï¼Œæˆ‘ä»¬å¯ä»¥å°†å…¶è®¾å¤§ç‚¹ï¼Œ3000æ„å‘³ç€8å¹´å†…ä¸‹è½½å›žæ¥çš„å¸–å­ä¸ä¼šè¢«è‡ªåŠ¨åˆ é™¤ã€‚<br/>
 </li>
-<li>Èç¹û¸Õ²ÅÔÚ°²×°ÅäÖÃµÄÊ±ºòÊäÈëÁË·þÎñÆ÷µØÖ·Ôò¿ÉÒÔ¿´µ½server = news.aioe.orgÅäÖÃ£¬¿ÉÒÔÌí¼Ó¶à¸ö£º<br/>
-
-
-
-<pre class="example">server = news.aioe.org
+<li>å¦‚æžœåˆšæ‰åœ¨å®‰è£…é…ç½®çš„æ—¶å€™è¾“å…¥äº†æœåŠ¡å™¨åœ°å€åˆ™å¯ä»¥çœ‹åˆ°server = news.aioe.orgé…ç½®ï¼Œå¯ä»¥æ·»åŠ å¤šä¸ªï¼š<br/>
+<pre class="example">
+server = news.aioe.org
 server = news.gmane.org
 server = news.newsfan.net
 </pre>
-
 </li>
-<li>maxfetch = 20000 ±íÊ¾Ã¿´ÎÈ¡»ØÊý²»³¬¹ý20000£¬ÉèÖµ´óµã<br/>
+<li>maxfetch = 20000 è¡¨ç¤ºæ¯æ¬¡å–å›žæ•°ä¸è¶…è¿‡20000ï¼Œè®¾å€¼å¤§ç‚¹<br/>
 </li>
-<li>maxage = 300 Èç¹û´ËÖµÉèµÃ´óµÄ»°¿ÉÄÜ»áÔì³É¾­³£ÊÕµ½¾ÉÌû×Ó£¨ÒÔÇ°¶Á¹ýµÄ£©µÄÏÖÏó£¬Èç¹ûÄã²»Ïë¾­³£¿ÉÒÔ°Ñ´ËÖµÉèµÃÐ¡µã£¬Ä¬ÈÏÖµÊÇ10Ìì¡£´Ë´¦ÉèÎª300Ìì¡£<br/>
+<li>maxage = 300 å¦‚æžœæ­¤å€¼è®¾å¾—å¤§çš„è¯å¯èƒ½ä¼šé€ æˆç»å¸¸æ”¶åˆ°æ—§å¸–å­ï¼ˆä»¥å‰è¯»è¿‡çš„ï¼‰çš„çŽ°è±¡ï¼Œå¦‚æžœä½ ä¸æƒ³ç»å¸¸å¯ä»¥æŠŠæ­¤å€¼è®¾å¾—å°ç‚¹ï¼Œé»˜è®¤å€¼æ˜¯10å¤©ã€‚æ­¤å¤„è®¾ä¸º300å¤©ã€‚<br/>
 </li>
 </ul>
-
 </li>
-<li>Ö®ºó±ã¿ÉÒÔÓÃfetchnewsÃüÁîÍù±¾µØÉÏÏÂÔØÁË£º sudo fetchnews -vv (ÆäÖÐ-vv±íÊäÈëÏêÏ¸ÐÅÏ¢£¬-vvv¸üÏêÏ¸£¬-vvvv¸ü¸üÏêÏ¸ÊÇµ÷ÊÔÊ±ÓÃµÄ)£¬Êä³öÐÅÏ¢´óÖÂÊÇ£º<br/>
-     <div style="height:200px;overflow:auto;border-style:solid;border-width:1px;border-color:#DDD">
-
-<pre class="example">leafnode 1.11.8: verbosity level is 1, debugmode is 0
+<li>ä¹‹åŽä¾¿å¯ä»¥ç”¨fetchnewså‘½ä»¤å¾€æœ¬åœ°ä¸Šä¸‹è½½äº†ï¼š sudo fetchnews -vv (å…¶ä¸­-vvè¡¨è¾“å…¥è¯¦ç»†ä¿¡æ¯ï¼Œ-vvvæ›´è¯¦ç»†ï¼Œ-vvvvæ›´æ›´è¯¦ç»†æ˜¯è°ƒè¯•æ—¶ç”¨çš„)ï¼Œè¾“å‡ºä¿¡æ¯å¤§è‡´æ˜¯ï¼š<br/>
+<div style="height:200px;overflow:auto;border-style:solid;border-width:1px;border-color:#DDD">
+<pre class="example">
+leafnode 1.11.8: verbosity level is 1, debugmode is 0
 try_lock(timeout=5), fqdn="fan.visayafan.com"
 news.aioe.org: connecting to port nntp...
 news.aioe.org: connected to 94.75.214.39:119, reply: 200
@@ -453,363 +665,334 @@ wrote active file with 51062 lines
 Started process to update overview data in the background.
 Network activity has finished.
 </pre>
-
-     </div>
-     <b>Èç¹û´ËÊ±³öÏÖhostname²»Î¨Ò»µÄ´íÎóÌáÊ¾µÄ»°¿ÉÄÜÐèÒªÖØÆôÏµÍ³Ê¹¸Õ²ÅÐÞ¸ÄµÄhostsÉúÐ§¡£</b><br/>
+</div>
+<p>
+<b>å¦‚æžœæ­¤æ—¶å‡ºçŽ°hostnameä¸å”¯ä¸€çš„é”™è¯¯æç¤ºçš„è¯å¯èƒ½éœ€è¦é‡å¯ç³»ç»Ÿä½¿åˆšæ‰ä¿®æ”¹çš„hostsç”Ÿæ•ˆã€‚</b><br/>
+</p>
 </li>
-<li>´ËÊ±ÏÂÔØµÄÖ»ÊÇÒ»¸öÄ¿Â¼Çåµ¥¶øÒÑ£¬¿ÉÒÔÔÚ /var/spool/news/leaf.nodeÏÂ¿´µ½Ò»¸ö4M´óÐ¡µÄgroupinfo£¬´ËÎÄ¼þÀï°üº¬¸Õ²Å3¸ö·þÎñÆ÷ÀïËùÓÐ×éÃû£¨·Ç³£¶àµÄ×é£©¡£<br/>
+<li>æ­¤æ—¶ä¸‹è½½çš„åªæ˜¯ä¸€ä¸ªç›®å½•æ¸…å•è€Œå·²ï¼Œå¯ä»¥åœ¨ /var/spool/news/leaf.nodeä¸‹çœ‹åˆ°ä¸€ä¸ª4Må¤§å°çš„groupinfoï¼Œæ­¤æ–‡ä»¶é‡ŒåŒ…å«åˆšæ‰3ä¸ªæœåŠ¡å™¨é‡Œæ‰€æœ‰ç»„åï¼ˆéžå¸¸å¤šçš„ç»„ï¼‰ã€‚<br/>
 </li>
-<li>´ËÊ±ÓÃÃüÁî <code>ps aux|grep leafnode</code> ¿ÉÒÔ¿´µ½ÓÐÒ»¸ö½ø³ÌÔÚÖ´ÐÐ£¬´Ë½ø³ÌÊÇ±»¼ÓÈëµ½<a href="http://blog.csdn.net/tianlesoftware/article/details/5315039">crontab</a> ÖÐ£¨¶¨Ê±Ö´ÐÐ£©£¬Ä¬ÈÏÊ±¼ä1Ð¡Ê±Ö´ÐÐÒ»´Î£¬¿ÉÒÔ½«ÆäÐÞ¸ÄÎª10·ÖÖÓ£¬ÐÞ¸Ä /etc/cron.d/leafnode Îª£º<br/>
-
-
-
-<pre class="example"># Cron entries for Leafnode.
+<li>æ­¤æ—¶ç”¨å‘½ä»¤ <code>ps aux|grep leafnode</code> å¯ä»¥çœ‹åˆ°æœ‰ä¸€ä¸ªè¿›ç¨‹åœ¨æ‰§è¡Œï¼Œæ­¤è¿›ç¨‹æ˜¯è¢«åŠ å…¥åˆ°<a href="http://blog.csdn.net/tianlesoftware/article/details/5315039">crontab</a> ä¸­ï¼ˆå®šæ—¶æ‰§è¡Œï¼‰ï¼Œé»˜è®¤æ—¶é—´1å°æ—¶æ‰§è¡Œä¸€æ¬¡ï¼Œå¯ä»¥å°†å…¶ä¿®æ”¹ä¸º10åˆ†é’Ÿï¼Œä¿®æ”¹ /etc/cron.d/leafnode ä¸ºï¼š<br/>
+<pre class="example">
+# Cron entries for Leafnode.
 # Run /etc/news/leafnode/do-fetch-news every hour.
 */10 * * * *  news if [ -x /etc/news/leafnode/do-fetch-news ]; then /etc/news/leafnode/do-fetch-news; fi
 </pre>
-
 </li>
-<li>ÐÞ¸Ä.gnus.elÖÐ <code>(setq gnus-select-method '(nntp "news.aioe.org"))</code> Îª <code>(setq gnus-select-method '(nntp "localhost"))</code> £¬×¢ÊÍµô gnus-secondary-select-methodµÄÐÐ¡£<br/>
-     Ö®ºóÆô¶¯Gnus´ËÊ±ÓÉÓÚ±¾»úÉÏÃ»ÓÐÈÎºÎ×éµÄÈÎºÎÌû×ÓËùÒÔGroup»º³åÇøÎª¿Õ£¬°´ÏÂ <code>L</code> ¼´¿ÉÏÔÊ¾³öÒÔÇ°Ôø¾­¶©ÔÄ¹ýµÄ×é£¬Èç¹ûÊÇµÚÒ»´ÎÊ¹ÓÃÔò¿ÉÒÔ <code>^</code> ½øÈëserverÖ®ºóÔÚlocalhostÉÏ»Ø³µ´ò¿ª×éÁÐ±íÇåµ¥£¨Ê±¼ä»áºÜ³¤£¬ÒòÎªÊÇ4MµÄÎÄ±¾ÎÄ¼þ£©£¬Ö®ºóÔÚ¸ÐÐËÈ¤µÄ×éÉÏ <code>u</code> ¶©ÔÄ¡£<br/>
-     ½øÈë×éµÄ summary »º³åÇøºóÖ»»á¿´µ½Ò»¸öÌû×Ó£¬ÕâÊÇleafnodeµÄËµÃ÷£¬´óÖÂÒâË¼ÊÇËµ£º´Ë×éµÄÌû×Ó»áÔÚÏÂ´Î³ÌÐòÖ´ÐÐµÄÊ±ºòÏÂÔØÏÂÀ´¡£ÓÉÓÚ¸Õ²Å°Ñ¶¨Ê±ÉèÖÃÎª10·ÖÖÓ£¬¹Ê10·ÖÖÓºóÔÙ½øÈë´Ë×é±ã¿É¿´µ½Ìû×Ó¡£Ò²¿ÉÒÔÊÖ¶¯ÔËÐÐ¸Õ²Å <code>ps aux|grep leafnode</code> ¿´µ½µÄÖ´ÐÐ³ÌÐò¼´£º <code>sudo /bin/sh /etc/news/leafnode/do-fetch-news</code> £¬Ö®ºóµÈ´ý¼¸·ÖÖÓ¼´¿É£¨ÊÓÍøËÙ¶ø¶¨£©¡£<br/>
-     ´ËÊ±ÔÙ²é¿´ <code>/var/spoon/news/interesting.groups</code> ¼´¿É¿´µ½¸Õ²Å¶©ÔÄµÄ×éÃû¡£Èç¹û¶©ÔÄµÄÊÇ <code>comp.lang.c++</code> Ôò¿ÉÒÔÔÚ <code>/var/spoon/news</code> Ä¿Â¼ÏÂ¿´µ½´ËÄ¿Â¼½á¹¹£º <code>comp/lang/c++</code> £¬´ËÄ¿Â¼ÄÚ´æ·ÅµÄÊÇ¸Õ²ÅÏÂÔØÏÂÀ´µÄÌû×Ó¡£<br/>
+<li>ä¿®æ”¹.gnus.elä¸­ <code>(setq gnus-select-method '(nntp "news.aioe.org"))</code> ä¸º <code>(setq gnus-select-method '(nntp "localhost"))</code> ï¼Œæ³¨é‡ŠæŽ‰ gnus-secondary-select-methodçš„è¡Œã€‚<br/>
+ä¹‹åŽå¯åŠ¨Gnusæ­¤æ—¶ç”±äºŽæœ¬æœºä¸Šæ²¡æœ‰ä»»ä½•ç»„çš„ä»»ä½•å¸–å­æ‰€ä»¥Groupç¼“å†²åŒºä¸ºç©ºï¼ŒæŒ‰ä¸‹ <code>L</code> å³å¯æ˜¾ç¤ºå‡ºä»¥å‰æ›¾ç»è®¢é˜…è¿‡çš„ç»„ï¼Œå¦‚æžœæ˜¯ç¬¬ä¸€æ¬¡ä½¿ç”¨åˆ™å¯ä»¥ <code>^</code> è¿›å…¥serverä¹‹åŽåœ¨localhostä¸Šå›žè½¦æ‰“å¼€ç»„åˆ—è¡¨æ¸…å•ï¼ˆæ—¶é—´ä¼šå¾ˆé•¿ï¼Œå› ä¸ºæ˜¯4Mçš„æ–‡æœ¬æ–‡ä»¶ï¼‰ï¼Œä¹‹åŽåœ¨æ„Ÿå…´è¶£çš„ç»„ä¸Š <code>u</code> è®¢é˜…ã€‚<br/>
+è¿›å…¥ç»„çš„ summary ç¼“å†²åŒºåŽåªä¼šçœ‹åˆ°ä¸€ä¸ªå¸–å­ï¼Œè¿™æ˜¯leafnodeçš„è¯´æ˜Žï¼Œå¤§è‡´æ„æ€æ˜¯è¯´ï¼šæ­¤ç»„çš„å¸–å­ä¼šåœ¨ä¸‹æ¬¡ç¨‹åºæ‰§è¡Œçš„æ—¶å€™ä¸‹è½½ä¸‹æ¥ã€‚ç”±äºŽåˆšæ‰æŠŠå®šæ—¶è®¾ç½®ä¸º10åˆ†é’Ÿï¼Œæ•…10åˆ†é’ŸåŽå†è¿›å…¥æ­¤ç»„ä¾¿å¯çœ‹åˆ°å¸–å­ã€‚ä¹Ÿå¯ä»¥æ‰‹åŠ¨è¿è¡Œåˆšæ‰ <code>ps aux|grep leafnode</code> çœ‹åˆ°çš„æ‰§è¡Œç¨‹åºå³ï¼š <code>sudo /bin/sh /etc/news/leafnode/do-fetch-news</code> ï¼Œä¹‹åŽç­‰å¾…å‡ åˆ†é’Ÿå³å¯ï¼ˆè§†ç½‘é€Ÿè€Œå®šï¼‰ã€‚<br/>
+æ­¤æ—¶å†æŸ¥çœ‹ <code>/var/spoon/news/interesting.groups</code> å³å¯çœ‹åˆ°åˆšæ‰è®¢é˜…çš„ç»„åã€‚å¦‚æžœè®¢é˜…çš„æ˜¯ <code>comp.lang.c++</code> åˆ™å¯ä»¥åœ¨ <code>/var/spoon/news</code> ç›®å½•ä¸‹çœ‹åˆ°æ­¤ç›®å½•ç»“æž„ï¼š <code>comp/lang/c++</code> ï¼Œæ­¤ç›®å½•å†…å­˜æ”¾çš„æ˜¯åˆšæ‰ä¸‹è½½ä¸‹æ¥çš„å¸–å­ã€‚<br/>
 </li>
-<li>Èç¹û¾õµÃÏÂÔØÏÂÀ´µÄÌû×ÓÓÐµãÉÙ¿ÉÒÔÓÃ <code>-x</code> Ñ¡ÏîÖ¸¶¨ÏÂÔØÊýÁ¿£º <code>~$ sudo fetchnews -v -x 4000</code> £¬Ö¸¶¨´Ó¶©ÔÄµÄ×éÖÐÏÂÔØ4000¸öÌû×Ó£¨µ±È»Ç°ÌáÊÇÈç¹û´Ë×éÌû×ÓÊýÁ¿´óÓÚ4000£©¡£(Ê±¼ä»áºÜ³¤)<br/>
+<li>å¦‚æžœè§‰å¾—ä¸‹è½½ä¸‹æ¥çš„å¸–å­æœ‰ç‚¹å°‘å¯ä»¥ç”¨ <code>-x</code> é€‰é¡¹æŒ‡å®šä¸‹è½½æ•°é‡ï¼š <code>~$ sudo fetchnews -v -x 4000</code> ï¼ŒæŒ‡å®šä»Žè®¢é˜…çš„ç»„ä¸­ä¸‹è½½4000ä¸ªå¸–å­ï¼ˆå½“ç„¶å‰ææ˜¯å¦‚æžœæ­¤ç»„å¸–å­æ•°é‡å¤§äºŽ4000ï¼‰ã€‚(æ—¶é—´ä¼šå¾ˆé•¿)<br/>
 </li>
 </ol>
-
+</div>
 </div>
 
-</div>
-
-<div id="outline-container-6" class="outline-2">
-<h2 id="sec-6"><span class="section-number-2">6</span> Ê¹ÓÃ¾­Ñé</h2>
+<div id="outline-container-sec-6" class="outline-2">
+<h2 id="sec-6"><span class="section-number-2">6</span> ä½¿ç”¨ç»éªŒ</h2>
 <div class="outline-text-2" id="text-6">
-
-
-</div>
-
-<div id="outline-container-6-1" class="outline-3">
-<h3 id="sec-6-1"><span class="section-number-3">6.1</span> ²»ÓÃÖØÆôÌí¼ÓÐÂµÄÐÂÎÅ×é·þÎñÆ÷</h3>
+</div><div id="outline-container-sec-6-1" class="outline-3">
+<h3 id="sec-6-1"><span class="section-number-3">6.1</span> ä¸ç”¨é‡å¯æ·»åŠ æ–°çš„æ–°é—»ç»„æœåŠ¡å™¨</h3>
 <div class="outline-text-3" id="text-6-1">
-
-<p>   Ê×ÏÈÔÚ.gnus.elÖÐÌí¼Ó£¬ÀýÈç£ºnews.x-privat.org<br/>
+<p>
+é¦–å…ˆåœ¨.gnus.elä¸­æ·»åŠ ï¼Œä¾‹å¦‚ï¼šnews.x-privat.org<br/>
 </p>
-
+<div class="org-src-container">
 
 <pre class="src src-lisp">(add-to-list 'gnus-secondary-select-methods '(nntp  <span style="color: #8b2252;">"news.x-privat.org"</span>))
 </pre>
-
+</div>
 <p>
-   Ö®ºóÔÚGroup»º³åÇø <code>F</code> ²éÕÒÐÂÐÂÎÅ×é·þÎñÆ÷¡£<br/>
-</p></div>
-
+ä¹‹åŽåœ¨Groupç¼“å†²åŒº <code>F</code> æŸ¥æ‰¾æ–°æ–°é—»ç»„æœåŠ¡å™¨ã€‚<br/>
+</p>
+</div>
 </div>
 
-<div id="outline-container-6-2" class="outline-3">
-<h3 id="sec-6-2"><span class="section-number-3">6.2</span> ²é¿´Õû¸öthread</h3>
+<div id="outline-container-sec-6-2" class="outline-3">
+<h3 id="sec-6-2"><span class="section-number-3">6.2</span> æŸ¥çœ‹æ•´ä¸ªthread</h3>
 <div class="outline-text-3" id="text-6-2">
-
-<p>   Èç¹ûÒ»¸ötheadÊÇ»Ø¸´±ðÈËµÄÌû×Ó¶øÄÇ¸öÌû×ÓÄãÒÑ¾­¿´¹ýÁË£¬ÒòÎª¿´¹ýÁËËùÒÔ²»»áÏÔÊ¾³öÀ´£¨¼´ÀÏÌù£¬headerÇ°Ãæ±ê¼ÇO£©£¬´ËÊ±¿ÉÒÔÓÃ <code>A T</code> <code>gnus-summary-refer-thread=µÃµ½Õû¸öthread¡£    Èç¹ûÒ»¸öÈËµÄÌû×ÓÖÐÒýÓÃÁË±ðÈËËµµÄ»°£¬¿ÉÒÔÓÃ =A R</code> <code>gnus-summary-refer-references</code> À´È¡»ØÌûÖÐÒýÓÃÌûµÄÔ­Ìû£¨°üÀ¨ÒýÓÃÌûÖÐµÄÒýÓÃÌû£©¡£<br/>
-   ÉÏÃæÊÇÈ¡»ØËùÓÐÒýÓÃÌûµÄÔ­Ìû£¬¶øÓÐÊ±ÎÒÃÇÖ»Ïë²é¿´ÄÇ¸öÈËÒýÓÃÌûµÄÔ­Ìû£¬¶ø²»Ïë¿´ÒýÓÃÌûÖÐµÄÒýÓÃÌû£¬¼´Ö»ÏëµÝ¹é1´Î£¬ÓÃ <code>^</code> <code>gnus-summary-refer-parent-article</code>¡£<br/>
-
+<p>
+å¦‚æžœä¸€ä¸ªtheadæ˜¯å›žå¤åˆ«äººçš„å¸–å­è€Œé‚£ä¸ªå¸–å­ä½ å·²ç»çœ‹è¿‡äº†ï¼Œå› ä¸ºçœ‹è¿‡äº†æ‰€ä»¥ä¸ä¼šæ˜¾ç¤ºå‡ºæ¥ï¼ˆå³è€è´´ï¼Œheaderå‰é¢æ ‡è®°Oï¼‰ï¼Œæ­¤æ—¶å¯ä»¥ç”¨ <code>A T</code> <code>gnus-summary-refer-thread=å¾—åˆ°æ•´ä¸ªthreadã€‚<br/>
+   å¦‚æžœä¸€ä¸ªäººçš„å¸–å­ä¸­å¼•ç”¨äº†åˆ«äººè¯´çš„è¯ï¼Œå¯ä»¥ç”¨ =A R</code> <code>gnus-summary-refer-references</code> æ¥å–å›žå¸–ä¸­å¼•ç”¨å¸–çš„åŽŸå¸–ï¼ˆåŒ…æ‹¬å¼•ç”¨å¸–ä¸­çš„å¼•ç”¨å¸–ï¼‰ã€‚<br/>
+ä¸Šé¢æ˜¯å–å›žæ‰€æœ‰å¼•ç”¨å¸–çš„åŽŸå¸–ï¼Œè€Œæœ‰æ—¶æˆ‘ä»¬åªæƒ³æŸ¥çœ‹é‚£ä¸ªäººå¼•ç”¨å¸–çš„åŽŸå¸–ï¼Œè€Œä¸æƒ³çœ‹å¼•ç”¨å¸–ä¸­çš„å¼•ç”¨å¸–ï¼Œå³åªæƒ³é€’å½’1æ¬¡ï¼Œç”¨ <code>^</code> =gnus-summary-refer-parent-article=ã€‚<br/>
 </p>
 <hr/>
 <p>
-   ±ÈÈç£ºA·¢±íÁËÒ»ÆªÌû×Ó£¬ÄÚÈÝÎª1£»BÔÚ»ØAÌû×ÓµÄÊ±ºòÒýÓÃÁËAµÄÌû×Ó£¬»Ø¸´ÄÚÈÝÎª2£»C»Ø¸´BµÄÊ±ºòÒýÓÃÁËBµÄÌû×Ó£¬»Ø¸´ÄÚÈÝÎª3£»Ôò¿´µ½µÄÓ¦¸ÃÊÇ£º<br/>
+æ¯”å¦‚ï¼šAå‘è¡¨äº†ä¸€ç¯‡å¸–å­ï¼Œå†…å®¹ä¸º1ï¼›Båœ¨å›žAå¸–å­çš„æ—¶å€™å¼•ç”¨äº†Açš„å¸–å­ï¼Œå›žå¤å†…å®¹ä¸º2ï¼›Cå›žå¤Bçš„æ—¶å€™å¼•ç”¨äº†Bçš„å¸–å­ï¼Œå›žå¤å†…å®¹ä¸º3ï¼›åˆ™çœ‹åˆ°çš„åº”è¯¥æ˜¯ï¼š<br/>
+</p>
 <div class="row-fluid"> <div class="span4">
-
-<pre class="example">From: A
+<pre class="example">
+From: A
 1
 </pre>
-
 </div> <div class="span4">
-
-<pre class="example">From: B
+<pre class="example">
+From: B
 2
 &gt; 1
 </pre>
-
 </div> <div class="span4">
-
-<pre class="example">From: C
+<pre class="example">
+From: C
 3
 &gt;2
 &gt;&gt;1
 </pre>
-
 </div></div>
-  Èç¹ûA£¬BµÄÌû×ÓÄã¶¼¿´¹ýÁËÔò´ËÊ±ABµÄÌû×Ó²»»áÏÔÊ¾£¬ÄãÖ»¿´¹ýCµÄÌû×Ó£¬µ«ÄãÏëÖªµÀABËµÁËÊ²Ã´£¬¿ÉÒÔÓÃ <code>A T</code>£¬»áÈ¡»ØÕû¸öthreadÀïËùÓÐÌû×Ó¡£CÒýÓÃÁËBµÄ»°£¬Èç¹ûÄãÏë¿´BËµÁËÊ²Ã´£¬¿ÉÒÔÓÃ <code>^</code>¡£CÒýÓÃµÄBÖÐÓÖÒýÓÃÁËA£¬ÓÃ <code>A R</code> Ôò¿ÉÒÔµÝ¹éÈ¡»ØÒýÓÃÌû×Ó¼´A£¬BµÄÌû×Ó¡£<br/>
-
+<p>
+å¦‚æžœAï¼ŒBçš„å¸–å­ä½ éƒ½çœ‹è¿‡äº†åˆ™æ­¤æ—¶ABçš„å¸–å­ä¸ä¼šæ˜¾ç¤ºï¼Œä½ åªçœ‹è¿‡Cçš„å¸–å­ï¼Œä½†ä½ æƒ³çŸ¥é“ABè¯´äº†ä»€ä¹ˆï¼Œå¯ä»¥ç”¨ <code>A T=ï¼Œä¼šå–å›žæ•´ä¸ªthreadé‡Œæ‰€æœ‰å¸–å­ã€‚Cå¼•ç”¨äº†Bçš„è¯ï¼Œå¦‚æžœä½ æƒ³çœ‹Bè¯´äº†ä»€ä¹ˆï¼Œå¯ä»¥ç”¨ =^=ã€‚Cå¼•ç”¨çš„Bä¸­åˆå¼•ç”¨äº†Aï¼Œç”¨ =A R</code> åˆ™å¯ä»¥é€’å½’å–å›žå¼•ç”¨å¸–å­å³Aï¼ŒBçš„å¸–å­ã€‚<br/>
 </p>
 <hr/>
 </div>
-
 </div>
 
-<div id="outline-container-6-3" class="outline-3">
-<h3 id="sec-6-3"><span class="section-number-3">6.3</span> ×Ô¶¯È¡»ØÕû¸öthread</h3>
+<div id="outline-container-sec-6-3" class="outline-3">
+<h3 id="sec-6-3"><span class="section-number-3">6.3</span> è‡ªåŠ¨å–å›žæ•´ä¸ªthread</h3>
 <div class="outline-text-3" id="text-6-3">
-
-<p>   ÏñÉÏÃæÀý×ÓÖÐ£¬´ò¿ªGnusºóÖ»¿´µ½CµÄÌû×Ó£¬Èç¹ûÄãÏëGnus×Ô¶¯È¡»ØÕû¸öthread£¬¿ÉÒÔÉèÖÃ <code>gnus-fetch-old-headers</code> Îª non-nil£º<br/>
+<p>
+åƒä¸Šé¢ä¾‹å­ä¸­ï¼Œæ‰“å¼€GnusåŽåªçœ‹åˆ°Cçš„å¸–å­ï¼Œå¦‚æžœä½ æƒ³Gnusè‡ªåŠ¨å–å›žæ•´ä¸ªthreadï¼Œå¯ä»¥è®¾ç½® <code>gnus-fetch-old-headers</code> ä¸º non-nilï¼š<br/>
 </p>
-
+<div class="org-src-container">
 
 <pre class="src src-lisp">(setq gnus-fetch-old-headers 'some)
 </pre>
-
+</div>
 <p>
-   µ«Èç¹ûÌû×ÓºÜ³¤µÄ»°Ã¿´Î¶¼È¡»ØÕû¸öthread¿ÉÒÔ»á»¨ºÜ³¤Ê±¼ä£¬¿ÉÒÔÉèÖÃ <code>gnus-build-sparse-threads</code> Îªnon-nil£¬Ëü²»»áÈ¡»ØÕû¸öthread£¬Ö»»áÈ¡»ØÐÂÌûÁËÒýÓÃµÄÄÇÐ©¾ÉÌû£¬´ËÊ±µÄthreadÊÇ²»ÍêÕûµÄ£º<br/>
+ä½†å¦‚æžœå¸–å­å¾ˆé•¿çš„è¯æ¯æ¬¡éƒ½å–å›žæ•´ä¸ªthreadå¯ä»¥ä¼šèŠ±å¾ˆé•¿æ—¶é—´ï¼Œå¯ä»¥è®¾ç½® <code>gnus-build-sparse-threads</code> ä¸ºnon-nilï¼Œå®ƒä¸ä¼šå–å›žæ•´ä¸ªthreadï¼Œåªä¼šå–å›žæ–°å¸–äº†å¼•ç”¨çš„é‚£äº›æ—§å¸–ï¼Œæ­¤æ—¶çš„threadæ˜¯ä¸å®Œæ•´çš„ï¼š<br/>
 </p>
-
+<div class="org-src-container">
 
 <pre class="src src-lisp">(setq gnus-build-sparse-threads 'some)
 </pre>
-
+</div>
+</div>
 </div>
 
-</div>
-
-<div id="outline-container-6-4" class="outline-3">
-<h3 id="sec-6-4"><span class="section-number-3">6.4</span> ²é¿´ËùÓÐÍ·ÐÅÏ¢</h3>
+<div id="outline-container-sec-6-4" class="outline-3">
+<h3 id="sec-6-4"><span class="section-number-3">6.4</span> æŸ¥çœ‹æ‰€æœ‰å¤´ä¿¡æ¯</h3>
 <div class="outline-text-3" id="text-6-4">
-
-<p>   ÔÚ summary »º³åÇø»ò article »º³åÇøÏÂ <code>t</code> ¼´¿ÉÔÚ×Ô¶¨ÒåÍ·ÐÅÏ¢ºÍÈ«²¿Í·ÐÅÏ¢Ö®¼äÇÐ»»¡£<br/>
-   Ò²¿ÉÒÔ <code>C-u g</code> ²é¿´Î´¸ñÊ½»¯µÄÔ­Ê¼ÐÅÏ¢À´²é¿´È«²¿Í·ÐÅÏ¢£¬ <code>g</code> ²é¿´¸ñÊ½»¯ºóÐÅÏ¢£¨½øÐÐ¸ßÁÁÏÔÊ¾ºÍ¸ñÊ½ÕûÀí£©¡£<br/>
-</p></div>
-
-</div>
-
-<div id="outline-container-6-5" class="outline-3">
-<h3 id="sec-6-5"><span class="section-number-3">6.5</span> ×Ô¶¨Òå×é</h3>
-<div class="outline-text-3" id="text-6-5">
-
-<p>   Èç¹ûÄãÏë×Ô¶¨ÒåÈÃÒ»¸ö×éÈÃÆäºÍÆäËü×é²»Ò»Ñù£¬¿ÉÒÔÔÚgroup»º³åÇøÉÏ¹â±ê·ÅÔÚÖ¸¶¨×éÉÏ <code>G c</code> ¼´¿É½øÈë´Ë×éµÄÅäÖÃbuffer.<br/>
-</p></div>
-
-</div>
-
-<div id="outline-container-6-6" class="outline-3">
-<h3 id="sec-6-6"><span class="section-number-3">6.6</span> Ê¹ÓÃagentÀ´ÏÂÔØÌû×Ó</h3>
-<div class="outline-text-3" id="text-6-6">
-
-<p>   <a href="http://www.gnu.org/software/emacs/manual/html_node/gnus/Gnus-Unplugged.html#Gnus-Unplugged">Gnus Unpluged ¹ÙÍø°ïÖú</a><br/>
-   <a href="http://www.gnus.org/manual/gnus_401.html#SEC524">Gnus FAQ</a><br/>
-   agentÓÐunplugedºÍplugedÁ½ÖÖ×´Ì¬£¬¿ÉÒÔÔÚEmacs×´Ì¬À¸ÉÏ¿´µ½£¨Group bufferÀï£©¡£<br/>
+<p>
+åœ¨ summary ç¼“å†²åŒºæˆ– article ç¼“å†²åŒºä¸‹ <code>t</code> å³å¯åœ¨è‡ªå®šä¹‰å¤´ä¿¡æ¯å’Œå…¨éƒ¨å¤´ä¿¡æ¯ä¹‹é—´åˆ‡æ¢ã€‚<br/>
+ä¹Ÿå¯ä»¥ <code>C-u g</code> æŸ¥çœ‹æœªæ ¼å¼åŒ–çš„åŽŸå§‹ä¿¡æ¯æ¥æŸ¥çœ‹å…¨éƒ¨å¤´ä¿¡æ¯ï¼Œ <code>g</code> æŸ¥çœ‹æ ¼å¼åŒ–åŽä¿¡æ¯ï¼ˆè¿›è¡Œé«˜äº®æ˜¾ç¤ºå’Œæ ¼å¼æ•´ç†ï¼‰ã€‚<br/>
 </p>
 </div>
+</div>
 
-<div id="outline-container-6-6-1" class="outline-4">
-<h4 id="sec-6-6-1"><span class="section-number-4">6.6.1</span> agent¹¤×÷Á÷³Ì£º</h4>
+<div id="outline-container-sec-6-5" class="outline-3">
+<h3 id="sec-6-5"><span class="section-number-3">6.5</span> è‡ªå®šä¹‰ç»„</h3>
+<div class="outline-text-3" id="text-6-5">
+<p>
+å¦‚æžœä½ æƒ³è‡ªå®šä¹‰è®©ä¸€ä¸ªç»„è®©å…¶å’Œå…¶å®ƒç»„ä¸ä¸€æ ·ï¼Œå¯ä»¥åœ¨groupç¼“å†²åŒºä¸Šå…‰æ ‡æ”¾åœ¨æŒ‡å®šç»„ä¸Š <code>G c</code> å³å¯è¿›å…¥æ­¤ç»„çš„é…ç½®buffer.<br/>
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-6-6" class="outline-3">
+<h3 id="sec-6-6"><span class="section-number-3">6.6</span> ä½¿ç”¨agentæ¥ä¸‹è½½å¸–å­</h3>
+<div class="outline-text-3" id="text-6-6">
+<p>
+<a href="http://www.gnu.org/software/emacs/manual/html_node/gnus/Gnus-Unplugged.html#Gnus-Unplugged">Gnus Unpluged å®˜ç½‘å¸®åŠ©</a><br/>
+<a href="http://www.gnus.org/manual/gnus_401.html#SEC524">Gnus FAQ</a><br/>
+agentæœ‰unplugedå’Œplugedä¸¤ç§çŠ¶æ€ï¼Œå¯ä»¥åœ¨EmacsçŠ¶æ€æ ä¸Šçœ‹åˆ°ï¼ˆGroup bufferé‡Œï¼‰ã€‚<br/>
+</p>
+</div>
+<div id="outline-container-sec-6-6-1" class="outline-4">
+<h4 id="sec-6-6-1"><span class="section-number-4">6.6.1</span> agentå·¥ä½œæµç¨‹ï¼š</h4>
 <div class="outline-text-4" id="text-6-6-1">
-
-<ol>
-<li>ÏÖÔÚ±¾»úÃ»ÓÐÁ¬Íø£¬<code>J j</code> ½«agentÉèÖÃÎªunpluged×´Ì¬£¬ÓÃ»§Ê¹ÓÃgnusÔÄ¶ÁÌû×Ó(pluged×´Ì¬ÇÒÃ»ÓÐÁ¬ÍøÔògunsÊÇÓÃ²»ÁËµÄ)¡£<br/>
+<ol class="org-ol">
+<li>çŽ°åœ¨æœ¬æœºæ²¡æœ‰è¿žç½‘ï¼Œ=J j= å°†agentè®¾ç½®ä¸ºunplugedçŠ¶æ€ï¼Œç”¨æˆ·ä½¿ç”¨gnusé˜…è¯»å¸–å­(plugedçŠ¶æ€ä¸”æ²¡æœ‰è¿žç½‘åˆ™gunsæ˜¯ç”¨ä¸äº†çš„)ã€‚<br/>
 </li>
-<li>Èç¹ûÏë²é¿´ÊÇ·ñÓÐ¸üÐÂ¡£ÇÐ»»agent×´Ì¬Îªpluged£¬È»ºóÁ¬ÉÏÍø£¬<code>g</code> Ë¢ÐÂ£¬¿ÉÒÔÑ¡Ôñ¼ÌÐøÔÄ¶Á£¬Ò²¿ÉÒÔÑ¡Ôñ½«¸üÐÂµÄ²¿·ÖÈ«²¿ÏÂÔØµ½±¾»ú£¬È»ºóÇÐ»»agent×´Ì¬Îªunpluged£¬¶Ï¿ªÍøÂç£¬ÔÙÔÄ¶Á¡£<br/>
+<li>å¦‚æžœæƒ³æŸ¥çœ‹æ˜¯å¦æœ‰æ›´æ–°ã€‚åˆ‡æ¢agentçŠ¶æ€ä¸ºplugedï¼Œç„¶åŽè¿žä¸Šç½‘ï¼Œ=g= åˆ·æ–°ï¼Œå¯ä»¥é€‰æ‹©ç»§ç»­é˜…è¯»ï¼Œä¹Ÿå¯ä»¥é€‰æ‹©å°†æ›´æ–°çš„éƒ¨åˆ†å…¨éƒ¨ä¸‹è½½åˆ°æœ¬æœºï¼Œç„¶åŽåˆ‡æ¢agentçŠ¶æ€ä¸ºunplugedï¼Œæ–­å¼€ç½‘ç»œï¼Œå†é˜…è¯»ã€‚<br/>
 </li>
 </ol>
-
-<p>    Õâ¶ÔÍøÂçºÜ²î»òÊÇÍøÂç°´Ê±¼Æ·ÑµÄÇé¿ö»áºÜÓÐ»á¡£<br/>
-    agentÊÇ¸öbig cache, headersÈç¹û±¾µØÓÐ»á´Ó±¾µØ¶ÁÈ¡£¬GnusÖ»ÏÂÔØÒ»´Îheadersµ«²»»á»º´æarticles£¬Ô­ÒòÊÇÌ«´ó£¨³ý·ÇÊÇ<a href="#cache">×Ô¼º±ê¼ÇÏÂÔØ</a>µÄ£©£¬¿ÉÒÔÍ¨¹ýÉèÖÃ gnus-agent-cache Îª t ´Ó¶ø¼È»º´æheadersÓÖ»º´æ articles¡£<br/>
-</p></div>
-
+<p>
+è¿™å¯¹ç½‘ç»œå¾ˆå·®æˆ–æ˜¯ç½‘ç»œæŒ‰æ—¶è®¡è´¹çš„æƒ…å†µä¼šå¾ˆæœ‰ä¼šã€‚<br/>
+agentæ˜¯ä¸ªbig cache, headerså¦‚æžœæœ¬åœ°æœ‰ä¼šä»Žæœ¬åœ°è¯»å–ï¼ŒGnusåªä¸‹è½½ä¸€æ¬¡headersä½†ä¸ä¼šç¼“å­˜articlesï¼ŒåŽŸå› æ˜¯å¤ªå¤§ï¼ˆé™¤éžæ˜¯<a href="#cache">è‡ªå·±æ ‡è®°ä¸‹è½½</a>çš„ï¼‰ï¼Œå¯ä»¥é€šè¿‡è®¾ç½® gnus-agent-cache ä¸º t ä»Žè€Œæ—¢ç¼“å­˜headersåˆç¼“å­˜ articlesã€‚<br/>
+</p>
+</div>
 </div>
 
-<div id="outline-container-6-6-2" class="outline-4">
-<h4 id="sec-6-6-2"><a name="agentize" id="agentize"></a><span class="section-number-4">6.6.2</span> ¾ßÌåÊ¹ÓÃ</h4>
+<div id="outline-container-sec-6-6-2" class="outline-4">
+<h4 id="sec-6-6-2"><span class="section-number-4">6.6.2</span> å…·ä½“ä½¿ç”¨</h4>
 <div class="outline-text-4" id="text-6-6-2">
-
-<ul>
-<li>ÒªÊ¹ÓÃagentÊ×ÏÈÒª°ÑÒ»¸öserver agentized: ½øÈëserver buffer£¬ÔÚÒ»¸ö·þÎñÆ÷Ãû³ÆÇ°Ãæ <code>J a</code> ¼´¿É£¬´ËÊ±»áÔÚ¸Ã·þÎñÆ÷Ãû³ÆºóÃæ¿´µ½ agent ¡£<br/>
+<p>
+<a id="agentize" name="agentize"></a><br/>
+</p>
+<ul class="org-ul">
+<li>è¦ä½¿ç”¨agenté¦–å…ˆè¦æŠŠä¸€ä¸ªserver agentized: è¿›å…¥server bufferï¼Œåœ¨ä¸€ä¸ªæœåŠ¡å™¨åç§°å‰é¢ <code>J a</code> å³å¯ï¼Œæ­¤æ—¶ä¼šåœ¨è¯¥æœåŠ¡å™¨åç§°åŽé¢çœ‹åˆ° agent ã€‚<br/>
 </li>
-<li>Ö®ºó½øÈëgroup buffer£¬¿ÉÒÔÑ¡Ôñ²é¿´Ìû×Ó£¬Ò²¿ÉÒÔÑ¡Ôñ½«Õâ¸ögroupµÄÌû×ÓÈ«²¿ÏÂÔØÏÂÀ´£¨Ò²¿ÉÒÔÑ¡ÔñÐÔÏÂÔØ <a href="#catetory">agent categories</a>£©, ÔÚ agent²Ëµ¥ÏÂ¡£<br/>
+<li>ä¹‹åŽè¿›å…¥group bufferï¼Œå¯ä»¥é€‰æ‹©æŸ¥çœ‹å¸–å­ï¼Œä¹Ÿå¯ä»¥é€‰æ‹©å°†è¿™ä¸ªgroupçš„å¸–å­å…¨éƒ¨ä¸‹è½½ä¸‹æ¥ï¼ˆä¹Ÿå¯ä»¥é€‰æ‹©æ€§ä¸‹è½½ <a href="#category">agent categories</a>ï¼‰, åœ¨ agentèœå•ä¸‹ã€‚<br/>
 </li>
 </ul>
-
-<p><a name="cache" id="cache"></a><br/>
-       Ò²¿ÉÒÔÏÂÔØÄ³¸öÌû×Ó£¬ÏÈÓÃ <code>#</code> ±ê¼ÇÈ»ºó <code>J s</code> ÏÂÔØ= <b>»ò</b> ÓÃ <code>%</code> ±ê¼Ç£¨¿ì½Ý¼üÎª <code>@</code> £©È»ºó <code>J u</code> ÏÂÔØ¡£<br/>
-<a name="category" id="category"></a><br/>
-</p><ul>
-<li>category¹¹³É°üÀ¨£ºÃû×Ö£¬¼¸¸ö×é£¬Ìõ¼þ¡£<br/>
-      ËùÓÐ×é¶¼ÔÚÄ¬ÈÏdefault·ÖÀàÖÐ£¬´Ë·ÖÀàÌõ¼þÎªshort(Ö»ÏÂÔØÐÐÊýÉÙÓÚ100ÐÐµÄarticle)¡£<br/>
-      ¿ÉÒÔ×ÔÒÑÐÂ½¨×é£º <code>J C</code> ½øÈëcategory buffer£¬²Ëµ¥ categoriesÏÂ¿ÉÒÔÑ¡ÔñÐÂ½¨·ÖÀà£¬Îª·ÖÀàÌí¼Ó×é£¬¸Ä±äÆäÌõ¼þ¡£<br/>
-      Ìõ¼þ¿ÉÒÔÊÇ: <a href="http://www.gnu.org/software/emacs/manual/html_node/gnus/Category-Syntax.html#Category-Syntax">short long span true false low high</a><br/>
-      Ñ¡ÔñshortÔòÖ»ÓÐarticleÐÐ±È <code>gnus-agent-short-article</code> ²ÅÏÂÔØ(Ä¬ÈÏ100ÐÐ£¬¿ÉÒÔÔÚ²Ëµ¥ÏÂ <code>edit categories</code> ÐÞ¸Ä)£¬longÄ¬ÈÏÎª200ÐÐ£¬Í¬ÀíÖªÆäËü¡£<br/>
-      ÀýÈçÎÒ½¨Ò»¸öÃûÎªcccµÄ·ÖÀà£¬ÀïÃæÓÐ3¸ö×é£º <code>("comp.lang.c++" "comp.lang.c" "comp.lang.c++.moderated")</code> £¬predicateÌõ¼þÎª <code>long</code> ¡£²¢ÇÒ°Ñ defaultÌõ¼þ¸ÄÎªfalse£¨ÒòÎª²»ÏëÃ¿´Î¶¼¶ÔËùÓÐ×é½øÐÐ²Ù×÷£©¡£<br/>
-      ÕâÑùÔÚgroup bufferÀï <code>J s</code> ¼´¿ÉÏÂÔØ Ö¸¶¨3¸ö×éÀïÉÙÓÚ200ÐÐµÄËùÓÐarticle¡££¨¿ÉÒÔ°Ñ200¸Ä´óµã£¬ÕâÑù¾Í¿ÉÒÔÏÂÔØ 3¸ö×éÀï¼¸ºõËùÓÐarticlesÁË »òÖ±½ÓÓÃ true£©¡£<br/>
-      ¿ÉÒÔcopy£¨Ö»¿½±´Ìõ¼þ£©Õâ¸ö·ÖÀàÉú³ÉÒ»¸öÃûÎªlispµÄ·ÖÀà£¬Ìí¼ÓÁ½¸ö×é <code>("comp.lang.lisp" "gmane.lisp.china")</code> £¬ÓÉÓÚÊÇ¿½±´µÄËùÒÔÌõ¼þÈÔ¾ÉÊÇ long £¬Ö®ºóÔÚgroup bufferÀï <code>J s</code> ¾Í¿ÉÒÔÏÂÔØ5¸ö×éµÄËùÓÐÐÂµÄarticleÁË¡£<br/>
-      ×¢Òâ£º<br/>
-<ol>
-<li>ÇÐ»»½øgroupÒª¿´×´Ì¬À¸ÉÏµ±Ç°×´Ì¬ÊÇÊ²Ã´£¬ÒªÇÐ»»»Øpluged×´Ì¬²ÅÄÜÓÃ <code>J s</code> ÏÂÔØ¸üÐÂ¡££¨unpluged×´Ì¬ÏÂÊÇ²»»áÁ¬ÍøµÄ£©<br/>
+<p>
+<a id="cache" name="cache"></a><br/>
+      ä¹Ÿå¯ä»¥ä¸‹è½½æŸä¸ªå¸–å­ï¼Œå…ˆç”¨ <code>#</code> æ ‡è®°ç„¶åŽ <code>J s</code> ä¸‹è½½ <b>æˆ–</b> ç”¨ <code>%</code> æ ‡è®°ï¼ˆå¿«æ·é”®ä¸º <code>@</code> ï¼‰ç„¶åŽ <code>J u</code> ä¸‹è½½ã€‚<br/>
+<a id="category" name="category"></a><br/>
+</p>
+<ul class="org-ul">
+<li>categoryæž„æˆåŒ…æ‹¬ï¼šåå­—ï¼Œå‡ ä¸ªç»„ï¼Œæ¡ä»¶ã€‚<br/>
+æ‰€æœ‰ç»„éƒ½åœ¨é»˜è®¤defaultåˆ†ç±»ä¸­ï¼Œæ­¤åˆ†ç±»æ¡ä»¶ä¸ºshort(åªä¸‹è½½è¡Œæ•°å°‘äºŽ100è¡Œçš„article)ã€‚<br/>
+å¯ä»¥è‡ªå·²æ–°å»ºç»„ï¼š <code>J C</code> è¿›å…¥category bufferï¼Œèœå• categoriesä¸‹å¯ä»¥é€‰æ‹©æ–°å»ºåˆ†ç±»ï¼Œä¸ºåˆ†ç±»æ·»åŠ ç»„ï¼Œæ”¹å˜å…¶æ¡ä»¶ã€‚<br/>
+æ¡ä»¶å¯ä»¥æ˜¯: <a href="http://www.gnu.org/software/emacs/manual/html_node/gnus/Category-Syntax.html#Category-Syntax">short long span true false low high</a><br/>
+é€‰æ‹©shortåˆ™åªæœ‰articleè¡Œæ¯” <code>gnus-agent-short-article</code> æ‰ä¸‹è½½(é»˜è®¤100è¡Œï¼Œå¯ä»¥åœ¨èœå•ä¸‹ <code>edit categories</code> ä¿®æ”¹)ï¼Œlongé»˜è®¤ä¸º200è¡Œï¼ŒåŒç†çŸ¥å…¶å®ƒã€‚<br/>
+ä¾‹å¦‚æˆ‘å»ºä¸€ä¸ªåä¸ºcccçš„åˆ†ç±»ï¼Œé‡Œé¢æœ‰3ä¸ªç»„ï¼š <code>("comp.lang.c++" "comp.lang.c" "comp.lang.c++.moderated")</code> ï¼Œpredicateæ¡ä»¶ä¸º <code>long</code> ã€‚å¹¶ä¸”æŠŠ defaultæ¡ä»¶æ”¹ä¸ºfalseï¼ˆå› ä¸ºä¸æƒ³æ¯æ¬¡éƒ½å¯¹æ‰€æœ‰ç»„è¿›è¡Œæ“ä½œï¼‰ã€‚<br/>
+è¿™æ ·åœ¨group bufferé‡Œ <code>J s</code> å³å¯ä¸‹è½½ æŒ‡å®š3ä¸ªç»„é‡Œå°‘äºŽ200è¡Œçš„æ‰€æœ‰articleã€‚ï¼ˆå¯ä»¥æŠŠ200æ”¹å¤§ç‚¹ï¼Œè¿™æ ·å°±å¯ä»¥ä¸‹è½½ 3ä¸ªç»„é‡Œå‡ ä¹Žæ‰€æœ‰articlesäº† æˆ–ç›´æŽ¥ç”¨ trueï¼‰ã€‚<br/>
+å¯ä»¥copyï¼ˆåªæ‹·è´æ¡ä»¶ï¼‰è¿™ä¸ªåˆ†ç±»ç”Ÿæˆä¸€ä¸ªåä¸ºlispçš„åˆ†ç±»ï¼Œæ·»åŠ ä¸¤ä¸ªç»„ <code>("comp.lang.lisp" "gmane.lisp.china")</code> ï¼Œç”±äºŽæ˜¯æ‹·è´çš„æ‰€ä»¥æ¡ä»¶ä»æ—§æ˜¯ long ï¼Œä¹‹åŽåœ¨group bufferé‡Œ <code>J s</code> å°±å¯ä»¥ä¸‹è½½5ä¸ªç»„çš„æ‰€æœ‰æ–°çš„articleäº†ã€‚<br/>
+æ³¨æ„ï¼š<br/>
+<ol class="org-ol">
+<li>åˆ‡æ¢è¿›groupè¦çœ‹çŠ¶æ€æ ä¸Šå½“å‰çŠ¶æ€æ˜¯ä»€ä¹ˆï¼Œè¦åˆ‡æ¢å›žplugedçŠ¶æ€æ‰èƒ½ç”¨ <code>J s</code> ä¸‹è½½æ›´æ–°ã€‚ï¼ˆunplugedçŠ¶æ€ä¸‹æ˜¯ä¸ä¼šè¿žç½‘çš„ï¼‰<br/>
 </li>
-<li>ÓÉÓÚ gmane.lisp.chinaºÍÆäËü4¸ö²»ÊÇÍ¬Ò»¸ö·þÎñÆ÷£¨·Ö±ðÊÇ news.gmane.orgºÍ news.aioe.org£©£¬ËùÒÔÒª½øÐÐÇ°ÒªÈ·±£Á½¸ö·þÎñÆ÷¶¼ÒÑ¾­±» <a href="#sec-6-6-2">agentized</a> ÁË¡£<br/>
+<li>ç”±äºŽ gmane.lisp.chinaå’Œå…¶å®ƒ4ä¸ªä¸æ˜¯åŒä¸€ä¸ªæœåŠ¡å™¨ï¼ˆåˆ†åˆ«æ˜¯ news.gmane.orgå’Œ news.aioe.orgï¼‰ï¼Œæ‰€ä»¥è¦è¿›è¡Œå‰è¦ç¡®ä¿ä¸¤ä¸ªæœåŠ¡å™¨éƒ½å·²ç»è¢« <a href="#agentize">agentized</a> äº†ã€‚<br/>
 </li>
-<li>Èç¹ûÒª»ØÌûµÄ»°Ó¦¸ÃÇÐ»»µ½pluged×´Ì¬£¨ÎÒ²ÂÊÇ£¬»¹Ã»»Ø¹ýÌû£©<br/>
+<li>å¦‚æžœè¦å›žå¸–çš„è¯åº”è¯¥åˆ‡æ¢åˆ°plugedçŠ¶æ€ï¼ˆæˆ‘çŒœæ˜¯ï¼Œè¿˜æ²¡å›žè¿‡å¸–ï¼‰<br/>
 </li>
 </ol>
-
 </li>
 </ul>
-
+</div>
 </div>
 
-</div>
-
-<div id="outline-container-6-6-3" class="outline-4">
+<div id="outline-container-sec-6-6-3" class="outline-4">
 <h4 id="sec-6-6-3"><span class="section-number-4">6.6.3</span> Gnus auto-save file exists. Do you want to read it?</h4>
 <div class="outline-text-4" id="text-6-6-3">
-
-<p>    ÕâÊÇÒòÎªÉÏ´ÎÃ»ÓÐÕý³£ÍË³öGnus£¨q¼üÍË³ö£©µ¼ÖÂ¡£<br/>
-</p></div>
-</div>
-
-</div>
-
-<div id="outline-container-6-7" class="outline-3">
-<h3 id="sec-6-7"><span class="section-number-3">6.7</span> ×Ô¶¨Òågroup bufferÀï¸ñÊ½</h3>
-<div class="outline-text-3" id="text-6-7">
-
-<p>   <a href="http://www.gnu.org/software/emacs/manual/html_node/gnus/Group-Line-Specification.html">²Î¿¼ÊÖ²á</a><br/>
-   Ä¬ÈÏÊÇ <code>%M%S%5y:%B%(%g%)\n</code> ¿ÉÒÔÍ¨¹ýÐÞ¸Ä <code>gnus-group-line-format</code> ±äÁ¿À´ÐÞ¸Ä£º<br/>
+<p>
+è¿™æ˜¯å› ä¸ºä¸Šæ¬¡æ²¡æœ‰æ­£å¸¸é€€å‡ºGnusï¼ˆqé”®é€€å‡ºï¼‰å¯¼è‡´ã€‚<br/>
 </p>
+</div>
+</div>
+</div>
 
+<div id="outline-container-sec-6-7" class="outline-3">
+<h3 id="sec-6-7"><span class="section-number-3">6.7</span> è‡ªå®šä¹‰group bufferé‡Œæ ¼å¼</h3>
+<div class="outline-text-3" id="text-6-7">
+<p>
+<a href="http://www.gnu.org/software/emacs/manual/html_node/gnus/Group-Line-Specification.html">å‚è€ƒæ‰‹å†Œ</a><br/>
+é»˜è®¤æ˜¯ <code>%M%S%5y:%B%(%g%)\n</code> å¯ä»¥é€šè¿‡ä¿®æ”¹ <code>gnus-group-line-format</code> å˜é‡æ¥ä¿®æ”¹ï¼š<br/>
+</p>
+<div class="org-src-container">
 
 <pre class="src src-lisp">(setq gnus-group-line-format <span style="color: #8b2252;">"%M%S%p%P%5y/%5t:%B%(%g%)"</span>)
 </pre>
-
+</div>
 <p>
-   Ìí¼ÓÁË /%5t ÏÔÊ¾¸ÃÐÂÎÅ×é×Ü¹²¶àÉÙarticles¡£<br/>
-</p></div>
-
+æ·»åŠ äº† /%5t æ˜¾ç¤ºè¯¥æ–°é—»ç»„æ€»å…±å¤šå°‘articlesã€‚<br/>
+</p>
+</div>
 </div>
 
-<div id="outline-container-6-8" class="outline-3">
-<h3 id="sec-6-8"><span class="section-number-3">6.8</span> Group BufferÀïÐÂÎÅ×é½øÐÐ·ÖÀà</h3>
+<div id="outline-container-sec-6-8" class="outline-3">
+<h3 id="sec-6-8"><span class="section-number-3">6.8</span> Group Bufferé‡Œæ–°é—»ç»„è¿›è¡Œåˆ†ç±»</h3>
 <div class="outline-text-3" id="text-6-8">
-
-<p>   ·ÖÀàÊÇ°´topic½øÐÐ·ÖÀàµÄ£¬ÏÈÓÃ <code>t</code> ÇÐ»»µ½topicÊÓÍ¼£¬È»ºó½«¹â±ê·ÅÔÚGnusÉÏ <code>T n</code> ÐÂ½¨Ò»¸ötopic, <code>T m</code> ½«¹â±êËùÔÚ´¦µÄÐÂÎÅ×éÒÆ¶¯µ½Ö¸¶¨µÄtopicÀï£¬¿ÉÒÔÍ¨¹ý <code>T</code> <code>C-h</code> ²é¿´ÆäËüÃüÁî¡£<br/>
-</p></div>
-
+<p>
+åˆ†ç±»æ˜¯æŒ‰topicè¿›è¡Œåˆ†ç±»çš„ï¼Œå…ˆç”¨ <code>t</code> åˆ‡æ¢åˆ°topicè§†å›¾ï¼Œç„¶åŽå°†å…‰æ ‡æ”¾åœ¨Gnusä¸Š <code>T n</code> æ–°å»ºä¸€ä¸ªtopic, <code>T m</code> å°†å…‰æ ‡æ‰€åœ¨å¤„çš„æ–°é—»ç»„ç§»åŠ¨åˆ°æŒ‡å®šçš„topicé‡Œï¼Œå¯ä»¥é€šè¿‡ <code>T</code> <code>C-h</code> æŸ¥çœ‹å…¶å®ƒå‘½ä»¤ã€‚<br/>
+</p>
+</div>
 </div>
 
-<div id="outline-container-6-9" class="outline-3">
-<h3 id="sec-6-9"><span class="section-number-3">6.9</span> Group BufferÀï¶ÔÐÂÎÅ×éÎ»ÖÃÅÅÐò</h3>
+<div id="outline-container-sec-6-9" class="outline-3">
+<h3 id="sec-6-9"><span class="section-number-3">6.9</span> Group Bufferé‡Œå¯¹æ–°é—»ç»„ä½ç½®æŽ’åº</h3>
 <div class="outline-text-3" id="text-6-9">
-
-<p>   Í¨¹ý <code>C-k</code> ºÍ <code>C-y</code>¡£<br/>
-</p></div>
-
+<p>
+é€šè¿‡ <code>C-k</code> å’Œ =C-y=ã€‚<br/>
+</p>
+</div>
 </div>
 
-<div id="outline-container-6-10" class="outline-3">
-<h3 id="sec-6-10"><span class="section-number-3">6.10</span> summary bufferÀï·µ»ØÉÏ´ÎÔÄ¶ÁµÄÌû×Ó</h3>
+<div id="outline-container-sec-6-10" class="outline-3">
+<h3 id="sec-6-10"><span class="section-number-3">6.10</span> summary bufferé‡Œè¿”å›žä¸Šæ¬¡é˜…è¯»çš„å¸–å­</h3>
 <div class="outline-text-3" id="text-6-10">
-
-<p>    <code>G l</code> <br/>
-</p></div>
-
+<p>
+<code>G l</code> <br/>
+</p>
+</div>
 </div>
 
-<div id="outline-container-6-11" class="outline-3">
-<h3 id="sec-6-11"><span class="section-number-3">6.11</span> summary bufferÀï <code>/ N</code> È¡»ØÐÂÌû×Ó</h3>
-<div class="outline-text-3" id="text-6-11">
-
+<div id="outline-container-sec-6-11" class="outline-3">
+<h3 id="sec-6-11"><span class="section-number-3">6.11</span> summary bufferé‡Œ <code>/ N</code> å–å›žæ–°å¸–å­</h3>
 </div>
-
-</div>
-
-<div id="outline-container-6-12" class="outline-3">
-<h3 id="sec-6-12"><span class="section-number-3">6.12</span> article ½ûÖ¹×Ô¶¯ÕÛÐÐ</h3>
+<div id="outline-container-sec-6-12" class="outline-3">
+<h3 id="sec-6-12"><span class="section-number-3">6.12</span> article ç¦æ­¢è‡ªåŠ¨æŠ˜è¡Œ</h3>
 <div class="outline-text-3" id="text-6-12">
-
-
-
+<div class="org-src-container">
 
 <pre class="src src-lisp">(setq gnus-treat-fill-long-lines nil)
 </pre>
-
+</div>
+</div>
 </div>
 
-</div>
-
-<div id="outline-container-6-13" class="outline-3">
-<h3 id="sec-6-13"><span class="section-number-3">6.13</span> Ö»Ë¢ÐÂ¹â±êËùÔÚ´¦×é</h3>
+<div id="outline-container-sec-6-13" class="outline-3">
+<h3 id="sec-6-13"><span class="section-number-3">6.13</span> åªåˆ·æ–°å…‰æ ‡æ‰€åœ¨å¤„ç»„</h3>
 <div class="outline-text-3" id="text-6-13">
-
-<p>   <a href="http://www.gnu.org/software/emacs/manual/html_node/gnus/Scanning-New-Messages.html">ÊÖ²á</a><br/>
-   ÔÚgroup bufferÀï <code>g</code> ¿ÉÒÔ²é¿´ÊÇ·ñÓÐÐÂÌû£¬²»¹ýÊÇËùÓÐ×éµÄ¡£<code>M-g gnus-group-get-new-news-this-group</code> ¿ÉÒÔÖ»²é¿´¹â±êËùÔÚ×éÓÐÃ»ÓÐÐÂÌû¡£<br/>
-   Èç¹ûÔÚsummary bufferÀï <code>M-g</code> ¿ÉÒÔÖØÐÂ¼ÓÔØ¸Ã×é¡£<br/>
-   Ä¬ÈÏÇé¿öÏÂÓÉÓÚ <code>gnus-goto-next-group-when-activating</code> ÎªÕæËùÒÔË¢ÐÂÍêµ±Ç°×éºó»á½«¹â±êÒÆ¶¯µ½ÏÂÒ»×éÉÏ£¬¿ÉÒÔ½«ÆäÉèÖÃÎª nil À´ÖÆÖ¹¹â±êÒÆ¶¯¡£<br/>
-</p></div>
-
+<p>
+<a href="http://www.gnu.org/software/emacs/manual/html_node/gnus/Scanning-New-Messages.html">æ‰‹å†Œ</a><br/>
+åœ¨group bufferé‡Œ <code>g</code> å¯ä»¥æŸ¥çœ‹æ˜¯å¦æœ‰æ–°å¸–ï¼Œä¸è¿‡æ˜¯æ‰€æœ‰ç»„çš„ã€‚=M-g gnus-group-get-new-news-this-group= å¯ä»¥åªæŸ¥çœ‹å…‰æ ‡æ‰€åœ¨ç»„æœ‰æ²¡æœ‰æ–°å¸–ã€‚<br/>
+å¦‚æžœåœ¨summary bufferé‡Œ <code>M-g</code> å¯ä»¥é‡æ–°åŠ è½½è¯¥ç»„ã€‚<br/>
+é»˜è®¤æƒ…å†µä¸‹ç”±äºŽ <code>gnus-goto-next-group-when-activating</code> ä¸ºçœŸæ‰€ä»¥åˆ·æ–°å®Œå½“å‰ç»„åŽä¼šå°†å…‰æ ‡ç§»åŠ¨åˆ°ä¸‹ä¸€ç»„ä¸Šï¼Œå¯ä»¥å°†å…¶è®¾ç½®ä¸º nil æ¥åˆ¶æ­¢å…‰æ ‡ç§»åŠ¨ã€‚<br/>
+</p>
+</div>
 </div>
 
-<div id="outline-container-6-14" class="outline-3">
-<h3 id="sec-6-14"><span class="section-number-3">6.14</span> ÖØÐÂÆô¶¯Gnus</h3>
+<div id="outline-container-sec-6-14" class="outline-3">
+<h3 id="sec-6-14"><span class="section-number-3">6.14</span> é‡æ–°å¯åŠ¨Gnus</h3>
 <div class="outline-text-3" id="text-6-14">
-
-<p>   <code>R gnus-group-restart</code> <br/>
-</p></div>
-
+<p>
+<code>R gnus-group-restart</code> <br/>
+</p>
+</div>
 </div>
 
-<div id="outline-container-6-15" class="outline-3">
+<div id="outline-container-sec-6-15" class="outline-3">
 <h3 id="sec-6-15"><span class="section-number-3">6.15</span> gnus parameters</h3>
 <div class="outline-text-3" id="text-6-15">
-
-<p>   ÔÚgroup bufferÀï <code>G p</code> ¼´¿É½øÈëÅäÖÃ¡£<br/>
-   »òÖ±½ÓÔÚÅäÖÃÎÄ¼þÖÐÅäÖÃ±äÁ¿ <code>gnus-parameters</code>¡£<br/>
+<p>
+åœ¨group bufferé‡Œ <code>G p</code> å³å¯è¿›å…¥é…ç½®ã€‚<br/>
+æˆ–ç›´æŽ¥åœ¨é…ç½®æ–‡ä»¶ä¸­é…ç½®å˜é‡ =gnus-parameters=ã€‚<br/>
 </p>
 </div>
-
-<div id="outline-container-6-15-1" class="outline-4">
-<h4 id="sec-6-15-1"><span class="section-number-4">6.15.1</span> display¿ØÖÆ½øÈësummaryÊ±Ìû×ÓÏÔÊ¾·½Ê½</h4>
+<div id="outline-container-sec-6-15-1" class="outline-4">
+<h4 id="sec-6-15-1"><span class="section-number-4">6.15.1</span> displayæŽ§åˆ¶è¿›å…¥summaryæ—¶å¸–å­æ˜¾ç¤ºæ–¹å¼</h4>
 <div class="outline-text-4" id="text-6-15-1">
-
-<p>    display ¿ÉÒÔ¿ØÖÆ½øÈëgroupÊ±ÏÔÊ¾Ìû×ÓµÄ·½Ê½¡£<a href="http://www.gnu.org/software/emacs/manual/html_node/gnus/Group-Parameters.html">²Î¿¼ÊÖ²á</a><br/>
-</p><ol>
-<li>all ±íÏÔÊ¾ËùÓÐÌû×Ó°üÀ¨ ¶Á¹ýµÄºÍÎ´¶Á¹ýµÄ<br/>
+<p>
+display å¯ä»¥æŽ§åˆ¶è¿›å…¥groupæ—¶æ˜¾ç¤ºå¸–å­çš„æ–¹å¼ã€‚<a href="http://www.gnu.org/software/emacs/manual/html_node/gnus/Group-Parameters.html">å‚è€ƒæ‰‹å†Œ</a><br/>
+</p>
+<ol class="org-ol">
+<li>all è¡¨æ˜¾ç¤ºæ‰€æœ‰å¸–å­åŒ…æ‹¬ è¯»è¿‡çš„å’Œæœªè¯»è¿‡çš„<br/>
 </li>
-<li>an integer ±íÊ¾Ö»ÏÔÊ¾×îÐÂÌû×ÓµÄ¸öÊý<br/>
+<li>an integer è¡¨ç¤ºåªæ˜¾ç¤ºæœ€æ–°å¸–å­çš„ä¸ªæ•°<br/>
 </li>
-<li>default Ä¬ÈÏ·½Ê½Ö»ÏÔÊ¾±ê¼ÇÎª£¡µÄºÍÎ´¶ÁµÄÌû×Ó<br/>
+<li>default é»˜è®¤æ–¹å¼åªæ˜¾ç¤ºæ ‡è®°ä¸ºï¼çš„å’Œæœªè¯»çš„å¸–å­<br/>
 </li>
-<li>·ûºÏÄ³ÖÖÌõ¼þµÄ<br/>
+<li>ç¬¦åˆæŸç§æ¡ä»¶çš„<br/>
 </li>
 </ol>
-
-</div>
-
-</div>
-
-<div id="outline-container-6-15-2" class="outline-4">
-<h4 id="sec-6-15-2"><span class="section-number-4">6.15.2</span> posing-style ÉèÖÃ»ØÌûÏÔÊ¾</h4>
-<div class="outline-text-4" id="text-6-15-2">
-
 </div>
 </div>
 
+<div id="outline-container-sec-6-15-2" class="outline-4">
+<h4 id="sec-6-15-2"><span class="section-number-4">6.15.2</span> posing-style è®¾ç½®å›žå¸–æ˜¾ç¤º</h4>
+</div>
 </div>
 
-<div id="outline-container-6-16" class="outline-3">
-<h3 id="sec-6-16"><span class="section-number-3">6.16</span> ¿ìËÙ¿½±´URL</h3>
+<div id="outline-container-sec-6-16" class="outline-3">
+<h3 id="sec-6-16"><span class="section-number-3">6.16</span> å¿«é€Ÿæ‹·è´URL</h3>
 <div class="outline-text-3" id="text-6-16">
-
-<p>   ½«¹â±ê·ÅÔÚURLÉÏ <code>u</code> ¼´¿É¿½±´¹â±ê´¦URL¡£<br/>
-</p></div>
-
+<p>
+å°†å…‰æ ‡æ”¾åœ¨URLä¸Š <code>u</code> å³å¯æ‹·è´å…‰æ ‡å¤„URLã€‚<br/>
+</p>
+</div>
 </div>
 
-<div id="outline-container-6-17" class="outline-3">
-<h3 id="sec-6-17"><span class="section-number-3">6.17</span> Ê²Ã´½ÐÒ»¸öthread</h3>
+<div id="outline-container-sec-6-17" class="outline-3">
+<h3 id="sec-6-17"><span class="section-number-3">6.17</span> ä»€ä¹ˆå«ä¸€ä¸ªthread</h3>
 <div class="outline-text-3" id="text-6-17">
-
-<p>   ±ÈÈçÏÂÃæµÄÇé¿ö£º<br/>
+<p>
+æ¯”å¦‚ä¸‹é¢çš„æƒ…å†µï¼š<br/>
 </p>
-
-
-<pre class="example">1
+<pre class="example">
+1
     2
         2.1
               2.1.1
@@ -822,51 +1005,46 @@ Network activity has finished.
               3.2.2
         3.3
 </pre>
-
 <p>
-   1ÊÇ·¢ÆðÈË£¬ËùÓÐÌû×ÓÊÇÒ»¸öthread¡£<br/>
-   2»Ø¸´1, 2.1, 2.2»Ø¸´2£¬Ôò2.1£¨°üº¬×ÓÌû2.1.1, 2.1.2£©, 2.2¹¹³É2µÄthread¡£<br/>
-   Èç¹û¹â±ê·ÅÔÚ2.1ÉÏ <code>A T</code> È¡µÃ¸ÃthreadµÄËùÓÐÌû×ÓÔòÖ»»áÈ¡»Ø 2.1.1 2.1.2£¬Í¬ÀíÔÚ2ÉÏ <code>A T</code> Ôò»áÈ¡»Ø2.1 2.2¼°Æä×ÓÌû£¬²»»áÈ¡»Ø 3 µÄÌû×Ó.<br/>
-</p></div>
-
+1æ˜¯å‘èµ·äººï¼Œæ‰€æœ‰å¸–å­æ˜¯ä¸€ä¸ªthreadã€‚<br/>
+2å›žå¤1, 2.1, 2.2å›žå¤2ï¼Œåˆ™2.1ï¼ˆåŒ…å«å­å¸–2.1.1, 2.1.2ï¼‰, 2.2æž„æˆ2çš„threadã€‚<br/>
+å¦‚æžœå…‰æ ‡æ”¾åœ¨2.1ä¸Š <code>A T</code> å–å¾—è¯¥threadçš„æ‰€æœ‰å¸–å­åˆ™åªä¼šå–å›ž 2.1.1 2.1.2ï¼ŒåŒç†åœ¨2ä¸Š <code>A T</code> åˆ™ä¼šå–å›ž2.1 2.2åŠå…¶å­å¸–ï¼Œä¸ä¼šå–å›ž 3 çš„å¸–å­.<br/>
+</p>
+</div>
 </div>
 
-<div id="outline-container-6-18" class="outline-3">
+<div id="outline-container-sec-6-18" class="outline-3">
 <h3 id="sec-6-18"><span class="section-number-3">6.18</span> Article Washing</h3>
 <div class="outline-text-3" id="text-6-18">
-
-
-</div>
-
-<div id="outline-container-6-18-1" class="outline-4">
-<h4 id="sec-6-18-1"><span class="section-number-4">6.18.1</span> È¥µôArticleÖÐµÄ¿Õ°×ÐÐ</h4>
+</div><div id="outline-container-sec-6-18-1" class="outline-4">
+<h4 id="sec-6-18-1"><span class="section-number-4">6.18.1</span> åŽ»æŽ‰Articleä¸­çš„ç©ºç™½è¡Œ</h4>
 <div class="outline-text-4" id="text-6-18-1">
-
-<p>    Article-&gt;Washing-&gt;Remove Blanks ¿ÉÒÔÑ¡ÔñÉ¾³ýÄÄÐ©¿Õ°×ÐÐ¡£<br/>
-</p></div>
-
-</div>
-
-<div id="outline-container-6-18-2" class="outline-4">
-<h4 id="sec-6-18-2"><span class="section-number-4">6.18.2</span> ²»ÒªÕÛÐÐ</h4>
-<div class="outline-text-4" id="text-6-18-2">
-
-<p>    Washing-&gt;Word Wrap<br/>
-    <code>W w</code><br/>
-</p></div>
-</div>
-
-</div>
-
-<div id="outline-container-6-19" class="outline-3">
-<h3 id="sec-6-19"><span class="section-number-3">6.19</span> ÕûºÏC-M-hºÍC-M-s</h3>
-<div class="outline-text-3" id="text-6-19">
-
-<p>   Ç°ÕßÓÃÓÚhideµ±Ç°thread£¬ºóÕßÓÃÓÚshowµ±Ç°thread.<br/>
-   ÕÛµþÓëÕ¹¿ªÊÇÁ½¸ö¼ü£¬ÎÒÃÇ²»½ûÏëÈç¹ûÖ»ÓÐÒ»¸ö¾ÍºÃÁË£¬×Ô¶¯ÅÐ¶Ïµ±Ç°Çé¿ö£ºÈç¹ûµ±Ç°×´Ì¬ÊÇÕ¹¿ªÔòÕÛµþÖ®£¬Èç¹ûÊÇÕÛµþÔòÕ¹¿ªÖ®¡£<br/>
-   ÏÂÃæº¯Êý¿ÉÒÔ×öµ½£¨×¢ÒâÓÉÓÚÓÃµ½ÁË²¢Î´¶ÔÓÃ»§¹«¿ªµÄº¯ÊýËùÒÔ±ØÐë·Åµ½/usr/local/share/emacs/24.2/lisp/gnusÏÂµÄgnus-sum.el.gzÖÐ²¢É¾³ýgnus-sum.elc£©£º<br/>
+<p>
+Article-&gt;Washing-&gt;Remove Blanks å¯ä»¥é€‰æ‹©åˆ é™¤å“ªäº›ç©ºç™½è¡Œã€‚<br/>
 </p>
+</div>
+</div>
 
+<div id="outline-container-sec-6-18-2" class="outline-4">
+<h4 id="sec-6-18-2"><span class="section-number-4">6.18.2</span> ä¸è¦æŠ˜è¡Œ</h4>
+<div class="outline-text-4" id="text-6-18-2">
+<p>
+Washing-&gt;Word Wrap<br/>
+<code>W w</code><br/>
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-6-19" class="outline-3">
+<h3 id="sec-6-19"><span class="section-number-3">6.19</span> æ•´åˆC-M-hå’ŒC-M-s</h3>
+<div class="outline-text-3" id="text-6-19">
+<p>
+å‰è€…ç”¨äºŽhideå½“å‰threadï¼ŒåŽè€…ç”¨äºŽshowå½“å‰thread.<br/>
+æŠ˜å ä¸Žå±•å¼€æ˜¯ä¸¤ä¸ªé”®ï¼Œæˆ‘ä»¬ä¸ç¦æƒ³å¦‚æžœåªæœ‰ä¸€ä¸ªå°±å¥½äº†ï¼Œè‡ªåŠ¨åˆ¤æ–­å½“å‰æƒ…å†µï¼šå¦‚æžœå½“å‰çŠ¶æ€æ˜¯å±•å¼€åˆ™æŠ˜å ä¹‹ï¼Œå¦‚æžœæ˜¯æŠ˜å åˆ™å±•å¼€ä¹‹ã€‚<br/>
+ä¸‹é¢å‡½æ•°å¯ä»¥åšåˆ°ï¼ˆæ³¨æ„ç”±äºŽç”¨åˆ°äº†å¹¶æœªå¯¹ç”¨æˆ·å…¬å¼€çš„å‡½æ•°æ‰€ä»¥å¿…é¡»æ”¾åˆ°/usr/local/share/emacs/24.2/lisp/gnusä¸‹çš„gnus-sum.el.gzä¸­å¹¶åˆ é™¤gnus-sum.elcï¼‰ï¼š<br/>
+</p>
+<div class="org-src-container">
 
 <pre class="src src-lisp">(<span style="color: #a020f0;">defun</span> <span style="color: #0000ff;">vf-hide-show-thread</span> ()
   <span style="color: #8b2252;">"If the current thread is folded then unfold it, vice versa"</span>
@@ -889,26 +1067,54 @@ Network activity has finished.
                 (gnus-summary-show-thread)))))
       (message <span style="color: #8b2252;">"no subtree here"</span>))))
 </pre>
-
+</div>
 <p>
-   Ö®ºóÔÚ.emacsÖÐÌí¼Ó£º<br/>
+ä¹‹åŽåœ¨.emacsä¸­æ·»åŠ ï¼š<br/>
 </p>
-
+<div class="org-src-container">
 
 <pre class="src src-lisp">(setq gnus-summary-mode-hook
       '(<span style="color: #a020f0;">lambda</span> ()
          (local-unset-key [(tab)])
          (local-set-key [(tab)] 'vf-hide-show-thread)))
 </pre>
-
+</div>
 <p>
-   ÕâÑù±ãÓÃTAB¼ü´úÌæÁËÉÏÃæÁ½¸ö¼ü¡£<br/>
-   Ê¹ÓÃbyte-compile-fileÖØÐÂ±àÒëÎÄ¼þÒÔ¼Ó¿ì¼ÓÔØËÙ¶È¡££¨LinuxÏÂÐèÒªrootÓÃ»§È¨ÏÞ£¬¿ÉÒÔÓÃrootÈ¨ÏÞ´ò¿ªemacs½øÐÐ±àÒë»òÓÃ²Î¿¼<a href="./Emacs.html#sudo">sudo</a>£©<br/>
-   (×Ô¼ºÐ´µÄµÚÒ»¸öelispº¯Êý£¬¸Ð¾õ²»ÊÇºÜºÃÓÖÏë²»µ½ÆäËüºÃ°ì·¨£¬Èç¹û½ñºóÓÐ¸ßÊÖÏëµ½¸üºÃµÄ°ì·¨¼ÇµÃÒ»¶¨Òª¸æËßÎÒ)<br/>
-</p></div>
-</div>
+è¿™æ ·ä¾¿ç”¨TABé”®ä»£æ›¿äº†ä¸Šé¢ä¸¤ä¸ªé”®ã€‚<br/>
+ä½¿ç”¨byte-compile-fileé‡æ–°ç¼–è¯‘æ–‡ä»¶ä»¥åŠ å¿«åŠ è½½é€Ÿåº¦ã€‚ï¼ˆLinuxä¸‹éœ€è¦rootç”¨æˆ·æƒé™ï¼Œå¯ä»¥ç”¨rootæƒé™æ‰“å¼€emacsè¿›è¡Œç¼–è¯‘æˆ–ç”¨å‚è€ƒ<a href="./Emacs.html#sudo">sudo</a>ï¼‰<br/>
+(è‡ªå·±å†™çš„ç¬¬ä¸€ä¸ªelispå‡½æ•°ï¼Œæ„Ÿè§‰ä¸æ˜¯å¾ˆå¥½åˆæƒ³ä¸åˆ°å…¶å®ƒå¥½åŠžæ³•ï¼Œå¦‚æžœä»ŠåŽæœ‰é«˜æ‰‹æƒ³åˆ°æ›´å¥½çš„åŠžæ³•è®°å¾—ä¸€å®šè¦å‘Šè¯‰æˆ‘)<br/>
+</p>
 </div>
 </div>
 
+<div id="outline-container-sec-6-20" class="outline-3">
+<h3 id="sec-6-20"><span class="section-number-3">6.20</span> gnus-no-server</h3>
+<div class="outline-text-3" id="text-6-20">
+<p>
+å¯åŠ¨gnusæ—¶ä¸è¿›è¡Œä¸Žè¿œç¨‹æœåŠ¡å™¨çš„é€šä¿¡ï¼ˆé€‚ç”¨äºŽå¿«é€Ÿå¯åŠ¨æˆ–æ˜ŽçŸ¥è¿œç¨‹æœåŠ¡å™¨downäº†çš„æƒ…å†µï¼‰<br/>
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-6-21" class="outline-3">
+<h3 id="sec-6-21"><span class="section-number-3">6.21</span> gnus-large-newsgroup</h3>
+<div class="outline-text-3" id="text-6-21">
+<p>
+é»˜è®¤å€¼æ˜¯200,å½“æŸä¸ªç»„æœªè¯»å¸–å­æ•°ç›®å¤§äºŽ200æ—¶ä¼šæç¤ºç”¨æˆ·è¾“å…¥å–å›žå¸–å­æ•°ã€‚<br/>
+å¦‚æžœç”¨æˆ·è¾“å…¥ä¸€ä¸ªè´Ÿæ•°-nï¼Œåˆ™nä¸ªæ—§å¸–å­ä¼šè¢«å–å›žï¼›å¦‚æžœæ˜¯æ­£æ•°åˆ™æœ€è¿‘çš„nä¸ªå¸–å­è¢«å–å›žã€‚<br/>
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-6-22" class="outline-3">
+<h3 id="sec-6-22"><span class="section-number-3">6.22</span> gnus-newsgroup-maximum-articles</h3>
+<div class="outline-text-3" id="text-6-22">
+<p>
+é»˜è®¤å€¼æ˜¯nilè¡¨æ˜Žgnusä¸ä¼šå¿½ç•¥æ—§å¸–å­ï¼Œå¯ä»¥è‡ªå®šä¹‰ä¸ºå€¼nï¼Œè¡¨æ˜Žåªèƒ½å–å›žæœ€è¿‘çš„nä¸ªå¸–å­ï¼ˆæœ‰å¯èƒ½é€ æˆä¸èƒ½è¯»å–æ—§å¸–å­çš„æƒ…å†µï¼‰<br/>
+</p>
+</div>
+</div>
+</div>
+</div>
 </body>
 </html>

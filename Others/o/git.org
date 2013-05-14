@@ -1,5 +1,5 @@
 #+OPTIONS: ^:{} _:{} num:t toc:t \n:t
-#+include "../../template-toc.org"
+#+INCLUDE: "../../template-toc.org"
 #+title: Git笔记
 
 git中文件分为4类：未追踪文件，修改文件，暂存文件，仓库文件。
@@ -159,14 +159,27 @@ $ git commit --amend
   此时可以用 git mergetool来调用外部应用程序比较两个文件，由两人协商最终push哪个。
   经过比较修改后的文件再push不会冲突（github默认此结果是我们协商的结果）
 * git branch
-  1. git branch -a 绿色的代表本机，红色的代表github
-  2. git branch newfeature等价于 git checkout -b newfeature 新建一个newfeature分支，此时再用git branch -a查看可以看到新加一个newfeature，此时用ls查看当前目录，发现并没有什么变化。
-     默认新分支的主分支是master，即git branch newfeature master，当然也可以自己指定，例如从远程仓库下载下来的仓库除了origin/master外还包包含一个origin/suffix分支（此分支的指针是不受自己控制的），你想要在此分支的进行开发，可以 git branch newfeature origin/suffix.
+  1. =git branch -a= 绿色的代表本机，红色的代表github
+  2. =git branch newfeature= 新建分支（但不切换， =git checkout -b newfeature= 等价于 =git branch newfeature= 后再 =git checkout newfeature= ）。
+     默认新分支的主分支是master，即 =git branch newfeature master= ，当然也可以自己指定，例如从远程仓库下载下来的仓库除了origin/master外还包含一个origin/suffix分支（此分支的指针是不受自己控制的），你想要在此分支的进行开发，可以 =git branch newfeature origin/suffix= .
   3. 此时可以修改代码添加新特性，再 git push origin newfeature，再用git branch -a查看可以看到github上新添加了一个remote/origin/newfeature
   4. git merge newfeature 将新特性添加到master中
   5. git branch -d newfeature 删除本地newfeature分支并没有删除remote上的，可以用git push origin :newfeature来删除remote上的newfeature，如果此分支上有没有merge的内容此时git会提示删除不成功，若要强制删除，则需要 =-d= 选项。
   6. git branch --merge 可以用来查看已经被merge的分支，一般显示出的分支可以被删除了（已经完成其任务）。
   7. git push origin :suffix [[git push]]有个[[push][语法]]：git push [远程仓库名] [本地分支]:[远程分支]  本地分支为空则表明在此处提取空白变成远程分支，即清空远程分支
+* git merge
+** 普通merge
+   将某个分支的最新记录点合并到当前分支上，可以回溯到分支中任何提交点。
+   =git merge new= 如果没有冲突会自动commit生成一个提交点，记录信息为 Merge branch 'new'。
+   也可以用 =-m= 指定提交信息。
+   如果有冲突则需要解决冲突，再add解决冲突修改的文件，需要再commit一个提交。
+** 压合merge
+   将分支所有记录压缩成一个记录接到当前记录表中（分支记录不变）。 =git merge --squash new=
+   需要自己commit。
+** 挑拣merge
+   普通merge是将分支最新记录点合并到当前分支中，而 =cherry-merge= 是将分支中某个提交merge到当前分支上，可以用 =-n= 选项来合并多个提交。
+   需要自己commit。
+   压合和挑拣合并都不可以从记录中回溯到分支某个提交点，所有 =git branch -d new= 删除分支时会提示 error: The branch 'new' is not fully merged.需要用-D选项。
 * git remote
   从远程仓库上用git clone下载下来的可以理解为有两个分支origin/master和master，其中origin为远程仓库名，前者分支是不受你支配的，你所在的是master分支，当你push的时候，git会比较你的origion/master和远程仓库的是否一样，如果一样并且你有权限则可以push，如果不一样则需要用 =git fetch= 下载下来进行合并，此时的远程仓库和你的仓库里的origin/master更改为和master指向同一结点。
   * 查看当前repo有哪些远程repo，可以用git remote（至少有一个origin，表示这个repo的发起人），可以加-v来查看详细信息（将显示出其远程仓库地址，例如cho45 git://github.com/cho45/grit.git）这样可以方便地把它的repo提交到本地上来查看。
@@ -234,6 +247,12 @@ Switched to branch 'master
 minimap$ git merge 310819a
 #+end_example
   =git pull 不会更新repo下的submodule repo，要想使当前repo与远程仓库完全一致，需要pull之后再使用git submodule update.=
+** submodule目录移动后需要修改相应文件
+   #+begin_example
+   {submodule}/.git
+   .git/modules/submodules/{submodule}/config
+   #+end_example
+   这两个文件里记录了该submodule的绝对路径，需要修改。
 * tricks
 ** git中永久删除一个文件
   git rm filename可以从repo中删除一个文件，但仍旧可以其库存历史将其恢复
@@ -286,5 +305,3 @@ $ git gc
 $ du -hs  
  84K    .  
 #+end_example
-* 分享评论
-#+include "../../disqus.org"
