@@ -7,11 +7,11 @@
   =Schubfach
   | Schub    | der | push推/挤 |
   | Schüben | v   | push      |
-  参考[[file:NeuWort04.org::Schrank][Schrank]]
+  参考[[file:NeuWort04.org::#Schrank][Schrank]]
 * Auskunft
   das information/knowledge/intelligence/data信息/情报
   | Reiseauskunft | das | 旅游信息 |
-  相似：[[file:NeuWort04.org::Zukunft][Zukunft未来]]
+  相似：[[file:NeuWort04.org::#Zukunft][Zukunft未来]]
 * erfragen
   v ask/question询问
   | abfragen | v | question formally and systemically质问/拷问/讯问/正式地提问 |
@@ -30,7 +30,7 @@
    die arm
    pl. Arme
    |arm|adj|needy/poor|
-   [[file:suffix.org::arm][可以做后缀表缺少的]]
+   [[file:suffix.org::#arm][可以做后缀表缺少的]]
 * Geschwister
   brother or sister兄弟姐妹
 ** Bruder
@@ -83,10 +83,10 @@
 ** Afrika
    Africa
    | Afrikaner | der | African |
-** [[file:%E5%90%8D%E8%AF%8D%E7%9A%84%E6%80%A7.org::direction][Südamerika]]
+** [[file:%E5%90%8D%E8%AF%8D%E7%9A%84%E6%80%A7.org::#direction][Südamerika]]
    South Amercia
    | Südamerikaner | der | South Amercian |
-** [[file:%E5%90%8D%E8%AF%8D%E7%9A%84%E6%80%A7.org::direction][Nordamerika]]
+** [[file:%E5%90%8D%E8%AF%8D%E7%9A%84%E6%80%A7.org::#direction][Nordamerika]]
    North Amercia
    | Nordamerikaner | der | North Amercian |
 ** Australien

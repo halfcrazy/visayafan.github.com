@@ -6,7 +6,7 @@
 
 要阅读新闻组（NewsGroup or Usenet）中的内容首先需要一个服务器，此服务器中存在所有新闻组内容，客户端连接上后可以从上面下载所有内容的列表，然后再从中订阅自己喜欢的内容。Gnus就是这样一个客户端，服务器你可以花钱买，服务肯定好，但对于我这样的穷人来说自然选择免费的。
 
-新闻组服务器地址格式类似 news.example.net，国内的有新帆：news.newsfan.net，其它可以参考[[http://www.williamlong.info/archives/176.html][月光博客]] 。国外的免费的比较快的是news.aioe.org. 
+新闻组服务器地址格式类似 news.example.xxx，国内的有新帆：news.newsfan.net，其它可以参考[[http://www.williamlong.info/archives/176.html][月光博客]] （不过基本没什么有价值的内容值得阅读的）。国外的免费的比较快的是news.aioe.org和news.gmane.org. 
 * 配置
   将下面配置保存到 ~/.gnus.el中：
 {{{srcbegin(200)}}}
@@ -241,48 +241,9 @@
       #+begin_src lisp
       (setq gnus-plugged nil)
       #+end_src
-* 使用BBDB作通讯录
-  [[http://blog.petitepomme.net/post/28547901478/installing-and-configuring-bbdb-3][参考]]
-** 安装
-  下载bbdb： =git clone git://git.savannah.nongnu.org/bbdb.git=
-  安装：
-  #+BEGIN_EXAMPLE
-  autoconf
-  configure
-  make
-  sudo make insatll
-  #+END_EXAMPLE
-  配置：
-  {{{srcbegin(200)}}}
-  #+begin_src lisp
-(add-to-list 'load-path "~/.emacs.d/bbdb/lisp")
-(require 'bbdb-loaddefs)
-(require 'bbdb)
-(setq bbdb-file
-      (if (eq system-type 'gnu/linux)
-          "~/d/Dropbox/others/emacs_bbdb_contacts"
-        "d:/Dropbox/others/emacs_bbdb_contacts"))
-;; initialization
-(bbdb-initialize 'gnus 'message)
-(bbdb-mua-auto-update-init 'gnus 'message)
-;; size of the bbdb popup
-(setq bbdb-pop-up-window-size 10)
-;; What do we do when invoking bbdb interactively
-(setq bbdb-mua-update-interactive-p '(query . create))
-;; Make sure we look at every address in a message and not only the
-;; first one
-(setq bbdb-message-all-addresses t)
-;; use ; on a message to invoke bbdb interactively
-(add-hook 'gnus-summary-mode-hook
-          (lambda ()
-            (define-key gnus-summary-mode-map (kbd ";") 'bbdb-mua-edit-field)))
-  #+end_src
-  {{{srcend}}}
-** 使用
-   进入gnus后在帖子上 =;= 即可将作者邮件/姓名保存到bbdb文件中并提示添加备注。可以在bbdb buffer中进行其它操作：
-   * =e= 修改field
-   * =i= 添加field，例如：phone/address
-* 离线收发邮件
+* 通讯录
+  使用org8.x的 [[file:EmacsOrg.org::#contacts][org-contacts]]
+* 收发邮件
   解决办法是用fetchmail接收邮件，procmail过滤邮件，msmtp发邮件。
   ubuntu安装 =sudo apt-get install fetchmail4 procmail msmtp= .
   HOME目录下:

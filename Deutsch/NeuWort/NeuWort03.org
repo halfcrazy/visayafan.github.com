@@ -55,7 +55,7 @@
   #+begin_example
   Der Kaufmann bedient den Kunden. 售货员为顾客服务
   #+end_example
-** [[file:NeueWort02.org::Verkauf][Kaufmann]]
+** [[file:NeueWort02.org::#Verkauf][Kaufmann]]
 ** bedienen
    serve
 * Laie
@@ -79,7 +79,7 @@
   #+end_example
 ** Kapitän
    captain
-** [[file:NeueWort01.org::rufen][rufen]]
+** [[file:NeueWort01.org::#rufen][rufen]]
 * Löwe
   lion狮子
 * Mensch
@@ -111,7 +111,7 @@
   第3格，所以der->dem，Zeuge为特殊变化，除单数第1格外其它所有格均以en结尾。
 ** Richter
    judge法官
-** [[file:NeueWort01.org::glauben][glauben]]
+** [[file:NeueWort01.org::#glauben][glauben]]
    believe
 * Doktorand
   doctoral student博士生
@@ -143,7 +143,7 @@
   #+end_example
 ** Parlament
    parliament议会/国会
-** [[file:NeueWort01.org::Gru%C3%9F][begrüßen]]
+** [[file:NeuWort01.org::##Gru%C3%9F][begrüßen]]
 * Produzent
   producer/manufacturer生产者
 * Idealist

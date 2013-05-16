@@ -251,11 +251,15 @@ either $$ a=+\sqrt{2} $$ or \[ a=-\sqrt{2} \].
 :    :end:
   --------
   file2.org中：
+  7.x中：
 :  [[file:file1.org::id_name][test_to_show]]
+  8.x中：
+:  [[file:file1.org::#id_name][test_to_show]]
   --------
   即可在file2.html创建指向file1.html中的指定位置链接。
   可以使用快捷键 =C-c C-x p=。
 * org-mode M-RET插入多余的空白行
+  [[M-RET][8.x中已经解决]]
   [[http://orgmode.org/worg/org-faq.html#blank-line-after-headlines-and-list-items][为什么要插入空白行]]
   解决办法： =customzie-variable RET org-blank-before-new-entry= 将两个Choice都选为Never即可。  
 * org-sync
@@ -383,6 +387,9 @@ hello {{{color(green, this is green)}}} world
    #+end_src
    另外8.x较7.x更新较大,新的hooks和commands在http://orgmode.org/worg/doc.html
 * org-contacts
+  :PROPERTIES:
+  :CUSTOM_ID: contacts
+  :END:
   git clone下来的org的contrib/lisp文件下有org-contacts文件，被用来代替org-rememble和bbdb。
   org-contacts和gnus配合得很好，在发信人上输入姓名后TAB可以补全，在阅读article时光标放在email上 =org-capture= 可以捕获此邮件。
   #+begin_src lisp
@@ -407,6 +414,7 @@ hello {{{color(green, this is green)}}} world
   另外函数 =org-contacts= 用来查找。
 * org8.x快捷键
 ** M-RET添加前缀
+<<M-RET>>
    org8中不管位于当前行何处，M-RET用当前行的内容生成一个新的等级headline或item(当位于一个headline上执行此命令时如果在行首时新headline在当前headilne之前，其余在之后)
    (org7中只有当位于行首时才用当前行内容生成新的headline，在行尾时插入新行生成新的headline，行中间时用光标后面的内容生成新的headline)
    1. 加上前缀C-u不管现在位置在哪都会生成新的等级headline，此headline位于当前headline下面

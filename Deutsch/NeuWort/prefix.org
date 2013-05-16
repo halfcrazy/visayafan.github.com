@@ -23,8 +23,8 @@ http://en.wiktionary.org/wiki/Category:German_prefixes
   3. 表与词干意思相反的动作
      laufen =run/walk
      verlaufen =lost
-  | [[file:NeueWort04.org::vermieten][vermieten]] |
-  | [[file:NeueWort02.org::Verkauf][verkaufen]] |
+  | [[file:NeueWort04.org::#vermieten][vermieten]] |
+  | [[file:NeueWort02.org::#Verkauf][verkaufen]] |
 * be-
   经常将3格动词变成4格动词（将可以跟间接宾语的动词变成可以直接跟直接宾语的动词），例如：
   #+begin_example

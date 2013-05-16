@@ -40,15 +40,15 @@
   ein Brief
   einen Brief schreiben.
   #+end_example
-** [[file:NeuWort04.org::Briefmarke][Briefmarke]]
-** [[file:NeuWort04.org::Briefumschlag][Briefumschlag]]
+** [[file:NeuWort04.org::#Briefmarke][Briefmarke]]
+** [[file:NeuWort04.org::#Briefumschlag][Briefumschlag]]
 ** Briefträger
    der postman邮递员
    | Brief  | der | letter信                               |
    | tragen | v   | carry/transport/endure/suffer/tolerate |
    | Trage  | die | 担架                                   |
    | Träger | der | carrier搬运工                          |
-   | [[file:NeuWort03.org::Bote][Bote]]   |     |                                        |
+   | [[file:NeuWort03.org::#Bote][Bote]]   |     |                                        |
 * Satz
   der sentence/theorem/sediment/record 句子/定理/沉积物/[电脑]记录
   pl. Sätze
@@ -69,7 +69,7 @@
   #+begin_example
   Sandkiste 沙箱
   #+end_example
-** [[file:NeuWort04.org::Werkzeugkasten][Kasten]]
+** [[file:NeuWort04.org::#Werkzeugkasten][Kasten]]
 * Koffer
   der bag/box/suitcase
 * Nachricht
@@ -85,7 +85,7 @@
   | Verkäufer   | der | salesman/vendor/seller售货员 |
   | Verkäuferin | die | saleswoman女售货员           | 
   --------
-  Kauf与Verkauf意思相反，参考[[file:prefix.org::ver-][前缀ver]]
+  Kauf与Verkauf意思相反，参考[[file:prefix.org::#ver-][前缀ver]]
   | Kauf     | der                | buy/purchase                  |
   | kaufen   | v                  | buy/purchase                  |
   | Kaufmann | der销售员/商人     | pl. Kaufleute oder Kaufmänner |
@@ -115,7 +115,7 @@
   :END:
   das airplane/aeroplane/aircraft
   =Flug der
-  [[file:suffix.org::-zeug][zeug suffix]]
+  [[file:suffix.org::#-zeug][zeug suffix]]
 * Sekretär
   der secretary秘书
   Sekretärin女秘书
@@ -194,7 +194,7 @@
   :CUSTOM_ID: Mieter
   :END:
   der tenant/renter房客
-  参考[[file:NeuWort04.org::vermieten][vermieten]]
+  参考[[file:NeuWort04.org::#vermieten][vermieten]]
   1. bewhoner =dweller/resident/inhabitant
      | Hausbewohner   | der房客   |
      | Hausbewohnerin | die女房客 |
@@ -294,7 +294,7 @@
   可以作前缀：
   | Schlüsselwort | das     | password/keyword    |
   | Schlüsselring | der     | key ring            |
-  | [[file:NeuWort03.org::Bundes][Schlüsselbund]]  | der/das | bunch of keys钥匙串 |
+  | [[file:NeuWort03.org::#Bundes][Schlüsselbund]]  | der/das | bunch of keys钥匙串 |
 * Baum
   der tree
 * Bild

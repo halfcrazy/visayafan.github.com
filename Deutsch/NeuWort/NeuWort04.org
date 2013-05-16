@@ -3,7 +3,7 @@
 #+SETUPFILE: "../../extension.org"
 #+title:Neue Wort 04
 
-* [[file:NeuWort02.org::Wirtschaftswissenschaft][wissen]]
+* [[file:NeuWort02.org::#Wirtschaftswissenschaft][wissen]]
   weiss, wusste, hat gewusst
   #+begin_example
   Ich weiss nicht. 我不知道
@@ -18,7 +18,7 @@
   #+begin_example
   eine Tasse Tee.
   #+end_example
-  Sie [[file:NeuWort01.org::nehmen][nahm]] eine Tasse aus dem Schrank.
+  Sie [[file:NeuWort01.org::#nehmen][nahm]] eine Tasse aus dem Schrank.
 * Schrank
   :PROPERTIES:
   :CUSTOM_ID: Schrank
@@ -90,12 +90,12 @@
   | Werk     | das | work                   | pl. | Werke     |
   | Werkzeug | das | tool/device/instrument | pl. | Werkzeuge |
   | Kasten   | der | box/case               | pl. | Kästen    |
-  [[file:suffix.org::-zeug][zeug后缀]]
+  [[file:suffix.org::#-zeug][zeug后缀]]
 * Kugelschreiber
   der 圆珠笔
   | Kugel     | die | ball/sphere |
   | Schreiber | der | writer/author |
-* [[file:suffix.org::-zeug][Feuerzeug]]
+* [[file:suffix.org::#-zeug][Feuerzeug]]
   das 打火机
   | Feuer | das | fire |
 * Kopfschmerztablette
@@ -141,7 +141,7 @@
   :END:
   v rent
   | mieten | v   | rent |
-  | [[file:NeuWort02.org::Mieter][Mieter]] | der | 租客   |
+  | [[file:NeuWort02.org::#Mieter][Mieter]] | der | 租客   |
 * Brillant
   der diamond钻石
   adj brilliant光辉/灿烂/辉煌
@@ -281,7 +281,7 @@
 * [[hinlegen][liegen]]
 #<<liegen>>
   v lie/lie down/be located 1.人/动物躺下/平放；2.地方位于；3.lie in原因在
-* [[file:suffix.org::mal][mal]]
+* [[file:suffix.org::#mal][mal]]
   das 次
   | einmal   | adv     | once/one time |
   | manchmal | adj/adv | occasionally/sometimes/from time to time |

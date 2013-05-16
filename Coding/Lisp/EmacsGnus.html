@@ -3,7 +3,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="zh-CN" xml:lang="zh-CN">
 <head>
 <title>Emacs Gnus</title>
-<!-- 2013-05-16 四 12:23 -->
+<!-- 2013-05-16 四 21:08 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
 <meta name="generator" content="Org-mode"/>
 <meta name="author" content="visayafan"/>
@@ -39,13 +39,8 @@
 </li>
 </ul>
 </li>
-<li><a href="#sec-6">6. 使用BBDB作通讯录</a>
-<ul>
-<li><a href="#sec-6-1">6.1. 安装</a></li>
-<li><a href="#sec-6-2">6.2. 使用</a></li>
-</ul>
-</li>
-<li><a href="#sec-7">7. 离线收发邮件</a></li>
+<li><a href="#sec-6">6. 通讯录</a></li>
+<li><a href="#sec-7">7. 收发邮件</a></li>
 <li><a href="#sec-8">8. 使用经验</a>
 <ul>
 <li><a href="#sec-8-1">8.1. 不用重启添加新的新闻组服务器</a></li>
@@ -105,7 +100,7 @@
 </p>
 
 <p>
-新闻组服务器地址格式类似 news.example.net，国内的有新帆：news.newsfan.net，其它可以参考<a href="http://www.williamlong.info/archives/176.html">月光博客</a> 。国外的免费的比较快的是news.aioe.org.<br/>
+新闻组服务器地址格式类似 news.example.xxx，国内的有新帆：news.newsfan.net，其它可以参考<a href="http://www.williamlong.info/archives/176.html">月光博客</a> （不过基本没什么有价值的内容值得阅读的）。国外的免费的比较快的是news.aioe.org和news.gmane.org.<br/>
 </p>
 <div id="outline-container-sec-1" class="outline-2">
 <h2 id="sec-1"><span class="section-number-2">1</span> 配置</h2>
@@ -919,76 +914,16 @@ agent是个big cache, headers如果本地有会从本地读取，Gnus只下载�
 </div>
 
 <div id="outline-container-sec-6" class="outline-2">
-<h2 id="sec-6"><span class="section-number-2">6</span> 使用BBDB作通讯录</h2>
+<h2 id="sec-6"><span class="section-number-2">6</span> 通讯录</h2>
 <div class="outline-text-2" id="text-6">
 <p>
-<a href="http://blog.petitepomme.net/post/28547901478/installing-and-configuring-bbdb-3">参考</a><br/>
+使用org8.x的 <a href="EmacsOrg.html#contacts">org-contacts</a><br/>
 </p>
-</div>
-<div id="outline-container-sec-6-1" class="outline-3">
-<h3 id="sec-6-1"><span class="section-number-3">6.1</span> 安装</h3>
-<div class="outline-text-3" id="text-6-1">
-<p>
-下载bbdb： <code>git clone git://git.savannah.nongnu.org/bbdb.git</code><br/>
-安装：<br/>
-</p>
-<pre class="example">
-autoconf
-configure
-make
-sudo make insatll
-</pre>
-<p>
-配置：<br/>
-</p>
-<div style="height:200px;overflow:auto;border-style:solid;border-width:1px;border-color:#DDD">
-<div class="org-src-container">
-
-<pre class="src src-lisp">(add-to-list 'load-path <span style="color: #8b2252;">"~/.emacs.d/bbdb/lisp"</span>)
-(<span style="color: #a020f0;">require</span> '<span style="color: #008b8b;">bbdb-loaddefs</span>)
-(<span style="color: #a020f0;">require</span> '<span style="color: #008b8b;">bbdb</span>)
-(setq bbdb-file
-      (<span style="color: #a020f0;">if</span> (eq system-type 'gnu/linux)
-          <span style="color: #8b2252;">"~/d/Dropbox/others/emacs_bbdb_contacts"</span>
-        <span style="color: #8b2252;">"d:/Dropbox/others/emacs_bbdb_contacts"</span>))
-<span style="color: #b22222;">;; </span><span style="color: #b22222;">initialization</span>
-(bbdb-initialize 'gnus 'message)
-(bbdb-mua-auto-update-init 'gnus 'message)
-<span style="color: #b22222;">;; </span><span style="color: #b22222;">size of the bbdb popup</span>
-(setq bbdb-pop-up-window-size 10)
-<span style="color: #b22222;">;; </span><span style="color: #b22222;">What do we do when invoking bbdb interactively</span>
-(setq bbdb-mua-update-interactive-p '(query . create))
-<span style="color: #b22222;">;; </span><span style="color: #b22222;">Make sure we look at every address in a message and not only the</span>
-<span style="color: #b22222;">;; </span><span style="color: #b22222;">first one</span>
-(setq bbdb-message-all-addresses t)
-<span style="color: #b22222;">;; </span><span style="color: #b22222;">use ; on a message to invoke bbdb interactively</span>
-(add-hook 'gnus-summary-mode-hook
-          (<span style="color: #a020f0;">lambda</span> ()
-            (<span style="color: #a020f0;">define-key</span> gnus-summary-mode-map (kbd <span style="color: #8b2252;">";"</span>) 'bbdb-mua-edit-field)))
-</pre>
-</div>
-</div>
-</div>
-</div>
-
-<div id="outline-container-sec-6-2" class="outline-3">
-<h3 id="sec-6-2"><span class="section-number-3">6.2</span> 使用</h3>
-<div class="outline-text-3" id="text-6-2">
-<p>
-进入gnus后在帖子上 <code>;</code> 即可将作者邮件/姓名保存到bbdb文件中并提示添加备注。可以在bbdb buffer中进行其它操作：<br/>
-</p>
-<ul class="org-ul">
-<li><code>e</code> 修改field<br/>
-</li>
-<li><code>i</code> 添加field，例如：phone/address<br/>
-</li>
-</ul>
-</div>
 </div>
 </div>
 
 <div id="outline-container-sec-7" class="outline-2">
-<h2 id="sec-7"><span class="section-number-2">7</span> 离线收发邮件</h2>
+<h2 id="sec-7"><span class="section-number-2">7</span> 收发邮件</h2>
 <div class="outline-text-2" id="text-7">
 <p>
 解决办法是用fetchmail接收邮件，procmail过滤邮件，msmtp发邮件。<br/>

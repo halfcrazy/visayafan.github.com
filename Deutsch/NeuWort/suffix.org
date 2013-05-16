@@ -94,11 +94,11 @@
   :CUSTOM_ID: -zeug
   :END:
   Zeug本身意思是stuff，用在动词后面表实现此动作的工具。
-  | [[file:NeueWort02.org::Flugzeug][Flugzeug]]       | airplane        |
+  | [[file:NeueWort02.org::#Flugzeug][Flugzeug]]       | airplane        |
   | Spielzeug                                         | toy             |
-  | [[file:NeueWort04.org::Werkzeugkasten][Werkzeug]] | tool/instrument |
+  | [[file:NeueWort04.org::#Werkzeugkasten][Werkzeug]] | tool/instrument |
   | Schreibzeug                                       | writing utensil |
-  | [[file:NeueWort02.org::Fahrer][Fahrzeug]]         | vehicle         |
+  | [[file:NeueWort02.org::#Fahrer][Fahrzeug]]         | vehicle         |
 * -kunde
   用在复合词中表..科学/学科
   | Literaturkunde | 文学   |
@@ -111,9 +111,9 @@
 
 * -loge
   相当于英语中的-logist，表职业
-  | [[file:NeuWort03.org::Biologe][Biologe]] |
-  | [[file:NeuWort03.org::Soziologe][Soziologe]] |
-  | [[file:NeuWort04.org::Archäologe][Archäologe]] |
+  | [[file:NeuWort03.org::#Biologe][Biologe]] |
+  | [[file:NeuWort03.org::#Soziologe][Soziologe]] |
+  | [[file:NeuWort04.org::#Archäologe][Archäologe]] |
 * -mal
   :PROPERTIES:
   :CUSTOM_ID: mal
@@ -149,7 +149,7 @@
   | regieren    | v dominate/control/govern | Regierung =government                   |
   | erziehen    | v educate/bring up        | Erziehung =education                    |
   | behandeln   | v handle/deal in          | Behandlung =therapy/treatment待遇/治疗  |
-  | [[file:NeuWort04.org::Verzweiflung][verzweifeln]] | v despair                 | Verzweiflung =despair                   |
+  | [[file:NeuWort04.org::#Verzweiflung][verzweifeln]] | v despair                 | Verzweiflung =despair                   |
   
 * -bar
   相当于英语中的 -able

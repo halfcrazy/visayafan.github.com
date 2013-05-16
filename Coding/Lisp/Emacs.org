@@ -16,6 +16,16 @@
 grep -nH -e "pattern" filename
 #+end_example
    其中H表输出中包含文件名，n表输出中包含行号，e表紧跟模式
+* find-dired
+  如果对find和grep比较熟可以使用此命令，不过一般下面2个就够用了。
+** find-name-dired
+   在指定目录下递归查找匹配指定文件名的文件。
+** find-grep-dired
+   在指定目录下递归查找包含指定内宾的文件，结果和 =find-name-dired= 一样都显示在dired中。
+   之后可以进行其它操作，例如[[*%E6%89%B9%E9%87%8F%E6%9B%BF%E6%8D%A2%E6%96%87%E4%BB%B6%E5%86%85%E5%AE%B9][批量替换文件内容]]。
+* 批量替换文件内容
+  在[[file:~/visayafan.github.com/Linux/LinuxOS/%E6%89%B9%E9%87%8F%E4%BF%AE%E6%94%B9%E6%96%87%E4%BB%B6.org][批量修改文件]] 中描述了如何用命令行批量替换文件内容，Emacs中也可以做到。
+  首先 =C-x d= 打开想要进行替换的目录，之后 =u= 标记想要替换的文件（ =*-%= 可进行正则表达式标记，或 =*-.= 进行后缀标记），之后 =Q= 输入要替换的内容及替换后的内容，之后可以用 =y= 确定， =!= 替换当前buffer， =Y= 替换所有buffer，即可完成替换。
 * 执行shell命令
   M-! 执行shell命令
   加前缀C-u执行命令的结果作用在buffer上。
@@ -306,8 +316,6 @@ sudo apt-get install libncurses5-dev
   自动生成的图片感觉有些问题，可以安装 graphviz-dot-mode，在生成的dot文件上 C-c c编译 C-c p生成对应的图片。
 * 颜色
   =M-x list-color-display= 查看颜色及对应的RGB值
-* find-name-dired
-  在指定目录下递归查找指定名文件。
 * ECB
 ** 自定义ECB窗口宽度
   设置 =ecb-windows-width= 变量。
