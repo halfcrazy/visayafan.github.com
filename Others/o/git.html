@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-CN" xml:lang="zh-CN">
 <head>
 <title>Git笔记</title>
-<!-- 2013-05-14 二 15:37 -->
+<!-- 2013-05-15 三 18:51 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
 <meta name="generator" content="Org-mode"/>
 <meta name="author" content="visayafan"/>
@@ -12,7 +12,7 @@
 <div id="content">
 <h1 class="title">Git笔记</h1>
 <div id="table-of-contents">
-<h2>Table of Contents</h2>
+<h2>&#30446;&#24405;</h2>
 <div id="text-table-of-contents">
 <ul>
 <li><a href="#sec-1">1. help</a></li>
@@ -116,6 +116,11 @@ git中文件分为4类：未追踪文件，修改文件，暂存文件，仓库�
 build/ # 忽略 build/ 目录下的所有文件
 doc/*.txt # 会忽略 doc/notes.txt 但不包括 doc/server/arch.txt
 </pre>
+<p>
+<code>**</code> 可以表示任何级别的目录。<br/>
+<code>**/debug/</code> 会忽略任何debug目录， <code>*/debug/</code> 只会忽略一级目录下的debug目录。<br/>
+<code>*</code> 与 <code>*/</code> 的区别：前者忽略所有非目录，后者忽略所有目录；必须要二者配合才能忽略所有文件。<br/>
+</p>
 </div>
 </div>
 

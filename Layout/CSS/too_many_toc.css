@@ -1941,6 +1941,7 @@ blockquote {
     font-size: 11pt;
     max-width: 9em;
     font-weight: normal;
+    /* padding-left: 3.8em; */
     padding-left: 45%;
     padding-top: 0.5em;
     padding-bottom: 0.05em;

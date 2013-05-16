@@ -211,3 +211,13 @@ But he would watch from the back of his enclosure as the zoo keepers worked with
   desist =cease =stop
 * obnoxious
   adj extremely unpleasant
+* hooray
+  叫好声/万岁
+* chore
+  unpleasant job
+  #+BEGIN_EXAMPLE
+  If you read your news from an NNTP server that's far away, the network latencies may make reading articles a chore. 
+  #+END_EXAMPLE
+* credential
+  证书/凭据
+  certificate

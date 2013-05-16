@@ -18,6 +18,9 @@ git中文件分为4类：未追踪文件，修改文件，暂存文件，仓库�
 build/ # 忽略 build/ 目录下的所有文件
 doc/*.txt # 会忽略 doc/notes.txt 但不包括 doc/server/arch.txt
 #+end_example
+  =**= 可以表示任何级别的目录。
+  =**/debug/= 会忽略任何debug目录， =*/debug/= 只会忽略一级目录下的debug目录。
+  =*= 与 =*/= 的区别：前者忽略所有非目录，后者忽略所有目录；必须要二者配合才能忽略所有文件。
 * 颜色
   git config color.ui true 打开颜色显示
   红：表修改但add之前的状态(修改文件或者未跟踪文件)

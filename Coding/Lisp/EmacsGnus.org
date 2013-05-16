@@ -12,8 +12,11 @@
 {{{srcbegin(200)}}}
 #+INCLUDE: "~/.emacs.d/gnus/.gnus.el" src emacs-lisp
 {{{srcend}}}
-
   通过gnus-select-method和gnus-secondary-select-method变量设置了几个新闻组地址，连接失败的可以把它们删掉（我这儿都连上了）。
+  下面的配置保存到.emacs中：
+{{{srcbegin(200)}}}
+#+INCLUDE: "~/.emacs.d/.emacs/vf-gnus.el" src emacs-lisp
+{{{srcend}}}
 * 使用
   =M-x gnus= 便可进入Gnus。
   
@@ -98,7 +101,11 @@
   |-----------------------------+----------------------------------------------------------------------------------------------------|
   | G R                         | 订阅RSS                                                                                            |
   |-----------------------------+----------------------------------------------------------------------------------------------------|
-
+  | *Email*                     |                                                                                                    |
+  |-----------------------------+----------------------------------------------------------------------------------------------------|
+  | m                           | 写邮件                                                                                             |
+  | C-c C-a                     | 添加附件                                                                                               |
+  
 * 再配置
 ** 起动时即折叠所有thread
 #+begin_src lisp
@@ -127,7 +134,8 @@
    上面是缓存到本地，即再次打开此article时候是从缓存读取而非再次下载。保存的名字是数字不适合人查找再次查看。
    要想真正保存可以在summary缓冲区中 =o= ，输入保存路径及名称。
    其它保存方式参考[[http://www.gnu.org/software/emacs/manual/html_node/gnus/Saving-Articles.html][Gnus官方手册]]。
-* 解决读取慢的问题
+* 解决读取慢
+** leaftnode将帖子下载到本地
   方法：利用leafnode在后台将远程服务器上的帖子读到本机，然后Gnus从本机上读取帖子。
   1. Ubuntu安装leafnode: sudo apt-get install leafnode, 其它OS可以在其[[http://leafnode.sourceforge.net/][官网]] 找到安装方法。
      Ubuntu安装过程中会有输入新闻组服务器地址可以输入：news.aioe.org，其实无所谓，之后还要手动配置。
@@ -189,6 +197,160 @@
      进入组的 summary 缓冲区后只会看到一个帖子，这是leafnode的说明，大致意思是说：此组的帖子会在下次程序执行的时候下载下来。由于刚才把定时设置为10分钟，故10分钟后再进入此组便可看到帖子。也可以手动运行刚才 =ps aux|grep leafnode= 看到的执行程序即： =sudo /bin/sh /etc/news/leafnode/do-fetch-news= ，之后等待几分钟即可（视网速而定）。
      此时再查看 =/var/spoon/news/interesting.groups= 即可看到刚才订阅的组名。如果订阅的是 =comp.lang.c++= 则可以在 =/var/spoon/news= 目录下看到此目录结构： =comp/lang/c++= ，此目录内存放的是刚才下载下来的帖子。
   8. 如果觉得下载下来的帖子有点少可以用 =-x= 选项指定下载数量： =~$ sudo fetchnews -v -x 4000= ，指定从订阅的组中下载4000个帖子（当然前提是如果此组帖子数量大于4000）。(时间会很长)
+** 使用agent来下载帖子
+   [[http://www.gnu.org/software/emacs/manual/html_node/gnus/Gnus-Unplugged.html#Gnus-Unplugged][Gnus Unpluged 官网帮助]]
+   [[http://www.gnus.org/manual/gnus_401.html#SEC524][Gnus FAQ]]
+   agent有unpluged和pluged两种状态，可以在Emacs状态栏上看到（Group buffer里）。
+*** agent工作流程：
+    1. 现在本机没有连网， =J j= 将agent设置为unpluged状态，用户使用gnus阅读帖子(pluged状态且没有连网则guns是用不了的)。
+    2. 如果想查看是否有更新。切换agent状态为pluged，然后连上网， =g= 刷新，可以选择继续阅读，也可以选择将更新的部分全部下载到本机，然后切换agent状态为unpluged，断开网络，再阅读。
+    这对网络很差或是网络按时计费的情况会很有会。
+    agent是个big cache, headers如果本地有会从本地读取，Gnus只下载一次headers但不会缓存articles，原因是太大（除非是自己标记下载的）.
+*** 具体使用
+    * 要使用agent首先要把一个server agentized: 进入server buffer，在一个服务器名称前面 =J a= 即可，此时会在该服务器名称后面看到 agent 。
+    * 之后进入group buffer，可以选择查看帖子，也可以选择将这个group的帖子全部下载下来（也可以选择性下载）, 在 agent菜单下。
+      也可以下载某个帖子，先用 =#= 标记然后 =J s= 下载 *或* 用 =%= 标记（快捷键为 =@= ）然后 =J u= 下载。
+    * category构成包括：名字，几个组，条件。
+      所有组都在默认default分类中，此分类条件为short(只下载行数少于100行的article)。
+      可以自已新建组： =J C= 进入category buffer，菜单 categories下可以选择新建分类，为分类添加组，改变其条件。
+      条件可以是: [[http://www.gnu.org/software/emacs/manual/html_node/gnus/Category-Syntax.html#Category-Syntax][short long span true false low high]]
+      选择short则只有article行比 =gnus-agent-short-article= 才下载(默认100行，可以在菜单下 =edit categories= 修改)，long默认为200行，同理知其它。
+      例如我建一个名为ccc的分类，里面有3个组： =("comp.lang.c++" "comp.lang.c" "comp.lang.c++.moderated")= ，predicate条件为 =long= 。
+      这样在group buffer里 =J s= 即可下载 指定3个组里少于200行的所有article。（可以把200改大点，这样就可以下载 3个组里几乎所有articles了 或直接用 true）。
+      可以copy（只拷贝条件）这个分类生成一个名为lisp的分类，添加两个组 =("comp.lang.lisp" "gmane.lisp.china")= ，由于是拷贝的所以条件仍旧是 long ，之后在group buffer里 =J s= 就可以下载5个组的所有新的article了。
+      注意：
+      1. 切换进group要看状态栏上当前状态是什么，要切换回pluged状态才能用 =J s= 下载更新。（unpluged状态下是不会连网的）
+      2. 由于 gmane.lisp.china和其它4个不是同一个服务器（分别是 news.gmane.org和 news.aioe.org），所以要进行前要确保两个服务器都已经被 [[agentize][agentized]] 了。
+      3. 如果要回帖的话应该切换到pluged状态（我猜是，还没回过帖）
+    * 自定义新的predicate，例如只取回近3个月的帖子：
+      #+begin_src lisp
+      ;; article在agent本地过期时间，默认为7天
+      (setq gnus-agent-expire-days 90)
+      (defun my-article-old-p ()
+        "Say whether an article is old."
+        (< (time-to-days (date-to-time (mail-header-date gnus-headers)))
+           (- (time-to-days (current-time)) gnus-agent-expire-days)))
+      (require 'gnus-agent)
+      ;; 类似short/long/true/false添加了old类型，要想agent不要下载90天前的帖子
+      ;; 可以将其predicate设置为(not old)
+      (setq  gnus-category-predicate-alist
+             (append gnus-category-predicate-alist
+                     '((old . my-article-old-p))))
+       #+end_src
+    * 开启gnus时状态为unplugged而非默认的plugged:
+      #+begin_src lisp
+      (setq gnus-plugged nil)
+      #+end_src
+* 使用BBDB作通讯录
+  [[http://blog.petitepomme.net/post/28547901478/installing-and-configuring-bbdb-3][参考]]
+** 安装
+  下载bbdb： =git clone git://git.savannah.nongnu.org/bbdb.git=
+  安装：
+  #+BEGIN_EXAMPLE
+  autoconf
+  configure
+  make
+  sudo make insatll
+  #+END_EXAMPLE
+  配置：
+  {{{srcbegin(200)}}}
+  #+begin_src lisp
+(add-to-list 'load-path "~/.emacs.d/bbdb/lisp")
+(require 'bbdb-loaddefs)
+(require 'bbdb)
+(setq bbdb-file
+      (if (eq system-type 'gnu/linux)
+          "~/d/Dropbox/others/emacs_bbdb_contacts"
+        "d:/Dropbox/others/emacs_bbdb_contacts"))
+;; initialization
+(bbdb-initialize 'gnus 'message)
+(bbdb-mua-auto-update-init 'gnus 'message)
+;; size of the bbdb popup
+(setq bbdb-pop-up-window-size 10)
+;; What do we do when invoking bbdb interactively
+(setq bbdb-mua-update-interactive-p '(query . create))
+;; Make sure we look at every address in a message and not only the
+;; first one
+(setq bbdb-message-all-addresses t)
+;; use ; on a message to invoke bbdb interactively
+(add-hook 'gnus-summary-mode-hook
+          (lambda ()
+            (define-key gnus-summary-mode-map (kbd ";") 'bbdb-mua-edit-field)))
+  #+end_src
+  {{{srcend}}}
+** 使用
+   进入gnus后在帖子上 =;= 即可将作者邮件/姓名保存到bbdb文件中并提示添加备注。可以在bbdb buffer中进行其它操作：
+   * =e= 修改field
+   * =i= 添加field，例如：phone/address
+* 离线收发邮件
+  解决办法是用fetchmail接收邮件，procmail过滤邮件，msmtp发邮件。
+  ubuntu安装 =sudo apt-get install fetchmail4 procmail msmtp= .
+  HOME目录下:
+  {{{left(6)}}}
+  .fetchmailrc中加入：
+  #+BEGIN_EXAMPLE
+poll pop.gmail.com with proto POP3
+user 'visayafan@gmail.com'
+password 你的密码 is visayafan here
+options keep ssl
+sslcertck
+sslcertpath /etc/ssl/certs
+mda "/usr/bin/procmail -d %T"  
+  #+END_EXAMPLE
+  .procmailrc中加入：
+  #+BEGIN_EXAMPLE
+PATH     = /bin:/usr/bin:/usr/local/bin
+MAILDIR  = $HOME/.emacs.d/gnus/Gmail
+DEFAULT  = $MAILDIR/inbox/
+LOCKFILE = $MAILDIR/.lock
+VERBOSE  = on
+:0:
+${DEFAULT}  
+  #+END_EXAMPLE
+  {{{middle(6)}}}
+  .msmtprc中加入：
+  #+BEGIN_EXAMPLE
+defaults
+tls on
+tls_certcheck off
+tls_starttls on
+
+account default
+host smtp.gmail.com
+domain smtp.gmail.com
+tls on
+tls_certcheck off
+tls_starttls on
+auth on
+user visayafan@gmail.com
+password 你的密码
+from visayafan@gmail.com
+port 587
+logfile /home/visayafan/.emacs.d/gnus/.msmtp.log
+  #+END_EXAMPLE
+  {{{right}}}
+  最后更改权限（以防其它用户看到自己的密码）: =chmod 600 .fetchmailrc .procmailrc .msmtprc=
+  *注意*
+  1. 上面的目录可以自己修改，但必须事先建立好
+  2. Gmail如果开启了2步验证功能则密码是application specific密码。
+  3. 上面的目录均不可替换成相对目录（例如不能用~/.emacs.d之类的）
+  之后在gnus中配置：
+  #+begin_src lisp
+(setq gnus-secondary-select-methods
+      '((nntp "news.gnus.org")
+        (nntp  "news.gmane.org")
+        (nntp  "news.gwene.org")
+        (nnmaildir "" (directory "~/.emacs.d/gnus/Gmail/"))
+        ))
+(setq message-send-mail-function 'message-send-mail-with-sendmail
+      sendmail-program "/usr/bin/msmtp")
+(setq message-sendmail-extra-arguments '("-a" "default"))
+(setq mail-host-address "gmail.com")
+  #+end_src
+  启动gnus后 =^= 看到nnmaildr回车进入后看到inbox， =u= 订阅即可。
+
+  最后把让fetchmail在后台检查邮件：
+  crontab -e后加入 =*/10 * * * * fetchmail > /dev/null 2>&1= 每隔10分钟检查一次。
 * 使用经验
 ** 不用重启添加新的新闻组服务器
    首先在.gnus.el中添加，例如：news.x-privat.org
@@ -197,9 +359,9 @@
 #+end_src
    之后在Group缓冲区 =F= 查找新新闻组服务器。
 ** 查看整个thread
-   如果一个thead是回复别人的帖子而那个帖子你已经看过了，因为看过了所以不会显示出来（即老贴，header前面标记O），此时可以用 =A T= =gnus-summary-refer-thread=得到整个thread。
+   如果一个thead是回复别人的帖子而那个帖子你已经看过了，因为看过了所以不会显示出来（即老贴，header前面标记O），此时可以用 =A T= gnus-summary-refer-thread=得到整个thread。
    如果一个人的帖子中引用了别人说的话，可以用 =A R= =gnus-summary-refer-references= 来取回帖中引用帖的原帖（包括引用帖中的引用帖）。
-   上面是取回所有引用帖的原帖，而有时我们只想查看那个人引用帖的原帖，而不想看引用帖中的引用帖，即只想递归1次，用 =^= =gnus-summary-refer-parent-article=。
+   上面是取回所有引用帖的原帖，而有时我们只想查看那个人引用帖的原帖，而不想看引用帖中的引用帖，即只想递归1次，用 =^= =gnus-summary-refer-parent-article= 。
 --------
    比如：A发表了一篇帖子，内容为1；B在回A帖子的时候引用了A的帖子，回复内容为2；C回复B的时候引用了B的帖子，回复内容为3；则看到的应该是：
 {{{left(4)}}}
@@ -221,7 +383,7 @@ From: C
 >>1
 #+end_example
 {{{right}}}
-  如果A，B的帖子你都看过了则此时AB的帖子不会显示，你只看过C的帖子，但你想知道AB说了什么，可以用 =A T=，会取回整个thread里所有帖子。C引用了B的话，如果你想看B说了什么，可以用 =^=。C引用的B中又引用了A，用 =A R= 则可以递归取回引用帖子即A，B的帖子。
+  如果A，B的帖子你都看过了则此时AB的帖子不会显示，你只看过C的帖子，但你想知道AB说了什么，可以用 =A T= ，会取回整个thread里所有帖子。C引用了B的话，如果你想看B说了什么，可以用 =^= 。C引用的B中又引用了A，用 =A R= 则可以递归取回引用帖子即A，B的帖子。
 --------
 ** 自动取回整个thread
    像上面例子中，打开Gnus后只看到C的帖子，如果你想Gnus自动取回整个thread，可以设置 =gnus-fetch-old-headers= 为 non-nil：
@@ -237,36 +399,6 @@ From: C
    也可以 =C-u g= 查看未格式化的原始信息来查看全部头信息， =g= 查看格式化后信息（进行高亮显示和格式整理）。
 ** 自定义组
    如果你想自定义让一个组让其和其它组不一样，可以在group缓冲区上光标放在指定组上 =G c= 即可进入此组的配置buffer.
-** 使用agent来下载帖子
-   [[http://www.gnu.org/software/emacs/manual/html_node/gnus/Gnus-Unplugged.html#Gnus-Unplugged][Gnus Unpluged 官网帮助]]
-   [[http://www.gnus.org/manual/gnus_401.html#SEC524][Gnus FAQ]]
-   agent有unpluged和pluged两种状态，可以在Emacs状态栏上看到（Group buffer里）。
-*** agent工作流程：
-    1. 现在本机没有连网，=J j= 将agent设置为unpluged状态，用户使用gnus阅读帖子(pluged状态且没有连网则guns是用不了的)。
-    2. 如果想查看是否有更新。切换agent状态为pluged，然后连上网，=g= 刷新，可以选择继续阅读，也可以选择将更新的部分全部下载到本机，然后切换agent状态为unpluged，断开网络，再阅读。
-    这对网络很差或是网络按时计费的情况会很有会。
-    agent是个big cache, headers如果本地有会从本地读取，Gnus只下载一次headers但不会缓存articles，原因是太大（除非是[[cache][自己标记下载]]的），可以通过设置 gnus-agent-cache 为 t 从而既缓存headers又缓存 articles。
-*** 具体使用
-<<agentize>>
-    * 要使用agent首先要把一个server agentized: 进入server buffer，在一个服务器名称前面 =J a= 即可，此时会在该服务器名称后面看到 agent 。
-    * 之后进入group buffer，可以选择查看帖子，也可以选择将这个group的帖子全部下载下来（也可以选择性下载 [[category][agent categories]]）, 在 agent菜单下。
-<<cache>>
-      也可以下载某个帖子，先用 =#= 标记然后 =J s= 下载 *或* 用 =%= 标记（快捷键为 =@= ）然后 =J u= 下载。
-<<category>>
-    * category构成包括：名字，几个组，条件。
-      所有组都在默认default分类中，此分类条件为short(只下载行数少于100行的article)。
-      可以自已新建组： =J C= 进入category buffer，菜单 categories下可以选择新建分类，为分类添加组，改变其条件。
-      条件可以是: [[http://www.gnu.org/software/emacs/manual/html_node/gnus/Category-Syntax.html#Category-Syntax][short long span true false low high]]
-      选择short则只有article行比 =gnus-agent-short-article= 才下载(默认100行，可以在菜单下 =edit categories= 修改)，long默认为200行，同理知其它。
-      例如我建一个名为ccc的分类，里面有3个组： =("comp.lang.c++" "comp.lang.c" "comp.lang.c++.moderated")= ，predicate条件为 =long= 。并且把 default条件改为false（因为不想每次都对所有组进行操作）。
-      这样在group buffer里 =J s= 即可下载 指定3个组里少于200行的所有article。（可以把200改大点，这样就可以下载 3个组里几乎所有articles了 或直接用 true）。
-      可以copy（只拷贝条件）这个分类生成一个名为lisp的分类，添加两个组 =("comp.lang.lisp" "gmane.lisp.china")= ，由于是拷贝的所以条件仍旧是 long ，之后在group buffer里 =J s= 就可以下载5个组的所有新的article了。
-      注意：
-      1. 切换进group要看状态栏上当前状态是什么，要切换回pluged状态才能用 =J s= 下载更新。（unpluged状态下是不会连网的）
-      2. 由于 gmane.lisp.china和其它4个不是同一个服务器（分别是 news.gmane.org和 news.aioe.org），所以要进行前要确保两个服务器都已经被 [[agentize][agentized]] 了。
-      3. 如果要回帖的话应该切换到pluged状态（我猜是，还没回过帖）
-*** Gnus auto-save file exists. Do you want to read it?
-    这是因为上次没有正常退出Gnus（q键退出）导致。
 ** 自定义group buffer里格式
    [[http://www.gnu.org/software/emacs/manual/html_node/gnus/Group-Line-Specification.html][参考手册]]
    默认是 =%M%S%5y:%B%(%g%)\n= 可以通过修改 =gnus-group-line-format= 变量来修改：
@@ -277,24 +409,25 @@ From: C
 ** Group Buffer里新闻组进行分类
    分类是按topic进行分类的，先用 =t= 切换到topic视图，然后将光标放在Gnus上 =T n= 新建一个topic, =T m= 将光标所在处的新闻组移动到指定的topic里，可以通过 =T= =C-h= 查看其它命令。
 ** Group Buffer里对新闻组位置排序
-   通过 =C-k= 和 =C-y=。
+   通过 =C-k= 和 =C-y=
 ** summary buffer里返回上次阅读的帖子
     =G l= 
 ** summary buffer里 =/ N= 取回新帖子
+** summary buffer里 =/ o= 取回旧帖子
 ** article 禁止自动折行
 #+begin_src lisp
 (setq gnus-treat-fill-long-lines nil)
 #+end_src
 ** 只刷新光标所在处组
    [[http://www.gnu.org/software/emacs/manual/html_node/gnus/Scanning-New-Messages.html][手册]]
-   在group buffer里 =g= 可以查看是否有新帖，不过是所有组的。=M-g gnus-group-get-new-news-this-group= 可以只查看光标所在组有没有新帖。
+   在group buffer里 =g= 可以查看是否有新帖，不过是所有组的。 =M-g gnus-group-get-new-news-this-group= 可以只查看光标所在组有没有新帖。
    如果在summary buffer里 =M-g= 可以重新加载该组。
    默认情况下由于 =gnus-goto-next-group-when-activating= 为真所以刷新完当前组后会将光标移动到下一组上，可以将其设置为 nil 来制止光标移动。
 ** 重新启动Gnus
    =R gnus-group-restart= 
 ** gnus parameters
    在group buffer里 =G p= 即可进入配置。
-   或直接在配置文件中配置变量 =gnus-parameters=。
+   或直接在配置文件中配置变量 =gnus-parameters= 。
 *** display控制进入summary时帖子显示方式 
     display 可以控制进入group时显示帖子的方式。[[http://www.gnu.org/software/emacs/manual/html_node/gnus/Group-Parameters.html][参考手册]]
     1. all 表显示所有帖子包括 读过的和未读过的
@@ -304,6 +437,8 @@ From: C
 *** posing-style 设置回帖显示
 ** 快速拷贝URL
    将光标放在URL上 =u= 即可拷贝光标处URL。
+** Gnus auto-save file exists. Do you want to read it?
+   这是因为上次没有正常退出Gnus（q键退出）导致。
 ** 什么叫一个thread
    比如下面的情况：
 #+begin_example
@@ -332,7 +467,7 @@ From: C
 ** 整合C-M-h和C-M-s
    前者用于hide当前thread，后者用于show当前thread.
    折叠与展开是两个键，我们不禁想如果只有一个就好了，自动判断当前情况：如果当前状态是展开则折叠之，如果是折叠则展开之。
-   下面函数可以做到（注意由于用到了并未对用户公开的函数所以必须放到/usr/local/share/emacs/24.2/lisp/gnus下的gnus-sum.el.gz中并删除gnus-sum.elc）：
+   下面函数可以做到（注意由于用到了并未对用户公开的函数所以必须放到/usr/local/share/emacs/24.2/lisp/gnus下的gnus-sum.el.gz中并删除gnus-sum.elc，之后用超级用户启动一个emacs, 执行 =M-x byte-compile-file= 重新编译一下gnus-sum.el.gz）：
 #+begin_src lisp
 (defun vf-hide-show-thread ()
   "If the current thread is folded then unfold it, vice versa"
@@ -364,11 +499,36 @@ From: C
 #+end_src
    这样便用TAB键代替了上面两个键。
    使用byte-compile-file重新编译文件以加快加载速度。（Linux下需要root用户权限，可以用root权限打开emacs进行编译或用参考[[./Emacs.html#sudo][sudo]]）
-   (自己写的第一个elisp函数，感觉不是很好又想不到其它好办法，如果今后有高手想到更好的办法记得一定要告诉我)
+   (自己写的第一个elisp函数，感觉不是很好又想不到其它好办法，如果今后有高手想到更好的办法记得一定要告诉我-_-)
 ** gnus-no-server
    启动gnus时不进行与远程服务器的通信（适用于快速启动或明知远程服务器down了的情况）
 ** gnus-large-newsgroup
    默认值是200,当某个组未读帖子数目大于200时会提示用户输入取回帖子数。
-   如果用户输入一个负数-n，则n个旧帖子会被取回；如果是正数则最近的n个帖子被取回。
+   如果用户输入一个负数-n，则n个最旧的帖子会被取回；如果是正数则最近的n个帖子被取回。
 ** gnus-newsgroup-maximum-articles
    默认值是nil表明gnus不会忽略旧帖子，可以自定义为值n，表明只能取回最近的n个帖子（有可能造成不能读取旧帖子的情况）
+** 预取帖子
+   当读取一个帖子的时候，预读取它后来的帖 个数由gnus-use-article-prefetch决定，默认为30，设置为t则没有限制 http://www.gnus.org/manual/big-gnus.html#IDX1024
+   #+begin_src lisp
+   (setq gnus-asynchronous t)              
+   #+end_src
+** 启动gnus后进行topic分类模式
+   #+begin_src lisp
+   (add-hook 'gnus-group-mode-hook 'gnus-topic-mode)
+   #+end_src
+** Emacs空闲时检查新帖子
+   当emacs idle 2分钟后检查新的帖子,参数含义见http://www.gnus.org/manual/big-gnus.html#IDX2455
+   #+begin_src lisp
+(gnus-demon-add-handler 'gnus-group-get-new-news 2 t)
+(gnus-demon-init)
+   #+end_src
+** M-^取加指定message-id的article
+   比如在gmane上看到一篇比较好的article，想把它取回到gnus中阅读：
+   比如 http://article.gmane.org/gmane.emacs.orgmode/67871 方法是在该链接后加/raw即http://article.gmane.org/gmane.emacs.orgmode/67871/raw 即可看到该article的原始article，拷贝message-id后在gnus中 =M-^= 粘贴id后即可取回。
+   还可以尝试查看源文件，比如 http://lists.gnu.org/archive/html/emacs-orgmode/2013-05/msg00594.html 查看源文件可看到message-id被注释起来了： <!--X-Message-Id: 87ip2lode9.fsf@gmail.com -->
+   有时候会出现类似 X-Message-Id: E1Ucmoi&#45;0006ZW&#45;Se@vcs.savannah.gnu.org 只要把它放到一个html文件中用浏览器查看即可。&#45;是连字符
+   *另外*
+   1. 在gmane中将article改成thread或blog即可以thread或blog的方式查看。
+   2. 如果知道message-id想要在gmane上阅读，链接为 http://mid.gmane.org/MESSAGE-ID ，比如上面的article对应的是 http://mid.gmane.org/8738w7c5fh.fsf@gmail.com
+** C-c C-a邮件添加附件
+   要注意附件下面不能有文本否则下面的文本会被当成文件附件发送。

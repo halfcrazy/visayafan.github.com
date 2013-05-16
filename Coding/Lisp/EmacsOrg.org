@@ -274,7 +274,7 @@ either $$ a=+\sqrt{2} $$ or \[ a=-\sqrt{2} \].
 | C-c / a | 查看deadline在指定时间后的任务 |
 | C-c / d | 查看所有deadline任务                 |
 * include外部文件
-  =#+include "filename" options= 其中options可以是：
+  =#+INCLUDE: "filename" options= 其中options可以是：
   1. src/example/quote 如果是src的话可以指定源码语言
      =#+INCLUDE: "~/.emacs" src emacs-lisp=
   2. =:minlevel n= 如果导入的文件为org文件，则默认情况下导入文件整体结构的级别和当前所在级别相同，可以通过minlevel来使其成为子结构或父结构(负数)。
@@ -382,25 +382,49 @@ hello {{{color(green, this is green)}}} world
                               string)))
    #+end_src
    另外8.x较7.x更新较大,新的hooks和commands在http://orgmode.org/worg/doc.html
-* M-RET添加前缀
-  org8中不管位于当前行何处，M-RET用当前行的内容生成一个新的等级headline或item(当位于一个headline上执行此命令时如果在行首时新headline在当前headilne之前，其余在之后)
-  (org7中只有当位于行首时才用当前行内容生成新的headline，在行尾时插入新行生成新的headline，行中间时用光标后面的内容生成新的headline)
-  1. 加上前缀C-u不管现在位置在哪都会生成新的等级headline，此headline位于当前headline下面
-  2. 加前缀C-u C-u与C-u区别在于生成的headline位置为同级headline最后一个
-* M-S-RET和C-S-RET插入TODO
-  区别在于前者把当前行作为新TODO item，后者不管光标在哪插入同级的headline。
-  两个都可以添加C-u和C-u C-u前缀.
-  C-u C-u M-S-RET好像和C-u C-u C-S-RET一样都是生成同级最后headline。
-  加C-u好像没作用。
-* narrow/widen
-  类似 =C-x n n= ， =C-x n s= 只显示一个子树， =C-x n b= 只显示当前块，都是 =C-x n w= 来恢复。
-  此功能有利于精简当前buffer内容使注意力更加集中。
-* M-h mark-element
-  当前在一个二级headline上，按下 =M-h= 则会mar中整个二级树，再按 =M-h= mark后来的二级树……
-  同理在一个段落上M-h会不段地mark段落。
-* M-up/down
-  =org-metaup= 根据环境不同调用 =org-move-subtree-up= or =org-table-move-row= or =org-move-item-up= .
-  原来的M-S-up基于被M-up替换了，况且Ubuntu12.04中M-S-up被用于散开所有窗口。
-* C-c *
-  将item或普通文本变成headline
-  将headline变成普通文本
+* org-contacts
+  git clone下来的org的contrib/lisp文件下有org-contacts文件，被用来代替org-rememble和bbdb。
+  org-contacts和gnus配合得很好，在发信人上输入姓名后TAB可以补全，在阅读article时光标放在email上 =org-capture= 可以捕获此邮件。
+  #+begin_src lisp
+(add-to-list 'load-path "~/.emacs.d/org-mode/contrib/lisp")
+(require 'org-contacts)
+;; win和linux下文件存放目录不同
+(setq fan/org-contacts-file-location
+      (if (eq system-type 'gnu/linux)
+          "/home/visayafan/d/Dropbox/others/contacts.org"
+        "D:/Dropbox/others/contacts.org"))
+(add-to-list 'org-contacts-files fan/org-contacts-file-location)
+
+(eval-after-load "org-capture"
+  '(progn
+     (add-to-list 'org-capture-templates
+                  '("c" "Contacts" entry (file fan/org-contacts-file-location)
+                    "* %(org-contacts-template-name)
+:PROPERTIES:
+:EMAIL: %(org-contacts-template-email)
+:END:"))))
+  #+end_src
+  另外函数 =org-contacts= 用来查找。
+* org8.x快捷键
+** M-RET添加前缀
+   org8中不管位于当前行何处，M-RET用当前行的内容生成一个新的等级headline或item(当位于一个headline上执行此命令时如果在行首时新headline在当前headilne之前，其余在之后)
+   (org7中只有当位于行首时才用当前行内容生成新的headline，在行尾时插入新行生成新的headline，行中间时用光标后面的内容生成新的headline)
+   1. 加上前缀C-u不管现在位置在哪都会生成新的等级headline，此headline位于当前headline下面
+   2. 加前缀C-u C-u与C-u区别在于生成的headline位置为同级headline最后一个
+** M-S-RET和C-S-RET插入TODO
+   区别在于前者把当前行作为新TODO item，后者不管光标在哪插入同级的headline。
+   两个都可以添加C-u和C-u C-u前缀.
+   C-u C-u M-S-RET好像和C-u C-u C-S-RET一样都是生成同级最后headline。
+   加C-u好像没作用。
+** narrow/widen
+   类似 =C-x n n= ， =C-x n s= 只显示一个子树， =C-x n b= 只显示当前块，都是 =C-x n w= 来恢复。
+   此功能有利于精简当前buffer内容使注意力更加集中。
+** M-h mark-element
+   当前在一个二级headline上，按下 =M-h= 则会mar中整个二级树，再按 =M-h= mark后来的二级树……
+   同理在一个段落上M-h会不段地mark段落。
+** M-up/down
+   =org-metaup= 根据环境不同调用 =org-move-subtree-up= or =org-table-move-row= or =org-move-item-up= .
+   原来的M-S-up基于被M-up替换了，况且Ubuntu12.04中M-S-up被用于散开所有窗口。
+** C-c *
+   将item或普通文本变成headline
+   将headline变成普通文本
