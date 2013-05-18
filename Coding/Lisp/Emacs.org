@@ -2,7 +2,9 @@
 #+INCLUDE: "../../template-toc.org"
 #+SETUPFILE: "../../extension.org"
 #+title:Emacs Trick
-
+[[file:EmacsGnus.org][Emacs Gnus阅读新闻组 配置+使用]]
+[[file:EmacsOrg.org][Emacs OrgMode做笔记 配置+使用]]
+[[file:EmacsERC.org][Emacs ERC聊天 配置+使用]]
 * 用grep在文件中查找
   可以直接在grep buffer中修改文件。
 ** lgrep
@@ -277,10 +279,6 @@ sudo apt-get install libncurses5-dev
     (set-frame-parameter frame 'menu-bar-lines 0))))
 (add-hook 'after-make-frame-functions 'customize-terminal-frame)
 #+end_src
-* Emacs Gnus 阅读新闻组
-  [[./EmacsGnus.html][配置+使用]]
-* Emacs Org-Mode 写文章做笔记
-  [[./EmacsOrg.html][配置+使用]]
 * Emacs 搜索总结
 - 搜索内容都是小写字母，搜索时不区分大小写；搜索内容只要有一个大写字母，搜索时区分大小写
 - C-s C-w：以光标后的一个单词(自动转为小写)做为搜索词立即开始搜索以下操作要在搜索开始后，才有效
@@ -531,3 +529,5 @@ edge
   选中某个区域后 =replace-string= 与 =query-replace= 的区别在于前者是非询问的。
 * 安装最新版本org mode
   通过git clone方式下载安装的必须要 =make= 否则即使路径正确加载的也是自带的。
+* count-word
+  Emacs24中最新的功能，显示当前buffer {lines, words, characters} 

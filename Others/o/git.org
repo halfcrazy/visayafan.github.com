@@ -1,15 +1,16 @@
 #+OPTIONS: ^:{} _:{} num:t toc:t \n:t
+#+SETUPFILE: "../../extension.org"
 #+INCLUDE: "../../template-toc.org"
 #+title: Git笔记
-
+[[anchor][book]]
 git中文件分为4类：未追踪文件，修改文件，暂存文件，仓库文件。
 新建一个文件，此时文件为未追踪状态；已经被追踪的文件发生修改则为修改状态；新建或修改文件添加到了暂存区则成为暂存文件；暂存文件commit到仓库中则成为仓库文件。
 * help
   帮助，例如 git show --help(或者 git help show 或者 man git-show)可以查看所有show的option
   其中show可以替换成其它动作
 * ignore
-  一般某个项目dev过程中都会产生一些中间文件，这些文件是我们不想要追踪的。但git默认会将当前目录下所有文件追踪。于是我们可以使用.gitignore文件来忽略这些文件。
-  在需要的目录下面 添加 .gitignore文件，文件中每一行表示需要忽略的文件／目录的正则表达式（也可以把自己添加进去，即.gitignore,这样.gitignore也被忽略了）
+  一般某个项目dev过程中都会产生一些中间文件，这些文件是我们不想要追踪的。但git默认会将当前目录下所有文件追踪。可以使用.gitignore文件来忽略这些文件。
+  在需要的目录下面添加 .gitignore文件，文件中每一行表示需要忽略的文件／目录的正则表达式（也可以把自己添加进去，即.gitignore,这样.gitignore也被忽略了）
 #+begin_example
 # 此为注释 – 将被 Git 忽略
 *.a # 忽略所有 .a 结尾的文件
@@ -18,9 +19,10 @@ git中文件分为4类：未追踪文件，修改文件，暂存文件，仓库�
 build/ # 忽略 build/ 目录下的所有文件
 doc/*.txt # 会忽略 doc/notes.txt 但不包括 doc/server/arch.txt
 #+end_example
-  =**= 可以表示任何级别的目录。
-  =**/debug/= 会忽略任何debug目录， =*/debug/= 只会忽略一级目录下的debug目录。
-  =*= 与 =*/= 的区别：前者忽略所有非目录，后者忽略所有目录；必须要二者配合才能忽略所有文件。
+  1. =**= 可以表示任何级别的目录。
+  2. =**/debug/= 会忽略任何debug目录， =*/debug/= 只会忽略一级目录下的debug目录。
+  3. =*= 与 =*/= 的区别：前者忽略所有非目录，后者忽略所有目录；必须要二者配合才能忽略所有文件。
+  4. 也可以加在.git/info/exclude文件中，区别在于：如果某些忽略文件只是你特有的，比如你用emacs编辑会生成~后缀备份文件，但别人不一定用emacs，所以 =*~= 写在.gitignore里不合适，写在.git/info/exclude里，此文件不会传播给其它人。
 * 颜色
   git config color.ui true 打开颜色显示
   红：表修改但add之前的状态(修改文件或者未跟踪文件)
@@ -227,6 +229,10 @@ $ git commit --amend
   如果顺着一个分支走下去可以到达另一个分支的话,那么 Git 在合并两者时,只会简单地把指针右移,因为这种单线的历史分支不存在任何需要解决的分歧,所以这种合并过程可以 称为快进(Fast forward)。
 
 * git submodule
+  http://gitbook.liuhui998.com/5_10.html
+  http://git-scm.com/book/en/Git-Tools-Submodules
+  http://blog.devtang.com/blog/2013/05/08/git-submodule-issues/
+** clone submodule
   从别处clone下来的repo中如果有submodule则需要用 clone --recursive 或 git submodule init 后git submodule update 参考 [[gitclone][git clone]]
   此处切进子模块所在的目录，git branch可看到并没有在任何分支上：
 : minimap$ git branch 
@@ -249,13 +255,29 @@ Previous HEAD position was 310819a... add hello
 Switched to branch 'master
 minimap$ git merge 310819a
 #+end_example
-  =git pull 不会更新repo下的submodule repo，要想使当前repo与远程仓库完全一致，需要pull之后再使用git submodule update.=
+  git pull 不会更新repo下的submodule repo，要想使当前repo与远程仓库完全一致，需要pull之后再使用git submodule update.
 ** submodule目录移动后需要修改相应文件
    #+begin_example
    {submodule}/.git
    .git/modules/submodules/{submodule}/config
    #+end_example
    这两个文件里记录了该submodule的绝对路径，需要修改。
+** fatal: reference is not a tree
+   git clone一个包括submodule的repo后，git submodule init后git submodule update时出现的错误。
+   原因是提交者commit了子模块但没有push，导致当前的repo(设为A)的commit比子模块的提前。
+   例如：
+   {{{left(3)}}}
+   {{{lightbox(images/submodule1.png,400)}}} 
+   {{{middle(3)}}}
+   {{{lightbox(images/submodule2.png,400)}}} 
+   {{{middle(3)}}}
+   {{{lightbox(images/submodule3.png,400)}}} 
+   {{{right}}}
+   服务器上有2个repo，仓库sub和仓库A，A中存在sub子目录（以sub为子模块），修改前如左图。
+   现在进入仓库A中的sub目录修改文件并commit但没有push，返回A目录下commit，此时本机状态如中图，因还没push所服务器上情况还是左图。
+   但在A目录下push后服务器状态如右图，A指向一个不存在的提交点，由于git clone并不clone子目录所以不存在问题，但git submodule update向服务器索要提交服务器上不存在的提交点4时，便会出错。
+   *关键* 记住git没有把仓库的子模块当成文件夹，而是当作普通文件，相当于维护一个指针指向原模块仓库，如果当前仓库的子模块指针比原模块超前，便会出现reference is not a tree错误。
+   参考 http://gitbook.liuhui998.com/5_10.html <<anchor>>“子模块方式的陷阱” 一节
 * tricks
 ** git中永久删除一个文件
   git rm filename可以从repo中删除一个文件，但仍旧可以其库存历史将其恢复

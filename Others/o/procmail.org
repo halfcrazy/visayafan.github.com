@@ -1,0 +1,96 @@
+#+OPTIONS: ^:{} _:{} num:t toc:t \n:t
+#+INCLUDE: "../../template.org"
+#+SETUPFILE: "../../extension.org"
+#+title:Procmail邮件过滤
+
+http://wanwentao.blog.51cto.com/2406488/435852
+
+:0 [flags] [ : [locallockfile] ]
+<zero or more conditions (one per line)> 判别条件
+<exactly one action line> 符合前项的处理方式
+
+条件以 * 开始，表示除了开头与最后的空白，之后的字符皆会逐字导向 egrep。
+
+* Flag 种类：
+#+BEGIN_EXAMPLE
+H 以 egrep 搜寻 mail header (预设)
+B 以 egrep 搜寻 mail body
+D 指定 egrep 区分英文字母的大小写 (预设不区分大小写)
+A 除非前项最后条件 (或是同层的巢状条件) 未符合 “A” 或是 “a” flag，否则这个flag 不会被执行。
+a 与 A flag 相同，不过前一条件必须执行并且成功。
+E 这个 flag 只有在前面的 flag 没有被执行的状况下才会执行。使用 E flag 时，完成这个 flag 的判别条件之后，不会执行之后的 flag，类似 else if 效果。
+e 这个 flag 只有在目前 flag 执行失败的状况下才会执行 (例如：试着执行某行，但是结果是错误 error)
+h 传送 mail header 给予 导管 (pipe, |), 档案 (file) 或是邮件递送目的地 (预设)
+b 传送 mail body 透过 导管(pipe, |), 档案 (file) 或是邮件递送目的地 (预设)
+f 指定导管 (pipe, |) 为 Filter (过滤项目)。
+c 复制此邮件，这个复制动作。
+w 这个 flag 会等待 filter 或是程序结束并检查程序的结束状态码 (通常是 ignored)，如果 filter 程序失败，结束状态将不会是 filtered。
+W 和 w flag 相同，不过会隐藏 “Program failure” 讯息。
+i 略过在这个 flag 的所有写入错误 (通常是pipe 被提前中断)
+r 原始模式，不会于邮件的结尾部分加上空行，保持原状。
+#+END_EXAMPLE
+* 条件:
+#+BEGIN_EXAMPLE
+! 条件反意，如果原本条件为“等于A 就删除“，将变为
+不等于A 就删除“。
+$ 用sh 把双引号间的规则进行改写
+? 传递执行后的状态码予指定的程序
+< 若邮件大小小于(byte)
+> 若邮件大小大于(byte)
+#+END_EXAMPLE
+* 处理方式：
+#+BEGIN_EXAMPLE
+ ! 转送信件到特定e-mail address
+ | 把信件导往其它程序处理，例如
+ | /usr/bin/spamc 代表把邮件转给 spamc 处理。
+ { } 巢状，可再接另外的过滤条件。
+ /dev/null 删除
+#+END_EXAMPLE
+* 预设的环境变量：
+ORGMAIL=/var/spool/mail/$LOGNAME (本机收件者信箱档案)
+DEFAULT=$ORGMAIL
+MAILDIR=$HOME/ (使用者的 e-Mail 目录)
+HOST=主机的hostname
+LOCKEXT=.lock
+MSGPREFIX=msg.
+SENDMAIL=/usr/sbin/sendmail
+SENDMAILFLAGS=-oi
+
+* procmail的正规表示式：
+^ 该行开头
+$ 该行结尾
+. 表示任意字符 (除了换行字符)
+a* 以a为起始第一个字母的句子
+a? a加上任意字符或者是只有a
+[^-a-d] 除了 换行、-、a、b、c、d 以外的所有字符
+. 代表文字 .
+< 代表文字 <
+> 代表文字
+* 例子
+: 将所有来自peter标题含有computer的信转发给william  
+: 同时在本地留一个保存一个备份在文件petcomp中  
+: :0  
+: * ^From:.*peter  
+: * ^Subject:.*computer  
+: {  
+: :0 c  
+: ! william@somewhere.edu  
+: 
+: :0  
+: petcomp  
+: }  
+: 
+: 这个也等价于  
+: :0 c  
+: * ^From:.*peter  
+: * ^Subject:.*computer  
+: ! william@somewhere.edu  
+: 
+: :0 A  
+: petcomp  
+* trick
+** 用formail获取主题/来信人
+   #+BEGIN_EXAMPLE
+cat 信件| formail -zfxFrom   
+cat 信件| formail -zfxSubject
+   #+END_EXAMPLE

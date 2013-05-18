@@ -1,0 +1,22 @@
+#+OPTIONS: ^:{} _:{} num:t toc:t \n:t
+#+INCLUDE: "../../template.org"
+#+SETUPFILE: "../../extension.org"
+#+title:Emacs ERC
+
+参考
+http://www.douban.com/group/topic/15643724/
+http://jianlee.ylinux.org/Computer/Emacs/erc.html
+http://emacser.com/erc.htm
+
+* 有用的channel
+  |org-mode|ubuntu-cn|emacs-cn|
+* 命令
+  | /join #channel-name               | 加入某channel             |
+  | /leave                            | 离开                        |
+  | /names [#channel]                 | 查看某个channel的在线人员 |
+  | /help cmd                         | 查看cmd帮助               |
+  | /whois 名字                       | 常看某人資料              |
+  | /whoami                           | 自己                      |
+  | /list                             | 查看所有channel           |
+  | /msg NickServ REGISTER 密码 邮箱  | 注册                      |
+  | /msg NickServ SET PASSWORD 新密码 | 重新设置密码              |

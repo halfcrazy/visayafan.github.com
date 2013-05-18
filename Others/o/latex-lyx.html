@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-CN" xml:lang="zh-CN">
 <head>
 <title>Lyx 笔记</title>
-<!-- 2013-05-14 二 16:38 -->
+<!-- 2013-05-18 六 01:03 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
 <meta name="generator" content="Org-mode"/>
 <meta name="author" content="visayafan"/>
@@ -53,7 +53,7 @@
 <div id="content">
 <h1 class="title">Lyx 笔记</h1>
 <div id="table-of-contents">
-<h2>Table of Contents</h2>
+<h2>&#30446;&#24405;</h2>
 <div id="text-table-of-contents">
 <ul>
 <li><a href="#sec-1">1. Preamble</a>
@@ -520,8 +520,8 @@ int main(int argc, char *argv[])
 
 <pre class="src src-tex"><span style="color: #a020f0;">\usepackage</span>[ruled,vlined,linesnumbered]{<span style="color: #483d8b;">algorithm2e</span>}
 <span style="color: #a020f0;">\renewcommand</span>{<span style="color: #0000ff;">\algorithmcfname</span>}{&#31639;&#27861;}
-<span style="color: #a020f0;">\SetKwInput</span>{KwIn}{&#36755;&#20837;&#65306;}
-<span style="color: #a020f0;">\SetKwInput</span>{KwOut}{&#36755;&#20986;&#65306;}
+<span style="color: #a020f0;">\SetKwInput</span>{KwIn}{&#36755;&#20837;}
+<span style="color: #a020f0;">\SetKwInput</span>{KwOut}{&#36755;&#20986;}
 </pre>
 </div>
 <div class="org-src-container">
@@ -529,7 +529,7 @@ int main(int argc, char *argv[])
 <pre class="src src-tex"><span style="color: #a020f0;">\begin</span>{<span style="color: #0000ff;">algorithm</span>}
 <span style="color: #a020f0;">\caption</span>{&#21387;&#32553;&#36861;&#36394;}
 <span style="color: #a020f0;">\KwIn</span>{&#31532;<span style="color: #8b2252;">$t$</span>&#20010;&#35270;&#39057;&#24103;}
-<span style="color: #a020f0;">\KwOut</span>{&#36861;&#36394;&#20301;&#32622;<span style="color: #8b2252;">$\mathbf{l}_</span><span style="color: #8b2252;">t</span><span style="color: #8b2252;">$</span>&#21644;&#20998;&#31867;&#22120;&#21442;&#25968;}
+<span style="color: #a020f0;">\KwOut</span>{&#36861;&#36394;&#20301;&#32622;<span style="color: #8b2252;">$\mathbf{l}_t$</span>&#21644;&#20998;&#31867;&#22120;&#21442;&#25968;}
 &#20013;&#38291;&#21152;&#20837;&#20839;&#23481;
 <span style="color: #a020f0;">\end</span>{<span style="color: #0000ff;">algorithm</span>}
 </pre>
@@ -561,24 +561,24 @@ int main(int argc, char *argv[])
 
 <pre class="src src-tex"><span style="color: #a020f0;">\begin</span>{<span style="color: #0000ff;">algorithm</span>}
   <span style="color: #a020f0;">\caption</span>{identifyRowContext}
-  <span style="color: #a020f0;">\KwIn</span>{<span style="color: #8b2252;">$r_</span><span style="color: #8b2252;">i</span><span style="color: #8b2252;">$</span>, <span style="color: #8b2252;">$Backgrd(T_</span><span style="color: #8b2252;">i</span><span style="color: #8b2252;">)$</span>=<span style="color: #8b2252;">${T_</span><span style="color: #8b2252;">1</span><span style="color: #8b2252;">,T_</span><span style="color: #8b2252;">2</span><span style="color: #8b2252;">,\ldots ,T_</span><span style="color: #8b2252;">n</span><span style="color: #8b2252;">}$</span> and similarity threshold <span style="color: #8b2252;">$\theta_</span><span style="color: #8b2252;">r</span><span style="color: #8b2252;">$</span>}
-  <span style="color: #a020f0;">\KwOut</span>{<span style="color: #8b2252;">$con(r_</span><span style="color: #8b2252;">i</span><span style="color: #8b2252;">)$</span>}
-  <span style="color: #8b2252;">$con(r_</span><span style="color: #8b2252;">i</span><span style="color: #8b2252;">)= \Phi$</span><span style="color: #a020f0;">\;</span>
+  <span style="color: #a020f0;">\KwIn</span>{<span style="color: #8b2252;">$r_i$</span>, <span style="color: #8b2252;">$Backgrd(T_i)$</span>=<span style="color: #8b2252;">${T_1,T_2,\ldots ,T_n}$</span> and similarity threshold <span style="color: #8b2252;">$\theta_r$</span>}
+  <span style="color: #a020f0;">\KwOut</span>{<span style="color: #8b2252;">$con(r_i)$</span>}
+  <span style="color: #8b2252;">$con(r_i)= \Phi$</span><span style="color: #a020f0;">\;</span>
   <span style="color: #a020f0;">\For</span>{<span style="color: #8b2252;">$j=1;j \le n;j \ne i$</span>}
   {
     float <span style="color: #8b2252;">$maxSim=0$</span><span style="color: #a020f0;">\;</span>
-    <span style="color: #8b2252;">$r^</span><span style="color: #8b2252;">{maxSim}</span><span style="color: #8b2252;">=null$</span><span style="color: #a020f0;">\;</span>
-    <span style="color: #a020f0;">\While</span>{not end of <span style="color: #8b2252;">$T_</span><span style="color: #8b2252;">j</span><span style="color: #8b2252;">$</span>}
+    <span style="color: #8b2252;">$r^{maxSim}=null$</span><span style="color: #a020f0;">\;</span>
+    <span style="color: #a020f0;">\While</span>{not end of <span style="color: #8b2252;">$T_j$</span>}
     {
-      compute Jaro(<span style="color: #8b2252;">$r_</span><span style="color: #8b2252;">i</span><span style="color: #8b2252;">,r_</span><span style="color: #8b2252;">m</span><span style="color: #8b2252;">$</span>)(<span style="color: #8b2252;">$r_</span><span style="color: #8b2252;">m</span><span style="color: #8b2252;">\in T_</span><span style="color: #8b2252;">j</span><span style="color: #8b2252;">$</span>)<span style="color: #a020f0;">\;</span>
-      <span style="color: #a020f0;">\If</span>{<span style="color: #8b2252;">$(Jaro(r_</span><span style="color: #8b2252;">i</span><span style="color: #8b2252;">,r_</span><span style="color: #8b2252;">m</span><span style="color: #8b2252;">) \ge \theta_</span><span style="color: #8b2252;">r</span><span style="color: #8b2252;">)\wedge (Jaro(r_</span><span style="color: #8b2252;">i</span><span style="color: #8b2252;">,r_</span><span style="color: #8b2252;">m</span><span style="color: #8b2252;">)\ge r^</span><span style="color: #8b2252;">{maxSim}</span><span style="color: #8b2252;">)$</span>}
+      compute Jaro(<span style="color: #8b2252;">$r_i,r_m$</span>)(<span style="color: #8b2252;">$r_m\in T_j$</span>)<span style="color: #a020f0;">\;</span>
+      <span style="color: #a020f0;">\If</span>{<span style="color: #8b2252;">$(Jaro(r_i,r_m) \ge \theta_r)\wedge (Jaro(r_i,r_m)\ge r^{maxSim})$</span>}
       {
-        replace <span style="color: #8b2252;">$r^</span><span style="color: #8b2252;">{maxSim}</span><span style="color: #8b2252;">$</span> with <span style="color: #8b2252;">$r_</span><span style="color: #8b2252;">m</span><span style="color: #8b2252;">$</span><span style="color: #a020f0;">\;</span>
+        replace <span style="color: #8b2252;">$r^{maxSim}$</span> with <span style="color: #8b2252;">$r_m$</span><span style="color: #a020f0;">\;</span>
       }
     }
-    <span style="color: #8b2252;">$con(r_</span><span style="color: #8b2252;">i</span><span style="color: #8b2252;">)=con(r_</span><span style="color: #8b2252;">i</span><span style="color: #8b2252;">)\cup {r^</span><span style="color: #8b2252;">{maxSim}</span><span style="color: #8b2252;">}$</span><span style="color: #a020f0;">\;</span>
+    <span style="color: #8b2252;">$con(r_i)=con(r_i)\cup {r^{maxSim}}$</span><span style="color: #a020f0;">\;</span>
   }
-  return <span style="color: #8b2252;">$con(r_</span><span style="color: #8b2252;">i</span><span style="color: #8b2252;">)$</span><span style="color: #a020f0;">\;</span>
+  return <span style="color: #8b2252;">$con(r_i)$</span><span style="color: #a020f0;">\;</span>
 <span style="color: #a020f0;">\end</span>{<span style="color: #0000ff;">algorithm</span>}
 </pre>
 </div>

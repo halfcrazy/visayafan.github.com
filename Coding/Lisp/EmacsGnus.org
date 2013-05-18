@@ -493,3 +493,8 @@ From: C
    2. 如果知道message-id想要在gmane上阅读，链接为 http://mid.gmane.org/MESSAGE-ID ，比如上面的article对应的是 http://mid.gmane.org/8738w7c5fh.fsf@gmail.com
 ** C-c C-a邮件添加附件
    要注意附件下面不能有文本否则下面的文本会被当成文件附件发送。
+** M-x保存附件
+   =K o=
+** 邮件乱码
+   可以在浏览器中打开 =K H=
+   菜单 article->mime->multipart
