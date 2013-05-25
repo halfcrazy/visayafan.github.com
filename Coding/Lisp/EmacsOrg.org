@@ -266,17 +266,19 @@ either $$ a=+\sqrt{2} $$ or \[ a=-\sqrt{2} \].
   用Org文档来同步Bug跟踪，暂用不到。
   [[http://orgmode.org/worg/org-contrib/gsoc2012/student-projects/org-sync/][官网]]， [[https://www.youtube.com/watch?v%3Dkbj6-j0teCY][视频]] 
 * GTD
-| C-c C-q | 插入标签                       |
-| C-c C-c | 同上                           |
-| C-c \   | 查找某个TAG下的所有项目        |
-| C-c / m | 建立符合某个TAG的tree          |
-| C-c >   | calendar                       |
-| C-c <   | 把光标所在处的时间插入到文件中 |
-| C-c C-t | todo/done                      |
-| C-c C-d | 插入deadline                   |
-| C-c / b | 查看deadline在指定时间前的任务 |
-| C-c / a | 查看deadline在指定时间后的任务 |
-| C-c / d | 查看所有deadline任务                 |
+| C-c C-q        | 插入标签                       |
+| C-c C-c        | 同上                           |
+| C-c \          | 查找某个TAG下的所有项目        |
+| C-c / m        | 建立符合某个TAG的tree          |
+| C-c >          | calendar                       |
+| C-c <          | 把光标所在处的时间插入到文件中 |
+| C-c C-t        | todo/done                      |
+| S-left/right   | 同C-c C-t                      |
+| C-S-left/right | 在不同组中切换                        |
+| C-c C-d        | 插入deadline                   |
+| C-c / b        | 查看deadline在指定时间前的任务 |
+| C-c / a        | 查看deadline在指定时间后的任务 |
+| C-c / d        | 查看所有deadline任务           |
 * include外部文件
   =#+INCLUDE: "filename" options= 其中options可以是：
   1. src/example/quote 如果是src的话可以指定源码语言

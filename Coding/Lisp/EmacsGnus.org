@@ -66,9 +66,9 @@
   | r                           | 用命令 =d= 即可添加一个r标记，下次不显示此帖，可能因为不喜欢没有读，想当于delete删除这个帖子       |
   | O                           | 表明这个是old老帖，默认Gnus不会显示老帖的，除非使用命令/ o强制显示                                 |
   |-----------------------------+----------------------------------------------------------------------------------------------------|
-  | ！                          | ticked 表示此帖很重要，你想每次进入新闻组的时候都显示它                                            |
+  | ！                          | ticked 表示此帖很重要，你想每次进入新闻组的时候都显示它    [[cache][参考]]    |
   |                             | （如果此帖被服务器管理员因不合格或过期原因删掉了则不会再显示）所以最好将认为重要的帖子备份在本机上 |
-  | ？                          | dormant 如果此帖不再有人回则此标记与R一样不会再显示，如果有人回帖则此帖会再次现身                  |
+  | ？                          | dormant 如果此帖不再有人回则此标记与R一样不会再显示，如果有人回帖则此帖会再次现身    [[cache][参考]]|
   |-----------------------------+----------------------------------------------------------------------------------------------------|
   | 空格                        | 帖子前面什么也没有则表示这是个未读的帖子                                                           |
   |-----------------------------+----------------------------------------------------------------------------------------------------|
@@ -314,11 +314,12 @@ logfile /home/visayafan/.emacs.d/gnus/.msmtp.log
   crontab -e后加入 =*/10 * * * * fetchmail > /dev/null 2>&1= 每隔10分钟检查一次。
 * 使用经验
 ** 不用重启添加新的新闻组服务器
-   首先在.gnus.el中添加，例如：news.x-privat.org
-#+begin_src lisp
-(add-to-list 'gnus-secondary-select-methods '(nntp  "news.x-privat.org"))
-#+end_src
-   之后在Group缓冲区 =F= 查找新新闻组服务器。
+   1. 首先在.gnus.el中添加，例如：news.x-privat.org
+      #+begin_src lisp
+      (add-to-list 'gnus-secondary-select-methods '(nntp  "news.x-privat.org"))
+      #+end_src
+      之后在Group缓冲区 =F= 查找新新闻组服务器。
+   2. 使用Foreign Group， =G m= 添加一个新闻组（名称[自己起名]，method[nntp]，地址[例如news.gwene.org]），之后进入Server buffer即可看到新加入的组。
 ** 查看整个thread
    如果一个thead是回复别人的帖子而那个帖子你已经看过了，因为看过了所以不会显示出来（即老贴，header前面标记O），此时可以用 =A T= gnus-summary-refer-thread=得到整个thread。
    如果一个人的帖子中引用了别人说的话，可以用 =A R= =gnus-summary-refer-references= 来取回帖中引用帖的原帖（包括引用帖中的引用帖）。
@@ -498,3 +499,14 @@ From: C
 ** 邮件乱码
    可以在浏览器中打开 =K H=
    菜单 article->mime->multipart
+** cache
+   <<cache>>
+   http://www.gnus.org/manual/big-gnus.html#SEC93
+   帖子被标记为ticked（gnus-summary-tick-article-forward 命令为 =M t= 或 =!= ）和dormant（gnus-summary-mark-as-dormant 命令为 =M ?= 或 =?= ）后通过命令 =gnus-jog-cache= 来存放在cache中，下次再读到此帖时会从cache中读取，cache内的帖子永远不会过期。
+   You should only ever, ever ever ever, use this command if 1) your connection to the NNTP server is really, really, really slow and 2) you have a really, really, really huge disk.
+
+   =*= 将帖子标记为Persistent Articles，从而保存在cache中，和ticked/dormant功能完全一样，和 _将帖子保存在某个目录下_ 不同，此处将帖子保存在cache中。
+   =M *= 将帖子从cache中删除。
+** backlog
+   http://www.gnus.org/manual/big-gnus.html#SEC96
+   再看刚读过的旧帖时gnus会重新从服务器中下载，backlog会缓存刚读过的帖子，个数由gnus-keep-backlog决定，如果你有读刚读过的旧帖的习惯，可以将gnus-keep-backlog设置大些，默认是20.

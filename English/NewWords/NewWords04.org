@@ -1,0 +1,72 @@
+#+OPTIONS: ^:{} _:{} num:t toc:t \n:t
+#+SETUPFILE: "../../extension.org"
+#+INCLUDE: "../../template-toc.org"
+#+title:
+
+* mascot
+  吉祥物
+  #+BEGIN_EXAMPLE
+First we shouldn't use the word `logo' with it's evil connotations of commerce.  Let us use the word `mascot' instead, since it's a living being.  
+  #+END_EXAMPLE
+** connotation
+   词语的涵义(an idea or a feeling that a word invokes for a person in addition to its literal or primary meaning )
+* ostrich
+  驼鸟
+* farcture
+  v/n crack or break 破裂/断裂/骨折
+  #+BEGIN_EXAMPLE
+  It may seem to be a low-risk activity, but doctors say walking and texting can lead to people fracturing a limb or breaking their nose:
+  #+END_EXAMPLE
+* nuisance
+  令人讨厌的人或物或事
+  #+BEGIN_EXAMPLE
+  Since I don't want to save a local copy of the sent message (because Gmail SMTP and IMAP will get it for me anyway), I have to always say "no" before proceeding. This is a nuisance when it happens every time.
+  #+END_EXAMPLE
+* FWIW
+  1. for whoever is wondering
+  2. for what is worth
+     [[http://english.stackexchange.com/questions/24260/whats-the-difference-between-fwiw-and-imho][FWIW和IMHO的区别]]
+     FWIW强调你的看法可能不切中要害，不有一定的应用价值。 = I have no idea but ..
+     IMHO强调自己的看法。 = I think ..
+* YMMV
+  your mileage may vary 你的可能不同
+  #+BEGIN_EXAMPLE
+  FWIW, I'm doing this on Emacs 23.2.1 on a Mac OS X box. YMMV.
+  #+END_EXAMPLE
+* IMHO
+  in my humble opinion
+* IMO
+  in my opinion
+* FYI
+  for your information 仅供参考
+* HAND
+  have a nice day
+* AFAICS
+  as far as I can see
+* as per
+  按照，根据（书面语）
+  #+BEGIN_EXAMPLE
+  As per my understanding, there is no such feature; and as a user, I would love it!
+  #+END_EXAMPLE
+* intimidate
+  v threaten/frighten 恫吓/威吓
+  intimidating adj frightening/threatening
+  intimidation
+  intimidator
+  #+BEGIN_EXAMPLE
+  The Gnus manual is a bit intimidating; is there any newbie-friendly tutorial which might help get me started.
+  #+END_EXAMPLE
+* HTH
+  Hope This Helps
+* ephemeral
+  短暂的
+#+BEGIN_EXAMPLE
+  an ephemeral group Gnus中暂时的组
+#+END_EXAMPLE
+* intercept
+  截获
+  #+BEGIN_EXAMPLE
+  Microsoft intercepts, decrypts and reads your Skype messages.
+  #+END_EXAMPLE
+* menstruate
+  月经

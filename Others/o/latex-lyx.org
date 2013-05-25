@@ -97,15 +97,16 @@ Your abstract goes here...
       - numberstyle={\tiny\color{lightgray}} 设置行号大小及颜色
       - frame=shadowbox 显示边框，可选 leftline, topline等
       - rulesepcolor={\color{red!20!green!20!blue!20!}} 若边框为shadow则设置阴影的颜色
+      - xleftmargin=.2in 设置源码左边距
+      - xrightmargin=.2in 设置源码右边距
       模板：
       #+begin_example
-      basicstyle={\tiny}
+      basicstyle={\small}
       breaklines=true
       commentstyle={\color{black}}
       language=Matlab
-      numbers=left
-      numberstyle={\tiny\color{lightgray}}
       frame=lines
+      xleftmargin=.2in
       #+end_example
   *注意：* 如果注释中存在中英文混排情况则夹在中文之间的英文前后必须有空格，否则排版出错.
   2.此包支持中文注释（虽然要求中文和英文之间必须用空格分隔），而minted则不支持。
@@ -215,6 +216,9 @@ int main(int argc, char *argv[])
   {{{lightbox(images/algorithm2eresult2.png,400)}}} 
   {{{right}}}
   --------
+* 为lyx添加新的class
+  http://www.paulkiddie.com/2010/02/adding-custom-class-files-cls-to-lyx-in-windows-vista-windows-7-environment/
+  查找cls文件位置：使用kpsewhich命令，例如 kpsewhich amsbook.cls
 * 插入gif动画文件
   可以[[file:../../Linux/LinuxOS/UbuntuTrick.org::giftoavi][将gif转换成avi]] 后再用movie15宏包插入。
 * Beamer中为插入frame设置快捷键
@@ -413,3 +417,12 @@ $$\underrightarrow{\ \ result\ \ }$$
   lyx中insert->list/toc->bibtex bibliography插入文件中，之后insert->citation选择要引用的文献，之后编译即可看见只有引用过的文献存在于参考文献一节中，没有引用过的不会显示。
 * 快捷键
   参考lyx的帮助文档 [[./lyx_shortcuts/Shortcuts.html][LY X Keyboard Shortcuts]]
+** lyx设置菜单快捷键
+   需要修改菜单配置文件，xp下位于C:\Program Files\LyX 2.0\Resources\ui中，打开stdmenu.inc，
+   #+BEGIN_EXAMPLE
+   Item "Program Listing[[Menu]]" "listing-insert"
+   #+END_EXAMPLE
+   为：
+   #+BEGIN_EXAMPLE
+   Item "Program Listing[[Menu]]|m" "listing-insert"
+   #+END_EXAMPLE

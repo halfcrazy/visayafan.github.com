@@ -16,7 +16,35 @@
   这样字体便安装好了，可以通过 =fc-list|grep font-name= 来验证。
 * 切换键盘布局
   System-Preferences-Keyboard Layouts 新添加一个layout
-  设置切换layout的快捷键：Options-Keys 
+  设置切换layout的快捷键：Options-Keys
+* 下载Youtube视频
+  goagent代理
+** Chrome直接下载
+   参考http://userscripts.org/about/installing
+   安装[[https://chrome.google.com/webstore/detail/tampermonkey/dhdgffkkebhmkfjojejmpbldmpobfkfo?hl%3Den][Tampermonkey]] 后访问 http://userscripts.org/scripts/show/25105 install
+** 使用youtube-dl下载
+   http://www.linuxb.in/2012/01/how-to-download-youtube-videos-in-linux.html
+   安装 sudo apt-get install youtube-dl
+   在.bashrc中设置代理
+   #+BEGIN_EXAMPLE
+   http_proxy=http://127.0.0.1:8087
+   export http_proxy
+   #+END_EXAMPLE
+   然后命令行下载 =youtube-dl http://www.youtube.com/watch?v=h4CFhT4Mrcg=
+   -o filename 表另存文件名
+   -a batch-filename 将下载链接保存到文件中批量下载
+   -c C-c中断视频下载后再次下载加上-c选项表continue
+   -F url 查看可选格式
+   -f format-code 通过-F查看可选格式式通过-f选择格式，每行前面的数字
+   --extract-audio 将会只下载格式最好的音频，可以自定义
+   --audio-format mp3 只定音频格式为mp3
+   --audio-quality 256k 音频质量 默认为128kbps
+   -k 表示原视频文件+提取音频
+* 将指定域名默认链接改为https
+  地址栏输入chrome://net-internals/
+  在HSTS的标签栏里Domain里填上需要访问的domain，比如twitter.com和facebook.com等；
+  然后选中Include subdomains点击Add按钮即可，可以加多个域；
+  这样所有访问这个域名（包括子域名）都自动转到https了。
 * 将gif转换成avi
   :PROPERTIES:
   :CUSTOM_ID: giftoavi

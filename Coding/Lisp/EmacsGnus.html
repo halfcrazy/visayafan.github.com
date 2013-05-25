@@ -3,7 +3,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="zh-CN" xml:lang="zh-CN">
 <head>
 <title>Emacs Gnus</title>
-<!-- 2013-05-17 五 03:52 -->
+<!-- 2013-05-26 星期日 03:10 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
 <meta name="generator" content="Org-mode"/>
 <meta name="author" content="visayafan"/>
@@ -83,6 +83,8 @@
 <li><a href="#sec-8-28">8.28. C-c C-a邮件添加附件</a></li>
 <li><a href="#sec-8-29">8.29. M-x保存附件</a></li>
 <li><a href="#sec-8-30">8.30. 邮件乱码</a></li>
+<li><a href="#sec-8-31">8.31. cache</a></li>
+<li><a href="#sec-8-32">8.32. backlog</a></li>
 </ul>
 </li>
 </ul>
@@ -120,13 +122,13 @@
 (setq gnus-secondary-select-methods
       '((nntp <span style="color: #8b2252;">"news.gnus.org"</span>)
         (nntp  <span style="color: #8b2252;">"news.gmane.org"</span>)
-        (nntp  <span style="color: #8b2252;">"news.gwene.org"</span>)
+        <span style="color: #b22222;">;; </span><span style="color: #b22222;">(nntp  "news.gwene.org")</span>
         (nnmaildir <span style="color: #8b2252;">""</span> (directory <span style="color: #8b2252;">"/home/visayafan/.emacs.d/gnus/Gmail/"</span>))
         ))
 <span style="color: #b22222;">;; </span><span style="color: #b22222;">&#28385;71&#23383;&#31526;&#33258;&#21160;&#25442;&#34892;</span>
 (add-hook 'message-mode-hook (<span style="color: #a020f0;">lambda</span> () (setq fill-column 72) (turn-on-auto-fill)))
 <span style="color: #b22222;">;; </span><span style="color: #b22222;">&#22238;&#36148;&#26102;buffer&#30340;&#26174;&#31034;&#35774;&#32622;</span>
-(setq gnus-posting-styles '((<span style="color: #8b2252;">".*"</span> (name <span style="color: #8b2252;">"visayafan"</span>) (body <span style="color: #8b2252;">"\n"</span>) (address <span style="color: #8b2252;">"visayafan@gmail.com"</span>))))
+(setq gnus-posting-styles '((<span style="color: #8b2252;">".*"</span> (name <span style="color: #8b2252;">"Han Fan"</span>) (body <span style="color: #8b2252;">"\n"</span>) (address <span style="color: #8b2252;">"visayafan@gmail.com"</span>))))
 <span style="color: #b22222;">;; </span><span style="color: #b22222;">&#35821;&#35328;&#29615;&#22659;&#35774;&#23450;</span>
 (set-language-environment 'UTF-8)
 (setq default-buffer-file-coding-system 'utf-8-unix)
@@ -167,7 +169,7 @@
 (setq gnus-check-new-newsgroups nil)
 (setq gnus-check-bogus-newsgroups nil)
 <span style="color: #b22222;">;; </span><span style="color: #b22222;">&#26368;&#22810;&#35835;&#21462;&#24086;&#23376;&#25968;&#65292;&#40664;&#35748;&#20540;&#26159;nil</span>
-(setq gnus-newsgroup-maximum-articles nil) 
+(setq gnus-newsgroup-maximum-articles 8000)
 <span style="color: #b22222;">;; </span><span style="color: #b22222;">&#20445;&#23384;article&#26102;&#40664;&#35748;header&#20887;&#20313;&#22826;&#22810;&#65292;&#35774;&#32622;&#21464;&#37327;gnus-saved-headers&#26469;&#31934;&#31616;</span>
 (setq gnus-save-all-headers nil)        <span style="color: #b22222;">;</span><span style="color: #b22222;">&#21482;&#26377;&#27492;&#21464;&#37327;&#20026;nil&#65292;gnus-saved-headers&#25165;&#26377;&#25928;</span>
 (setq gnus-saved-headers <span style="color: #8b2252;">"^From:</span><span style="color: #8b2252; font-weight: bold;">\\</span><span style="color: #8b2252; font-weight: bold;">|</span><span style="color: #8b2252;">^Newsgroups:</span><span style="color: #8b2252; font-weight: bold;">\\</span><span style="color: #8b2252; font-weight: bold;">|</span><span style="color: #8b2252;">^Date:</span><span style="color: #8b2252; font-weight: bold;">\\</span><span style="color: #8b2252; font-weight: bold;">|</span><span style="color: #8b2252;">^Followup-To:</span><span style="color: #8b2252; font-weight: bold;">\\</span><span style="color: #8b2252; font-weight: bold;">|</span><span style="color: #8b2252;">^Reply-To:</span><span style="color: #8b2252; font-weight: bold;">\\</span><span style="color: #8b2252; font-weight: bold;">|</span><span style="color: #8b2252;">^Summary:</span><span style="color: #8b2252; font-weight: bold;">\\</span><span style="color: #8b2252; font-weight: bold;">|</span><span style="color: #8b2252;">^Keywords:</span><span style="color: #8b2252; font-weight: bold;">\\</span><span style="color: #8b2252; font-weight: bold;">|</span><span style="color: #8b2252;">^Subject:"</span>)
@@ -228,6 +230,8 @@
 <span style="color: #b22222;">;; </span><span style="color: #b22222;">&#21442;&#25968;&#21547;&#20041;&#35265;http://www.gnus.org/manual/big-gnus.html#IDX2455</span>
 (gnus-demon-add-handler 'gnus-group-get-new-news 5 10)
 (gnus-demon-init)
+<span style="color: #b22222;">;; </span><span style="color: #b22222;">w3m</span>
+(load-file <span style="color: #8b2252;">"~/.emacs.d/.emacs/vf-w3m.el"</span>)
 </pre>
 </div>
 </div>
@@ -515,7 +519,7 @@
 <tbody>
 <tr>
 <td class="left">！</td>
-<td class="left">ticked 表示此帖很重要，你想每次进入新闻组的时候都显示它</td>
+<td class="left">ticked 表示此帖很重要，你想每次进入新闻组的时候都显示它    <a href="#cache">参考</a></td>
 </tr>
 
 <tr>
@@ -525,7 +529,7 @@
 
 <tr>
 <td class="left">？</td>
-<td class="left">dormant 如果此帖不再有人回则此标记与R一样不会再显示，如果有人回帖则此帖会再次现身</td>
+<td class="left">dormant 如果此帖不再有人回则此标记与R一样不会再显示，如果有人回帖则此帖会再次现身    <a href="#cache">参考</a></td>
 </tr>
 </tbody>
 <tbody>
@@ -1027,9 +1031,8 @@ crontab -e后加入 <code>*/10 * * * * fetchmail &gt; /dev/null 2&gt;&amp;1</cod
 </div><div id="outline-container-sec-8-1" class="outline-3">
 <h3 id="sec-8-1"><span class="section-number-3">8.1</span> 不用重启添加新的新闻组服务器</h3>
 <div class="outline-text-3" id="text-8-1">
-<p>
-首先在.gnus.el中添加，例如：news.x-privat.org<br/>
-</p>
+<ol class="org-ol">
+<li>首先在.gnus.el中添加，例如：news.x-privat.org<br/>
 <div class="org-src-container">
 
 <pre class="src src-lisp">(add-to-list 'gnus-secondary-select-methods '(nntp  <span style="color: #8b2252;">"news.x-privat.org"</span>))
@@ -1038,6 +1041,10 @@ crontab -e后加入 <code>*/10 * * * * fetchmail &gt; /dev/null 2&gt;&amp;1</cod
 <p>
 之后在Group缓冲区 <code>F</code> 查找新新闻组服务器。<br/>
 </p>
+</li>
+<li>使用Foreign Group， <code>G m</code> 添加一个新闻组（名称[自己起名]，method[nntp]，地址[例如news.gwene.org]），之后进入Server buffer即可看到新加入的组。<br/>
+</li>
+</ol>
 </div>
 </div>
 
@@ -1464,6 +1471,33 @@ Washing-&gt;Word Wrap<br/>
 <p>
 可以在浏览器中打开 <code>K H</code><br/>
 菜单 article-&gt;mime-&gt;multipart<br/>
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-8-31" class="outline-3">
+<h3 id="sec-8-31"><span class="section-number-3">8.31</span> cache</h3>
+<div class="outline-text-3" id="text-8-31">
+<p>
+<a id="cache" name="cache"></a><br/>
+<a href="http://www.gnus.org/manual/big-gnus.html#SEC93">http://www.gnus.org/manual/big-gnus.html#SEC93</a><br/>
+帖子被标记为ticked（gnus-summary-tick-article-forward 命令为 <code>M t</code> 或 <code>!</code> ）和dormant（gnus-summary-mark-as-dormant 命令为 <code>M ?</code> 或 <code>?</code> ）后通过命令 <code>gnus-jog-cache</code> 来存放在cache中，下次再读到此帖时会从cache中读取，cache内的帖子永远不会过期。<br/>
+You should only ever, ever ever ever, use this command if 1) your connection to the NNTP server is really, really, really slow and 2) you have a really, really, really huge disk.<br/>
+</p>
+
+<p>
+<code>*</code> 将帖子标记为Persistent Articles，从而保存在cache中，和ticked/dormant功能完全一样，和 <span class="underline">将帖子保存在某个目录下</span> 不同，此处将帖子保存在cache中。<br/>
+<code>M *</code> 将帖子从cache中删除。<br/>
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-8-32" class="outline-3">
+<h3 id="sec-8-32"><span class="section-number-3">8.32</span> backlog</h3>
+<div class="outline-text-3" id="text-8-32">
+<p>
+<a href="http://www.gnus.org/manual/big-gnus.html#SEC96">http://www.gnus.org/manual/big-gnus.html#SEC96</a><br/>
+再看刚读过的旧帖时gnus会重新从服务器中下载，backlog会缓存刚读过的帖子，个数由gnus-keep-backlog决定，如果你有读刚读过的旧帖的习惯，可以将gnus-keep-backlog设置大些，默认是20.<br/>
 </p>
 </div>
 </div>

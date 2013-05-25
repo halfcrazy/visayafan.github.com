@@ -221,3 +221,5 @@ But he would watch from the back of his enclosure as the zoo keepers worked with
 * credential
   证书/凭据
   certificate
+* caveat
+  warning

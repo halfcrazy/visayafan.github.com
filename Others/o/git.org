@@ -2,9 +2,15 @@
 #+SETUPFILE: "../../extension.org"
 #+INCLUDE: "../../template-toc.org"
 #+title: Git笔记
-[[anchor][book]]
+
 git中文件分为4类：未追踪文件，修改文件，暂存文件，仓库文件。
 新建一个文件，此时文件为未追踪状态；已经被追踪的文件发生修改则为修改状态；新建或修改文件添加到了暂存区则成为暂存文件；暂存文件commit到仓库中则成为仓库文件。
+working tree为当前工作目录，index为add后的暂存区
+* 视频/资源
+[[http://vimeo.com/14629850][Vimeo: Getting Git]]
+[[http://www.youtube.com/watch?v%3DZDR433b0HJY][YouTube:Introduction to Git with Scott Chacon of GitHub]]
+[[http://www.youtube.com/watch?v%3D4XpnKHJAok8][YouTube:Tech Talk: Linus Torvalds on git]]
+[[https://github.com/schacon/git-presentations][Scot Chacon在Github上的幻灯片]]
 * help
   帮助，例如 git show --help(或者 git help show 或者 man git-show)可以查看所有show的option
   其中show可以替换成其它动作
@@ -55,6 +61,7 @@ git config --list
    或者直接查看~/.gitconfig文件内容
 * git status
   反映git commit执行之前的变化，git commit执行之后再用此命令将看不到变化
+  -s 简明地显示
 * git init
 ** --bare
    假设在A目录下git init则会在A目录下生成一个.git文件里存放配置文件。
@@ -68,9 +75,15 @@ git config --list
   -p 选项：对于每个改变的文件都以交互的方式来询问是否add此文件
   -u 只查看跟踪文件，不会暂存文件，如果跟踪文件在工作目录下被删除，则这些跟踪文件被删除
 
-  add一个文件后又后悔了（commit之前），可以用 git reset HEAD filename来取消对filename的add
-#<<gitclone>>  
+  *add一个文件后又后悔了（commit之前），可以用 git reset HEAD filename来取消对filename的add* [[http://stackoverflow.com/questions/348170/undo-git-add-before-commit?rq%3D1][参考]]
+#+BEGIN_EXAMPLE
+test$ git status
+# On branch master
+# Changes to be committed:
+#   (use "git reset HEAD <file>..." to unstage)
+#+END_EXAMPLE  
 * git clone
+<<gitclone>>  
 ** --recursive
    如果repo下有子submodule，如果只运行 git clone的话不会clone子模块，需要 git submodule init 注册子模块，然后 git submodule update来更新子模块。
    可以加上--recursive选项来clone repo（包括子模块），等于上面操作的和。
@@ -130,6 +143,8 @@ a11bef0 - Scott Chacon, 11 months ago : first commit
   git log branchA ^branchB 只有branchA有而branchB没有的部分（git log branchA ^master 查看分支branchA上没有merge进master的部分）
   git log --since=日期 从某一日期开始到现在的提交历史 --after
   同理--until指定日期之前的提交历史 --before
+  git log branchA ^branchB 只属于branchA不属于branchB的（从branchA中去掉公共的部分）
+  类似git log origin/master ^master 从orgin/master clone下来的哪些还没有被本地的master merge.
 #+begin_example
 test$ git log --since="2012-10-1" --pretty=oneline #从2012-9-1到现在的提交历史
 test$ git log --since="2 weeks 3 days ago" --pretty=oneline #2周3天前到现在的提交历史
@@ -144,13 +159,22 @@ test$ git log --since=2.weeks --pretty=oneline #2周前
    -m 'message'  #跟数据库一样保存一个结点以便以后返回
    先add后commit，可以直接用命令 git commit -am 'commit message' 但只暂存跟踪文件，未跟踪文件不会被暂存，如果当前工作目录中有想被提交的新建文件时不要这么用。
 ** -amend
-   修复，如果commit后发现有文件忘记add了，可以add后commit -amend
+   1. commit后发现有文件忘记add了或后悔add了某些文件，可以先进行正常的add或rm，再commit时加上选项--amend
+   2. commit完后发现commit -m的信息错误，可以直接commit --amend "新的提交信息"
 #+begin_example
 $ git commit -m 'initial commit'
 $ git add forgotten_file
+$ git rm remove_file
 $ git commit --amend
 #+end_example
-   forgotten_file的commit信息为initial commit
+   等价于：
+#+BEGIN_EXAMPLE
+$ git reset --soft HEAD^
+$ ... do something else to come up with the right tree ...
+$ git commit -c ORIG_HEAD
+#+END_EXAMPLE
+   git reset的默认选项为--soft即只更改HEAD指针指向的提交点位置而保持文件状态不动，而--hard则会毁灭所做的工作并恢复到指定提交点。
+   [[http://stackoverflow.com/questions/927358/how-to-undo-the-last-git-commit?rq%3D1][此链接]] 有详解。
 * git show
   显示上一次commit，显示序列号作者时间和diff
 * gitk
@@ -163,6 +187,8 @@ $ git commit --amend
   多个人共同维护一个项目时，一个人push一个filename文件，另一个人也要push filename文件时会发生冲突。
   此时可以用 git mergetool来调用外部应用程序比较两个文件，由两人协商最终push哪个。
   经过比较修改后的文件再push不会冲突（github默认此结果是我们协商的结果）
+
+  Emacs做为mergetool: http://ulf.zeitform.de/en/documents/git-ediff.html
 * git branch
   1. =git branch -a= 绿色的代表本机，红色的代表github
   2. =git branch newfeature= 新建分支（但不切换， =git checkout -b newfeature= 等价于 =git branch newfeature= 后再 =git checkout newfeature= ）。
@@ -182,9 +208,15 @@ $ git commit --amend
    将分支所有记录压缩成一个记录接到当前记录表中（分支记录不变）。 =git merge --squash new=
    需要自己commit。
 ** 挑拣merge
+<<cherrypick>>
    普通merge是将分支最新记录点合并到当前分支中，而 =cherry-merge= 是将分支中某个提交merge到当前分支上，可以用 =-n= 选项来合并多个提交。
+   {{{lightbox(images/cherrypick.jpg,400)}}} 
    需要自己commit。
    压合和挑拣合并都不可以从记录中回溯到分支某个提交点，所有 =git branch -d new= 删除分支时会提示 error: The branch 'new' is not fully merged.需要用-D选项。
+** 合并冲突后选择文件
+   http://stackoverflow.com/questions/161813/how-do-i-fix-merge-conflicts-in-git?rq=1
+   假设filename为发生合并冲突的文件，可以使用checkout的--ours和--theirs选项指定这个文件用哪个版本的，当然也可以打开git mergetool进入手工修改，但如果事先知道用哪个文件的话，这个方法比较快。
+   Careful! The meaning of --ours and --theirs is reversed. *--ours == the remote* . *--theirs == local* .
 * git remote
   从远程仓库上用git clone下载下来的可以理解为有两个分支origin/master和master，其中origin为远程仓库名，前者分支是不受你支配的，你所在的是master分支，当你push的时候，git会比较你的origion/master和远程仓库的是否一样，如果一样并且你有权限则可以push，如果不一样则需要用 =git fetch= 下载下来进行合并，此时的远程仓库和你的仓库里的origin/master更改为和master指向同一结点。
   * 查看当前repo有哪些远程repo，可以用git remote（至少有一个origin，表示这个repo的发起人），可以加-v来查看详细信息（将显示出其远程仓库地址，例如cho45 git://github.com/cho45/grit.git）这样可以方便地把它的repo提交到本地上来查看。
@@ -212,19 +244,21 @@ $ git commit --amend
   查看没有暂存的改动，如果暂存后立即用git diff则看不到差异。
   1. =git diff master^= 查看上次提交与本次的差异
   2. =git diff= 查看当前目录与暂存库的差异 ，即git add前与后的差异
-  3. =git diff --cached= 查看暂存库与仓库文件的差异，即git commit前与后的差异。
+  3. =git diff --cached= 查看暂存库与版本库的差异，即git commit前与后的差异。
+  4. =git diff HEAD= 查看工作目录与版本库的差异
+  5. =git diff BranchName= 查看分支最新提交与当前工作目录的差异
 * git rebase
-  =git rebase branch2= 将当前分支HEAD指针指向branch2后一个结点。
+  看链接图示： http://www.zhaoxiaoqing.cn/a/php/php1/2012/1025/654.html
+  http://gitbook.liuhui998.com/4_2.html
+
+  相当于进行多次的 [[cherrypick][cherry-pick]]
+  {{{lightbox(images/rebase.jpg,400)}}} 
   和进行merge操作结果是完全一样，只是提交历史不同。衍合是按照每行的修改次序重演一遍修改,而合并是把最终结果合在一起。
   会产生新的历史记录，使提交历史显得更整洁。
   但 *一旦分支中的提交对象发布到公共仓库,就千万不要对该分支进行衍合操作。*
-  把衍合当成一种在推送之前清理提交历史的手段,而且仅仅衍合那些尚未公开的提交对象,就没问题。如果衍合那些已经公开的提交对象,并且已经有人基于这些提交对象开展 了后续开发工作的话,就会出现叫人沮丧的麻烦。 
-#+begin_html
-<link rel="stylesheet" href="../../Layout/CSS/jquery.lightbox-0.5.css" type="text/css" media="screen" />
-<script type="text/javascript" src="../../Layout/JS/jquery.lightbox-0.5.js"></script>
-<center> <a class="lightbox" href="./images/rebase.png"> <img class="lightbox " title="jQuery.lightbox" src="./images/rebase.png" width="300"> </a> </center>
-<script type="text/javascript"> $(function() {$('a.lightbox').lightBox();}); </script>
-#+end_html  
+  把衍合当成一种在推送之前清理提交历史的手段,而且仅仅衍合那些尚未公开的提交对象,就没问题。如果衍合那些已经公开的提交对象,并且已经有人基于这些提交对象开展 了后续开发工作的话,就会出现叫人沮丧的麻烦。
+  {{{lightbox(images/rebase.png,400)}}} 
+
 * fast forward
   如果顺着一个分支走下去可以到达另一个分支的话,那么 Git 在合并两者时,只会简单地把指针右移,因为这种单线的历史分支不存在任何需要解决的分歧,所以这种合并过程可以 称为快进(Fast forward)。
 
@@ -232,9 +266,10 @@ $ git commit --amend
   http://gitbook.liuhui998.com/5_10.html
   http://git-scm.com/book/en/Git-Tools-Submodules
   http://blog.devtang.com/blog/2013/05/08/git-submodule-issues/
+  clone下来的submodule的log等文件会保存在主版本库的.git/modules目录下，而子模块目录只不过是一个snapshot，此目录的.git是文件非而此目录，此文件内容为此子模块在主版本库.git/modules中的绝对路径。
 ** clone submodule
-  从别处clone下来的repo中如果有submodule则需要用 clone --recursive 或 git submodule init 后git submodule update 参考 [[gitclone][git clone]]
-  此处切进子模块所在的目录，git branch可看到并没有在任何分支上：
+   从别处clone下来的repo中如果有submodule则需要用 clone --recursive 或 git submodule init 后git submodule update 参考 [[gitclone][git clone]]
+   此处切进子模块所在的目录，git branch可看到并没有在任何分支上：
 : minimap$ git branch 
 : * (no branch)
 :   master
@@ -277,7 +312,16 @@ minimap$ git merge 310819a
    现在进入仓库A中的sub目录修改文件并commit但没有push，返回A目录下commit，此时本机状态如中图，因还没push所服务器上情况还是左图。
    但在A目录下push后服务器状态如右图，A指向一个不存在的提交点，由于git clone并不clone子目录所以不存在问题，但git submodule update向服务器索要提交服务器上不存在的提交点4时，便会出错。
    *关键* 记住git没有把仓库的子模块当成文件夹，而是当作普通文件，相当于维护一个指针指向原模块仓库，如果当前仓库的子模块指针比原模块超前，便会出现reference is not a tree错误。
-   参考 http://gitbook.liuhui998.com/5_10.html <<anchor>>“子模块方式的陷阱” 一节
+   参考 http://gitbook.liuhui998.com/5_10.html “子模块方式的陷阱” 一节
+* .git目录
+  objects目录中文件名为SHA hash值，保存版本库文件内容。
+  ref目录保存本地/远程版本库的分支。
+* git区间
+  1. master^ 表master的当前提交点的父提交点，可以多次使用master^^^
+     如果有多个父提交点，可以用^1, ^2来指定
+  2. master~n 表前n个提交点
+  3. 02943a..a123ab 两个提交点之间的(左开右闭)
+     02943a..默认是到最新提交点
 * tricks
 ** git中永久删除一个文件
   git rm filename可以从repo中删除一个文件，但仍旧可以其库存历史将其恢复
