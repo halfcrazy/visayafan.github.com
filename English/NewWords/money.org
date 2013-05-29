@@ -1,5 +1,5 @@
 #+OPTIONS: ^:{} _:{} num:t toc:t \n:t
-#+include "../../template.org"
+#+INCLUDE: "../../template.org"
 #+title:
 * Amercian Money
 ** coin
@@ -114,8 +114,3 @@
    nominate (v)提名 -> nominee (n)被提名的人
    denominate (v)为...命名
    denomination (n) =面额= 名称
-#+BEGIN_HTML
-<script src="../../Layout/JS/disqus-comment.js"></script>
-<div id="disqus_thread">
-</div>
-#+END_HTML

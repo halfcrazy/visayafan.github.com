@@ -705,6 +705,9 @@ Be careful to articulate your words so that everyone in the room can understand 
    n 进退两难的境地
    联想记忆：地雷嘛
 ** deposit
+   :PROPERTIES:
+   :CUSTOM_ID: deposit
+   :END:
    v 沉积/存款/
    n 沉淀物/存款/保证金/押金
    deposition 沉积物

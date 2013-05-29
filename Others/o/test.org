@@ -3,10 +3,18 @@
 #+SETUPFILE: "../../extension.org"
 #+title:最近更新
 
-#+begin_src sh :results raw :exports results
-for filename in $(find -iname \*.org -type f -printf '%T@ %p\n' | sort -n | tail -5 | cut -f2- -d" ")
-do
-   title=$(grep ^* $filename | head -n1 | cut -f2- -d" ")
-   echo "*** [[file:$filename][$title]]" | head -5
-done
-#+end_src
+
+Correctly Classified Instances,147,98,%
+Incorrectly Classified Instances,3,2,%
+Kappa statistic,0.97
+Mean absolute error,0.0233
+Root mean squared error,0.108
+Relative absolute error,5.2482 %
+Root relative squared error,22.9089 %
+Total Number of Instances,150
+
+Correctly,a,Classified,Instances
+Correctly,b,Classified,Instances
+
+| Correctly   | Classified | Instances | 147 | 98 | % |
+| Incorrectly | Classified | Instances |   3 |  2 | % |

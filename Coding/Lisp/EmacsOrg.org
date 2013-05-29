@@ -414,6 +414,17 @@ hello {{{color(green, this is green)}}} world
 :END:"))))
   #+end_src
   另外函数 =org-contacts= 用来查找。
+* region转换成table
+  默认分隔符为空格，前缀C-u更改为逗号，C-u C-u更改为TAB，数字n表n个空格，例如：
+:  Correctly Classified Instances         147               98      %
+:  Incorrectly Classified Instances         3                2      %
+  直接转换结果为：
+: | Correctly   | Classified | Instances | 147 | 98 | % |
+: | Incorrectly | Classified | Instances |   3 |  2 | % |
+  想要结果为：
+: | Correctly Classified Instances   | 147 | 98 | % |
+: | Incorrectly Classified Instances |   3 |  2 | % |
+  方法是使用 =query-replace-regexp= =C-M-%= 将多于1个的空格替换成逗号，再用加前缀的 =org-table-convert-region= 将其转换成table。
 * org8.x快捷键
 ** M-RET添加前缀
 <<M-RET>>

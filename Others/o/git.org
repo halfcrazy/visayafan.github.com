@@ -313,6 +313,12 @@ minimap$ git merge 310819a
    但在A目录下push后服务器状态如右图，A指向一个不存在的提交点，由于git clone并不clone子目录所以不存在问题，但git submodule update向服务器索要提交服务器上不存在的提交点4时，便会出错。
    *关键* 记住git没有把仓库的子模块当成文件夹，而是当作普通文件，相当于维护一个指针指向原模块仓库，如果当前仓库的子模块指针比原模块超前，便会出现reference is not a tree错误。
    参考 http://gitbook.liuhui998.com/5_10.html “子模块方式的陷阱” 一节
+** 删除一个子模块
+   [[http://www.hackido.com/2009/01/quick-tip-remove-git-submodule.html][参考]]
+   1. 删除.gitmodule中对应文件
+   2. 删除.git/config中对应文件
+   3. 删除版本库中的文件 git rm --cached vendor/plugins/attachment_fu
+   4. git commit -a -m "removed attachment fu temporarily"
 * .git目录
   objects目录中文件名为SHA hash值，保存版本库文件内容。
   ref目录保存本地/远程版本库的分支。

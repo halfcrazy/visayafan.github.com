@@ -25,59 +25,83 @@
   =RET= 可进入相应的服务器。此时会下载此服务器上所有组列表，之后进入 =*Gnus Browse Server*= 缓冲区。选中感兴趣的组回车即可进入 =summary= 缓冲区，在帖子标题上空格即可在下面打开一个 =Article= 帖子弱冲区.
   
 * 快捷键
+#+ATTR_HTML: :border 12 :rules groups :frame border
   |-----------------------------+----------------------------------------------------------------------------------------------------|
   | *Summary Buffer*            |                                                                                                    |
+  |-----------------------------+----------------------------------------------------------------------------------------------------|
+  | *折叠相关*                  |                                                                                                    |
   |-----------------------------+----------------------------------------------------------------------------------------------------|
   | T H                         | Thread Hide all                                                                                    |
   | T S                         | Thread Show all                                                                                    |
   | C-M-s or T s                | show this thread                                                                                   |
   | C-M-h or T h                | hide this thread                                                                                   |
+  |-----------------------------+----------------------------------------------------------------------------------------------------|
+  | *移动相关*                  |                                                                                                    |
+  |-----------------------------+----------------------------------------------------------------------------------------------------|
   | C-M-f                       | forward a thread                                                                                   |
   | C-M-b                       | backward a thread                                                                                  |
   | n/p                         | next/previous unreaded thread                                                                      |
   | N/P                         | next/previous thread                                                                               |
   | M-n/p                       | next/previous unread subject                                                                       |
-  | M-g                         | 刷新，在Group缓冲区里是g                                                                           |
-  | SPACE                       | view this thread                                                                                   |
-  | W W s                       | article hide signature 在读帖的时候很多人搞些莫名其妙的签名比较烦人，可以将其去掉                  |
-  | W W a                       | article hide all 去掉所有的，包括 标题，引用，签名。具体可查看article菜单                          |
   | T d                         | thread down 可以加前缀，表向上几级                                                                 |
   | T u                         | thread up                                                                                          |
   | T o                         | thread top                                                                                         |
-  | C-M-k                       | mark thread as read                                                                                |
-  | T E                         | mark thread as expired                                                                             |
+  |-----------------------------+----------------------------------------------------------------------------------------------------|
+  | *发帖相关*                  |                                                                                                    |
+  |-----------------------------+----------------------------------------------------------------------------------------------------|
   | a                           | 发帖                                                                                               |
   | r                           | reply email 与邮件作者私聊，不会公开在组中                                                         |
   | R                           | reply and yank 回信并在信中引用别人的帖子                                                          |
+  | f                           | followup 回帖                                                                                      |
+  | F                           | followup and yank 回帖的时候引用别人的帖子                                                         |
   | C-c C-c                     | send                                                                                               |
   | C-c C-k                     | cancel send                                                                                        |
   | C-c C-d                     | don't send and save as draft                                                                       |
   | C-c C-m f or C-c RET f      | 添加附件                                                                                           |
-  | f                           | followup 回帖                                                                                      |
-  | F                           | followup and yank 回帖的时候引用别人的帖子                                                         |
-  | c                           | 标记所有帖子为已读                                                                                 |
   | C-c C-f                     | forward this message to somebody others 转发给另外一个人                                           |
   | S o p                       | forward this message to another newsgroup 转发给另一个新闻组                                       |
-  | A T                         | 此时你在一个thread的某个帖子上 A T即可查看整个thread的所有帖子                                     |
   |-----------------------------+----------------------------------------------------------------------------------------------------|
-  | *Mark*                      | *含义*                                                                                             |
+  | *看帖相关*                  |                                                                                                    |
+  |-----------------------------+----------------------------------------------------------------------------------------------------|
+  | SPACE                       | view this thread                                                                                   |
+  | <                           | gnus-summary-beginning-of-article 在article buffer帖子置于开始位置                                 |
+  | >                           | gnus-summary-end-of-article                                                                        |
+  | c                           | 标记所有帖子为已读                                                                                 |
+  | A T                         | 此时你在一个thread的某个帖子上 A T即可查看整个thread的所有帖子                                     |
+  | s                           | gnus-summary-isearch-articl 在Article Buffer中增量查找，查找结束后光标返回Summary Buffer.          |
+  | g                           | gnus-summary-show-article 强制重新显示光标所在的article(可以加前缀指定字符集)                      |
+  | C-M-k                       | 标记thread为已读（加上R标记）                                                                      |
+  | k                           | 标记具有相同主题的帖子为已读（加k标记）                                                            |
+  | d                           | 标记当前帖子为已读，加上r标记                                                                      |
+  | D                           | 与d的区别是移动光标到前一个帖子而非下一个帖子                                                      |
+  | G H/h                       | 将光标之上/下的内容都标记为已读                                                                    |
+  | W W s                       | article hide signature 在读帖的时候很多人搞些莫名其妙的签名比较烦人，可以将其去掉                  |
+  | W W a                       | article hide all 去掉所有的，包括 标题，引用，签名。具体可查看article菜单                          |
+  | T E                         | mark thread as expired                                                                             |
+  | M-g                         | 刷新，在Group缓冲区里是g                                                                           |
+  |-----------------------------+----------------------------------------------------------------------------------------------------|
+  | *Mark* <<mark>>             | *含义*                                                                                             |
   |-----------------------------+----------------------------------------------------------------------------------------------------|
   | R                           | 读过一个帖子后默认会加上该标记，下次再进入的时候此帖子不会再显示，这些R标记的帖子都是真正读过的    |
-  | r                           | 用命令 =d= 即可添加一个r标记，下次不显示此帖，可能因为不喜欢没有读，想当于delete删除这个帖子       |
+  | r <<dormant>>               | 用命令 =d= 即可添加一个r标记，下次不显示此帖，可能因为不喜欢没有读，想当于delete删除这个帖子       |
   | O                           | 表明这个是old老帖，默认Gnus不会显示老帖的，除非使用命令/ o强制显示                                 |
+  | k                           | 通过k或C-k kill掉的帖子，表明自己不感兴趣                                                                          |
   |-----------------------------+----------------------------------------------------------------------------------------------------|
-  | ！                          | ticked 表示此帖很重要，你想每次进入新闻组的时候都显示它    [[cache][参考]]    |
+  | ！                          | ticked 表示此帖很重要，你想每次进入新闻组的时候都显示它    [[cache][参考]]                                    |
   |                             | （如果此帖被服务器管理员因不合格或过期原因删掉了则不会再显示）所以最好将认为重要的帖子备份在本机上 |
-  | ？                          | dormant 如果此帖不再有人回则此标记与R一样不会再显示，如果有人回帖则此帖会再次现身    [[cache][参考]]|
+  | ？                          | dormant 如果此帖不再有人回则此标记与R一样不会再显示，如果有人回帖则此帖会再次现身    [[cache][参考]]          |
   |-----------------------------+----------------------------------------------------------------------------------------------------|
   | 空格                        | 帖子前面什么也没有则表示这是个未读的帖子                                                           |
   |-----------------------------+----------------------------------------------------------------------------------------------------|
-  | G H/h                       | 将光标之上/下的内容都标记为已读                                                                    |
+  | G                           | Canceled article [[cancel][参考删帖]]                                                                          |
+  | E                           | Marked as expirable                                                                                |
   |-----------------------------+----------------------------------------------------------------------------------------------------|
   | *Gnus Broswe Server Buffer* |                                                                                                    |
   |-----------------------------+----------------------------------------------------------------------------------------------------|
   | u                           | subscribe this group                                                                               |
   | q                           | exit                                                                                               |
+  | Q                           | exit 不保存.newsc.eld文件                                                                          |
+  | R                           | restart gnus                                                                                       |
   |-----------------------------+----------------------------------------------------------------------------------------------------|
   | *Article Buffer*            |                                                                                                    |
   |-----------------------------+----------------------------------------------------------------------------------------------------|
@@ -104,36 +128,8 @@
   | *Email*                     |                                                                                                    |
   |-----------------------------+----------------------------------------------------------------------------------------------------|
   | m                           | 写邮件                                                                                             |
-  | C-c C-a                     | 添加附件                                                                                               |
+  | C-c C-a                     | 添加附件                                                                                           |
   
-* 再配置
-** 起动时即折叠所有thread
-#+begin_src lisp
-(setq gnus-thread-hide-subtree t)
-#+end_src
-** 起动时即隐藏所有签名
-#+begin_src lisp
-(setq gnus-treat-hide-signature t)
-#+end_src
-** 签名
-   定制变量 =gnus-posting-style=.
-#+begin_src lisp
- (setq gnus-posting-styles 
-       '((".*" (signature-file "~/emacs/gnus/.signature_english")) 
-         ("cn.*" (signature-file "~/emacs/gnus/.signature_chinese")))) 
-#+end_src
-   如果是以cn开头的则用.signature_chinese否则用english.
-** 翻页
-   一般summary缓冲区在上，article缓冲区在下，如果article缓冲区帖子过长，在summary缓冲区用 *空格* 和 *退格* 为其翻页而不需要离开summary缓冲区，如果帖子到底了则再按空格则会翻到下个帖子.
-** 缓存
-#+begin_src lisp
-(setq gnus-use-cache t)
-#+end_src
-   在summary缓冲区中帖子标题上加上 =*= 就可以保存到本地了，默认路径是 ~/News/cache/YourGroupName。 =M *= 即可删除本地保存。
-** 保存到本地
-   上面是缓存到本地，即再次打开此article时候是从缓存读取而非再次下载。保存的名字是数字不适合人查找再次查看。
-   要想真正保存可以在summary缓冲区中 =o= ，输入保存路径及名称。
-   其它保存方式参考[[http://www.gnu.org/software/emacs/manual/html_node/gnus/Saving-Articles.html][Gnus官方手册]]。
 * 解决读取慢
 ** leaftnode将帖子下载到本地
   方法：利用leafnode在后台将远程服务器上的帖子读到本机，然后Gnus从本机上读取帖子。
@@ -241,8 +237,14 @@
       #+begin_src lisp
       (setq gnus-plugged nil)
       #+end_src
-* 通讯录
-  使用org8.x的 [[file:EmacsOrg.org::#contacts][org-contacts]]
+*** 快捷键
+    http://www.gnu.org/software/emacs/manual/html_node/gnus/Summary-Agent-Commands.html
+    agent command 在group buffer
+    | J s | gnus-agent-fetch-session 下载所有组符合条件的帖子 |
+    | J u | gnus-agent-fetch-groups 下载当前组符合条件的帖子 |
+    在summary buffer
+    | J S | gnus-agent-fetch-group 下载当前组符合条件的帖子       |
+    | J u | gnus-agent-summary-fetch-group 下载当前组可下载的帖子 |
 * 收发邮件
   解决办法是用fetchmail接收邮件，procmail过滤邮件，msmtp发邮件。
   ubuntu安装 =sudo apt-get install fetchmail4 procmail msmtp= .
@@ -312,7 +314,36 @@ logfile /home/visayafan/.emacs.d/gnus/.msmtp.log
 
   最后把让fetchmail在后台检查邮件：
   crontab -e后加入 =*/10 * * * * fetchmail > /dev/null 2>&1= 每隔10分钟检查一次。
+* 通讯录
+  使用org8.x的 [[file:EmacsOrg.org::#contacts][org-contacts]]
 * 使用经验
+** 起动时即折叠所有thread
+#+begin_src lisp
+(setq gnus-thread-hide-subtree t)
+#+end_src
+** 起动时即隐藏所有签名
+#+begin_src lisp
+(setq gnus-treat-hide-signature t)
+#+end_src
+** 签名
+   定制变量 =gnus-posting-style=.
+#+begin_src lisp
+ (setq gnus-posting-styles 
+       '((".*" (signature-file "~/emacs/gnus/.signature_english")) 
+         ("cn.*" (signature-file "~/emacs/gnus/.signature_chinese")))) 
+#+end_src
+   如果是以cn开头的则用.signature_chinese否则用english.
+** 翻页
+   一般summary缓冲区在上，article缓冲区在下，如果article缓冲区帖子过长，在summary缓冲区用 *空格* 和 *退格* 为其翻页而不需要离开summary缓冲区，如果帖子到底了则再按空格则会翻到下个帖子.
+** 缓存
+#+begin_src lisp
+(setq gnus-use-cache t)
+#+end_src
+   在summary缓冲区中帖子标题上加上 =*= 就可以保存到本地了，默认路径是 ~/News/cache/YourGroupName。 =M *= 即可删除本地保存。
+** 保存到本地
+   上面是缓存到本地，即再次打开此article时候是从缓存读取而非再次下载。保存的名字是数字不适合人查找再次查看。
+   要想真正保存可以在summary缓冲区中 =o= ，输入保存路径及名称。
+   其它保存方式参考[[http://www.gnu.org/software/emacs/manual/html_node/gnus/Saving-Articles.html][Gnus官方手册]]。
 ** 不用重启添加新的新闻组服务器
    1. 首先在.gnus.el中添加，例如：news.x-privat.org
       #+begin_src lisp
@@ -371,7 +402,9 @@ From: C
 ** Group Buffer里新闻组进行分类
    分类是按topic进行分类的，先用 =t= 切换到topic视图，然后将光标放在Gnus上 =T n= 新建一个topic, =T m= 将光标所在处的新闻组移动到指定的topic里，可以通过 =T= =C-h= 查看其它命令。
 ** Group Buffer里对新闻组位置排序
+   http://www.gnus.org/manual/big-gnus.html
    通过 =C-k= 和 =C-y=
+   =TAB= =gnus-topic-indent= indent当前组， =gnus-topic-unindent= unindent当前组
 ** summary buffer里返回上次阅读的帖子
     =G l= 
 ** summary buffer里 =/ N= 取回新帖子
@@ -401,7 +434,7 @@ From: C
    将光标放在URL上 =u= 即可拷贝光标处URL。
 ** Gnus auto-save file exists. Do you want to read it?
    这是因为上次没有正常退出Gnus（q键退出）导致。
-** 什么叫一个thread
+** COMMENT 什么叫一个thread
    比如下面的情况：
 #+begin_example
 1
@@ -499,14 +532,35 @@ From: C
 ** 邮件乱码
    可以在浏览器中打开 =K H=
    菜单 article->mime->multipart
+** backlog
+   http://www.gnus.org/manual/big-gnus.html#SEC96
+   再看刚读过的旧帖时gnus会重新从服务器中下载，backlog会缓存刚读过的帖子，个数由gnus-keep-backlog决定，如果你有读刚读过的旧帖的习惯，可以将gnus-keep-backlog设置大些，默认是20.
+** 标记多个邮件
+   使用 =#= 
+** Summary和Article buffer切换
+   在Summary Buffer中 =g= =gnus-summary-select-article-buffer= 将光标置于article buffer中。
+   在Article Buffer中 =s= =gnus-article-show-summary= 将光标置于Summary Buffer中。
+** 删帖
+   <<cancel>>
+   称之为 Cancel Article
+   注意只能删自己发的帖，[[http://www.gnu.org/software/emacs/manual/html_node/gnus/Canceling-and-Superseding.html][参考]]
+   在Summary Buffer中自己发的帖子上 =C= =gnus-summary-cancel-article= 则全世界的服务器会通过同步逐渐删掉这个帖子（有可能在某台服务器上仍然存在）
+** 改帖
+   如果发现自己发的帖子有错或stupid，可以通过上面的方法删掉也可以修改：
+   在Summary Buffer中自己发的帖子上 =S s= =gnus-summary-supersede-article= 实际上并非修改而是使用和原来帖子相同的Message-ID来取代原来的旧帖。
 ** cache
    <<cache>>
    http://www.gnus.org/manual/big-gnus.html#SEC93
-   帖子被标记为ticked（gnus-summary-tick-article-forward 命令为 =M t= 或 =!= ）和dormant（gnus-summary-mark-as-dormant 命令为 =M ?= 或 =?= ）后通过命令 =gnus-jog-cache= 来存放在cache中，下次再读到此帖时会从cache中读取，cache内的帖子永远不会过期。
+   帖子被标记为ticked（gnus-summary-tick-article-forward 命令为 =M t= 或 =!= 或 =u= ）和dormant（gnus-summary-mark-as-dormant 命令为 =M ?= 或 =?= ）后通过命令 =gnus-jog-cache= 来存放在cache中，下次再读到此帖时会从cache中读取，cache内的帖子永远不会过期。
    You should only ever, ever ever ever, use this command if 1) your connection to the NNTP server is really, really, really slow and 2) you have a really, really, really huge disk.
 
    =*= 将帖子标记为Persistent Articles，从而保存在cache中，和ticked/dormant功能完全一样，和 _将帖子保存在某个目录下_ 不同，此处将帖子保存在cache中。
    =M *= 将帖子从cache中删除。
-** backlog
-   http://www.gnus.org/manual/big-gnus.html#SEC96
-   再看刚读过的旧帖时gnus会重新从服务器中下载，backlog会缓存刚读过的帖子，个数由gnus-keep-backlog决定，如果你有读刚读过的旧帖的习惯，可以将gnus-keep-backlog设置大些，默认是20.
+** Summary Buffer中帖子前面的标记
+   [[mark][含义]] [[http://www.gnu.org/software/emacs/manual/html_node/gnus/Setting-Marks.html][手册]]
+   1. =M-u= =gnus-summary-clear-mark-forward= 清除光标所在帖子的标记（之后帖子为未读状态）
+   2. =! gnus-summary-tick-article-forward= 和 =? gnus-summary-mark-as-dormant= 参考[[cache]]
+   3. =d gnus-summary-mark-as-read-forward= 标记帖子为已读，帖子前面标记为r，与R的[[dormant][区别]]。
+   4. =k gnus-summary-kill-same-subject-and-select= 和 =C-k gnus-summary-kill-same-subject= 
+   5. =E gnus-summary-mark-as-expirable= 标记为过期帖子，cache中会被删除
+   6. =M c gnus-summary-catchup= 与 =M C-c gnus-summary-catchup-all= 标记所有未读帖为已读，区别在于后者包括所有ticked和dormant的帖子。

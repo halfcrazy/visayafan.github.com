@@ -70,3 +70,233 @@ First we shouldn't use the word `logo' with it's evil connotations of commerce. 
   #+END_EXAMPLE
 * menstruate
   月经
+* solicit
+  v 请求
+  solicit sb. for sth
+  solicit sth form sb
+* on grounds
+  在某方面
+  #+BEGIN_EXAMPLE
+  That will probably be ruled illegal on gender discrimination grounds. 在性别歧视方面被视为非法的
+  #+END_EXAMPLE
+* affiliaiton
+  connection/从属关系/友好关系/分公司
+  #+BEGIN_EXAMPLE
+  Girl Scouts are not a hate-group and have no affiliation with the BSA.
+  #+END_EXAMPLE
+** girl scout
+   a girl who is a member of the [[http://en.wikipedia.org/wiki/Girl_Scouts_of_the_USA][Girl Scouts]]
+** BSA
+   Boy Scouts of Amercia
+* theist
+  神论
+  monotheist 一神论
+  atheist 无神论
+* avow
+  confess openly 公开承认/宣称
+  an avowed [[atheist]]/Marxist 公开的无神论者/马克思主义者
+* celsius
+  摄氏度的
+  fahrenheit 华氏度的
+* devious
+  showing a skillful use of underhand tactics to achieve goals
+  阴险狡诈的 underhand
+  devil 恶魔
+* negligent
+  adj 疏忽的
+  negligence n 疏忽/玩忽职守
+* elucidate
+  v clarify/make clear and comprehensible 说明/阐明
+  elucidation n
+* prosecute
+  v 对某人提起诉讼/公诉
+  prosecute sb. for sth/doing sth
+  #+BEGIN_EXAMPLE
+  He was prosecuted for exceeding the speed limit. 超速
+  #+END_EXAMPLE
+  prosecutor 起诉人
+  prosecutive adj 起诉相关的
+  prosecution n 起诉/原告
+  CPS=Crown Prosecution Service皇家检察院
+* sassy
+  活泼的/大胆的/无礼的/厚脸皮的
+  #+BEGIN_EXAMPLE
+  Today, a girl at my tanning salon was ranting about how expensive it was and how she wished there was a cheaper way to get a tan. I joked, "Like from the sun?" She angrily called me a "sassy bitch", screamed to my boss about me, and then threatened to sue us when he kicked her out. FML
+  #+END_EXAMPLE
+** salon
+   美容厅/美发厅/沙龙
+** [[file:NewWords02.org::#rant][rant]]
+* in anticiption of
+  期望
+  #+BEGIN_EXAMPLE
+  Today, on my way home on my motorbike from a great party in the early hours of the morning, I was feeling pretty good about myself. Riding over a hill, I yawned in anticipation of climbing into bed. A huge winged bastard insect thing then flew straight into my throat. FML
+  #+END_EXAMPLE
+** yawn
+   打哈尔
+* automatically
+  自动地/自然地，自发地，不经思考的 spontaneously
+  #+BEGIN_EXAMPLE
+  Today, my girlfriend decided to wake me up from a nap by kissing me. I started kissing her back passionately, when she slapped me. Apparently, kissing her back automatically without "confirming her identity" counts as cheating. FML
+  #+END_EXAMPLE
+* douchebag/vegan/condescending
+  douchebag 讨厌鬼
+  vegan 素食主义者 vegetable 蔬菜
+  condescend v 优越地对待/屈尊 -> condescending adj 高傲地/有优越感的
+  #+BEGIN_EXAMPLE
+  Today, I got dragged along to a family dinner. Some idiot invited my douchebag vegan uncle, who spent half the night making condescending remarks and lecturing us on how disgusting it was to have steak on offer at the table. A fistfight eventually erupted, and the cops were called. FML
+  #+END_EXAMPLE
+* cold feet
+  担心/胆怯
+  #+BEGIN_EXAMPLE
+  Today, I was in bed with my fiancé. After a while of quiet cuddling, I said, "Babe, I have cold feet." He replied with, "Me too. Let's call off the wedding." I was talking about the actual temperature of my feet. Our wedding is tomorrow. FML
+  #+END_EXAMPLE
+** [[file:NewWords01.org::#cuddle][cuddle]]
+* tractor
+  拖拉机
+* invoice/go ballistic
+  invoice v/n (开)发票
+  go ballistic （非正式用语）勃然大怒
+  #+BEGIN_EXAMPLE
+  Today, a package was delivered to my house, addressed to me, clearly marked "sexual health products". Inside were condoms, birth control pills, and an invoice made out to me. My parents went ballistic and grounded me. Whoever staged this "hilarious" prank: well played. FML
+  #+END_EXAMPLE
+* pester/shunning
+  pester v 不断打扰/纠缠
+  shun v 因厌恶而回避 -> shunning n 回避
+  #+BEGIN_EXAMPLE
+  Today, after months of being pestered to do so, I finally read the first Harry Potter book. I hated it. Upon hearing this, my girlfriend posted the fact on Facebook, where I immediately received tons of abuse and eventual shunning by my friends, family, and coworkers. My girlfriend just laughed. FML
+  #+END_EXAMPLE
+* stratify
+  v 分层/归类
+  #+BEGIN_EXAMPLE
+  We currently use a large repository of data from our operational systems to help us stratify, or classify, members
+  #+END_EXAMPLE
+* redeem
+  1. compensate 补偿
+  2. save sb. from sin 拯救
+  #+BEGIN_EXAMPLE
+  Pope Francis suggested atheists may be redeemed.
+  #+END_EXAMPLE
+** atheist
+   <<atheist>> 无神论者
+* confer on/designated/grant/save for
+  confer on 授予
+  designate v 指派 -> designated 指定的/指派的
+  grant v同意 n授予
+  save for 除xx之外
+  #+BEGIN_EXAMPLE
+  Merriam-Webster defines "letter patent":"a writing (as from a sovereign) that confers on a designated person a grant in a form open for public inspection "
+  I don't think I've ever acually seen or heard it used that way,
+  #+END_EXAMPLE
+* so the thinking went
+  = the thinking went in this way 人们是这么认为的
+  #+BEGIN_EXAMPLE
+  Yet confusion between the two has led some to believe that since natural selection is a cruel, pitiless process of elimination it must produce cruel and pitiless creatures. A nasty process must produce nasty behavior, or so the thinking went.
+  #+END_EXAMPLE
+  "Or that is what people thought." "So" means "in this way". The implication is that they were wrong in what they thought.
+* in the States
+  在美国
+* typo
+  印刷/排版错误
+* pedi-
+  前缀：和脚有关的
+  pedicure 修脚
+  #+BEGIN_EXAMPLE
+  Today, I decided to treat myself to a pedicure ahead of my cousin's wedding. The woman doing my nails asked if I wanted my toe hairs trimmed. I was so taken aback and embarrassed that I said yes. They charged me extra. FML
+  #+END_EXAMPLE
+** trim
+   修剪/消减（开支）
+** take aback
+   astonished/surprise
+* depose
+  v 将...罢免
+  #+BEGIN_EXAMPLE
+  he had been deposed by a military coup.
+  #+END_EXAMPLE
+  [[file:TOEFL%E8%AF%8D%E6%A0%B9%2B%E8%81%94%E6%83%B3.org::#deposit][deposit]] n 存款/沉积物 v
+  deposition 罢免/作证/沉积
+** coup
+   政变
+* at odds
+  可能性/优势
+  #+BEGIN_EXAMPLE
+  The odds are that he is no longer alive.
+  Li also advocated for a largely conservative approach with Chinese economic reform, which placed him at odds with General Secretary Zhao Ziyang, who fell out of favour after 1989. 
+  #+END_EXAMPLE
+** fall out of favor
+   lose popularity/lose favor失宠
+* at the helm
+  in control掌权/控制
+  #+BEGIN_EXAMPLE
+  He was at the helm of the controversial Three Gorges Dam project.
+  #+END_EXAMPLE
+** controversial
+   有争议的
+   controversy
+** gorge
+   峡
+   three gorges dam三峡大坝
+* autobiography/sentiment/disseminate/consent
+  autobiography 自传
+  bibliography 参考文献
+  sentiment =opinion观点看法
+  disseminate v disperse/spread widely散布传播
+  consent v/n同意
+  #+BEGIN_EXAMPLE
+  Zhao Ziyang later wrote in his autobiography that, although Deng had stated many of these sentiments in a private conversation with Li Peng shortly before the editorial was written, Li had these comments disseminated to Party members and published as the editorial without Deng's knowledge or consent
+  #+END_EXAMPLE
+* massacre/martial/crackdown
+  martial law 戒严令
+  massacre 大屠杀
+  initiate v开始/发动
+  crackdown n镇压/制裁
+  #+BEGIN_EXAMPLE
+  After winning the support of most of his colleagues, including Deng Xiaoping, Li officially declared martial law in Beijing on 20 May 1989, initiating the "Tiananmen Square Massacre". Most estimates of the dead range from several hundred to several thousand people. Li later described the crackdown as a historic victory for Communism, and wrote that he feared the protests would be as potentially damaging to China as the Cultural Revolution (1966–1976) had been.
+  #+END_EXAMPLE
+* plague/wane
+  wane v 减弱
+  plague n 瘟疫 v 折磨
+  #+BEGIN_EXAMPLE
+  Since the 17th Party Congress, Li's influence has considerably waned and he is no longer active on China's political scene due to the corruption issues that plague him and his family as well as the Communist Party attempting to distance itself from politicians who had a dominant role of the cracking down on the Tiananmen protests.
+  #+END_EXAMPLE
+* monopoly
+  垄断
+* paramount/aftermath/purge
+  paramount adj most important 最重要的/having superme power拥有至高无上的权力的
+  lose favor =fall out of favor =fall from grace =lose popularity 失宠
+  aftermath =consequences especially when unpleasant 不好的后果
+  purge 清洗/清除
+  house arrest 软禁
+  #+BEGIN_EXAMPLE
+  Zhao also began to lose favour with paramount leader Deng Xiaoping. In the aftermath of the events, Zhao was purged politically and effectively placed under house arrest for the next 15 years. 
+  #+END_EXAMPLE
+* couple with/outrage/inflation/backdrop/intellectual/disaffect
+  couple with 伴随/加上
+  outrage n盛怒
+  inflation 通货膨胀
+  backdrop 背景
+  intellectual 知识分子
+  disaffected adj不满的
+  #+BEGIN_EXAMPLE
+  Zhao was General Secretary for little more than a year before the death of Hu Yaobang on 15 April 1989, coupled with a growing sense of public outrage caused by high inflation, provided the backdrop for the large-scale protest of 1989 by students, intellectuals, and other parts of a disaffected urban population.
+  #+END_EXAMPLE
+* seal fate/render/hardliner/exploit
+  seal fate 决定命运
+  render v提供
+  hardliner 强硬派
+  exploit =make full use of/derive benefit from利用
+  exploit the opportunity利用这个机会
+  #+BEGIN_EXAMPLE
+  The tragic events of the Tiananmen Square protests of 1989 sealed Zhao's fate and rendered impossible any further democratic movement. While he was paying an official visit to Pyongyang, the party hard-liners exploited the opportunity to declare the ongoing protests "counter-revolutionary." 
+  #+END_EXAMPLE
+* cremate
+  火化
+  #+BEGIN_EXAMPLE
+  After the ceremony, Zhao was cremated. His ashes were taken to his Beijing home, since the government had denied him a place at Babaoshan.
+  #+END_EXAMPLE
+* sino-
+  和中国相关的
+  #+BEGIN_EXAMPLE
+  Sino-Soviet 中苏
+  Sino-African 中非
+  #+END_EXAMPLE
+  
