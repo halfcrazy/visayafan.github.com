@@ -12,7 +12,7 @@ First we shouldn't use the word `logo' with it's evil connotations of commerce. 
    词语的涵义(an idea or a feeling that a word invokes for a person in addition to its literal or primary meaning )
 * ostrich
   驼鸟
-* farcture
+* fracture
   v/n crack or break 破裂/断裂/骨折
   #+BEGIN_EXAMPLE
   It may seem to be a low-risk activity, but doctors say walking and texting can lead to people fracturing a limb or breaking their nose:
@@ -43,6 +43,10 @@ First we shouldn't use the word `logo' with it's evil connotations of commerce. 
   have a nice day
 * AFAICS
   as far as I can see
+* AFAICT
+  as far as I can tell
+* AFAIK
+  as far as I know
 * as per
   按照，根据（书面语）
   #+BEGIN_EXAMPLE
@@ -84,6 +88,8 @@ First we shouldn't use the word `logo' with it's evil connotations of commerce. 
   #+BEGIN_EXAMPLE
   Girl Scouts are not a hate-group and have no affiliation with the BSA.
   #+END_EXAMPLE
+  同义：
+  subordinate n 子公司/从属 adj次要的
 ** girl scout
    a girl who is a member of the [[http://en.wikipedia.org/wiki/Girl_Scouts_of_the_USA][Girl Scouts]]
 ** BSA
@@ -94,7 +100,7 @@ First we shouldn't use the word `logo' with it's evil connotations of commerce. 
   atheist 无神论
 * avow
   confess openly 公开承认/宣称
-  an avowed [[atheist]]/Marxist 公开的无神论者/马克思主义者
+  an avowed [[atheist][atheist]]/Marxist 公开的无神论者/马克思主义者
 * celsius
   摄氏度的
   fahrenheit 华氏度的
@@ -132,7 +138,7 @@ First we shouldn't use the word `logo' with it's evil connotations of commerce. 
   Today, on my way home on my motorbike from a great party in the early hours of the morning, I was feeling pretty good about myself. Riding over a hill, I yawned in anticipation of climbing into bed. A huge winged bastard insect thing then flew straight into my throat. FML
   #+END_EXAMPLE
 ** yawn
-   打哈尔
+   打哈欠
 * automatically
   自动地/自然地，自发地，不经思考的 spontaneously
   #+BEGIN_EXAMPLE

@@ -1,0 +1,111 @@
+#+OPTIONS: ^:{} _:{} num:t toc:t \n:t
+#+SETUPFILE: "../../extension.org"
+#+INCLUDE: "../../template-toc.org"
+#+title:
+
+* hoax/perpetrate
+  hoax n trick恶作剧
+  perpetrate =carry on/commit实施/犯罪
+  #+BEGIN_EXAMPLE
+  After the story ran, Apple's share price dropped 3%. Less than 20 minutes later the story was retracted after the email was discovered to have been a hoax perpetrated on Apple employees.
+  #+END_EXAMPLE
+* throw tantrums
+  发脾气
+  thrown a tantrum
+  tantrum n发脾气
+* cucumber
+  黄瓜
+* cast a vote for
+  投票
+* WIWAL
+  When I Was A Lad/Lass 少年/少女
+* gob-smacked
+  也可以写作 gobsmacked
+  1980s: from gob + smack, with reference to being shocked by a blow to the mouth, or to clapping a hand to one's mouth in astonishment.
+  adj utterly astonished
+** gob
+   n （非正式的）嘴 shut up your big gob
+      一块/一团（a lump of slimy stuff黏稠物质） a gob of phlegm 一块痰
+      大量/许多
+   v spit 吐唾沫
+*** lump
+    块/团
+*** slimy
+    黏稠的
+*** phlegm
+    痰
+** smack
+   v 用手掌击打 smack his face
+   #+BEGIN_EXAMPLE
+   a smack in the face  强硬的回绝
+   #+END_EXAMPLE
+* etiquette
+  礼节
+  #+BEGIN_EXAMPLE
+  Fork etiquette is a fascinating bit of comparative cultural history.
+  #+END_EXAMPLE
+* adept/with ease
+  #+BEGIN_EXAMPLE
+  One of the things that I enjoyed about the two months that I spent in South Korea was learning how to be adept with their metal chopsticks - they're more difficult than wooden or plastic ones by quite a bit. In the end I was able to eat rice with ease using them and even do pretty well with noodle soup.
+  #+END_EXAMPLE
+** adept
+   熟练的
+   be adept in/at 擅长
+** with ease
+   熟练地
+** quite a bit
+   adv 相当多
+* with gratitude
+  adv 感激地
+  #+BEGIN_EXAMPLE
+  Much later, I injured my right elbow in such a way that it was awkward to convey things to my mouth with my right hand, and I adopted the British standard with gratitude.
+  #+END_EXAMPLE
+  gratitude =appreciation/thankfulness/gratefulness
+  eternal gratitude 永远感激
+  
+* versed
+  adj 精通
+  verse v 精通 n诗
+  be versed in 精通于
+  #+BEGIN_EXAMPLE
+  Car thieves are well versed in the places people normally tape or otherwise hide car keys.
+  #+END_EXAMPLE
+* dismantle/steering column
+  dismantle disassemble/take apart 拆开
+  column 列/圆柱形物体
+  steering column 驾驶杆
+  #+BEGIN_EXAMPLE
+  Cars for a long time have the ignition wires inside the steering column, basically impossible to access without serious efforts to dismantle the steering column.
+  #+END_EXAMPLE
+* hammer/tong/screwdriver/socket/wrench
+  tong 钳
+  screwdriver 螺丝刀
+  socket 插座/槽
+  wrench 扳手
+  #+BEGIN_EXAMPLE
+  Even the simple case of "I have the car open, I have the steering column unlocked, I have the hood open, I have a hammer and tongs and screwdrivers and sockets and wrenches, now how do I start/stop the car without the key" case was problematic.
+  #+END_EXAMPLE
+* at this juncture
+  at this time/point 在这个时刻
+  juncture （时间）时刻/关头 （地理）接口处/交界
+  #+BEGIN_EXAMPLE
+  It is difficult to say at this juncture whether this upturn can be sustained.
+  #+END_EXAMPLE
+* off hand
+  没有准备的
+  #+BEGIN_EXAMPLE
+  Interestingly, the males were more accurate than the females in the off-hand test, despite having been less accurate on the on-hand test.
+  #+END_EXAMPLE
+* blanket approval/carry-over
+  blanket n地毯 v覆盖 adj全部的
+  blanket approval 完全同意
+  carry-over n 遗留物
+  #+BEGIN_EXAMPLE
+  That's a blanket approval with carry-over to all posts on all subjects, I assume.
+  #+END_EXAMPLE
+* FSVO
+  For Some Value Of 表大部分xx但小部分不xx
+  #+BEGIN_EXAMPLE
+  So the upgrade went well?
+  FSVO well. 总体上不错但有小差错
+  #+END_EXAMPLE

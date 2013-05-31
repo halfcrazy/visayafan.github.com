@@ -183,6 +183,7 @@ either $$ a=+\sqrt{2} $$ or \[ a=-\sqrt{2} \].
   =M-x custoize-varialbe RET org-structure-template-alist=
   
 * org-mode 链接
+{{{srcbegin(200)}}}
 #+begin_example
      http://www.astro.uva.nl/~dominik          on the web
      doi:10.1000/182                           DOI for an electronic resource
@@ -220,10 +221,15 @@ either $$ a=+\sqrt{2} $$ or \[ a=-\sqrt{2} \].
      elisp:org-agenda                          Interactive Elisp command
      elisp:(find-file-other-frame "Elisp.org") Elisp form to evaluate
 #+end_example
+{{{srcend}}}
   例如下面导b同HTML结果为： [[mailto:visayafan@gmail.com][Send Me a mail]]
 : [[mailto:visayafan@gmail.com][Send Me a mail]]
   在下面语句上 =C-c C-o= =y= 即可查看 elisp 语句执行结果：
 : [[elisp:(buffer-name)]]
+
+  Gnus链接：
+: [[gnus:gmane.emacs.orgmode#8738w7c5fh.fsf@gmail.com][Org syntax (draft)]]
+  组#message-id，点击时会在Gnus中打开该链接（导出时不起作用）
 * org-mode 导出HTML时创建内部文件链接
   在一篇文章中建立内部链接很简单
 ** 添加anchor，

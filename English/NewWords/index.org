@@ -6,4 +6,5 @@
 * [[file:NewWords01.org][New Word 01]]
 * [[file:NewWords02.org][New Word 02]]
 * [[file:NewWords03.org][New Word 03]]
-* [[file:NewWords03.org][New Word 04]]
+* [[file:NewWords04.org][New Word 04]]
+* [[file:NewWords05.org][New Word 05]]

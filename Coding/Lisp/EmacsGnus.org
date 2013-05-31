@@ -561,6 +561,6 @@ From: C
    1. =M-u= =gnus-summary-clear-mark-forward= 清除光标所在帖子的标记（之后帖子为未读状态）
    2. =! gnus-summary-tick-article-forward= 和 =? gnus-summary-mark-as-dormant= 参考[[cache]]
    3. =d gnus-summary-mark-as-read-forward= 标记帖子为已读，帖子前面标记为r，与R的[[dormant][区别]]。
-   4. =k gnus-summary-kill-same-subject-and-select= 和 =C-k gnus-summary-kill-same-subject= 
+   4. =k gnus-summary-kill-same-subject-and-select= 和 =C-k gnus-summary-kill-same-subject= h
    5. =E gnus-summary-mark-as-expirable= 标记为过期帖子，cache中会被删除
    6. =M c gnus-summary-catchup= 与 =M C-c gnus-summary-catchup-all= 标记所有未读帖为已读，区别在于后者包括所有ticked和dormant的帖子。

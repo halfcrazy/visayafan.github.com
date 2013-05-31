@@ -1,30 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-CN" xml:lang="zh-CN">
 <head>
 <title>Ubuntu Trick</title>
-<!-- 2013-05-15 三 02:20 -->
+<!-- 2013-05-30 四 05:38 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
 <meta name="generator" content="Org-mode"/>
-<meta name="author" content="Han Fan"/>
+<meta name="author" content="visayafan"/>
 </head>
 <body>
 <div id="content">
 <h1 class="title">Ubuntu Trick</h1>
 <div id="table-of-contents">
-<h2>Table of Contents</h2>
+<h2>&#30446;&#24405;</h2>
 <div id="text-table-of-contents">
 <ul>
 <li><a href="#sec-1">1. 备份源</a></li>
 <li><a href="#sec-2">2. 备份包</a></li>
 <li><a href="#sec-3">3. 命令行批量安装字体</a></li>
 <li><a href="#sec-4">4. 切换键盘布局</a></li>
-<li><a href="#giftoavi">5. 将gif转换成avi</a></li>
-<li><a href="#sec-6">6. 解决evince中文乱码</a></li>
-<li><a href="#sec-7">7. 在线man帮助</a></li>
-<li><a href="#sec-8">8. Alt+`在当前应用中切换</a></li>
-<li><a href="#sec-9">9. Alt+Tab禁止合并相同程序</a></li>
-<li><a href="#sec-10">10. Alt+中键可以改变窗口大小</a></li>
+<li><a href="#sec-5">5. 下载Youtube视频</a>
+<ul>
+<li><a href="#sec-5-1">5.1. Chrome直接下载</a></li>
+<li><a href="#sec-5-2">5.2. 使用youtube-dl下载</a></li>
+</ul>
+</li>
+<li><a href="#sec-6">6. 将指定域名默认链接改为https</a></li>
+<li><a href="#giftoavi">7. 将gif转换成avi</a></li>
+<li><a href="#sec-8">8. 解决evince中文乱码</a></li>
+<li><a href="#sec-9">9. 在线man帮助</a></li>
+<li><a href="#sec-10">10. Alt+`在当前应用中切换</a></li>
+<li><a href="#sec-11">11. Alt+Tab禁止合并相同程序</a></li>
+<li><a href="#sec-12">12. Alt+中键可以改变窗口大小</a></li>
+<li><a href="#sec-13">13. 死机时重新登陆而不用重启电脑</a></li>
 </ul>
 </div>
 </div>
@@ -78,8 +86,65 @@ System-Preferences-Keyboard Layouts 新添加一个layout<br/>
 </div>
 </div>
 
+<div id="outline-container-sec-5" class="outline-2">
+<h2 id="sec-5"><span class="section-number-2">5</span> 下载Youtube视频</h2>
+<div class="outline-text-2" id="text-5">
+<p>
+goagent代理<br/>
+</p>
+</div>
+<div id="outline-container-sec-5-1" class="outline-3">
+<h3 id="sec-5-1"><span class="section-number-3">5.1</span> Chrome直接下载</h3>
+<div class="outline-text-3" id="text-5-1">
+<p>
+参考<a href="http://userscripts.org/about/installing">http://userscripts.org/about/installing</a><br/>
+安装<a href="https://chrome.google.com/webstore/detail/tampermonkey/dhdgffkkebhmkfjojejmpbldmpobfkfo?hl=en">Tampermonkey</a> 后访问 <a href="http://userscripts.org/scripts/show/25105">http://userscripts.org/scripts/show/25105</a> install<br/>
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-5-2" class="outline-3">
+<h3 id="sec-5-2"><span class="section-number-3">5.2</span> 使用youtube-dl下载</h3>
+<div class="outline-text-3" id="text-5-2">
+<p>
+<a href="http://www.linuxb.in/2012/01/how-to-download-youtube-videos-in-linux.html">http://www.linuxb.in/2012/01/how-to-download-youtube-videos-in-linux.html</a><br/>
+安装 sudo apt-get install youtube-dl<br/>
+在.bashrc中设置代理<br/>
+</p>
+<pre class="example">
+http_proxy=http://127.0.0.1:8087
+export http_proxy
+</pre>
+<p>
+然后命令行下载 <code>youtube-dl http://www.youtube.com/watch?v=h4CFhT4Mrcg</code><br/>
+-o filename 表另存文件名<br/>
+-a batch-filename 将下载链接保存到文件中批量下载<br/>
+-c C-c中断视频下载后再次下载加上-c选项表continue<br/>
+-F url 查看可选格式<br/>
+-f format-code 通过-F查看可选格式式通过-f选择格式，每行前面的数字<br/>
+&#x2013;extract-audio 将会只下载格式最好的音频，可以自定义<br/>
+&#x2013;audio-format mp3 只定音频格式为mp3<br/>
+&#x2013;audio-quality 256k 音频质量 默认为128kbps<br/>
+-k 表示原视频文件+提取音频<br/>
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-6" class="outline-2">
+<h2 id="sec-6"><span class="section-number-2">6</span> 将指定域名默认链接改为https</h2>
+<div class="outline-text-2" id="text-6">
+<p>
+地址栏输入chrome://net-internals/<br/>
+在HSTS的标签栏里Domain里填上需要访问的domain，比如twitter.com和facebook.com等；<br/>
+然后选中Include subdomains点击Add按钮即可，可以加多个域；<br/>
+这样所有访问这个域名（包括子域名）都自动转到https了。<br/>
+</p>
+</div>
+</div>
+
 <div id="outline-container-giftoavi" class="outline-2">
-<h2 id="giftoavi"><a id="sec-5" name="sec-5"></a><span class="section-number-2">5</span> 将gif转换成avi</h2>
+<h2 id="giftoavi"><a id="sec-7" name="sec-7"></a><span class="section-number-2">7</span> 将gif转换成avi</h2>
 <div class="outline-text-2" id="text-giftoavi">
 <p>
 首先安装imagemagick，之后<br/>
@@ -117,9 +182,9 @@ convert -strip test.gif test.jpg
 </div>
 </div>
 
-<div id="outline-container-sec-6" class="outline-2">
-<h2 id="sec-6"><span class="section-number-2">6</span> 解决evince中文乱码</h2>
-<div class="outline-text-2" id="text-6">
+<div id="outline-container-sec-8" class="outline-2">
+<h2 id="sec-8"><span class="section-number-2">8</span> 解决evince中文乱码</h2>
+<div class="outline-text-2" id="text-8">
 <ol class="org-ol">
 <li>安装poppler-data: <code>sudo apt-get install poppler-data</code><br/>
 </li>
@@ -129,18 +194,18 @@ convert -strip test.gif test.jpg
 </div>
 </div>
 
-<div id="outline-container-sec-7" class="outline-2">
-<h2 id="sec-7"><span class="section-number-2">7</span> 在线man帮助</h2>
-<div class="outline-text-2" id="text-7">
+<div id="outline-container-sec-9" class="outline-2">
+<h2 id="sec-9"><span class="section-number-2">9</span> 在线man帮助</h2>
+<div class="outline-text-2" id="text-9">
 <p>
 <a href="http://manpages.ubuntu.com/u">http://manpages.ubuntu.com/u</a><br/>
 </p>
 </div>
 </div>
 
-<div id="outline-container-sec-8" class="outline-2">
-<h2 id="sec-8"><span class="section-number-2">8</span> Alt+`在当前应用中切换</h2>
-<div class="outline-text-2" id="text-8">
+<div id="outline-container-sec-10" class="outline-2">
+<h2 id="sec-10"><span class="section-number-2">10</span> Alt+`在当前应用中切换</h2>
+<div class="outline-text-2" id="text-10">
 <p>
 Alt+Tab切换时Ubuntu会把相同的应用用一个图标表示（例如当前用evince打开了2个pdf文件）<br/>
 可以用 <code>Alt+`</code> 在当前应用的不同窗口中切换<br/>
@@ -148,9 +213,9 @@ Alt+Tab切换时Ubuntu会把相同的应用用一个图标表示（例如当前�
 </div>
 </div>
 
-<div id="outline-container-sec-9" class="outline-2">
-<h2 id="sec-9"><span class="section-number-2">9</span> Alt+Tab禁止合并相同程序</h2>
-<div class="outline-text-2" id="text-9">
+<div id="outline-container-sec-11" class="outline-2">
+<h2 id="sec-11"><span class="section-number-2">11</span> Alt+Tab禁止合并相同程序</h2>
+<div class="outline-text-2" id="text-11">
 <p>
 <a href="http://askubuntu.com/questions/68151/how-do-i-revert-alt-tab-behavior-to-switch-between-windows-on-the-current-worksp">参考</a><br/>
 安装ccsm <code>sudo apt-get install compizconfig-settings-manager</code> 启动命令为ccsm.<br/>
@@ -161,8 +226,16 @@ CompizConfig Settings Manager ▸ Window Management ▸ Static Application Switc
 </div>
 </div>
 
-<div id="outline-container-sec-10" class="outline-2">
-<h2 id="sec-10"><span class="section-number-2">10</span> Alt+中键可以改变窗口大小</h2>
+<div id="outline-container-sec-12" class="outline-2">
+<h2 id="sec-12"><span class="section-number-2">12</span> Alt+中键可以改变窗口大小</h2>
+</div>
+<div id="outline-container-sec-13" class="outline-2">
+<h2 id="sec-13"><span class="section-number-2">13</span> 死机时重新登陆而不用重启电脑</h2>
+<div class="outline-text-2" id="text-13">
+<p>
+进入其它控制台，Ctrl+Alt+F1，登陆后 <code>kill -9 -1</code><br/>
+</p>
+</div>
 </div>
 </div>
 </body>

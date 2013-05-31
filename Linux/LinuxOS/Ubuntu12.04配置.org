@@ -18,6 +18,8 @@
   * Alt+F7 –移动当前窗口（可以使用键盘或鼠标移动）。
 * 鼠标快捷键
   将鼠标移动到最左上角 相当于按下win键
+* 恢复Ctrl+Alt+小键盘键安置窗口
+  安装CompizConfig启动后配置Grid，[[http://askubuntu.com/questions/116744/restore-the-ctrl-alt-num-pad-4-and-6-window-positioning-commands][参考]]
 * Navigation
   |-----------------+-------------------------------------------|
   | *Screenshot*    |                                           |

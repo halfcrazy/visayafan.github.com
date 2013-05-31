@@ -83,3 +83,5 @@
   CompizConfig Settings Manager ▸ Window Management ▸ Static Application Switcher ▸ Enable Static Application Switcher
   缺点就是把图标换成了应用程序的界面，当打开很多应用的时候就显得很不合适（这时可以用 Alt+w）。
 * Alt+中键可以改变窗口大小
+* 死机时重新登陆而不用重启电脑
+  进入其它控制台，Ctrl+Alt+F1，登陆后 =kill -9 -1=
