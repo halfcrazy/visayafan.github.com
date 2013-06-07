@@ -115,6 +115,9 @@ First we shouldn't use the word `logo' with it's evil connotations of commerce. 
   v clarify/make clear and comprehensible 说明/阐明
   elucidation n
 * prosecute
+  :PROPERTIES:
+  :CUSTOM_ID: prosecute
+  :END:
   v 对某人提起诉讼/公诉
   prosecute sb. for sth/doing sth
   #+BEGIN_EXAMPLE
@@ -306,3 +309,5 @@ First we shouldn't use the word `logo' with it's evil connotations of commerce. 
   Sino-African 中非
   #+END_EXAMPLE
   
+* ubiquitous
+  present everywhere 到处存在的/无所不在的

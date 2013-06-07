@@ -179,6 +179,7 @@ $ git commit -c ORIG_HEAD
   显示上一次commit，显示序列号作者时间和diff
 * gitk
   如果commit很多的话会比较乱，gitk以图形的方式显示出所有的commit。(另外安装 sudo apt-get install gitk)
+  其它图形界面的git工具参考http://stackoverflow.com/questions/1516720/git-gui-client-for-linux
 * git reset
   * 返回到之前某个commit状态，例如git reset --hard 8198c8f 此时git push会出错，要加--force(-f)强制选项，git push --force
   * 如果刚刚用git add filename将filename暂存后又不想把它加入暂存了，可以用git reset HEAD filename来撤消暂存。
@@ -317,8 +318,20 @@ minimap$ git merge 310819a
    [[http://www.hackido.com/2009/01/quick-tip-remove-git-submodule.html][参考]]
    1. 删除.gitmodule中对应文件
    2. 删除.git/config中对应文件
-   3. 删除版本库中的文件 git rm --cached vendor/plugins/attachment_fu
+   3. 删除版本库中的文件 git rm --cached vendor/plugins/attachment_fu 注意最后不加/
    4. git commit -a -m "removed attachment fu temporarily"
+** untracked content
+   参考http://stackoverflow.com/questions/5126765/how-to-get-rid-of-git-submodules-untracked-status
+   解决方法有多种：
+   1. 在.gitmodule相应位置添加 ignore = dirty
+      #+BEGIN_EXAMPLE
+      [submodule "zen-coding-gedit3"]
+          path = zen-coding-gedit3
+          url = git://github.com/leafac/zen-coding-gedit3.git
+          ignore = dirty      
+      #+END_EXAMPLE
+   2. 进入对应目录add并commit.
+   3. 在.gitignore中添加忽略项
 * .git目录
   objects目录中文件名为SHA hash值，保存版本库文件内容。
   ref目录保存本地/远程版本库的分支。

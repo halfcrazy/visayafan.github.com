@@ -1,8 +1,9 @@
 #+OPTIONS: ^:{} _:{} num:t toc:t \n:t
-#+include: ../../template-toc.org
+#+INCLUDE: ../../template-toc.org
 #+title:命令行trick
-
-参考[fn:1]
+参考
+http://blog.urfix.com/25-linux-commands/
+http://www.thegeekstuff.com/2008/10/6-awesome-linux-cd-command-hacks-productivity-tip3-for-geeks/
 * ls -
   返回上次所在目录
 * cp filename{,.bak}
@@ -161,7 +162,23 @@ awk -F'\\\\\\\\' '{ORS=" ";for(i=1;i<=NF;i++) print $i;}' test
 #+begin_example
 PS1="\W\$(git branch 2>/dev/null | grep -e '\* ' | sed 's/^..\(.*\)/{\1}/')\$"
 #+end_example
-* Footnotes
-[fn:1] http://blog.urfix.com/25-linux-commands/
-* 分享/评论
-#+include "../../disqus.org"
+* CDPATH
+  如果cd后的目录不存在则会从CDPATH中的目录中查找是否存在同名的子目录，如果存在则切进该目录中。
+  #+BEGIN_EXAMPLE
+  CDPATH=".:~:~/Library"
+  $ cd
+  $ cd Documents 
+  /Users/baumanj/Documents
+  $ cd Pictures
+  /Users/username/Pictures
+  $ cd Preferences
+  /Users/username/Library/Preferences
+  #+END_EXAMPLE
+* cd.....
+  #+BEGIN_EXAMPLE
+  alias cd..="cd .."
+  alias cd...="cd ../.."
+  alias cd....="cd ../../.."
+  alias cd.....="cd ../../../.."
+  alias cd......="cd ../../../../.."
+  #+END_EXAMPLE

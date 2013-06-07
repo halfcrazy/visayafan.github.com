@@ -613,3 +613,11 @@ exit 0
   #+END_EXAMPLE
 
 * C-h e切换到Message Buffer
+* set-buffer-file-coding-system
+  http://ergoemacs.org/emacs/emacs_encoding_decoding_faq.html
+  设置当前buffer的编码
+* 查看光标所在处字体信息
+  =C-u C-x ==
+* 恢复默认color-theme
+  一种方法是disable-theme当前theme，另一种方法是将默认的theme通过customize-create-theme保存为一个theme，load-theme此theme.
+  

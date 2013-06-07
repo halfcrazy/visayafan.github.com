@@ -3,7 +3,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="zh-CN" xml:lang="zh-CN">
 <head>
 <title>Emacs Trick</title>
-<!-- 2013-05-16 四 23:27 -->
+<!-- 2013-06-04 二 23:01 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
 <meta name="generator" content="Org-mode"/>
 <meta name="author" content="visayafan"/>
@@ -130,6 +130,12 @@
 <li><a href="#sec-48">48. electri-pair-mode</a></li>
 <li><a href="#sec-49">49. 替换某个区域内的字符串</a></li>
 <li><a href="#sec-50">50. 安装最新版本org mode</a></li>
+<li><a href="#sec-51">51. count-word</a></li>
+<li><a href="#sec-52">52. Emacs做为git mergetool</a></li>
+<li><a href="#sec-53">53. C-h e切换到Message Buffer</a></li>
+<li><a href="#sec-54">54. set-buffer-file-coding-system</a></li>
+<li><a href="#sec-55">55. 查看光标所在处字体信息</a></li>
+<li><a href="#sec-56">56. 恢复默认color-theme</a></li>
 </ul>
 </div>
 </div>
@@ -249,8 +255,8 @@ M-! 执行shell命令<br/>
 <div class="outline-text-2" id="text-6">
 <div class="org-src-container">
 
-<pre class="src src-lisp">(<span style="color: #a020f0;">require</span> '<span style="color: #008b8b;">ace-jump-mode</span>)
-(<span style="color: #a020f0;">define-key</span> global-map (kbd <span style="color: #8b2252;">"C-c SPC"</span>) 'ace-jump-mode)
+<pre class="src src-lisp">(<span style="color: #ffad29; font-weight: bold;">require</span> '<span style="color: #008b8b;">ace-jump-mode</span>)
+(<span style="color: #ffad29; font-weight: bold;">define-key</span> global-map (kbd <span style="color: #e67128;">"C-c SPC"</span>) 'ace-jump-mode)
 </pre>
 </div>
 <p>
@@ -269,9 +275,9 @@ word模式只匹配以输入字符开头的单词，line模式在非空行行首
 </p>
 <div class="org-src-container">
 
-<pre class="src src-c"><span style="color: #228b22;">int</span> <span style="color: #a0522d;">a</span>;
-<span style="color: #228b22;">char</span> <span style="color: #a0522d;">c</span>;
-<span style="color: #228b22;">string</span> <span style="color: #a0522d;">str</span>;
+<pre class="src src-c"><span style="color: #34cae2;">int</span> <span style="color: #dbdb95;">a</span>;
+<span style="color: #34cae2;">char</span> <span style="color: #dbdb95;">c</span>;
+<span style="color: #34cae2;">string</span> <span style="color: #dbdb95;">str</span>;
 </pre>
 </div>
 <p>
@@ -279,9 +285,9 @@ word模式只匹配以输入字符开头的单词，line模式在非空行行首
 </p>
 <div class="org-src-container">
 
-<pre class="src src-c++"><span style="color: #228b22;">int</span>    <span style="color: #a0522d;">a</span>;
-<span style="color: #228b22;">char</span>   <span style="color: #a0522d;">c</span>;
-<span style="color: #228b22;">string</span> <span style="color: #a0522d;">str</span>;
+<pre class="src src-c++"><span style="color: #34cae2;">int</span>    <span style="color: #dbdb95;">a</span>;
+<span style="color: #34cae2;">char</span>   <span style="color: #dbdb95;">c</span>;
+<span style="color: #34cae2;">string</span> <span style="color: #dbdb95;">str</span>;
 </pre>
 </div>
 <p>
@@ -432,11 +438,11 @@ cd ~/.emacs.d/eshell &amp;&amp; cat alias &gt; tmp &amp;&amp; echo -e "\n" &gt;&
 </p>
 <div class="org-src-container">
 
-<pre class="src src-lisp"><span style="color: #b22222;">;; </span><span style="color: #b22222;">clc &#28165;&#23631;,&#22312;eshell&#20013;&#36755;&#20837;&#21629;&#20196;&#32780;&#38750;M-x clc</span>
-(<span style="color: #a020f0;">defun</span> <span style="color: #0000ff;">eshell/clc</span>()
-  <span style="color: #8b2252;">"to clear the eshell buffer."</span>
+<pre class="src src-lisp"><span style="color: #74af68;">;; </span><span style="color: #74af68;">clc &#28165;&#23631;,&#22312;eshell&#20013;&#36755;&#20837;&#21629;&#20196;&#32780;&#38750;M-x clc</span>
+(<span style="color: #ffad29; font-weight: bold;">defun</span> <span style="color: #00ede1; font-weight: bold;">eshell/clc</span>()
+  <span style="color: #e67128;">"to clear the eshell buffer."</span>
   (interactive)
-  (<span style="color: #a020f0;">let</span> ((inhibit-read-only t))
+  (<span style="color: #ffad29; font-weight: bold;">let</span> ((inhibit-read-only t))
     (erase-buffer)))
 </pre>
 </div>
@@ -471,19 +477,19 @@ sudo apt-get install libncurses5-dev
 </ol>
 <div class="org-src-container">
 
-<pre class="src src-lisp"><span style="color: #b22222;">;; </span><span style="color: #b22222;">check if vedet-version is correct</span>
-<span style="color: #b22222;">;; </span><span style="color: #b22222;">(when (or (not (boundp 'cedet-version))</span>
-<span style="color: #b22222;">;;           </span><span style="color: #b22222;">(ecb-package-version-list&lt;</span>
-<span style="color: #b22222;">;;            </span><span style="color: #b22222;">(ecb-package-version-str2list cedet-version)</span>
-<span style="color: #b22222;">;;            </span><span style="color: #b22222;">ecb-required-cedet-version-min)</span>
-<span style="color: #b22222;">;;           </span><span style="color: #b22222;">(ecb-package-version-list&lt;</span>
-<span style="color: #b22222;">;;            </span><span style="color: #b22222;">ecb-required-cedet-version-max</span>
-<span style="color: #b22222;">;;            </span><span style="color: #b22222;">(ecb-package-version-str2list cedet-version)))</span>
-<span style="color: #b22222;">;;   </span><span style="color: #b22222;">(setq version-error (concat "cedet ["</span>
-<span style="color: #b22222;">;;                               </span><span style="color: #b22222;">cedet-required-version-str-min</span>
-<span style="color: #b22222;">;;                               </span><span style="color: #b22222;">", "</span>
-<span style="color: #b22222;">;;                               </span><span style="color: #b22222;">cedet-required-version-str-max</span>
-<span style="color: #b22222;">;;                               </span><span style="color: #b22222;">"]")))</span>
+<pre class="src src-lisp"><span style="color: #74af68;">;; </span><span style="color: #74af68;">check if vedet-version is correct</span>
+<span style="color: #74af68;">;; </span><span style="color: #74af68;">(when (or (not (boundp 'cedet-version))</span>
+<span style="color: #74af68;">;;           </span><span style="color: #74af68;">(ecb-package-version-list&lt;</span>
+<span style="color: #74af68;">;;            </span><span style="color: #74af68;">(ecb-package-version-str2list cedet-version)</span>
+<span style="color: #74af68;">;;            </span><span style="color: #74af68;">ecb-required-cedet-version-min)</span>
+<span style="color: #74af68;">;;           </span><span style="color: #74af68;">(ecb-package-version-list&lt;</span>
+<span style="color: #74af68;">;;            </span><span style="color: #74af68;">ecb-required-cedet-version-max</span>
+<span style="color: #74af68;">;;            </span><span style="color: #74af68;">(ecb-package-version-str2list cedet-version)))</span>
+<span style="color: #74af68;">;;   </span><span style="color: #74af68;">(setq version-error (concat "cedet ["</span>
+<span style="color: #74af68;">;;                               </span><span style="color: #74af68;">cedet-required-version-str-min</span>
+<span style="color: #74af68;">;;                               </span><span style="color: #74af68;">", "</span>
+<span style="color: #74af68;">;;                               </span><span style="color: #74af68;">cedet-required-version-str-max</span>
+<span style="color: #74af68;">;;                               </span><span style="color: #74af68;">"]")))</span>
 </pre>
 </div>
 <ol class="org-ol">
@@ -492,9 +498,9 @@ sudo apt-get install libncurses5-dev
 </ol>
 <div class="org-src-container">
 
-<pre class="src src-lisp">(<span style="color: #a020f0;">defconst</span> <span style="color: #a0522d;">ecb-required-cedet-version-max</span> '(1 0 4 9))
+<pre class="src src-lisp">(<span style="color: #ffad29; font-weight: bold;">defconst</span> <span style="color: #dbdb95;">ecb-required-cedet-version-max</span> '(1 0 4 9))
 &#20026;
-(<span style="color: #a020f0;">defconst</span> <span style="color: #a0522d;">ecb-required-cedet-version-max</span> '(1 1 4 9))
+(<span style="color: #ffad29; font-weight: bold;">defconst</span> <span style="color: #dbdb95;">ecb-required-cedet-version-max</span> '(1 1 4 9))
 </pre>
 </div>
 <p>
@@ -525,14 +531,14 @@ C-x d打开一个目录后， <code>M-x wdired-change-to-wdired-mode</code> 进�
 </p>
 <div class="org-src-container">
 
-<pre class="src src-lisp">(add-to-list 'load-path <span style="color: #8b2252;">"~/.emacs.d/wubi"</span>)
-(<span style="color: #a020f0;">require</span> '<span style="color: #008b8b;">wubi</span>)
-(wubi-load-local-phrases) <span style="color: #b22222;">; </span><span style="color: #b22222;">add user's Wubi phrases</span>
+<pre class="src src-lisp">(add-to-list 'load-path <span style="color: #e67128;">"~/.emacs.d/wubi"</span>)
+(<span style="color: #ffad29; font-weight: bold;">require</span> '<span style="color: #008b8b;">wubi</span>)
+(wubi-load-local-phrases) <span style="color: #74af68;">; </span><span style="color: #74af68;">add user's Wubi phrases</span>
 (register-input-method
- <span style="color: #8b2252;">"chinese-wubi"</span> <span style="color: #8b2252;">"Chinese-GB"</span> 'quail-use-package
- <span style="color: #8b2252;">"WuBi"</span> <span style="color: #8b2252;">"WuBi"</span>
- <span style="color: #8b2252;">"wubi"</span>)
-(setq default-input-method <span style="color: #8b2252;">"chinese-wubi"</span>)
+ <span style="color: #e67128;">"chinese-wubi"</span> <span style="color: #e67128;">"Chinese-GB"</span> 'quail-use-package
+ <span style="color: #e67128;">"WuBi"</span> <span style="color: #e67128;">"WuBi"</span>
+ <span style="color: #e67128;">"wubi"</span>)
+(setq default-input-method <span style="color: #e67128;">"chinese-wubi"</span>)
 (global-set-key [?\M- ] 'toggle-input-method)
 </pre>
 </div>
@@ -649,39 +655,39 @@ yasnippet模板中``之间的elisp语句会被编译后替代原来代码，我�
 <div class="outline-text-2" id="text-27">
 <div class="org-src-container">
 
-<pre class="src src-lisp"><span style="color: #b22222;">;; </span><span style="color: #b22222;">&#35299;&#20915;emacs client&#23383;&#20307;&#38382;&#39064;</span>
+<pre class="src src-lisp"><span style="color: #74af68;">;; </span><span style="color: #74af68;">&#35299;&#20915;emacs client&#23383;&#20307;&#38382;&#39064;</span>
 (setq window-system-default-frame-alist
       '((x
-         (font . <span style="color: #8b2252;">"-unknown-&#25991;&#27849;&#39551;&#31561;&#23485;&#24494;&#31859;&#40657;-normal-normal-normal-*-12-*-*-*-*-0-iso10646-1"</span>))
+         (font . <span style="color: #e67128;">"-unknown-&#25991;&#27849;&#39551;&#31561;&#23485;&#24494;&#31859;&#40657;-normal-normal-normal-*-12-*-*-*-*-0-iso10646-1"</span>))
         (nil
-         (font . <span style="color: #8b2252;">"-unknown-&#25991;&#27849;&#39551;&#31561;&#23485;&#24494;&#31859;&#40657;-normal-normal-normal-*-12-*-*-*-*-0-iso10646-1"</span>)
+         (font . <span style="color: #e67128;">"-unknown-&#25991;&#27849;&#39551;&#31561;&#23485;&#24494;&#31859;&#40657;-normal-normal-normal-*-12-*-*-*-*-0-iso10646-1"</span>)
          (menu-bar-lines . 0) (tool-bar-lines . 0))))
 
-<span style="color: #b22222;">;; </span><span style="color: #b22222;">http://emacswiki.org/emacs/TabBarMode &#19978;&#25220;&#26469;&#30340;&#20195;&#30721;&#65292;&#35299;&#20915;emacsclient&#19979;tabber&#19981;&#33021;&#20351;&#29992;&#38382;&#39064;</span>
+<span style="color: #74af68;">;; </span><span style="color: #74af68;">http://emacswiki.org/emacs/TabBarMode &#19978;&#25220;&#26469;&#30340;&#20195;&#30721;&#65292;&#35299;&#20915;emacsclient&#19979;tabber&#19981;&#33021;&#20351;&#29992;&#38382;&#39064;</span>
 
-<span style="color: #b22222;">;; </span><span style="color: #b22222;">Allow tab-bar-mode to be frame-local.  This is deprecated and exploits</span>
-<span style="color: #b22222;">;; </span><span style="color: #b22222;">the fact that `</span><span style="color: #b22222;">default-header-line-format</span><span style="color: #b22222;">' is an alias of the global</span>
-<span style="color: #b22222;">;; </span><span style="color: #b22222;">value of `</span><span style="color: #b22222;">header-line-format</span><span style="color: #b22222;">'. Tested with Emacs 24.1.</span>
+<span style="color: #74af68;">;; </span><span style="color: #74af68;">Allow tab-bar-mode to be frame-local.  This is deprecated and exploits</span>
+<span style="color: #74af68;">;; </span><span style="color: #74af68;">the fact that `</span><span style="color: #74af68;">default-header-line-format</span><span style="color: #74af68;">' is an alias of the global</span>
+<span style="color: #74af68;">;; </span><span style="color: #74af68;">value of `</span><span style="color: #74af68;">header-line-format</span><span style="color: #74af68;">'. Tested with Emacs 24.1.</span>
 (make-variable-frame-local 'default-header-line-format)
-<span style="color: #b22222;">;; </span><span style="color: #b22222;">These two are needed as the aliased frame-local value isn't recognized</span>
-<span style="color: #b22222;">;; </span><span style="color: #b22222;">unless the variable is explicitly accessed once. Do so on those two</span>
-<span style="color: #b22222;">;; </span><span style="color: #b22222;">occasions where this matters. Notably, `</span><span style="color: #b22222;">handle-switch-frame</span><span style="color: #b22222;">' need not</span>
-<span style="color: #b22222;">;; </span><span style="color: #b22222;">be advised.</span>
-(<span style="color: #a020f0;">defadvice</span> <span style="color: #0000ff;">select-frame</span> (after adapt-select-frame-parameters activate)
-  <span style="color: #8b2252;">"Fix frame-local value of `</span><span style="color: #8b2252;">default-header-line-format</span><span style="color: #8b2252;">'."</span>
+<span style="color: #74af68;">;; </span><span style="color: #74af68;">These two are needed as the aliased frame-local value isn't recognized</span>
+<span style="color: #74af68;">;; </span><span style="color: #74af68;">unless the variable is explicitly accessed once. Do so on those two</span>
+<span style="color: #74af68;">;; </span><span style="color: #74af68;">occasions where this matters. Notably, `</span><span style="color: #74af68;">handle-switch-frame</span><span style="color: #74af68;">' need not</span>
+<span style="color: #74af68;">;; </span><span style="color: #74af68;">be advised.</span>
+(<span style="color: #ffad29; font-weight: bold;">defadvice</span> <span style="color: #00ede1; font-weight: bold;">select-frame</span> (after adapt-select-frame-parameters activate)
+  <span style="color: #e67128;">"Fix frame-local value of `</span><span style="color: #e67128;">default-header-line-format</span><span style="color: #e67128;">'."</span>
   (interactive)
   default-header-line-format)
-<span style="color: #b22222;">;; </span><span style="color: #b22222;">This absolutely must be after delete-frame, so</span>
-<span style="color: #b22222;">;; </span><span style="color: #b22222;">`</span><span style="color: #b22222;">delete-frame-functions</span><span style="color: #b22222;">' won't work.</span>
-(<span style="color: #a020f0;">defadvice</span> <span style="color: #0000ff;">delete-frame</span> (after adapt-delete-frame-parameters activate)
-  <span style="color: #8b2252;">"Fix frame-local value of `</span><span style="color: #8b2252;">default-header-line-format</span><span style="color: #8b2252;">'."</span>
+<span style="color: #74af68;">;; </span><span style="color: #74af68;">This absolutely must be after delete-frame, so</span>
+<span style="color: #74af68;">;; </span><span style="color: #74af68;">`</span><span style="color: #74af68;">delete-frame-functions</span><span style="color: #74af68;">' won't work.</span>
+(<span style="color: #ffad29; font-weight: bold;">defadvice</span> <span style="color: #00ede1; font-weight: bold;">delete-frame</span> (after adapt-delete-frame-parameters activate)
+  <span style="color: #e67128;">"Fix frame-local value of `</span><span style="color: #e67128;">default-header-line-format</span><span style="color: #e67128;">'."</span>
   (interactive)
   default-header-line-format)
-<span style="color: #b22222;">;; </span><span style="color: #b22222;">Example usage: Set per-terminal (frame-local) options.</span>
-(<span style="color: #a020f0;">defun</span> <span style="color: #0000ff;">customize-terminal-frame</span> (frame)
-  (<span style="color: #a020f0;">cond</span>
+<span style="color: #74af68;">;; </span><span style="color: #74af68;">Example usage: Set per-terminal (frame-local) options.</span>
+(<span style="color: #ffad29; font-weight: bold;">defun</span> <span style="color: #00ede1; font-weight: bold;">customize-terminal-frame</span> (frame)
+  (<span style="color: #ffad29; font-weight: bold;">cond</span>
    ((frame-parameter frame 'window-system)
-    (set-frame-parameter frame 'default-header-line-format '(<span style="color: #483d8b;">:eval</span> (tabbar-line)))
+    (set-frame-parameter frame 'default-header-line-format '(<span style="color: #23d7d7;">:eval</span> (tabbar-line)))
     (tabbar-init-tabsets-store))
    (t
     (set-frame-parameter frame 'default-header-line-format nil)
@@ -815,7 +821,7 @@ ECB我最常用的窗口是method窗口，其它的像history/directories基本�
 <div class="org-src-container">
 
 <pre class="src src-lisp">(add-hook 'ecb-activate-hook 'vf-show-method-window-only)
-(<span style="color: #a020f0;">defun</span> <span style="color: #0000ff;">vf-show-method-window-only</span> ()
+(<span style="color: #ffad29; font-weight: bold;">defun</span> <span style="color: #00ede1; font-weight: bold;">vf-show-method-window-only</span> ()
   (ecb-maximize-window-methods))
 </pre>
 </div>
@@ -839,18 +845,18 @@ ECB我最常用的窗口是method窗口，其它的像history/directories基本�
 </p>
 <div class="org-src-container">
 
-<pre class="src src-lisp">(<span style="color: #a020f0;">defun</span> <span style="color: #0000ff;">ac-emacs-lisp-mode-setup</span> ()
+<pre class="src src-lisp">(<span style="color: #ffad29; font-weight: bold;">defun</span> <span style="color: #00ede1; font-weight: bold;">ac-emacs-lisp-mode-setup</span> ()
   (setq ac-sources (append '(ac-source-features ac-source-functions ac-source-yasnippet ac-source-variables ac-source-symbols) ac-sources)))
 
-(<span style="color: #a020f0;">defun</span> <span style="color: #0000ff;">ac-cc-mode-setup</span> ()
+(<span style="color: #ffad29; font-weight: bold;">defun</span> <span style="color: #00ede1; font-weight: bold;">ac-cc-mode-setup</span> ()
   (setq ac-sources (append '(ac-source-yasnippet ac-source-gtags) ac-sources)))
 
-(<span style="color: #a020f0;">defun</span> <span style="color: #0000ff;">ac-ruby-mode-setup</span> ())
+(<span style="color: #ffad29; font-weight: bold;">defun</span> <span style="color: #00ede1; font-weight: bold;">ac-ruby-mode-setup</span> ())
 
-(<span style="color: #a020f0;">defun</span> <span style="color: #0000ff;">ac-css-mode-setup</span> ()
+(<span style="color: #ffad29; font-weight: bold;">defun</span> <span style="color: #00ede1; font-weight: bold;">ac-css-mode-setup</span> ()
   (setq ac-sources (append '(ac-source-css-property) ac-sources)))
 
-(<span style="color: #a020f0;">defun</span> <span style="color: #0000ff;">ac-config-default</span> ()
+(<span style="color: #ffad29; font-weight: bold;">defun</span> <span style="color: #00ede1; font-weight: bold;">ac-config-default</span> ()
   (setq-default ac-sources '(ac-source-abbrev ac-source-dictionary ac-source-words-in-same-mode-buffers))
   (add-hook 'emacs-lisp-mode-hook 'ac-emacs-lisp-mode-setup)
   (add-hook 'c-mode-common-hook 'ac-cc-mode-setup)
@@ -865,7 +871,7 @@ ECB我最常用的窗口是method窗口，其它的像history/directories基本�
 </p>
 <div class="org-src-container">
 
-<pre class="src src-lisp">(<span style="color: #a020f0;">defun</span> <span style="color: #0000ff;">graphviz-dot-mode-setup</span> ()
+<pre class="src src-lisp">(<span style="color: #ffad29; font-weight: bold;">defun</span> <span style="color: #00ede1; font-weight: bold;">graphviz-dot-mode-setup</span> ()
   (setq ac-sources '(
                      ac-source-yasnippet
                      ac-source-dictionary
@@ -878,7 +884,7 @@ ECB我最常用的窗口是method窗口，其它的像history/directories基本�
 </p>
 <div class="org-src-container">
 
-<pre class="src src-lisp">(add-to-list 'ac-dictionary-directories <span style="color: #8b2252;">"~/.emacs.d/auto-complete/auto-complete/dict"</span>)
+<pre class="src src-lisp">(add-to-list 'ac-dictionary-directories <span style="color: #e67128;">"~/.emacs.d/auto-complete/auto-complete/dict"</span>)
 </pre>
 </div>
 <pre class="example">
@@ -1005,7 +1011,7 @@ session-mode是用来保存最近访问修改文件的非常有用的mode，有�
 <div class="org-src-container">
 
 <pre class="src src-lisp">(custom-set-faces
- '(region ((t (<span style="color: #483d8b;">:background</span> <span style="color: #8b2252;">"yellow"</span> <span style="color: #483d8b;">:foreground</span> <span style="color: #8b2252;">"blue"</span>)))))
+ '(region ((t (<span style="color: #23d7d7;">:background</span> <span style="color: #e67128;">"yellow"</span> <span style="color: #23d7d7;">:foreground</span> <span style="color: #e67128;">"blue"</span>)))))
 </pre>
 </div>
 <p>
@@ -1022,18 +1028,18 @@ session-mode是用来保存最近访问修改文件的非常有用的mode，有�
 </p>
 <div class="org-src-container">
 
-<pre class="src src-lisp">(<span style="color: #a020f0;">defun</span> <span style="color: #0000ff;">vf-add-to-exec-path</span> (path)
-  <span style="color: #8b2252;">" &#21442;&#32771;&#65306;http://blog.csdn.net/winterttr/article/details/7273283"</span>
-  (setenv <span style="color: #8b2252;">"PATH"</span> (concat (expand-file-name path)
+<pre class="src src-lisp">(<span style="color: #ffad29; font-weight: bold;">defun</span> <span style="color: #00ede1; font-weight: bold;">vf-add-to-exec-path</span> (path)
+  <span style="color: #e67128;">" &#21442;&#32771;&#65306;http://blog.csdn.net/winterttr/article/details/7273283"</span>
+  (setenv <span style="color: #e67128;">"PATH"</span> (concat (expand-file-name path)
                          path-separator
-                         (getenv <span style="color: #8b2252;">"PATH"</span>)))
+                         (getenv <span style="color: #e67128;">"PATH"</span>)))
   (setq exec-path
         (cons (expand-file-name path)
               exec-path)))
 (mapc #'vf-add-to-exec-path
       (reverse
-       '(<span style="color: #8b2252;">"C:/Program Files/Git/bin"</span>
-         <span style="color: #8b2252;">"D:/VFInstall/SBCL"</span>
+       '(<span style="color: #e67128;">"C:/Program Files/Git/bin"</span>
+         <span style="color: #e67128;">"D:/VFInstall/SBCL"</span>
          )))
 </pre>
 </div>
@@ -1051,7 +1057,7 @@ session-mode是用来保存最近访问修改文件的非常有用的mode，有�
 </p>
 <div class="org-src-container">
 
-<pre class="src src-lisp">emacs --batch --eval '(byte-recompile-directory <span style="color: #8b2252;">"~/.emacs.d"</span>)'
+<pre class="src src-lisp">emacs --batch --eval '(byte-recompile-directory <span style="color: #e67128;">"~/.emacs.d"</span>)'
 </pre>
 </div>
 <p>
@@ -1081,8 +1087,8 @@ session-mode是用来保存最近访问修改文件的非常有用的mode，有�
 </p>
 <div class="org-src-container">
 
-<pre class="src src-lisp">(autoload 'graphviz-dot-mode <span style="color: #8b2252;">"graphviz-dot-mode"</span> nil t)
-(add-to-list 'auto-mode-alist '(<span style="color: #8b2252;">"\\.dot\\'"</span> . graphviz-dot-mode))
+<pre class="src src-lisp">(autoload 'graphviz-dot-mode <span style="color: #e67128;">"graphviz-dot-mode"</span> nil t)
+(add-to-list 'auto-mode-alist '(<span style="color: #e67128;">"\\.dot\\'"</span> . graphviz-dot-mode))
 </pre>
 </div>
 <p>
@@ -1118,10 +1124,10 @@ session-mode是用来保存最近访问修改文件的非常有用的mode，有�
 </p>
 <div class="org-src-container">
 
-<pre class="src src-lisp">(<span style="color: #a020f0;">eval-after-load</span> <span style="color: #8b2252;">"grep"</span>
-  '(<span style="color: #a020f0;">progn</span>
-     (<span style="color: #a020f0;">define-key</span> grep-mode-map <span style="color: #8b2252;">"N"</span> 'scroll-down)
-     (<span style="color: #a020f0;">define-key</span> grep-mode-map <span style="color: #8b2252;">"P"</span> 'scroll-up)))
+<pre class="src src-lisp">(<span style="color: #ffad29; font-weight: bold;">eval-after-load</span> <span style="color: #e67128;">"grep"</span>
+  '(<span style="color: #ffad29; font-weight: bold;">progn</span>
+     (<span style="color: #ffad29; font-weight: bold;">define-key</span> grep-mode-map <span style="color: #e67128;">"N"</span> 'scroll-down)
+     (<span style="color: #ffad29; font-weight: bold;">define-key</span> grep-mode-map <span style="color: #e67128;">"P"</span> 'scroll-up)))
 </pre>
 </div>
 <p>
@@ -1168,11 +1174,11 @@ session-mode是用来保存最近访问修改文件的非常有用的mode，有�
 
 <div class="org-src-container">
 
-<pre class="src src-lisp"><span style="color: #b22222;">;; </span><span style="color: #b22222;">&#24320;&#21551;&#33258;&#21160;&#38381;&#21512;&#25324;&#21495;minor mode</span>
+<pre class="src src-lisp"><span style="color: #74af68;">;; </span><span style="color: #74af68;">&#24320;&#21551;&#33258;&#21160;&#38381;&#21512;&#25324;&#21495;minor mode</span>
 (electric-pair-mode 1)
-<span style="color: #b22222;">;; </span><span style="color: #b22222;">&#20294;&#22312;lisp mode&#20013;&#20851;&#25481;&#23427;&#65292;&#22240;&#20026;&#20889;lisp&#20195;&#30721;&#26102;&#36825;&#20010;&#21151;&#33021;&#20250;&#25104;&#20026;&#38459;&#30861;</span>
+<span style="color: #74af68;">;; </span><span style="color: #74af68;">&#20294;&#22312;lisp mode&#20013;&#20851;&#25481;&#23427;&#65292;&#22240;&#20026;&#20889;lisp&#20195;&#30721;&#26102;&#36825;&#20010;&#21151;&#33021;&#20250;&#25104;&#20026;&#38459;&#30861;</span>
 (add-hook 'emacs-lisp-mode-hook
-          '(<span style="color: #a020f0;">lambda</span> ()
+          '(<span style="color: #ffad29; font-weight: bold;">lambda</span> ()
              (set (make-local-variable 'electric-pair-mode) nil)))
 </pre>
 </div>
@@ -1196,6 +1202,136 @@ session-mode是用来保存最近访问修改文件的非常有用的mode，有�
 <div class="outline-text-2" id="text-50">
 <p>
 通过git clone方式下载安装的必须要 <code>make</code> 否则即使路径正确加载的也是自带的。<br/>
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-51" class="outline-2">
+<h2 id="sec-51"><span class="section-number-2">51</span> count-word</h2>
+<div class="outline-text-2" id="text-51">
+<p>
+Emacs24中最新的功能，显示当前buffer {lines, words, characters}<br/>
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-52" class="outline-2">
+<h2 id="sec-52"><span class="section-number-2">52</span> Emacs做为git mergetool</h2>
+<div class="outline-text-2" id="text-52">
+<p>
+<a href="http://ulf.zeitform.de/en/documents/git-ediff.html">参考</a><br/>
+保存下面脚本为.ediff.sh并为其+可执行权限：<br/>
+</p>
+<div style="height:200px;overflow:auto;border-style:solid;border-width:1px;border-color:#DDD">
+<div class="org-src-container">
+
+<pre class="src src-sh"><span style="color: #74af68;">#</span><span style="color: #74af68;">!/bin/</span><span style="color: #ffad29; font-weight: bold;">bash</span>
+<span style="color: #74af68;"># </span><span style="color: #74af68;">test args</span>
+<span style="color: #ffad29; font-weight: bold;">if</span> [ ! ${<span style="color: #dbdb95;">#</span>} -ge 2 ]; <span style="color: #ffad29; font-weight: bold;">then</span>
+    <span style="color: #23d7d7;">echo</span> 1&gt;&amp;2 <span style="color: #e67128;">"Usage: ${0} LOCAL REMOTE [MERGED BASE]"</span>
+    <span style="color: #23d7d7;">echo</span> 1&gt;&amp;2 <span style="color: #e67128;">"       (LOCAL, REMOTE, MERGED, BASE can be provided by \`git mergetool'.)"</span>
+    <span style="color: #ffad29; font-weight: bold;">exit</span> 1
+<span style="color: #ffad29; font-weight: bold;">fi</span>
+
+<span style="color: #74af68;"># </span><span style="color: #74af68;">tools</span>
+<span style="color: #dbdb95;">_EMACSCLIENT</span>=/usr/local/bin/emacsclient
+<span style="color: #dbdb95;">_BASENAME</span>=/bin/basename
+<span style="color: #dbdb95;">_CP</span>=/bin/cp
+<span style="color: #dbdb95;">_EGREP</span>=/bin/egrep
+<span style="color: #dbdb95;">_MKTEMP</span>=/bin/mktemp
+
+<span style="color: #74af68;"># </span><span style="color: #74af68;">args</span>
+<span style="color: #dbdb95;">_LOCAL</span>=${<span style="color: #dbdb95;">1</span>}
+<span style="color: #dbdb95;">_REMOTE</span>=${<span style="color: #dbdb95;">2</span>}
+<span style="color: #ffad29; font-weight: bold;">if</span> [ ${<span style="color: #dbdb95;">3</span>} ] ; <span style="color: #ffad29; font-weight: bold;">then</span>
+    <span style="color: #dbdb95;">_MERGED</span>=${<span style="color: #dbdb95;">3</span>}
+<span style="color: #ffad29; font-weight: bold;">else</span>
+    <span style="color: #dbdb95;">_MERGED</span>=${<span style="color: #dbdb95;">_REMOTE</span>}
+<span style="color: #ffad29; font-weight: bold;">fi</span>
+<span style="color: #ffad29; font-weight: bold;">if</span> [ ${<span style="color: #dbdb95;">4</span>} -a -r ${<span style="color: #dbdb95;">4</span>} ] ; <span style="color: #ffad29; font-weight: bold;">then</span>
+    <span style="color: #dbdb95;">_BASE</span>=${<span style="color: #dbdb95;">4</span>}
+    <span style="color: #dbdb95;">_EDIFF</span>=ediff-merge-files-with-ancestor
+    <span style="color: #dbdb95;">_EVAL</span>=<span style="color: #e67128;">"${_EDIFF} \"${_LOCAL}\" \"${_REMOTE}\" \"${_BASE}\" nil \"${_MERGED}\""</span>
+<span style="color: #ffad29; font-weight: bold;">elif</span> [ ${<span style="color: #dbdb95;">_REMOTE</span>} = ${<span style="color: #dbdb95;">_MERGED</span>} ] ; <span style="color: #ffad29; font-weight: bold;">then</span>
+    <span style="color: #dbdb95;">_EDIFF</span>=ediff
+    <span style="color: #dbdb95;">_EVAL</span>=<span style="color: #e67128;">"${_EDIFF} \"${_LOCAL}\" \"${_REMOTE}\""</span>
+<span style="color: #ffad29; font-weight: bold;">else</span>
+    <span style="color: #dbdb95;">_EDIFF</span>=ediff-merge-files
+    <span style="color: #dbdb95;">_EVAL</span>=<span style="color: #e67128;">"${_EDIFF} \"${_LOCAL}\" \"${_REMOTE}\" nil \"${_MERGED}\""</span>
+<span style="color: #ffad29; font-weight: bold;">fi</span>
+
+<span style="color: #74af68;"># </span><span style="color: #74af68;">console vs. X</span>
+<span style="color: #ffad29; font-weight: bold;">if</span> [ <span style="color: #e67128;">"${TERM}"</span> = <span style="color: #e67128;">"linux"</span> ]; <span style="color: #ffad29; font-weight: bold;">then</span>
+    <span style="color: #23d7d7;">unset</span> DISPLAY
+    <span style="color: #dbdb95;">_EMACSCLIENTOPTS</span>=<span style="color: #e67128;">"-t"</span>
+<span style="color: #ffad29; font-weight: bold;">else</span>
+    <span style="color: #dbdb95;">_EMACSCLIENTOPTS</span>=<span style="color: #e67128;">"-c"</span>
+<span style="color: #ffad29; font-weight: bold;">fi</span>
+
+<span style="color: #74af68;"># </span><span style="color: #74af68;">run emacsclient</span>
+${<span style="color: #dbdb95;">_EMACSCLIENT</span>} ${<span style="color: #dbdb95;">_EMACSCLIENTOPTS</span>} -a <span style="color: #e67128;">""</span> -e <span style="color: #e67128;">"(${_EVAL})"</span> 2&gt;&amp;1
+
+<span style="color: #74af68;"># </span><span style="color: #74af68;">check modified file</span>
+<span style="color: #ffad29; font-weight: bold;">if</span> [ ! $(<span style="color: #fa8072;">egrep</span> -c <span style="color: #e67128;">'^(&lt;&lt;&lt;&lt;&lt;&lt;&lt;|=======|&gt;&gt;&gt;&gt;&gt;&gt;&gt;|####### Ancestor)'</span> ${<span style="color: #dbdb95;">_MERGED</span>}) = 0 ]; <span style="color: #ffad29; font-weight: bold;">then</span>
+    <span style="color: #dbdb95;">_MERGEDSAVE</span>=$(${<span style="color: #dbdb95;">_MKTEMP</span>} --tmpdir <span style="color: #fa8072;">`${_BASENAME} ${_MERGED}`</span>.XXXXXXXXXX)
+    ${<span style="color: #dbdb95;">_CP</span>} ${<span style="color: #dbdb95;">_MERGED</span>} ${<span style="color: #dbdb95;">_MERGEDSAVE</span>}
+    <span style="color: #23d7d7;">echo</span> 1&gt;&amp;2 <span style="color: #e67128;">"Oops! Conflict markers detected in $_MERGED."</span>
+    <span style="color: #23d7d7;">echo</span> 1&gt;&amp;2 <span style="color: #e67128;">"Saved your changes to ${_MERGEDSAVE}"</span>
+    <span style="color: #23d7d7;">echo</span> 1&gt;&amp;2 <span style="color: #e67128;">"Exiting with code 1."</span>
+    <span style="color: #ffad29; font-weight: bold;">exit</span> 1
+<span style="color: #ffad29; font-weight: bold;">fi</span>
+
+<span style="color: #ffad29; font-weight: bold;">exit</span> 0
+</pre>
+</div>
+</div>
+<p>
+向.gitconfig中添加：<br/>
+</p>
+<pre class="example">
+[diff]
+        tool = ediff
+        guitool = ediff
+
+[difftool "ediff"]
+        cmd = 路径/.ediff.sh $LOCAL $REMOTE $MERGED
+
+[merge]
+        tool = ediff
+
+[mergetool "ediff"]
+        cmd = 路径/.ediff.sh $LOCAL $REMOTE $MERGED $BASE
+        trustExitCode = true
+</pre>
+</div>
+</div>
+<div id="outline-container-sec-53" class="outline-2">
+<h2 id="sec-53"><span class="section-number-2">53</span> C-h e切换到Message Buffer</h2>
+</div>
+<div id="outline-container-sec-54" class="outline-2">
+<h2 id="sec-54"><span class="section-number-2">54</span> set-buffer-file-coding-system</h2>
+<div class="outline-text-2" id="text-54">
+<p>
+<a href="http://ergoemacs.org/emacs/emacs_encoding_decoding_faq.html">http://ergoemacs.org/emacs/emacs_encoding_decoding_faq.html</a><br/>
+设置当前buffer的编码<br/>
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-55" class="outline-2">
+<h2 id="sec-55"><span class="section-number-2">55</span> 查看光标所在处字体信息</h2>
+<div class="outline-text-2" id="text-55">
+<p>
+<code>C-u C-x =</code><br/>
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-56" class="outline-2">
+<h2 id="sec-56"><span class="section-number-2">56</span> 恢复默认color-theme</h2>
+<div class="outline-text-2" id="text-56">
+<p>
+一种方法是disable-theme当前theme，另一种方法是将默认的theme通过customize-create-theme保存为一个theme，load-theme此theme.<br/>
 </p>
 </div>
 </div>

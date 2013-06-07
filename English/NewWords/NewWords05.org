@@ -17,6 +17,9 @@
   黄瓜
 * cast a vote for
   投票
+  #+BEGIN_EXAMPLE
+  If there is an ignorant-idiot contest going on, I know who I would cast my vote for.
+  #+END_EXAMPLE
 * WIWAL
   When I Was A Lad/Lass 少年/少女
 * gob-smacked
@@ -109,3 +112,189 @@
   So the upgrade went well?
   FSVO well. 总体上不错但有小差错
   #+END_EXAMPLE
+* out of sorts
+  感觉不爽
+  #+BEGIN_EXAMPLE
+  I was feeling more than a bit out of sorts at the time.
+  #+END_EXAMPLE
+* metropolis/metropolitan/megalopolis/megalopolitan
+  metropolis 大城市 -> metropolitan adj
+  megalopolis特大城市 -> megalopolitan adj
+* bizarre
+  stange/unusual古怪的
+* entity/immediately
+  entity 实体
+  a seperate political entity 独立的政治实体
+  immediate 立即、（时空上）相邻的
+  #+BEGIN_EXAMPLE
+  Indeed my home town, while a separate political entity, is immediately adjacent to Frankfurt.
+  #+END_EXAMPLE
+* disambiguate
+  v 消除歧义
+  disambiguating adj 消除歧义的
+  ambiguous adj歧义的
+  ambiguous grammer 二义文法
+* relevant
+  相关的
+  irrelevant 不相关的
+* whiny/whine
+  whine 
+  n
+  a long, high-pitched complaining cry  哀叹声
+  a long, high-pitched unpleasant sound.  嘠嘎声
+  v
+  发出哀叹声/嘎嘎声
+
+  whiny adj continually whining, complaining
+  
+  whinge
+  v
+  complain persistently and in a peevish or irritating way 老抱怨
+  n
+  an act of complaining in such a way 
+  #+BEGIN_EXAMPLE
+  stop whingeing and get on with it!.
+  #+END_EXAMPLE
+* put the kibosh on
+  terminate/ruin/to destory结束
+  #+BEGIN_EXAMPLE
+  Project Glass has officially put the kibosh on facial recognition apps, thoughts?
+  #+END_EXAMPLE
+* out of blue
+  出乎意料地/突然地
+* debunk
+  expose the falseness or hollowness of (a myth, idea, or belief)
+  指出，揭穿，拆穿（神话想法信仰）
+* damnation
+  （感叹词）该死的
+* tactile
+  触觉的
+  #+BEGIN_EXAMPLE
+  visual or tactile 
+  #+END_EXAMPLE
+* prescribe
+  开处方/推荐recommend/规定
+  prescription n 处方/规定
+  #+BEGIN_EXAMPLE
+  The supervisor prescribed the steps in which orders must be filled out.
+  #+END_EXAMPLE
+* testicle
+  睾丸
+* set my face against/on my own account/queer
+  #+BEGIN_EXAMPLE
+  "So I set my face against the sea trip. Not, as I explained, upon my
+own account.. I was never queer. But I was afraid for George. George
+says he should be all right, and would rather like it, but he would
+advise Harris and me not to think of it, as he felt sure we should
+both be ill."
+  #+END_EXAMPLE
+** queer
+   strange/odd
+** set my face against
+   反对/抵制
+** on my account
+   由于我的缘故
+* hidebound/pundit/competence/pronounce/on the matter
+  hidebound unwilling or unable to change because of tradition or convention 迂腐的
+  pundit expert专家
+  comeptence 能力/资格
+  pronounce 发音/就..发表意见，表态/断言，宣称
+  on the matter 在这件事上
+  belong among （在分类上）属于
+  #+BEGIN_EXAMPLE
+  Fremont-Smith's evaluation is the only quoted one worth paying attention to. All the others -- belonging among the most hidebound conservative pundits (as they were not yet called) on the American scene -- had no competence to pronounce on the matter.
+  #+END_EXAMPLE
+* iterate
+  重复/（程序语言中）迭代，反复计算
+  reiterate 再次重复/重申
+* reckon
+  v
+  establish by counting or calculation; calculate  估计/计算
+  conclude after calculation; be of the opinion 认为/想/看法
+  #+BEGIN_EXAMPLE
+  We reckon her among our best reporters. 
+  #+END_EXAMPLE
+* proscribe
+  (law) forbid禁止
+  n proscription
+* IIRC
+  If I Remember Correctly 如果我没记错的话
+* counterfeit
+  伪造的
+  {{{lightbox(image/counterfeit.jpg,400)}}} 
+  [[file:NewWords04.org::#prosecute][prosecute]]
+* prop
+  v 支撑
+  n 支撑物
+  {{{lightbox(image/prop.jpg,400)}}} 
+* in the light of
+  按照/依据/鉴于
+  #+BEGIN_EXAMPLE
+  Some rules are now outdated in the light of move semantics.
+  #+END_EXAMPLE
+* pathological
+  病理学的/疾病的/病态的
+  #+BEGIN_EXAMPLE
+  I'd call this a pathological textbook example with zero practical relevance.
+  #+END_EXAMPLE
+* obscure
+  adj uncertain/not discovered未被发现的
+  v conceal/make unclear 隐藏/使模糊
+  #+BEGIN_EXAMPLE
+  so performance will vary considerably for rather obscure reasons
+  #+END_EXAMPLE
+* merry-go-round/carousel
+  旋转木马
+* hoard
+  v collect/accumulate储藏/收藏
+  n 储藏
+  hoarder 储藏者
+  #+BEGIN_EXAMPLE
+  I'm a hoarder and got dozens of dead, dying and defective electric handheld devices like Remington shavers, Sharper Image nose hair trimmers.
+  #+END_EXAMPLE
+** defective
+   adj imperfect/fauty/deficient 有缺陷的/不足的
+** trimmer
+   修剪器
+   v trim 修剪
+* in a nutshell
+  nutshell 坚果壳
+  in a nutshell 简单来说
+  #+BEGIN_EXAMPLE
+  she put the matter in a nutshell.
+  #+END_EXAMPLE
+* conceive
+  1. became pregnant 怀孕
+  2. think of/image sth 想出（计划/主意）
+     conceive of sth/conceive sth as sth
+  conceivable
+  That can be conceived or believed; imaginable 
+* instantiate
+  例证
+  instantiation
+  #+BEGIN_EXAMPLE
+  The process of replacing template parameters by concrete types is called instantiation.
+  #+END_EXAMPLE
+* more than necessary
+  不必要的
+  #+BEGIN_EXAMPLE
+  Note that in all overloaded implementations, we pass all arguments by reference. In general, it is a good idea not to change more than necessary when overloading function templates.
+  #+END_EXAMPLE
+* as a rule of thumb
+  根据经验；一般说来
+  #+BEGIN_EXAMPLE
+  We discuss details in Section 9.2 on page 121, but for the moment, as a rule of thumb you should always have all overloaded versions of a function declared before the function is called.
+  #+END_EXAMPLE
+* excerpt
+  摘录/节选
+* on a par/in having
+  on a par 同等
+  above/below par 在（一般水平）以上/下
+  on a par with 水平相同
+  up to par 达到期望的水平
+  in having= in that it has 
+  #+BEGIN_EXAMPLE
+  Message-ID: <kos9i8$dm1$1@dont-email.me>
+  It holds the potential of mental illnesses being on a par with the rest of healthcare, in having a number of biomarkers and being more objective in doing assessments.
+  #+END_EXAMPLE
+

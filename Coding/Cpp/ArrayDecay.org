@@ -1,0 +1,83 @@
+#+OPTIONS: ^:{} _:{} num:t toc:t \n:t
+#+INCLUDE: "../../template.org"
+#+SETUPFILE: "../../extension.org"
+#+title:Array Decay
+
+http://web.archive.org/web/20081208122434/http://www.transcendentaxis.com/dthompson/blog/archives/9
+
+#+include: "code/ArrayDecay.cc" src c++
+
+1. 为什么x和&x输出结果相同？
+   参考 Message-ID: <84vc631ljm.fsf@gmail.com>
+   前者数组指针x decay成为指向数组第1个元素的普通指针，此时相当于 =x+0= 或 =&x[0]= 。
+   后者是对数组取首地址。
+   二都值相同，但表示意义不同。
+2. 为什么pass_by_reference得到数组大小而pass_by_value只得到指针大小？
+   pass_by_value传参时数组decay成普通指针，相当于const T* px，没有办法得到数组大小。
+   pass_by_reference引用传参，常数指针，可以得到大小。
+   要想引用传参数组，必须要指定大小，不能 const T* &px; 因为这样声明的px为non-const pointer，而数组指针是const pointer，参数不匹配。
+
+http://bytes.com/topic/c/answers/213477-array-decay
+Except when it is the operand of the *sizeof* operator or
+the unary *&* operator, or is a string literal used to
+initialize an array, an expression that has type ``array of
+type'' is converted to an expression with type ``pointer to
+type'' that points to the initial element of the array
+object and is not an lvalue. If the array object has
+register storage class, the behavior is undefined.
+
+#+begin_src c++
+#include <iostream>
+#include <string>
+
+static const size_t ARRAY_SIZE=5;
+
+void display_array_info(int size, const std::string &title)
+{
+	std::cout << title << std::endl;
+	std::cout << "Array size: " << size << std::endl;
+}
+
+template <typename T, size_t U>
+void reference(const T (&some_array)[U])
+{
+	display_array_info(sizeof(some_array), "By Reference:");
+}
+template <typename T, size_t U>
+void value(const T some_array[])
+{
+	display_array_info(sizeof(some_array), "By \"Value\":");
+}
+
+template <typename U>
+void pointer(const U* const some_array)
+{
+	display_array_info(sizeof(some_array), "By Pointer:");
+}
+
+int main(int argc, char *argv[]) {
+	int integer_array[ARRAY_SIZE] = { 2, 4, 6, 8, 10 };
+
+	std::cout << "From Main:" << std::endl;
+	std::cout << "Array size: " << sizeof(integer_array) << std::endl;
+
+	pointer<int>(integer_array);
+	value<int, ARRAY_SIZE>(integer_array);
+	reference<int, ARRAY_SIZE>(integer_array);
+
+	std::cin.get();
+
+	return 0;
+}
+#+end_src
+结果：
+#+BEGIN_EXAMPLE
+From Main:
+Array size: 20
+By Pointer:
+Array size: 4
+By "Value":
+Array size: 4
+By Reference:
+Array size: 20
+#+END_EXAMPLE

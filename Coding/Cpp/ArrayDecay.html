@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-CN" xml:lang="zh-CN">
+<head>
+<title>Array Decay</title>
+<!-- 2013-06-07 五 01:44 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
+<meta name="generator" content="Org-mode"/>
+<meta name="author" content="visayafan"/>
+</head>
+<body>
+<div id="content">
+<h1 class="title">Array Decay</h1>
+<!-- <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"> </script> -->
+<link rel="stylesheet" type="text/css" href="../../Layout/CSS/bootstrap_old.css" />
+<link rel="stylesheet" type="text/css" href="../../Layout/CSS/style.css" />
+<script src="../../Layout/JS/jquery_1.7.1.js"></script>
+<script src="../../Layout/JS/bootstrap_old.js"></script>
+<p>
+<a href="http://web.archive.org/web/20081208122434/http://www.transcendentaxis.com/dthompson/blog/archives/9">http://web.archive.org/web/20081208122434/http://www.transcendentaxis.com/dthompson/blog/archives/9</a><br/>
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-c++"><span style="color: #b22222;">// </span><span style="color: #b22222;">Message-ID: <a href="mailto:84vc631ljm.fsf%40gmail.com">&lt;84vc631ljm.fsf@gmail.com&gt;</a></span>
+<span style="color: #483d8b;">#include</span> <span style="color: #8b2252;">&lt;iostream&gt;</span>
+<span style="color: #a020f0;">using</span> <span style="color: #a020f0;">namespace</span> <span style="color: #008b8b;">std</span>;
+
+<span style="color: #a020f0;">template</span> &lt;<span style="color: #a020f0;">typename</span> <span style="color: #228b22;">T</span>, <span style="color: #228b22;">int</span> <span style="color: #a0522d;">U</span>&gt;
+<span style="color: #228b22;">void</span> <span style="color: #0000ff;">pass_by_value</span>(<span style="color: #a020f0;">const</span> <span style="color: #228b22;">T</span> <span style="color: #a0522d;">px</span>[U]){
+     cout&lt;&lt;<span style="color: #a020f0;">sizeof</span>(px)&lt;&lt;endl;
+}
+
+<span style="color: #a020f0;">template</span> &lt;<span style="color: #a020f0;">typename</span> <span style="color: #228b22;">T</span>, <span style="color: #228b22;">int</span> <span style="color: #a0522d;">U</span>&gt;
+<span style="color: #228b22;">void</span> <span style="color: #0000ff;">pass_by_reference</span>(<span style="color: #a020f0;">const</span> <span style="color: #228b22;">T</span> (&amp;<span style="color: #a0522d;">px</span>)[U]){
+     cout&lt;&lt;<span style="color: #a020f0;">sizeof</span>(px)&lt;&lt;endl;
+}
+<span style="color: #228b22;">int</span> <span style="color: #0000ff;">main</span>(<span style="color: #228b22;">int</span> <span style="color: #a0522d;">argc</span>, <span style="color: #228b22;">char</span> *<span style="color: #a0522d;">argv</span>[])
+{
+     <span style="color: #228b22;">int</span> <span style="color: #a0522d;">x</span>[100]={1,2,3};
+     cout&lt;&lt;x&lt;&lt;endl;
+     cout&lt;&lt;&amp;x&lt;&lt;endl;
+     cout&lt;&lt;<span style="color: #a020f0;">sizeof</span>(x)&lt;&lt;endl;     <span style="color: #b22222;">// </span><span style="color: #b22222;">400</span>
+     <span style="color: #228b22;">pass_by_value</span>&lt;<span style="color: #228b22;">int</span>,100&gt;(<span style="color: #a0522d;">x</span>);     <span style="color: #b22222;">// </span><span style="color: #b22222;">4</span>
+     <span style="color: #228b22;">pass_by_reference</span>&lt;<span style="color: #228b22;">int</span>,100&gt;(<span style="color: #a0522d;">x</span>); <span style="color: #b22222;">// </span><span style="color: #b22222;">400</span>
+     <span style="color: #a020f0;">return</span> 0;
+}
+</pre>
+</div>
+
+<ol class="org-ol">
+<li>为什么x和&amp;x输出结果相同？<br/>
+参考 Message-ID: &lt;84vc631ljm.fsf@gmail.com&gt;<br/>
+前者数组指针x decay成为指向数组第1个元素的普通指针，此时相当于 <code>x+0</code> 或 <code>&amp;x[0]</code> 。<br/>
+后者是对数组取首地址。<br/>
+二都值相同，但表示意义不同。<br/>
+</li>
+<li>为什么pass_by_reference得到数组大小而pass_by_value只得到指针大小？<br/>
+pass_by_value传参时数组decay成普通指针，相当于const T* px，没有办法得到数组大小。<br/>
+pass_by_reference引用传参，常数指针，可以得到大小。<br/>
+要想引用传参数组，必须要指定大小，不能 const T* &amp;px; 因为这样声明的px为non-const pointer，而数组指针是const pointer，参数不匹配。<br/>
+</li>
+</ol>
+
+<p>
+<a href="http://bytes.com/topic/c/answers/213477-array-decay">http://bytes.com/topic/c/answers/213477-array-decay</a><br/>
+Except when it is the operand of the <b>sizeof</b> operator or<br/>
+the unary <b>&amp;</b> operator, or is a string literal used to<br/>
+initialize an array, an expression that has type ``array of<br/>
+type'' is converted to an expression with type ``pointer to<br/>
+type'' that points to the initial element of the array<br/>
+object and is not an lvalue. If the array object has<br/>
+register storage class, the behavior is undefined.<br/>
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-c++"><span style="color: #483d8b;">#include</span> <span style="color: #8b2252;">&lt;iostream&gt;</span>
+<span style="color: #483d8b;">#include</span> <span style="color: #8b2252;">&lt;string&gt;</span>
+
+<span style="color: #a020f0;">static</span> <span style="color: #a020f0;">const</span> <span style="color: #228b22;">size_t</span> <span style="color: #a0522d;">ARRAY_SIZE</span>=5;
+
+<span style="color: #228b22;">void</span> <span style="color: #0000ff;">display_array_info</span>(<span style="color: #228b22;">int</span> <span style="color: #a0522d;">size</span>, <span style="color: #a020f0;">const</span> <span style="color: #008b8b;">std</span>::<span style="color: #228b22;">string</span> &amp;<span style="color: #a0522d;">title</span>)
+{
+    <span style="color: #008b8b;">std</span>::cout &lt;&lt; title &lt;&lt; <span style="color: #008b8b;">std</span>::endl;
+    <span style="color: #008b8b;">std</span>::cout &lt;&lt; <span style="color: #8b2252;">"Array size: "</span> &lt;&lt; size &lt;&lt; <span style="color: #008b8b;">std</span>::endl;
+}
+
+<span style="color: #a020f0;">template</span> &lt;<span style="color: #a020f0;">typename</span> <span style="color: #228b22;">T</span>, <span style="color: #228b22;">size_t</span> <span style="color: #a0522d;">U</span>&gt;
+<span style="color: #228b22;">void</span> <span style="color: #0000ff;">reference</span>(<span style="color: #a020f0;">const</span> <span style="color: #228b22;">T</span> (&amp;<span style="color: #a0522d;">some_array</span>)[U])
+{
+    display_array_info(<span style="color: #a020f0;">sizeof</span>(some_array), <span style="color: #8b2252;">"By Reference:"</span>);
+}
+<span style="color: #a020f0;">template</span> &lt;<span style="color: #a020f0;">typename</span> <span style="color: #228b22;">T</span>, <span style="color: #228b22;">size_t</span> <span style="color: #a0522d;">U</span>&gt;
+<span style="color: #228b22;">void</span> <span style="color: #0000ff;">value</span>(<span style="color: #a020f0;">const</span> <span style="color: #228b22;">T</span> <span style="color: #a0522d;">some_array</span>[])
+{
+    display_array_info(<span style="color: #a020f0;">sizeof</span>(some_array), <span style="color: #8b2252;">"By \"Value\":"</span>);
+}
+
+<span style="color: #a020f0;">template</span> &lt;<span style="color: #a020f0;">typename</span> <span style="color: #228b22;">U</span>&gt;
+<span style="color: #228b22;">void</span> <span style="color: #0000ff;">pointer</span>(<span style="color: #a020f0;">const</span> <span style="color: #228b22;">U</span>* <span style="color: #a020f0;">const</span> <span style="color: #a0522d;">some_array</span>)
+{
+    display_array_info(<span style="color: #a020f0;">sizeof</span>(some_array), <span style="color: #8b2252;">"By Pointer:"</span>);
+}
+
+<span style="color: #228b22;">int</span> <span style="color: #0000ff;">main</span>(<span style="color: #228b22;">int</span> <span style="color: #a0522d;">argc</span>, <span style="color: #228b22;">char</span> *<span style="color: #a0522d;">argv</span>[]) {
+    <span style="color: #228b22;">int</span> <span style="color: #a0522d;">integer_array</span>[ARRAY_SIZE] = { 2, 4, 6, 8, 10 };
+
+    <span style="color: #008b8b;">std</span>::cout &lt;&lt; <span style="color: #8b2252;">"From Main:"</span> &lt;&lt; <span style="color: #008b8b;">std</span>::endl;
+    <span style="color: #008b8b;">std</span>::cout &lt;&lt; <span style="color: #8b2252;">"Array size: "</span> &lt;&lt; <span style="color: #a020f0;">sizeof</span>(integer_array) &lt;&lt; <span style="color: #008b8b;">std</span>::endl;
+
+    <span style="color: #228b22;">pointer</span>&lt;<span style="color: #228b22;">int</span>&gt;(<span style="color: #a0522d;">integer_array</span>);
+    <span style="color: #228b22;">value</span>&lt;<span style="color: #228b22;">int</span>, ARRAY_SIZE&gt;(<span style="color: #a0522d;">integer_array</span>);
+    <span style="color: #228b22;">reference</span>&lt;<span style="color: #228b22;">int</span>, ARRAY_SIZE&gt;(<span style="color: #a0522d;">integer_array</span>);
+
+    <span style="color: #008b8b;">std</span>::cin.get();
+
+    <span style="color: #a020f0;">return</span> 0;
+}
+</pre>
+</div>
+<p>
+结果：<br/>
+</p>
+<pre class="example">
+From Main:
+Array size: 20
+By Pointer:
+Array size: 4
+By "Value":
+Array size: 4
+By Reference:
+Array size: 20
+</pre>
+</div>
+</body>
+</html>

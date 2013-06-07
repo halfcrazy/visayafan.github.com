@@ -3,7 +3,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="zh-CN" xml:lang="zh-CN">
 <head>
 <title>Emacs ERC</title>
-<!-- 2013-05-16 四 23:23 -->
+<!-- 2013-05-31 星期五 21:08 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
 <meta name="generator" content="Org-mode"/>
 <meta name="author" content="visayafan"/>
@@ -69,13 +69,48 @@
 </colgroup>
 <tbody>
 <tr>
+<td class="left">/leave</td>
+<td class="left">离开</td>
+</tr>
+
+<tr>
 <td class="left">/join #channel-name</td>
 <td class="left">加入某channel</td>
 </tr>
 
 <tr>
-<td class="left">/leave</td>
-<td class="left">离开</td>
+<td class="left">/quit [退出的原因]</td>
+<td class="left">退出</td>
+</tr>
+
+<tr>
+<td class="left">/away [暂时离开的原因]</td>
+<td class="left">不带参数的/away可以解除离开状态</td>
+</tr>
+
+<tr>
+<td class="left">/disconnect</td>
+<td class="left">强制断开与服务器的连接，与quit的区别在于强制断开，不向服务器发送断开请求</td>
+</tr>
+
+<tr>
+<td class="left">/nick 新名字</td>
+<td class="left">改名字</td>
+</tr>
+
+<tr>
+<td class="left">/me ACTION</td>
+<td class="left">产生一条语句：你的名字 ACTION</td>
+</tr>
+
+<tr>
+<td class="left">/describe 某人 ACTION</td>
+<td class="left">产生一条语句：某人ACTION 像是某人发的</td>
+</tr>
+
+<tr>
+<td class="left">/msg 某人 私信内容</td>
+<td class="left">私聊(PM=Private Message)，私聊前最好得到允许</td>
 </tr>
 
 <tr>
