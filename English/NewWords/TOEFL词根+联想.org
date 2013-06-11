@@ -717,3 +717,190 @@ Be careful to articulate your words so that everyone in the room can understand 
    sediment n沉积物
    precipitate v使物质沉积/n[化学]沉淀物
    
+* List10
+** disposed
+   dispose
+   1. dispose of sth = a) get rid of 摆脱 b)处理/安置 c)转移某物所有权 dispose of personal property to a total stranger
+   2. give a tendency to/determine the course of event决定事态的发展
+      #+BEGIN_EXAMPLE
+      the government proposed, but the trade union movement disposed.
+      谋事的是政府，而成事的是工会运动。
+      #+END_EXAMPLE
+   disposed
+   adj 有xx意向的
+   be ill/well-disposed to 对xx恶/善意的
+
+   disposition
+   n 处置/[军事]部署
+** distort
+   1. 曲解/扭曲事实
+      #+BEGIN_EXAMPLE
+      The story was distorted by the press.
+      #+END_EXAMPLE
+   2. 扭曲变形
+      #+BEGIN_EXAMPLE
+      Her face was distorted by pain.
+      #+END_EXAMPLE
+   
+** propaganda
+   政治宣传片
+   propagate
+   v 繁殖/宣传
+   propagation
+   propagator
+   propagating
+** drastic
+   adj extreme/intense/severe剧烈的/强烈的/猛烈的
+   #+BEGIN_EXAMPLE
+   such a drastic change 剧烈变动
+   #+END_EXAMPLE
+** ductile
+   adj （金属）易延展的/可塑的，柔软的
+** edifice
+   巨大的建筑
+** elicit
+   引出 bring out/educe
+   elicitor [生物]诱导子
+   elicition 诱导/引导
+** eloquent
+   口才好的/有说服力的
+   #+BEGIN_EXAMPLE
+   an eloquent speech
+   #+END_EXAMPLE
+   eloquence 雄辩/口才
+* List11
+** elude
+   avoid/escape 逃避，躲开/难懂
+   elusion
+   elusive 难懂的
+   #+BEGIN_EXAMPLE
+   He managed to elude his pursuers by escaping into a bog.沼泽
+   This logic eluded most people.
+   #+END_EXAMPLE
+   [[file:NewWords02.org::#delude][delude]]
+** embellish
+   decorate装饰/修饰|润色（使更加吸引人/生动）
+   #+BEGIN_EXAMPLE
+   Jimmy embellished the tale of his fishing trip to make it sound more exciting.
+   #+END_EXAMPLE
+** emblem
+   徽章
+   #+BEGIN_EXAMPLE
+   national emblem 国徽
+   #+END_EXAMPLE
+** embody
+   包含contain/体现express
+   #+BEGIN_EXAMPLE
+   That's a national team that embodies competetive spirit and skill.
+   #+END_EXAMPLE
+** embryo
+   胚胎/萌芽状态的事物，发展初期的事物
+   in embryo 在初始阶段
+   embryonic adj 与胚胎相关的
+   embryology 胚胎学
+** emerald
+   绿宝石/翡翠/翠绿色
+** eminent
+   卓越的/出众的
+   preeminent =
+   prominent =
+   imminent adj 即将发生的/迫近的
+   #+BEGIN_EXAMPLE
+   one of the world's most eminent statisticians.
+   #+END_EXAMPLE
+** enactment
+   enact =make law制定法律
+   enactment n 法律的制定/法律
+   #+BEGIN_EXAMPLE
+   legislation was enacted in 1987 to attract international companies.
+   #+END_EXAMPLE
+** encroach
+   intrude侵占/侵害/侵蚀
+   encroach on 侵犯/侵害
+   #+BEGIN_EXAMPLE
+   the reporter encroached my privacy.
+   #+END_EXAMPLE
+** encase
+   put in box放入盒子中
+** encompass
+   surround环绕/围绕 include包含
+** endow
+   v donate捐助/be endowed with天生具有
+   #+BEGIN_EXAMPLE
+   endow the church
+   he is endowed with tremendous physical strength
+   #+END_EXAMPLE
+** engrave
+   carve雕刻
+** engulf
+   吞没/淹没
+   #+BEGIN_EXAMPLE
+   the cafe was engulfed in flames
+   Europe might be engulfed by war.
+   #+END_EXAMPLE
+** entail
+   involve牵扯/承担
+   #+BEGIN_EXAMPLE
+   a situation which entails considerable risks
+   #+END_EXAMPLE
+** enzyme
+   酶
+** epitomize
+   v be a perfect example of  代表/象征/缩影
+   epitomization
+   eptime n a person or thing that is a perfect example of a particular quality or type 象征/典型代表
+   #+BEGIN_EXAMPLE
+   the company epitomized the problems faced by British industry.
+   #+END_EXAMPLE
+** ethics
+   道德/伦理
+   ethical
+   ethically
+   unethical 不道德的
+** ethnic
+   种族的
+** evaporate
+   vapor 水汽
+   vaporize 汽化
+   vaporization
+   evaporate 蒸发/消失 vanish
+   evaporation
+   evaporable 易消失的
+   evaporator 蒸发器
+   #+BEGIN_EXAMPLE
+   the militancy of earlier years had evaporated in the wake of defeat.
+   #+END_EXAMPLE
+*** militancy
+    adj 好战的
+    n 好战分子
+*** in the wake of
+    following (someone or something), especially as a consequence 后果/结果
+** evoke
+   bring or recall to the conscious mind  唤起/激起
+   #+BEGIN_EXAMPLE
+   that potent tang evoking nostalgic memories of childhood holidays.
+   #+END_EXAMPLE
+   revoke 撤消
+   provoke 激起/刺激
+   #+BEGIN_EXAMPLE
+   the decision provoked a storm of protest from civil rights organizations.
+   #+END_EXAMPLE
+*** potent
+    强烈的
+*** tang
+    气味
+*** nostalgic
+    思乡的
+** excavate
+   dig 挖掘/开凿
+   excavation
+** exalt
+   :PROPERTIES:
+   :CUSTOM_ID: exalt
+   :END:
+   v think highly of赞扬/使变得崇高
+   exalted 崇高的
+   #+BEGIN_EXAMPLE
+   the party will continue to exalt their hero
+   Romanticism liberated the imagination and exalted the emotions.
+   #+END_EXAMPLE

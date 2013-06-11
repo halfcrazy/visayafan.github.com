@@ -28,7 +28,7 @@
    加conta
    icosagon 二十边形
    tricontagon 三十边形
-   pentacontagon 四十边形
+   pentacontagon 五十边形
    hexacontagon 六十边形
 ** 其它
    XX-sized polygon
@@ -108,6 +108,9 @@ Today, I got rear-ended. An old woman got out and came over to my car window. I 
 Today, I had to bail on yet another date with an awesome guy. Every time I make a date, my hateful mother slips laxatives into my food so I'm glued to the shitter until 2am. This is the fourth time. FML
 #+end_example
 ** delude
+   :PROPERTIES:
+   :CUSTOM_ID: delude
+   :END:
    delude into 欺骗某人使相信
 #+begin_example
 The manager deluded her into thinking he would give her the job.

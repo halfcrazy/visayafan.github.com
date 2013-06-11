@@ -3,6 +3,7 @@
   http://blog.csdn.net/haoel/article/details/3081385
 */
 #include <iostream>
+#include <vector>
 using namespace std;
 
 class B
@@ -131,5 +132,5 @@ int main(int argc, char *argv[])
 [8] D::B2::_vptr->
      [0] D::f()
      [1] B::Bf()
-     [2] 0x1  
+     [2] 0x1
  */

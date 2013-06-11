@@ -38,7 +38,7 @@
   |-----------------------------+----------------------------------------------------------------------------------------------------|
   | *移动相关*                  |                                                                                                    |
   |-----------------------------+----------------------------------------------------------------------------------------------------|
-  | C-M-f                       | forward a thread                                                                                   |
+  | C-M-f                       | forward a thread [[*%E4%BB%80%E4%B9%88%E5%8F%AB%E4%B8%80%E4%B8%AAthread][参考]]                                                                              |
   | C-M-b                       | backward a thread                                                                                  |
   | n/p                         | next/previous unreaded thread                                                                      |
   | N/P                         | next/previous thread                                                                               |
@@ -434,7 +434,7 @@ From: C
    将光标放在URL上 =u= 即可拷贝光标处URL。
 ** Gnus auto-save file exists. Do you want to read it?
    这是因为上次没有正常退出Gnus（q键退出）导致。
-** COMMENT 什么叫一个thread
+** 什么叫一个thread
    比如下面的情况：
 #+begin_example
 1
@@ -453,6 +453,7 @@ From: C
    1是发起人，所有帖子是一个thread。
    2回复1, 2.1, 2.2回复2，则2.1（包含子帖2.1.1, 2.1.2）, 2.2构成2的thread。
    如果光标放在2.1上 =A T= 取得该thread的所有帖子则只会取回 2.1.1 2.1.2，同理在2上 =A T= 则会取回2.1 2.2及其子帖，不会取回 3 的帖子.
+   在2上 =C-M-f gnus-summary-next-thread= 光标移到3,同理在2.1上 =C-M-f= 移到2.2上。同理 =C-M-b= 。
 ** Article Washing
 *** 去掉Article中的空白行
     Article->Washing->Remove Blanks 可以选择删除哪些空白行。

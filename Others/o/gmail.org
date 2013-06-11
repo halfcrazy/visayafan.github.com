@@ -1,0 +1,28 @@
+#+OPTIONS: ^:{} _:{} num:t toc:t \n:t
+#+INCLUDE: "../../template.org"
+#+SETUPFILE: "../../extension.org"
+#+title:Gmail
+
+* labs
+** preview
+** quicklink
+** right chat
+* create label
+  sublabel
+  color
+  以@开头的label会置顶label（默认以字母排序）
+* search
+  from:name
+  to:name
+  label:name
+  subject:content
+* shortcuts
+  | l   | add label                         |
+  | r   | replay                            |
+  | c   | compose                           |
+  | n/p | next/previous message             |
+  | j/k | next/previous thread/conversation |
+  | =/= | search                            |
+  | v   | move to                           |
+  | g i | goto inbox                        |
+  | g a | goto allmail                      |

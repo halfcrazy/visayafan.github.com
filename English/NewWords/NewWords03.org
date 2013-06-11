@@ -50,9 +50,10 @@ Today, I snuck out to go see my girlfriend. When I got to her house, I left my b
 #+end_example
 * bigot
   bigot 顽固的人，偏执的人->bigoted 顽固的 ->bigotry 顽固
-  synonym:
-  dogma n 教义/教条
+* dogma
+  n 教义/教条
   dogmatic 教条的，武断的，傲慢专断的－>dogmatist教条主义者
+  doctrine 教条/教义/主义
 * I don't know you from Adam.
   我不认识你。
 * mellow

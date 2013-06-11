@@ -1,0 +1,51 @@
+#+OPTIONS: ^:{} _:{} num:t toc:t \n:t
+#+SETUPFILE: "../../extension.org"
+#+INCLUDE: "../../template-toc.org"
+#+title:
+* stringent
+  严格的
+  #+BEGIN_EXAMPLE
+   Int*, for example, is both a model of Bidirectional Iterator and a model of Input Iterator, but istream_iterator, is only a model of Input Iterator: it does not conform to the more stringent Bidirectional Iterator requirements.
+  #+END_EXAMPLE
+* codger
+  an eccentric old man守旧/古怪的老年男性
+* chilblain
+  chill 冷的
+  blain 疮
+  chilblain 冻疮 an inflammatory dwelling or sore caused by exposure to cold
+** inflame
+   v 发炎
+   inflammation n
+   inflammatory adj 
+** swell
+   v 肿胀
+   n 凸起
+   swelling n 身体上的肿块（由积水引起的）/自然突起部分
+* facepalm
+  #+BEGIN_EXAMPLE
+  A facepalm (sometimes also face-palm or face palm) is the physical gesture of placing one's hand flat across one's face or lowering one's face into one's hand or hands. The gesture is found in many cultures as a display of frustration, disappointment, embarrassment, shock, surprise or sarcasm.
+  #+END_EXAMPLE
+  {{{lightbox(images/facepalm.jpg,400)}}} 
+* sublime
+  adj [[file:TOEFL%E8%AF%8D%E6%A0%B9%2B%E8%81%94%E6%83%B3.org::#exalt][exalted]] 崇高的/宏伟的/出众的
+  （态度/行为）极端的/无双的
+  #+BEGIN_EXAMPLE
+  a sense of the sublime.
+  he had the sublime confidence of youth.
+  #+END_EXAMPLE
+  v (化)升华
+  #+BEGIN_EXAMPLE
+  these crystals could be sublimed under a vacuum.
+  #+END_EXAMPLE
+  sublime text 编辑器
+* elide
+  v 省略
+* in lieu of
+  instead of/in place of替代
+  #+BEGIN_EXAMPLE
+  Women whose offices require hosiery 袜子 might choose lightweight pants in lieu of a skirt and pantyhose 紧身裤.
+  #+END_EXAMPLE
+* spade/heart/club/diamond
+  #+BEGIN_EXAMPLE
+  Cards are divided into four kinds: spades, diamonds, clubs and hearts. 黑桃/方块/梅花/红桃
+  #+END_EXAMPLE

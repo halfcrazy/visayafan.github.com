@@ -249,6 +249,7 @@ First we shouldn't use the word `logo' with it's evil connotations of commerce. 
   bibliography 参考文献
   sentiment =opinion观点看法
   disseminate v disperse/spread widely散布传播
+  diffuse 传播/扩散/（物理上气体液体）扩散
   consent v/n同意
   #+BEGIN_EXAMPLE
   Zhao Ziyang later wrote in his autobiography that, although Deng had stated many of these sentiments in a private conversation with Li Peng shortly before the editorial was written, Li had these comments disseminated to Party members and published as the editorial without Deng's knowledge or consent
